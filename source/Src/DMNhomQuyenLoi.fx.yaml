@@ -351,7 +351,22 @@ DMNhomQuyenLoi As screen:
                 ShowColumns(
                     AddColumns(
                         SortByColumns(
-                            Filter(DM_NHOM_QUYENLOIS,Or(TextFilterNQL.Value="",Or(And(CbxFilterNQL.Selected.Value="Mã nhóm quyền lợi",StartsWith(MA_NHOM_QL,TextFilterNQL.Value)),And(CbxFilterNQL.Selected.Value="Tên nhóm quyền lợi",!IsBlank(Find(TextFilterNQL.Value,MA_NHOM_QL)))))),
+                            Filter(
+                                DM_NHOM_QUYENLOIS,
+                                Or(
+                                    TextFilterNQL.Value="",
+                                    Or(
+                                        And(
+                                            CbxFilterNQL.Selected.Value="Mã nhóm quyền lợi",
+                                            StartsWith(MA_NHOM_QL,TextFilterNQL.Value)
+                                        ),
+                                        And(
+                                            CbxFilterNQL.Selected.Value="Tên nhóm quyền lợi",
+                                            !IsBlank(Find(TextFilterNQL.Value,TEN_NHOM_QL))
+                                        )
+                                    )
+                                )
+                            ),
                             "cr282_ma_nhom_ql",
                             SortOrder.Ascending
                         ),
