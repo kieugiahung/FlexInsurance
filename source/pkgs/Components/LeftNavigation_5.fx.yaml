@@ -1,0 +1,153 @@
+LeftNavigation_5 As CanvasComponent:
+    Fill: =RGBA(244,244,244,1)
+    Height: =Max(App.Height, App.DesignHeight)
+    MenuWidth: =If(varOpenMenu,Max(App.Width, App.DesignWidth)/5+40,70)
+    NavItems: |-
+        =Table(
+            {
+                Title: "Home",
+                Screen: App.ActiveScreen,
+                Icon: Icon.Home,
+                MenuID: 1,
+                Subtable: Table(
+                    {
+                   Title: "Home1",
+                   Screen: App.ActiveScreen,
+                   Icon: Icon.Home, 
+                   MenuID: 1.1
+        
+                    },
+                    {
+                   Title: "Home2",
+                   Screen: App.ActiveScreen,
+                   Icon: Icon.Home, 
+                   MenuID: 1.2
+        
+                    },
+                      {
+                   Title: "Home3",
+                   Screen: App.ActiveScreen,
+                   Icon: Icon.Home, 
+                   MenuID: 1.3
+        
+                    }
+                )
+            }, {
+                Title: "Task",
+                Screen: App.ActiveScreen,
+                Icon: Icon.DetailList,
+                MenuID: 2,
+                Subtable: Table(
+                    {
+                   Title: "Home2.1",
+                   Screen: App.ActiveScreen,
+                   Icon: Icon.Home, 
+                   MenuID: 2.1
+        
+                    },
+                    {
+                   Title: "Home2.2",
+                   Screen: App.ActiveScreen,
+                   Icon: Icon.Home, 
+                   MenuID: 2.2
+        
+                    },
+                      {
+                   Title: "Home2.3",
+                   Screen: App.ActiveScreen,
+                   Icon: Icon.Home, 
+                   MenuID: 2.3
+        
+                    }
+                )
+            }
+        )
+    Width: =LeftNavigation_5.MenuWidth
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Gallery2 As gallery.variableTemplateHeightGallery:
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Height: =1055
+        Items: =LeftNavigation_5.NavItems
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        TemplateSize: =296
+        Width: =Parent.Width
+        Y: =76
+        ZIndex: =3
+
+        icoNav_2 As icon.Add:
+            BorderColor: =RGBA(32, 54, 71, 1)
+            Color: =RGBA(32, 54, 71, 1)
+            DisabledFill: =icoNav_2.Fill
+            FocusedBorderColor: =icoNav_2.BorderColor
+            Height: =50
+            HoverBorderColor: =ColorFade(icoNav_2.BorderColor, 20%)
+            HoverColor: =ColorFade(icoNav_2.Color, 20%)
+            HoverFill: =icoNav_2.Fill
+            Icon: =ThisItem.Icon
+            OnSelect: |-
+                =Set(varOpenMenu,true); Navigate(ThisItem.Screen);
+                If (openMenu = ThisItem.MenuID,
+                Set(openMenu, Blank()),
+                Set(openMenu, ThisItem.MenuID)
+                );
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            PressedBorderColor: =ColorFade(icoNav_2.BorderColor, -20%)
+            PressedColor: =ColorFade(icoNav_2.Color, -20%)
+            PressedFill: =icoNav_2.Fill
+            Width: =50
+            Y: =54
+            ZIndex: =2
+
+        Gallery4 As gallery.variableTemplateHeightGallery:
+            BorderColor: =RGBA(32, 54, 71, 1)
+            DelayItemLoading: =true
+            Height: =178
+            Items: =ThisItem.Subtable
+            Layout: =Layout.Vertical
+            LoadingSpinner: =LoadingSpinner.Data
+            TemplateSize: =147
+            Visible: =openMenu = ThisItem.MenuID
+            Width: =158
+            Y: =114
+            ZIndex: =3
+
+            Label1 As label:
+                BorderColor: =RGBA(32, 54, 71, 1)
+                Height: =80
+                OnSelect: =Select(Parent)
+                Size: =16
+                Text: =ThisItem.Title
+                Width: =Parent.Width
+                Y: =15
+                ZIndex: =1
+
+        Label3 As label:
+            Align: =Align.Center
+            BorderColor: =RGBA(32, 54, 71, 1)
+            Height: =70
+            OnSelect: =Select(Parent)
+            Size: =21
+            Text: =ThisItem.Title
+            Width: =98
+            X: =60
+            Y: =44
+            ZIndex: =4
+
+    Icon1_1 As icon.More:
+        BorderColor: =RGBA(32, 54, 71, 1)
+        Color: =RGBA(32, 54, 71, 1)
+        Icon: =Icon.More
+        OnSelect: |-
+            =Set(varOpenMenu,!varOpenMenu);
+            Set(openMenu, Blank());
+        Width: =70
+        Y: =2
+        ZIndex: =4
+
