@@ -1,0 +1,384 @@
+DMGioiTinh As screen:
+    OnVisible: |
+        =ClearCollect(
+            tmpGTCollect,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                        DM_GIOI_TINHS,
+                        "cr282_ma_gioi_tinh",
+                        SortOrder.Ascending
+                    ),
+                    "edited",
+                    0
+                ),
+                "cr282_ma_gioi_tinh",
+                "cr282_ten_gioi_tinh",
+                "cr282_ghi_chu",
+                "edited"
+            )
+        );
+        UpdateContext({
+            maAdded:"",
+            maUpdated:""
+        });
+
+    GalleryGT As gallery.galleryVertical:
+        DelayItemLoading: =true
+        Height: =615
+        Items: =SortByColumns(tmpGTCollect,"cr282_ma_gioi_tinh",SortOrder.Ascending)
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        NavigationStep: =0
+        TemplateSize: =40
+        Width: =1283
+        X: =54
+        Y: =120
+        ZIndex: =1
+
+        IconXoaGT As icon.Trash:
+            Color: =RGBA(233, 79, 76, 1)
+            Height: =40
+            Icon: =Icon.Trash
+            OnSelect: |-
+                =If(
+                    Or(maAdded<>"",maUpdated<>""),
+                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                    Refresh(DM_GIOI_TINHS);
+                    RemoveIf(
+                        DM_GIOI_TINHS,
+                        MA_GIOI_TINH=ThisItem.cr282_ma_gioi_tinh
+                    );
+                    Remove(tmpGTCollect,ThisItem);
+                    Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
+                )
+            Tooltip: ="Xóa"
+            Visible: =ThisItem.edited=0
+            Width: =37
+            X: =1235
+            ZIndex: =7
+
+        TextMaGT As text:
+            BorderColor: =RGBA(15, 108, 189, 1)
+            Default: =ThisItem.cr282_ma_gioi_tinh
+            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+            DisabledColor: =RGBA(0, 0, 0, 1)
+            DisabledFill: =RGBA(255, 255, 255, 1)
+            DisplayMode: =DisplayMode.Disabled
+            OnChange: =
+            OnSelect: =Select(Parent)
+            Width: =199
+            ZIndex: =8
+
+        TextTenGT As text:
+            BorderColor: =RGBA(72, 163, 62, 1)
+            Default: =ThisItem.cr282_ten_gioi_tinh
+            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+            DisabledColor: =RGBA(0, 0, 0, 1)
+            DisabledFill: =RGBA(255, 255, 255, 1)
+            DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+            OnChange: =
+            OnSelect: =Select(Parent)
+            Width: =610
+            X: =205
+            ZIndex: =9
+
+        TextGhiChuGT As text:
+            BorderColor: =RGBA(72, 163, 62, 1)
+            Default: =ThisItem.cr282_ghi_chu
+            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+            DisabledColor: =RGBA(0, 0, 0, 1)
+            DisabledFill: =RGBA(255, 255, 255, 1)
+            DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+            OnChange: =
+            OnSelect: =Select(Parent)
+            Width: =376
+            X: =821
+            ZIndex: =13
+
+        IconEditGT As icon.Edit:
+            Color: =RGBA(83, 144, 164, 1)
+            Height: =40
+            Icon: =Icon.Edit
+            OnSelect: |-
+                =If(
+                    Or(maAdded<>"",maUpdated<>""),
+                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                    UpdateIf(
+                        tmpGTCollect,
+                        cr282_ma_gioi_tinh=ThisItem.cr282_ma_gioi_tinh,
+                        {
+                            edited:1
+                        }
+                    );
+                    UpdateContext({
+                        maUpdated:ThisItem.cr282_ma_gioi_tinh
+                    })
+                )
+            Tooltip: ="Sửa"
+            Visible: =ThisItem.edited=0
+            Width: =29
+            X: =1206
+            ZIndex: =14
+
+        IconLuuGT As icon.Save:
+            Color: =RGBA(72, 163, 62, 1)
+            Height: =40
+            Icon: =Icon.Save
+            OnSelect: |
+                =If(
+                    TextTenGT.Text="",
+                    Notify("Bắt buộc nhập tên giới tính", NotificationType.Error,800),
+                    If(
+                        ThisItem.cr282_ma_gioi_tinh=maAdded,
+                        Patch(
+                            DM_GIOI_TINHS,
+                            {
+                                MA_GIOI_TINH:ThisItem.cr282_ma_gioi_tinh,
+                                TEN_GIOI_TINH:TextTenGT.Text,
+                                GHI_CHU:TextGhiChuGT.Text
+                            }
+                        ),
+                        UpdateIf(
+                            DM_GIOI_TINHS,
+                            MA_GIOI_TINH=ThisItem.cr282_ma_gioi_tinh,
+                            {
+                                TEN_GIOI_TINH:TextTenGT.Text,
+                                GHI_CHU:TextGhiChuGT.Text
+                            }
+                        )
+                    );
+                    UpdateIf(
+                        tmpGTCollect,
+                        cr282_ma_gioi_tinh=ThisItem.cr282_ma_gioi_tinh,
+                        {
+                            cr282_ten_gioi_tinh:TextTenGT.Text,
+                            cr282_ghi_chu:TextGhiChuGT.Text,
+                            edited:0
+                        }
+                    );
+                    Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
+                    ClearCollect(
+                        tmpGTCollect,
+                        ShowColumns(
+                            AddColumns(
+                                SortByColumns(
+                                    DM_GIOI_TINHS,
+                                    "cr282_ma_gioi_tinh",
+                                    SortOrder.Ascending
+                                ),
+                                "edited",
+                                0
+                            ),
+                            "cr282_ma_gioi_tinh",
+                            "cr282_ten_gioi_tinh",
+                            "cr282_ghi_chu",
+                            "edited"
+                        )
+                    );
+                    UpdateContext({
+                        maAdded:"",
+                        maUpdated:""
+                    });
+                    Reset(TextFilterGT); Reset(CbxFilterGT)
+                )
+            Tooltip: ="Lưu"
+            Visible: =ThisItem.edited=1
+            Width: =33
+            X: =1204
+            ZIndex: =15
+
+        IconHuyGT As icon.CancelBadge:
+            Color: =RGBA(139, 154, 159, 1)
+            Height: =40
+            Icon: =Icon.CancelBadge
+            OnSelect: |-
+                =If(
+                    ThisItem.cr282_ma_gioi_tinh=maAdded,
+                    Remove(tmpGTCollect,ThisItem),
+                    UpdateIf(
+                        tmpGTCollect,
+                        cr282_ma_gioi_tinh=ThisItem.cr282_ma_gioi_tinh,
+                        {
+                            edited:0
+                        }
+                    )
+                );
+                UpdateContext({
+                    maAdded:"",
+                    maUpdated:""
+                });
+            Tooltip: ="Hủy"
+            Visible: =ThisItem.edited=1
+            Width: =28
+            X: =1240
+            ZIndex: =16
+
+    BadgeCanvas1_5 As Badge:
+        BasePaletteColor: =
+        Content: =""
+        DisplayMode: =DisplayMode.Edit
+        FontColor: =
+        Height: =39
+        Width: =1208
+        X: =54
+        Y: =78
+        ZIndex: =2
+
+    TextCanvas2_24 As Text:
+        DisplayMode: =DisplayMode.Edit
+        FontColor: =
+        Height: =38
+        Size: =14
+        Text: ="Mã giới tính"
+        Weight: ='TextCanvas.Weight'.Bold
+        Width: =96
+        X: =66
+        Y: =78
+        ZIndex: =3
+
+    TextCanvas2_25 As Text:
+        DisplayMode: =DisplayMode.Edit
+        FontColor: =
+        Height: =38
+        Size: =14
+        Text: ="Tên giới tính"
+        Weight: ='TextCanvas.Weight'.Bold
+        Width: =96
+        X: =267
+        Y: =78
+        ZIndex: =4
+
+    TextCanvas2_29 As Text:
+        DisplayMode: =DisplayMode.Edit
+        FontColor: =
+        Height: =38
+        Size: =14
+        Text: ="Ghi chú"
+        Weight: ='TextCanvas.Weight'.Bold
+        Width: =96
+        X: =881
+        Y: =79
+        ZIndex: =5
+
+    "TextFilterGT As 'Text input'":
+        BasePaletteColor: =
+        DisplayMode: =DisplayMode.Edit
+        FontColor: =
+        Height: =43
+        OnChange: =
+        Placeholder: ="Nhập giá trị lọc"
+        Width: =204
+        X: =558
+        Y: =23
+        ZIndex: =6
+
+    IconTaiLaiGT As icon.Sync:
+        Color: =RGBA(83, 144, 164, 1)
+        Height: =36
+        Icon: =Icon.Sync
+        OnSelect: |-
+            =ClearCollect(
+                tmpGTCollect,
+                ShowColumns(
+                    AddColumns(
+                        SortByColumns(
+                            DM_GIOI_TINHS,
+                            "cr282_ma_gioi_tinh",
+                            SortOrder.Ascending
+                        ),
+                        "edited",
+                        0
+                    ),
+                    "cr282_ma_gioi_tinh",
+                    "cr282_ten_gioi_tinh",
+                    "cr282_ghi_chu",
+                    "edited"
+                )
+            );
+            UpdateContext({
+                maAdded:"",
+                maUpdated:""
+            });
+            Reset(TextFilterGT); Reset(CbxFilterGT);
+        Tooltip: ="Tải lại"
+        Width: =32
+        X: =89
+        Y: =25
+        ZIndex: =7
+
+    IconThemGT As icon.AddDocument:
+        Color: =RGBA(72, 163, 62, 1)
+        DisplayMode: =If(And(maAdded="",maUpdated=""), DisplayMode.Edit,DisplayMode.Disabled)
+        Height: =42
+        Icon: =Icon.AddDocument
+        OnSelect: |
+            =If(
+                Or(maAdded<>"",maUpdated<>""),
+                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                UpdateContext({
+                    idMa:If(
+                        CountIf(DM_GIOI_TINHS,true)=0,
+                        1000,
+                        Value(Last(SortByColumns(DM_GIOI_TINHS,"cr282_ma_gioi_tinh",SortOrder.Ascending)).MA_GIOI_TINH)+1
+                    )
+                });
+                Collect(
+                    tmpGTCollect,
+                    {
+                        cr282_ma_gioi_tinh:Text(idMa),
+                        cr282_ten_gioi_tinh:"",
+                        cr282_ghi_chu:"",
+                        edited:1
+                    }
+                );
+                UpdateContext({maAdded:Text(idMa)})
+            )
+        Tooltip: ="Thêm mới"
+        Width: =40
+        X: =140
+        Y: =21
+        ZIndex: =8
+
+    IconFilterGT As icon.FilterFlat:
+        Color: =RGBA(71, 158, 245, 1)
+        DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
+        Height: =47
+        Icon: =Icon.FilterFlat
+        OnSelect: |-
+            =ClearCollect(
+                tmpGTCollect,
+                ShowColumns(
+                    AddColumns(
+                        SortByColumns(
+                            Filter(DM_GIOI_TINHS,Or(TextFilterGT.Value="",Or(And(CbxFilterGT.Selected.Value="Mã giới tính",StartsWith(MA_GIOI_TINH,TextFilterGT.Value)),And(CbxFilterGT.Selected.Value="Tên giới tính",!IsBlank(Find(TextFilterGT.Value,TEN_GIOI_TINH)))))),
+                            "cr282_ma_gioi_tinh",
+                            SortOrder.Ascending
+                        ),
+                        "edited",
+                        0
+                    ),
+                    "cr282_ma_gioi_tinh",
+                    "cr282_ten_gioi_tinh",
+                    "cr282_ghi_chu",
+                    "edited"
+                )
+            )
+        Tooltip: ="Lọc"
+        Width: =32
+        X: =773
+        Y: =21
+        ZIndex: =9
+
+    CbxFilterGT As Combobox.pcfdataset:
+        DefaultSelectedItems: =Filter(["Mã giới tính", "Tên giới tính"],Value="Mã giới tính")
+        DisplayMode: =DisplayMode.Edit
+        Height: =43
+        InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
+        Items: =["Mã giới tính", "Tên giới tính"]
+        OnChange: =Reset(TextFilterGT)
+        Width: =152
+        X: =397
+        Y: =23
+        ZIndex: =10
+
