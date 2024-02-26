@@ -32,8 +32,8 @@ DMNhomQuyenLoi As screen:
         NavigationStep: =0
         TemplateSize: =40
         Width: =1283
-        X: =54
-        Y: =129
+        X: =83
+        Y: =111
         ZIndex: =1
 
         IconXoaNQL As icon.Trash:
@@ -221,8 +221,8 @@ DMNhomQuyenLoi As screen:
         FontColor: =
         Height: =39
         Width: =1208
-        X: =54
-        Y: =87
+        X: =83
+        Y: =69
         ZIndex: =2
 
     TextCanvas2_26 As Text:
@@ -233,8 +233,8 @@ DMNhomQuyenLoi As screen:
         Text: ="Mã nhóm quyền lợi"
         Weight: ='TextCanvas.Weight'.Bold
         Width: =142
-        X: =66
-        Y: =87
+        X: =95
+        Y: =69
         ZIndex: =3
 
     TextCanvas2_27 As Text:
@@ -245,8 +245,8 @@ DMNhomQuyenLoi As screen:
         Text: ="Tên nhóm quyền lợi"
         Weight: ='TextCanvas.Weight'.Bold
         Width: =159
-        X: =267
-        Y: =87
+        X: =296
+        Y: =69
         ZIndex: =4
 
     TextCanvas2_30 As Text:
@@ -257,8 +257,8 @@ DMNhomQuyenLoi As screen:
         Text: ="Ghi chú"
         Weight: ='TextCanvas.Weight'.Bold
         Width: =96
-        X: =881
-        Y: =88
+        X: =910
+        Y: =70
         ZIndex: =5
 
     "TextFilterNQL As 'Text input'":
@@ -269,8 +269,8 @@ DMNhomQuyenLoi As screen:
         OnChange: =
         Placeholder: ="Nhập giá trị lọc"
         Width: =204
-        X: =558
-        Y: =32
+        X: =587
+        Y: =14
         ZIndex: =6
 
     IconTaiLaiNQL As icon.Sync:
@@ -303,8 +303,8 @@ DMNhomQuyenLoi As screen:
             Reset(TextFilterNQL); Reset(CbxFilterNQL);
         Tooltip: ="Tải lại"
         Width: =32
-        X: =89
-        Y: =34
+        X: =118
+        Y: =16
         ZIndex: =7
 
     IconThemNQL As icon.AddDocument:
@@ -336,8 +336,8 @@ DMNhomQuyenLoi As screen:
             )
         Tooltip: ="Thêm mới"
         Width: =40
-        X: =140
-        Y: =30
+        X: =169
+        Y: =12
         ZIndex: =8
 
     IconFilterNQL As icon.FilterFlat:
@@ -351,7 +351,22 @@ DMNhomQuyenLoi As screen:
                 ShowColumns(
                     AddColumns(
                         SortByColumns(
-                            Filter(DM_NHOM_QUYENLOIS,Or(TextFilterNQL.Value="",Or(And(CbxFilterNQL.Selected.Value="Mã nhóm quyền lợi",StartsWith(MA_NHOM_QL,TextFilterNQL.Value)),And(CbxFilterNQL.Selected.Value="Tên nhóm quyền lợi",!IsBlank(Find(TextFilterNQL.Value,MA_NHOM_QL)))))),
+                            Filter(
+                                DM_NHOM_QUYENLOIS,
+                                Or(
+                                    TextFilterNQL.Value="",
+                                    Or(
+                                        And(
+                                            CbxFilterNQL.Selected.Value="Mã nhóm quyền lợi",
+                                            StartsWith(MA_NHOM_QL,TextFilterNQL.Value)
+                                        ),
+                                        And(
+                                            CbxFilterNQL.Selected.Value="Tên nhóm quyền lợi",
+                                            !IsBlank(Find(TextFilterNQL.Value,TEN_NHOM_QL))
+                                        )
+                                    )
+                                )
+                            ),
                             "cr282_ma_nhom_ql",
                             SortOrder.Ascending
                         ),
@@ -366,8 +381,8 @@ DMNhomQuyenLoi As screen:
             )
         Tooltip: ="Lọc"
         Width: =32
-        X: =773
-        Y: =30
+        X: =802
+        Y: =12
         ZIndex: =9
 
     CbxFilterNQL As Combobox.pcfdataset:
@@ -378,7 +393,11 @@ DMNhomQuyenLoi As screen:
         Items: =["Mã nhóm quyền lợi", "Tên nhóm quyền lợi"]
         OnChange: =Reset(TextFilterNQL)
         Width: =152
-        X: =397
-        Y: =32
+        X: =426
+        Y: =14
         ZIndex: =10
+
+    LeftNavigation_13 As LeftNavigation_9:
+        Width: =LeftNavigation_13.MenuWidth
+        ZIndex: =11
 
