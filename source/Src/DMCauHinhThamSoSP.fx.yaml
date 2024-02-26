@@ -78,7 +78,7 @@ DMCauHinhThamSoSP As screen:
                 Y: =139
                 ZIndex: =1
 
-                IconXoaYTAH_1 As icon.Trash:
+                IconXoaYTAH As icon.Trash:
                     Color: =RGBA(233, 79, 76, 1)
                     Height: =40
                     Icon: =Icon.Trash
@@ -100,7 +100,7 @@ DMCauHinhThamSoSP As screen:
                     X: =1218
                     ZIndex: =7
 
-                TextMaYTAH_1 As text:
+                TextMaYTAH As text:
                     BorderColor: =RGBA(15, 108, 189, 1)
                     Default: =ThisItem.cr282_ma_yeu_to
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
@@ -113,7 +113,7 @@ DMCauHinhThamSoSP As screen:
                     X: =11
                     ZIndex: =8
 
-                TextTenYTAH_1 As text:
+                TextTenYTAH As text:
                     BorderColor: =RGBA(72, 163, 62, 1)
                     Default: =ThisItem.cr282_ten_yeu_to
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
@@ -126,7 +126,7 @@ DMCauHinhThamSoSP As screen:
                     X: =150
                     ZIndex: =9
 
-                IconEditYTAH_1 As icon.Edit:
+                IconEditYTAH As icon.Edit:
                     Color: =RGBA(83, 144, 164, 1)
                     Height: =40
                     Icon: =Icon.Edit
@@ -151,17 +151,17 @@ DMCauHinhThamSoSP As screen:
                     X: =1189
                     ZIndex: =14
 
-                IconLuuYTAH_1 As icon.Save:
+                IconLuuYTAH As icon.Save:
                     Color: =RGBA(72, 163, 62, 1)
                     Height: =40
                     Icon: =Icon.Save
                     OnSelect: |
                         =If(
-                            IsBlank(TextTenYTAH_1.Text),
+                            IsBlank(TextTenYTAH.Text),
                             Notify("Bắt buộc nhập tên yếu tố ảnh hưởng", NotificationType.Error,800),
-                            IsBlank(CbxLHNVYTAH_1.Selected.Value),
+                            IsBlank(CbxLHNVYTAH.Selected.Value),
                             Notify("Bắt buộc chọn loại hình nghiệp vụ", NotificationType.Error,800),
-                            IsBlank(DpHLTuYTAH_1.SelectedDate),
+                            IsBlank(DpHLTuYTAH.SelectedDate),
                             Notify("Bắt buộc nhập ngày hiệu lực từ", NotificationType.Error,800),
                             If(
                                 ThisItem.cr282_ma_yeu_to=maAddedYTAH,
@@ -169,20 +169,20 @@ DMCauHinhThamSoSP As screen:
                                     DM_YEUTO_AH_PHIS,
                                     {
                                         MA_YEU_TO:ThisItem.cr282_ma_yeu_to,
-                                        TEN_YEU_TO:TextTenYTAH_1.Text,
-                                        LHNV:Concat(CbxLHNVYTAH_1.SelectedItems,Value,"|"),
-                                        HIEU_LUC_TU:DpHLTuYTAH_1.SelectedDate,
-                                        HIEU_LUC_DEN:DpHLDenYTAH_1.SelectedDate
+                                        TEN_YEU_TO:TextTenYTAH.Text,
+                                        LHNV:Concat(CbxLHNVYTAH.SelectedItems,Value,"|"),
+                                        HIEU_LUC_TU:DpHLTuYTAH.SelectedDate,
+                                        HIEU_LUC_DEN:DpHLDenYTAH.SelectedDate
                                     }
                                 ),
                                 UpdateIf(
                                     DM_YEUTO_AH_PHIS,
                                     MA_YEU_TO=ThisItem.cr282_ma_yeu_to,
                                     {
-                                        TEN_YEU_TO:TextTenYTAH_1.Text,
-                                        LHNV:Concat(CbxLHNVYTAH_1.SelectedItems,Value,"|"),
-                                        HIEU_LUC_TU:DpHLTuYTAH_1.SelectedDate,
-                                        HIEU_LUC_DEN:DpHLDenYTAH_1.SelectedDate
+                                        TEN_YEU_TO:TextTenYTAH.Text,
+                                        LHNV:Concat(CbxLHNVYTAH.SelectedItems,Value,"|"),
+                                        HIEU_LUC_TU:DpHLTuYTAH.SelectedDate,
+                                        HIEU_LUC_DEN:DpHLDenYTAH.SelectedDate
                                     }
                                 )
                             );
@@ -190,10 +190,10 @@ DMCauHinhThamSoSP As screen:
                                 tmpYTAHCollect,
                                 cr282_ma_yeu_to=ThisItem.cr282_ma_yeu_to,
                                 {
-                                    cr282_ten_yeu_to:TextTenYTAH_1.Text,
-                                    cr282_lhnv:Concat(CbxLHNVYTAH_1.SelectedItems,Value,"|"),
-                                    cr282_hieu_luc_tu:DpHLTuYTAH_1.SelectedDate,
-                                    cr282_hieu_luc_den:DpHLDenYTAH_1.SelectedDate,
+                                    cr282_ten_yeu_to:TextTenYTAH.Text,
+                                    cr282_lhnv:Concat(CbxLHNVYTAH.SelectedItems,Value,"|"),
+                                    cr282_hieu_luc_tu:DpHLTuYTAH.SelectedDate,
+                                    cr282_hieu_luc_den:DpHLDenYTAH.SelectedDate,
                                     edited:0
                                 }
                             );
@@ -222,7 +222,7 @@ DMCauHinhThamSoSP As screen:
                                 maAddedYTAH:"",
                                 maUpdatedYTAH:""
                             });
-                            Reset(TextFilterYTAH_1); Reset(CbxFilterYTAH_1)
+                            Reset(TextFilterYTAH); Reset(CbxFilterYTAH)
                         )
                     Tooltip: ="Lưu"
                     Visible: =ThisItem.edited=1
@@ -230,7 +230,7 @@ DMCauHinhThamSoSP As screen:
                     X: =1188
                     ZIndex: =15
 
-                IconHuyYTAH_1 As icon.CancelBadge:
+                IconHuyYTAH As icon.CancelBadge:
                     Color: =RGBA(139, 154, 159, 1)
                     Height: =40
                     Icon: =Icon.CancelBadge
@@ -256,7 +256,7 @@ DMCauHinhThamSoSP As screen:
                     X: =1223
                     ZIndex: =16
 
-                CbxLHNVYTAH_1 As combobox:
+                CbxLHNVYTAH As combobox:
                     BorderColor: =RGBA(72, 163, 62, 1)
                     ChevronBackground: =RGBA(255, 255, 255, 1)
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
@@ -286,7 +286,7 @@ DMCauHinhThamSoSP As screen:
                     X: =433
                     ZIndex: =19
 
-                DpHLDenYTAH_1 As datepicker:
+                DpHLDenYTAH As datepicker:
                     BorderColor: =RGBA(72, 163, 62, 1)
                     DefaultDate: =ThisItem.cr282_hieu_luc_den
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
@@ -299,7 +299,7 @@ DMCauHinhThamSoSP As screen:
                     X: =960
                     ZIndex: =20
 
-                DpHLTuYTAH_1 As datepicker:
+                DpHLTuYTAH As datepicker:
                     BorderColor: =RGBA(72, 163, 62, 1)
                     DefaultDate: =ThisItem.cr282_hieu_luc_tu
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
@@ -371,7 +371,7 @@ DMCauHinhThamSoSP As screen:
                 Y: =97
                 ZIndex: =6
 
-            "TextFilterYTAH_1 As 'Text input'":
+            "TextFilterYTAH As 'Text input'":
                 BasePaletteColor: =
                 DisplayMode: =DisplayMode.Edit
                 FontColor: =
@@ -384,7 +384,7 @@ DMCauHinhThamSoSP As screen:
                 Y: =42
                 ZIndex: =7
 
-            IconTaiLaiYTAH_1 As icon.Sync:
+            IconTaiLaiYTAH As icon.Sync:
                 Color: =RGBA(83, 144, 164, 1)
                 Height: =36
                 Icon: =Icon.Sync
@@ -414,14 +414,14 @@ DMCauHinhThamSoSP As screen:
                         maUpdatedYTAH:"",
                         loaiFilterYTAH:0
                     });
-                    Reset(TextFilterYTAH_1); Reset(CbxFilterYTAH_1);Reset(CbxFilterValueYTAH_1)
+                    Reset(TextFilterYTAH); Reset(CbxFilterYTAH);Reset(CbxFilterValueYTAH)
                 Tooltip: ="Tải lại"
                 Width: =32
                 X: =40
                 Y: =44
                 ZIndex: =8
 
-            IconThemYTAH_1 As icon.AddDocument:
+            IconThemYTAH As icon.AddDocument:
                 Color: =RGBA(72, 163, 62, 1)
                 DisplayMode: =If(And(maAddedYTAH="",maUpdatedYTAH=""), DisplayMode.Edit,DisplayMode.Disabled)
                 Height: =42
@@ -456,7 +456,7 @@ DMCauHinhThamSoSP As screen:
                 Y: =40
                 ZIndex: =9
 
-            IconFilterYTAH_1 As icon.FilterFlat:
+            IconFilterYTAH As icon.FilterFlat:
                 Color: =RGBA(71, 158, 245, 1)
                 DisplayMode: =If(Or(maAddedYTAH<>"",maUpdatedYTAH<>""),DisplayMode.Disabled,DisplayMode.Edit)
                 Height: =47
@@ -471,24 +471,24 @@ DMCauHinhThamSoSP As screen:
                                         DM_YEUTO_AH_PHIS,
                                         Or(
                                             And(
-                                                TextFilterYTAH_1.Value="",
+                                                TextFilterYTAH.Value="",
                                                 loaiFilterYTAH<>1
                                             ),
                                             And(
-                                                IsBlank(CbxFilterValueYTAH_1.Selected.Value),
+                                                IsBlank(CbxFilterValueYTAH.Selected.Value),
                                                 loaiFilterYTAH=1
                                             ),
                                             And(
-                                                CbxFilterYTAH_1.Selected.Value="Mã yếu tố",
-                                                StartsWith(MA_YEU_TO,TextFilterYTAH_1.Value)
+                                                CbxFilterYTAH.Selected.Value="Mã yếu tố",
+                                                StartsWith(MA_YEU_TO,TextFilterYTAH.Value)
                                             ),
                                             And(
-                                                CbxFilterYTAH_1.Selected.Value="Tên yếu tố",
-                                                !IsBlank(Find(TextFilterYTAH_1.Value,TEN_YEU_TO))
+                                                CbxFilterYTAH.Selected.Value="Tên yếu tố",
+                                                !IsBlank(Find(TextFilterYTAH.Value,TEN_YEU_TO))
                                             ),
                                             And(
-                                                CbxFilterYTAH_1.Selected.Value="Loại hình nghiệp vụ",
-                                                !IsBlank(Find(CbxFilterValueYTAH_1.Selected.Value,LHNV))
+                                                CbxFilterYTAH.Selected.Value="Loại hình nghiệp vụ",
+                                                !IsBlank(Find(CbxFilterValueYTAH.Selected.Value,LHNV))
                                             )
                                         )
                                     ),
@@ -513,7 +513,7 @@ DMCauHinhThamSoSP As screen:
                 Y: =40
                 ZIndex: =10
 
-            CbxFilterYTAH_1 As Combobox.pcfdataset:
+            CbxFilterYTAH As Combobox.pcfdataset:
                 DefaultSelectedItems: =Filter(["Mã yếu tố", "Tên yếu tố","Loại hình nghiệp vụ"],Value="Mã yếu tố")
                 DisplayMode: =DisplayMode.Edit
                 Height: =43
@@ -521,17 +521,17 @@ DMCauHinhThamSoSP As screen:
                 Items: =["Mã yếu tố", "Tên yếu tố","Loại hình nghiệp vụ"]
                 OnChange: |-
                     =If(
-                        CbxFilterYTAH_1.Selected.Value="Loại hình nghiệp vụ",
+                        CbxFilterYTAH.Selected.Value="Loại hình nghiệp vụ",
                         UpdateContext({loaiFilterYTAH:1}),
                         UpdateContext({loaiFilterYTAH:0})
                     );
-                    Reset(TextFilterYTAH_1);Reset(CbxFilterValueYTAH_1)
+                    Reset(TextFilterYTAH);Reset(CbxFilterValueYTAH)
                 Width: =188
                 X: =311
                 Y: =42
                 ZIndex: =11
 
-            CbxFilterValueYTAH_1 As Combobox.pcfdataset:
+            CbxFilterValueYTAH As Combobox.pcfdataset:
                 DisplayMode: =DisplayMode.Edit
                 Height: =43
                 InputTextPlaceholder: ="Chọn loại hình nghiệp vụ"
