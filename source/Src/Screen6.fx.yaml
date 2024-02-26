@@ -1,0 +1,402 @@
+Screen6 As screen:
+
+    Container2 As groupContainer.manualLayoutContainer:
+        Height: =768
+        Width: =1076
+        X: =290
+        ZIndex: =1
+
+        GalleryPV_1 As gallery.galleryVertical:
+            DelayItemLoading: =true
+            Height: =440
+            Items: =SortByColumns(tmpCTCollect,"cr282_ma_chuong_trinh",SortOrder.Ascending)
+            Layout: =Layout.Vertical
+            LoadingSpinner: =LoadingSpinner.Data
+            NavigationStep: =0
+            TemplateSize: =40
+            Width: =1076
+            Y: =255
+            ZIndex: =1
+
+            TxtMaCT As text:
+                BorderColor: =RGBA(15, 108, 189, 1)
+                Default: =ThisItem.cr282_ma_chuong_trinh
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Width: =168
+                ZIndex: =8
+
+            TxtTenCT As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_ten_chuong_trinh
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Width: =229
+                X: =180
+                ZIndex: =9
+
+            TxtMoTa As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_mo_ta
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Width: =326
+                X: =420
+                ZIndex: =10
+
+            Btn_SuaCT As button:
+                OnSelect: |-
+                    =If(
+                        Or(maAdded<>"",maUpdated<>""),
+                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                        UpdateIf(
+                            tmpCTCollect,
+                            cr282_ma_chuong_trinh=ThisItem.cr282_ma_chuong_trinh,
+                            {
+                                edited:1
+                            }
+                        );
+                        UpdateContext({
+                            maUpdated:ThisItem.cr282_ma_chuong_trinh
+                        })
+                    )
+                Text: ="Sửa"
+                Visible: =ThisItem.edited=0
+                Width: =75
+                X: =770
+                ZIndex: =17
+
+            Btn_XoaCT As button:
+                OnSelect: |-
+                    =If(
+                        Or(maAdded<>"",maUpdated<>""),
+                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                        Refresh(DL_CHUONG_TRINH_BH);
+                        RemoveIf(
+                            DL_CHUONG_TRINH_BH,
+                            MA_CHUONG_TRINH=ThisItem.cr282_ma_chuong_trinh
+                        );
+                        Remove(tmpCTCollect,ThisItem);
+                        Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
+                    )
+                Text: ="Xóa"
+                Visible: =ThisItem.edited=0
+                Width: =85
+                X: =861
+                ZIndex: =18
+
+            Btn_LuuCT As button:
+                OnSelect: |-
+                    =If(
+                        TxtTenCT.Text="",
+                        Notify("Bắt buộc nhập tên chương trình", NotificationType.Error,800),
+                        If(
+                            ThisItem.cr282_ma_chuong_trinh=maAdded,
+                            Patch(
+                                DL_CHUONG_TRINH_BH,
+                                {
+                                    MA_CHUONG_TRINH:ThisItem.cr282_ma_chuong_trinh,
+                                    TEN_CHUONG_TRINH:TxtTenCT.Text,
+                                    MO_TA:TxtMoTa.Text,
+                                    MA_SAN_PHAM:Txt_MaSP.Text,
+                                    TRANG_THAI:0
+                                }
+                            ),
+                            UpdateIf(
+                                DL_CHUONG_TRINH_BH,
+                                MA_CHUONG_TRINH=ThisItem.cr282_ma_chuong_trinh,
+                                {
+                                    TEN_CHUONG_TRINH:TxtTenCT.Text,
+                                    MO_TA:TxtMoTa.Text,
+                                    MA_SAN_PHAM:Txt_MaSP.Text,
+                                    TRANG_THAI:0
+                                }
+                            )
+                        );
+                        UpdateIf(
+                            tmpCTCollect,
+                            cr282_ma_chuong_trinh=ThisItem.cr282_ma_chuong_trinh,
+                            {
+                                cr282_ten_chuong_trinh:TxtTenCT.Text,
+                                cr282_mo_ta:TxtMoTa.Text,
+                                cr282_ma_san_pham:Txt_MaSP.Text,
+                                edited:0
+                            }
+                        );
+                        Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
+                        ClearCollect(
+                            tmpCTCollect,
+                            ShowColumns(
+                                AddColumns(
+                                    SortByColumns(
+                                        DL_CHUONG_TRINH_BH,
+                                        "cr282_ma_chuong_trinh",
+                                        SortOrder.Ascending
+                                    ),
+                                    "edited",
+                                    0
+                                ),
+                                "cr282_ma_chuong_trinh",
+                                "cr282_ten_chuong_trinh",
+                                "cr282_mo_ta",
+                                "cr282_ma_san_pham",
+                                "cr282_trang_thai",
+                                "edited"
+                            )
+                        );
+                        UpdateContext({
+                            maAdded:"",
+                            maUpdated:""
+                        });
+                    )
+                Text: ="Lưu"
+                Visible: =ThisItem.edited=1
+                Width: =125
+                X: =764
+                ZIndex: =19
+
+            Btn_HuyCT As button:
+                OnSelect: |-
+                    =If(
+                        ThisItem.cr282_ma_chuong_trinh=maAdded,
+                        Remove(tmpCTCollect,ThisItem),
+                        UpdateIf(
+                            tmpCTCollect,
+                            cr282_ma_chuong_trinh=ThisItem.cr282_ma_chuong_trinh,
+                            {
+                                edited:0
+                            }
+                        )
+                    );
+                    UpdateContext({
+                        maAdded:"",
+                        maUpdated:""
+                    });
+                Text: ="Hủy"
+                Visible: =ThisItem.edited=1
+                Width: =130
+                X: =920
+                ZIndex: =20
+
+            Btn_ChiTiet As button:
+                OnSelect: =
+                Text: ="Chi tiết"
+                Visible: =ThisItem.edited=0 && ThisItem.cr282_trang_thai=1
+                Width: =103
+                X: =963
+                ZIndex: =21
+
+        BadgeCanvas1_4 As Badge:
+            BasePaletteColor: =
+            Content: =""
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =35
+            Width: =1076
+            X: =0
+            Y: =213
+            ZIndex: =2
+
+        TextCanvas2_46 As Text:
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =14
+            Text: ="Tên chương trình"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =262
+            X: =228
+            Y: =210
+            ZIndex: =3
+
+        TextCanvas2_47 As Text:
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =34
+            Size: =14
+            Text: ="Mô tả"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =96
+            X: =503
+            Y: =217
+            ZIndex: =4
+
+        TextCanvas2_48 As Text:
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =34
+            Size: =14
+            Text: ="Thao tác"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =96
+            X: =872
+            Y: =214
+            ZIndex: =5
+
+        Label_MaSP As label:
+            Height: =37
+            Text: ="Mã sản phẩm"
+            Width: =122
+            X: =40
+            Y: =40
+            ZIndex: =6
+
+        Label_TenSP As label:
+            Height: =37
+            Text: ="Tên sản phẩm"
+            Width: =137
+            X: =476
+            Y: =40
+            ZIndex: =7
+
+        Txt_MaSP As text:
+            Default: =""
+            Height: =37
+            Width: =265
+            X: =162
+            Y: =40
+            ZIndex: =8
+
+        Txt_TenSP As text:
+            Default: =""
+            Height: =37
+            Width: =392
+            X: =613
+            Y: =40
+            ZIndex: =9
+
+        TextCanvas2_49 As Text:
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =39
+            Size: =14
+            Text: ="Mã chương trình"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =162
+            X: =52
+            Y: =212
+            ZIndex: =10
+
+        ThemMoiCT As button:
+            Height: =36
+            OnSelect: |
+                =If(
+                    Or(maAdded<>"",maUpdated<>""),
+                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                    UpdateContext({
+                        idMa:If(
+                            CountIf(DL_CHUONG_TRINH_BH,true)=0,
+                            1000,
+                            Value(Last(SortByColumns(DL_CHUONG_TRINH_BH,"cr282_ma_chuong_trinh",SortOrder.Ascending)).MA_CHUONG_TRINH)+1
+                        )
+                    });
+                    Collect(
+                        tmpCTCollect,
+                        {
+                            cr282_ma_chuong_trinh:Text(idMa),
+                            cr282_ten_chuong_trinh:"",
+                            cr282_mo_ta:"",
+                            cr282_ma_san_pham:"",
+                            cr282_trang_thai:0,
+                            edited:1
+                        }
+                    );
+                    UpdateContext({maAdded:Text(idMa)})
+                )
+            Text: ="Thêm mới"
+            X: =40
+            Y: =154
+            ZIndex: =11
+
+        LuuThongTinCT As button:
+            Height: =36
+            OnSelect: |-
+                =If(
+                    Or(
+                        maAdded <> "",
+                        maUpdated <> ""
+                    ),
+                    Notify(
+                        "Có dữ liệu chưa được lưu",
+                        NotificationType.Warning,
+                        800
+                    ),
+                    If(
+                        CountRows(tmpCTCollect) > 0,
+                        UpdateIf(
+                            DL_CHUONG_TRINH_BH,
+                            Txt_MaSP.Text = MA_SAN_PHAM && TRANG_THAI=0,
+                            {TRANG_THAI: 1}
+                        )
+                    )
+                );
+                Select(IconTaiLaiCT);
+            Text: ="Lưu thông tin"
+            Visible: |-
+                =If(
+                    CountRows(Filter(DL_CHUONG_TRINH_BH,MA_SAN_PHAM=Txt_MaSP.Text)) > 0,
+                    true,
+                    false
+                )
+            X: =228
+            Y: =152
+            ZIndex: =12
+
+        Label1_1 As label:
+            Align: =Align.Justify
+            FontWeight: =FontWeight.Bold
+            Height: =44
+            Size: =16
+            Text: ="1. Chương trình (gói sản phẩm)"
+            Width: =1076
+            Y: =95
+            ZIndex: =13
+
+        IconTaiLaiCT As icon.Sync:
+            Color: =RGBA(83, 144, 164, 1)
+            Height: =36
+            Icon: =Icon.Sync
+            OnSelect: |-
+                =ClearCollect(
+                    tmpCTCollect,
+                    ShowColumns(
+                        AddColumns(
+                            SortByColumns(
+                                DL_CHUONG_TRINH_BH,
+                                "cr282_ma_chuong_trinh",
+                                SortOrder.Ascending
+                            ),
+                            "edited",
+                            0
+                        ),
+                        "cr282_ma_chuong_trinh",
+                        "cr282_ten_chuong_trinh",
+                        "cr282_mo_ta",
+                        "cr282_ma_san_pham",
+                        "cr282_trang_thai",
+                        "edited"
+                    )
+                );
+                UpdateContext({
+                    maAdded:"",
+                    maUpdated:""
+                });
+            Tooltip: ="Tải lại"
+            Visible: =false
+            Width: =32
+            X: =1044
+            Y: =160
+            ZIndex: =14
+
