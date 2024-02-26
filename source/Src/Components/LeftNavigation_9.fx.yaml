@@ -67,84 +67,90 @@ LeftNavigation_9 As CanvasComponent:
     Y: =0
     ZIndex: =1
 
-    Gallery2_2 As gallery.variableTemplateHeightGallery:
-        BorderColor: =RGBA(32, 54, 71, 1)
-        Height: =682
-        Items: =LeftNavigation_9.NavItems
-        Layout: =Layout.Vertical
-        LoadingSpinner: =LoadingSpinner.Data
-        TemplateSize: =404
-        Width: =186
-        Y: =86
-        ZIndex: =3
+    Container1 As groupContainer.manualLayoutContainer:
+        Width: =LeftNavigation_7.MenuWidth
+        X: =40
+        Y: =40
+        ZIndex: =5
 
-        icoNav_4 As icon.Add:
+        Gallery2_3 As gallery.variableTemplateHeightGallery:
             BorderColor: =RGBA(32, 54, 71, 1)
-            Color: =RGBA(32, 54, 71, 1)
-            DisabledFill: =icoNav_4.Fill
-            FocusedBorderColor: =icoNav_4.BorderColor
-            Height: =50
-            HoverBorderColor: =ColorFade(icoNav_4.BorderColor, 20%)
-            HoverColor: =ColorFade(icoNav_4.Color, 20%)
-            HoverFill: =icoNav_4.Fill
-            Icon: =ThisItem.Icon
-            OnSelect: |-
-                =Set(varOpenMenu,true); Navigate(ThisItem.Screen);
-                If (openMenu = ThisItem.MenuID,
-                Set(openMenu, Blank()),
-                Set(openMenu, ThisItem.MenuID)
-                );
-            PaddingBottom: =10
-            PaddingLeft: =10
-            PaddingRight: =10
-            PaddingTop: =10
-            PressedBorderColor: =ColorFade(icoNav_4.BorderColor, -20%)
-            PressedColor: =ColorFade(icoNav_4.Color, -20%)
-            PressedFill: =icoNav_4.Fill
-            Width: =50
-            ZIndex: =2
-
-        Gallery4_2 As gallery.variableTemplateHeightGallery:
-            BorderColor: =RGBA(32, 54, 71, 1)
-            DelayItemLoading: =true
-            Height: =351
-            Items: =ThisItem.Subtable
+            Height: =682
+            Items: =LeftNavigation_9.NavItems
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
-            TemplateSize: =147
-            Visible: =openMenu = ThisItem.MenuID
-            Width: =176
-            Y: =50
-            ZIndex: =3
+            TemplateSize: =404
+            Width: =186
+            Y: =84
+            ZIndex: =1
 
-            Label1_2 As label:
+            icoNav_5 As icon.Add:
                 BorderColor: =RGBA(32, 54, 71, 1)
-                Height: =80
-                OnSelect: =Navigate(ThisItem.Screen);
-                Size: =12
+                Color: =RGBA(32, 54, 71, 1)
+                DisabledFill: =icoNav_5.Fill
+                FocusedBorderColor: =icoNav_5.BorderColor
+                Height: =50
+                HoverBorderColor: =ColorFade(icoNav_5.BorderColor, 20%)
+                HoverColor: =ColorFade(icoNav_5.Color, 20%)
+                HoverFill: =icoNav_5.Fill
+                Icon: =ThisItem.Icon
+                OnSelect: |-
+                    =Set(varOpenMenu,true); Navigate(ThisItem.Screen);
+                    If (openMenu = ThisItem.MenuID,
+                    Set(openMenu, Blank()),
+                    Set(openMenu, ThisItem.MenuID)
+                    );
+                PaddingBottom: =10
+                PaddingLeft: =10
+                PaddingRight: =10
+                PaddingTop: =10
+                PressedBorderColor: =ColorFade(icoNav_5.BorderColor, -20%)
+                PressedColor: =ColorFade(icoNav_5.Color, -20%)
+                PressedFill: =icoNav_5.Fill
+                Width: =50
+                ZIndex: =2
+
+            Gallery4_3 As gallery.variableTemplateHeightGallery:
+                BorderColor: =RGBA(32, 54, 71, 1)
+                DelayItemLoading: =true
+                Height: =351
+                Items: =ThisItem.Subtable
+                Layout: =Layout.Vertical
+                LoadingSpinner: =LoadingSpinner.Data
+                TemplateSize: =147
+                Visible: =openMenu = ThisItem.MenuID
+                Width: =176
+                Y: =50
+                ZIndex: =3
+
+                Label1_3 As label:
+                    BorderColor: =RGBA(32, 54, 71, 1)
+                    Height: =80
+                    OnSelect: =Navigate(ThisItem.Screen);
+                    Size: =12
+                    Text: =ThisItem.Title
+                    Width: =170
+                    Y: =15
+                    ZIndex: =1
+
+            Label3_3 As label:
+                BorderColor: =RGBA(32, 54, 71, 1)
+                Height: =50
+                OnSelect: =Select(Parent)
+                Size: =15
                 Text: =ThisItem.Title
-                Width: =170
-                Y: =15
-                ZIndex: =1
+                Width: =113
+                X: =63
+                ZIndex: =4
 
-        Label3_2 As label:
+        Icon1_4 As icon.More:
             BorderColor: =RGBA(32, 54, 71, 1)
-            Height: =50
-            OnSelect: =Select(Parent)
-            Size: =15
-            Text: =ThisItem.Title
-            Width: =113
-            X: =63
-            ZIndex: =4
-
-    Icon1_3 As icon.More:
-        BorderColor: =RGBA(32, 54, 71, 1)
-        Color: =RGBA(32, 54, 71, 1)
-        Icon: =Icon.More
-        OnSelect: |-
-            =Set(varOpenMenu,!varOpenMenu);
-            Set(openMenu, Blank());
-        Width: =50
-        Y: =2
-        ZIndex: =4
+            Color: =RGBA(32, 54, 71, 1)
+            Icon: =Icon.More
+            OnSelect: |-
+                =Set(varOpenMenu,!varOpenMenu);
+                Set(openMenu, Blank());
+            Width: =50
+            Y: =2
+            ZIndex: =2
 
