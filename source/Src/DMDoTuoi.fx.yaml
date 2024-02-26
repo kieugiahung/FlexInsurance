@@ -1,4 +1,5 @@
 DMDoTuoi As screen:
+    Height: =Max(900, App.MinScreenHeight)
     OnVisible: |
         =ClearCollect(
             dvTuoiCollect,
@@ -45,6 +46,11 @@ DMDoTuoi As screen:
             maAdded:"",
             maUpdated:""
         });
+    Width: =Max(1500, App.MinScreenWidth)
+
+    LeftNavigation_11 As LeftNavigation_9:
+        Width: =LeftNavigation_11.MenuWidth
+        ZIndex: =15
 
     GalleryDT As gallery.galleryVertical:
         DelayItemLoading: =true
@@ -56,8 +62,8 @@ DMDoTuoi As screen:
         TemplateSize: =40
         Width: =1283
         X: =83
-        Y: =131
-        ZIndex: =1
+        Y: =157
+        ZIndex: =16
 
         IconXoaDT As icon.Trash:
             Color: =RGBA(233, 79, 76, 1)
@@ -191,6 +197,16 @@ DMDoTuoi As screen:
                     Notify("Bắt buộc nhập tuổi từ và đơn vị tuổi từ, hoặc tuổi đến và đơn vị tuổi đến", NotificationType.Error,800),
                     And(
                         !IsBlank(TextTuoiTu.Text),
+                        IsBlank(CbxDVTuoiTu.Selected.Value)
+                    ),
+                    Notify("Bắt buộc nhập đơn vị tuổi từ nếu nhập tuổi từ", NotificationType.Error,800),
+                    And(
+                        !IsBlank(TextTuoiDen.Text),
+                        IsBlank(CbxDVTuoiDen.Selected.Value)
+                    ),
+                    Notify("Bắt buộc nhập đơn vị tuổi đến nếu nhập tuổi đến", NotificationType.Error,800),
+                    And(
+                        !IsBlank(TextTuoiTu.Text),
                         !IsBlank(CbxDVTuoiTu.Selected.Value),
                         !IsBlank(TextTuoiDen.Text),
                         !IsBlank(CbxDVTuoiDen.Selected.Value),
@@ -249,7 +265,34 @@ DMDoTuoi As screen:
                             DM_DO_TUOIS,
                             MA_DO_TUOI=ThisItem.cr282_ma_do_tuoi,
                             {
-                                MO_TA:TextMoTaDT.Text,
+                                MO_TA:If(
+                                    IsBlank(TextMoTaDT.Text),
+                                    Concatenate(
+                                        If(
+                                            IsBlank(TextTuoiTu.Text),
+                                            "",
+                                            Concatenate(
+                                                "từ ",
+                                                TextTuoiTu.Text,
+                                                " ",
+                                                LookUp(dvTuoiCollect,Value=CbxDVTuoiTu.Selected.Value,Key),
+                                                " "
+                                            )
+                                        ),
+                                        If(
+                                            IsBlank(TextTuoiDen.Text),
+                                            "",
+                                            Concatenate(
+                                                "đến ",
+                                                TextTuoiDen.Text,
+                                                " ",
+                                                LookUp(dvTuoiCollect,Value=CbxDVTuoiDen.Selected.Value,Key),
+                                                " "
+                                            )
+                                        )
+                                    ),
+                                    TextMoTaDT.Text
+                                ),
                                 TUOI_TU:Value(TextTuoiTu.Text),
                                 TUOI_DEN:Value(TextTuoiDen.Text),
                                 DONVI_TUOI_TU:CbxDVTuoiTu.Selected.Value,
@@ -263,7 +306,34 @@ DMDoTuoi As screen:
                         cr282_ma_do_tuoi=ThisItem.cr282_ma_do_tuoi,
                         {
                             cr282_ma_do_tuoi:ThisItem.cr282_ma_do_tuoi,
-                            cr282_mo_ta:TextMoTaDT.Text,
+                            cr282_mo_ta:If(
+                                    IsBlank(TextMoTaDT.Text),
+                                    Concatenate(
+                                        If(
+                                            IsBlank(TextTuoiTu.Text),
+                                            "",
+                                            Concatenate(
+                                                "từ ",
+                                                TextTuoiTu.Text,
+                                                " ",
+                                                LookUp(dvTuoiCollect,Value=CbxDVTuoiTu.Selected.Value,Key),
+                                                " "
+                                            )
+                                        ),
+                                        If(
+                                            IsBlank(TextTuoiDen.Text),
+                                            "",
+                                            Concatenate(
+                                                "đến ",
+                                                TextTuoiDen.Text,
+                                                " ",
+                                                LookUp(dvTuoiCollect,Value=CbxDVTuoiDen.Selected.Value,Key),
+                                                " "
+                                            )
+                                        )
+                                    ),
+                                    TextMoTaDT.Text
+                                ),
                             cr282_tuoi_tu:Value(TextTuoiTu.Text),
                             cr282_tuoi_den:Value(TextTuoiDen.Text),
                             cr282_donvi_tuoi_tu:CbxDVTuoiTu.Selected.Value,
@@ -341,7 +411,7 @@ DMDoTuoi As screen:
             ChevronFill: =RGBA(72, 163, 62, 1)
             ChevronHoverBackground: =RGBA(255, 255, 255, 1)
             ChevronHoverFill: =RGBA(72, 163, 62, 1)
-            DefaultSelectedItems: =If(IsBlank(ThisItem.cr282_donvi_tuoi_den),LookUp(dvTuoiCollect,Value=100),LookUp(dvTuoiCollect,Value=ThisItem.cr282_donvi_tuoi_den))
+            DefaultSelectedItems: =If(IsBlank(ThisItem.cr282_donvi_tuoi_den),Blank(),LookUp(dvTuoiCollect,Value=ThisItem.cr282_donvi_tuoi_den))
             DisabledBorderColor: =RGBA(180, 214, 250, 1)
             DisabledColor: =RGBA(0, 0, 0, 1)
             DisabledFill: =RGBA(255, 255, 255, 1)
@@ -372,7 +442,7 @@ DMDoTuoi As screen:
             ChevronFill: =RGBA(72, 163, 62, 1)
             ChevronHoverBackground: =RGBA(255, 255, 255, 1)
             ChevronHoverFill: =RGBA(72, 163, 62, 1)
-            DefaultSelectedItems: =If(IsBlank(ThisItem.cr282_donvi_tuoi_tu),LookUp(dvTuoiCollect,Key="Tuổi"),LookUp(dvTuoiCollect,Value=ThisItem.cr282_donvi_tuoi_tu))
+            DefaultSelectedItems: =If(IsBlank(ThisItem.cr282_donvi_tuoi_tu),Blank(),LookUp(dvTuoiCollect,Value=ThisItem.cr282_donvi_tuoi_tu))
             DisabledBorderColor: =RGBA(180, 214, 250, 1)
             DisabledColor: =RGBA(0, 0, 0, 1)
             DisabledFill: =RGBA(255, 255, 255, 1)
@@ -400,11 +470,11 @@ DMDoTuoi As screen:
         Content: =""
         DisplayMode: =DisplayMode.Edit
         FontColor: =
-        Height: =42
-        Width: =1122
-        X: =169
-        Y: =89
-        ZIndex: =2
+        Height: =39
+        Width: =1208
+        X: =83
+        Y: =115
+        ZIndex: =17
 
     TextCanvas2_6 As Text:
         DisplayMode: =DisplayMode.Edit
@@ -414,9 +484,9 @@ DMDoTuoi As screen:
         Text: ="Mã độ tuổi"
         Weight: ='TextCanvas.Weight'.Bold
         Width: =96
-        X: =280
-        Y: =32
-        ZIndex: =3
+        X: =95
+        Y: =115
+        ZIndex: =18
 
     TextCanvas2_7 As Text:
         DisplayMode: =DisplayMode.Edit
@@ -427,8 +497,8 @@ DMDoTuoi As screen:
         Weight: ='TextCanvas.Weight'.Bold
         Width: =96
         X: =215
-        Y: =89
-        ZIndex: =4
+        Y: =115
+        ZIndex: =19
 
     TextCanvas2_8 As Text:
         DisplayMode: =DisplayMode.Edit
@@ -439,8 +509,8 @@ DMDoTuoi As screen:
         Weight: ='TextCanvas.Weight'.Bold
         Width: =96
         X: =639
-        Y: =90
-        ZIndex: =5
+        Y: =116
+        ZIndex: =20
 
     TextCanvas2_9 As Text:
         DisplayMode: =DisplayMode.Edit
@@ -451,8 +521,8 @@ DMDoTuoi As screen:
         Weight: ='TextCanvas.Weight'.Bold
         Width: =62
         X: =883
-        Y: =90
-        ZIndex: =6
+        Y: =116
+        ZIndex: =21
 
     TextCanvas2_10 As Text:
         DisplayMode: =DisplayMode.Edit
@@ -463,8 +533,8 @@ DMDoTuoi As screen:
         Weight: ='TextCanvas.Weight'.Bold
         Width: =118
         X: =995
-        Y: =90
-        ZIndex: =7
+        Y: =116
+        ZIndex: =22
 
     TextCanvas2_11 As Text:
         DisplayMode: =DisplayMode.Edit
@@ -475,8 +545,8 @@ DMDoTuoi As screen:
         Weight: ='TextCanvas.Weight'.Bold
         Width: =96
         X: =1135
-        Y: =90
-        ZIndex: =8
+        Y: =116
+        ZIndex: =23
 
     "TextFilterDT As 'Text input'":
         BasePaletteColor: =
@@ -487,8 +557,8 @@ DMDoTuoi As screen:
         Placeholder: ="Nhập giá trị lọc"
         Width: =204
         X: =587
-        Y: =34
-        ZIndex: =9
+        Y: =60
+        ZIndex: =24
 
     IconTaiLaiDT As icon.Sync:
         Color: =RGBA(83, 144, 164, 1)
@@ -544,8 +614,8 @@ DMDoTuoi As screen:
         Tooltip: ="Tải lại"
         Width: =32
         X: =118
-        Y: =36
-        ZIndex: =10
+        Y: =62
+        ZIndex: =25
 
     IconThemDT As icon.AddDocument:
         Color: =RGBA(72, 163, 62, 1)
@@ -581,8 +651,8 @@ DMDoTuoi As screen:
         Tooltip: ="Thêm mới"
         Width: =40
         X: =169
-        Y: =32
-        ZIndex: =11
+        Y: =58
+        ZIndex: =26
 
     IconFilterDT As icon.FilterFlat:
         Color: =RGBA(71, 158, 245, 1)
@@ -615,8 +685,8 @@ DMDoTuoi As screen:
         Tooltip: ="Lọc"
         Width: =32
         X: =802
-        Y: =32
-        ZIndex: =12
+        Y: =58
+        ZIndex: =27
 
     CbxFilterDT As Combobox.pcfdataset:
         DefaultSelectedItems: =Filter(["Mã độ tuổi", "Mô tả"],Value="Mã độ tuổi")
@@ -627,8 +697,8 @@ DMDoTuoi As screen:
         OnChange: =Reset(TextFilterDT)
         Width: =152
         X: =426
-        Y: =34
-        ZIndex: =13
+        Y: =60
+        ZIndex: =28
 
     TextCanvas2_12 As Text:
         DisplayMode: =DisplayMode.Edit
@@ -639,10 +709,6 @@ DMDoTuoi As screen:
         Weight: ='TextCanvas.Weight'.Bold
         Width: =118
         X: =743
-        Y: =89
-        ZIndex: =14
-
-    LeftNavigation_11 As LeftNavigation_9:
-        Width: =LeftNavigation_11.MenuWidth
-        ZIndex: =15
+        Y: =115
+        ZIndex: =29
 
