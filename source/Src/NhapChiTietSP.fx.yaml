@@ -1,0 +1,961 @@
+"NhapChiTietSP As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
+    OnVisible: |-
+        =ClearCollect(
+            tmpCTCollect,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                       ' DL_SAN_PHAM_CT',
+                        "cr282_ma_chuong_trinh",
+                        SortOrder.Ascending
+                    ),
+                    "edited",
+                    0
+                ),
+                "cr282_ma_chuong_trinh",
+                "cr282_ten_chuong_trinh",
+                "cr282_mo_ta",
+                "cr282_ma_san_pham",
+                "cr282_trang_thai",
+                "edited"
+            )
+        );
+        UpdateContext({
+            maAdded:"",
+            maUpdated:""
+        });
+
+    CanvasSP As fluidGrid.fluidGridWithBlankCard:
+        BorderThickness: =0
+        Height: =Parent.Height - Self.Y
+        Width: =Parent.Width
+        Y: =
+        ZIndex: =3
+
+        DataCard1 As dataCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =0
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =705
+            Width: =1366
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+            "'1. ChuongTrinh' As groupContainer.manualLayoutContainer":
+                Height: =555
+                Width: =1160
+                X: =158
+                ZIndex: =1
+
+                GalleryCT As gallery.galleryVertical:
+                    DelayItemLoading: =true
+                    Height: =243
+                    Items: =SortByColumns(tmpCTCollect,"cr282_ma_chuong_trinh",SortOrder.Ascending)
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    NavigationStep: =0
+                    TemplateSize: =40
+                    Width: =1076
+                    Y: =255
+                    ZIndex: =1
+
+                    TxtMaCT_1 As text:
+                        BorderColor: =RGBA(15, 108, 189, 1)
+                        Default: =ThisItem.cr282_ma_chuong_trinh
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =168
+                        ZIndex: =8
+
+                    TxtTenCT_1 As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_ten_chuong_trinh
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =229
+                        X: =180
+                        ZIndex: =9
+
+                    TxtMoTa_1 As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_mo_ta
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =326
+                        X: =426
+                        ZIndex: =10
+
+                    Btn_SuaCT_1 As button:
+                        OnSelect: |-
+                            =If(
+                                Or(maAdded<>"",maUpdated<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                UpdateIf(
+                                    tmpCTCollect,
+                                    cr282_ma_chuong_trinh=ThisItem.cr282_ma_chuong_trinh,
+                                    {
+                                        edited:1
+                                    }
+                                );
+                                UpdateContext({
+                                    maUpdated:ThisItem.cr282_ma_chuong_trinh
+                                })
+                            )
+                        Text: ="Sửa"
+                        Visible: =ThisItem.edited=0
+                        Width: =75
+                        X: =770
+                        ZIndex: =17
+
+                    Btn_XoaCT_1 As button:
+                        OnSelect: |-
+                            =If(
+                                Or(maAdded<>"",maUpdated<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                Refresh(' DL_SAN_PHAM_CT');
+                                RemoveIf(
+                                    ' DL_SAN_PHAM_CT',
+                                    MA_CHUONG_TRINH=ThisItem.cr282_ma_chuong_trinh
+                                );
+                                Remove(tmpCTCollect,ThisItem);
+                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
+                            )
+                        Text: ="Xóa"
+                        Visible: =ThisItem.edited=0
+                        Width: =85
+                        X: =861
+                        ZIndex: =18
+
+                    Btn_LuuCT_1 As button:
+                        OnSelect: |-
+                            =If(
+                                TxtTenCT_1.Text="",
+                                Notify("Bắt buộc nhập tên chương trình", NotificationType.Error,800),
+                                If(
+                                    ThisItem.cr282_ma_chuong_trinh=maAdded,
+                                    Patch(
+                                        ' DL_SAN_PHAM_CT',
+                                        {
+                                            MA_CHUONG_TRINH:ThisItem.cr282_ma_chuong_trinh,
+                                            TEN_CHUONG_TRINH:TxtTenCT_1.Text,
+                                            MO_TA:TxtMoTa_1.Text,
+                                            MA_SAN_PHAM:Txt_MaSP.Text,
+                                            TRANG_THAI:0
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        ' DL_SAN_PHAM_CT',
+                                        MA_CHUONG_TRINH=ThisItem.cr282_ma_chuong_trinh,
+                                        {
+                                            TEN_CHUONG_TRINH:TxtTenCT_1.Text,
+                                            MO_TA:TxtMoTa_1.Text,
+                                            MA_SAN_PHAM:Txt_MaSP.Text,
+                                            TRANG_THAI:0
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpCTCollect,
+                                    cr282_ma_chuong_trinh=ThisItem.cr282_ma_chuong_trinh,
+                                    {
+                                        cr282_ten_chuong_trinh:TxtTenCT_1.Text,
+                                        cr282_mo_ta:TxtMoTa_1.Text,
+                                        cr282_ma_san_pham:Txt_MaSP.Text,
+                                        edited:0
+                                    }
+                                );
+                                Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
+                                ClearCollect(
+                                    tmpCTCollect,
+                                    ShowColumns(
+                                        AddColumns(
+                                            SortByColumns(
+                                                ' DL_SAN_PHAM_CT',
+                                                "cr282_ma_chuong_trinh",
+                                                SortOrder.Ascending
+                                            ),
+                                            "edited",
+                                            0
+                                        ),
+                                        "cr282_ma_chuong_trinh",
+                                        "cr282_ten_chuong_trinh",
+                                        "cr282_mo_ta",
+                                        "cr282_ma_san_pham",
+                                        "cr282_trang_thai",
+                                        "edited"
+                                    )
+                                );
+                                UpdateContext({
+                                    maAdded:"",
+                                    maUpdated:""
+                                });
+                            )
+                        Text: ="Lưu"
+                        Visible: =ThisItem.edited=1
+                        Width: =125
+                        X: =764
+                        ZIndex: =19
+
+                    Btn_HuyCT_1 As button:
+                        OnSelect: |-
+                            =If(
+                                ThisItem.cr282_ma_chuong_trinh=maAdded,
+                                Remove(tmpCTCollect,ThisItem),
+                                UpdateIf(
+                                    tmpCTCollect,
+                                    cr282_ma_chuong_trinh=ThisItem.cr282_ma_chuong_trinh,
+                                    {
+                                        edited:0
+                                    }
+                                )
+                            );
+                            UpdateContext({
+                                maAdded:"",
+                                maUpdated:""
+                            });
+                        Text: ="Hủy"
+                        Visible: =ThisItem.edited=1
+                        Width: =130
+                        X: =920
+                        ZIndex: =20
+
+                    Btn_ChiTiet_1 As button:
+                        OnSelect: =
+                        Text: ="Chi tiết"
+                        Visible: =ThisItem.edited=0 && ThisItem.cr282_trang_thai=1
+                        Width: =103
+                        X: =963
+                        ZIndex: =21
+
+                BadgeCanvas1_9 As Badge:
+                    BasePaletteColor: =
+                    Content: =""
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =35
+                    Visible: =true
+                    Width: =1076
+                    X: =0
+                    Y: =213
+                    ZIndex: =2
+
+                TextCanvas2_50 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =38
+                    Size: =14
+                    Text: ="Tên chương trình"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =262
+                    X: =228
+                    Y: =210
+                    ZIndex: =3
+
+                TextCanvas2_52 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =34
+                    Size: =14
+                    Text: ="Mô tả"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =96
+                    X: =555
+                    Y: =214
+                    ZIndex: =4
+
+                TextCanvas2_53 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =34
+                    Size: =14
+                    Text: ="Thao tác"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =96
+                    X: =872
+                    Y: =214
+                    ZIndex: =5
+
+                Label_MaSP As label:
+                    Height: =37
+                    Text: ="Mã sản phẩm"
+                    Width: =122
+                    X: =40
+                    Y: =40
+                    ZIndex: =6
+
+                Label_TenSP As label:
+                    Height: =37
+                    Text: ="Tên sản phẩm"
+                    Width: =137
+                    X: =476
+                    Y: =40
+                    ZIndex: =7
+
+                Txt_MaSP As text:
+                    Default: =valMaSP
+                    DisplayMode: =DisplayMode.Disabled
+                    Height: =37
+                    Width: =265
+                    X: =162
+                    Y: =40
+                    ZIndex: =8
+
+                Txt_TenSP As text:
+                    Default: =valTenSP
+                    DisplayMode: =DisplayMode.Disabled
+                    Height: =37
+                    Width: =392
+                    X: =613
+                    Y: =40
+                    ZIndex: =9
+
+                TextCanvas2_51 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =39
+                    Size: =14
+                    Text: ="Mã chương trình"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =162
+                    X: =52
+                    Y: =212
+                    ZIndex: =10
+
+                ThemMoiCT As button:
+                    Height: =36
+                    OnSelect: |
+                        =If(
+                            Or(maAdded<>"",maUpdated<>""),
+                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                            UpdateContext({
+                                idMa:If(
+                                    CountIf(' DL_SAN_PHAM_CT',true)=0,
+                                    1000,
+                                    Value(Last(SortByColumns(' DL_SAN_PHAM_CT',"cr282_ma_chuong_trinh",SortOrder.Ascending)).MA_CHUONG_TRINH)+1
+                                )
+                            });
+                            Collect(
+                                tmpCTCollect,
+                                {
+                                    cr282_ma_chuong_trinh:Text(idMa),
+                                    cr282_ten_chuong_trinh:"",
+                                    cr282_mo_ta:"",
+                                    cr282_ma_san_pham:"",
+                                    cr282_trang_thai:0,
+                                    edited:1
+                                }
+                            );
+                            UpdateContext({maAdded:Text(idMa)})
+                        )
+                    Text: ="Thêm mới"
+                    X: =40
+                    Y: =154
+                    ZIndex: =11
+
+                LuuThongTinCT As button:
+                    Height: =36
+                    OnSelect: |-
+                        =If(
+                            Or(
+                                maAdded <> "",
+                                maUpdated <> ""
+                            ),
+                            Notify(
+                                "Có dữ liệu chưa được lưu",
+                                NotificationType.Warning,
+                                800
+                            ),
+                            If(
+                                CountRows(tmpCTCollect) > 0,
+                                UpdateIf(
+                                    ' DL_SAN_PHAM_CT',
+                                    Txt_MaSP.Text = MA_SAN_PHAM && TRANG_THAI=0,
+                                    {TRANG_THAI: 1}
+                                )
+                            )
+                        );
+                        Select(IconTaiLaiCT);
+                    Text: ="Lưu thông tin"
+                    Visible: |-
+                        =If(
+                            CountRows(Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=Txt_MaSP.Text)) > 0,
+                            true,
+                            false
+                        )
+                    X: =228
+                    Y: =152
+                    ZIndex: =12
+
+                Label1_2 As label:
+                    Align: =Align.Justify
+                    FontWeight: =FontWeight.Bold
+                    Height: =44
+                    Size: =16
+                    Text: ="1. Chương trình (gói sản phẩm)"
+                    Width: =1076
+                    Y: =95
+                    ZIndex: =13
+
+                IconTaiLaiCT As icon.Sync:
+                    Color: =RGBA(83, 144, 164, 1)
+                    Height: =36
+                    Icon: =Icon.Sync
+                    OnSelect: |-
+                        =ClearCollect(
+                            tmpCTCollect,
+                            ShowColumns(
+                                AddColumns(
+                                    SortByColumns(
+                                        ' DL_SAN_PHAM_CT',
+                                        "cr282_ma_chuong_trinh",
+                                        SortOrder.Ascending
+                                    ),
+                                    "edited",
+                                    0
+                                ),
+                                "cr282_ma_chuong_trinh",
+                                "cr282_ten_chuong_trinh",
+                                "cr282_mo_ta",
+                                "cr282_ma_san_pham",
+                                "cr282_trang_thai",
+                                "edited"
+                            )
+                        );
+                        UpdateContext({
+                            maAdded:"",
+                            maUpdated:""
+                        });
+                    Tooltip: ="Tải lại"
+                    Width: =32
+                    X: =1044
+                    Y: =160
+                    ZIndex: =14
+
+        DataCard2 As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =1366
+            X: =0
+            Y: =1
+            ZIndex: =2
+
+            YeuToAnhHuong As groupContainer.manualLayoutContainer:
+                Height: =768
+                Width: =1148
+                X: =196
+                ZIndex: =1
+
+                ChuongTrinh As checkbox:
+                    Default: =true
+                    DisplayMode: =DisplayMode.Disabled
+                    Text: ="Chương trình"
+                    Width: =192
+                    X: =38
+                    Y: =80
+                    ZIndex: =1
+
+                GioiTinh As checkbox:
+                    Text: ="Giới tính"
+                    Visible: |-
+                        =LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Giới tính"
+                        ).HIEU_LUC_TU <= Today() && (LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Giới tính"
+                        ).HIEU_LUC_DEN >= Today() || IsBlank(
+                            LookUp(
+                                DM_YEUTO_AH_PHIS,
+                                TEN_YEU_TO = "Giới tính"
+                            ).HIEU_LUC_DEN
+                        ))
+                    Width: =192
+                    X: =38
+                    Y: =332
+                    ZIndex: =3
+
+                NganhNghe As checkbox:
+                    Text: ="Ngành nghề"
+                    Visible: |-
+                        =LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Ngành nghề"
+                        ).HIEU_LUC_TU <= Today() && (LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Ngành nghề"
+                        ).HIEU_LUC_DEN >= Today() || IsBlank(
+                            LookUp(
+                                DM_YEUTO_AH_PHIS,
+                                TEN_YEU_TO = "Ngành nghề"
+                            ).HIEU_LUC_DEN
+                        ))
+                    Width: =192
+                    X: =38
+                    Y: =390
+                    ZIndex: =4
+
+                NhomTP As checkbox:
+                    Default: =true
+                    DisplayMode: =DisplayMode.Disabled
+                    Text: ="Nhóm tính phí"
+                    Width: =192
+                    X: =38
+                    Y: =145
+                    ZIndex: =5
+
+                PVDiaLy As checkbox:
+                    Default: =true
+                    DisplayMode: =DisplayMode.Disabled
+                    Text: ="Phạm vi địa lý"
+                    Width: =192
+                    X: =38
+                    Y: =211
+                    ZIndex: =6
+
+                BH_SoTien As checkbox:
+                    Default: =true
+                    Height: =38
+                    Text: ="Số tiền bảo hiểm"
+                    Visible: |-
+                        =LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Số tiền bảo hiểm"
+                        ).HIEU_LUC_TU <= Today() && (LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Số tiền bảo hiểm"
+                        ).HIEU_LUC_DEN >= Today() || IsBlank(
+                            LookUp(
+                                DM_YEUTO_AH_PHIS,
+                                TEN_YEU_TO = "Số tiền bảo hiểm"
+                            ).HIEU_LUC_DEN
+                        ))
+                    Width: =192
+                    X: =38
+                    Y: =457
+                    ZIndex: =7
+
+                BH_SoNguoi As checkbox:
+                    Text: ="Số người được BH"
+                    Visible: |-
+                        =LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Số người được BH"
+                        ).HIEU_LUC_TU <= Today() && (LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Số người được BH"
+                        ).HIEU_LUC_DEN >= Today() || IsBlank(
+                            LookUp(
+                                DM_YEUTO_AH_PHIS,
+                                TEN_YEU_TO = "Số người được BH"
+                            ).HIEU_LUC_DEN
+                        ))
+                    Width: =192
+                    X: =38
+                    Y: =513
+                    ZIndex: =8
+
+                BH_ThoiHan As checkbox:
+                    Text: ="Thời hạn bảo hiểm"
+                    Visible: |-
+                        =LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Thời hạn bảo hiểm"
+                        ).HIEU_LUC_TU <= Today() && (LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Thời hạn bảo hiểm"
+                        ).HIEU_LUC_DEN >= Today() || IsBlank(
+                            LookUp(
+                                DM_YEUTO_AH_PHIS,
+                                TEN_YEU_TO = "Thời hạn bảo hiểm"
+                            ).HIEU_LUC_DEN
+                        ))
+                    Width: =212
+                    X: =38
+                    Y: =572
+                    ZIndex: =9
+
+                BH_PhuongThuc As checkbox:
+                    Height: =38
+                    Text: ="Phương thức đóng phí"
+                    Visible: |-
+                        =LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Phương thức đóng phí"
+                        ).HIEU_LUC_TU <= Today() && (LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Phương thức đóng phí"
+                        ).HIEU_LUC_DEN >= Today() || IsBlank(
+                            LookUp(
+                                DM_YEUTO_AH_PHIS,
+                                TEN_YEU_TO = "Phương thức đóng phí"
+                            ).HIEU_LUC_DEN
+                        ))
+                    Width: =232
+                    X: =38
+                    Y: =646
+                    ZIndex: =10
+
+                Label_TienTe As label:
+                    Text: ="Đơn vị tiền"
+                    X: =38
+                    Y: =706
+                    ZIndex: =11
+
+                DsTienTe As dropdown:
+                    Height: =45
+                    Items: =BH_DM_TIENTES
+                    X: =296
+                    Y: =706
+                    ZIndex: =12
+
+                Datafield_CT As combobox:
+                    DisplayFields: =["cr282_ten_chuong_trinh"]
+                    Height: =45
+                    InputTextPlaceholder: =""
+                    IsSearchable: =false
+                    Items: =' DL_SAN_PHAM_CT'
+                    SearchFields: =["cr282_ten_chuong_trinh"]
+                    SearchItems: =[]
+                    Width: =840
+                    X: =296
+                    Y: =80
+                    ZIndex: =13
+
+                Datafield_Nhom As combobox:
+                    DisplayFields: =["cr282_ten_nhom_tp"]
+                    Height: =45
+                    InputTextPlaceholder: =""
+                    IsSearchable: =false
+                    Items: =BH_DM_NHOMTP
+                    SearchFields: =["cr282_id"]
+                    SearchItems: =[]
+                    Width: =840
+                    X: =296
+                    Y: =150
+                    ZIndex: =14
+
+                Datafield_DT As combobox:
+                    DisplayFields: =["cr282_mo_ta"]
+                    Height: =45
+                    InputTextPlaceholder: =""
+                    IsSearchable: =false
+                    Items: =DM_DO_TUOIS
+                    SearchFields: =["cr282_mo_ta"]
+                    SearchItems: =[]
+                    Visible: =If(DoTuoi.Value=true && DoTuoi.Visible=true,true,false)
+                    Width: =840
+                    X: =296
+                    Y: =277
+                    ZIndex: =15
+
+                Datafield_GT As combobox:
+                    DisplayFields: =["cr282_ten_gioi_tinh"]
+                    Height: =45
+                    InputTextPlaceholder: ="Find items"
+                    IsSearchable: =false
+                    Items: =DM_GIOI_TINHS
+                    SearchFields: =["cr282_ten_gioi_tinh"]
+                    SearchItems: =[]
+                    Visible: =If(GioiTinh.Value=true && GioiTinh.Visible=true, true,false)
+                    Width: =840
+                    X: =296
+                    Y: =337
+                    ZIndex: =16
+
+                LuuYT As button:
+                    OnSelect: |
+                        =/*RemoveIf(
+                            MaTranPhis,
+                            true
+                        );*/
+                        Set(
+                            valMaYT,
+                            0
+                        );
+                        UpdateContext(
+                            {
+                                valMaYT: If(
+                                    CountIf(
+                                        DL_SAN_PHAM_YT,
+                                        true
+                                    ) = 0,
+                                    1000,
+                                    Value(
+                                        Last(
+                                            SortByColumns(
+                                                DL_SAN_PHAM_YT,
+                                                "cr282_ma_yeu_to_sp",
+                                                SortOrder.Ascending
+                                            )
+                                        ).MA_YEU_TO_SP
+                                    ) + 1
+                                )
+                            }
+                        );
+                        If(
+                            IsBlank(
+                                LookUp(
+                                    DL_SAN_PHAM_YT,
+                                    MA_SAN_PHAM = valMaSP
+                                ).MA_YEU_TO_SP
+                            ),
+                            Patch(
+                                DL_SAN_PHAM_YT,
+                                {
+                                    MA_SAN_PHAM: valMaSP,
+                                    MA_YEU_TO_SP: valMaYT,
+                                    CHUONG_TRINH: Datafield_CT.Selected.TEN_CHUONG_TRINH,
+                                    NHOM_TINH_PHI: Datafield_Nhom.Selected.TEN_NHOM_TP,
+                                    PHAM_VI_DL: Datafield_PV.Selected.TEN_PHAMVI,
+                                    CHECKED_DOTUOI: If(
+                                        DoTuoi.Visible = true && DoTuoi.Value = true,
+                                        true,
+                                        false
+                                    ),
+                                    CHECKED_GIOITINH: If(
+                                        GioiTinh.Visible = true && GioiTinh.Value = true,
+                                        true,
+                                        false
+                                    ),
+                                    CHECKED_NGANHNGHE: If(
+                                        NganhNghe.Visible = true && NganhNghe.Value = true,
+                                        true,
+                                        false
+                                    ),
+                                    CHECKED_SOTIEN: If(
+                                        BH_SoTien.Visible = true && BH_SoTien.Value = true,
+                                        true,
+                                        false
+                                    ),
+                                    CHECKED_SONGUOI: If(
+                                        BH_SoNguoi.Visible = true && BH_SoNguoi.Value = true,
+                                        true,
+                                        false
+                                    ),
+                                    CHECKED_THOIHAN: If(
+                                        BH_ThoiHan.Visible = true && BH_ThoiHan.Value = true,
+                                        true,
+                                        false
+                                    ),
+                                    CHECKED_DONGPHI: If(
+                                        BH_PhuongThuc.Visible = true && BH_PhuongThuc.Value = true,
+                                        true,
+                                        false
+                                    ),
+                                    DON_VI_TIEN: DsTienTe.Selected.TIEN_TE,
+                                    DO_TUOI: Datafield_DT.Selected.MO_TA,
+                                    GIOI_TINH: Datafield_GT.Selected.TEN_GIOI_TINH,
+                                    NGANH_NGHE: Datafield_NN.Selected.TEN_NGANH,
+                                    BH_SO_TIEN: Datafield_ST.Selected.TEN_SOTIEN,
+                                    BH_SO_NGUOI: Datafield_SN.Selected.TEN_SO_NGUOI,
+                                    BH_THOI_HAN: Datafield_TH.Selected.TEN_THOI_HAN,
+                                    BH_PHUONG_THUC_DP: Datafield_DP.Selected.TEN_PT
+                                }
+                            ),
+                            UpdateIf(
+                                DL_SAN_PHAM_YT,
+                                MA_SAN_PHAM = valMaSP,
+                                {
+                                    CHUONG_TRINH: Datafield_CT.Selected.TEN_CHUONG_TRINH,
+                                    NHOM_TINH_PHI: Datafield_Nhom.Selected.TEN_NHOM_TP,
+                                    PHAM_VI_DL: Datafield_PV.Selected.TEN_PHAMVI,
+                                    CHECKED_DOTUOI: If(
+                                        DoTuoi.Visible = true && DoTuoi.Value = true,
+                                        true,
+                                        false
+                                    ),
+                                    CHECKED_GIOITINH: If(
+                                        GioiTinh.Visible = true && GioiTinh.Value = true,
+                                        true,
+                                        false
+                                    ),
+                                    CHECKED_NGANHNGHE: If(
+                                        NganhNghe.Visible = true && NganhNghe.Value = true,
+                                        true,
+                                        false
+                                    ),
+                                    CHECKED_SOTIEN: If(
+                                        BH_SoTien.Visible = true && BH_SoTien.Value = true,
+                                        true,
+                                        false
+                                    ),
+                                    CHECKED_SONGUOI: If(
+                                        BH_SoNguoi.Visible = true && BH_SoNguoi.Value = true,
+                                        true,
+                                        false
+                                    ),
+                                    CHECKED_THOIHAN: If(
+                                        BH_ThoiHan.Visible = true && BH_ThoiHan.Value = true,
+                                        true,
+                                        false
+                                    ),
+                                    CHECKED_DONGPHI: If(
+                                        BH_PhuongThuc.Visible = true && BH_PhuongThuc.Value = true,
+                                        true,
+                                        false
+                                    ),
+                                    DON_VI_TIEN: DsTienTe.Selected.TIEN_TE,
+                                    DO_TUOI: Datafield_DT.Selected.MO_TA,
+                                    GIOI_TINH: Datafield_GT.Selected.TEN_GIOI_TINH,
+                                    NGANH_NGHE: Datafield_NN.Selected.TEN_NGANH,
+                                    BH_SO_TIEN: Datafield_ST.Selected.TEN_SOTIEN,
+                                    BH_SO_NGUOI: Datafield_SN.Selected.TEN_SO_NGUOI,
+                                    BH_THOI_HAN: Datafield_TH.Selected.TEN_THOI_HAN,
+                                    BH_PHUONG_THUC_DP: Datafield_DP.Selected.TEN_PT
+                                }
+                            )
+                        );
+                        Set(
+                            showGrid,
+                            true
+                        );
+                    Text: ="Lưu"
+                    X: =976
+                    Y: =708
+                    ZIndex: =17
+
+                Datafield_PV As dropdown:
+                    Height: =45
+                    Items: =DM_PHAMVI_DIALYS
+                    Width: =840
+                    X: =296
+                    Y: =216
+                    ZIndex: =18
+
+                Datafield_NN As combobox:
+                    DisplayFields: =["cr282_ten_nganh"]
+                    Height: =45
+                    InputTextPlaceholder: =""
+                    IsSearchable: =false
+                    Items: =BH_DM_NGANHNGHES
+                    SearchFields: =["cr282_ten_nganh"]
+                    SearchItems: =[]
+                    Visible: =If(NganhNghe.Value=true && NganhNghe.Visible=true,true,false)
+                    Width: =840
+                    X: =296
+                    Y: =398
+                    ZIndex: =19
+
+                Datafield_ST As combobox:
+                    DisplayFields: =["cr282_ten_sotien"]
+                    Height: =45
+                    InputTextPlaceholder: =""
+                    IsSearchable: =false
+                    Items: =BH_DM_SOTIEN
+                    SearchFields: =["cr282_ten_sotien"]
+                    SearchItems: =[]
+                    Visible: =If(BH_SoTien.Value=true && BH_SoTien.Visible=true,true,false)
+                    Width: =840
+                    X: =296
+                    Y: =457
+                    ZIndex: =20
+
+                Datafield_SN As combobox:
+                    DisplayFields: =["cr282_ten_so_nguoi"]
+                    Height: =45
+                    InputTextPlaceholder: =""
+                    IsSearchable: =false
+                    Items: =BH_DM_SONGUOI
+                    SearchFields: =["cr282_ten_so_nguoi"]
+                    SearchItems: =[]
+                    Visible: =If(BH_SoNguoi.Value=true && BH_SoNguoi.Visible=true,true,false)
+                    Width: =840
+                    X: =296
+                    Y: =513
+                    ZIndex: =21
+
+                Datafield_TH As combobox:
+                    DisplayFields: =["cr282_ten_thoi_han"]
+                    Height: =45
+                    InputTextPlaceholder: =""
+                    IsSearchable: =false
+                    Items: =BH_DM_THOIHAN
+                    SearchFields: =["cr282_ten_thoi_han"]
+                    SearchItems: =[]
+                    Visible: =If(BH_ThoiHan.Value=true && BH_ThoiHan.Visible=true,true,false)
+                    Width: =840
+                    X: =296
+                    Y: =577
+                    ZIndex: =22
+
+                Datafield_DP As combobox:
+                    DisplayFields: =["cr282_ten_pt"]
+                    Height: |
+                        =45
+                    InputTextPlaceholder: =""
+                    IsSearchable: =false
+                    Items: =BH_DM_PT_DONG
+                    SearchFields: =["cr282_ten_pt"]
+                    SearchItems: =[]
+                    Visible: =If(BH_PhuongThuc.Value=true && BH_PhuongThuc.Visible=true,true,false)
+                    Width: =840
+                    X: =296
+                    Y: =646
+                    ZIndex: =23
+
+                SuaYT As button:
+                    OnSelect: |
+                        =/*RemoveIf(
+                            BH_YEUTO_CT,
+                            true
+                        );
+                        RemoveIf(
+                            MaTranPhis,
+                            true
+                        );
+                        Set(showGrid, false);*/
+                    Text: ="Sửa"
+                    X: =751
+                    Y: =708
+                    ZIndex: =24
+
+                Label1_5 As label:
+                    Align: =Align.Justify
+                    FontWeight: =FontWeight.Bold
+                    Height: =44
+                    Size: =16
+                    Text: ="4.1.1. Các yếu tố ảnh hưởng"
+                    Width: =1076
+                    X: =38
+                    Y: =15
+                    ZIndex: =25
+
+                DoTuoi As checkbox:
+                    Default: =true
+                    Text: ="Độ tuổi"
+                    Visible: |-
+                        =LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Độ tuổi"
+                        ).HIEU_LUC_TU <= Today() && (LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Độ tuổi"
+                        ).HIEU_LUC_DEN >= Today() || IsBlank(
+                            LookUp(
+                                DM_YEUTO_AH_PHIS,
+                                TEN_YEU_TO = "Độ tuổi"
+                            ).HIEU_LUC_DEN
+                        ))
+                    Width: =192
+                    X: =38
+                    Y: =274
+                    ZIndex: =26
+
