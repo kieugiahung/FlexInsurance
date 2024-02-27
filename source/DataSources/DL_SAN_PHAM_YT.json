@@ -6,8 +6,10 @@
     "IsSampleData": false,
     "IsWritable": true,
     "LogicalName": "cr282_dl_san_pham_yt",
+    "MaxGetRowsCount": 500,
     "Name": "DL_SAN_PHAM_YT",
     "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Owner",
       "cr282_bh_phuong_thuc_dp": "BH_PHUONG_THUC_DP",
       "cr282_bh_so_nguoi": "BH_SO_NGUOI",
       "cr282_bh_so_tien": "BH_SO_TIEN",
@@ -20,6 +22,12 @@
       "cr282_checked_sotien": "CHECKED_SOTIEN",
       "cr282_checked_thoihan": "CHECKED_THOIHAN",
       "cr282_chuong_trinh": "CHUONG_TRINH",
+      "cr282_dl_san_pham_yt_AsyncOperations": "System Jobs",
+      "cr282_dl_san_pham_yt_BulkDeleteFailures": "Bulk Delete Failures",
+      "cr282_dl_san_pham_yt_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "cr282_dl_san_pham_yt_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "cr282_dl_san_pham_yt_ProcessSession": "Process Sessions",
+      "cr282_dl_san_pham_yt_SyncErrors": "Sync Errors",
       "cr282_dl_san_pham_ytid": "DL_SAN_PHAM_YT",
       "cr282_do_tuoi": "DO_TUOI",
       "cr282_don_vi_tien": "DON_VI_TIEN",
@@ -29,10 +37,17 @@
       "cr282_nganh_nghe": "NGANH_NGHE",
       "cr282_nhom_tinh_phi": "NHOM_TINH_PHI",
       "cr282_pham_vi_dl": "PHAM_VI_DL",
+      "createdby": "Created By",
       "createdon": "Created On",
+      "createdonbehalfby": "Created By (Delegate)",
       "importsequencenumber": "Import Sequence Number",
+      "modifiedby": "Modified By",
       "modifiedon": "Modified On",
+      "modifiedonbehalfby": "Modified By (Delegate)",
       "overriddencreatedon": "Record Created On",
+      "owningbusinessunit": "Owning Business Unit",
+      "owningteam": "Owning Team",
+      "owninguser": "Owning User",
       "statecode": "Status",
       "statuscode": "Status Reason",
       "timezoneruleversionnumber": "Time Zone Rule Version Number",
@@ -41,6 +56,20 @@
     },
     "PreferredName": "DL_SAN_PHAM_YT",
     "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "DL_SAN_PHAM_YT (Views)",
+    "Name": "_cr282_dl_san_pham_yt_views",
+    "RelatedEntityName": "DL_SAN_PHAM_YT",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "84b37edb-b95b-4dd0-b3c6-1e157bc56fa6": "DL_SAN_PHAM_YT Associated View",
+      "85f4c751-bf90-4e94-8858-24e41fec8a20": "DL_SAN_PHAM_YT Advanced Find View",
+      "dda8b0b0-227b-432d-b7e1-2e349b5ba938": "Inactive DL_SAN_PHAM_YT",
+      "edf71de2-f085-4dce-8095-32247982e46e": "Active DL_SAN_PHAM_YT",
+      "f0b515f3-e74f-49f5-9cd6-851b0175ff45": "DL_SAN_PHAM_YT Lookup View"
+    }
   },
   {
     "DisplayName": "CHECKED_DONGPHI (DL_SAN_PHAM_YT)",
@@ -179,6 +208,46 @@
     },
     "OptionSetTypeKey": "BooleanType",
     "RelatedColumnInvariantName": "cr282_checked_thoihan",
+    "RelatedEntityName": "DL_SAN_PHAM_YT",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status (DL_SAN_PHAM_YT)_1",
+    "Name": "cr282_dl_san_pham_yt_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Active",
+      "1": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "DL_SAN_PHAM_YT"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "DL_SAN_PHAM_YT",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status Reason (DL_SAN_PHAM_YT)_1",
+    "Name": "cr282_dl_san_pham_yt_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Active",
+      "2": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "DL_SAN_PHAM_YT"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
     "RelatedEntityName": "DL_SAN_PHAM_YT",
     "Type": "OptionSetInfo"
   },

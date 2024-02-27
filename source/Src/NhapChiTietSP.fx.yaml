@@ -747,13 +747,9 @@
 
                 LuuYT As button:
                     OnSelect: |
-                        =/*RemoveIf(
-                            MaTranPhis,
+                        =RemoveIf(
+                            DL_SAN_PHAM_MATRANPHI,
                             true
-                        );*/
-                        Set(
-                            valMaYT,
-                            0
                         );
                         UpdateContext(
                             {
@@ -762,7 +758,7 @@
                                         DL_SAN_PHAM_YT,
                                         true
                                     ) = 0,
-                                    1000,
+                                    1,
                                     Value(
                                         Last(
                                             SortByColumns(
@@ -786,7 +782,18 @@
                                 DL_SAN_PHAM_YT,
                                 {
                                     MA_SAN_PHAM: valMaSP,
-                                    MA_YEU_TO_SP: valMaYT,
+                                    MA_YEU_TO_SP: Concatenate(
+                                        If(
+                                            valMaYT < 10,
+                                            "00",
+                                            If(
+                                                valMaYT < 100 && valMaYT >= 10,
+                                                "0",
+                                                ""
+                                            )
+                                        ),
+                                        Text(valMaYT)
+                                    ),
                                     CHUONG_TRINH: Concat(Datafield_CT.SelectedItems, TEN_CHUONG_TRINH,", "),
                                     NHOM_TINH_PHI: Concat(Datafield_Nhom.SelectedItems,TEN_NHOM_TP,", "),
                                     PHAM_VI_DL: Datafield_PV.Selected.TEN_PHAMVI,
@@ -888,10 +895,7 @@
                                 }
                             )
                         );
-                        Set(
-                            showGrid,
-                            true
-                        );
+                        UpdateContext({showGrid: true});
                     Text: ="Lưu"
                     X: =976
                     Y: =708
@@ -979,15 +983,21 @@
 
                 SuaYT As button:
                     OnSelect: |
-                        =/*RemoveIf(
-                            BH_YEUTO_CT,
-                            true
+                        =If(
+                            CountRows(DL_SAN_PHAM_YTCT) > 0,
+                            RemoveIf(
+                                DL_SAN_PHAM_YTCT,
+                                true
+                            )
                         );
-                        RemoveIf(
-                            MaTranPhis,
-                            true
+                        If(
+                            CountRows(DL_SAN_PHAM_MATRANPHI) > 0,
+                            RemoveIf(
+                                DL_SAN_PHAM_MATRANPHI,
+                                true
+                            )
                         );
-                        Set(showGrid, false);*/
+                        UpdateContext({showGrid: false});
                     Text: ="Sửa"
                     X: =751
                     Y: =708
@@ -1057,10 +1067,10 @@
 
                 "Gallery As gallery.'BrowseLayout_Vertical_OneTextVariant_ver5.0'":
                     DelayItemLoading: =true
-                    Height: =249
+                    Height: =284
                     Items: |-
                         =GroupBy(
-                            DL_SAN_PHAM_YTCT,
+                            Filter(DL_SAN_PHAM_YTCT,MA_SAN_PHAM=valMaSP),
                             "cr282_nhom_tinh_phi",
                             "cr282_pham_vi_dl",
                             "cr282_bh_phuong_thuc",
@@ -1071,7 +1081,6 @@
                             "cr282_gioi_tinh",
                             "cr282_nganh_nghe",
                             "cr282_ma_san_pham",
-                            //"cr282_id",
                             "CHUONG_TRINH_GROUP"
                         )
                     Layout: =Layout.Vertical
@@ -1079,7 +1088,7 @@
                     TemplatePadding: =0
                     TemplateSize: =62
                     Width: =1207
-                    Y: =154
+                    Y: =167
                     ZIndex: =2
 
                     Combo_CT As combobox:
@@ -1425,12 +1434,13 @@
                     Y: =122
                     ZIndex: =13
 
-                Button2_2 As button:
+                LuuYeuTo As button:
                     OnSelect: |-
-                        =RemoveIf(
+                        =If(CountRows(DL_SAN_PHAM_MATRANPHI)>0
+                        RemoveIf(
                             DL_SAN_PHAM_MATRANPHI,
                             true
-                        );
+                        ));
                         If(
                             !IsEmpty(DL_SAN_PHAM_YTCT),
                             ForAll(
