@@ -10,7 +10,23 @@ TraCuuSP As screen:
         GallerySP As gallery.galleryVertical:
             DelayItemLoading: =true
             Height: =551
-            Items: =SortByColumns(DL_SAN_PHAM,"cr282_ma",SortOrder.Ascending)
+            Items: |-
+                =SortByColumns(DL_SAN_PHAM,"cr282_ma",SortOrder.Ascending)
+                /*SortByColumns(
+                    Filter(
+                        DL_SAN_PHAM,
+                        If(
+                            !IsBlank(TxtFilterMSP.Text),
+                            MA_SAN_PHAM = TxtFilterMSP.Text,true
+                        ) && LHNV = Drop_Filter_LHNV.Selected.Ten_lhnv && HL_TU >= Date_HLT.SelectedDate
+                                    //&& If(
+                //!IsBlank(HL_DEN) && !IsBlank(Date_HLD.SelectedDate),
+                //HL_DEN <= Date_HLD.SelectedDate
+                //)
+                    ),
+                    "cr282_ma",
+                    SortOrder.Ascending
+                )*/
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
             NavigationStep: =0
@@ -38,7 +54,7 @@ TraCuuSP As screen:
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.View
+                DisplayMode: =DisplayMode.Disabled
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Width: =167
@@ -51,7 +67,7 @@ TraCuuSP As screen:
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.View
+                DisplayMode: =DisplayMode.Disabled
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Width: =127
@@ -64,7 +80,7 @@ TraCuuSP As screen:
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.View
+                DisplayMode: =DisplayMode.Disabled
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Width: =116
@@ -77,7 +93,7 @@ TraCuuSP As screen:
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.View
+                DisplayMode: =DisplayMode.Disabled
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Width: =123
@@ -90,7 +106,7 @@ TraCuuSP As screen:
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.View
+                DisplayMode: =DisplayMode.Disabled
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Width: =140
@@ -103,7 +119,7 @@ TraCuuSP As screen:
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.View
+                DisplayMode: =DisplayMode.Disabled
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Width: =138
@@ -116,7 +132,7 @@ TraCuuSP As screen:
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.View
+                DisplayMode: =DisplayMode.Disabled
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Width: =119
@@ -129,7 +145,7 @@ TraCuuSP As screen:
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.View
+                DisplayMode: =DisplayMode.Disabled
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Width: =105
@@ -142,7 +158,7 @@ TraCuuSP As screen:
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.View
+                DisplayMode: =DisplayMode.Disabled
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Width: =105
@@ -155,7 +171,7 @@ TraCuuSP As screen:
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.View
+                DisplayMode: =DisplayMode.Disabled
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Width: =105
@@ -163,7 +179,10 @@ TraCuuSP As screen:
                 ZIndex: =19
 
             Btn_detailSP As button:
-                OnSelect: =Select(Parent)
+                OnSelect: |-
+                    =Set(valMaSP,ThisItem.MA_SAN_PHAM);
+                    Set(valTenSP,ThisItem.TEN_SAN_PHAM);
+                    Navigate(ChiTietSP);
                 Text: ="Chi tiết"
                 Width: =128
                 X: =1446
@@ -263,71 +282,6 @@ TraCuuSP As screen:
             X: =677
             Y: =163
             ZIndex: =8
-
-        IconTaiLaiSP As icon.Sync:
-            Color: =RGBA(83, 144, 164, 1)
-            Height: =36
-            Icon: =Icon.Sync
-            OnSelect: |
-                =ShowColumns(
-                        AddColumns(
-                            SortByColumns(
-                                DL_SAN_PHAM,
-                                "cr282_ma",
-                                SortOrder.Ascending
-                            ),
-                            "edited",
-                            0
-                        ),
-                        "cr282_ma",
-                        "cr282_ma_san_pham",
-                        "cr282_ten_san_pham",
-                        "cr282_lhnv",
-                        "cr282_mo_ta",
-                        "cr282_so_van_ban",
-                        "cr282_quy_tac_bh",
-                        "cr282_tai_lieu_mau",
-                        "cr282_hl_tu",
-                        "cr282_hl_den",
-                        "cr282_doanh_nghiep_bh",
-                        "cr282_trang_thai",
-                        "edited"
-                    );
-                ClearCollect(colLHNV,{Ten_lhnv:"Bảo hiểm sức khỏe"},{Ten_lhnv:"Bảo hiểm nhân thọ"},{Ten_lhnv:"Bảo hiểm phi nhân thọ"});
-            Tooltip: ="Tải lại"
-            Visible: =false
-            Width: =32
-            X: =20
-            Y: =44
-            ZIndex: =10
-
-        IconFilterSP As icon.FilterFlat:
-            Color: =RGBA(71, 158, 245, 1)
-            DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
-            Height: =47
-            Icon: =Icon.FilterFlat
-            OnSelect: |
-                =Select(IconTaiLaiSP);
-                SortByColumns(
-                    Filter(
-                        DL_SAN_PHAM,
-                        If(
-                            !IsBlank(TxtFilterMSP.Text),
-                            MA_SAN_PHAM = TxtFilterMSP.Text
-                        ) && LHNV = Drop_Filter_LHNV.Selected.Ten_lhnv && HL_TU >= Date_HLT.SelectedDate
-                                    //&& If(
-                //!IsBlank(HL_DEN) && !IsBlank(Date_HLD.SelectedDate),
-                //HL_DEN <= Date_HLD.SelectedDate
-                //)
-                    ),
-                    "cr282_ma",
-                    SortOrder.Ascending
-                );
-            Tooltip: ="Lọc"
-            Width: =32
-            X: =1400
-            Y: =30
-            ZIndex: =12
 
         Btn_ThemMoi As button:
             OnSelect: |-
