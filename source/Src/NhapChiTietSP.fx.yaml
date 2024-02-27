@@ -5140,7 +5140,7 @@
                     Btn_HuyCT_1 As button:
                         OnSelect: |-
                             =If(
-                                ThisItem.cr282_id_dkc=maAdded,
+                                ThisItem.cr282_id_dkc=maAddedDKC,
                                 Remove(tmpDKCCollect,ThisItem),
                                 UpdateIf(
                                     tmpDKCCollect,
@@ -5150,8 +5150,8 @@
                                     }
                                 )
                             );
-                             Set(   maAdded, "");
-                              Set(  maUpdated,"");
+                             Set(   maAddedDKC, "");
+                              Set(  maUpdatedDKC,"");
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =85
