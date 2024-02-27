@@ -1,5 +1,5 @@
 "NhapChiTietSP As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
-    OnVisible: |
+    OnVisible: |-
         =ClearCollect(
             tmpCTCollect,
             ShowColumns(
@@ -94,6 +94,30 @@
                 maUpdatedDKC: ""
             }
         );
+        
+        ClearCollect(
+            tmpGPCCollect,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                       Filter(DL_SAN_PHAM_GIAMPHIS,MA_SAN_PHAM="PTI_CARE"),
+                        "cr282_id_giamphi",
+                        SortOrder.Ascending
+                    ),
+                    "edited",
+                    0
+                ),
+                "cr282_id_giamphi",
+                "cr282_ma_san_pham",
+                "cr282_thong_tin",
+                "cr282_mo_ta",
+                "cr282_so_tien",
+                "cr282_donvi_tien",
+                "cr282_ty_le",
+                "edited"
+            )
+        );
+        UpdateContext({maAddedGP:"",maUpdatedGP:""});
 
     CanvasSP As fluidGrid.fluidGridWithBlankCard:
         BorderThickness: =0
