@@ -414,8 +414,8 @@
                             UpdateContext({maAdded: Text(idMa)})
                         )
                     Text: ="Thêm mới"
-                    X: =40
-                    Y: =154
+                    X: =2
+                    Y: =160
                     ZIndex: =11
 
                 LuuThongTinCT As button:
@@ -449,7 +449,7 @@
                             false
                         )
                     X: =228
-                    Y: =152
+                    Y: =160
                     ZIndex: =12
 
                 Label1_2 As label:
@@ -480,6 +480,7 @@
                                     0
                                 ),
                                 "cr282_ma_chuong_trinh",
+                                "cr282_ma_chuongtrinh",
                                 "cr282_ten_chuong_trinh",
                                 "cr282_mo_ta",
                                 "cr282_ma_san_pham",
@@ -981,12 +982,12 @@
                 Label1_5 As label:
                     Align: =Align.Justify
                     FontWeight: =FontWeight.Bold
-                    Height: =44
+                    Height: =46
                     Size: =16
                     Text: ="4.1.1. Các yếu tố ảnh hưởng"
-                    Width: =1076
-                    X: =38
-                    Y: =15
+                    Width: =1204
+                    X: =3
+                    Y: =18
                     ZIndex: =25
 
                 DoTuoi As checkbox:
@@ -1351,130 +1352,6 @@
                     X: =12
                     Y: =40
                     ZIndex: =8
-
-                Button1 As button:
-                    OnSelect: |
-                        =Clear(OldCollection);
-                        Set(
-                            varCheck_CT,
-                            ChuongTrinh.Value
-                        );
-                        Set(
-                            varCheck_GT,
-                            GioiTinh.Value
-                        );
-                        Set(
-                            varCheck_NTP,
-                            NhomTP.Value
-                        );
-                        Set(
-                            varCheck_DT,
-                            DoTuoi.Value
-                        );
-                        
-                        Set(
-                            varCheck_PV,
-                            PVDiaLy.Value
-                        );
-                        Collect(
-                            NewCollection,
-                            {}
-                        );
-                        
-                        Collect(
-                            OldCollection,
-                            {       Chuongtrinh: "",
-                                    Gioitinh: "",
-                                    Dotuoi: "",
-                                    Phamvi: "",
-                                    NhomTP : ""}
-                        );
-                        
-                        
-                        ClearCollect(
-                           OldCollection,
-                          ForAll(
-                               Filter(
-                                  MaTranPhis,
-                                   Masanpham = "001"
-                               ),
-                               {
-                                    Chuongtrinh: Chuongtrinh,
-                                    Gioitinh: Gioitinh,
-                                    Dotuoi: Dotuoi,
-                                    Phamvi: Phamvi,
-                                    NhomTP : NhomTP
-                               }
-                           )
-                        );
-                        
-                        ClearCollect(
-                            NewCollection,
-                            OldCollection
-                        );
-                        If(
-                            varCheck_CT = false,
-                            ClearCollect(
-                                NewCollection,
-                                DropColumns(
-                                    NewCollection,
-                                    "Chuongtrinh"
-                                )
-                            )
-                        );
-                        If(
-                            varCheck_NTP = false,
-                            ClearCollect(
-                                NewCollection,
-                                DropColumns(
-                                    NewCollection,
-                                    "NhomTP"
-                                )
-                            )
-                        );
-                        If(
-                            varCheck_GT = false,
-                            ClearCollect(
-                                NewCollection,
-                                DropColumns(
-                                    NewCollection,
-                                    "Gioitinh"
-                                )
-                            )
-                        );
-                        If(
-                            varCheck_DT = false,
-                            ClearCollect(
-                                NewCollection,
-                                DropColumns(
-                                    NewCollection,
-                                    "Dotuoi"
-                                )
-                            )
-                        );
-                        If(
-                            varCheck_PV = false,
-                            ClearCollect(
-                                NewCollection,
-                                DropColumns(
-                                    NewCollection,
-                                    "Phamvi"
-                                )
-                            )
-                        );
-                        
-                        ExportToExcel.Run(
-                            JSON(
-                                NewCollection,
-                                JSONFormat.IgnoreBinaryData & JSONFormat.IgnoreUnsupportedTypes
-                            )
-                        );
-                        //Download("https://5ddm0q-my.sharepoint.com/:x:/r/personal/anh_nguyentrong_kieugiahung_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc=%7B1448E403-224E-4B74-8F06-D89F9CAF613E%7D&file=MauExcel.csv&action=default&mobileredirect=true");
-                    Text: ="Xuất file excel"
-                    Width: =189
-                    X: =810
-                    Y: =471
-                    ZIndex: =9
 
                 Label_st As label:
                     Height: =44
@@ -5007,4 +4884,13 @@
                     X: =12
                     Y: =132
                     ZIndex: =16
+
+                Label1_6 As label:
+                    Align: =Align.Justify
+                    FontWeight: =FontWeight.Bold
+                    Size: =16
+                    Text: ="4.1.2. Bảng thông tin "
+                    Width: =1207
+                    Y: =22
+                    ZIndex: =17
 
