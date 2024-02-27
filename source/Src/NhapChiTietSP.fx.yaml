@@ -24,6 +24,27 @@
                 "edited"
             )
         );
+        ClearCollect(
+            tmpDKCCollect,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                       //DL_SAN_PHAM_DKCHUNGS,
+                       Filter(DL_SAN_PHAM_DKCHUNGS,ma_san_pham="PTI_CARE"),
+                        "cr282_id_dkc",
+                        SortOrder.Ascending
+                    ),
+                    "edited",
+                    0
+                ),
+                "cr282_id_dkc",
+                "cr282_ma_san_pham",
+                "cr282_nhom_thong_tin",
+                "cr282_thong_tin",
+                "cr282_noi_dung",
+                "edited"
+            )
+        );
         UpdateContext(
             {
                 maAdded: "",
@@ -44,14 +65,14 @@
             BorderThickness: =0
             DisplayMode: =DisplayMode.Edit
             Fill: =RGBA(0, 0, 0, 0)
-            Height: =705
+            Height: =560
             Width: =1366
             X: =0
             Y: =0
             ZIndex: =1
 
             "'1. ChuongTrinh' As groupContainer.manualLayoutContainer":
-                Height: =555
+                Height: =406
                 Width: =1207
                 X: =158
                 ZIndex: =1
@@ -65,7 +86,8 @@
                     NavigationStep: =0
                     TemplateSize: =40
                     Width: =1076
-                    Y: =255
+                    X: =5
+                    Y: =163
                     ZIndex: =1
 
                     TxtMaCT As text:
@@ -4923,6 +4945,332 @@
                     X: =801
                     Y: =122
                     ZIndex: =16
+
+        DataCard4 As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =1366
+            X: =0
+            Y: =3
+            ZIndex: =4
+
+            "'2. Dieukhoanchung' As groupContainer.manualLayoutContainer":
+                Height: =555
+                Width: =1223
+                X: =140
+                Y: =40
+                ZIndex: =1
+
+                GalleryCT_1 As gallery.galleryVertical:
+                    DelayItemLoading: =true
+                    Height: =415
+                    Items: =tmpDKCCollect
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    NavigationStep: =0
+                    TemplateSize: =40
+                    Width: =1218
+                    Y: =134
+                    ZIndex: =1
+
+                    TxtThongTin As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_thong_tin
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =215
+                        X: =305
+                        ZIndex: =9
+
+                    Btn_SuaCT_1 As button:
+                        OnSelect: |-
+                            =If(
+                                Or(maAdded<>"",maUpdated<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                UpdateIf(
+                                    tmpDKCCollect,
+                                    cr282_id_dkc=ThisItem.cr282_id_dkc,
+                                    {
+                                        edited:1
+                                    }
+                                );
+                                UpdateContext({
+                                    maUpdated:ThisItem.cr282_id_dkc
+                                })
+                            )
+                        Text: ="Sửa"
+                        Visible: =ThisItem.edited=0
+                        Width: =75
+                        X: =1035
+                        ZIndex: =17
+
+                    Btn_XoaCT_1 As button:
+                        OnSelect: |-
+                            =If(
+                                Or(maAdded<>"",maUpdated<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                Refresh(DL_SAN_PHAM_DKCHUNGS);
+                                RemoveIf(
+                                    DL_SAN_PHAM_DKCHUNGS,
+                                    id_dkc=ThisItem.cr282_id_dkc
+                                );
+                                Remove(tmpDKCCollect,ThisItem);
+                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
+                            )
+                        Text: ="Xóa"
+                        Visible: =ThisItem.edited=0
+                        Width: =85
+                        X: =1123
+                        ZIndex: =18
+
+                    Btn_LuuCT_1 As button:
+                        OnSelect: |
+                            =
+                                If( ThisItem.cr282_id_dkc=maAdded,
+                                    Patch(
+                                        DL_SAN_PHAM_DKCHUNGS,
+                                        {
+                                            id_dkc:ThisItem.cr282_id_dkc,
+                                            nhom_thong_tin:CbxNhomTT.Selected.Value,
+                                            thong_tin:TxtThongTin.Text,
+                                            noi_dung:TxtND.Text
+                                        }
+                                    ),
+                                    UpdateIf(
+                                         DL_SAN_PHAM_DKCHUNGS,
+                                        id_dkc=ThisItem.cr282_id_dkc,
+                                        {
+                                            nhom_thong_tin:CbxNhomTT.Selected.Value,
+                                            thong_tin:TxtThongTin.Text,
+                                            noi_dung:TxtND.Text
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpDKCCollect,
+                                    cr282_id_dkc=ThisItem.cr282_id_dkc,
+                                    {
+                                        cr282_nhom_thong_tin:CbxNhomTT.Selected.Value,
+                                        cr282_thong_tin:TxtThongTin.Text,
+                                        cr282_noi_dung:TxtND.Text,
+                                        edited:0
+                                    }
+                                );
+                                Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
+                                ClearCollect(
+                                    tmpDKCCollect,
+                                    ShowColumns(
+                                        AddColumns(
+                                            SortByColumns(
+                                                DL_SAN_PHAM_DKCHUNGS,
+                                                "cr282_id_dkc",
+                                                SortOrder.Ascending
+                                            ),
+                                            "edited",
+                                            0
+                                        ),
+                                        "cr282_id_dkc",
+                                        "cr282_ma_san_pham",
+                                        "cr282_nhom_thong_tin",
+                                        "cr282_thong_tin",
+                                        "cr282_noi_dung",
+                                        "edited"
+                                    )
+                                );
+                                UpdateContext({
+                                    maAdded:"",
+                                    maUpdated:""
+                                });
+                        Text: ="Lưu"
+                        Visible: =ThisItem.edited=1
+                        Width: =75
+                        X: =1035
+                        ZIndex: =19
+
+                    Btn_HuyCT_1 As button:
+                        OnSelect: |-
+                            =If(
+                                ThisItem.cr282_id_dkc=maAdded,
+                                Remove(tmpDKCCollect,ThisItem),
+                                UpdateIf(
+                                    tmpDKCCollect,
+                                    cr282_id_dkc=ThisItem.cr282_id_dkc,
+                                    {
+                                        edited:0
+                                    }
+                                )
+                            );
+                             Set(   maAdded, "");
+                              Set(  maUpdated,"");
+                        Text: ="Hủy"
+                        Visible: =ThisItem.edited=1
+                        Width: =85
+                        X: =1123
+                        ZIndex: =20
+
+                    TxtID_DKC As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_id_dkc
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        Width: =134
+                        X: =3
+                        ZIndex: =21
+
+                    TxtND As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_noi_dung
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =490
+                        X: =532
+                        ZIndex: =22
+
+                    CbxNhomTT As combobox:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                        ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
+                        ChevronHoverBackground: =RGBA(255, 255, 255, 1)
+                        ChevronHoverFill: =RGBA(72, 163, 62, 1)
+                        DefaultSelectedItems: =If(IsBlank(ThisItem.cr282_nhom_thong_tin),Blank(),LookUp(dsNhomTT,Value=Value(ThisItem.cr282_nhom_thong_tin)))
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayFields: =["Key"]
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        HoverBorderColor: =RGBA(9, 33, 98, 1)
+                        HoverFill: =RGBA(180, 214, 250, 1)
+                        InputTextPlaceholder: ="Chọn đơn vị tuổi"
+                        IsSearchable: =false
+                        Items: =SortByColumns(dsNhomTT,"Value",SortOrder.Ascending)
+                        OnSelect: =Select(Parent)
+                        PressedColor: =RGBA(72, 163, 62, 1)
+                        PressedFill: =RGBA(255, 255, 255, 1)
+                        SearchFields: =["Key"]
+                        SearchItems: =[]
+                        SelectionColor: =RGBA(0, 0, 0, 1)
+                        SelectionFill: =RGBA(214, 221, 224, 1)
+                        SelectMultiple: =false
+                        Width: =290
+                        X: =3
+                        ZIndex: =24
+
+                BadgeCanvas1_11 As Badge:
+                    BasePaletteColor: =
+                    Content: =""
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =32
+                    Visible: =true
+                    Width: =1218
+                    X: =0
+                    Y: =100
+                    ZIndex: =2
+
+                TextCanvas2_54 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =38
+                    Size: =14
+                    Text: ="Thông tin"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =185
+                    X: =305
+                    Y: =98
+                    ZIndex: =3
+
+                TextCanvas2_57 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =34
+                    Size: =14
+                    Text: ="Nội dung"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =96
+                    X: =540
+                    Y: =101
+                    ZIndex: =4
+
+                TextCanvas2_56 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =34
+                    Size: =14
+                    Text: ="Thao tác"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =96
+                    X: =1089
+                    Y: =100
+                    ZIndex: =5
+
+                TextCanvas2_55 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =39
+                    Size: =14
+                    Text: ="Nhóm thông tin"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =162
+                    X: =13
+                    Y: =100
+                    ZIndex: =10
+
+                ThemMoiCT_1 As button:
+                    Height: =36
+                    OnSelect: |
+                        =If( Or(maAdded<>"",maUpdated<>""),
+                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                            UpdateContext({
+                                idMa:If(
+                                    CountRows(tmpDKCCollect) = 0,
+                                    1000,
+                                    Max(DL_SAN_PHAM_DKCHUNGS, id_dkc) + 1
+                                )
+                            });
+                            Collect(
+                                tmpDKCCollect,
+                                {
+                                    cr282_id_dkc:Text(idMa),
+                                    cr282_ma_san_pham:"",
+                                    cr282_nhom_thong_tin:"",
+                                    cr282_thong_tin:"",
+                                    cr282_noi_dung:"",
+                                    edited:1
+                                }
+                            );
+                          UpdateContext({maAdded:Text(idMa)})
+                        )
+                    Text: ="Thêm mới"
+                    Y: =48
+                    ZIndex: =11
+
+                Label1_4 As label:
+                    Align: =Align.Justify
+                    FontWeight: =FontWeight.Bold
+                    Height: =44
+                    Size: =16
+                    Text: ="2. Điều khoản chung (Trừ quyền lợi, phí)"
+                    Width: =1076
+                    Y: =4
+                    ZIndex: =13
 
     LeftNavigation_20 As LeftNavigation_9:
         Width: =LeftNavigation_20.MenuWidth
