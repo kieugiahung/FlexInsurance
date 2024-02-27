@@ -385,7 +385,7 @@
                                     )
                                 }
                             );
-                            Set(MaCT,CountRows(' DL_SAN_PHAM_CT') + 1);
+                            Set(MaCT,CountIf(' DL_SAN_PHAM_CT',true) + 1);
                             Collect(
                                 tmpCTCollect,
                                 {
@@ -400,9 +400,9 @@
                                                 MaCT < 100 && MaCT >= 10,
                                                 "0",
                                                 ""
-                                            ),
-                                            Text(MaCT)
-                                        )
+                                            )
+                                        ),
+                                        Text(MaCT)
                                     ),
                                     cr282_ten_chuong_trinh: "",
                                     cr282_mo_ta: "",
