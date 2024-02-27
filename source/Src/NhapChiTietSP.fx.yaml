@@ -575,8 +575,20 @@
 
                 PVDiaLy As checkbox:
                     Default: =true
-                    DisplayMode: =DisplayMode.Disabled
                     Text: ="Phạm vi địa lý"
+                    Visible: |-
+                        =LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Phạm vi địa lý"
+                        ).HIEU_LUC_TU <= Today() && (LookUp(
+                            DM_YEUTO_AH_PHIS,
+                            TEN_YEU_TO = "Phạm vi địa lý"
+                        ).HIEU_LUC_DEN >= Today() || IsBlank(
+                            LookUp(
+                                DM_YEUTO_AH_PHIS,
+                                TEN_YEU_TO = "Phạm vi địa lý"
+                            ).HIEU_LUC_DEN
+                        ))
                     Width: =192
                     X: =38
                     Y: =211
@@ -679,6 +691,7 @@
                     ZIndex: =12
 
                 Datafield_CT As combobox:
+                    DefaultSelectedItems: =
                     DisplayFields: =["cr282_ten_chuong_trinh"]
                     Height: =45
                     InputTextPlaceholder: =""
@@ -887,6 +900,7 @@
                 Datafield_PV As dropdown:
                     Height: =45
                     Items: =DM_PHAMVI_DIALYS
+                    Visible: =If(PVDiaLy.Value=true && PVDiaLy.Visible=true,true,false)
                     Width: =840
                     X: =296
                     Y: =216
@@ -1029,6 +1043,18 @@
                 Y: =40
                 ZIndex: =1
 
+                BadgeCanvas1_10 As Badge:
+                    BasePaletteColor: =
+                    Content: =""
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =45
+                    Visible: =showGrid
+                    Width: =1195
+                    X: =12
+                    Y: =122
+                    ZIndex: =1
+
                 "Gallery As gallery.'BrowseLayout_Vertical_OneTextVariant_ver5.0'":
                     DelayItemLoading: =true
                     Height: =249
@@ -1044,7 +1070,9 @@
                             "cr282_do_tuoi",
                             "cr282_gioi_tinh",
                             "cr282_nganh_nghe",
-                            "cr282_ma_san_pham","CHUONG_TRINH_GROUP"
+                            "cr282_ma_san_pham",
+                            //"cr282_id",
+                            "CHUONG_TRINH_GROUP"
                         )
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
@@ -1052,26 +1080,23 @@
                     TemplateSize: =62
                     Width: =1207
                     Y: =154
-                    ZIndex: =1
+                    ZIndex: =2
 
                     Combo_CT As combobox:
-                        DefaultSelectedItems: |-
-                            =//Filter(BH_YEUTO_CT, TEN_NHOM_TP = Dropdown_TP.Selected.TEN_NHOM_TP && MA_SAN_PHAN="001" 
-                            //&& TEN_CHUONG_TRINH = );
-                            ThisItem.CHUONG_TRINH_GROUP
+                        DefaultSelectedItems: =ThisItem.CHUONG_TRINH_GROUP
                         DisplayFields: =["cr282_ten_chuong_trinh"]
-                        Height: =32
+                        Height: =31
                         InputTextPlaceholder: =""
                         IsSearchable: =false
                         Items: |-
-                            =//Filter(BH_CT_NHOMTP, TEN_NHOM_TP = Dropdown_TP.Selected.TEN_NHOM_TP && TEN_CHUONG_TRINH in Datafield_CT.SelectedItems.Ten_Chuongtrinh)
+                            =//' DL_SAN_PHAM_CT'
                             Datafield_CT.SelectedItems
                         OnSelect: =Select(Parent)
-                        SearchFields: =["cr282_ma_chuong_trinh"]
+                        SearchFields: =["cr282_ten_chuong_trinh"]
                         SearchItems: =[]
                         Width: =176
                         X: =16
-                        Y: =18
+                        Y: =19
                         ZIndex: =5
 
                     Dropdown_TP As dropdown:
@@ -1092,7 +1117,7 @@
                         Text: =""
                         Width: =50
                         X: =363
-                        Y: =10
+                        Y: =9
                         ZIndex: =7
 
                     Checkbox_DT As checkbox:
@@ -1103,7 +1128,7 @@
                         Text: =""
                         Width: =50
                         X: =445
-                        Y: =10
+                        Y: =9
                         ZIndex: =8
 
                     Checkbox_GT As checkbox:
@@ -1114,7 +1139,7 @@
                         Text: =""
                         Width: =50
                         X: =531
-                        Y: =10
+                        Y: =9
                         ZIndex: =9
 
                     Icon1_2 As icon.Cancel:
@@ -1126,7 +1151,7 @@
                                 Combo_CT.SelectedItems As ct,
                                 RemoveIf(
                                     DL_SAN_PHAM_YTCT,
-                                    CHUONGTRINH_NHOMTP = Concatenate(
+                                    ID = Concatenate(
                                         Dropdown_TP.Selected.TEN_NHOM_TP,
                                         "- ",
                                         ct.TEN_CHUONG_TRINH
@@ -1134,8 +1159,8 @@
                                 )
                             );
                         Width: =38
-                        X: =1193
-                        Y: =23
+                        X: =1165
+                        Y: =17
                         ZIndex: =10
 
                     Icon2 As icon.Save:
@@ -1153,7 +1178,7 @@
                                             DL_SAN_PHAM_YTCT,
                                             true
                                         ) = 0,
-                                        1,
+                                        0,
                                         Value(
                                             Last(
                                                 SortByColumns(
@@ -1183,7 +1208,11 @@
                                         DL_SAN_PHAM_YTCT,
                                         Defaults(DL_SAN_PHAM_YTCT),
                                         {
-                                            ID: maxIdYTCT + 1,
+                                            ID: Concatenate(
+                                                Dropdown_TP.Selected.TEN_NHOM_TP,
+                                                "- ",
+                                                ct.TEN_CHUONG_TRINH
+                                            ),
                                             CHUONGTRINH_NHOMTP: Concatenate(
                                                 Dropdown_TP.Selected.TEN_NHOM_TP,
                                                 "- ",
@@ -1225,8 +1254,8 @@
                                 )
                             )
                         Width: =38
-                        X: =1126
-                        Y: =20
+                        X: =1096
+                        Y: =17
                         ZIndex: =11
 
                     Checkbox_NN As checkbox:
@@ -1237,7 +1266,7 @@
                         Text: =""
                         Width: =50
                         X: =618
-                        Y: =10
+                        Y: =9
                         ZIndex: =12
 
                     Checkbox_ST As checkbox:
@@ -1248,7 +1277,7 @@
                         Text: =""
                         Width: =50
                         X: =729
-                        Y: =10
+                        Y: =9
                         ZIndex: =13
 
                     Checkbox_SN As checkbox:
@@ -1259,7 +1288,7 @@
                         Text: =""
                         Width: =50
                         X: =828
-                        Y: =10
+                        Y: =9
                         ZIndex: =14
 
                     Checkbox_TH As checkbox:
@@ -1270,7 +1299,7 @@
                         Text: =""
                         Width: =50
                         X: =925
-                        Y: =10
+                        Y: =9
                         ZIndex: =15
 
                     Checkbox_PT As checkbox:
@@ -1281,61 +1310,62 @@
                         Text: =""
                         Width: =50
                         X: =1023
-                        Y: =10
+                        Y: =9
                         ZIndex: =16
 
                 Label_ct As label:
-                    Height: =44
+                    Height: =45
                     Text: ="Chương trình"
                     Visible: =showGrid
                     Width: =130
-                    X: =60
-                    Y: =115
-                    ZIndex: =2
+                    X: =28
+                    Y: =120
+                    ZIndex: =3
 
                 Label_nhom As label:
-                    Height: =46
+                    Height: =45
                     Text: ="Nhóm tính phí"
                     Visible: =showGrid
                     Width: =145
-                    X: =232
-                    Y: =115
-                    ZIndex: =3
+                    X: =191
+                    Y: =119
+                    ZIndex: =4
 
                 Label_pv As label:
+                    Height: =45
                     Text: ="Phạm vi"
                     Visible: =showGrid
                     Width: =75
-                    X: =396
-                    Y: =121
-                    ZIndex: =4
+                    X: =344
+                    Y: =119
+                    ZIndex: =5
 
                 Label_dt As label:
-                    Height: =41
+                    Height: =45
                     Text: ="Độ tuổi"
                     Visible: =showGrid
                     Width: =82
-                    X: =476
-                    Y: =121
-                    ZIndex: =5
+                    X: =427
+                    Y: =120
+                    ZIndex: =6
 
                 Label_gt As label:
-                    Height: =46
+                    Height: =45
                     Text: ="Giới tính"
                     Visible: =showGrid
                     Width: =84
-                    X: =558
-                    Y: =121
-                    ZIndex: =6
+                    X: =513
+                    Y: =119
+                    ZIndex: =7
 
                 Label_thaotac As label:
-                    Height: =48
+                    Height: =45
                     Text: ="Thao tác"
                     Visible: =showGrid
                     Width: =82
-                    X: =1125
-                    Y: =106
-                    ZIndex: =7
+                    X: =1108
+                    Y: =120
+                    ZIndex: =8
 
                 ThemMoi_1 As button:
                     OnSelect: |-
@@ -1350,8 +1380,8 @@
                     Text: ="Thêm mới"
                     Visible: =showGrid
                     X: =12
-                    Y: =40
-                    ZIndex: =8
+                    Y: =59
+                    ZIndex: =9
 
                 Label_st As label:
                     Height: =44
@@ -1360,29 +1390,18 @@
                         bảo hiểm"
                     Visible: =showGrid
                     Width: =95
-                    X: =762
-                    Y: =115
+                    X: =706
+                    Y: =123
                     ZIndex: =10
 
                 Label_nn As label:
-                    Height: =44
+                    Height: =45
                     Text: ="Ngành nghề"
                     Visible: =showGrid
                     Width: =115
-                    X: =642
-                    Y: =123
+                    X: =592
+                    Y: =120
                     ZIndex: =11
-
-                Label_sn As label:
-                    Height: =44
-                    Text: |-
-                        ="Số người 
-                        được BH"
-                    Visible: =showGrid
-                    Width: =95
-                    X: =857
-                    Y: =115
-                    ZIndex: =12
 
                 Label_th As label:
                     Height: =44
@@ -1391,9 +1410,9 @@
                         bảo hiểm"
                     Visible: =showGrid
                     Width: =95
-                    X: =952
-                    Y: =118
-                    ZIndex: =13
+                    X: =896
+                    Y: =122
+                    ZIndex: =12
 
                 Label_pt As label:
                     Height: =43
@@ -1402,9 +1421,9 @@
                         đóng phí"
                     Visible: =showGrid
                     Width: =116
-                    X: =1047
-                    Y: =119
-                    ZIndex: =14
+                    X: =991
+                    Y: =122
+                    ZIndex: =13
 
                 Button2_2 As button:
                     OnSelect: |-
@@ -1448,6 +1467,7 @@
                                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
                                                                                             {
+                                                                                                ID: ct.ID,
                                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1469,7 +1489,7 @@
                                                                                     Patch(
                                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                        {
+                                                                                        {ID: ct.ID,
                                                                                             MA_SAN_PHAM: valMaSP,
                                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1496,7 +1516,7 @@
                                                                                     Patch(
                                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                        {
+                                                                                        {ID: ct.ID,
                                                                                             MA_SAN_PHAM: valMaSP,
                                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1518,7 +1538,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1550,7 +1570,7 @@
                                                                                     Patch(
                                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                        {
+                                                                                        {ID: ct.ID,
                                                                                             MA_SAN_PHAM: valMaSP,
                                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1572,7 +1592,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1599,7 +1619,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1621,7 +1641,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1658,7 +1678,7 @@
                                                                                     Patch(
                                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                        {
+                                                                                        {ID: ct.ID,
                                                                                             MA_SAN_PHAM: valMaSP,
                                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1680,7 +1700,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1707,7 +1727,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1729,7 +1749,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1761,7 +1781,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1783,7 +1803,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1810,7 +1830,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1832,7 +1852,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1874,7 +1894,7 @@
                                                                                     Patch(
                                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                        {
+                                                                                        {ID: ct.ID,
                                                                                             MA_SAN_PHAM: valMaSP,
                                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1896,7 +1916,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1923,7 +1943,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1945,7 +1965,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1977,7 +1997,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -1999,7 +2019,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2026,7 +2046,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2048,7 +2068,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2085,7 +2105,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2107,7 +2127,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2134,7 +2154,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2156,7 +2176,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2188,7 +2208,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2210,7 +2230,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2237,7 +2257,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2259,7 +2279,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2306,7 +2326,7 @@
                                                                                     Patch(
                                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                        {
+                                                                                        {ID: ct.ID,
                                                                                             MA_SAN_PHAM: valMaSP,
                                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2328,7 +2348,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2355,7 +2375,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2377,7 +2397,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2409,7 +2429,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2431,7 +2451,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2458,7 +2478,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2480,7 +2500,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2517,7 +2537,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2539,7 +2559,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2566,7 +2586,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2588,7 +2608,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2620,7 +2640,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2642,7 +2662,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2669,7 +2689,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2691,7 +2711,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2733,7 +2753,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2755,7 +2775,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2782,7 +2802,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2804,7 +2824,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2836,7 +2856,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2858,7 +2878,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2885,7 +2905,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2907,7 +2927,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2944,7 +2964,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2966,7 +2986,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -2993,7 +3013,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3015,7 +3035,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3047,7 +3067,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3069,7 +3089,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3096,7 +3116,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3118,7 +3138,7 @@
                                                                 Patch(
                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                    {
+                                                                    {ID: ct.ID,
                                                                         MA_SAN_PHAM: valMaSP,
                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3170,7 +3190,7 @@
                                                                                     Patch(
                                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                        {
+                                                                                        {ID: ct.ID,
                                                                                             MA_SAN_PHAM: valMaSP,
                                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3192,7 +3212,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3219,7 +3239,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3241,7 +3261,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3273,7 +3293,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3295,7 +3315,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3322,7 +3342,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3344,7 +3364,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3381,7 +3401,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3403,7 +3423,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3430,7 +3450,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3452,7 +3472,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3484,7 +3504,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3506,7 +3526,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3533,7 +3553,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3555,7 +3575,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3597,7 +3617,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3619,7 +3639,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3646,7 +3666,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3668,7 +3688,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3700,7 +3720,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3722,7 +3742,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3749,7 +3769,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3771,7 +3791,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3808,7 +3828,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3830,7 +3850,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3857,7 +3877,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3879,7 +3899,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3911,7 +3931,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3933,7 +3953,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3960,7 +3980,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -3982,7 +4002,7 @@
                                                                 Patch(
                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                    {
+                                                                    {ID: ct.ID,
                                                                         MA_SAN_PHAM: valMaSP,
                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4029,7 +4049,7 @@
                                                                                 Patch(
                                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                    {
+                                                                                    {ID: ct.ID,
                                                                                         MA_SAN_PHAM: valMaSP,
                                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4051,7 +4071,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4078,7 +4098,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4100,7 +4120,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4132,7 +4152,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4154,7 +4174,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4181,7 +4201,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4203,7 +4223,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4240,7 +4260,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4262,7 +4282,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4289,7 +4309,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4311,7 +4331,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4343,7 +4363,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4365,7 +4385,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4392,7 +4412,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4414,7 +4434,7 @@
                                                                 Patch(
                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                    {
+                                                                    {ID: ct.ID,
                                                                         MA_SAN_PHAM: valMaSP,
                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4456,7 +4476,7 @@
                                                                             Patch(
                                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                                {
+                                                                                {ID: ct.ID,
                                                                                     MA_SAN_PHAM: valMaSP,
                                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4478,7 +4498,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4505,7 +4525,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4527,7 +4547,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4559,7 +4579,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4581,7 +4601,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4608,7 +4628,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4630,7 +4650,7 @@
                                                                 Patch(
                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                    {
+                                                                    {ID: ct.ID,
                                                                         MA_SAN_PHAM: valMaSP,
                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4667,7 +4687,7 @@
                                                                         Patch(
                                                                             DL_SAN_PHAM_MATRANPHI,
                                                                             Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                            {
+                                                                            {ID: ct.ID,
                                                                                 MA_SAN_PHAM: valMaSP,
                                                                                 CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                                 NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4689,7 +4709,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4716,7 +4736,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4738,7 +4758,7 @@
                                                                 Patch(
                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                    {
+                                                                    {ID: ct.ID,
                                                                         MA_SAN_PHAM: valMaSP,
                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4770,7 +4790,7 @@
                                                                     Patch(
                                                                         DL_SAN_PHAM_MATRANPHI,
                                                                         Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                        {
+                                                                        {ID: ct.ID,
                                                                             MA_SAN_PHAM: valMaSP,
                                                                             CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                             NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4792,7 +4812,7 @@
                                                                 Patch(
                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                    {
+                                                                    {ID: ct.ID,
                                                                         MA_SAN_PHAM: valMaSP,
                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4819,7 +4839,7 @@
                                                                 Patch(
                                                                     DL_SAN_PHAM_MATRANPHI,
                                                                     Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                    {
+                                                                    {ID: ct.ID,
                                                                         MA_SAN_PHAM: valMaSP,
                                                                         CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                         NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4841,7 +4861,7 @@
                                                             Patch(
                                                                 DL_SAN_PHAM_MATRANPHI,
                                                                 Defaults(DL_SAN_PHAM_MATRANPHI),
-                                                                {
+                                                                {ID: ct.ID,
                                                                     MA_SAN_PHAM: valMaSP,
                                                                     CHUONG_TRINH: ct.CHUONG_TRINH,
                                                                     NHOM_TINH_PHI: ct.NHOM_TINH_PHI,
@@ -4871,19 +4891,7 @@
                     Text: ="Lưu yếu tố"
                     X: =1047
                     Y: =471
-                    ZIndex: =15
-
-                BadgeCanvas1_10 As Badge:
-                    BasePaletteColor: =
-                    Content: =""
-                    DisplayMode: =DisplayMode.Edit
-                    FontColor: =
-                    Height: =35
-                    Visible: =showGrid
-                    Width: =1195
-                    X: =12
-                    Y: =132
-                    ZIndex: =16
+                    ZIndex: =14
 
                 Label1_6 As label:
                     Align: =Align.Justify
@@ -4891,6 +4899,16 @@
                     Size: =16
                     Text: ="4.1.2. Bảng thông tin "
                     Width: =1207
-                    Y: =22
-                    ZIndex: =17
+                    ZIndex: =15
+
+                Label_sn As label:
+                    Height: =44
+                    Text: |-
+                        ="Số người 
+                        được BH"
+                    Visible: =showGrid
+                    Width: =95
+                    X: =801
+                    Y: =122
+                    ZIndex: =16
 
