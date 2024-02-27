@@ -1,4 +1,4 @@
-Screen2 As screen:
+DLSanPhamQLCT As screen:
     OnVisible: |+
         =ClearCollect(
             tmpQLTVCollect,
@@ -115,6 +115,7 @@ Screen2 As screen:
             BorderStyle: =BorderStyle.None
             Height: =48
             Width: =657
+            X: =(ThisItem.cr282_cap-1)*50
             ZIndex: =4
 
             TextQLCT As text:
@@ -320,7 +321,7 @@ Screen2 As screen:
         Tooltip: ="Lưu"
         Width: =53
         X: =1250
-        Y: =128
+        Y: =55*CountRows(tmpQLTVCollect)+120
         ZIndex: =5
 
     Icon3 As icon.CancelBadge:
@@ -331,6 +332,6 @@ Screen2 As screen:
         Tooltip: ="Hủy"
         Width: =54
         X: =1179
-        Y: =138
+        Y: =55*CountRows(tmpQLTVCollect)+130
         ZIndex: =6
 
