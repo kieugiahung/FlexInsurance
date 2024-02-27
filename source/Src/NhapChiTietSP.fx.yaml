@@ -5416,7 +5416,7 @@
                             =
                                 If( ThisItem.cr282_id_giamphi=maAddedGP,
                                     Patch(
-                                        DL_SAN_PHAM_GIAMPHIS,
+                                        DL_SAN_PHAM_GPS,
                                         {
                                             ID_GIAMPHI:ThisItem.cr282_id_giamphi,
                                             MA_SAN_PHAM:valMaSP,
@@ -5428,7 +5428,7 @@
                                         }
                                     ),
                                     UpdateIf(
-                                        DL_SAN_PHAM_GIAMPHIS,
+                                        DL_SAN_PHAM_GPS,
                                         ID_GIAMPHI=ThisItem.cr282_id_giamphi,
                                         {
                                             THONG_TIN:TxtThongtin.Text,
@@ -5458,7 +5458,7 @@
                                     ShowColumns(
                                         AddColumns(
                                             SortByColumns(
-                                                Filter(DL_SAN_PHAM_GIAMPHIS,MA_SAN_PHAM=valMaSP),
+                                                Filter(DL_SAN_PHAM_GPS,MA_SAN_PHAM=valMaSP),
                                                 "cr282_id_giamphi",
                                                 SortOrder.Ascending
                                             ),
