@@ -774,8 +774,8 @@
                                 {
                                     MA_SAN_PHAM: valMaSP,
                                     MA_YEU_TO_SP: valMaYT,
-                                    CHUONG_TRINH: Datafield_CT.Selected.TEN_CHUONG_TRINH,
-                                    NHOM_TINH_PHI: Datafield_Nhom.Selected.TEN_NHOM_TP,
+                                    CHUONG_TRINH: Concat(Datafield_CT.SelectedItems, TEN_CHUONG_TRINH,", "),
+                                    NHOM_TINH_PHI: Concat(Datafield_Nhom.SelectedItems,TEN_NHOM_TP,", "),
                                     PHAM_VI_DL: Datafield_PV.Selected.TEN_PHAMVI,
                                     CHECKED_DOTUOI: If(
                                         DoTuoi.Visible = true && DoTuoi.Value = true,
@@ -813,21 +813,21 @@
                                         false
                                     ),
                                     DON_VI_TIEN: DsTienTe.Selected.TIEN_TE,
-                                    DO_TUOI: Datafield_DT.Selected.MO_TA,
-                                    GIOI_TINH: Datafield_GT.Selected.TEN_GIOI_TINH,
-                                    NGANH_NGHE: Datafield_NN.Selected.TEN_NGANH,
-                                    BH_SO_TIEN: Datafield_ST.Selected.TEN_SOTIEN,
-                                    BH_SO_NGUOI: Datafield_SN.Selected.TEN_SO_NGUOI,
-                                    BH_THOI_HAN: Datafield_TH.Selected.TEN_THOI_HAN,
-                                    BH_PHUONG_THUC_DP: Datafield_DP.Selected.TEN_PT
+                                    DO_TUOI: Concat(Datafield_DT.SelectedItems,MO_TA,", "),
+                                    GIOI_TINH: Concat(Datafield_GT.SelectedItems,TEN_GIOI_TINH,", "),
+                                    NGANH_NGHE: Concat(Datafield_NN.SelectedItems,TEN_NGANH,", "),
+                                    BH_SO_TIEN: Concat(Datafield_ST.SelectedItems,TEN_SOTIEN,", "),
+                                    BH_SO_NGUOI: Concat(Datafield_SN.SelectedItems,TEN_SO_NGUOI,", "),
+                                    BH_THOI_HAN: Concat(Datafield_TH.SelectedItems,TEN_THOI_HAN,", "),
+                                    BH_PHUONG_THUC_DP: Concat(Datafield_DP.SelectedItems,TEN_PT,", ")
                                 }
                             ),
                             UpdateIf(
                                 DL_SAN_PHAM_YT,
                                 MA_SAN_PHAM = valMaSP,
                                 {
-                                    CHUONG_TRINH: Datafield_CT.Selected.TEN_CHUONG_TRINH,
-                                    NHOM_TINH_PHI: Datafield_Nhom.Selected.TEN_NHOM_TP,
+                                    CHUONG_TRINH: Concat(Datafield_CT.SelectedItems, TEN_CHUONG_TRINH,", "),
+                                    NHOM_TINH_PHI: Concat(Datafield_Nhom.SelectedItems,TEN_NHOM_TP,", "),
                                     PHAM_VI_DL: Datafield_PV.Selected.TEN_PHAMVI,
                                     CHECKED_DOTUOI: If(
                                         DoTuoi.Visible = true && DoTuoi.Value = true,
@@ -865,13 +865,13 @@
                                         false
                                     ),
                                     DON_VI_TIEN: DsTienTe.Selected.TIEN_TE,
-                                    DO_TUOI: Datafield_DT.Selected.MO_TA,
-                                    GIOI_TINH: Datafield_GT.Selected.TEN_GIOI_TINH,
-                                    NGANH_NGHE: Datafield_NN.Selected.TEN_NGANH,
-                                    BH_SO_TIEN: Datafield_ST.Selected.TEN_SOTIEN,
-                                    BH_SO_NGUOI: Datafield_SN.Selected.TEN_SO_NGUOI,
-                                    BH_THOI_HAN: Datafield_TH.Selected.TEN_THOI_HAN,
-                                    BH_PHUONG_THUC_DP: Datafield_DP.Selected.TEN_PT
+                                    DO_TUOI: Concat(Datafield_DT.SelectedItems,MO_TA,", "),
+                                    GIOI_TINH: Concat(Datafield_GT.SelectedItems,TEN_GIOI_TINH,", "),
+                                    NGANH_NGHE: Concat(Datafield_NN.SelectedItems,TEN_NGANH,", "),
+                                    BH_SO_TIEN: Concat(Datafield_ST.SelectedItems,TEN_SOTIEN,", "),
+                                    BH_SO_NGUOI: Concat(Datafield_SN.SelectedItems,TEN_SO_NGUOI,", "),
+                                    BH_THOI_HAN: Concat(Datafield_TH.SelectedItems,TEN_THOI_HAN,", "),
+                                    BH_PHUONG_THUC_DP: Concat(Datafield_DP.SelectedItems,TEN_PT,", ")
                                 }
                             )
                         );
