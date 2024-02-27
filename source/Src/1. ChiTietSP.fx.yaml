@@ -1,4 +1,29 @@
 "'1. ChiTietSP' As screen":
+    OnVisible: |-
+        =ClearCollect(
+            tmpCTCollect,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                       ' DL_SAN_PHAM_CT',
+                        "cr282_ma_chuong_trinh",
+                        SortOrder.Ascending
+                    ),
+                    "edited",
+                    0
+                ),
+                "cr282_ma_chuong_trinh",
+                "cr282_ten_chuong_trinh",
+                "cr282_mo_ta",
+                "cr282_ma_san_pham",
+                "cr282_trang_thai",
+                "edited"
+            )
+        );
+        UpdateContext({
+            maAdded:"",
+            maUpdated:""
+        });
 
     Container2 As groupContainer.manualLayoutContainer:
         Height: =498

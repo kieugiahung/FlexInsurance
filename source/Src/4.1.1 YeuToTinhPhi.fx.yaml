@@ -177,13 +177,13 @@
             Y: =646
             ZIndex: =10
 
-        Label1_2 As label:
+        Label_TienTe As label:
             Text: ="Đơn vị tiền"
             X: =38
             Y: =706
             ZIndex: =11
 
-        Dropdown1 As dropdown:
+        DsTienTe As dropdown:
             Height: =45
             Items: =BH_DM_TIENTES
             X: =296
@@ -204,12 +204,12 @@
             ZIndex: =13
 
         Datafield_Nhom As combobox:
-            DisplayFields: =["cr282_ten_nhom_ql"]
+            DisplayFields: =["cr282_ten_nhom_tp"]
             Height: =45
             InputTextPlaceholder: =""
             IsSearchable: =false
-            Items: =DM_NHOM_QUYENLOIS
-            SearchFields: =["cr282_ten_nhom_ql"]
+            Items: =BH_DM_NHOMTP
+            SearchFields: =["cr282_id"]
             SearchItems: =[]
             Width: =840
             X: =296
@@ -224,7 +224,7 @@
             Items: =DM_DO_TUOIS
             SearchFields: =["cr282_mo_ta"]
             SearchItems: =[]
-            Visible: =If(DoTuoi.Value=true,true,false)
+            Visible: =If(DoTuoi.Value=true && DoTuoi.Visible=true,true,false)
             Width: =840
             X: =296
             Y: =277
@@ -238,19 +238,159 @@
             Items: =DM_GIOI_TINHS
             SearchFields: =["cr282_ten_gioi_tinh"]
             SearchItems: =[]
-            Visible: =If(GioiTinh.Value=true, true,false)
+            Visible: =If(GioiTinh.Value=true && GioiTinh.Visible=true, true,false)
             Width: =840
             X: =296
             Y: =337
             ZIndex: =16
 
-        Button2 As button:
-            OnSelect: |-
-                =RemoveIf(
+        LuuYT As button:
+            OnSelect: |
+                =/*RemoveIf(
                     MaTranPhis,
                     true
+                );*/
+                Set(
+                    valMaYT,
+                    0
                 );
-                Set(showGrid, true);
+                UpdateContext(
+                    {
+                        valMaYT: If(
+                            CountIf(
+                                DL_SAN_PHAM_YT,
+                                true
+                            ) = 0,
+                            1000,
+                            Value(
+                                Last(
+                                    SortByColumns(
+                                        DL_SAN_PHAM_YT,
+                                        "cr282_ma_yeu_to_sp",
+                                        SortOrder.Ascending
+                                    )
+                                ).MA_YEU_TO_SP
+                            ) + 1
+                        )
+                    }
+                );
+                If(
+                    IsBlank(
+                        LookUp(
+                            DL_SAN_PHAM_YT,
+                            MA_SAN_PHAM = valMaSP
+                        ).MA_YEU_TO_SP
+                    ),
+                    Patch(
+                        DL_SAN_PHAM_YT,
+                        {
+                            MA_SAN_PHAM: valMaSP,
+                            MA_YEU_TO_SP: valMaYT,
+                            CHUONG_TRINH: Datafield_CT.Selected.TEN_CHUONG_TRINH,
+                            NHOM_TINH_PHI: Datafield_Nhom.Selected.TEN_NHOM_TP,
+                            PHAM_VI_DL: Datafield_PV.Selected.TEN_PHAMVI,
+                            CHECKED_DOTUOI: If(
+                                DoTuoi.Visible = true && DoTuoi.Value = true,
+                                true,
+                                false
+                            ),
+                            CHECKED_GIOITINH: If(
+                                GioiTinh.Visible = true && GioiTinh.Value = true,
+                                true,
+                                false
+                            ),
+                            CHECKED_NGANHNGHE: If(
+                                NganhNghe.Visible = true && NganhNghe.Value = true,
+                                true,
+                                false
+                            ),
+                            CHECKED_SOTIEN: If(
+                                BH_SoTien.Visible = true && BH_SoTien.Value = true,
+                                true,
+                                false
+                            ),
+                            CHECKED_SONGUOI: If(
+                                BH_SoNguoi.Visible = true && BH_SoNguoi.Value = true,
+                                true,
+                                false
+                            ),
+                            CHECKED_THOIHAN: If(
+                                BH_ThoiHan.Visible = true && BH_ThoiHan.Value = true,
+                                true,
+                                false
+                            ),
+                            CHECKED_DONGPHI: If(
+                                BH_PhuongThuc.Visible = true && BH_PhuongThuc.Value = true,
+                                true,
+                                false
+                            ),
+                            DON_VI_TIEN: DsTienTe.Selected.TIEN_TE,
+                            DO_TUOI: Datafield_DT.Selected.MO_TA,
+                            GIOI_TINH: Datafield_GT.Selected.TEN_GIOI_TINH,
+                            NGANH_NGHE: Datafield_NN.Selected.TEN_NGANH,
+                            BH_SO_TIEN: Datafield_ST.Selected.TEN_SOTIEN,
+                            BH_SO_NGUOI: Datafield_SN.Selected.TEN_SO_NGUOI,
+                            BH_THOI_HAN: Datafield_TH.Selected.TEN_THOI_HAN,
+                            BH_PHUONG_THUC_DP: Datafield_DP.Selected.TEN_PT
+                        }
+                    ),
+                    UpdateIf(
+                        DL_SAN_PHAM_YT,
+                        MA_SAN_PHAM = valMaSP,
+                        {
+                            CHUONG_TRINH: Datafield_CT.Selected.TEN_CHUONG_TRINH,
+                            NHOM_TINH_PHI: Datafield_Nhom.Selected.TEN_NHOM_TP,
+                            PHAM_VI_DL: Datafield_PV.Selected.TEN_PHAMVI,
+                            CHECKED_DOTUOI: If(
+                                DoTuoi.Visible = true && DoTuoi.Value = true,
+                                true,
+                                false
+                            ),
+                            CHECKED_GIOITINH: If(
+                                GioiTinh.Visible = true && GioiTinh.Value = true,
+                                true,
+                                false
+                            ),
+                            CHECKED_NGANHNGHE: If(
+                                NganhNghe.Visible = true && NganhNghe.Value = true,
+                                true,
+                                false
+                            ),
+                            CHECKED_SOTIEN: If(
+                                BH_SoTien.Visible = true && BH_SoTien.Value = true,
+                                true,
+                                false
+                            ),
+                            CHECKED_SONGUOI: If(
+                                BH_SoNguoi.Visible = true && BH_SoNguoi.Value = true,
+                                true,
+                                false
+                            ),
+                            CHECKED_THOIHAN: If(
+                                BH_ThoiHan.Visible = true && BH_ThoiHan.Value = true,
+                                true,
+                                false
+                            ),
+                            CHECKED_DONGPHI: If(
+                                BH_PhuongThuc.Visible = true && BH_PhuongThuc.Value = true,
+                                true,
+                                false
+                            ),
+                            DON_VI_TIEN: DsTienTe.Selected.TIEN_TE,
+                            DO_TUOI: Datafield_DT.Selected.MO_TA,
+                            GIOI_TINH: Datafield_GT.Selected.TEN_GIOI_TINH,
+                            NGANH_NGHE: Datafield_NN.Selected.TEN_NGANH,
+                            BH_SO_TIEN: Datafield_ST.Selected.TEN_SOTIEN,
+                            BH_SO_NGUOI: Datafield_SN.Selected.TEN_SO_NGUOI,
+                            BH_THOI_HAN: Datafield_TH.Selected.TEN_THOI_HAN,
+                            BH_PHUONG_THUC_DP: Datafield_DP.Selected.TEN_PT
+                        }
+                    )
+                );
+                Set(
+                    showGrid,
+                    true
+                );
             Text: ="Lưu"
             X: =976
             Y: =708
@@ -272,7 +412,7 @@
             Items: =BH_DM_NGANHNGHES
             SearchFields: =["cr282_ten_nganh"]
             SearchItems: =[]
-            Visible: =If(NganhNghe.Value=true,true,false)
+            Visible: =If(NganhNghe.Value=true && NganhNghe.Visible=true,true,false)
             Width: =840
             X: =296
             Y: =398
@@ -286,7 +426,7 @@
             Items: =BH_DM_SOTIEN
             SearchFields: =["cr282_ten_sotien"]
             SearchItems: =[]
-            Visible: =If(BH_SoTien.Value=true,true,false)
+            Visible: =If(BH_SoTien.Value=true && BH_SoTien.Visible=true,true,false)
             Width: =840
             X: =296
             Y: =457
@@ -300,7 +440,7 @@
             Items: =BH_DM_SONGUOI
             SearchFields: =["cr282_ten_so_nguoi"]
             SearchItems: =[]
-            Visible: =If(BH_SoNguoi.Value=true,true,false)
+            Visible: =If(BH_SoNguoi.Value=true && BH_SoNguoi.Visible=true,true,false)
             Width: =840
             X: =296
             Y: =513
@@ -314,7 +454,7 @@
             Items: =BH_DM_THOIHAN
             SearchFields: =["cr282_ten_thoi_han"]
             SearchItems: =[]
-            Visible: =If(BH_ThoiHan.Value=true,true,false)
+            Visible: =If(BH_ThoiHan.Value=true && BH_ThoiHan.Visible=true,true,false)
             Width: =840
             X: =296
             Y: =577
@@ -329,13 +469,13 @@
             Items: =BH_DM_PT_DONG
             SearchFields: =["cr282_ten_pt"]
             SearchItems: =[]
-            Visible: =If(BH_PhuongThuc.Value=true,true,false)
+            Visible: =If(BH_PhuongThuc.Value=true && BH_PhuongThuc.Visible=true,true,false)
             Width: =840
             X: =296
             Y: =646
             ZIndex: =23
 
-        Button2_3 As button:
+        SuaYT As button:
             OnSelect: |
                 =/*RemoveIf(
                     BH_YEUTO_CT,
