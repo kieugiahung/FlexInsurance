@@ -696,7 +696,7 @@
                     Height: =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
-                    Items: =' DL_SAN_PHAM_CT'
+                    Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=valMaSP)
                     SearchFields: =["cr282_ten_chuong_trinh"]
                     SearchItems: =[]
                     Width: =840
@@ -1081,7 +1081,7 @@
                             "cr282_gioi_tinh",
                             "cr282_nganh_nghe",
                             "cr282_ma_san_pham",
-                            "CHUONG_TRINH_GROUP"
+                            "cr282_chuong_trinh"
                         )
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
@@ -1092,7 +1092,9 @@
                     ZIndex: =2
 
                     Combo_CT As combobox:
-                        DefaultSelectedItems: =ThisItem.CHUONG_TRINH_GROUP
+                        DefaultSelectedItems: |-
+                            =//ThisItem.CHUONG_TRINH_GROUP
+                            ThisItem.cr282_chuong_trinh
                         DisplayFields: =["cr282_ten_chuong_trinh"]
                         Height: =31
                         InputTextPlaceholder: =""
@@ -1436,7 +1438,7 @@
 
                 LuuYeuTo As button:
                     OnSelect: |-
-                        =If(CountRows(DL_SAN_PHAM_MATRANPHI)>0
+                        =If(CountRows(DL_SAN_PHAM_MATRANPHI)>0,
                         RemoveIf(
                             DL_SAN_PHAM_MATRANPHI,
                             true
