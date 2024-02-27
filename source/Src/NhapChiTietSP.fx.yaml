@@ -13,6 +13,7 @@
                     0
                 ),
                 "cr282_ma_chuong_trinh",
+                "cr282_ma_chuongtrinh",
                 "cr282_ten_chuong_trinh",
                 "cr282_mo_ta",
                 "cr282_ma_san_pham",
@@ -46,7 +47,7 @@
 
             "'1. ChuongTrinh' As groupContainer.manualLayoutContainer":
                 Height: =555
-                Width: =1160
+                Width: =1207
                 X: =158
                 ZIndex: =1
 
@@ -62,9 +63,9 @@
                     Y: =255
                     ZIndex: =1
 
-                    TxtMaCT_1 As text:
+                    TxtMaCT As text:
                         BorderColor: =RGBA(15, 108, 189, 1)
-                        Default: =ThisItem.cr282_ma_chuong_trinh
+                        Default: =ThisItem.cr282_ma_chuongtrinh
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
@@ -74,7 +75,7 @@
                         Width: =168
                         ZIndex: =8
 
-                    TxtTenCT_1 As text:
+                    TxtTenCT As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_ten_chuong_trinh
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
@@ -87,7 +88,7 @@
                         X: =180
                         ZIndex: =9
 
-                    TxtMoTa_1 As text:
+                    TxtMoTa As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_mo_ta
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
@@ -100,7 +101,7 @@
                         X: =426
                         ZIndex: =10
 
-                    Btn_SuaCT_1 As button:
+                    Btn_SuaCT As button:
                         OnSelect: |-
                             =If(
                                 Or(maAdded<>"",maUpdated<>""),
@@ -122,7 +123,7 @@
                         X: =770
                         ZIndex: =17
 
-                    Btn_XoaCT_1 As button:
+                    Btn_XoaCT As button:
                         OnSelect: |-
                             =If(
                                 Or(maAdded<>"",maUpdated<>""),
@@ -130,7 +131,7 @@
                                 Refresh(' DL_SAN_PHAM_CT');
                                 RemoveIf(
                                     ' DL_SAN_PHAM_CT',
-                                    MA_CHUONG_TRINH=ThisItem.cr282_ma_chuong_trinh
+                                    ID=ThisItem.cr282_ma_chuong_trinh
                                 );
                                 Remove(tmpCTCollect,ThisItem);
                                 Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
@@ -141,29 +142,30 @@
                         X: =861
                         ZIndex: =18
 
-                    Btn_LuuCT_1 As button:
+                    Btn_LuuCT As button:
                         OnSelect: |-
                             =If(
-                                TxtTenCT_1.Text="",
+                                TxtTenCT.Text="",
                                 Notify("Bắt buộc nhập tên chương trình", NotificationType.Error,800),
                                 If(
                                     ThisItem.cr282_ma_chuong_trinh=maAdded,
                                     Patch(
                                         ' DL_SAN_PHAM_CT',
                                         {
-                                            MA_CHUONG_TRINH:ThisItem.cr282_ma_chuong_trinh,
-                                            TEN_CHUONG_TRINH:TxtTenCT_1.Text,
-                                            MO_TA:TxtMoTa_1.Text,
+                                            ID:ThisItem.cr282_ma_chuong_trinh,
+                                            MA_CHUONG_TRINH:TxtMaCT.Text,
+                                            TEN_CHUONG_TRINH:TxtTenCT.Text,
+                                            MO_TA:TxtMoTa.Text,
                                             MA_SAN_PHAM:Txt_MaSP.Text,
                                             TRANG_THAI:0
                                         }
                                     ),
                                     UpdateIf(
                                         ' DL_SAN_PHAM_CT',
-                                        MA_CHUONG_TRINH=ThisItem.cr282_ma_chuong_trinh,
+                                        ID=ThisItem.cr282_ma_chuong_trinh,
                                         {
-                                            TEN_CHUONG_TRINH:TxtTenCT_1.Text,
-                                            MO_TA:TxtMoTa_1.Text,
+                                            TEN_CHUONG_TRINH:TxtTenCT.Text,
+                                            MO_TA:TxtMoTa.Text,
                                             MA_SAN_PHAM:Txt_MaSP.Text,
                                             TRANG_THAI:0
                                         }
@@ -173,8 +175,8 @@
                                     tmpCTCollect,
                                     cr282_ma_chuong_trinh=ThisItem.cr282_ma_chuong_trinh,
                                     {
-                                        cr282_ten_chuong_trinh:TxtTenCT_1.Text,
-                                        cr282_mo_ta:TxtMoTa_1.Text,
+                                        cr282_ten_chuong_trinh:TxtTenCT.Text,
+                                        cr282_mo_ta:TxtMoTa.Text,
                                         cr282_ma_san_pham:Txt_MaSP.Text,
                                         edited:0
                                     }
@@ -193,6 +195,7 @@
                                             0
                                         ),
                                         "cr282_ma_chuong_trinh",
+                                        "cr282_ma_chuongtrinh",
                                         "cr282_ten_chuong_trinh",
                                         "cr282_mo_ta",
                                         "cr282_ma_san_pham",
@@ -211,7 +214,7 @@
                         X: =764
                         ZIndex: =19
 
-                    Btn_HuyCT_1 As button:
+                    Btn_HuyCT As button:
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_ma_chuong_trinh=maAdded,
@@ -234,13 +237,26 @@
                         X: =920
                         ZIndex: =20
 
-                    Btn_ChiTiet_1 As button:
+                    Btn_ChiTiet As button:
                         OnSelect: =
                         Text: ="Chi tiết"
                         Visible: =ThisItem.edited=0 && ThisItem.cr282_trang_thai=1
                         Width: =103
                         X: =963
                         ZIndex: =21
+
+                    TxtID As text:
+                        BorderColor: =RGBA(15, 108, 189, 1)
+                        Default: =ThisItem.cr282_ma_chuong_trinh
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        Width: =168
+                        ZIndex: =22
 
                 BadgeCanvas1_9 As Badge:
                     BasePaletteColor: =
@@ -338,29 +354,64 @@
 
                 ThemMoiCT As button:
                     Height: =36
-                    OnSelect: |
+                    OnSelect: |-
                         =If(
-                            Or(maAdded<>"",maUpdated<>""),
-                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                            UpdateContext({
-                                idMa:If(
-                                    CountIf(' DL_SAN_PHAM_CT',true)=0,
-                                    1000,
-                                    Value(Last(SortByColumns(' DL_SAN_PHAM_CT',"cr282_ma_chuong_trinh",SortOrder.Ascending)).MA_CHUONG_TRINH)+1
-                                )
-                            });
+                            Or(
+                                maAdded <> "",
+                                maUpdated <> ""
+                            ),
+                            Notify(
+                                "Có dữ liệu chưa được lưu",
+                                NotificationType.Warning,
+                                800
+                            ),
+                            UpdateContext(
+                                {
+                                    idMa: If(
+                                        CountIf(
+                                            ' DL_SAN_PHAM_CT',
+                                            true
+                                        ) = 0,
+                                        1000,
+                                        Value(
+                                            Last(
+                                                SortByColumns(
+                                                    ' DL_SAN_PHAM_CT',
+                                                    "cr282_ma_chuong_trinh",
+                                                    SortOrder.Ascending
+                                                )
+                                            ).ID
+                                        ) + 1
+                                    )
+                                }
+                            );
+                            Set(MaCT,CountRows(' DL_SAN_PHAM_CT') + 1);
                             Collect(
                                 tmpCTCollect,
                                 {
-                                    cr282_ma_chuong_trinh:Text(idMa),
-                                    cr282_ten_chuong_trinh:"",
-                                    cr282_mo_ta:"",
-                                    cr282_ma_san_pham:"",
-                                    cr282_trang_thai:0,
-                                    edited:1
+                                    cr282_ma_chuong_trinh: Text(idMa),
+                                    cr282_ma_chuongtrinh: Concatenate(
+                                        valMaSP,
+                                        "_",
+                                        If(
+                                            MaCT < 10,
+                                            "00",
+                                            If(
+                                                MaCT < 100 && MaCT >= 10,
+                                                "0",
+                                                ""
+                                            ),
+                                            Text(MaCT)
+                                        )
+                                    ),
+                                    cr282_ten_chuong_trinh: "",
+                                    cr282_mo_ta: "",
+                                    cr282_ma_san_pham: "",
+                                    cr282_trang_thai: 0,
+                                    edited: 1
                                 }
                             );
-                            UpdateContext({maAdded:Text(idMa)})
+                            UpdateContext({maAdded: Text(idMa)})
                         )
                     Text: ="Thêm mới"
                     X: =40
@@ -459,8 +510,8 @@
 
             YeuToAnhHuong As groupContainer.manualLayoutContainer:
                 Height: =768
-                Width: =1148
-                X: =196
+                Width: =1207
+                X: =148
                 ZIndex: =1
 
                 ChuongTrinh As checkbox:
