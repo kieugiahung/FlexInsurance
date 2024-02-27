@@ -83,9 +83,9 @@ ChiTietSP As screen:
                     =If(
                         Or(maAdded<>"",maUpdated<>""),
                         Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                        Refresh(DL_CHUONG_TRINH_BH);
+                        Refresh(' DL_SAN_PHAM_CT');
                         RemoveIf(
-                            DL_CHUONG_TRINH_BH,
+                            ' DL_SAN_PHAM_CT',
                             MA_CHUONG_TRINH=ThisItem.cr282_ma_chuong_trinh
                         );
                         Remove(tmpCTCollect,ThisItem);
@@ -105,7 +105,7 @@ ChiTietSP As screen:
                         If(
                             ThisItem.cr282_ma_chuong_trinh=maAdded,
                             Patch(
-                                DL_CHUONG_TRINH_BH,
+                                ' DL_SAN_PHAM_CT',
                                 {
                                     MA_CHUONG_TRINH:ThisItem.cr282_ma_chuong_trinh,
                                     TEN_CHUONG_TRINH:TxtTenCT.Text,
@@ -115,7 +115,7 @@ ChiTietSP As screen:
                                 }
                             ),
                             UpdateIf(
-                                DL_CHUONG_TRINH_BH,
+                                ' DL_SAN_PHAM_CT',
                                 MA_CHUONG_TRINH=ThisItem.cr282_ma_chuong_trinh,
                                 {
                                     TEN_CHUONG_TRINH:TxtTenCT.Text,
@@ -141,7 +141,7 @@ ChiTietSP As screen:
                             ShowColumns(
                                 AddColumns(
                                     SortByColumns(
-                                        DL_CHUONG_TRINH_BH,
+                                        ' DL_SAN_PHAM_CT',
                                         "cr282_ma_chuong_trinh",
                                         SortOrder.Ascending
                                     ),
@@ -300,9 +300,9 @@ ChiTietSP As screen:
                     Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                     UpdateContext({
                         idMa:If(
-                            CountIf(DL_CHUONG_TRINH_BH,true)=0,
+                            CountIf(' DL_SAN_PHAM_CT',true)=0,
                             1000,
-                            Value(Last(SortByColumns(DL_CHUONG_TRINH_BH,"cr282_ma_chuong_trinh",SortOrder.Ascending)).MA_CHUONG_TRINH)+1
+                            Value(Last(SortByColumns(' DL_SAN_PHAM_CT',"cr282_ma_chuong_trinh",SortOrder.Ascending)).MA_CHUONG_TRINH)+1
                         )
                     });
                     Collect(
@@ -339,7 +339,7 @@ ChiTietSP As screen:
                     If(
                         CountRows(tmpCTCollect) > 0,
                         UpdateIf(
-                            DL_CHUONG_TRINH_BH,
+                            ' DL_SAN_PHAM_CT',
                             Txt_MaSP.Text = MA_SAN_PHAM && TRANG_THAI=0,
                             {TRANG_THAI: 1}
                         )
@@ -349,7 +349,7 @@ ChiTietSP As screen:
             Text: ="Lưu thông tin"
             Visible: |-
                 =If(
-                    CountRows(Filter(DL_CHUONG_TRINH_BH,MA_SAN_PHAM=Txt_MaSP.Text)) > 0,
+                    CountRows(Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=Txt_MaSP.Text)) > 0,
                     true,
                     false
                 )
@@ -377,7 +377,7 @@ ChiTietSP As screen:
                     ShowColumns(
                         AddColumns(
                             SortByColumns(
-                                DL_CHUONG_TRINH_BH,
+                                ' DL_SAN_PHAM_CT',
                                 "cr282_ma_chuong_trinh",
                                 SortOrder.Ascending
                             ),
@@ -397,7 +397,6 @@ ChiTietSP As screen:
                     maUpdated:""
                 });
             Tooltip: ="Tải lại"
-            Visible: =false
             Width: =32
             X: =1044
             Y: =160
