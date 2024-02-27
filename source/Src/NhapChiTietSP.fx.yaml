@@ -1,11 +1,14 @@
 "NhapChiTietSP As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
-    OnVisible: |-
+    OnVisible: |
         =ClearCollect(
             tmpCTCollect,
             ShowColumns(
                 AddColumns(
                     SortByColumns(
-                       ' DL_SAN_PHAM_CT',
+                        Filter(
+                            ' DL_SAN_PHAM_CT',
+                            MA_SAN_PHAM = valMaSP
+                        ),
                         "cr282_ma_chuong_trinh",
                         SortOrder.Ascending
                     ),
@@ -21,10 +24,12 @@
                 "edited"
             )
         );
-        UpdateContext({
-            maAdded:"",
-            maUpdated:""
-        });
+        UpdateContext(
+            {
+                maAdded: "",
+                maUpdated: ""
+            }
+        );
 
     CanvasSP As fluidGrid.fluidGridWithBlankCard:
         BorderThickness: =0
@@ -1072,16 +1077,15 @@
                         =GroupBy(
                             Filter(DL_SAN_PHAM_YTCT,MA_SAN_PHAM=valMaSP),
                             "cr282_nhom_tinh_phi",
+                            "cr282_do_tuoi",
                             "cr282_pham_vi_dl",
                             "cr282_bh_phuong_thuc",
                             "cr282_bh_songuoi",
                             "cr282_bh_sotien",
                             "cr282_bh_thoihan",
-                            "cr282_do_tuoi",
                             "cr282_gioi_tinh",
                             "cr282_nganh_nghe",
-                            "cr282_ma_san_pham",
-                            "cr282_chuong_trinh"
+                            "CHUONG_TRINH_GROUP"
                         )
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
@@ -1092,16 +1096,12 @@
                     ZIndex: =2
 
                     Combo_CT As combobox:
-                        DefaultSelectedItems: |-
-                            =//ThisItem.CHUONG_TRINH_GROUP
-                            ThisItem.cr282_chuong_trinh
+                        DefaultSelectedItems: =ThisItem.CHUONG_TRINH_GROUP
                         DisplayFields: =["cr282_ten_chuong_trinh"]
                         Height: =31
                         InputTextPlaceholder: =""
                         IsSearchable: =false
-                        Items: |-
-                            =//' DL_SAN_PHAM_CT'
-                            Datafield_CT.SelectedItems
+                        Items: =Datafield_CT.SelectedItems
                         OnSelect: =Select(Parent)
                         SearchFields: =["cr282_ten_chuong_trinh"]
                         SearchItems: =[]
