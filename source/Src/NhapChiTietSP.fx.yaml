@@ -5279,7 +5279,7 @@
                 ThemMoiCT_1 As button:
                     Height: =36
                     OnSelect: |
-                        =If( Or(maAdded<>"",maUpdated<>""),
+                        =If( Or(maAddedDKC<>"",maUpdatedDKC<>""),
                             Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                             UpdateContext({
                                 idMa:If(
@@ -5299,7 +5299,7 @@
                                     edited:1
                                 }
                             );
-                          UpdateContext({maAdded:Text(idMa)})
+                          UpdateContext({maAddedDKC:Text(idMa)})
                         )
                     Text: ="Thêm mới"
                     Y: =48
