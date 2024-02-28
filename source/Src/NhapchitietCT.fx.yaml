@@ -1,7 +1,7 @@
 "NhapchitietCT As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
     OnVisible: |-
         =ClearCollect(
-            tmpGPCCollect,
+            tmpGPCCollectCT,
             ShowColumns(
                 AddColumns(
                     SortByColumns(
@@ -344,7 +344,7 @@
                 GalleryCT_8 As gallery.galleryVertical:
                     DelayItemLoading: =true
                     Height: =213
-                    Items: =tmpGPCCollect
+                    Items: =tmpGPCCollectCT
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
@@ -627,13 +627,13 @@
                             Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                             UpdateContext({
                                 idMa:If(
-                                    CountRows(tmpGPCCollect) = 0,
+                                    CountRows(tmpGPCCollectCT) = 0,
                                     Max(DL_CHUONGTRINH_GPS, ID) + 1,
                                     Max(DL_CHUONGTRINH_GPS, ID) + 1
                                 )
                             });
                             Collect(
-                                tmpGPCCollect,
+                                tmpGPCCollectCT,
                                 {
                                     cr282_id:Text(idMa),
                                     cr282_ma_san_pham:valMaSP,
