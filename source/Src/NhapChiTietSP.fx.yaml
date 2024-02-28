@@ -655,10 +655,9 @@
                             // chuyển dữ liệu quyền lợi khác
                             ForAll(Filter(DL_SAN_PHAM_QL_KHACS,MA_SP = valMaSP ) As dkc,
                                 Patch(
-                                    DL_CHUONGTRINH_QL_KHAC,
-                                    Defaults(DL_CHUONGTRINH_QL_KHAC),
+                                    DL_CHUONGTRINH_QL_KHACS,
+                                    Defaults(DL_CHUONGTRINH_QL_KHACS),
                                     {
-                                        MA_D: Max(DL_CHUONGTRINH_DKCHUNGS, MA_DIEU_KHOAN) + 1
                                         MA_SAN_PHAM:valMaSP,
                                         MA_CHUONG_TRINH: CT.MA_CHUONG_TRINH
                                     }
