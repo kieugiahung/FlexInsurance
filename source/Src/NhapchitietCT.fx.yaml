@@ -1456,10 +1456,9 @@
                                     Patch(
                                         DL_CHUONGTRINH_QLCTS,
                                         {
-                                            //cuongbs
                                             MA_QL_CT:CbxQLQLCTCT.Selected.MA_QL_CHITIET,
-                                            MA_SAN_PHAM:"1000",
-                                            MA_CHUONG_TRINH:"1000",
+                                            MA_SAN_PHAM:objCT.MA_SAN_PHAM,
+                                            MA_CHUONG_TRINH:VarCT,
                                             TT_HIENTHI:Value(TiTthtQLCTCT.Text),
                                             MA_NHOM_QL:CbxNhomQLQLCTCT.Selected.MA_NHOM_QL,
                                             MA_NHOMQL_SP:Blank(),
@@ -1477,8 +1476,8 @@
                                         DL_CHUONGTRINH_QLCTS,
                                         MA_QL_CT=ThisItem.cr282_ma_ql_ct,
                                         {
-                                            MA_SAN_PHAM:"1000",
-                                            MA_CHUONG_TRINH:"1000",
+                                            MA_SAN_PHAM:objCT.MA_SAN_PHAM,
+                                            MA_CHUONG_TRINH:VarCT,
                                             TT_HIENTHI:Value(TiTthtQLCTCT.Text),
                                             MA_NHOM_QL:CbxNhomQLQLCTCT.Selected.MA_NHOM_QL,
                                             MA_NHOMQL_SP:Blank(),
@@ -1497,8 +1496,8 @@
                                     tmpQLCTCTCollect,
                                     cr282_ma_ql_ct=ThisItem.cr282_ma_ql_ct,
                                     {
-                                        cr282_ma_san_pham:"1000",
-                                        cr282_ma_chuong_trinh:"1000",
+                                        cr282_ma_san_pham:objCT.MA_SAN_PHAM,
+                                        cr282_ma_chuong_trinh:VarCT,
                                         cr282_tt_hienthi:Value(TiTthtQLCTCT.Text),
                                         cr282_ma_nhom_ql:CbxNhomQLQLCTCT.Selected.MA_NHOM_QL,
                                         cr282_ma_nhomql_sp:Blank(),
@@ -1522,7 +1521,7 @@
                                                 Filter(
                                                     DL_CHUONGTRINH_QLCTS,
                                                     //cuong_bs
-                                                    MA_CHUONG_TRINH="1000" && MA_SAN_PHAM="1000"
+                                                    MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=objCT.MA_SAN_PHAM
                                                 ),
                                                 "cr282_ma_ql_ct",
                                                 SortOrder.Ascending
@@ -1901,8 +1900,7 @@
                                     SortByColumns(
                                         Filter(
                                             DL_CHUONGTRINH_QLCTS,
-                                            //cuong_bs
-                                            MA_CHUONG_TRINH="1000" && MA_SAN_PHAM="1000"
+                                            MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=objCT.MA_SAN_PHAM
                                         ),
                                         "cr282_ma_ql_ct",
                                         SortOrder.Ascending
@@ -2288,8 +2286,8 @@
                                         {
                                             //cuongbs
                                             MA_DL_CT:ThisItem.cr282_ma_dl_ct,
-                                            MA_SAN_PHAM:"1000",
-                                            MA_CHUONG_TRINH:"1000",
+                                            MA_SAN_PHAM:objCT.MA_SAN_PHAM,
+                                            MA_CHUONG_TRINH:VarCT,
                                             MA_NHOM_QL_CT:CbxNhomQLQLKCT.Selected.MA_NHOM_QL,
                                             MO_TA_CT:TiMoTaQLKCT.Text
                                         }
@@ -2298,8 +2296,8 @@
                                         DL_CHUONGTRINH_QL_KHACS,
                                         MA_DL_CT=ThisItem.cr282_ma_dl_ct,
                                         {
-                                            MA_SAN_PHAM:"1000",
-                                            MA_CHUONG_TRINH:"1000",
+                                            MA_SAN_PHAM:objCT.MA_SAN_PHAM,
+                                            MA_CHUONG_TRINH:VarCT,
                                             MA_NHOM_QL_CT:CbxNhomQLQLKCT.Selected.MA_NHOM_QL,
                                             MO_TA_CT:TiMoTaQLKCT.Text
                                         }
@@ -2309,8 +2307,8 @@
                                     tmpQLKCTCollect,
                                     cr282_ma_dl_ct=ThisItem.cr282_ma_dl_ct,
                                     {
-                                        cr282_ma_san_pham:"1000",
-                                        cr282_ma_chuong_trinh:"1000",
+                                        cr282_ma_san_pham:objCT.MA_SAN_PHAM,
+                                        cr282_ma_chuong_trinh:VarCT,
                                         cr282_ma_nhom_ql_ct:CbxNhomQLQLKCT.Selected.MA_NHOM_QL,
                                         cr282_mo_ta_ct:TiMoTaQLKCT.Text,
                                         edited:0
@@ -2463,7 +2461,10 @@
                             ShowColumns(
                                 AddColumns(
                                     SortByColumns(
-                                        DL_CHUONGTRINH_QL_KHACS,
+                                        Filter(
+                                            DL_CHUONGTRINH_QL_KHACS,
+                                            MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=objCT.MA_SAN_PHAM
+                                        ),
                                         "cr282_ma_dl_ct",
                                         SortOrder.Ascending
                                     ),
@@ -2499,18 +2500,17 @@
                             Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                             UpdateContext({
                                 idMaQLKCT:If(
-                                    //cuongbs
-                                    CountIf(DL_CHUONGTRINH_QL_KHACS,MA_SAN_PHAM="1000" && MA_CHUONG_TRINH="1000")=0,
+                                    CountIf(DL_CHUONGTRINH_QL_KHACS,true)=0,
                                     1000,
-                                    Value(Last(SortByColumns(Filter(DL_CHUONGTRINH_QL_KHACS,MA_SAN_PHAM="1000" && MA_CHUONG_TRINH="1000"),"cr282_ma_dl_ct",SortOrder.Ascending)).MA_DL_CT)+1
+                                    Value(Last(SortByColumns(DL_CHUONGTRINH_QL_KHACS,"cr282_ma_dl_ct",SortOrder.Ascending)).MA_DL_CT)+1
                                 )
                             });
                             Collect(
                                 tmpDKCCTCollect,
                                 {
                                     cr282_ma_dl_ct:Text(idMaQLKCT),
-                                    cr282_ma_san_pham:"1000",
-                                    cr282_ma_chuong_trinh:"1000",
+                                    cr282_ma_san_pham:objCT.MA_SAN_PHAM,
+                                    cr282_ma_chuong_trinh:VarCT,
                                     cr282_ma_nhom_ql_ct:Blank(),
                                     cr282_mo_ta_ct:Blank(),
                                     edited:1
