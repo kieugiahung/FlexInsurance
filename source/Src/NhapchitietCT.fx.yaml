@@ -49,6 +49,138 @@
                 maUpdatedPhiKhac: ""
             }
         );
+        UpdateContext(
+            {
+                objCT:LookUp(' DL_SAN_PHAM_CT',MA_CHUONG_TRINH=VarCT),
+                objSP:LookUp(DL_SAN_PHAM,MA_SAN_PHAM=objCT.MA_SAN_PHAM)
+            }
+        );
+        ClearCollect(
+            tmpDKCCTCollect,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                        Filter(
+                            DL_CHUONGTRINH_DKCHUNGS,
+                            MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=objCT.MA_SAN_PHAM
+                        ),
+                        "cr282_ma_dieu_khoan",
+                        SortOrder.Ascending
+                    ),
+                    "edited",
+                    0
+                ),
+                "cr282_ma_dieu_khoan",
+                "cr282_nhom_thong_tin",
+                "cr282_thong_tin",
+                "cr282_noi_dung",
+                "edited"
+            )
+        );
+        UpdateContext({
+            maAddedDKCCT:"",
+            maUpdatedDKCCT:""
+        });
+        ClearCollect(
+            tmpQLCTCTCollect,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                        Filter(
+                            DL_CHUONGTRINH_QLCTS,
+                            MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=objCT.MA_SAN_PHAM
+                        ),
+                        "cr282_ma_ql_ct",
+                        SortOrder.Ascending
+                    ),
+                    "edited",
+                    0
+                ),
+                "cr282_ma_ql_ct",
+                "cr282_gh_solan_nam",
+                "cr282_gh_songay_nam",
+                "cr282_gh_sotien_benh",
+                "cr282_gh_sotien_nam",
+                "cr282_gh_sotien_ngay",
+                "cr282_gh_sotien_vu",
+                "cr282_ma_nhomql_sp",
+                "cr282_ma_nhom_ql",
+                "cr282_pt_tu_chitra",
+                "cr282_so_tien_bh",
+                "cr282_tt_hienthi",
+                "cr282_ma_san_pham",
+                "cr282_ma_chuong_trinh",
+                "edited"
+            )
+        );
+        UpdateContext({
+            maAddedQLCTCT:"",
+            maUpdatedQLCTCT:""
+        });
+        ClearCollect(
+            tmpQLKCTCollect,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                        Filter(
+                            DL_CHUONGTRINH_QL_KHACS,
+                            MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=objCT.MA_SAN_PHAM
+                        ),
+                        "cr282_ma_dl_ct",
+                        SortOrder.Ascending
+                    ),
+                    "edited",
+                    0
+                ),
+                "cr282_ma_dl_ct",
+                "cr282_ma_san_pham",
+                "cr282_ma_chuong_trinh",
+                "cr282_ma_nhom_ql_ct",
+                "cr282_mo_ta_ct",
+                "edited"
+            )
+        );
+        UpdateContext({
+            maAddedQLKCT:"",
+            maUpdatedQLKCT:""
+        });
+        ClearCollect(
+            dsNhomTT,
+            {
+                Key:"Đối tượng bảo hiểm",
+                Value:1
+            },
+            {
+                Key:"Phạm vi rủi ro được bảo hiểm",
+                Value:2
+            },
+            {
+                Key:"Điều khoản loại trừ",
+                Value:3
+            },
+            {
+                Key:"Phương thức đóng phí",
+                Value:4
+            }
+            ,
+            {
+                Key:"Thời hạn bảo hiểm",
+                Value:5
+            }
+            ,
+            {
+                Key:"Các quy định giải quyết tranh chấp",
+                Value:6
+            },
+            {
+                Key:"Quyền lợi và nghĩa vụ bên mua bảo hiểm, người được bảo hiểm",
+                Value:7
+            }
+            , {
+                Key:"Trách nhiệm Doanh nghiệp bảo hiểm",
+                Value:8
+            }
+        );
 
     Canvas1 As fluidGrid.fluidGridWithBlankCard:
         BorderThickness: =0
