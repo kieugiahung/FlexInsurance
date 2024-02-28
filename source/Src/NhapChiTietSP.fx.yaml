@@ -432,7 +432,9 @@
                         ZIndex: =20
 
                     Btn_ChiTiet_1 As button:
-                        OnSelect: =
+                        OnSelect: |-
+                            =Set(VarCT, ThisItem.cr282_ma_chuong_trinh);
+                            Navigate(NhapchitietCT);
                         Size: =13
                         Text: ="Chi tiết"
                         Visible: =ThisItem.edited=0 && ThisItem.cr282_trang_thai=1
