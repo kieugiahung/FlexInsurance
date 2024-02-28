@@ -1,11 +1,11 @@
 "NhapchitietCT As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
     OnVisible: |-
         =ClearCollect(
-            tmpPhiKhacCollect,
+            tmpGPCCollect,
             ShowColumns(
                 AddColumns(
                     SortByColumns(
-                        Filter(DL_SAN_PHAM_PHIKHACS,MA_SAN_PHAM= valMaSP),
+                        Filter(DL_CHUONGTRINH_GPS,MA_SAN_PHAM=valMaSP),
                         "cr282_id",
                         SortOrder.Ascending
                     ),
@@ -14,17 +14,15 @@
                 ),
                 "cr282_id",
                 "cr282_ma_san_pham",
-                "cr282_nhom_thong_tin",
+                "cr282_thong_tin",
                 "cr282_mo_ta",
+                "cr282_so_tien",
+                "cr282_donvi_tien",
+                "cr282_ty_le",
                 "edited"
             )
         );
-        UpdateContext(
-            {
-                maAddedPhiKhac:"",
-                maUpdatedPhiKhac: ""
-            }
-        );
+        UpdateContext({maAddedGP:"",maUpdatedGP:""});
 
     Canvas1 As fluidGrid.fluidGridWithBlankCard:
         BorderThickness: =0
