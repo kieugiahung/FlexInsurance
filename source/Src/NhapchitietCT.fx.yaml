@@ -385,7 +385,7 @@
                                     DL_CHUONGTRINH_GPS,
                                     ID=ThisItem.cr282_id
                                 );
-                                Remove(tmpGPCCollect,ThisItem);
+                                Remove(tmpGPCCollectCT,ThisItem);
                                 Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
                             )
                         Text: ="Xóa"
@@ -426,7 +426,7 @@
                                     )
                                 );
                                 UpdateIf(
-                                    tmpGPCCollect,
+                                    tmpGPCCollectCT,
                                     cr282_id=ThisItem.cr282_id,
                                     {
                                             cr282_thong_tin:TxtThongtin_2.Text,
@@ -439,7 +439,7 @@
                                 );
                                 Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
                                 ClearCollect(
-                                    tmpGPCCollect,
+                                    tmpGPCCollectCT,
                                     ShowColumns(
                                         AddColumns(
                                             SortByColumns(
