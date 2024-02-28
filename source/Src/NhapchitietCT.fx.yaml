@@ -874,7 +874,7 @@
                 ZIndex: =3
 
                 TextCanvas3 As Text:
-                    DisplayMode: =DisplayMode.Edit
+                    DisplayMode: =DisplayMode.View
                     FontColor: =
                     Height: =32
                     Text: ="Mã sản phẩm"
@@ -884,7 +884,7 @@
                     ZIndex: =1
 
                 TextCanvas3_1 As Text:
-                    DisplayMode: =DisplayMode.Edit
+                    DisplayMode: =DisplayMode.View
                     FontColor: =
                     Height: =32
                     Text: ="Mã chương trình"
@@ -894,7 +894,7 @@
                     ZIndex: =2
 
                 TextCanvas3_2 As Text:
-                    DisplayMode: =DisplayMode.Edit
+                    DisplayMode: =DisplayMode.View
                     FontColor: =
                     Height: =32
                     Text: ="Tên chương trình"
@@ -904,7 +904,7 @@
                     ZIndex: =3
 
                 TextCanvas3_3 As Text:
-                    DisplayMode: =DisplayMode.Edit
+                    DisplayMode: =DisplayMode.View
                     FontColor: =
                     Height: =32
                     Text: ="Tên sản phẩm"
@@ -915,9 +915,10 @@
 
                 "TiMaSPCTCT As 'Text input'":
                     BasePaletteColor: =
-                    DisplayMode: =DisplayMode.Edit
+                    DisplayMode: =DisplayMode.View
                     FontColor: =
                     Height: =32
+                    Value: =objSP.MA_SAN_PHAM
                     Width: =320
                     X: =216
                     Y: =30
@@ -925,9 +926,10 @@
 
                 "TiTenSPCTCT As 'Text input'":
                     BasePaletteColor: =
-                    DisplayMode: =DisplayMode.Edit
+                    DisplayMode: =DisplayMode.View
                     FontColor: =
                     Height: =32
+                    Value: =objSP.TEN_SAN_PHAM
                     Width: =320
                     X: =835
                     Y: =30
@@ -935,9 +937,10 @@
 
                 "TiMaCTCTCT As 'Text input'":
                     BasePaletteColor: =
-                    DisplayMode: =DisplayMode.Edit
+                    DisplayMode: =DisplayMode.View
                     FontColor: =
                     Height: =32
+                    Value: =objCT.MA_CHUONG_TRINH
                     Width: =320
                     X: =216
                     Y: =105
@@ -945,9 +948,10 @@
 
                 "TiTenCTCTCT As 'Text input'":
                     BasePaletteColor: =
-                    DisplayMode: =DisplayMode.Edit
+                    DisplayMode: =DisplayMode.View
                     FontColor: =
                     Height: =32
+                    Value: =objCT.TEN_CHUONG_TRINH
                     Width: =320
                     X: =835
                     Y: =105
@@ -1080,8 +1084,8 @@
                                             NHOM_THONG_TIN:CbxNhomTTDKCCT.Selected.Value,
                                             THONG_TIN:CbxTTinDKCCT.Selected.MA_TTIN,
                                             NOI_DUNG:TiNDDCKCT.Text,
-                                            MA_CHUONG_TRINH:"1000",
-                                            MA_SP:"1000"
+                                            MA_CHUONG_TRINH:VarCT,
+                                            MA_SP:objCT.MA_SAN_PHAM
                                         }
                                     ),
                                     UpdateIf(
@@ -1091,8 +1095,8 @@
                                             NHOM_THONG_TIN:CbxNhomTTDKCCT.Selected.Value,
                                             THONG_TIN:CbxTTinDKCCT.Selected.MA_TTIN,
                                             NOI_DUNG:TiNDDCKCT.Text,
-                                            MA_CHUONG_TRINH:"1000",
-                                            MA_SP:"1000"
+                                            MA_CHUONG_TRINH:VarCT,
+                                            MA_SP:objCT.MA_SAN_PHAM
                                         }
                                     )
                                 );
@@ -1115,7 +1119,7 @@
                                                 Filter(
                                                     DL_CHUONGTRINH_DKCHUNGS,
                                                     //cuong_bs
-                                                    MA_CHUONG_TRINH="1000" && MA_SP="1000"
+                                                    MA_CHUONG_TRINH=VarCT && MA_SP=objCT.MA_SAN_PHAM
                                                 ),
                                                 "cr282_ma_dieu_khoan",
                                                 SortOrder.Ascending
@@ -1302,8 +1306,7 @@
                                     SortByColumns(
                                         Filter(
                                             DL_CHUONGTRINH_DKCHUNGS,
-                                            //cuongbs
-                                            MA_CHUONG_TRINH="1000" && MA_SP="1000"
+                                            MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=objCT.MA_SAN_PHAM
                                         ),
                                         "cr282_ma_dieu_khoan",
                                         SortOrder.Ascending
@@ -1340,9 +1343,9 @@
                             UpdateContext({
                                 idMaDKCCT:If(
                                     //cuongbs
-                                    CountIf(DL_CHUONGTRINH_DKCHUNGS,MA_SP="1000" && MA_CHUONG_TRINH="1000")=0,
+                                    CountIf(DL_CHUONGTRINH_DKCHUNGS,true)=0,
                                     1000,
-                                    Value(Last(SortByColumns(Filter(DL_CHUONGTRINH_DKCHUNGS,MA_SP="1000" && MA_CHUONG_TRINH="1000"),"cr282_ma_dieu_khoan",SortOrder.Ascending)).MA_DIEU_KHOAN)+1
+                                    Value(Last(SortByColumns(DL_CHUONGTRINH_DKCHUNGS,"cr282_ma_dieu_khoan",SortOrder.Ascending)).MA_DIEU_KHOAN)+1
                                 )
                             });
                             Collect(
