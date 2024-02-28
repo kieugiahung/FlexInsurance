@@ -181,6 +181,37 @@
                 Value:8
             }
         );
+        
+        ClearCollect(
+            TmpMaTraPhiCT,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                        Filter(
+                            DL_CHUONGTRINH_MATRANPHIS,
+                            MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=VarCT
+                        ),
+                        "cr282_id",
+                        SortOrder.Ascending
+                    ),
+                    "edited",
+                    0
+                ),
+                "cr282_id",
+                "cr282_ma_san_pham",
+                "cr282_ma_chuong_trinh",
+                "cr282_chuong_trinh",
+                "cr282_nhom_tinh_phi",
+                "cr282_pham_vi_dl",
+                "cr282_do_tuoi",
+                "cr282_gioi_tinh",
+                "edited"
+            )
+        );
+        UpdateContext({
+            maAddedMatranCT:"",
+            maUpdateMatranCT:""
+        });
 
     Canvas1 As fluidGrid.fluidGridWithBlankCard:
         BorderThickness: =0
