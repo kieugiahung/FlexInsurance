@@ -6706,7 +6706,7 @@
             BorderStyle: =BorderStyle.Solid
             DisplayMode: =DisplayMode.Edit
             Fill: =RGBA(0, 0, 0, 0)
-            Height: =725
+            Height: =885
             Width: =1366
             X: =0
             Y: =3
@@ -7067,6 +7067,271 @@
                     Text: ="4.2 Thông tin giảm trừ phí"
                     Width: =1197
                     ZIndex: =17
+
+            "'4.3Thongtinphikhac' As groupContainer.manualLayoutContainer":
+                Height: =386
+                Width: =1208
+                X: =152
+                Y: =452
+                ZIndex: =2
+
+                GalleryCT_4 As gallery.galleryVertical:
+                    DelayItemLoading: =true
+                    Height: =257
+                    Items: =tmpPhiKhacCollect
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    NavigationStep: =0
+                    TemplateSize: =40
+                    Width: =1218
+                    Y: =129
+                    ZIndex: =1
+
+                    Btn_SuaCT_4 As button:
+                        OnSelect: |-
+                            =If(
+                                Or(maAddedPhiKhac<>"",maAddedPhiKhac<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                UpdateIf(
+                                    tmpPhiKhacCollect,
+                                    cr282_id=ThisItem.cr282_id,
+                                    {
+                                        edited:1
+                                    }
+                                );
+                                UpdateContext({
+                                    maUpdatedGP:ThisItem.cr282_id
+                                })
+                            )
+                        Text: ="Sửa"
+                        Visible: =ThisItem.edited=0
+                        Width: =75
+                        X: =989
+                        ZIndex: =17
+
+                    Btn_XoaCT_4 As button:
+                        OnSelect: |-
+                            =If(
+                                Or(maAddedPhiKhac<>"",maAddedPhiKhac<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                Refresh(DL_SAN_PHAM_PHIKHACS);
+                                RemoveIf(
+                                    DL_SAN_PHAM_PHIKHACS,
+                                    ID=ThisItem.cr282_id
+                                );
+                                Remove(tmpPhiKhacCCollect,ThisItem);
+                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
+                            )
+                        Text: ="Xóa"
+                        Visible: =ThisItem.edited=0
+                        Width: =85
+                        X: =1093
+                        ZIndex: =18
+
+                    Btn_LuuCT_4 As button:
+                        OnSelect: |
+                            =
+                                If( ThisItem.cr282_id=maAddedPhiKhac,
+                                    Patch(
+                                        DL_SAN_PHAM_PHIKHACS,
+                                        {
+                                            ID:ThisItem.cr282_id,
+                                            NHOM_THONG_TIN:TxtNhom_thongtin.Text ,
+                                            MO_TA:TxtMota.Text
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        DL_SAN_PHAM_PHIKHACS,
+                                        ID=ThisItem.cr282_id,
+                                        {
+                                            NHOM_THONG_TIN:TxtNhom_thongtin.Text ,
+                                            MO_TA:TxtMota.Text
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpPhiKhacCollect,
+                                    cr282_id=ThisItem.cr282_id,
+                                    {
+                                           cr282_nhom_thong_tin:TxtNhom_thongtin.Text,
+                                           cr282_mo_ta: TxtMota.Text
+                                    }
+                                );
+                                Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
+                                ClearCollect(
+                                    tmpPhiKhacCollect,
+                                    ShowColumns(
+                                        AddColumns(
+                                            SortByColumns(
+                                                Filter(DL_SAN_PHAM_PHIKHACS,MA_SAN_PHAM="PTI_CARE"),
+                                                "cr282_id",
+                                                SortOrder.Ascending
+                                            ),
+                                            "edited",
+                                            0
+                                        ),
+                                    "cr282_id",
+                                    "cr282_ma_san_pham",
+                                    "cr282_nhom_thong_tin",
+                                    "cr282_mo_ta",
+                                    "edited"
+                                    )
+                                );
+                                UpdateContext({
+                                    maAddedPhiKhac:"",
+                                    maUpdatedPhiKhac:""
+                                });
+                        Text: ="Lưu"
+                        Visible: =ThisItem.edited=1
+                        Width: =75
+                        X: =985
+                        ZIndex: =19
+
+                    Btn_HuyCT_4 As button:
+                        OnSelect: |-
+                            =If(
+                                ThisItem.cr282_id=maAddedPhiKhac,
+                                Remove(tmpPhiKhacCollect,ThisItem),
+                                UpdateIf(
+                                    tmpPhiKhacCollect,
+                                    cr282_id=ThisItem.cr282_id,
+                                    {
+                                        edited:0
+                                    }
+                                )
+                            );
+                             Set(  maAddedPhiKhac, "");
+                             Set(  maUpdatedPhiKhac,"");
+                        Text: ="Hủy"
+                        Visible: =ThisItem.edited=1
+                        Width: =85
+                        X: =1110
+                        ZIndex: =20
+
+                    TxtID_2 As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_id
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        Width: =134
+                        X: =3
+                        ZIndex: =21
+
+                    TxtNhom_thongtin As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_nhom_thong_tin
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =448
+                        X: =3
+                        ZIndex: =22
+
+                    TxtMota As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_mo_ta
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =498
+                        X: =462
+                        ZIndex: =23
+
+                BadgeCanvas1_23 As Badge:
+                    BasePaletteColor: =
+                    Content: =""
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =30
+                    Visible: =true
+                    Width: =1189
+                    X: =0
+                    Y: =102
+                    ZIndex: =2
+
+                TextCanvas2_95 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =38
+                    Size: =14
+                    Text: ="Nhóm thông tin"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =185
+                    X: =19
+                    Y: =98
+                    ZIndex: =3
+
+                TextCanvas2_94 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =34
+                    Size: =14
+                    Text: ="Mô tả"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =96
+                    X: =471
+                    Y: =94
+                    ZIndex: =4
+
+                TextCanvas2_96 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =34
+                    Size: =14
+                    Text: ="Thao tác"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =96
+                    X: =1055
+                    Y: =102
+                    ZIndex: =5
+
+                ThemMoiCT_4 As button:
+                    Height: =36
+                    OnSelect: |
+                        =If( Or(maAddedPhiKhac<>"",maUpdatedPhiKhac<>""),
+                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                            UpdateContext({
+                                idMa:If(
+                                    CountRows(tmpPhiKhacCollect) = 0,
+                                    1000,
+                                    Max(DL_SAN_PHAM_PHIKHACS, ID) + 1
+                                )
+                            });
+                            Collect(
+                                tmpPhiKhacCollect,
+                                {
+                                    cr282_id:Text(idMa),
+                                    cr282_ma_san_pham:"",
+                                    cr282_nhom_thong_tin:"",
+                                    cr282_mo_ta:"",
+                                    edited:1
+                                }
+                            );
+                          UpdateContext({maAddedPhiKhac:Text(idMa)})
+                        )
+                    Text: ="Thêm mới"
+                    Y: =48
+                    ZIndex: =11
+
+                Label1_11 As label:
+                    Align: =Align.Justify
+                    FontWeight: =FontWeight.Bold
+                    Height: =44
+                    Text: ="4.3. Thông tin phí khác"
+                    Width: =1076
+                    Y: =4
+                    ZIndex: =13
 
     LeftNavigation_21 As LeftNavigation_9:
         Width: =LeftNavigation_21.MenuWidth
