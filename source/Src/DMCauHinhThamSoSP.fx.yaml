@@ -53,12 +53,19 @@ DMCauHinhThamSoSP As screen:
         });
     Width: =Max(1500, App.MinScreenWidth)
 
+    LeftNavigation_17 As LeftNavigation_9:
+        Height: =800
+        Width: =LeftNavigation_17.MenuWidth
+        X: =89
+        Y: =54
+        ZIndex: =2
+
     ContainerTong As groupContainer.manualLayoutContainer:
         Height: =800
         Width: =1288
         X: =159
         Y: =54
-        ZIndex: =1
+        ZIndex: =3
 
         ContainerYTAH As groupContainer.manualLayoutContainer:
             Height: =380
@@ -126,7 +133,7 @@ DMCauHinhThamSoSP As screen:
                     X: =150
                     ZIndex: =9
 
-                IconEditYTAH As icon.Edit:
+                IconSuaYTAH As icon.Edit:
                     Color: =RGBA(83, 144, 164, 1)
                     Height: =40
                     Icon: =Icon.Edit
@@ -142,7 +149,9 @@ DMCauHinhThamSoSP As screen:
                                 }
                             );
                             UpdateContext({
-                                maUpdatedYTAH:ThisItem.cr282_ma_yeu_to
+                                maUpdatedYTAH:ThisItem.cr282_ma_yeu_to,
+                                tmpHLTuYTAH:ThisItem.cr282_hieu_luc_tu,
+                        	    tmpHLDenYTAH:ThisItem.cr282_hieu_luc_den
                             })
                         )
                     Tooltip: ="Sửa"
@@ -227,7 +236,7 @@ DMCauHinhThamSoSP As screen:
                                 maAddedYTAH:"",
                                 maUpdatedYTAH:""
                             });
-                            Reset(TextFilterYTAH); Reset(CbxFilterYTAH)
+                            Reset(TextFilterYTAH); Reset(CbxFilterYTAH); Reset(CbxFilterValueYTAH)
                         )
                     Tooltip: ="Lưu"
                     Visible: =ThisItem.edited=1
@@ -247,7 +256,9 @@ DMCauHinhThamSoSP As screen:
                                 tmpYTAHCollect,
                                 cr282_ma_yeu_to=ThisItem.cr282_ma_yeu_to,
                                 {
-                                    edited:0
+                                    edited:0,
+                                    cr282_hieu_luc_tu:tmpHLTuYTAH,
+                                    cr282_hieu_luc_den:tmpHLDenYTAH
                                 }
                             )
                         );
@@ -300,7 +311,15 @@ DMCauHinhThamSoSP As screen:
                     DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                     Format: ="dd/mm/yyyy"
                     InputTextPlaceholder: =""
-                    OnSelect: =
+                    OnSelect: |-
+                        =UpdateIf(
+                            tmpYTAHCollect,
+                            cr282_ma_yeu_to=ThisItem.cr282_ma_yeu_to,
+                            {
+                                cr282_hieu_luc_tu:DpHLTuYTAH.SelectedDate,
+                                cr282_hieu_luc_den:Blank()
+                            }
+                        )
                     Tooltip: ="Nhập ngày hiệu lực"
                     Width: =218
                     X: =960
@@ -315,6 +334,15 @@ DMCauHinhThamSoSP As screen:
                     DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                     Format: ="dd/mm/yyyy"
                     InputTextPlaceholder: =
+                    OnSelect: |-
+                        =UpdateIf(
+                            tmpYTAHCollect,
+                            cr282_ma_yeu_to=ThisItem.cr282_ma_yeu_to,
+                            {
+                                cr282_hieu_luc_tu:Blank(),
+                                cr282_hieu_luc_den:DpHLDenYTAH.SelectedDate
+                            }
+                        )
                     Tooltip: ="Nhập ngày hiệu lực"
                     Width: =228
                     X: =727
@@ -636,7 +664,7 @@ DMCauHinhThamSoSP As screen:
                     X: =11
                     ZIndex: =8
 
-                IconEditNQLNV As icon.Edit:
+                IconSuaNQLNV As icon.Edit:
                     Color: =RGBA(83, 144, 164, 1)
                     Height: =40
                     Icon: =Icon.Edit
@@ -652,7 +680,9 @@ DMCauHinhThamSoSP As screen:
                                 }
                             );
                             UpdateContext({
-                                maUpdatedNQL:ThisItem.cr282_ma_nhomql_lhnv
+                                maUpdatedNQL:ThisItem.cr282_ma_nhomql_lhnv,
+                                tmpHLTuNQL:ThisItem.cr282_hieu_luc_tu,
+                        	    tmpHLDenNQL:ThisItem.cr282_hieu_luc_den
                             })
                         )
                     Tooltip: ="Sửa"
@@ -737,7 +767,7 @@ DMCauHinhThamSoSP As screen:
                                 maAddedNQL:"",
                                 maUpdatedNQL:""
                             });
-                            Reset(TextFilterNQLNV); Reset(CbxFilterNQLNV)
+                            Reset(TextFilterNQLNV); Reset(CbxFilterNQLNV);Reset(CbxFilterValueNQLNVNQL);Reset(CbxFilterValueNQLNVLHNV)
                         )
                     Tooltip: ="Lưu"
                     Visible: =ThisItem.edited=1
@@ -757,7 +787,9 @@ DMCauHinhThamSoSP As screen:
                                 tmpNQLLHNVCollect,
                                 cr282_ma_nhomql_lhnv=ThisItem.cr282_ma_nhomql_lhnv,
                                 {
-                                    edited:0
+                                    edited:0,
+                                    cr282_hieu_luc_tu:tmpHLTuNQL,
+                                    cr282_hieu_luc_den:tmpHLDenNQL
                                 }
                             )
                         );
@@ -810,6 +842,15 @@ DMCauHinhThamSoSP As screen:
                     DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                     Format: ="dd/mm/yyyy"
                     InputTextPlaceholder: =""
+                    OnSelect: |-
+                        =UpdateIf(
+                            tmpNQLLHNVCollect,
+                            cr282_ma_nhomql_lhnv=ThisItem.cr282_ma_nhomql_lhnv,
+                            {
+                                cr282_hieu_luc_tu:DpHLTuNQLNV.SelectedDate,
+                                cr282_hieu_luc_den:Blank()
+                            }
+                        )
                     Tooltip: ="Nhập ngày hiệu lực"
                     Width: =218
                     X: =960
@@ -824,6 +865,15 @@ DMCauHinhThamSoSP As screen:
                     DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                     Format: ="dd/mm/yyyy"
                     InputTextPlaceholder: =""
+                    OnSelect: |-
+                        =UpdateIf(
+                            tmpNQLLHNVCollect,
+                            cr282_ma_nhomql_lhnv=ThisItem.cr282_ma_nhomql_lhnv,
+                            {
+                                cr282_hieu_luc_tu:Blank(),
+                                cr282_hieu_luc_den:DpHLDenNQLNV.SelectedDate
+                            }
+                        )
                     Tooltip: ="Nhập ngày hiệu lực"
                     Width: =228
                     X: =727
@@ -1171,11 +1221,4 @@ DMCauHinhThamSoSP As screen:
                     FieldVariantName: ="textualColumn"
                     Order: =1
                     ZIndex: =24
-
-    LeftNavigation_17 As LeftNavigation_9:
-        Height: =800
-        Width: =LeftNavigation_17.MenuWidth
-        X: =89
-        Y: =54
-        ZIndex: =2
 
