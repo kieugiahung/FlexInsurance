@@ -1,0 +1,312 @@
+"NhapchitietCT As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
+
+    Canvas1 As fluidGrid.fluidGridWithBlankCard:
+        BorderThickness: =0
+        Height: =Parent.Height - Self.Y
+        Width: =Parent.Width
+        Y: =
+        ZIndex: =3
+
+        DataCard7 As dataCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =0
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =980
+            Width: =Parent.Width
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+            "'4.3Thongtinphikhac_1' As groupContainer.manualLayoutContainer":
+                Height: =386
+                Width: =1208
+                X: =32
+                Y: =220
+                ZIndex: =1
+
+                GalleryCT_7 As gallery.galleryVertical:
+                    DelayItemLoading: =true
+                    Height: =257
+                    Items: =tmpPhiKhacCollect
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    NavigationStep: =0
+                    TemplateSize: =40
+                    Width: =1208
+                    Y: =129
+                    ZIndex: =1
+
+                    Btn_SuaCT_7 As button:
+                        OnSelect: |-
+                            =If(
+                                Or(maAddedPhiKhac<>"",maUpdatedPhiKhac<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                UpdateIf(
+                                    tmpPhiKhacCollect,
+                                    cr282_id=ThisItem.cr282_id,
+                                    {
+                                        edited:1
+                                    }
+                                );
+                                UpdateContext({
+                                    maUpdatedPhiKhac:ThisItem.cr282_id
+                                })
+                            )
+                        Text: ="Sửa"
+                        Visible: =ThisItem.edited=0
+                        Width: =75
+                        X: =989
+                        ZIndex: =17
+
+                    Btn_XoaCT_7 As button:
+                        OnSelect: |-
+                            =If(
+                                Or(maAddedPhiKhac<>"",maAddedPhiKhac<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                Refresh(DL_SAN_PHAM_PHIKHACS);
+                                RemoveIf(
+                                    DL_SAN_PHAM_PHIKHACS,
+                                    ID=ThisItem.cr282_id
+                                );
+                                Remove(tmpPhiKhacCollect,ThisItem);
+                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
+                            )
+                        Size: =13
+                        Text: ="Xóa"
+                        Visible: =ThisItem.edited=0
+                        Width: =85
+                        X: =1093
+                        ZIndex: =18
+
+                    Btn_LuuCT_7 As button:
+                        OnSelect: |
+                            =
+                                If( ThisItem.cr282_id=maAddedPhiKhac,
+                                    Patch(
+                                        DL_SAN_PHAM_PHIKHACS,
+                                        {
+                                            ID:ThisItem.cr282_id,
+                                            NHOM_THONG_TIN:CbxNhom_thongtin_1.Selected.MA_YEU_TO ,
+                                            MA_SAN_PHAM:valMaSP,
+                                            MO_TA:TxtMota_3.Text
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        DL_SAN_PHAM_PHIKHACS,
+                                        ID=ThisItem.cr282_id,
+                                        {
+                                            NHOM_THONG_TIN:CbxNhom_thongtin_1.Selected.MA_YEU_TO ,
+                                            MA_SAN_PHAM:valMaSP,
+                                            MO_TA:TxtMota_3.Text
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpPhiKhacCollect,
+                                    cr282_id=ThisItem.cr282_id,
+                                    {
+                                           cr282_nhom_thong_tin:CbxNhom_thongtin_1.Selected.MA_YEU_TO,
+                                           cr282_mo_ta: TxtMota_3.Text,
+                                           cr282_ma_san_pham: valMaSP
+                                    }
+                                );
+                                Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
+                                ClearCollect(
+                                    tmpPhiKhacCollect,
+                                    ShowColumns(
+                                        AddColumns(
+                                            SortByColumns(
+                                                Filter(DL_SAN_PHAM_PHIKHACS,MA_SAN_PHAM= valMaSP),
+                            
+                                                "cr282_id",
+                                                SortOrder.Ascending
+                                            ),
+                                            "edited",
+                                            0
+                                        ),
+                                    "cr282_id",
+                                    "cr282_ma_san_pham",
+                                    "cr282_nhom_thong_tin",
+                                    "cr282_mo_ta",
+                                    "edited"
+                                    )
+                                );
+                                UpdateContext({
+                                    maAddedPhiKhac:"",
+                                    maUpdatedPhiKhac:""
+                                });
+                        Text: ="Lưu"
+                        Visible: =ThisItem.edited=1
+                        Width: =75
+                        X: =989
+                        ZIndex: =19
+
+                    Btn_HuyCT_7 As button:
+                        OnSelect: |-
+                            =If(
+                                ThisItem.cr282_id=maAddedPhiKhac,
+                                Remove(tmpPhiKhacCollect,ThisItem),
+                                UpdateIf(
+                                    tmpPhiKhacCollect,
+                                    cr282_id=ThisItem.cr282_id,
+                                    {
+                                        edited:0
+                                    }
+                                )
+                            );
+                             Set(  maAddedPhiKhac, "");
+                             Set(  maUpdatedPhiKhac,"");
+                        Text: ="Hủy"
+                        Visible: =ThisItem.edited=1
+                        Width: =85
+                        X: =1093
+                        ZIndex: =20
+
+                    TxtID_3 As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_id
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        Width: =134
+                        X: =3
+                        ZIndex: =21
+
+                    TxtMota_3 As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_mo_ta
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =494
+                        X: =465
+                        ZIndex: =23
+
+                    CbxNhom_thongtin_1 As combobox:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                        ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
+                        ChevronHoverBackground: =RGBA(255, 255, 255, 1)
+                        ChevronHoverFill: =RGBA(72, 163, 62, 1)
+                        DefaultSelectedItems: =LookUp(DM_YEUTO_AH_PHIS, MA_YEU_TO =ThisItem.cr282_nhom_thong_tin)
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayFields: =["cr282_ten_yeu_to"]
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        HoverBorderColor: =RGBA(9, 33, 98, 1)
+                        HoverFill: =RGBA(180, 214, 250, 1)
+                        InputTextPlaceholder: ="Chọn nhóm quyền lợi"
+                        IsSearchable: =false
+                        Items: =Filter(DM_YEUTO_AH_PHIS, LHNV = "Sức khoẻ")
+                        OnSelect: =Select(Parent)
+                        PressedColor: =RGBA(72, 163, 62, 1)
+                        PressedFill: =RGBA(255, 255, 255, 1)
+                        SearchFields: =["cr282_ten_yeu_to"]
+                        SearchItems: =[]
+                        SelectionColor: =RGBA(0, 0, 0, 1)
+                        SelectionFill: =RGBA(214, 221, 224, 1)
+                        SelectMultiple: =false
+                        Width: =451
+                        X: =3
+                        ZIndex: =24
+
+                BadgeCanvas1_25 As Badge:
+                    BasePaletteColor: =
+                    Content: =""
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =30
+                    Visible: =true
+                    Width: =1189
+                    X: =0
+                    Y: =102
+                    ZIndex: =2
+
+                TextCanvas2_102 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =38
+                    Size: =14
+                    Text: ="Nhóm thông tin"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =185
+                    X: =19
+                    Y: =98
+                    ZIndex: =3
+
+                TextCanvas2_97 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =34
+                    Size: =14
+                    Text: ="Mô tả"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =96
+                    X: =471
+                    Y: =94
+                    ZIndex: =4
+
+                TextCanvas2_103 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =34
+                    Size: =14
+                    Text: ="Thao tác"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =96
+                    X: =1055
+                    Y: =102
+                    ZIndex: =5
+
+                ThemMoiCT_7 As button:
+                    Height: =36
+                    OnSelect: |
+                        =If( Or(maAddedPhiKhac<>"",maUpdatedPhiKhac<>""),
+                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                            UpdateContext({
+                                idMa:If(
+                                    CountRows(tmpPhiKhacCollect) = 0,
+                                    1000,
+                                    Max(DL_SAN_PHAM_PHIKHACS, ID) + 1
+                                )
+                            });
+                            Collect(
+                                tmpPhiKhacCollect,
+                                {
+                                    cr282_id:Text(idMa),
+                                    cr282_ma_san_pham:valMaSP,
+                                    cr282_nhom_thong_tin:"",
+                                    cr282_mo_ta:"",
+                                    edited:1
+                                }
+                            );
+                          UpdateContext({maAddedPhiKhac:Text(idMa),
+                          maUpdatedPhiKhac : ""
+                          })
+                        )
+                    Size: =13
+                    Text: ="Thêm mới"
+                    Y: =48
+                    ZIndex: =11
+
+                Label1_12 As label:
+                    Align: =Align.Justify
+                    FontWeight: =FontWeight.Bold
+                    Height: =44
+                    Text: ="3.1. Thông tin phí khác"
+                    Width: =1076
+                    Y: =4
+                    ZIndex: =13
+
