@@ -2624,18 +2624,23 @@
                     Btn_LuuCT_9 As button:
                         OnSelect: |
                             =
-                                If( ThisItem.cr282_id=maAddedGP,
+                                If( ThisItem.cr282_id=maAddedMatranCT,
                                     Patch(
-                                        DL_CHUONGTRINH_GPS,
+                                        DL_CHUONGTRINH_MATRANPHIS,
                                         {
                                             ID:ThisItem.cr282_id,
                                             MA_SAN_PHAM:valMaSP,
-                                            MA_CHUONG_TRINH:VarCT,
-                                            THONG_TIN:TxtNhomtinhphi.Text,
-                                            MO_TA:TxtPhamvidl.Text,
-                                            SO_TIEN:Value(TxtSo_tien_4.Text),
-                                            DONVI_TIEN: TxtGioitinh.Text,
-                                            TY_LE:TxtSonguoi.Text
+                                            MA_CHUONG_TRINH:VarCT, 
+                                            DO_TUOI: TxtDotuoi.Text, 
+                                            PHI:Value(TxtPhi.Text),
+                                            PHUONG_THUC_DP: TxtPhuongthuc.Text,
+                                            THOI_HAN:TxtThoihan.Text,
+                                            SO_TIEN:TxtSotien.Text,
+                                            NGANH_NGHE:TxtNganhnghe.Text,
+                                            SO_NGUOI:TxtSonguoi.Text,
+                                            GIOI_TINH:TxtGioitinh.Text,
+                                            PHAM_VI_DL:TxtPhamvidl.Text,
+                                            NHOM_TINH_PHI:TxtNhomtinhphi.Text
                                         }
                                     ),
                                     UpdateIf(
