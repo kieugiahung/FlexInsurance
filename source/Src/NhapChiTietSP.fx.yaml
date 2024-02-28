@@ -7221,7 +7221,7 @@
                         X: =747
                         ZIndex: =23
 
-                    CbxPVDLNQLSP_2 As combobox:
+                    CbxNhom_thongtin As combobox:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
                         ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
@@ -7233,17 +7233,17 @@
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
-                        DisplayFields: =["cr282_ma_yeu_to"]
+                        DisplayFields: =["cr282_ten_yeu_to"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
                         IsSearchable: =false
-                        Items: =Filter(DM_YEUTO_AH_PHIS,LHNV="Sức khoẻ")
+                        Items: =Filter(Filter(DM_YEUTO_AH_PHIS,LHNV="Sức khoẻ"), MA_YEU_TO = CbxNhomTT_2.Selected.Key)
                         OnSelect: =Select(Parent)
                         PressedColor: =RGBA(72, 163, 62, 1)
                         PressedFill: =RGBA(255, 255, 255, 1)
-                        SearchFields: =["cr282_ma_yeu_to"]
+                        SearchFields: =["cr282_ten_yeu_to"]
                         SearchItems: =[]
                         SelectionColor: =RGBA(0, 0, 0, 1)
                         SelectionFill: =RGBA(214, 221, 224, 1)
