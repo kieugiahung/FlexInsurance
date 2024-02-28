@@ -328,15 +328,16 @@
                             UpdateContext({
                                 idMa:If(
                                     CountRows(tmpPhiKhacCollect) = 0,
-                                    1000,
-                                    Max(DL_SAN_PHAM_PHIKHACS, ID) + 1
+                                    Max(DL_CHUONGTRINH_PHIKHACS, ID) + 1,
+                                    Max(DL_CHUONGTRINH_PHIKHACS, ID) + 1
                                 )
                             });
                             Collect(
-                                tmpPhiKhacCollect,
+                                tmpPhiKhacCollectCT,
                                 {
                                     cr282_id:Text(idMa),
                                     cr282_ma_san_pham:valMaSP,
+                                    cr282_ma_chuong_trinh:VarCT,
                                     cr282_nhom_thong_tin:"",
                                     cr282_mo_ta:"",
                                     edited:1
