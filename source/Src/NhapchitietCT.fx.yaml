@@ -2912,27 +2912,52 @@
 
                 ThemMoiCT_9 As button:
                     Height: =36
-                    OnSelect: |
-                        =If( Or(maAddedMatranCT<>"",maUpdateMatranCT<>""),
-                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                            UpdateContext({
-                                idMa:If(
-                                    CountRows(tmpGPCCollectCT) = 0,
-                                    Max(DL_CHUONGTRINH_MATRANPHIS, ID) + 1,
-                                    Max(DL_CHUONGTRINH_MATRANPHIS, ID) + 1
-                                )
-                            });
+                    OnSelect: |-
+                        =If(
+                            Or(
+                                maAddedMatranCT <> "",
+                                maUpdateMatranCT <> ""
+                            ),
+                            Notify(
+                                "Có dữ liệu chưa được lưu",
+                                NotificationType.Warning,
+                                800
+                            ),
+                            UpdateContext(
+                                {
+                                    idMa: If(
+                                        CountRows(TmpMaTraPhiCT) = 0,
+                                        Max(
+                                            DL_CHUONGTRINH_MATRANPHIS,
+                                            ID
+                                        ) + 1,
+                                        Max(
+                                            DL_CHUONGTRINH_MATRANPHIS,
+                                            ID
+                                        ) + 1
+                                    )
+                                }
+                            );
                             Collect(
                                 TmpMaTraPhiCT,
                                 {
-                                    cr282_id:Text(idMa),
-                                    cr282_ma_san_pham:valMaSP,
-                                    cr282_ma_chuong_trinh:VarCT,
-                        
-                                    edited:1
+                                    cr282_id: Text(idMa),
+                                    cr282_ma_san_pham: valMaSP,
+                                    cr282_ma_chuong_trinh: VarCT,
+                                    cr282_chuong_trinh: "",
+                                    cr282_nhom_tinh_phi: "",
+                                    cr282_pham_vi_dl: "",
+                                    cr282_do_tuoi: "",
+                                    cr282_gioi_tinh: "",
+                                    cr282_nganh_nghe: "",
+                                    cr282_so_tien: "",
+                                    cr282_so_nguoi: "",
+                                    cr282_thoi_han: "",
+                                    cr282_phuong_thuc_dp: "",
+                                    edited: 1
                                 }
                             );
-                          UpdateContext({maAddedMatranCT:Text(idMa)})
+                            UpdateContext({maAddedMatranCT: Text(idMa)})
                         )
                     Size: =13
                     Text: ="Thêm mới"
