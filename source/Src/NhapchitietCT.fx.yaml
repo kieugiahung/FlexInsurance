@@ -135,7 +135,7 @@
                             =
                                 If( ThisItem.cr282_id=maAddedPhiKhac,
                                     Patch(
-                                        DL_SAN_PHAM_PHIKHACS,
+                                        DL_CHUONGTRINH_PHIKHACS,
                                         {
                                             ID:ThisItem.cr282_id,
                                             NHOM_THONG_TIN:CbxNhom_thongtin_1.Selected.MA_YEU_TO ,
@@ -144,7 +144,7 @@
                                         }
                                     ),
                                     UpdateIf(
-                                        DL_SAN_PHAM_PHIKHACS,
+                                        DL_CHUONGTRINH_PHIKHACS,
                                         ID=ThisItem.cr282_id,
                                         {
                                             NHOM_THONG_TIN:CbxNhom_thongtin_1.Selected.MA_YEU_TO ,
@@ -154,7 +154,7 @@
                                     )
                                 );
                                 UpdateIf(
-                                    tmpPhiKhacCollect,
+                                    tmpPhiKhacCollectCT,
                                     cr282_id=ThisItem.cr282_id,
                                     {
                                            cr282_nhom_thong_tin:CbxNhom_thongtin_1.Selected.MA_YEU_TO,
@@ -164,11 +164,11 @@
                                 );
                                 Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
                                 ClearCollect(
-                                    tmpPhiKhacCollect,
+                                    tmpPhiKhacCollectCT,
                                     ShowColumns(
                                         AddColumns(
                                             SortByColumns(
-                                                Filter(DL_SAN_PHAM_PHIKHACS,MA_SAN_PHAM= valMaSP),
+                                                Filter(DL_CHUONGTRINH_PHIKHACS,MA_SAN_PHAM= valMaSP),
                             
                                                 "cr282_id",
                                                 SortOrder.Ascending
