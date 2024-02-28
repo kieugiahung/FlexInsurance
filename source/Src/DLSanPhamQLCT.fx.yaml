@@ -70,6 +70,7 @@ DLSanPhamQLCT As screen:
             }
         )
         
+    Width: =Max(1500, App.MinScreenWidth)
 
     GalleryQLTV As gallery.variableTemplateHeightGallery:
         DelayItemLoading: =true
@@ -79,12 +80,13 @@ DLSanPhamQLCT As screen:
         LoadingSpinner: =LoadingSpinner.Data
         TemplateSize: =48
         Width: =1314
-        X: =20
-        Y: =105
+        X: =156
+        Y: =101
         ZIndex: =1
 
         TextTenHTQLCT As text:
             BorderColor: =RGBA(72, 163, 62, 1)
+            BorderThickness: =3
             Default: =ThisItem.ten_hien_thi
             DisabledBorderColor: =RGBA(180, 214, 250, 1)
             DisabledColor: =RGBA(0, 0, 0, 1)
@@ -115,7 +117,6 @@ DLSanPhamQLCT As screen:
             BorderStyle: =BorderStyle.None
             Height: =48
             Width: =657
-            X: =(ThisItem.cr282_cap-1)*50
             ZIndex: =4
 
             TextQLCT As text:
@@ -263,8 +264,8 @@ DLSanPhamQLCT As screen:
         FontColor: =
         Height: =54
         Width: =1244
-        X: =72
-        Y: =48
+        X: =208
+        Y: =44
         ZIndex: =2
 
     TextCanvas2_71 As Text:
@@ -275,8 +276,8 @@ DLSanPhamQLCT As screen:
         Text: ="Quyền lợi chi tiết"
         Weight: ='TextCanvas.Weight'.Bold
         Width: =171
-        X: =110
-        Y: =48
+        X: =246
+        Y: =44
         ZIndex: =3
 
     TextCanvas2_72 As Text:
@@ -287,11 +288,11 @@ DLSanPhamQLCT As screen:
         Text: ="Tên hiển thị"
         Weight: ='TextCanvas.Weight'.Bold
         Width: =151
-        X: =1011
-        Y: =48
+        X: =1147
+        Y: =44
         ZIndex: =4
 
-    Icon2_1 As icon.Save:
+    IconLuuQLTV As icon.Save:
         Color: =RGBA(72, 163, 62, 1)
         Height: =69
         Icon: =Icon.Save
@@ -310,7 +311,7 @@ DLSanPhamQLCT As screen:
                 )
             );
             Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
-            Navigate(TestSort);
+            Navigate(NhapChiTietSP);
             UpdateIf(
                 tmpQLTVCollect,
                 true,
@@ -320,18 +321,22 @@ DLSanPhamQLCT As screen:
             );
         Tooltip: ="Lưu"
         Width: =53
-        X: =1250
+        X: =1386
         Y: =55*CountRows(tmpQLTVCollect)+120
         ZIndex: =5
 
-    Icon3 As icon.CancelBadge:
+    IconHuyQLTV As icon.CancelBadge:
         Color: =RGBA(233, 79, 76, 1)
         Height: =48
         Icon: =Icon.CancelBadge
-        OnSelect: =Navigate(TestSort)
+        OnSelect: =Navigate(NhapChiTietSP)
         Tooltip: ="Hủy"
         Width: =54
-        X: =1179
+        X: =1315
         Y: =55*CountRows(tmpQLTVCollect)+130
         ZIndex: =6
+
+    LeftNavigation_22 As LeftNavigation_9:
+        Width: =LeftNavigation_22.MenuWidth
+        ZIndex: =7
 
