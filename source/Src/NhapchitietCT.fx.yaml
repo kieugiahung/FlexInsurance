@@ -2701,18 +2701,18 @@
                     Btn_HuyCT_9 As button:
                         OnSelect: |-
                             =If(
-                                ThisItem.cr282_id=maAddedGP,
-                                Remove(tmpGPCCollectCT,ThisItem),
+                                ThisItem.cr282_id=maAddedMatranCT,
+                                Remove(TmpMaTraPhiCT,ThisItem),
                                 UpdateIf(
-                                    tmpGPCCollectCT,
+                                    TmpMaTraPhiCT,
                                     cr282_id=ThisItem.cr282_id,
                                     {
                                         edited:0
                                     }
                                 )
                             );
-                             Set(   maAddedGP, "");
-                              Set(  maUpdated,"");
+                             Set(   maAddedMatranCT, "");
+                              Set(  maUpdateMatranCT,"");
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =52
