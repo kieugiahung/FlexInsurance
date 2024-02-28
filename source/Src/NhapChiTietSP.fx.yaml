@@ -7058,7 +7058,7 @@
                     Btn_SuaCT_4 As button:
                         OnSelect: |-
                             =If(
-                                Or(maAddedPhiKhac<>"",maAddedPhiKhac<>""),
+                                Or(maAddedPhiKhac<>"",maUpdatedPhiKhac<>""),
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                                 UpdateIf(
                                     tmpPhiKhacCollect,
@@ -7068,7 +7068,7 @@
                                     }
                                 );
                                 UpdateContext({
-                                    maAddedPhiKhac:ThisItem.cr282_id
+                                    maUpdatedPhiKhac:ThisItem.cr282_id
                                 })
                             )
                         Text: ="Sửa"
