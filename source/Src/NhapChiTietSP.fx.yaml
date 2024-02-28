@@ -626,8 +626,14 @@
                                 NotificationType.Warning,
                                 800
                             ),
-                            ClearCollect(tempSpTrangThai0, Filter(' DL_SAN_PHAM_CT',TRANG_THAI = 0));
-                          
+                            //lấy danh sách chương trình có trạng thái = 0
+                            ClearCollect(tempCTTrangThai0, Filter(' DL_SAN_PHAM_CT',TRANG_THAI = 0));
+                            // quét từng chương trình để chuyển dữ liệu
+                            ForAll(tempCTTrangThai0 As x, 1=1
+                               // chuyển dữ liệu điều khoản chung
+                            
+                             );
+                        
                         
                             If(
                                 CountRows(tmpCTCollect) > 0,
