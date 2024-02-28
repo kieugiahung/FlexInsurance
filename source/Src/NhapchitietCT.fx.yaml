@@ -115,12 +115,12 @@
                             =If(
                                 Or(maAddedPhiKhac<>"",maAddedPhiKhac<>""),
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                                Refresh(DL_SAN_PHAM_PHIKHACS);
+                                Refresh(DL_CHUONGTRINH_PHIKHACS);
                                 RemoveIf(
-                                    DL_SAN_PHAM_PHIKHACS,
+                                    DL_CHUONGTRINH_PHIKHACS,
                                     ID=ThisItem.cr282_id
                                 );
-                                Remove(tmpPhiKhacCollect,ThisItem);
+                                Remove(tmpPhiKhacCollectCT,ThisItem);
                                 Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
                             )
                         Size: =13
