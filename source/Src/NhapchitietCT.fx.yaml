@@ -2583,17 +2583,17 @@
                     Btn_SuaCT_9 As button:
                         OnSelect: |-
                             =If(
-                                Or(maAddedGP<>"",maUpdatedGP<>""),
+                                Or(maAddedMatranCT<>"",maUpdateMatranCT<>""),
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                                 UpdateIf(
-                                    tmpGPCCollectCT,
+                                    TmpMaTraPhiCT,
                                     cr282_id=ThisItem.cr282_id,
                                     {
                                         edited:1
                                     }
                                 );
                                 UpdateContext({
-                                    maUpdatedGP:ThisItem.cr282_id
+                                    maUpdateMatranCT:ThisItem.cr282_id
                                 })
                             )
                         Text: ="Sửa"
