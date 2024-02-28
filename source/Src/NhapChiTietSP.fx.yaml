@@ -123,7 +123,10 @@
             ShowColumns(
                 AddColumns(
                     SortByColumns(
-                        DL_SAN_PHAM_QL_KHACS,
+                        Filter(
+                            DL_SAN_PHAM_QL_KHACS,
+                            MA_SP=valMaSP
+                        ),
                         "cr282_ma_dl",
                         SortOrder.Ascending
                     ),
@@ -149,7 +152,7 @@
                     SortByColumns(
                         Filter(
                             DL_SAN_PHAM_NHOMQLS,
-                            MA_SP="1000"
+                            MA_SP=valMaSP
                         ),
                         "cr282_ma_dl",
                         SortOrder.Ascending
@@ -1078,7 +1081,7 @@
                                 Notify("Bắt buộc nhập nhóm tính phí", NotificationType.Error,800),
                                 IsBlank(CbxCTADNQLSP_1.Selected.Value),
                                 Notify("Bắt buộc nhập chương trình áp dụng", NotificationType.Error,800),
-                                CountIf(DL_SAN_PHAM_NHOMQLS,MA_SP="1000" && MA_NHOM_QL=CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL && MA_DL<>ThisItem.cr282_ma_dl)>0,
+                                CountIf(DL_SAN_PHAM_NHOMQLS,MA_SP=valMaSP && MA_NHOM_QL=CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL && MA_DL<>ThisItem.cr282_ma_dl)>0,
                                 Notify("Đã tồn tại nhóm quyền lợi này trong sản phẩm", NotificationType.Error,800),
                                 If(
                                     ThisItem.cr282_ma_dl=maAddedNQLSP,
@@ -1091,7 +1094,7 @@
                                             MA_NHOM_QL:CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL,
                                             PHAMVI_DIALY:CbxPVDLNQLSP_1.Selected.MA_PHAMVI,
                                             MA_NHOM_TINHPHI:CbxNhomTPNQLSP_1.Selected.Value,
-                                            MA_SP:"1000",
+                                            MA_SP:valMaSP,
                                             TEN_HIEN_THI:If(IsBlank(TextTenHTNQLSP_1.Text),LookUp(DM_NHOM_QUYENLOIS,MA_NHOM_QL=CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL,TEN_NHOM_QL),TextTenHTNQLSP_1.Text)
                                         }
                                     ),
@@ -1104,7 +1107,7 @@
                                             MA_NHOM_QL:CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL,
                                             PHAMVI_DIALY:CbxPVDLNQLSP_1.Selected.MA_PHAMVI,
                                             MA_NHOM_TINHPHI:CbxNhomTPNQLSP_1.Selected.Value,
-                                            MA_SP:"1000",
+                                            MA_SP:valMaSP,
                                             TEN_HIEN_THI:If(IsBlank(TextTenHTNQLSP_1.Text),LookUp(DM_NHOM_QUYENLOIS,MA_NHOM_QL=CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL,TEN_NHOM_QL),TextTenHTNQLSP_1.Text)
                                         }
                                     )
@@ -1120,7 +1123,7 @@
                                         cr282_phamvi_dialy:CbxPVDLNQLSP_1.Selected.MA_PHAMVI,
                                         cr282_ma_nhom_tinhphi:CbxNhomTPNQLSP_1.Selected.Value,
                                         cr282_ten_hien_thi:If(IsBlank(TextTenHTNQLSP_1.Text),LookUp(DM_NHOM_QUYENLOIS,MA_NHOM_QL=CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL,TEN_NHOM_QL),TextTenHTNQLSP_1.Text),
-                                        cr282_ma_sp:"1000",
+                                        cr282_ma_sp:valMaSP,
                                         edited:0
                                     }
                                 );
@@ -1430,7 +1433,7 @@
                                     SortByColumns(
                                         Filter(
                                             DL_SAN_PHAM_NHOMQLS,
-                                            MA_SP="1000"
+                                            MA_SP=valMaSP
                                         ),
                                         "cr282_ma_dl",
                                         SortOrder.Ascending
@@ -1485,9 +1488,9 @@
                             Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                             UpdateContext({
                                 idMaNQLSP:If(
-                                    CountIf(DL_SAN_PHAM_NHOMQLS,MA_SP="1000")=0,
+                                    CountIf(DL_SAN_PHAM_NHOMQLS,MA_SP=valMaSP)=0,
                                     1000,
-                                    Value(Last(SortByColumns(Filter(DL_SAN_PHAM_NHOMQLS,MA_SP="1000"),"cr282_ma_dl",SortOrder.Ascending)).MA_DL)+1
+                                    Value(Last(SortByColumns(Filter(DL_SAN_PHAM_NHOMQLS,MA_SP=valMaSP),"cr282_ma_dl",SortOrder.Ascending)).MA_DL)+1
                                 )
                             });
                             Collect(
@@ -1498,7 +1501,7 @@
                                     cr282_loai:Blank(),
                                     cr282_ma_nhom_ql:Blank(),
                                     cr282_ma_nhom_tinhphi:Blank(),
-                                    cr282_ma_sp:"1000",
+                                    cr282_ma_sp:valMaSP,
                                     cr282_phamvi_dialy:Blank(),
                                     cr282_ten_hien_thi:Blank(),
                                     edited:1
@@ -2075,7 +2078,10 @@
                                 ShowColumns(
                                     AddColumns(
                                         SortByColumns(
-                                            DL_SAN_PHAM_QL_KHACS,
+                                            Filter(
+                                                DL_SAN_PHAM_QL_KHACS,
+                                                MA_SP=valMaSP
+                                            ),
                                             "cr282_ma_dl",
                                             SortOrder.Ascending
                                         ),
@@ -2112,16 +2118,16 @@
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                                 UpdateContext({
                                     idMaQLK:If(
-                                        CountIf(DL_SAN_PHAM_QL_KHACS,true)=0,
+                                        CountIf(DL_SAN_PHAM_QL_KHACS,MA_SP=valMaSP)=0,
                                         1000,
-                                        Value(Last(SortByColumns(DL_SAN_PHAM_QL_KHACS,"cr282_ma_dl",SortOrder.Ascending)).MA_DL)+1
+                                        Value(Last(SortByColumns(Filter(DL_SAN_PHAM_QL_KHACS,MA_SP=valMaSP),"cr282_ma_dl",SortOrder.Ascending)).MA_DL)+1
                                     )
                                 });
                                 Collect(
                                     tmpQLKCollect,
                                     {
                                         cr282_ma_dl:Text(idMaQLK),
-                                        cr282_ma_sp:"1001",
+                                        cr282_ma_sp:valMaSP,
                                         cr282_ma_nhom_ql:Blank(),
                                         cr282_mo_ta:Blank(),
                                         edited:1
@@ -2147,7 +2153,10 @@
                                     AddColumns(
                                         SortByColumns(
                                             Filter(
-                                                DL_SAN_PHAM_QL_KHACS,
+                                                Filter(
+                                                    DL_SAN_PHAM_QL_KHACS,
+                                                    MA_SP=valMaSP
+                                                ),
                                                 Or(
                                                     IsBlank(CbxFilterValueQLK_1.Selected.MA_NHOM_QL),
                                                     MA_NHOM_QL=CbxFilterValueQLK_1.Selected.MA_NHOM_QL
