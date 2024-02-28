@@ -397,11 +397,11 @@
                     Btn_LuuCT_8 As button:
                         OnSelect: |
                             =
-                                If( ThisItem.cr282_id_giamphi=maAddedGP,
+                                If( ThisItem.cr282_id=maAddedGP,
                                     Patch(
                                         DL_CHUONGTRINH_GPS,
                                         {
-                                            ID:ThisItem.cr282_id_giamphi,
+                                            ID:ThisItem.cr282_id,
                                             MA_SAN_PHAM:valMaSP,
                                             THONG_TIN:TxtThongtin_2.Text,
                                             MO_TA:TxtMota_4.Text,
@@ -412,7 +412,7 @@
                                     ),
                                     UpdateIf(
                                         DL_CHUONGTRINH_GPS,
-                                        ID=ThisItem.cr282_id_giamphi,
+                                        ID=ThisItem.cr282_id,
                                         {
                                             THONG_TIN:TxtThongtin_2.Text,
                                             MA_SAN_PHAM:valMaSP,
@@ -425,7 +425,7 @@
                                 );
                                 UpdateIf(
                                     tmpGPCCollect,
-                                    cr282_id=ThisItem.cr282_id_giamphi,
+                                    cr282_id=ThisItem.cr282_id,
                                     {
                                             cr282_thong_tin:TxtThongtin_2.Text,
                                             cr282_mo_ta:TxtMota_4.Text,
@@ -441,7 +441,7 @@
                                     ShowColumns(
                                         AddColumns(
                                             SortByColumns(
-                                                Filter(DL_CHUONGTRINH_GPS,MA_SAN_PHAM=valMaSP),
+                                                Filter(DL_CHUONGTRINH_GPS,MA_SAN_PHAM=valMaSP && MA_CHUONG_TRINH = VarCT),
                                                 "cr282_id",
                                                 SortOrder.Ascending
                                             ),
@@ -471,11 +471,11 @@
                     Btn_HuyCT_8 As button:
                         OnSelect: |-
                             =If(
-                                ThisItem.cr282_id_giamphi=maAddedGP,
+                                ThisItem.cr282_id=maAddedGP,
                                 Remove(tmpGPCCollect,ThisItem),
                                 UpdateIf(
                                     tmpGPCCollect,
-                                    cr282_id_giamphi=ThisItem.cr282_id_giamphi,
+                                    cr282_id=ThisItem.cr282_id,
                                     {
                                         edited:0
                                     }
@@ -491,7 +491,7 @@
 
                     TxtID_GP_3 As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =ThisItem.cr282_id_giamphi
+                        Default: =ThisItem.cr282_id
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
