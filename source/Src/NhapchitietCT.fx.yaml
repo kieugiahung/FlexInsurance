@@ -628,7 +628,7 @@
                             UpdateContext({
                                 idMa:If(
                                     CountRows(tmpGPCCollect) = 0,
-                                    1000,
+                                    Max(DL_CHUONGTRINH_GPS, ID) + 1,
                                     Max(DL_CHUONGTRINH_GPS, ID) + 1
                                 )
                             });
