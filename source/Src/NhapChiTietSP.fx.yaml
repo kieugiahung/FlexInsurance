@@ -632,7 +632,7 @@
                                 )
                             )
                         );
-                        Select(IconTaiLaiCT_1);
+                        //Select(IconTaiLaiCT_1);
                     Text: ="Lưu thông tin"
                     Visible: |-
                         =If(
@@ -652,42 +652,6 @@
                     Width: =1076
                     Y: =95
                     ZIndex: =13
-
-                IconTaiLaiCT_1 As icon.Sync:
-                    Color: =RGBA(83, 144, 164, 1)
-                    Height: =36
-                    Icon: =Icon.Sync
-                    OnSelect: |-
-                        =ClearCollect(
-                            tmpCTCollect,
-                            ShowColumns(
-                                AddColumns(
-                                    SortByColumns(
-                                        ' DL_SAN_PHAM_CT',
-                                        "cr282_ma_chuong_trinh",
-                                        SortOrder.Ascending
-                                    ),
-                                    "edited",
-                                    0
-                                ),
-                                "cr282_ma_chuong_trinh",
-                                "cr282_ma_chuongtrinh",
-                                "cr282_ten_chuong_trinh",
-                                "cr282_mo_ta",
-                                "cr282_ma_san_pham",
-                                "cr282_trang_thai",
-                                "edited"
-                            )
-                        );
-                        UpdateContext({
-                            maAdded:"",
-                            maUpdated:""
-                        });
-                    Tooltip: ="Tải lại"
-                    Width: =32
-                    X: =1044
-                    Y: =160
-                    ZIndex: =14
 
             "'2. Dieukhoanchung_2' As groupContainer.manualLayoutContainer":
                 Height: =435
