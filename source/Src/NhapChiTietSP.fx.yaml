@@ -2633,7 +2633,7 @@
                     OnSelect: |
                         =RemoveIf(
                             DL_SAN_PHAM_MATRANPHI,
-                            true
+                            MA_SAN_PHAM=valMaSP
                         );
                         UpdateContext(
                             {
@@ -2871,14 +2871,14 @@
                             CountRows(DL_SAN_PHAM_BANGYT) > 0,
                             RemoveIf(
                                 DL_SAN_PHAM_BANGYT,
-                                true
+                                MA_SAN_PHAM=valMaSP
                             )
                         );
                         If(
                             CountRows(DL_SAN_PHAM_MATRANPHI) > 0,
                             RemoveIf(
                                 DL_SAN_PHAM_MATRANPHI,
-                                true
+                                MA_SAN_PHAM=valMaSP
                             )
                         );
                         UpdateContext({showGrid: false});
@@ -3067,20 +3067,28 @@
                         Color: =RGBA(255, 0, 0, 1)
                         Height: =36
                         Icon: =Icon.Cancel
-                        OnSelect: |
-                            =RemoveIf(DL_SAN_PHAM_BANGYT, ID="NULL");
-                            ForAll(
+                        OnSelect: |-
+                            =RemoveIf(
+                                DL_SAN_PHAM_BANGYT,
+                                ID = "NULL"
+                            );
+                            If(
+                                !IsEmpty(DL_SAN_PHAM_BANGYT),
+                                RemoveIf(
+                                    DL_SAN_PHAM_BANGYT,
+                                    ID = ThisItem.cr282_id
+                                );
+                                
+                            );
+                            /*ForAll(
                                 Combo_CT_1.SelectedItems As ct,
                                 //If(CountRows(DL_SAN_PHAM_BANGYT)>0,
                                 RemoveIf(
                                     DL_SAN_PHAM_BANGYT,
-                                    CHUONGTRINH_NHOMTP = Concatenate(
-                                        Dropdown_TP_1.Selected.TEN_NHOM_TP,
-                                        "- ",
-                                        ct.TEN_CHUONG_TRINH
-                                    ) && MA_SAN_PHAM = valMaSP
+                                    ID = ThisItem.cr282_id
                                 )//)
-                            );
+                            );*/
+                            Select(IconTaiLaiBYT);
                         Width: =38
                         X: =1165
                         Y: =17
@@ -3337,38 +3345,38 @@
                         =If(CountRows(DL_SAN_PHAM_MATRANPHI)>0,
                         RemoveIf(
                             DL_SAN_PHAM_MATRANPHI,
-                            true
+                            MA_SAN_PHAM=valMaSP
                         ));
                         If(
                             !IsEmpty(DL_SAN_PHAM_BANGYT),
                             ForAll(
                                 DL_SAN_PHAM_BANGYT As ct,
                                 If(
-                                    ct.DO_TUOI = true,
+                                    ct.DO_TUOI = true && CountRows(Datafield_DT_1.SelectedItems) >0,
                                     ForAll(
                                         Datafield_DT_1.SelectedItems As dt,
                                         If(
-                                            ct.GIOI_TINH = true,
+                                            ct.GIOI_TINH = true && CountRows(Datafield_GT_1.SelectedItems) >0,
                                             ForAll(
                                                 Datafield_GT_1.SelectedItems As gt,
                                                 If(
-                                                    ct.NGANH_NGHE = true,
+                                                    ct.NGANH_NGHE = true && CountRows(Datafield_NN_1.SelectedItems) >0,
                                                     ForAll(
                                                         Datafield_NN_1.SelectedItems As nn,
                                                         If(
-                                                            ct.BH_SOTIEN = true,
+                                                            ct.BH_SOTIEN = true && CountRows(Datafield_ST_1.SelectedItems) >0,
                                                             ForAll(
                                                                 Datafield_ST_1.SelectedItems As st,
                                                                 If(
-                                                                    ct.BH_SONGUOI = true,
+                                                                    ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_SN_1.SelectedItems As sn,
                                                                         If(
-                                                                            ct.BH_THOIHAN = true,
+                                                                            ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_TH_1.SelectedItems As th,
                                                                                 If(
-                                                                                    ct.BH_PHUONG_THUC = true,
+                                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                                     ForAll(
                                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                                         Patch(
@@ -3418,7 +3426,7 @@
                                                                                 )
                                                                             ),
                                                                             If(
-                                                                                ct.BH_PHUONG_THUC = true,
+                                                                                ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                                 ForAll(
                                                                                     Datafield_DP_1.SelectedItems As dp,
                                                                                     Patch(
@@ -3468,11 +3476,11 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        ct.BH_THOIHAN = true,
+                                                                        ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_TH_1.SelectedItems As th,
                                                                             If(
-                                                                                ct.BH_PHUONG_THUC = true,
+                                                                                ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                                 ForAll(
                                                                                     Datafield_DP_1.SelectedItems As dp,
                                                                                     Patch(
@@ -3521,7 +3529,7 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            ct.BH_PHUONG_THUC = true,
+                                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                                 Patch(
@@ -3572,15 +3580,15 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                ct.BH_SONGUOI = true,
+                                                                ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_SN_1.SelectedItems As sn,
                                                                     If(
-                                                                        ct.BH_THOIHAN = true,
+                                                                        ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_TH_1.SelectedItems As th,
                                                                             If(
-                                                                                ct.BH_PHUONG_THUC = true,
+                                                                                ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                                 ForAll(
                                                                                     Datafield_DP_1.SelectedItems As dp,
                                                                                     Patch(
@@ -3629,7 +3637,7 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            ct.BH_PHUONG_THUC = true,
+                                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                                 Patch(
@@ -3679,11 +3687,11 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    ct.BH_THOIHAN = true,
+                                                                    ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_TH_1.SelectedItems As th,
                                                                         If(
-                                                                            ct.BH_PHUONG_THUC = true,
+                                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                                 Patch(
@@ -3732,7 +3740,7 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -3784,19 +3792,19 @@
                                                         )
                                                     ),
                                                     If(
-                                                        ct.BH_SOTIEN = true,
+                                                        ct.BH_SOTIEN = true && CountRows(Datafield_ST_1.SelectedItems) >0,
                                                         ForAll(
                                                             Datafield_ST_1.SelectedItems As st,
                                                             If(
-                                                                ct.BH_SONGUOI = true,
+                                                                ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_SN_1.SelectedItems As sn,
                                                                     If(
-                                                                        ct.BH_THOIHAN = true,
+                                                                        ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_TH_1.SelectedItems As th,
                                                                             If(
-                                                                                ct.BH_PHUONG_THUC = true,
+                                                                                ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                                 ForAll(
                                                                                     Datafield_DP_1.SelectedItems As dp,
                                                                                     Patch(
@@ -3845,7 +3853,7 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            ct.BH_PHUONG_THUC = true,
+                                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                                 Patch(
@@ -3895,11 +3903,11 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    ct.BH_THOIHAN = true,
+                                                                    ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_TH_1.SelectedItems As th,
                                                                         If(
-                                                                            ct.BH_PHUONG_THUC = true,
+                                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                                 Patch(
@@ -3948,7 +3956,7 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -3999,15 +4007,15 @@
                                                             )
                                                         ),
                                                         If(
-                                                            ct.BH_SONGUOI = true,
+                                                            ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                             ForAll(
                                                                 Datafield_SN_1.SelectedItems As sn,
                                                                 If(
-                                                                    ct.BH_THOIHAN = true,
+                                                                    ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_TH_1.SelectedItems As th,
                                                                         If(
-                                                                            ct.BH_PHUONG_THUC = true,
+                                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                                 Patch(
@@ -4056,7 +4064,7 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -4106,11 +4114,11 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                ct.BH_THOIHAN = true,
+                                                                ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_TH_1.SelectedItems As th,
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -4159,7 +4167,7 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    ct.BH_PHUONG_THUC = true,
+                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                         Patch(
@@ -4212,23 +4220,23 @@
                                                 )
                                             ),
                                             If(
-                                                ct.NGANH_NGHE = true,
+                                                ct.NGANH_NGHE = true && CountRows(Datafield_NN_1.SelectedItems) >0,
                                                 ForAll(
                                                     Datafield_NN_1.SelectedItems As nn,
                                                     If(
-                                                        ct.BH_SOTIEN = true,
+                                                        ct.BH_SOTIEN = true && CountRows(Datafield_ST_1.SelectedItems) >0,
                                                         ForAll(
                                                             Datafield_ST_1.SelectedItems As st,
                                                             If(
-                                                                ct.BH_SONGUOI = true,
+                                                                ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_SN_1.SelectedItems As sn,
                                                                     If(
-                                                                        ct.BH_THOIHAN = true,
+                                                                        ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_TH_1.SelectedItems As th,
                                                                             If(
-                                                                                ct.BH_PHUONG_THUC = true,
+                                                                                ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                                 ForAll(
                                                                                     Datafield_DP_1.SelectedItems As dp,
                                                                                     Patch(
@@ -4277,7 +4285,7 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            ct.BH_PHUONG_THUC = true,
+                                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                                 Patch(
@@ -4327,11 +4335,11 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    ct.BH_THOIHAN = true,
+                                                                    ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_TH_1.SelectedItems As th,
                                                                         If(
-                                                                            ct.BH_PHUONG_THUC = true,
+                                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                                 Patch(
@@ -4380,7 +4388,7 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -4431,15 +4439,15 @@
                                                             )
                                                         ),
                                                         If(
-                                                            ct.BH_SONGUOI = true,
+                                                            ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                             ForAll(
                                                                 Datafield_SN_1.SelectedItems As sn,
                                                                 If(
-                                                                    ct.BH_THOIHAN = true,
+                                                                    ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_TH_1.SelectedItems As th,
                                                                         If(
-                                                                            ct.BH_PHUONG_THUC = true,
+                                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                                 Patch(
@@ -4488,7 +4496,7 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -4538,11 +4546,11 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                ct.BH_THOIHAN = true,
+                                                                ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_TH_1.SelectedItems As th,
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -4591,7 +4599,7 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    ct.BH_PHUONG_THUC = true,
+                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                         Patch(
@@ -4643,19 +4651,19 @@
                                                     )
                                                 ),
                                                 If(
-                                                    ct.BH_SOTIEN = true,
+                                                    ct.BH_SOTIEN = true && CountRows(Datafield_ST_1.SelectedItems) >0,
                                                     ForAll(
                                                         Datafield_ST_1.SelectedItems As st,
                                                         If(
-                                                            ct.BH_SONGUOI = true,
+                                                            ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                             ForAll(
                                                                 Datafield_SN_1.SelectedItems As sn,
                                                                 If(
-                                                                    ct.BH_THOIHAN = true,
+                                                                    ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_TH_1.SelectedItems As th,
                                                                         If(
-                                                                            ct.BH_PHUONG_THUC = true,
+                                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                                 Patch(
@@ -4704,7 +4712,7 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -4754,11 +4762,11 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                ct.BH_THOIHAN = true,
+                                                                ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_TH_1.SelectedItems As th,
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -4807,7 +4815,7 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    ct.BH_PHUONG_THUC = true,
+                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                         Patch(
@@ -4858,15 +4866,15 @@
                                                         )
                                                     ),
                                                     If(
-                                                        ct.BH_SONGUOI = true,
+                                                        ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                         ForAll(
                                                             Datafield_SN_1.SelectedItems As sn,
                                                             If(
-                                                                ct.BH_THOIHAN = true,
+                                                                ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_TH_1.SelectedItems As th,
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -4915,7 +4923,7 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    ct.BH_PHUONG_THUC = true,
+                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                         Patch(
@@ -4965,11 +4973,11 @@
                                                             )
                                                         ),
                                                         If(
-                                                            ct.BH_THOIHAN = true,
+                                                            ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                             ForAll(
                                                                 Datafield_TH_1.SelectedItems As th,
                                                                 If(
-                                                                    ct.BH_PHUONG_THUC = true,
+                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                         Patch(
@@ -5018,7 +5026,7 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                ct.BH_PHUONG_THUC = true,
+                                                                ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_DP_1.SelectedItems As dp,
                                                                     Patch(
@@ -5072,27 +5080,27 @@
                                         )
                                     ),
                                     If(
-                                        ct.GIOI_TINH = true,
+                                        ct.GIOI_TINH = true && CountRows(Datafield_GT_1.SelectedItems) >0,
                                         ForAll(
                                             Datafield_GT_1.SelectedItems As gt,
                                             If(
-                                                ct.NGANH_NGHE = true,
+                                                ct.NGANH_NGHE = true && CountRows(Datafield_NN_1.SelectedItems) >0,
                                                 ForAll(
                                                     Datafield_NN_1.SelectedItems As nn,
                                                     If(
-                                                        ct.BH_SOTIEN = true,
+                                                        ct.BH_SOTIEN = true && CountRows(Datafield_ST_1.SelectedItems) >0,
                                                         ForAll(
                                                             Datafield_ST_1.SelectedItems As st,
                                                             If(
-                                                                ct.BH_SONGUOI = true,
+                                                                ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_SN_1.SelectedItems As sn,
                                                                     If(
-                                                                        ct.BH_THOIHAN = true,
+                                                                        ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_TH_1.SelectedItems As th,
                                                                             If(
-                                                                                ct.BH_PHUONG_THUC = true,
+                                                                                ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                                 ForAll(
                                                                                     Datafield_DP_1.SelectedItems As dp,
                                                                                     Patch(
@@ -5141,7 +5149,7 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            ct.BH_PHUONG_THUC = true,
+                                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                                 Patch(
@@ -5191,11 +5199,11 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    ct.BH_THOIHAN = true,
+                                                                    ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_TH_1.SelectedItems As th,
                                                                         If(
-                                                                            ct.BH_PHUONG_THUC = true,
+                                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                                 Patch(
@@ -5244,7 +5252,7 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -5295,15 +5303,15 @@
                                                             )
                                                         ),
                                                         If(
-                                                            ct.BH_SONGUOI = true,
+                                                            ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                             ForAll(
                                                                 Datafield_SN_1.SelectedItems As sn,
                                                                 If(
-                                                                    ct.BH_THOIHAN = true,
+                                                                    ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_TH_1.SelectedItems As th,
                                                                         If(
-                                                                            ct.BH_PHUONG_THUC = true,
+                                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                                 Patch(
@@ -5352,7 +5360,7 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -5402,11 +5410,11 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                ct.BH_THOIHAN = true,
+                                                                ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_TH_1.SelectedItems As th,
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -5455,7 +5463,7 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    ct.BH_PHUONG_THUC = true,
+                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                         Patch(
@@ -5507,19 +5515,19 @@
                                                     )
                                                 ),
                                                 If(
-                                                    ct.BH_SOTIEN = true,
+                                                    ct.BH_SOTIEN = true && CountRows(Datafield_ST_1.SelectedItems) >0,
                                                     ForAll(
                                                         Datafield_ST_1.SelectedItems As st,
                                                         If(
-                                                            ct.BH_SONGUOI = true,
+                                                            ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                             ForAll(
                                                                 Datafield_SN_1.SelectedItems As sn,
                                                                 If(
-                                                                    ct.BH_THOIHAN = true,
+                                                                    ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_TH_1.SelectedItems As th,
                                                                         If(
-                                                                            ct.BH_PHUONG_THUC = true,
+                                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                                 Patch(
@@ -5568,7 +5576,7 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -5618,11 +5626,11 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                ct.BH_THOIHAN = true,
+                                                                ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_TH_1.SelectedItems As th,
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -5671,7 +5679,7 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    ct.BH_PHUONG_THUC = true,
+                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                         Patch(
@@ -5722,15 +5730,15 @@
                                                         )
                                                     ),
                                                     If(
-                                                        ct.BH_SONGUOI = true,
+                                                        ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                         ForAll(
                                                             Datafield_SN_1.SelectedItems As sn,
                                                             If(
-                                                                ct.BH_THOIHAN = true,
+                                                                ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_TH_1.SelectedItems As th,
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -5779,7 +5787,7 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    ct.BH_PHUONG_THUC = true,
+                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                         Patch(
@@ -5829,11 +5837,11 @@
                                                             )
                                                         ),
                                                         If(
-                                                            ct.BH_THOIHAN = true,
+                                                            ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                             ForAll(
                                                                 Datafield_TH_1.SelectedItems As th,
                                                                 If(
-                                                                    ct.BH_PHUONG_THUC = true,
+                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                         Patch(
@@ -5882,7 +5890,7 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                ct.BH_PHUONG_THUC = true,
+                                                                ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_DP_1.SelectedItems As dp,
                                                                     Patch(
@@ -5935,23 +5943,23 @@
                                             )
                                         ),
                                         If(
-                                            ct.NGANH_NGHE = true,
+                                            ct.NGANH_NGHE = true && CountRows(Datafield_NN_1.SelectedItems) >0,
                                             ForAll(
                                                 Datafield_NN_1.SelectedItems As nn,
                                                 If(
-                                                    ct.BH_SOTIEN = true,
+                                                    ct.BH_SOTIEN = true && CountRows(Datafield_ST_1.SelectedItems) >0,
                                                     ForAll(
                                                         Datafield_ST_1.SelectedItems As st,
                                                         If(
-                                                            ct.BH_SONGUOI = true,
+                                                            ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                             ForAll(
                                                                 Datafield_SN_1.SelectedItems As sn,
                                                                 If(
-                                                                    ct.BH_THOIHAN = true,
+                                                                    ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_TH_1.SelectedItems As th,
                                                                         If(
-                                                                            ct.BH_PHUONG_THUC = true,
+                                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                             ForAll(
                                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                                 Patch(
@@ -6000,7 +6008,7 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -6050,11 +6058,11 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                ct.BH_THOIHAN = true,
+                                                                ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_TH_1.SelectedItems As th,
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -6103,7 +6111,7 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    ct.BH_PHUONG_THUC = true,
+                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                         Patch(
@@ -6154,15 +6162,15 @@
                                                         )
                                                     ),
                                                     If(
-                                                        ct.BH_SONGUOI = true,
+                                                        ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                         ForAll(
                                                             Datafield_SN_1.SelectedItems As sn,
                                                             If(
-                                                                ct.BH_THOIHAN = true,
+                                                                ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_TH_1.SelectedItems As th,
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -6211,7 +6219,7 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    ct.BH_PHUONG_THUC = true,
+                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                         Patch(
@@ -6261,11 +6269,11 @@
                                                             )
                                                         ),
                                                         If(
-                                                            ct.BH_THOIHAN = true,
+                                                            ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                             ForAll(
                                                                 Datafield_TH_1.SelectedItems As th,
                                                                 If(
-                                                                    ct.BH_PHUONG_THUC = true,
+                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                         Patch(
@@ -6314,7 +6322,7 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                ct.BH_PHUONG_THUC = true,
+                                                                ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_DP_1.SelectedItems As dp,
                                                                     Patch(
@@ -6366,19 +6374,19 @@
                                                 )
                                             ),
                                             If(
-                                                ct.BH_SOTIEN = true,
+                                                ct.BH_SOTIEN = true && CountRows(Datafield_ST_1.SelectedItems) >0,
                                                 ForAll(
                                                     Datafield_ST_1.SelectedItems As st,
                                                     If(
-                                                        ct.BH_SONGUOI = true,
+                                                        ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                         ForAll(
                                                             Datafield_SN_1.SelectedItems As sn,
                                                             If(
-                                                                ct.BH_THOIHAN = true,
+                                                                ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_TH_1.SelectedItems As th,
                                                                     If(
-                                                                        ct.BH_PHUONG_THUC = true,
+                                                                        ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                         ForAll(
                                                                             Datafield_DP_1.SelectedItems As dp,
                                                                             Patch(
@@ -6427,7 +6435,7 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    ct.BH_PHUONG_THUC = true,
+                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                         Patch(
@@ -6477,11 +6485,11 @@
                                                             )
                                                         ),
                                                         If(
-                                                            ct.BH_THOIHAN = true,
+                                                            ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                             ForAll(
                                                                 Datafield_TH_1.SelectedItems As th,
                                                                 If(
-                                                                    ct.BH_PHUONG_THUC = true,
+                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                         Patch(
@@ -6530,7 +6538,7 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                ct.BH_PHUONG_THUC = true,
+                                                                ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_DP_1.SelectedItems As dp,
                                                                     Patch(
@@ -6581,15 +6589,15 @@
                                                     )
                                                 ),
                                                 If(
-                                                    ct.BH_SONGUOI = true,
+                                                    ct.BH_SONGUOI = true && CountRows(Datafield_SN_1.SelectedItems) >0,
                                                     ForAll(
                                                         Datafield_SN_1.SelectedItems As sn,
                                                         If(
-                                                            ct.BH_THOIHAN = true,
+                                                            ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                             ForAll(
                                                                 Datafield_TH_1.SelectedItems As th,
                                                                 If(
-                                                                    ct.BH_PHUONG_THUC = true,
+                                                                    ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                     ForAll(
                                                                         Datafield_DP_1.SelectedItems As dp,
                                                                         Patch(
@@ -6638,7 +6646,7 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                ct.BH_PHUONG_THUC = true,
+                                                                ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_DP_1.SelectedItems As dp,
                                                                     Patch(
@@ -6688,11 +6696,11 @@
                                                         )
                                                     ),
                                                     If(
-                                                        ct.BH_THOIHAN = true,
+                                                        ct.BH_THOIHAN = true && CountRows(Datafield_TH_1.SelectedItems) >0,
                                                         ForAll(
                                                             Datafield_TH_1.SelectedItems As th,
                                                             If(
-                                                                ct.BH_PHUONG_THUC = true,
+                                                                ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                                 ForAll(
                                                                     Datafield_DP_1.SelectedItems As dp,
                                                                     Patch(
@@ -6741,7 +6749,7 @@
                                                             )
                                                         ),
                                                         If(
-                                                            ct.BH_PHUONG_THUC = true,
+                                                            ct.BH_PHUONG_THUC = true && CountRows(Datafield_DP_1.SelectedItems) >0,
                                                             ForAll(
                                                                 Datafield_DP_1.SelectedItems As dp,
                                                                 Patch(
@@ -6797,6 +6805,7 @@
                             )
                         );
                     Text: ="Lưu"
+                    Visible: =showGrid
                     X: =212
                     Y: =59
                     ZIndex: =14
@@ -6889,6 +6898,7 @@
                                 DisabledBorderColor: =RGBA(153, 207, 236, 1)
                                 DisabledColor: =RGBA(0, 0, 0, 1)
                                 DisabledFill: =RGBA(255, 255, 255, 1)
+                                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                                 HoverBorderColor: =RGBA(9, 33, 98, 1)
                                 Items: |-
                                     =//BH_DM_NHOMTP
@@ -6914,6 +6924,7 @@
                                 DisabledBorderColor: =RGBA(153, 207, 236, 1)
                                 DisabledColor: =RGBA(0, 0, 0, 1)
                                 DisabledFill: =RGBA(255, 255, 255, 1)
+                                DisplayMode: =If(ThisItem.edited=1 && PVDiaLy_1.Value=true && PVDiaLy_1.Visible=true,DisplayMode.Edit,DisplayMode.Disabled) 
                                 HoverBorderColor: =RGBA(9, 33, 98, 1)
                                 Items: |-
                                     =//DM_PHAMVI_DIALYS
@@ -6943,7 +6954,7 @@
                                 DisabledColor: =RGBA(0, 0, 0, 1)
                                 DisabledFill: =RGBA(255, 255, 255, 1)
                                 DisplayFields: =["cr282_mo_ta"]
-                                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                                DisplayMode: =If(ThisItem.edited=1 && DoTuoi_1.Value=true && DoTuoi_1.Visible=true,DisplayMode.Edit,DisplayMode.Disabled) 
                                 HoverBorderColor: =RGBA(9, 33, 98, 1)
                                 HoverFill: =RGBA(180, 214, 250, 1)
                                 InputTextPlaceholder: ="Chọn đơn vị tuổi"
@@ -6973,7 +6984,7 @@
                                 DisabledColor: =RGBA(0, 0, 0, 1)
                                 DisabledFill: =RGBA(255, 255, 255, 1)
                                 DisplayFields: =["cr282_ten_gioi_tinh"]
-                                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                                DisplayMode: =If(ThisItem.edited=1 && GioiTinh_1.Value=true && GioiTinh_1.Visible=true,DisplayMode.Edit,DisplayMode.Disabled) 
                                 HoverBorderColor: =RGBA(9, 33, 98, 1)
                                 HoverFill: =RGBA(180, 214, 250, 1)
                                 InputTextPlaceholder: ="Chọn đơn vị tuổi"
@@ -7003,7 +7014,7 @@
                                 DisabledColor: =RGBA(0, 0, 0, 1)
                                 DisabledFill: =RGBA(255, 255, 255, 1)
                                 DisplayFields: =["cr282_ten_nganh"]
-                                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                                DisplayMode: =If(ThisItem.edited=1 && NganhNghe_1.Value=true && NganhNghe_1.Visible=true,DisplayMode.Edit,DisplayMode.Disabled) 
                                 HoverBorderColor: =RGBA(9, 33, 98, 1)
                                 HoverFill: =RGBA(180, 214, 250, 1)
                                 InputTextPlaceholder: ="Chọn đơn vị tuổi"
@@ -7033,7 +7044,7 @@
                                 DisabledColor: =RGBA(0, 0, 0, 1)
                                 DisabledFill: =RGBA(255, 255, 255, 1)
                                 DisplayFields: =["cr282_ten_sotien"]
-                                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                                DisplayMode: =If(ThisItem.edited=1 && BH_SoTien_1.Value=true && BH_SoTien_1.Visible=true,DisplayMode.Edit,DisplayMode.Disabled) 
                                 HoverBorderColor: =RGBA(9, 33, 98, 1)
                                 HoverFill: =RGBA(180, 214, 250, 1)
                                 InputTextPlaceholder: ="Chọn đơn vị tuổi"
@@ -7063,7 +7074,7 @@
                                 DisabledColor: =RGBA(0, 0, 0, 1)
                                 DisabledFill: =RGBA(255, 255, 255, 1)
                                 DisplayFields: =["cr282_ten_so_nguoi"]
-                                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                                DisplayMode: =If(ThisItem.edited=1 && BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true,DisplayMode.Edit,DisplayMode.Disabled) 
                                 HoverBorderColor: =RGBA(9, 33, 98, 1)
                                 HoverFill: =RGBA(180, 214, 250, 1)
                                 InputTextPlaceholder: ="Chọn đơn vị tuổi"
@@ -7093,7 +7104,7 @@
                                 DisabledColor: =RGBA(0, 0, 0, 1)
                                 DisabledFill: =RGBA(255, 255, 255, 1)
                                 DisplayFields: =["cr282_ten_thoi_han"]
-                                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                                DisplayMode: =If(ThisItem.edited=1 && BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true,DisplayMode.Edit,DisplayMode.Disabled) 
                                 HoverBorderColor: =RGBA(9, 33, 98, 1)
                                 HoverFill: =RGBA(180, 214, 250, 1)
                                 InputTextPlaceholder: ="Chọn đơn vị tuổi"
@@ -7123,7 +7134,7 @@
                                 DisabledColor: =RGBA(0, 0, 0, 1)
                                 DisabledFill: =RGBA(255, 255, 255, 1)
                                 DisplayFields: =["cr282_ten_pt"]
-                                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                                DisplayMode: =If(ThisItem.edited=1 && BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true,DisplayMode.Edit,DisplayMode.Disabled) 
                                 HoverBorderColor: =RGBA(9, 33, 98, 1)
                                 HoverFill: =RGBA(180, 214, 250, 1)
                                 InputTextPlaceholder: ="Chọn đơn vị tuổi"
@@ -7182,9 +7193,9 @@
                                 ZIndex: =31
 
                             Btn_LuuLT As button:
-                                OnSelect: |
+                                OnSelect: |-
                                     =If(
-                                        ThisItem.cr282_id = maLTAdded && !IsEmpty(DL_SAN_PHAM_LOAITRU),
+                                        !IsEmpty(DL_SAN_PHAM_LOAITRU),
                                         RemoveIf(
                                             DL_SAN_PHAM_LOAITRU,
                                             ID = ThisItem.cr282_id
@@ -7194,31 +7205,31 @@
                                     ForAll(
                                         CbxCTLT.SelectedItems As ct,
                                         If(
-                                            !IsEmpty(CbxDoTuoiLT.SelectedItems),
+                                            DoTuoi_1.Value=true && DoTuoi_1.Visible=true && CountRows(CbxDoTuoiLT.SelectedItems)>0,
                                             ForAll(
                                                 CbxDoTuoiLT.SelectedItems As dt,
                                                 If(
-                                                    !IsEmpty(CbxGioiTinhLT.SelectedItems),
+                                                    GioiTinh_1.Value=true && GioiTinh_1.Visible=true && CountRows(CbxGioiTinhLT.SelectedItems)>0,
                                                     ForAll(
                                                         CbxGioiTinhLT.SelectedItems As gt,
                                                         If(
-                                                            !IsEmpty(CbxNganhLT.SelectedItems),
+                                                            NganhNghe_1.Value=true && NganhNghe_1.Visible=true && CountRows(CbxNganhLT.SelectedItems)>0,
                                                             ForAll(
                                                                 CbxNganhLT.SelectedItems As nn,
                                                                 If(
-                                                                    !IsEmpty(CbxSoTienLT.SelectedItems),
+                                                                    BH_SoTien_1.Value=true && BH_SoTien_1.Visible=true && CountRows(CbxSoTienLT.SelectedItems)>0,
                                                                     ForAll(
                                                                         CbxSoTienLT.SelectedItems As st,
                                                                         If(
-                                                                            !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                                            BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxSoNguoiLT.SelectedItems As sn,
                                                                                 If(
-                                                                                    !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                                    BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxThoiHanLT.SelectedItems As th,
                                                                                         If(
-                                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                             ForAll(
                                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                                 Patch(
@@ -7261,7 +7272,7 @@
                                                                                         )
                                                                                     ),
                                                                                     If(
-                                                                                        !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                        BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                         ForAll(
                                                                                             CbxPhuongThucLT.SelectedItems As pt,
                                                                                             Patch(
@@ -7305,11 +7316,11 @@
                                                                                 )
                                                                             ),
                                                                             If(
-                                                                                !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                                BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxThoiHanLT.SelectedItems As th,
                                                                                     If(
-                                                                                        !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                        BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                         ForAll(
                                                                                             CbxPhuongThucLT.SelectedItems As pt,
                                                                                             Patch(
@@ -7352,7 +7363,7 @@
                                                                                     )
                                                                                 ),
                                                                                 If(
-                                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                                         Patch(
@@ -7397,15 +7408,15 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                                        BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxSoNguoiLT.SelectedItems As sn,
                                                                             If(
-                                                                                !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                                BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxThoiHanLT.SelectedItems As th,
                                                                                     If(
-                                                                                        !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                        BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                         ForAll(
                                                                                             CbxPhuongThucLT.SelectedItems As pt,
                                                                                             Patch(
@@ -7448,7 +7459,7 @@
                                                                                     )
                                                                                 ),
                                                                                 If(
-                                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                                         Patch(
@@ -7492,11 +7503,11 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                            BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxThoiHanLT.SelectedItems As th,
                                                                                 If(
-                                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                                         Patch(
@@ -7539,7 +7550,7 @@
                                                                                 )
                                                                             ),
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -7585,19 +7596,19 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                !IsEmpty(CbxSoTienLT.SelectedItems),
+                                                                BH_SoTien_1.Value=true && BH_SoTien_1.Visible=true && CountRows(CbxSoTienLT.SelectedItems)>0,
                                                                 ForAll(
                                                                     CbxSoTienLT.SelectedItems As st,
                                                                     If(
-                                                                        !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                                        BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxSoNguoiLT.SelectedItems As sn,
                                                                             If(
-                                                                                !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                                BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxThoiHanLT.SelectedItems As th,
                                                                                     If(
-                                                                                        !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                        BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                         ForAll(
                                                                                             CbxPhuongThucLT.SelectedItems As pt,
                                                                                             Patch(
@@ -7640,7 +7651,7 @@
                                                                                     )
                                                                                 ),
                                                                                 If(
-                                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                                         Patch(
@@ -7684,11 +7695,11 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                            BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxThoiHanLT.SelectedItems As th,
                                                                                 If(
-                                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                                         Patch(
@@ -7731,7 +7742,7 @@
                                                                                 )
                                                                             ),
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -7776,15 +7787,15 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                                    BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                                     ForAll(
                                                                         CbxSoNguoiLT.SelectedItems As sn,
                                                                         If(
-                                                                            !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                            BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxThoiHanLT.SelectedItems As th,
                                                                                 If(
-                                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                                         Patch(
@@ -7827,7 +7838,7 @@
                                                                                 )
                                                                             ),
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -7871,11 +7882,11 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                        BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxThoiHanLT.SelectedItems As th,
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -7918,7 +7929,7 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                 Patch(
@@ -7965,23 +7976,23 @@
                                                         )
                                                     ),
                                                     If(
-                                                        !IsEmpty(CbxNganhLT.SelectedItems),
+                                                        NganhNghe_1.Value=true && NganhNghe_1.Visible=true && CountRows(CbxNganhLT.SelectedItems)>0,
                                                         ForAll(
                                                             CbxNganhLT.SelectedItems As nn,
                                                             If(
-                                                                !IsEmpty(CbxSoTienLT.SelectedItems),
+                                                                BH_SoTien_1.Value=true && BH_SoTien_1.Visible=true && CountRows(CbxSoTienLT.SelectedItems)>0,
                                                                 ForAll(
                                                                     CbxSoTienLT.SelectedItems As st,
                                                                     If(
-                                                                        !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                                        BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxSoNguoiLT.SelectedItems As sn,
                                                                             If(
-                                                                                !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                                BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxThoiHanLT.SelectedItems As th,
                                                                                     If(
-                                                                                        !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                        BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                         ForAll(
                                                                                             CbxPhuongThucLT.SelectedItems As pt,
                                                                                             Patch(
@@ -8024,7 +8035,7 @@
                                                                                     )
                                                                                 ),
                                                                                 If(
-                                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                                         Patch(
@@ -8068,11 +8079,11 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                            BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxThoiHanLT.SelectedItems As th,
                                                                                 If(
-                                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                                         Patch(
@@ -8115,7 +8126,7 @@
                                                                                 )
                                                                             ),
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -8160,15 +8171,15 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                                    BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                                     ForAll(
                                                                         CbxSoNguoiLT.SelectedItems As sn,
                                                                         If(
-                                                                            !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                            BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxThoiHanLT.SelectedItems As th,
                                                                                 If(
-                                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                                         Patch(
@@ -8211,7 +8222,7 @@
                                                                                 )
                                                                             ),
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -8255,11 +8266,11 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                        BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxThoiHanLT.SelectedItems As th,
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -8302,7 +8313,7 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                 Patch(
@@ -8348,19 +8359,19 @@
                                                             )
                                                         ),
                                                         If(
-                                                            !IsEmpty(CbxSoTienLT.SelectedItems),
+                                                            BH_SoTien_1.Value=true && BH_SoTien_1.Visible=true && CountRows(CbxSoTienLT.SelectedItems)>0,
                                                             ForAll(
                                                                 CbxSoTienLT.SelectedItems As st,
                                                                 If(
-                                                                    !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                                    BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                                     ForAll(
                                                                         CbxSoNguoiLT.SelectedItems As sn,
                                                                         If(
-                                                                            !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                            BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxThoiHanLT.SelectedItems As th,
                                                                                 If(
-                                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                                         Patch(
@@ -8403,7 +8414,7 @@
                                                                                 )
                                                                             ),
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -8447,11 +8458,11 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                        BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxThoiHanLT.SelectedItems As th,
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -8494,7 +8505,7 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                 Patch(
@@ -8539,15 +8550,15 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                                BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                                 ForAll(
                                                                     CbxSoNguoiLT.SelectedItems As sn,
                                                                     If(
-                                                                        !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                        BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxThoiHanLT.SelectedItems As th,
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -8590,7 +8601,7 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                 Patch(
@@ -8634,11 +8645,11 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                    BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                     ForAll(
                                                                         CbxThoiHanLT.SelectedItems As th,
                                                                         If(
-                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                 Patch(
@@ -8681,7 +8692,7 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                        BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxPhuongThucLT.SelectedItems As pt,
                                                                             Patch(
@@ -8729,27 +8740,27 @@
                                                 )
                                             ),
                                             If(
-                                                !IsEmpty(CbxGioiTinhLT.SelectedItems),
+                                                GioiTinh_1.Value=true && GioiTinh_1.Visible=true,
                                                 ForAll(
                                                     CbxGioiTinhLT.SelectedItems As gt,
                                                     If(
-                                                        !IsEmpty(CbxNganhLT.SelectedItems),
+                                                        NganhNghe_1.Value=true && NganhNghe_1.Visible=true && CountRows(CbxNganhLT.SelectedItems)>0,
                                                         ForAll(
                                                             CbxNganhLT.SelectedItems As nn,
                                                             If(
-                                                                !IsEmpty(CbxSoTienLT.SelectedItems),
+                                                                BH_SoTien_1.Value=true && BH_SoTien_1.Visible=true && CountRows(CbxSoTienLT.SelectedItems)>0,
                                                                 ForAll(
                                                                     CbxSoTienLT.SelectedItems As st,
                                                                     If(
-                                                                        !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                                        BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxSoNguoiLT.SelectedItems As sn,
                                                                             If(
-                                                                                !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                                BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxThoiHanLT.SelectedItems As th,
                                                                                     If(
-                                                                                        !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                        BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                         ForAll(
                                                                                             CbxPhuongThucLT.SelectedItems As pt,
                                                                                             Patch(
@@ -8792,7 +8803,7 @@
                                                                                     )
                                                                                 ),
                                                                                 If(
-                                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                                         Patch(
@@ -8836,11 +8847,11 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                            BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxThoiHanLT.SelectedItems As th,
                                                                                 If(
-                                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                                         Patch(
@@ -8883,7 +8894,7 @@
                                                                                 )
                                                                             ),
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -8928,15 +8939,15 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                                    BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                                     ForAll(
                                                                         CbxSoNguoiLT.SelectedItems As sn,
                                                                         If(
-                                                                            !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                            BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxThoiHanLT.SelectedItems As th,
                                                                                 If(
-                                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                                         Patch(
@@ -8979,7 +8990,7 @@
                                                                                 )
                                                                             ),
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -9023,11 +9034,11 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                        BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxThoiHanLT.SelectedItems As th,
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -9070,7 +9081,7 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                 Patch(
@@ -9116,19 +9127,19 @@
                                                             )
                                                         ),
                                                         If(
-                                                            !IsEmpty(CbxSoTienLT.SelectedItems),
+                                                            BH_SoTien_1.Value=true && BH_SoTien_1.Visible=true && CountRows(CbxSoTienLT.SelectedItems)>0,
                                                             ForAll(
                                                                 CbxSoTienLT.SelectedItems As st,
                                                                 If(
-                                                                    !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                                    BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                                     ForAll(
                                                                         CbxSoNguoiLT.SelectedItems As sn,
                                                                         If(
-                                                                            !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                            BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxThoiHanLT.SelectedItems As th,
                                                                                 If(
-                                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                                         Patch(
@@ -9171,7 +9182,7 @@
                                                                                 )
                                                                             ),
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -9215,11 +9226,11 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                        BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxThoiHanLT.SelectedItems As th,
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -9262,7 +9273,7 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                 Patch(
@@ -9307,15 +9318,15 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                                BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                                 ForAll(
                                                                     CbxSoNguoiLT.SelectedItems As sn,
                                                                     If(
-                                                                        !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                        BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxThoiHanLT.SelectedItems As th,
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -9358,7 +9369,7 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                 Patch(
@@ -9402,11 +9413,11 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                    BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                     ForAll(
                                                                         CbxThoiHanLT.SelectedItems As th,
                                                                         If(
-                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                 Patch(
@@ -9449,7 +9460,7 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                        BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxPhuongThucLT.SelectedItems As pt,
                                                                             Patch(
@@ -9496,23 +9507,23 @@
                                                     )
                                                 ),
                                                 If(
-                                                    !IsEmpty(CbxNganhLT.SelectedItems),
+                                                    NganhNghe_1.Value=true && NganhNghe_1.Visible=true && CountRows(CbxNganhLT.SelectedItems)>0,
                                                     ForAll(
                                                         CbxNganhLT.SelectedItems As nn,
                                                         If(
-                                                            !IsEmpty(CbxSoTienLT.SelectedItems),
+                                                            BH_SoTien_1.Value=true && BH_SoTien_1.Visible=true && CountRows(CbxSoTienLT.SelectedItems)>0,
                                                             ForAll(
                                                                 CbxSoTienLT.SelectedItems As st,
                                                                 If(
-                                                                    !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                                    BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                                     ForAll(
                                                                         CbxSoNguoiLT.SelectedItems As sn,
                                                                         If(
-                                                                            !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                            BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxThoiHanLT.SelectedItems As th,
                                                                                 If(
-                                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                     ForAll(
                                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                                         Patch(
@@ -9555,7 +9566,7 @@
                                                                                 )
                                                                             ),
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -9599,11 +9610,11 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                        BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxThoiHanLT.SelectedItems As th,
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -9646,7 +9657,7 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                 Patch(
@@ -9691,15 +9702,15 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                                BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                                 ForAll(
                                                                     CbxSoNguoiLT.SelectedItems As sn,
                                                                     If(
-                                                                        !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                        BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxThoiHanLT.SelectedItems As th,
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -9742,7 +9753,7 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                 Patch(
@@ -9786,11 +9797,11 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                    BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                     ForAll(
                                                                         CbxThoiHanLT.SelectedItems As th,
                                                                         If(
-                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                 Patch(
@@ -9833,7 +9844,7 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                        BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxPhuongThucLT.SelectedItems As pt,
                                                                             Patch(
@@ -9879,19 +9890,19 @@
                                                         )
                                                     ),
                                                     If(
-                                                        !IsEmpty(CbxSoTienLT.SelectedItems),
+                                                        BH_SoTien_1.Value=true && BH_SoTien_1.Visible=true && CountRows(CbxSoTienLT.SelectedItems)>0,
                                                         ForAll(
                                                             CbxSoTienLT.SelectedItems As st,
                                                             If(
-                                                                !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                                BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                                 ForAll(
                                                                     CbxSoNguoiLT.SelectedItems As sn,
                                                                     If(
-                                                                        !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                        BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxThoiHanLT.SelectedItems As th,
                                                                             If(
-                                                                                !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                                BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                                 ForAll(
                                                                                     CbxPhuongThucLT.SelectedItems As pt,
                                                                                     Patch(
@@ -9934,7 +9945,7 @@
                                                                             )
                                                                         ),
                                                                         If(
-                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                 Patch(
@@ -9978,11 +9989,11 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                    BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                     ForAll(
                                                                         CbxThoiHanLT.SelectedItems As th,
                                                                         If(
-                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                 Patch(
@@ -10025,7 +10036,7 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                        BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxPhuongThucLT.SelectedItems As pt,
                                                                             Patch(
@@ -10070,15 +10081,15 @@
                                                             )
                                                         ),
                                                         If(
-                                                            !IsEmpty(CbxSoNguoiLT.SelectedItems),
+                                                            BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true && CountRows(CbxSoNguoiLT.SelectedItems)>0,
                                                             ForAll(
                                                                 CbxSoNguoiLT.SelectedItems As sn,
                                                                 If(
-                                                                    !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                    BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                     ForAll(
                                                                         CbxThoiHanLT.SelectedItems As th,
                                                                         If(
-                                                                            !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                            BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                             ForAll(
                                                                                 CbxPhuongThucLT.SelectedItems As pt,
                                                                                 Patch(
@@ -10121,7 +10132,7 @@
                                                                         )
                                                                     ),
                                                                     If(
-                                                                        !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                        BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxPhuongThucLT.SelectedItems As pt,
                                                                             Patch(
@@ -10165,11 +10176,11 @@
                                                                 )
                                                             ),
                                                             If(
-                                                                !IsEmpty(CbxThoiHanLT.SelectedItems),
+                                                                BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true && CountRows(CbxThoiHanLT.SelectedItems)>0,
                                                                 ForAll(
                                                                     CbxThoiHanLT.SelectedItems As th,
                                                                     If(
-                                                                        !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                        BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                         ForAll(
                                                                             CbxPhuongThucLT.SelectedItems As pt,
                                                                             Patch(
@@ -10212,7 +10223,7 @@
                                                                     )
                                                                 ),
                                                                 If(
-                                                                    !IsEmpty(CbxPhuongThucLT.SelectedItems),
+                                                                    BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true && CountRows(CbxPhuongThucLT.SelectedItems)>0,
                                                                     ForAll(
                                                                         CbxPhuongThucLT.SelectedItems As pt,
                                                                         Patch(
@@ -10271,7 +10282,7 @@
                                 OnSelect: |-
                                     =If(
                                         ThisItem.cr282_id=maLTAdded,
-                                        Remove(tmpNQLCollect,ThisItem),
+                                        Remove(tmpLTCollect,ThisItem),
                                         UpdateIf(
                                             tmpLTCollect,
                                             cr282_id=ThisItem.cr282_id,
@@ -10435,7 +10446,8 @@
 
                         ThemMoiLT As button:
                             OnSelect: |
-                                =If(
+                                =//RemoveIf(DL_SAN_PHAM_LOAITRU,true);
+                                If(
                                     Or(maLTAdded<>"",maLTUpdated<>""),
                                     Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                                     UpdateContext({
@@ -10574,6 +10586,7 @@
                             }
                         );
                     Tooltip: ="Tải lại"
+                    Visible: =showGrid
                     Width: =32
                     X: =408
                     Y: =59
