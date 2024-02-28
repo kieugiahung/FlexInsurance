@@ -2951,7 +2951,7 @@
                     DelayItemLoading: =true
                     Height: =224
                     Items: |-
-                        =GroupBy(
+                        =/*GroupBy(
                             Filter(DL_SAN_PHAM_BANGYT,MA_SAN_PHAM=valMaSP),
                             "cr282_nhom_tinh_phi",
                             "cr282_do_tuoi",
@@ -2964,7 +2964,8 @@
                             "cr282_nganh_nghe",
                             "cr282_id",
                             "CHUONG_TRINH_GROUP"
-                        )
+                        )*/
+                        tmpBYTCollect
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     TemplatePadding: =0
@@ -2974,9 +2975,19 @@
                     ZIndex: =2
 
                     Combo_CT_1 As combobox:
+                        BorderColor: =RGBA(45, 128, 40, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                        ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
+                        ChevronHoverBackground: =RGBA(255, 255, 255, 1)
+                        ChevronHoverFill: =RGBA(45, 128, 40, 1)
                         DefaultSelectedItems: =ThisItem.CHUONG_TRINH_GROUP
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
                         DisplayFields: =["cr282_ten_chuong_trinh"]
                         Height: =31
+                        HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: =""
                         IsSearchable: =false
                         Items: |-
@@ -2985,23 +2996,38 @@
                         OnSelect: =Select(Parent)
                         SearchFields: =["cr282_ten_chuong_trinh"]
                         SearchItems: =[]
+                        SelectionFill: =RGBA(214, 221, 224, 1)
                         Width: =176
                         X: =16
                         Y: =19
                         ZIndex: =5
 
                     Dropdown_TP_1 As dropdown:
+                        BorderColor: =RGBA(45, 128, 40, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                        ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
+                        ChevronHoverBackground: =RGBA(255, 255, 255, 1)
+                        ChevronHoverFill: =RGBA(45, 128, 40, 1)
                         Default: =ThisItem.cr282_nhom_tinh_phi
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
                         Height: =31
+                        HoverFill: =RGBA(180, 214, 250, 1)
                         Items: =Datafield_Nhom_1.SelectedItems
                         OnSelect: =Select(Parent)
+                        SelectionFill: =RGBA(214, 221, 224, 1)
                         Width: =145
                         X: =192
                         Y: =19
                         ZIndex: =6
 
                     Checkbox_PV_1 As checkbox:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_pham_vi_dl
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisplayMode: =If(PVDiaLy_1.Value=true, DisplayMode.Edit, DisplayMode.Disabled)
                         Height: =52
                         OnSelect: =Select(Parent)
@@ -3012,7 +3038,9 @@
                         ZIndex: =7
 
                     Checkbox_DT_1 As checkbox:
+                        CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_do_tuoi
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisplayMode: =If(DoTuoi_1.Value=true, DisplayMode.Edit,DisplayMode.Disabled)
                         Height: =52
                         OnSelect: =Select(Parent)
@@ -3023,7 +3051,9 @@
                         ZIndex: =8
 
                     Checkbox_GT_1 As checkbox:
+                        CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_gioi_tinh
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisplayMode: =If(GioiTinh_1.Value=true, DisplayMode.Edit, DisplayMode.Disabled)
                         Height: =52
                         OnSelect: =Select(Parent)
@@ -3034,6 +3064,7 @@
                         ZIndex: =9
 
                     Icon1_3 As icon.Cancel:
+                        Color: =RGBA(255, 0, 0, 1)
                         Height: =36
                         Icon: =Icon.Cancel
                         OnSelect: |
@@ -3056,104 +3087,59 @@
                         ZIndex: =10
 
                     Icon2_2 As icon.Save:
+                        BorderColor: =RGBA(152, 208, 70, 1)
+                        Color: =RGBA(72, 163, 62, 1)
                         Height: =42
                         Icon: =Icon.Save
-                        OnSelect: |-
+                        OnSelect: |
                             =RemoveIf(
                                 DL_SAN_PHAM_BANGYT,
                                 ID = "NULL"
                             );
-                            UpdateContext(
-                                {
-                                    maxIdYTCT: If(
-                                        CountIf(
-                                            DL_SAN_PHAM_BANGYT,
-                                            true
-                                        ) = 0,
-                                        1,
-                                        Value(
-                                            Last(
-                                                SortByColumns(
-                                                    DL_SAN_PHAM_BANGYT,
-                                                    "cr282_id",
-                                                    SortOrder.Ascending
-                                                )
-                                            ).ID
-                                        ) + 1
-                                    )
-                                }
+                            If(
+                                !IsEmpty(DL_SAN_PHAM_BANGYT),
+                                RemoveIf(
+                                    DL_SAN_PHAM_BANGYT,
+                                    ID = ThisItem.cr282_id
+                                );
+                                
                             );
                             ForAll(
                                 Combo_CT_1.SelectedItems As ct,
-                                If(
-                                    IsBlank(
-                                        LookUp(
-                                            DL_SAN_PHAM_BANGYT,
-                                            ID = ThisItem.cr282_id && MA_SAN_PHAM = valMaSP
-                                        ).ID
-                                    ),
-                                    Patch(
-                                        DL_SAN_PHAM_BANGYT,
-                                        Defaults(DL_SAN_PHAM_BANGYT),
-                                        {
-                                            ID: maxIdYTCT,
-                                            CHUONGTRINH_NHOMTP: Concatenate(
-                                                Dropdown_TP_1.Selected.TEN_NHOM_TP,
-                                                "- ",
-                                                ct.TEN_CHUONG_TRINH
-                                            ),
-                                            MA_SAN_PHAM: valMaSP,
-                                            TEN_CHUONG_TRINH: ct.TEN_CHUONG_TRINH,
-                                            NHOM_TINH_PHI: Dropdown_TP_1.Selected.TEN_NHOM_TP,
-                                            GIOI_TINH: Checkbox_GT_1.Value,
-                                            PHAM_VI_DL: Checkbox_PV_1.Value,
-                                            DO_TUOI: Checkbox_DT_1.Value,
-                                            NGANH_NGHE: Checkbox_NN_1.Value,
-                                            BH_SOTIEN: Checkbox_ST_1.Value,
-                                            BH_SONGUOI: Checkbox_SN_1.Value,
-                                            BH_THOIHAN: Checkbox_TH_1.Value,
-                                            BH_PHUONG_THUC: Checkbox_PT_1.Value
-                                        }
-                                    ),
-                                    If(
-                                        CountRows(DL_SAN_PHAM_BANGYT) > 0,
-                                        RemoveIf(
-                                            DL_SAN_PHAM_BANGYT,
-                                            ID = ThisItem.cr282_id
-                                        )
-                                    );
-                                    Patch(
-                                        DL_SAN_PHAM_BANGYT,
-                                        Defaults(DL_SAN_PHAM_BANGYT),
-                                        {
-                                            ID: maxIdYTCT,
-                                            CHUONGTRINH_NHOMTP: Concatenate(
-                                                Dropdown_TP_1.Selected.TEN_NHOM_TP,
-                                                "- ",
-                                                ct.TEN_CHUONG_TRINH
-                                            ),
-                                            MA_SAN_PHAM: valMaSP,
-                                            TEN_CHUONG_TRINH: ct.TEN_CHUONG_TRINH,
-                                            NHOM_TINH_PHI: Dropdown_TP_1.Selected.TEN_NHOM_TP,
-                                            GIOI_TINH: Checkbox_GT_1.Value,
-                                            PHAM_VI_DL: Checkbox_PV_1.Value,
-                                            DO_TUOI: Checkbox_DT_1.Value,
-                                            NGANH_NGHE: Checkbox_NN_1.Value,
-                                            BH_SOTIEN: Checkbox_ST_1.Value,
-                                            BH_SONGUOI: Checkbox_SN_1.Value,
-                                            BH_THOIHAN: Checkbox_TH_1.Value,
-                                            BH_PHUONG_THUC: Checkbox_PT_1.Value
-                                        }
-                                    )
+                                Patch(
+                                    DL_SAN_PHAM_BANGYT,
+                                    Defaults(DL_SAN_PHAM_BANGYT),
+                                    {
+                                        ID: ThisItem.cr282_id,
+                                        CHUONGTRINH_NHOMTP: Concatenate(
+                                            Dropdown_TP_1.Selected.TEN_NHOM_TP,
+                                            "- ",
+                                            ct.TEN_CHUONG_TRINH
+                                        ),
+                                        MA_SAN_PHAM: valMaSP,
+                                        TEN_CHUONG_TRINH: ct.TEN_CHUONG_TRINH,
+                                        NHOM_TINH_PHI: Dropdown_TP_1.Selected.TEN_NHOM_TP,
+                                        GIOI_TINH: Checkbox_GT_1.Value,
+                                        PHAM_VI_DL: Checkbox_PV_1.Value,
+                                        DO_TUOI: Checkbox_DT_1.Value,
+                                        NGANH_NGHE: Checkbox_NN_1.Value,
+                                        BH_SOTIEN: Checkbox_ST_1.Value,
+                                        BH_SONGUOI: Checkbox_SN_1.Value,
+                                        BH_THOIHAN: Checkbox_TH_1.Value,
+                                        BH_PHUONG_THUC: Checkbox_PT_1.Value
+                                    }
                                 )
-                            )
+                            );
+                            Select(IconTaiLaiBYT);
                         Width: =38
                         X: =1096
                         Y: =17
                         ZIndex: =11
 
                     Checkbox_NN_1 As checkbox:
+                        CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_nganh_nghe
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisplayMode: =If(NganhNghe_1.Value=true, DisplayMode.Edit, DisplayMode.Disabled)
                         Height: =52
                         OnSelect: =Select(Parent)
@@ -3164,7 +3150,9 @@
                         ZIndex: =12
 
                     Checkbox_ST_1 As checkbox:
+                        CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_bh_sotien
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisplayMode: =If(BH_SoTien_1.Value=true, DisplayMode.Edit, DisplayMode.Disabled)
                         Height: =52
                         OnSelect: =Select(Parent)
@@ -3175,7 +3163,9 @@
                         ZIndex: =13
 
                     Checkbox_SN_1 As checkbox:
+                        CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_bh_songuoi
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisplayMode: =If(BH_SoNguoi_1.Value=true, DisplayMode.Edit, DisplayMode.Disabled)
                         Height: =52
                         OnSelect: =Select(Parent)
@@ -3186,7 +3176,9 @@
                         ZIndex: =14
 
                     Checkbox_TH_1 As checkbox:
+                        CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_bh_thoihan
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisplayMode: =If(BH_ThoiHan_1.Value=true, DisplayMode.Edit, DisplayMode.Disabled)
                         Height: =52
                         OnSelect: =Select(Parent)
@@ -3197,7 +3189,9 @@
                         ZIndex: =15
 
                     Checkbox_PT_1 As checkbox:
+                        CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_bh_phuong_thuc
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisplayMode: =If(BH_PhuongThuc_1.Value=true, DisplayMode.Edit, DisplayMode.Disabled)
                         Height: =52
                         OnSelect: =Select(Parent)
@@ -3261,16 +3255,35 @@
                     Y: =120
                     ZIndex: =8
 
-                ThemMoi_2 As button:
-                    OnSelect: |-
-                        =Patch(
+                ThemMoiBYT As button:
+                    OnSelect: |
+                        =/*Patch(
                             DL_SAN_PHAM_BANGYT,
                             Defaults(DL_SAN_PHAM_BANGYT),
                             {
                                 ID:"NULL",
                                 MA_SAN_PHAM: valMaSP
                             }
-                        );
+                        );*/
+                        If(
+                            Or(maBYTAdded<>"",maBYTUpdated<>""),
+                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                            UpdateContext({
+                                idMaBYT:If(
+                                    CountIf(DL_SAN_PHAM_BANGYT,true)=0,
+                                    1,
+                                    Value(Last(SortByColumns(DL_SAN_PHAM_BANGYT,"cr282_id",SortOrder.Ascending)).ID)+1
+                                )
+                            });
+                            Collect(
+                                tmpBYTCollect,
+                                {
+                                    cr282_id:Text(idMaBYT),
+                                    edited:1
+                                }
+                            );
+                            UpdateContext({maBYTAdded:Text(idMaBYT)})
+                        )
                     Text: ="Thêm mới"
                     Visible: =showGrid
                     X: =12
@@ -10420,7 +10433,7 @@
                             Y: =99
                             ZIndex: =16
 
-                        Button5 As button:
+                        ThemMoiLT As button:
                             OnSelect: |
                                 =If(
                                     Or(maLTAdded<>"",maLTUpdated<>""),
@@ -10502,6 +10515,69 @@
                             Text: ="4.1.3. Thông tin loại trừ ma trận"
                             Width: =1207
                             ZIndex: =19
+
+                IconTaiLaiBYT As icon.Sync:
+                    Color: =RGBA(83, 144, 164, 1)
+                    Height: =36
+                    Icon: =Icon.Sync
+                    OnSelect: |
+                        =ClearCollect(
+                            tmpBYTCollect,
+                            GroupBy(
+                                ShowColumns(
+                                    AddColumns(
+                                        SortByColumns(
+                                            Filter(
+                                                DL_SAN_PHAM_BANGYT,
+                                                MA_SAN_PHAM = valMaSP
+                                            ),
+                                            "cr282_ma_san_pham",
+                                            SortOrder.Ascending
+                                        ),
+                                        "edited",
+                                        0
+                                    ),
+                                    "cr282_id",
+                                    "cr282_ma_san_pham",
+                                    "cr282_chuongtrinh_nhomtp",
+                                    "cr282_ten_chuong_trinh",
+                                    "cr282_nhom_tinh_phi",
+                                    "cr282_pham_vi_dl",
+                                    "cr282_do_tuoi",
+                                    "cr282_gioi_tinh",
+                                    "cr282_nganh_nghe",
+                                    "cr282_bh_sotien",
+                                    "cr282_bh_songuoi",
+                                    "cr282_bh_thoihan",
+                                    "cr282_bh_phuong_thuc",
+                                    "edited"
+                                ),
+                                "cr282_id",
+                                "cr282_ma_san_pham",
+                                "cr282_nhom_tinh_phi",
+                                "cr282_pham_vi_dl",
+                                "cr282_do_tuoi",
+                                "cr282_gioi_tinh",
+                                "cr282_nganh_nghe",
+                                "cr282_bh_sotien",
+                                "cr282_bh_songuoi",
+                                "cr282_bh_thoihan",
+                                "cr282_bh_phuong_thuc",
+                                "edited",
+                                "CHUONG_TRINH_GROUP"
+                            )
+                        );
+                        UpdateContext(
+                            {
+                                maBYTAdded: "",
+                                maBYTUpdated: ""
+                            }
+                        );
+                    Tooltip: ="Tải lại"
+                    Width: =32
+                    X: =408
+                    Y: =59
+                    ZIndex: =18
 
         DataCard5_1 As dataCard.blankCard:
             BorderColor: =RGBA(0, 0, 0, 1)
