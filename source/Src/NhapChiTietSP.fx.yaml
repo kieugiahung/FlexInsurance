@@ -638,7 +638,21 @@
                         ForAll(
                                 tempCTTrangThai0 As CT,
                                // chuyển dữ liệu điều khoản chung
-                               ForAll(Filter(DL_SAN_PHAM_DKCHUNGS,ma_san_pham = valMaSP ) As dkc,
+                            ForAll(Filter(DL_SAN_PHAM_DKCHUNGS,ma_san_pham = valMaSP ) As dkc,
+                                Patch(
+                                    DL_CHUONGTRINH_DKCHUNGS,
+                                    Defaults(DL_CHUONGTRINH_DKCHUNGS),
+                                    {
+                                        MA_SAN_PHAM:valMaSP,
+                                        MA_CHUONG_TRINH: CT.MA_CHUONG_TRINH,
+                                        NHOM_THONG_TIN:dkc.nhom_thong_tin,
+                                        THONG_TIN: dkc.thong_tin,
+                                        NOI_DUNG:dkc.noi_dung
+                        
+                                    }
+                                )
+                            );
+                            ForAll(Filter(DL_SAN_PHAM_DKCHUNGS,ma_san_pham = valMaSP ) As dkc,
                                 Patch(
                                     DL_CHUONGTRINH_DKCHUNGS,
                                     Defaults(DL_CHUONGTRINH_DKCHUNGS),
