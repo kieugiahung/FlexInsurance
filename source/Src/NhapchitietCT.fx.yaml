@@ -2630,24 +2630,24 @@
                                             ID:ThisItem.cr282_id,
                                             MA_SAN_PHAM:valMaSP,
                                             MA_CHUONG_TRINH:VarCT,
-                                            THONG_TIN:TxtThongtin_3.Text,
-                                            MO_TA:TxtMota_5.Text,
+                                            THONG_TIN:TxtNhomtinhphi.Text,
+                                            MO_TA:TxtPhamvidl.Text,
                                             SO_TIEN:Value(TxtSo_tien_4.Text),
-                                            DONVI_TIEN: TxtDonvi_tien_4.Text,
-                                            TY_LE:TxtTy_le_4.Text
+                                            DONVI_TIEN: TxtGioitinh.Text,
+                                            TY_LE:TxtSonguoi.Text
                                         }
                                     ),
                                     UpdateIf(
                                         DL_CHUONGTRINH_GPS,
                                         ID=ThisItem.cr282_id,
                                         {
-                                            THONG_TIN:TxtThongtin_3.Text,
+                                            THONG_TIN:TxtNhomtinhphi.Text,
                                             MA_SAN_PHAM:valMaSP,
                                             MA_CHUONG_TRINH:VarCT,
-                                            MO_TA:TxtMota_5.Text,
+                                            MO_TA:TxtPhamvidl.Text,
                                             SO_TIEN:Value(TxtSo_tien_4.Text),
-                                            DONVI_TIEN: TxtDonvi_tien_4.Text,
-                                            TY_LE:TxtTy_le_4.Text
+                                            DONVI_TIEN: TxtGioitinh.Text,
+                                            TY_LE:TxtSonguoi.Text
                                         }
                                     )
                                 );
@@ -2655,11 +2655,11 @@
                                     tmpGPCCollectCT,
                                     cr282_id=ThisItem.cr282_id,
                                     {
-                                            cr282_thong_tin:TxtThongtin_3.Text,
-                                            cr282_mo_ta:TxtMota_5.Text,
+                                            cr282_thong_tin:TxtNhomtinhphi.Text,
+                                            cr282_mo_ta:TxtPhamvidl.Text,
                                             cr282_so_tien:Value(TxtSo_tien_4.Text),
-                                            cr282_donvi_tien: TxtDonvi_tien_4.Text,
-                                            cr282_ty_le:TxtTy_le_4.Text,
+                                            cr282_donvi_tien: TxtGioitinh.Text,
+                                            cr282_ty_le:TxtSonguoi.Text,
                                         edited:0
                                     }
                                 );
@@ -2732,7 +2732,7 @@
                         X: =3
                         ZIndex: =21
 
-                    TxtThongtin_3 As text:
+                    TxtNhomtinhphi As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_thong_tin
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
@@ -2745,7 +2745,7 @@
                         X: =3
                         ZIndex: =22
 
-                    TxtMota_5 As text:
+                    TxtPhamvidl As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_mo_ta
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
@@ -2758,21 +2758,7 @@
                         X: =157
                         ZIndex: =23
 
-                    TxtSo_tien_4 As text:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =ThisItem.cr282_so_tien
-                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                        DisabledColor: =RGBA(0, 0, 0, 1)
-                        DisabledFill: =RGBA(255, 255, 255, 1)
-                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Format: =TextFormat.Number
-                        OnChange: =
-                        OnSelect: =Select(Parent)
-                        Width: =127
-                        X: =312
-                        ZIndex: =24
-
-                    TxtDonvi_tien_4 As text:
+                    TxtGioitinh As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_donvi_tien
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
@@ -2785,7 +2771,7 @@
                         X: =439
                         ZIndex: =25
 
-                    TxtTy_le_4 As text:
+                    TxtSonguoi As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_ty_le
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
@@ -2798,7 +2784,7 @@
                         X: =778
                         ZIndex: =26
 
-                    TxtDonvi_tien_5 As text:
+                    TxtNganhnghe As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_donvi_tien
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
@@ -2811,7 +2797,7 @@
                         X: =552
                         ZIndex: =27
 
-                    TxtDonvi_tien_6 As text:
+                    TxtSotien As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_donvi_tien
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
@@ -2824,7 +2810,7 @@
                         X: =665
                         ZIndex: =28
 
-                    TxtTy_le_5 As text:
+                    TxtThoihan As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_ty_le
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
@@ -2833,11 +2819,11 @@
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         OnChange: =
                         OnSelect: =Select(Parent)
-                        Width: =76
+                        Width: =82
                         X: =877
                         ZIndex: =29
 
-                    TxtTy_le_6 As text:
+                    TxtPhuongthuc As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_ty_le
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
@@ -2850,7 +2836,7 @@
                         X: =959
                         ZIndex: =30
 
-                    TxtTy_le_7 As text:
+                    TxtPhi As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_ty_le
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
@@ -2862,6 +2848,19 @@
                         Width: =76
                         X: =1050
                         ZIndex: =31
+
+                    TxtDotuoi As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_mo_ta
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =130
+                        X: =309
+                        ZIndex: =32
 
                 BadgeCanvas1_31 As Badge:
                     BasePaletteColor: =
