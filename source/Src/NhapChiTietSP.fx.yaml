@@ -1031,7 +1031,7 @@
                             UpdateContext({
                                 idMa:If(
                                     CountRows(tmpDKCCollect) = 0,
-                                    1000,
+                                    Max(DL_SAN_PHAM_GPS, ID_GIAMPHI) + 1,
                                     Max(DL_SAN_PHAM_DKCHUNGS, id_dkc) + 1
                                 )
                             });
