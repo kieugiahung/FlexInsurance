@@ -190,6 +190,33 @@
             loaiFilterQLCTTB:1,
             loaiFilterNQLSP:1
         });
+        
+        ClearCollect(
+            tmpPhiKhacCollect,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                       DL_SAN_PHAM_PHIKHACS,
+                      // Filter(DL_SAN_PHAM_PHIKHACS,MA_SAN_PHAM="PTI_CARE"),
+                        "cr282_id",
+                        SortOrder.Ascending
+                    ),
+                    "edited",
+                    0
+                ),
+                "cr282_id",
+                "cr282_ma_san_pham",
+                "cr282_nhom_thong_tin",
+                "cr282_mo_ta",
+                "edited"
+            )
+        );
+        UpdateContext(
+            {
+                maAddedPhiKhac:"",
+                maUpdatedPhiKhac: ""
+            }
+        );
         Reset(CbxFilterQLCTTB_1);Reset(CbxFilterValueQLCTTB_1);Reset(TextFilterQLCTTB_1)
 
     CanvasSP_1 As fluidGrid.fluidGridWithBlankCard:
@@ -6679,7 +6706,7 @@
             BorderStyle: =BorderStyle.Solid
             DisplayMode: =DisplayMode.Edit
             Fill: =RGBA(0, 0, 0, 0)
-            Height: =425
+            Height: =725
             Width: =1366
             X: =0
             Y: =3
