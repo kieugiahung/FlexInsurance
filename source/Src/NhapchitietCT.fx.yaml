@@ -501,10 +501,10 @@
                     ZIndex: =13
 
             "'3.1Giamtruphi_3' As groupContainer.manualLayoutContainer":
-                Height: =473
+                Height: =205
                 Width: =1262
                 X: =75
-                Y: =1673
+                Y: =1940
                 ZIndex: =2
 
                 GalleryCT_8 As gallery.galleryVertical:
@@ -2397,7 +2397,7 @@
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
                     Height: =39
-                    Width: =1240
+                    Width: =1252
                     X: =10
                     Y: =97
                     ZIndex: =2
@@ -2523,6 +2523,380 @@
                     X: =158
                     Y: =47
                     ZIndex: =17
+
+            "'3.1Giamtruphi_4' As groupContainer.manualLayoutContainer":
+                Height: =267
+                Width: =1262
+                X: =75
+                Y: =1673
+                ZIndex: =7
+
+                GalleryCT_9 As gallery.galleryVertical:
+                    DelayItemLoading: =true
+                    Height: =69
+                    Items: =tmpGPCCollectCT
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    NavigationStep: =0
+                    TemplateSize: =40
+                    Width: =1208
+                    X: =21
+                    Y: =167
+                    ZIndex: =1
+
+                    Btn_SuaCT_9 As button:
+                        OnSelect: |-
+                            =If(
+                                Or(maAddedGP<>"",maUpdatedGP<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                UpdateIf(
+                                    tmpGPCCollectCT,
+                                    cr282_id=ThisItem.cr282_id,
+                                    {
+                                        edited:1
+                                    }
+                                );
+                                UpdateContext({
+                                    maUpdatedGP:ThisItem.cr282_id
+                                })
+                            )
+                        Text: ="Sửa"
+                        Visible: =ThisItem.edited=0
+                        Width: =75
+                        X: =1035
+                        ZIndex: =17
+
+                    Btn_XoaCT_9 As button:
+                        OnSelect: |-
+                            =If(
+                                Or(maAddedGP<>"",maUpdatedGP<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                Refresh(DL_SAN_PHAM_GPS);
+                                RemoveIf(
+                                    DL_CHUONGTRINH_GPS,
+                                    ID=ThisItem.cr282_id
+                                );
+                                Remove(tmpGPCCollectCT,ThisItem);
+                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
+                            )
+                        Text: ="Xóa"
+                        Visible: =ThisItem.edited=0
+                        Width: =85
+                        X: =1113
+                        ZIndex: =18
+
+                    Btn_LuuCT_9 As button:
+                        OnSelect: |
+                            =
+                                If( ThisItem.cr282_id=maAddedGP,
+                                    Patch(
+                                        DL_CHUONGTRINH_GPS,
+                                        {
+                                            ID:ThisItem.cr282_id,
+                                            MA_SAN_PHAM:valMaSP,
+                                            MA_CHUONG_TRINH:VarCT,
+                                            THONG_TIN:TxtThongtin_3.Text,
+                                            MO_TA:TxtMota_5.Text,
+                                            SO_TIEN:Value(TxtSo_tien_4.Text),
+                                            DONVI_TIEN: TxtDonvi_tien_4.Text,
+                                            TY_LE:TxtTy_le_4.Text
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        DL_CHUONGTRINH_GPS,
+                                        ID=ThisItem.cr282_id,
+                                        {
+                                            THONG_TIN:TxtThongtin_3.Text,
+                                            MA_SAN_PHAM:valMaSP,
+                                            MA_CHUONG_TRINH:VarCT,
+                                            MO_TA:TxtMota_5.Text,
+                                            SO_TIEN:Value(TxtSo_tien_4.Text),
+                                            DONVI_TIEN: TxtDonvi_tien_4.Text,
+                                            TY_LE:TxtTy_le_4.Text
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpGPCCollectCT,
+                                    cr282_id=ThisItem.cr282_id,
+                                    {
+                                            cr282_thong_tin:TxtThongtin_3.Text,
+                                            cr282_mo_ta:TxtMota_5.Text,
+                                            cr282_so_tien:Value(TxtSo_tien_4.Text),
+                                            cr282_donvi_tien: TxtDonvi_tien_4.Text,
+                                            cr282_ty_le:TxtTy_le_4.Text,
+                                        edited:0
+                                    }
+                                );
+                                Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
+                                ClearCollect(
+                                    tmpGPCCollectCT,
+                                    ShowColumns(
+                                        AddColumns(
+                                            SortByColumns(
+                                                Filter(DL_CHUONGTRINH_GPS,MA_SAN_PHAM=valMaSP && MA_CHUONG_TRINH = VarCT),
+                                                "cr282_id",
+                                                SortOrder.Ascending
+                                            ),
+                                            "edited",
+                                            0
+                                        ),
+                                    "cr282_id",
+                                    "cr282_ma_san_pham",
+                                    "cr282_ma_chuong_trinh",
+                                    "cr282_thong_tin",
+                                    "cr282_mo_ta",
+                                    "cr282_so_tien",
+                                    "cr282_donvi_tien",
+                                    "cr282_ty_le",
+                                    "edited"
+                                    )
+                                );
+                                UpdateContext({
+                                    maAddedGP:"",
+                                    maUpdatedGP:""
+                                });
+                        Text: ="Lưu"
+                        Visible: =ThisItem.edited=1
+                        Width: =75
+                        X: =1035
+                        ZIndex: =19
+
+                    Btn_HuyCT_9 As button:
+                        OnSelect: |-
+                            =If(
+                                ThisItem.cr282_id=maAddedGP,
+                                Remove(tmpGPCCollectCT,ThisItem),
+                                UpdateIf(
+                                    tmpGPCCollectCT,
+                                    cr282_id=ThisItem.cr282_id,
+                                    {
+                                        edited:0
+                                    }
+                                )
+                            );
+                             Set(   maAddedGP, "");
+                              Set(  maUpdated,"");
+                        Text: ="Hủy"
+                        Visible: =ThisItem.edited=1
+                        Width: =85
+                        X: =1113
+                        ZIndex: =20
+
+                    TxtID_GP_4 As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_id
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        Width: =134
+                        X: =3
+                        ZIndex: =21
+
+                    TxtThongtin_3 As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_thong_tin
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =205
+                        X: =3
+                        ZIndex: =22
+
+                    TxtMota_5 As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_mo_ta
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =227
+                        X: =219
+                        ZIndex: =23
+
+                    TxtSo_tien_4 As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_so_tien
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Format: =TextFormat.Number
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =127
+                        X: =457
+                        ZIndex: =24
+
+                    TxtDonvi_tien_4 As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_donvi_tien
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =191
+                        X: =595
+                        ZIndex: =25
+
+                    TxtTy_le_4 As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_ty_le
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =191
+                        X: =800
+                        ZIndex: =26
+
+                BadgeCanvas1_31 As Badge:
+                    BasePaletteColor: =
+                    Content: =""
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =30
+                    Visible: =true
+                    Width: =1241
+                    X: =21
+                    Y: =137
+                    ZIndex: =2
+
+                TextCanvas2_142 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =38
+                    Size: =14
+                    Text: ="Thông tin"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =185
+                    X: =40
+                    Y: =136
+                    ZIndex: =3
+
+                TextCanvas2_143 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =34
+                    Size: =14
+                    Text: ="Mô tả"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =96
+                    X: =246
+                    Y: =133
+                    ZIndex: =4
+
+                TextCanvas2_145 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =34
+                    Size: =14
+                    Text: ="Thao tác"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =96
+                    X: =1046
+                    Y: =133
+                    ZIndex: =5
+
+                ThemMoiCT_9 As button:
+                    Height: =36
+                    OnSelect: |
+                        =If( Or(maAddedGP<>"",maUpdatedGP<>""),
+                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                            UpdateContext({
+                                idMa:If(
+                                    CountRows(tmpGPCCollectCT) = 0,
+                                    Max(DL_CHUONGTRINH_GPS, ID) + 1,
+                                    Max(DL_CHUONGTRINH_GPS, ID) + 1
+                                )
+                            });
+                            Collect(
+                                tmpGPCCollectCT,
+                                {
+                                    cr282_id:Text(idMa),
+                                    cr282_ma_san_pham:valMaSP,
+                                    cr282_ma_chuong_trinh:VarCT,
+                                    cr282_thong_tin:"",
+                                    cr282_mo_ta:"",
+                                    cr282_so_tien:0,
+                                    cr282_donvi_tien:"",
+                                    cr282_donvi_ty_le:"",
+                                    edited:1
+                                }
+                            );
+                          UpdateContext({maAddedGP:Text(idMa)})
+                        )
+                    Size: =13
+                    Text: ="Thêm mới"
+                    X: =21
+                    Y: =63
+                    ZIndex: =11
+
+                TextCanvas2_146 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =34
+                    Size: =14
+                    Text: ="Số tiền"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =96
+                    X: =491
+                    Y: =133
+                    ZIndex: =14
+
+                TextCanvas2_147 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =34
+                    Size: =14
+                    Text: ="Đơn vị tiền"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =96
+                    X: =619
+                    Y: =133
+                    ZIndex: =15
+
+                TextCanvas2_144 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =34
+                    Size: =14
+                    Text: ="Tỷ lệ"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =96
+                    X: =827
+                    Y: =137
+                    ZIndex: =16
+
+                Label2_2 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =33
+                    Size: =12
+                    Text: ="3.1 Thông tin giảm trừ phí"
+                    Width: =1176
+                    ZIndex: =17
+
+                Label2_3 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =33
+                    Size: =12
+                    Text: ="3.1 Thông tin giảm trừ phí"
+                    Width: =1262
+                    Y: =30
+                    ZIndex: =18
 
     LeftNavigation_23 As LeftNavigation_9:
         Width: =LeftNavigation_23.MenuWidth
