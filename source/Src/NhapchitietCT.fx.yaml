@@ -343,7 +343,7 @@
 
                 GalleryCT_8 As gallery.galleryVertical:
                     DelayItemLoading: =true
-                    Height: =303
+                    Height: =213
                     Items: =tmpGPCCollect
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
@@ -399,7 +399,7 @@
                             =
                                 If( ThisItem.cr282_id_giamphi=maAddedGP,
                                     Patch(
-                                        DL_SAN_PHAM_GPS,
+                                        DL_CHUONGTRINH_GPS,
                                         {
                                             ID_GIAMPHI:ThisItem.cr282_id_giamphi,
                                             MA_SAN_PHAM:valMaSP,
@@ -411,7 +411,7 @@
                                         }
                                     ),
                                     UpdateIf(
-                                        DL_SAN_PHAM_GPS,
+                                        DL_CHUONGTRINH_GPS,
                                         ID_GIAMPHI=ThisItem.cr282_id_giamphi,
                                         {
                                             THONG_TIN:TxtThongtin_2.Text,
@@ -441,7 +441,7 @@
                                     ShowColumns(
                                         AddColumns(
                                             SortByColumns(
-                                                Filter(DL_SAN_PHAM_GPS,MA_SAN_PHAM=valMaSP),
+                                                Filter(DL_CHUONGTRINH_GPS,MA_SAN_PHAM=valMaSP),
                                                 "cr282_id_giamphi",
                                                 SortOrder.Ascending
                                             ),
