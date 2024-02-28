@@ -140,6 +140,7 @@
                                             ID:ThisItem.cr282_id,
                                             NHOM_THONG_TIN:CbxNhom_thongtin_1.Selected.MA_YEU_TO ,
                                             MA_SAN_PHAM:valMaSP,
+                                            MA_CHUONG_TRINH:VarCT,
                                             MO_TA:TxtMota_3.Text
                                         }
                                     ),
@@ -149,6 +150,7 @@
                                         {
                                             NHOM_THONG_TIN:CbxNhom_thongtin_1.Selected.MA_YEU_TO ,
                                             MA_SAN_PHAM:valMaSP,
+                                            MA_CHUONG_TRINH:VarCT,
                                             MO_TA:TxtMota_3.Text
                                         }
                                     )
@@ -159,7 +161,8 @@
                                     {
                                            cr282_nhom_thong_tin:CbxNhom_thongtin_1.Selected.MA_YEU_TO,
                                            cr282_mo_ta: TxtMota_3.Text,
-                                           cr282_ma_san_pham: valMaSP
+                                           cr282_ma_san_pham: valMaSP,
+                                           cr282_ma_chuong_trinh:VarCT
                                     }
                                 );
                                 Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
@@ -169,7 +172,6 @@
                                         AddColumns(
                                             SortByColumns(
                                                 Filter(DL_CHUONGTRINH_PHIKHACS,MA_SAN_PHAM= valMaSP && MA_CHUONG_TRINH = VarCT),
-                            
                                                 "cr282_id",
                                                 SortOrder.Ascending
                                             ),
@@ -178,6 +180,7 @@
                                         ),
                                     "cr282_id",
                                     "cr282_ma_san_pham",
+                                    "cr282_ma_chuong_trinh",
                                     "cr282_nhom_thong_tin",
                                     "cr282_mo_ta",
                                     "edited"
