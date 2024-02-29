@@ -51,7 +51,11 @@
         );
         UpdateContext(
             {
-                objCT:LookUp(' DL_SAN_PHAM_CT',MA_CHUONG_TRINH=VarCT),
+                objCT:LookUp(' DL_SAN_PHAM_CT',MA_CHUONG_TRINH=VarCT)
+            }
+        );
+        UpdateContext(
+            {
                 objSP:LookUp(DL_SAN_PHAM,MA_SAN_PHAM=objCT.MA_SAN_PHAM)
             }
         );
@@ -62,7 +66,7 @@
                     SortByColumns(
                         Filter(
                             DL_CHUONGTRINH_DKCHUNGS,
-                            MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=objCT.MA_SAN_PHAM
+                            MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SAN_PHAM=objCT.MA_SAN_PHAM
                         ),
                         "cr282_ma_dieu_khoan",
                         SortOrder.Ascending
@@ -1121,7 +1125,7 @@
                                             NHOM_THONG_TIN:CbxNhomTTDKCCT.Selected.Value,
                                             THONG_TIN:CbxTTinDKCCT.Selected.MA_TTIN,
                                             NOI_DUNG:TiNDDCKCT.Text,
-                                            MA_CHUONG_TRINH:VarCT,
+                                            MA_CHUONG_TRINH:objCT.MA_CHUONG_TRINH,
                                             MA_SP:objCT.MA_SAN_PHAM
                                         }
                                     ),
@@ -1132,7 +1136,7 @@
                                             NHOM_THONG_TIN:CbxNhomTTDKCCT.Selected.Value,
                                             THONG_TIN:CbxTTinDKCCT.Selected.MA_TTIN,
                                             NOI_DUNG:TiNDDCKCT.Text,
-                                            MA_CHUONG_TRINH:VarCT,
+                                            MA_CHUONG_TRINH:objCT.MA_CHUONG_TRINH,
                                             MA_SP:objCT.MA_SAN_PHAM
                                         }
                                     )
@@ -1156,7 +1160,7 @@
                                                 Filter(
                                                     DL_CHUONGTRINH_DKCHUNGS,
                                                     //cuong_bs
-                                                    MA_CHUONG_TRINH=VarCT && MA_SP=objCT.MA_SAN_PHAM
+                                                    MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SP=objCT.MA_SAN_PHAM
                                                 ),
                                                 "cr282_ma_dieu_khoan",
                                                 SortOrder.Ascending
@@ -1343,7 +1347,7 @@
                                     SortByColumns(
                                         Filter(
                                             DL_CHUONGTRINH_DKCHUNGS,
-                                            MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=objCT.MA_SAN_PHAM
+                                            MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SAN_PHAM=objCT.MA_SAN_PHAM
                                         ),
                                         "cr282_ma_dieu_khoan",
                                         SortOrder.Ascending
@@ -1379,7 +1383,6 @@
                             Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                             UpdateContext({
                                 idMaDKCCT:If(
-                                    //cuongbs
                                     CountIf(DL_CHUONGTRINH_DKCHUNGS,true)=0,
                                     1000,
                                     Value(Last(SortByColumns(DL_CHUONGTRINH_DKCHUNGS,"cr282_ma_dieu_khoan",SortOrder.Ascending)).MA_DIEU_KHOAN)+1
@@ -1464,7 +1467,7 @@
                                 Refresh(DL_CHUONGTRINH_QLCTS);
                                 RemoveIf(
                                     DL_CHUONGTRINH_QLCTS,
-                                    MA_QL_CT=ThisItem.cr282_ma_ql_ct
+                                    MA_QL_CT=ThisItem.cr282_ma_ql_ct && MA_SAN_PHAM=objCT.MA_SAN_PHAM && MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH
                                 );
                                 Remove(tmpQLCTCTCollect,ThisItem);
                                 Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
@@ -1495,7 +1498,7 @@
                                         {
                                             MA_QL_CT:CbxQLQLCTCT.Selected.MA_QL_CHITIET,
                                             MA_SAN_PHAM:objCT.MA_SAN_PHAM,
-                                            MA_CHUONG_TRINH:VarCT,
+                                            MA_CHUONG_TRINH:objCT.MA_CHUONG_TRINH,
                                             TT_HIENTHI:Value(TiTthtQLCTCT.Text),
                                             MA_NHOM_QL:CbxNhomQLQLCTCT.Selected.MA_NHOM_QL,
                                             MA_NHOMQL_SP:Blank(),
@@ -1511,10 +1514,8 @@
                                     ),
                                     UpdateIf(
                                         DL_CHUONGTRINH_QLCTS,
-                                        MA_QL_CT=ThisItem.cr282_ma_ql_ct,
+                                        MA_QL_CT=ThisItem.cr282_ma_ql_ct && MA_SAN_PHAM=objCT.MA_SAN_PHAM && MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH,
                                         {
-                                            MA_SAN_PHAM:objCT.MA_SAN_PHAM,
-                                            MA_CHUONG_TRINH:VarCT,
                                             TT_HIENTHI:Value(TiTthtQLCTCT.Text),
                                             MA_NHOM_QL:CbxNhomQLQLCTCT.Selected.MA_NHOM_QL,
                                             MA_NHOMQL_SP:Blank(),
@@ -1533,8 +1534,6 @@
                                     tmpQLCTCTCollect,
                                     cr282_ma_ql_ct=ThisItem.cr282_ma_ql_ct,
                                     {
-                                        cr282_ma_san_pham:objCT.MA_SAN_PHAM,
-                                        cr282_ma_chuong_trinh:VarCT,
                                         cr282_tt_hienthi:Value(TiTthtQLCTCT.Text),
                                         cr282_ma_nhom_ql:CbxNhomQLQLCTCT.Selected.MA_NHOM_QL,
                                         cr282_ma_nhomql_sp:Blank(),
@@ -1557,8 +1556,7 @@
                                             SortByColumns(
                                                 Filter(
                                                     DL_CHUONGTRINH_QLCTS,
-                                                    //cuong_bs
-                                                    MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=objCT.MA_SAN_PHAM
+                                                    MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SAN_PHAM=objCT.MA_SAN_PHAM
                                                 ),
                                                 "cr282_ma_ql_ct",
                                                 SortOrder.Ascending
@@ -1996,8 +1994,8 @@
                                     cr282_pt_tu_chitra:Blank(),
                                     cr282_so_tien_bh:Blank(),
                                     cr282_tt_hienthi:Blank(),
-                                    cr282_ma_san_pham:Blank(),
-                                    cr282_ma_chuong_trinh:Blank(),
+                                    cr282_ma_san_pham:objCT.MA_SAN_PHAM,
+                                    cr282_ma_chuong_trinh:objCT.MA_CHUONG_TRINH,
                                     edited:1
                                 }
                             );
@@ -2314,7 +2312,7 @@
                                 Notify("Bắt buộc nhập nhóm quyền lợi", NotificationType.Error,800),
                                 IsBlank(TiMoTaQLKCT.Text),
                                 Notify("Bắt buộc nhập mô tả", NotificationType.Error,800),
-                                !IsBlank(LookUp(tmpDKCCTCollect,cr282_ma_san_pham=ThisItem.cr282_ma_san_pham && cr282_ma_nhom_ql_ct=ThisItem.cr282_ma_nhom_ql_ct && cr282_ma_chuong_trinh=ThisItem.cr282_ma_chuong_trinh && cr282_ma_dl_ct<>ThisItem.cr282_ma_dl_ct)),
+                                !IsBlank(LookUp(tmpDKCCTCollect,cr282_ma_nhom_ql_ct=ThisItem.cr282_ma_nhom_ql_ct && cr282_ma_dl_ct<>ThisItem.cr282_ma_dl_ct)),
                                 Notify("Tồn tại dữ liệu có cùng nhóm quyền lợi", NotificationType.Error,800),
                                 If(
                                     ThisItem.cr282_ma_dl_ct=maAddedQLKCT,
@@ -2324,7 +2322,7 @@
                                             //cuongbs
                                             MA_DL_CT:ThisItem.cr282_ma_dl_ct,
                                             MA_SAN_PHAM:objCT.MA_SAN_PHAM,
-                                            MA_CHUONG_TRINH:VarCT,
+                                            MA_CHUONG_TRINH:objCT.MA_CHUONG_TRINH,
                                             MA_NHOM_QL_CT:CbxNhomQLQLKCT.Selected.MA_NHOM_QL,
                                             MO_TA_CT:TiMoTaQLKCT.Text
                                         }
@@ -2333,8 +2331,6 @@
                                         DL_CHUONGTRINH_QL_KHACS,
                                         MA_DL_CT=ThisItem.cr282_ma_dl_ct,
                                         {
-                                            MA_SAN_PHAM:objCT.MA_SAN_PHAM,
-                                            MA_CHUONG_TRINH:VarCT,
                                             MA_NHOM_QL_CT:CbxNhomQLQLKCT.Selected.MA_NHOM_QL,
                                             MO_TA_CT:TiMoTaQLKCT.Text
                                         }
@@ -2344,8 +2340,6 @@
                                     tmpQLKCTCollect,
                                     cr282_ma_dl_ct=ThisItem.cr282_ma_dl_ct,
                                     {
-                                        cr282_ma_san_pham:objCT.MA_SAN_PHAM,
-                                        cr282_ma_chuong_trinh:VarCT,
                                         cr282_ma_nhom_ql_ct:CbxNhomQLQLKCT.Selected.MA_NHOM_QL,
                                         cr282_mo_ta_ct:TiMoTaQLKCT.Text,
                                         edited:0
@@ -2357,7 +2351,10 @@
                                     ShowColumns(
                                         AddColumns(
                                             SortByColumns(
-                                                DL_CHUONGTRINH_QL_KHACS,
+                                                Filter(
+                                                    DL_CHUONGTRINH_QL_KHACS,
+                                                    MA_SAN_PHAM=objCT.MA_SAN_PHAM && MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH
+                                                ),
                                                 "cr282_ma_dl_ct",
                                                 SortOrder.Ascending
                                             ),
@@ -2500,7 +2497,7 @@
                                     SortByColumns(
                                         Filter(
                                             DL_CHUONGTRINH_QL_KHACS,
-                                            MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=objCT.MA_SAN_PHAM
+                                            MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SAN_PHAM=objCT.MA_SAN_PHAM
                                         ),
                                         "cr282_ma_dl_ct",
                                         SortOrder.Ascending
@@ -2546,8 +2543,6 @@
                                 tmpDKCCTCollect,
                                 {
                                     cr282_ma_dl_ct:Text(idMaQLKCT),
-                                    cr282_ma_san_pham:objCT.MA_SAN_PHAM,
-                                    cr282_ma_chuong_trinh:VarCT,
                                     cr282_ma_nhom_ql_ct:Blank(),
                                     cr282_mo_ta_ct:Blank(),
                                     edited:1
@@ -3060,7 +3055,7 @@
                     FontWeight: =FontWeight.Bold
                     Height: =33
                     Size: =12
-                    Text: ="3.1 Bảng phí"
+                    Text: ="3 Bảng phí"
                     Width: =1176
                     ZIndex: =17
 
