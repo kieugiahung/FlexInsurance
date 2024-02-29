@@ -655,7 +655,21 @@
                                 )
                             );
                             // chuyển dữ liệu quyền lợi chi tiết
-                            
+                            ForAll(Filter(DL_SAN_PHAM_QLCT_CHONS,MA_SAN_PHAM = valMaSP ) As qlc,
+                                Patch(
+                                    DL_CHUONGTRINH_QLCTS,
+                                    Defaults(DL_CHUONGTRINH_QLCTS),
+                                    {
+                                        MA_SAN_PHAM:valMaSP,
+                                        MA_NHOM_QL: qlc.MA_NHOM_QL,
+                                        MA_CHUONG_TRINH:CT.MA_CHUONG_TRINH,
+                                        MA_QL_CT:qlc.MA_QL_CHITIET,
+                                        MA_SP:valMaSP,
+                                        MA_CT:CT.MA_CHUONG_TRINH,
+                                        MA_NHOMQL_SP:qlc.MA_QL_CHITIET
+                                    }
+                                )
+                            );
                             // chuyển dữ liệu quyền lợi khác
                             ForAll(Filter(DL_SAN_PHAM_QL_KHACS,MA_SP = valMaSP ) As qlk,
                                 Patch(
@@ -2614,6 +2628,7 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
+                    Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).DON_VI_TIEN
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     Height: =45
                     Items: =BH_DM_TIENTES
@@ -2630,7 +2645,7 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
-                    DefaultSelectedItems: =
+                    DefaultSelectedItems: =Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHUONG_TRINH,",")
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_chuong_trinh"]
                     Height: =45
@@ -2653,6 +2668,7 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).NHOM_TINH_PHI,",")
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_nhom_tp"]
                     Height: =45
@@ -2675,6 +2691,7 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).DO_TUOI,",")
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_mo_ta"]
                     Height: =45
@@ -2698,6 +2715,7 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).GIOI_TINH,",")
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_gioi_tinh"]
                     Height: =45
@@ -2877,6 +2895,7 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
+                    Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).PHAM_VI_DL
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     Height: =45
                     Items: =DM_PHAMVI_DIALYS
@@ -2895,6 +2914,7 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).NGANH_NGHE,",")
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_nganh"]
                     Height: =45
@@ -2918,6 +2938,7 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_SO_TIEN,",")
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_sotien"]
                     Height: =45
@@ -2941,6 +2962,7 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_SO_NGUOI,",")
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_so_nguoi"]
                     Height: =45
@@ -2964,6 +2986,7 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_THOI_HAN,",")
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_thoi_han"]
                     Height: =45
@@ -2987,6 +3010,7 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_PHUONG_THUC_DP,",")
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_pt"]
                     Height: |
