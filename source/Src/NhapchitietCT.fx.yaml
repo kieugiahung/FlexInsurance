@@ -3003,20 +3003,20 @@
                             UpdateContext(
                                 {
                                     idMa: If(
-                                        CountRows(TmpMaTraPhiCT) = 0,
+                                        CountRows(TmpBangPhiCT) = 0,
                                         Max(
-                                            DL_CHUONGTRINH_MATRANPHIS,
-                                            ID
+                                            DL_CHUONG_TRINH_BANG_PHIS,
+                                            MA_BANG_PHI
                                         ) + 1,
                                         Max(
-                                            DL_CHUONGTRINH_MATRANPHIS,
-                                            ID
+                                            DL_CHUONG_TRINH_BANG_PHIS,
+                                            MA_BANG_PHI
                                         ) + 1
                                     )
                                 }
                             );
                             Collect(
-                                TmpMaTraPhiCT,
+                                TmpBangPhiCT,
                                 {
                                     cr282_id: Text(idMa),
                                     cr282_ma_san_pham: valMaSP,
