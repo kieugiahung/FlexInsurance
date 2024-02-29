@@ -2751,11 +2751,11 @@
                     Btn_HuyCT_9 As button:
                         OnSelect: |-
                             =If(
-                                ThisItem.cr282_id=maAddedMatranCT,
-                                Remove(TmpMaTraPhiCT,ThisItem),
+                                ThisItem.cr282_ma_bang_phi=maAddedMatranCT,
+                                Remove(TmpBangPhiCT,ThisItem),
                                 UpdateIf(
-                                    TmpMaTraPhiCT,
-                                    cr282_id=ThisItem.cr282_id,
+                                    TmpBangPhiCT,
+                                    cr282_ma_bang_phi=ThisItem.cr282_ma_bang_phi,
                                     {
                                         edited:0
                                     }
@@ -2810,7 +2810,7 @@
 
                     TxtNganhnghe As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =ThisItem.c
+                        Default: =ThisItem.cr282_nhom_nganh_nghe
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
