@@ -9,15 +9,17 @@ TraCuuSP As screen:
         LayoutMode: =LayoutMode.Auto
         LayoutOverflowX: =LayoutOverflow.Scroll
         LayoutOverflowY: =LayoutOverflow.Scroll
-        Width: =Max(App.Width+670, App.MinScreenWidth)
+        Width: =Max(App.Width, App.MinScreenWidth)
         X: =84
         ZIndex: =3
 
         Container1 As groupContainer.manualLayoutContainer:
-            Height: =768
+            AlignInContainer: =AlignInContainer.SetByContainer
+            FillPortions: =0
+            Height: =Max(App.Height, App.MinScreenHeight)
             LayoutMinHeight: =100
             LayoutMinWidth: =250
-            Width: =1800
+            Width: =Max(App.Width+145, App.MinScreenHeight)
             X: =84
             ZIndex: =1
 
@@ -44,8 +46,8 @@ TraCuuSP As screen:
                 Layout: =Layout.Vertical
                 LoadingSpinner: =LoadingSpinner.Data
                 NavigationStep: =0
-                TemplateSize: =40
-                Width: =1761
+                TemplateSize: =41
+                Width: =1443
                 Y: =200
                 ZIndex: =1
 
@@ -140,19 +142,6 @@ TraCuuSP As screen:
                     X: =810
                     ZIndex: =15
 
-                TextGhiChu_3 As text:
-                    BorderColor: =RGBA(72, 163, 62, 1)
-                    Default: =ThisItem.DOANH_NGHIEP_BH
-                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                    DisabledColor: =RGBA(0, 0, 0, 1)
-                    DisabledFill: =RGBA(255, 255, 255, 1)
-                    DisplayMode: =DisplayMode.Disabled
-                    OnChange: =
-                    OnSelect: =Select(Parent)
-                    Width: =119
-                    X: =959
-                    ZIndex: =16
-
                 TextGhiChu_4 As text:
                     BorderColor: =RGBA(72, 163, 62, 1)
                     Default: =ThisItem.HL_TU
@@ -163,7 +152,7 @@ TraCuuSP As screen:
                     OnChange: =
                     OnSelect: =Select(Parent)
                     Width: =105
-                    X: =1088
+                    X: =960
                     ZIndex: =17
 
                 TextGhiChu_5 As text:
@@ -176,21 +165,8 @@ TraCuuSP As screen:
                     OnChange: =
                     OnSelect: =Select(Parent)
                     Width: =105
-                    X: =1206
+                    X: =1069
                     ZIndex: =18
-
-                TextGhiChu_6 As text:
-                    BorderColor: =RGBA(72, 163, 62, 1)
-                    Default: =ThisItem.TRANG_THAI
-                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                    DisabledColor: =RGBA(0, 0, 0, 1)
-                    DisabledFill: =RGBA(255, 255, 255, 1)
-                    DisplayMode: =DisplayMode.Disabled
-                    OnChange: =
-                    OnSelect: =Select(Parent)
-                    Width: =105
-                    X: =1323
-                    ZIndex: =19
 
                 Btn_detailSP As button:
                     OnSelect: |-
@@ -198,8 +174,8 @@ TraCuuSP As screen:
                         Set(valTenSP,ThisItem.TEN_SAN_PHAM);
                         Navigate(NhapChiTietSP);
                     Text: ="Chi tiết"
-                    Width: =128
-                    X: =1446
+                    Width: =111
+                    X: =1189
                     ZIndex: =20
 
                 Btn_editSP As button:
@@ -208,8 +184,8 @@ TraCuuSP As screen:
                         EditForm(ThemMoiSP);
                         Navigate(ThemMoi);
                     Text: ="Sửa"
-                    Width: =140
-                    X: =1585
+                    Width: =106
+                    X: =1313
                     ZIndex: =21
 
             BadgeCanvas1_3 As Badge:
@@ -218,7 +194,7 @@ TraCuuSP As screen:
                 DisplayMode: =DisplayMode.Edit
                 FontColor: =
                 Height: =39
-                Width: =1761
+                Width: =1438
                 X: =0
                 Y: =162
                 ZIndex: =2
@@ -372,18 +348,6 @@ TraCuuSP As screen:
                 Y: =164
                 ZIndex: =23
 
-            TextCanvas2_33 As Text:
-                DisplayMode: =DisplayMode.Edit
-                FontColor: =
-                Height: =37
-                Size: =14
-                Text: ="Doanh nghiệp BH"
-                Weight: ='TextCanvas.Weight'.Bold
-                Width: =118
-                X: =963
-                Y: =164
-                ZIndex: =24
-
             TextCanvas2_42 As Text:
                 DisplayMode: =DisplayMode.Edit
                 FontColor: =
@@ -392,8 +356,8 @@ TraCuuSP As screen:
                 Text: ="Hiệu lực từ"
                 Weight: ='TextCanvas.Weight'.Bold
                 Width: =93
-                X: =1100
-                Y: =164
+                X: =971
+                Y: =163
                 ZIndex: =25
 
             TextCanvas2_43 As Text:
@@ -404,21 +368,9 @@ TraCuuSP As screen:
                 Text: ="Hiệu lực đến"
                 Weight: ='TextCanvas.Weight'.Bold
                 Width: =84
-                X: =1220
-                Y: =164
+                X: =1075
+                Y: =162
                 ZIndex: =26
-
-            TextCanvas2_44 As Text:
-                DisplayMode: =DisplayMode.Edit
-                FontColor: =
-                Height: =37
-                Size: =14
-                Text: ="Trạng thái"
-                Weight: ='TextCanvas.Weight'.Bold
-                Width: =78
-                X: =1334
-                Y: =164
-                ZIndex: =27
 
             TextCanvas2_45 As Text:
                 DisplayMode: =DisplayMode.Edit
@@ -428,7 +380,7 @@ TraCuuSP As screen:
                 Text: ="Thao tác"
                 Weight: ='TextCanvas.Weight'.Bold
                 Width: =78
-                X: =1550
-                Y: =164
+                X: =1277
+                Y: =162
                 ZIndex: =28
 
