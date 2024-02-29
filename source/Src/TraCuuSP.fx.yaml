@@ -1,424 +1,434 @@
 TraCuuSP As screen:
-    Width: =Max(App.Width+670, App.MinScreenWidth)
-
-    Container1 As groupContainer.manualLayoutContainer:
-        Height: =768
-        Width: =1765
-        X: =84
-        ZIndex: =1
-
-        GallerySP As gallery.galleryVertical:
-            DelayItemLoading: =true
-            Height: =551
-            Items: |-
-                =SortByColumns(DL_SAN_PHAM,"cr282_ma",SortOrder.Ascending)
-                /*SortByColumns(
-                    Filter(
-                        DL_SAN_PHAM,
-                        If(
-                            !IsBlank(TxtFilterMSP.Text),
-                            MA_SAN_PHAM = TxtFilterMSP.Text,true
-                        ) && LHNV = Drop_Filter_LHNV.Selected.Ten_lhnv && HL_TU >= Date_HLT.SelectedDate
-                                    //&& If(
-                //!IsBlank(HL_DEN) && !IsBlank(Date_HLD.SelectedDate),
-                //HL_DEN <= Date_HLD.SelectedDate
-                //)
-                    ),
-                    "cr282_ma",
-                    SortOrder.Ascending
-                )*/
-            Layout: =Layout.Vertical
-            LoadingSpinner: =LoadingSpinner.Data
-            NavigationStep: =0
-            TemplateSize: =40
-            Width: =1761
-            Y: =200
-            ZIndex: =1
-
-            TextMaPV_1 As text:
-                BorderColor: =RGBA(15, 108, 189, 1)
-                Default: =ThisItem.MA
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.Disabled
-                OnChange: =
-                OnSelect: =Select(Parent)
-                Tooltip: =ThisItem.cr282_mo_ta
-                Width: =75
-                ZIndex: =8
-
-            TextTenPV_1 As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.LHNV
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.Disabled
-                OnChange: =
-                OnSelect: =Select(Parent)
-                Width: =167
-                X: =86
-                ZIndex: =9
-
-            TextMoTa_1 As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.MA_SAN_PHAM
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.Disabled
-                OnChange: =
-                OnSelect: =Select(Parent)
-                Width: =127
-                X: =264
-                ZIndex: =10
-
-            TextDNBH_1 As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.TEN_SAN_PHAM
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.Disabled
-                OnChange: =
-                OnSelect: =Select(Parent)
-                Width: =116
-                X: =400
-                ZIndex: =11
-
-            TextMaSP_1 As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.SO_VAN_BAN
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.Disabled
-                OnChange: =
-                OnSelect: =Select(Parent)
-                Width: =123
-                X: =527
-                ZIndex: =12
-
-            TextGhiChu_1 As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.QUY_TAC_BH.FileName
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.Disabled
-                OnChange: =
-                OnSelect: =Select(Parent)
-                Width: =140
-                X: =658
-                ZIndex: =13
-
-            TextGhiChu_2 As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.TAI_LIEU_MAU.FileName
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.Disabled
-                OnChange: =
-                OnSelect: =Select(Parent)
-                Width: =138
-                X: =810
-                ZIndex: =15
-
-            TextGhiChu_3 As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.DOANH_NGHIEP_BH
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.Disabled
-                OnChange: =
-                OnSelect: =Select(Parent)
-                Width: =119
-                X: =959
-                ZIndex: =16
-
-            TextGhiChu_4 As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.HL_TU
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.Disabled
-                OnChange: =
-                OnSelect: =Select(Parent)
-                Width: =105
-                X: =1088
-                ZIndex: =17
-
-            TextGhiChu_5 As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.HL_DEN
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.Disabled
-                OnChange: =
-                OnSelect: =Select(Parent)
-                Width: =105
-                X: =1206
-                ZIndex: =18
-
-            TextGhiChu_6 As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.TRANG_THAI
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.Disabled
-                OnChange: =
-                OnSelect: =Select(Parent)
-                Width: =105
-                X: =1323
-                ZIndex: =19
-
-            Btn_detailSP As button:
-                OnSelect: |-
-                    =Set(valMaSP,ThisItem.MA_SAN_PHAM);
-                    Set(valTenSP,ThisItem.TEN_SAN_PHAM);
-                    Navigate(NhapChiTietSP);
-                Text: ="Chi tiết"
-                Width: =128
-                X: =1446
-                ZIndex: =20
-
-            Btn_editSP As button:
-                OnSelect: |-
-                    =ResetForm(ThemMoiSP);
-                    EditForm(ThemMoiSP);
-                    Navigate(ThemMoi);
-                Text: ="Sửa"
-                Width: =140
-                X: =1585
-                ZIndex: =21
-
-        BadgeCanvas1_3 As Badge:
-            BasePaletteColor: =
-            Content: =""
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =39
-            Width: =1761
-            X: =0
-            Y: =162
-            ZIndex: =2
-
-        TextCanvas2_22 As Text:
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =38
-            Size: =14
-            Text: ="Mã"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =51
-            X: =20
-            Y: =162
-            ZIndex: =3
-
-        TextCanvas2_21 As Text:
-            Align: ='TextCanvas.Align'.Justify
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =38
-            Size: =14
-            Text: ="Loại hình nghiệp vụ"
-            VerticalAlign: ='TextCanvas.VerticalAlign'.Middle
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =143
-            X: =106
-            Y: =163
-            ZIndex: =4
-
-        TextCanvas2_20 As Text:
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =38
-            Size: =14
-            Text: ="Mã sản phẩm"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =96
-            X: =288
-            Y: =162
-            ZIndex: =5
-
-        TextCanvas2_19 As Text:
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =38
-            Size: =14
-            Text: ="Tên sản phẩm"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =109
-            X: =419
-            Y: =162
-            ZIndex: =6
-
-        TextCanvas2_18 As Text:
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =38
-            Size: =14
-            Text: ="Số văn bản"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =96
-            X: =548
-            Y: =163
-            ZIndex: =7
-
-        TextCanvas2_17 As Text:
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Quy tắc bảo hiểm"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =118
-            X: =677
-            Y: =163
-            ZIndex: =8
-
-        Btn_ThemMoi As button:
-            OnSelect: |-
-                =ResetForm(ThemMoiSP);
-                NewForm(ThemMoiSP);
-                Navigate(ThemMoi);
-            Text: ="Thêm mới"
-            Y: =103
-            ZIndex: =14
-
-        Label_Filter_MSP As label:
-            Text: ="Mã sản phẩm"
-            Width: =125
-            X: =124
-            Y: =37
-            ZIndex: =15
-
-        TxtFilterMSP As text:
-            Default: =
-            Width: =160
-            X: =252
-            Y: =37
-            ZIndex: =16
-
-        Label_Filter_LHNV As label:
-            Text: ="Loại hình nghiệp vụ"
-            Width: =171
-            X: =432
-            Y: =37
-            ZIndex: =17
-
-        Drop_Filter_LHNV As dropdown:
-            Items: =colLHNV
-            Width: =203
-            X: =609
-            Y: =37
-            ZIndex: =18
-
-        Label_Filter_HLT As label:
-            Text: ="Hiệu lực từ"
-            Width: =125
-            X: =828
-            Y: =37
-            ZIndex: =19
-
-        Date_HLT As datepicker:
-            Width: =203
-            X: =956
-            Y: =37
-            ZIndex: =20
-
-        Label_Filter_HLD As label:
-            Text: ="Hiệu lực đến"
-            Width: =125
-            X: =1178
-            Y: =37
-            ZIndex: =21
-
-        Date_HLD As datepicker:
-            Width: =203
-            X: =1163
-            Y: =37
-            ZIndex: =22
-
-        TextCanvas2_23 As Text:
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Tài liệu minh họa"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =118
-            X: =821
-            Y: =164
-            ZIndex: =23
-
-        TextCanvas2_33 As Text:
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Doanh nghiệp BH"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =118
-            X: =963
-            Y: =164
-            ZIndex: =24
-
-        TextCanvas2_42 As Text:
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =36
-            Size: =14
-            Text: ="Hiệu lực từ"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =93
-            X: =1100
-            Y: =164
-            ZIndex: =25
-
-        TextCanvas2_43 As Text:
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Hiệu lực đến"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =84
-            X: =1220
-            Y: =164
-            ZIndex: =26
-
-        TextCanvas2_44 As Text:
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Trạng thái"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =78
-            X: =1334
-            Y: =164
-            ZIndex: =27
-
-        TextCanvas2_45 As Text:
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Thao tác"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =78
-            X: =1550
-            Y: =164
-            ZIndex: =28
 
     LeftNavigation_18 As LeftNavigation_9:
         Width: =84
         ZIndex: =2
+
+    Container2 As groupContainer.horizontalAutoLayoutContainer:
+        Height: =Max(App.Height, App.MinScreenHeight)
+        LayoutMode: =LayoutMode.Auto
+        LayoutOverflowX: =LayoutOverflow.Scroll
+        LayoutOverflowY: =LayoutOverflow.Scroll
+        Width: =Max(App.Width+670, App.MinScreenWidth)
+        X: =84
+        ZIndex: =3
+
+        Container1 As groupContainer.manualLayoutContainer:
+            Height: =768
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            Width: =1800
+            X: =84
+            ZIndex: =1
+
+            GallerySP As gallery.galleryVertical:
+                DelayItemLoading: =true
+                Height: =551
+                Items: |-
+                    =SortByColumns(DL_SAN_PHAM,"cr282_ma",SortOrder.Ascending)
+                    /*SortByColumns(
+                        Filter(
+                            DL_SAN_PHAM,
+                            If(
+                                !IsBlank(TxtFilterMSP.Text),
+                                MA_SAN_PHAM = TxtFilterMSP.Text,true
+                            ) && LHNV = Drop_Filter_LHNV.Selected.Ten_lhnv && HL_TU >= Date_HLT.SelectedDate
+                                        //&& If(
+                    //!IsBlank(HL_DEN) && !IsBlank(Date_HLD.SelectedDate),
+                    //HL_DEN <= Date_HLD.SelectedDate
+                    //)
+                        ),
+                        "cr282_ma",
+                        SortOrder.Ascending
+                    )*/
+                Layout: =Layout.Vertical
+                LoadingSpinner: =LoadingSpinner.Data
+                NavigationStep: =0
+                TemplateSize: =40
+                Width: =1761
+                Y: =200
+                ZIndex: =1
+
+                TextMaPV_1 As text:
+                    BorderColor: =RGBA(15, 108, 189, 1)
+                    Default: =ThisItem.MA
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =DisplayMode.Disabled
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    Tooltip: =ThisItem.cr282_mo_ta
+                    Width: =75
+                    ZIndex: =8
+
+                TextTenPV_1 As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =ThisItem.LHNV
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =DisplayMode.Disabled
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    Width: =167
+                    X: =86
+                    ZIndex: =9
+
+                TextMoTa_1 As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =ThisItem.MA_SAN_PHAM
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =DisplayMode.Disabled
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    Width: =127
+                    X: =264
+                    ZIndex: =10
+
+                TextDNBH_1 As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =ThisItem.TEN_SAN_PHAM
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =DisplayMode.Disabled
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    Width: =116
+                    X: =400
+                    ZIndex: =11
+
+                TextMaSP_1 As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =ThisItem.SO_VAN_BAN
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =DisplayMode.Disabled
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    Width: =123
+                    X: =527
+                    ZIndex: =12
+
+                TextGhiChu_1 As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =ThisItem.QUY_TAC_BH.FileName
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =DisplayMode.Disabled
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    Width: =140
+                    X: =658
+                    ZIndex: =13
+
+                TextGhiChu_2 As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =ThisItem.TAI_LIEU_MAU.FileName
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =DisplayMode.Disabled
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    Width: =138
+                    X: =810
+                    ZIndex: =15
+
+                TextGhiChu_3 As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =ThisItem.DOANH_NGHIEP_BH
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =DisplayMode.Disabled
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    Width: =119
+                    X: =959
+                    ZIndex: =16
+
+                TextGhiChu_4 As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =ThisItem.HL_TU
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =DisplayMode.Disabled
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    Width: =105
+                    X: =1088
+                    ZIndex: =17
+
+                TextGhiChu_5 As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =ThisItem.HL_DEN
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =DisplayMode.Disabled
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    Width: =105
+                    X: =1206
+                    ZIndex: =18
+
+                TextGhiChu_6 As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =ThisItem.TRANG_THAI
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =DisplayMode.Disabled
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    Width: =105
+                    X: =1323
+                    ZIndex: =19
+
+                Btn_detailSP As button:
+                    OnSelect: |-
+                        =Set(valMaSP,ThisItem.MA_SAN_PHAM);
+                        Set(valTenSP,ThisItem.TEN_SAN_PHAM);
+                        Navigate(NhapChiTietSP);
+                    Text: ="Chi tiết"
+                    Width: =128
+                    X: =1446
+                    ZIndex: =20
+
+                Btn_editSP As button:
+                    OnSelect: |-
+                        =ResetForm(ThemMoiSP);
+                        EditForm(ThemMoiSP);
+                        Navigate(ThemMoi);
+                    Text: ="Sửa"
+                    Width: =140
+                    X: =1585
+                    ZIndex: =21
+
+            BadgeCanvas1_3 As Badge:
+                BasePaletteColor: =
+                Content: =""
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =39
+                Width: =1761
+                X: =0
+                Y: =162
+                ZIndex: =2
+
+            TextCanvas2_22 As Text:
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =38
+                Size: =14
+                Text: ="Mã"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =51
+                X: =20
+                Y: =162
+                ZIndex: =3
+
+            TextCanvas2_21 As Text:
+                Align: ='TextCanvas.Align'.Justify
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =38
+                Size: =14
+                Text: ="Loại hình nghiệp vụ"
+                VerticalAlign: ='TextCanvas.VerticalAlign'.Middle
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =143
+                X: =106
+                Y: =163
+                ZIndex: =4
+
+            TextCanvas2_20 As Text:
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =38
+                Size: =14
+                Text: ="Mã sản phẩm"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =96
+                X: =288
+                Y: =162
+                ZIndex: =5
+
+            TextCanvas2_19 As Text:
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =38
+                Size: =14
+                Text: ="Tên sản phẩm"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =109
+                X: =419
+                Y: =162
+                ZIndex: =6
+
+            TextCanvas2_18 As Text:
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =38
+                Size: =14
+                Text: ="Số văn bản"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =96
+                X: =548
+                Y: =163
+                ZIndex: =7
+
+            TextCanvas2_17 As Text:
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Quy tắc bảo hiểm"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =118
+                X: =677
+                Y: =163
+                ZIndex: =8
+
+            Btn_ThemMoi As button:
+                OnSelect: |-
+                    =ResetForm(ThemMoiSP);
+                    NewForm(ThemMoiSP);
+                    Navigate(ThemMoi);
+                Text: ="Thêm mới"
+                Y: =103
+                ZIndex: =14
+
+            Label_Filter_MSP As label:
+                Text: ="Mã sản phẩm"
+                Width: =125
+                X: =124
+                Y: =37
+                ZIndex: =15
+
+            TxtFilterMSP As text:
+                Default: =
+                Width: =160
+                X: =252
+                Y: =37
+                ZIndex: =16
+
+            Label_Filter_LHNV As label:
+                Text: ="Loại hình nghiệp vụ"
+                Width: =171
+                X: =432
+                Y: =37
+                ZIndex: =17
+
+            Drop_Filter_LHNV As dropdown:
+                Items: =colLHNV
+                Width: =203
+                X: =609
+                Y: =37
+                ZIndex: =18
+
+            Label_Filter_HLT As label:
+                Text: ="Hiệu lực từ"
+                Width: =125
+                X: =828
+                Y: =37
+                ZIndex: =19
+
+            Date_HLT As datepicker:
+                Width: =203
+                X: =956
+                Y: =37
+                ZIndex: =20
+
+            Label_Filter_HLD As label:
+                Text: ="Hiệu lực đến"
+                Width: =125
+                X: =1178
+                Y: =37
+                ZIndex: =21
+
+            Date_HLD As datepicker:
+                Width: =203
+                X: =1163
+                Y: =37
+                ZIndex: =22
+
+            TextCanvas2_23 As Text:
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Tài liệu minh họa"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =118
+                X: =821
+                Y: =164
+                ZIndex: =23
+
+            TextCanvas2_33 As Text:
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Doanh nghiệp BH"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =118
+                X: =963
+                Y: =164
+                ZIndex: =24
+
+            TextCanvas2_42 As Text:
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =36
+                Size: =14
+                Text: ="Hiệu lực từ"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =93
+                X: =1100
+                Y: =164
+                ZIndex: =25
+
+            TextCanvas2_43 As Text:
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Hiệu lực đến"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =84
+                X: =1220
+                Y: =164
+                ZIndex: =26
+
+            TextCanvas2_44 As Text:
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Trạng thái"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =78
+                X: =1334
+                Y: =164
+                ZIndex: =27
+
+            TextCanvas2_45 As Text:
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Thao tác"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =78
+                X: =1550
+                Y: =164
+                ZIndex: =28
 
