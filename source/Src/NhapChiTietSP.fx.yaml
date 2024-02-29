@@ -11147,6 +11147,209 @@
                     ZIndex: =1
 
                 btnXuatFile As button:
+                    OnSelect: |
+                        =Clear(OldCollection);
+                        Set(
+                            varCheck_CT,
+                            ChuongTrinh_1.Value
+                        );
+                        Set(
+                            varCheck_NTP,
+                            NhomTP_1.Value
+                        );
+                        Set(
+                            varCheck_PV,
+                            PVDiaLy_1.Value
+                        );
+                        Set(
+                            varCheck_DT,
+                            DoTuoi_1.Value
+                        );
+                        Set(
+                            varCheck_GT,
+                            GioiTinh_1.Value
+                        );
+                        Set(
+                            varCheck_NN,
+                            NganhNghe_1.Value
+                        );
+                        Set(
+                            varCheck_ST,
+                            BH_SoTien_1.Value
+                        );
+                        Set(
+                            varCheck_SN,
+                            BH_SoNguoi_1.Value
+                        );
+                        Set(
+                            varCheck_TH,
+                            BH_ThoiHan_1.Value
+                        );
+                        Set(
+                            varCheck_PT,
+                            BH_PhuongThuc_1.Value
+                        );
+                        Collect(
+                            NewCollection,
+                            {}
+                        );
+                        
+                        Collect(
+                            OldCollection,
+                            {       MA_SAN_PHAM: "",
+                                    MA_CHUONG_TRINH: "",
+                                    TEN_SAN_PHAM: "",
+                                    TEN_CHUONG_TRINH: "",
+                                    NHOM_TINH_PHI: "",
+                                    PHAMVI: "",
+                                    DO_TUOI: "",
+                                    GIOI_TINH: "",
+                                    NGANH_NGHE: "",
+                                    SOTIEN: "",
+                                    SO_NGUOI: "",
+                                    THOI_HAN: "",
+                                    PHUONG_THUC: ""
+                            }
+                        );
+                        
+                        
+                        ClearCollect(
+                           OldCollection,
+                          ForAll(
+                               Filter(
+                                  DL_SAN_PHAM_MATRANPHI,
+                                   MA_SAN_PHAM = valMaSP
+                               ),
+                               {    MA_SAN_PHAM: valMaSP,
+                                    MA_CHUONG_TRINH: MA_CHUONG_TRINH,
+                                    TEN_SAN_PHAM: valTenSP,
+                                    TEN_CHUONG_TRINH: CHUONG_TRINH,
+                                    NHOM_TINH_PHI: NHOM_TINH_PHI,
+                                    PHAMVI: PHAM_VI_DL,
+                                    DO_TUOI: DO_TUOI,
+                                    GIOI_TINH: GIOI_TINH,
+                                    NGANH_NGHE: NGANH_NGHE,
+                                    SOTIEN: SO_TIEN,
+                                    SO_NGUOI: SO_NGUOI,
+                                    THOI_HAN: THOI_HAN,
+                                    PHUONG_THUC: PHUONG_THUC_DP
+                            }
+                           )
+                        );
+                        
+                        ClearCollect(
+                            NewCollection,
+                            OldCollection
+                        );
+                        If(
+                            varCheck_CT = false,
+                            ClearCollect(
+                                NewCollection,
+                                DropColumns(
+                                    NewCollection,
+                                    "MA_CHUONG_TRINH","TEN_CHUONG_TRINH"
+                                )
+                            )
+                        );
+                        If(
+                            varCheck_NTP = false,
+                            ClearCollect(
+                                NewCollection,
+                                DropColumns(
+                                    NewCollection,
+                                    "NHOM_TINH_PHI"
+                                )
+                            )
+                        );
+                        If(
+                            varCheck_PV = false,
+                            ClearCollect(
+                                NewCollection,
+                                DropColumns(
+                                    NewCollection,
+                                    "PHAMVI"
+                                )
+                            )
+                        );
+                        If(
+                            varCheck_DT = false,
+                            ClearCollect(
+                                NewCollection,
+                                DropColumns(
+                                    NewCollection,
+                                    "DO_TUOI"
+                                )
+                            )
+                        );
+                        If(
+                            varCheck_GT = false,
+                            ClearCollect(
+                                NewCollection,
+                                DropColumns(
+                                    NewCollection,
+                                    "GIOI_TINH"
+                                )
+                            )
+                        );
+                        If(
+                            varCheck_NN = false,
+                            ClearCollect(
+                                NewCollection,
+                                DropColumns(
+                                    NewCollection,
+                                    "NGANH_NGHE"
+                                )
+                            )
+                        );
+                        If(
+                            varCheck_ST = false,
+                            ClearCollect(
+                                NewCollection,
+                                DropColumns(
+                                    NewCollection,
+                                    "SOTIEN"
+                                )
+                            )
+                        );
+                        If(
+                            varCheck_SN = false,
+                            ClearCollect(
+                                NewCollection,
+                                DropColumns(
+                                    NewCollection,
+                                    "SO_NGUOI"
+                                )
+                            )
+                        );
+                        If(
+                            varCheck_TH = false,
+                            ClearCollect(
+                                NewCollection,
+                                DropColumns(
+                                    NewCollection,
+                                    "THOI_HAN"
+                                )
+                            )
+                        );
+                        If(
+                            varCheck_PT = false,
+                            ClearCollect(
+                                NewCollection,
+                                DropColumns(
+                                    NewCollection,
+                                    "PHUONG_THUC"
+                                )
+                            )
+                        );
+                        
+                        
+                        ExportToExcel.Run(
+                            JSON(
+                                NewCollection,
+                                JSONFormat.IgnoreBinaryData & JSONFormat.IgnoreUnsupportedTypes
+                            )
+                        );
+                        Download("https://5ddm0q.sharepoint.com/:x:/s/Test/EW4AFywm7c9EhhALbkXGoEEBKRl3CeUjPhJpm75mUbZ4Ug?e=ZyjhT1");
                     Text: ="Xuất file mẫu"
                     Y: =57
                     ZIndex: =2
