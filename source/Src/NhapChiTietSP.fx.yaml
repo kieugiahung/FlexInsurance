@@ -1516,7 +1516,8 @@
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                                 Navigate(DLSanPhamQLCT);
                                 Set(maDLNhomQLFwd,ThisItem.cr282_ma_dl);
-                                Set(maNQLFwd,CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL)
+                                Set(maNQLFwd,CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL);
+                                Set(maSPFwd,valMaSP)
                             )
                         Tooltip: ="Nhập chi tiết"
                         Visible: =ThisItem.edited=0
@@ -1907,15 +1908,15 @@
 
             "'3.3 Thongtinqlkhac' As groupContainer.manualLayoutContainer":
                 Height: =322
-                Width: =1216
-                X: =150
+                Width: =1293
+                X: =71
                 Y: =1976
                 ZIndex: =8
 
                 ContainerQLK_1 As groupContainer.manualLayoutContainer:
                     Height: =322
                     Visible: =showConfirmQLK=0
-                    Width: =1216
+                    Width: =1293
                     ZIndex: =1
 
                     GalleryQLK_1 As gallery.galleryVertical:
@@ -1926,7 +1927,7 @@
                         LoadingSpinner: =LoadingSpinner.Data
                         NavigationStep: =0
                         TemplateSize: =52
-                        Width: =1187
+                        Width: =1280
                         X: =5
                         Y: =139
                         ZIndex: =1
@@ -2024,7 +2025,10 @@
                                         ShowColumns(
                                             AddColumns(
                                                 SortByColumns(
-                                                    DL_SAN_PHAM_QL_KHACS,
+                                                    Filter(
+                                                        DL_SAN_PHAM_QL_KHACS,
+                                                        MA_SP=valMaSP
+                                                    ),
                                                     "cr282_ma_dl",
                                                     SortOrder.Ascending
                                                 ),
