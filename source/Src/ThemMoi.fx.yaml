@@ -1,6 +1,7 @@
 ThemMoi As screen:
 
     ThemSP As groupContainer.manualLayoutContainer:
+        BorderColor: =RGBA(72, 163, 62, 1)
         Height: =768
         Width: =1076
         X: =152
@@ -79,6 +80,7 @@ ThemMoi As screen:
                     BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                     Default: =Parent.Default
                     DelayOutput: =true
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayMode: =DisplayMode.Disabled
                     Fill: =RGBA(0, 0, 0, 1)
                     HintText: ="Hệ thống tự sinh"
@@ -160,8 +162,11 @@ ThemMoi As screen:
                     ZIndex: =4
 
                 DataCardValue4 As dropdown:
-                    BorderColor: =RGBA(39, 113, 194, 1)
-                    ChevronBackground: =RGBA(9, 33, 98, 1)
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    ChevronBackground: =RGBA(255, 255, 255, 1)
+                    ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                    ChevronFill: =RGBA(72, 163, 62, 1)
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     Height: =44
                     Items: =colLHNV
                     Width: =604
@@ -186,7 +191,7 @@ ThemMoi As screen:
 
                 DataCardKey5 As label:
                     Color: =RGBA(0, 0, 0, 1)
-                    Text: =Parent.DisplayName
+                    Text: ="Mã sản phẩm"
                     Width: =249
                     Wrap: =false
                     X: =187
@@ -194,7 +199,7 @@ ThemMoi As screen:
                     ZIndex: =1
 
                 DataCardValue5 As text:
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    BorderColor: =If(IsBlank(Parent.Error), RGBA(72, 163, 62, 1), Color.Red)
                     Default: =Parent.Default
                     DelayOutput: =true
                     DisplayMode: =Parent.DisplayMode
@@ -254,7 +259,7 @@ ThemMoi As screen:
                 DataCardKey6 As label:
                     Color: =RGBA(0, 0, 0, 1)
                     Height: =37
-                    Text: =Parent.DisplayName
+                    Text: ="Tên sản phẩm"
                     Width: =252
                     Wrap: =false
                     X: =187
@@ -262,7 +267,7 @@ ThemMoi As screen:
                     ZIndex: =1
 
                 DataCardValue6 As text:
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    BorderColor: =If(IsBlank(Parent.Error), RGBA(72, 163, 62, 1), Color.Red)
                     Default: =
                     DelayOutput: =true
                     DisplayMode: =Parent.DisplayMode
@@ -322,7 +327,7 @@ ThemMoi As screen:
                 DataCardKey7 As label:
                     Color: =RGBA(0, 0, 0, 1)
                     Height: =37
-                    Text: =Parent.DisplayName
+                    Text: ="Mô tả"
                     Width: =249
                     Wrap: =false
                     X: =187
@@ -330,7 +335,7 @@ ThemMoi As screen:
                     ZIndex: =1
 
                 DataCardValue7 As text:
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    BorderColor: =If(IsBlank(Parent.Error), RGBA(72, 163, 62, 1), Color.Red)
                     Default: =
                     DelayOutput: =true
                     DisplayMode: =Parent.DisplayMode
@@ -391,7 +396,7 @@ ThemMoi As screen:
                     AutoHeight: =true
                     Color: =RGBA(0, 0, 0, 1)
                     Height: =34
-                    Text: =Parent.DisplayName
+                    Text: ="Số văn bản"
                     Width: =254
                     Wrap: =false
                     X: =187
@@ -399,8 +404,8 @@ ThemMoi As screen:
                     ZIndex: =1
 
                 DataCardValue8 As text:
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                    Default: =436
+                    BorderColor: =If(IsBlank(Parent.Error), RGBA(72, 163, 62, 1), Color.Red)
+                    Default: =
                     DelayOutput: =true
                     DisplayMode: =Parent.DisplayMode
                     MaxLength: =Parent.MaxLength
@@ -468,7 +473,7 @@ ThemMoi As screen:
 
                 DataCardValue2 As attachments:
                     AddAttachmentText: ="Upload file"
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    BorderColor: =If(IsBlank(Parent.Error), RGBA(72, 163, 62, 1), Color.Red)
                     DisplayMode: =Parent.DisplayMode
                     Height: =87
                     IsInDataCard: =true
@@ -539,7 +544,7 @@ ThemMoi As screen:
 
                 DataCardValue3 As attachments:
                     AddAttachmentText: ="Upload file"
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    BorderColor: =If(IsBlank(Parent.Error), RGBA(72, 163, 62, 1), Color.Red)
                     DisplayMode: =Parent.DisplayMode
                     Height: =87
                     IsInDataCard: =true
@@ -609,10 +614,11 @@ ThemMoi As screen:
                     ZIndex: =1
 
                 DateValue1 As datepicker:
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    BorderColor: =If(IsBlank(Parent.Error), RGBA(72, 163, 62, 1), Color.Red)
                     DefaultDate: =ThisItem.HL_TU
                     DisplayMode: =Parent.DisplayMode
                     EndYear: =Year(Today())+100
+                    InputTextPlaceholder: =If(IsBlank(Self.SelectedDate), Text(Today(), Self.Format, Self.Language))
                     IsEditable: =true
                     PaddingBottom: =0
                     PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
@@ -691,10 +697,11 @@ ThemMoi As screen:
                     ZIndex: =1
 
                 DateValue2 As datepicker:
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    BorderColor: =If(IsBlank(Parent.Error), RGBA(72, 163, 62, 1), Color.Red)
                     DefaultDate: =ThisItem.HL_DEN
                     DisplayMode: =Parent.DisplayMode
                     EndYear: =Year(Today())+100
+                    InputTextPlaceholder: =
                     IsEditable: =true
                     PaddingBottom: =0
                     PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
