@@ -58,9 +58,7 @@ ThemMoi As screen:
                 Height: =50
                 MaxLength: =DataSourceInfo([@DL_SAN_PHAM], DataSourceInfo.MaxLength, "cr282_ma")
                 Required: =true
-                Update: |-
-                    =//DataCardValue1.Text
-                    newID
+                Update: =newID
                 Width: =1066
                 X: =0
                 Y: =0
@@ -762,20 +760,20 @@ ThemMoi As screen:
                             Value(Last(SortByColumns(DL_SAN_PHAM,"cr282_ma",SortOrder.Ascending)).MA)+1
                         )
                     });
-                UpdateContext({error:""});
-                If(IsBlank(DataCardValue4.SelectedText), UpdateContext({error:"Loại hình nghiệp vụ là bắt buộc"}));
+                UpdateContext({errorMsg:""});
+                If(IsBlank(DataCardValue4.SelectedText), UpdateContext({errorMsg:"Loại hình nghiệp vụ là bắt buộc"}));
                 
-                If(IsBlank(error),
-                If(IsBlank(DataCardValue5.Text), UpdateContext({error:"Mã sản phẩm là bắt buộc"})));
+                If(IsBlank(errorMsg),
+                If(IsBlank(DataCardValue5.Text), UpdateContext({errorMsg:"Mã sản phẩm là bắt buộc"})));
                 
-                If(IsBlank(error),
-                If(IsBlank(DataCardValue6.Text), UpdateContext({error:"Tên sản phẩm là bắt buộc"})));
+                If(IsBlank(errorMsg),
+                If(IsBlank(DataCardValue6.Text), UpdateContext({errorMsg:"Tên sản phẩm là bắt buộc"})));
                 
-                If(IsBlank(error),
-                If(IsBlank(DateValue1.SelectedDate), UpdateContext({error:"Hiệu lực từ là bắt buộc"})));
+                If(IsBlank(errorMsg),
+                If(IsBlank(DateValue1.SelectedDate), UpdateContext({errorMsg:"Hiệu lực từ là bắt buộc"})));
                 
-                If(IsBlank(error),
-                Notify(error, NotificationType.Error,800), 
+                If(!IsBlank(errorMsg),
+                Notify(errorMsg, NotificationType.Error,800), 
                 SubmitForm(ThemMoiSP);
                 Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
                 ResetForm(ThemMoiSP);
