@@ -2631,12 +2631,12 @@
                             =If(
                                 Or(maAddedMatranCT<>"",maUpdateMatranCT<>""),
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                                Refresh(DL_CHUONGTRINH_MATRANPHIS);
+                                Refresh(DL_CHUONG_TRINH_BANG_PHIS);
                                 RemoveIf(
-                                    DL_CHUONGTRINH_MATRANPHIS,
-                                    ID=ThisItem.cr282_id
+                                    DL_CHUONG_TRINH_BANG_PHIS,
+                                    MA_BANG_PHI=ThisItem.cr282_ma_bang_phi
                                 );
-                                Remove(TmpMaTraPhiCT,ThisItem);
+                                Remove(TmpBangPhiCT,ThisItem);
                                 Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
                             )
                         Text: ="Xóa"
