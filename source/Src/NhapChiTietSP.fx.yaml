@@ -174,7 +174,10 @@
             tmpQLCTTBCollect,
             ShowColumns(
                 SortByColumns(
-                    DL_SAN_PHAM_QLCT_CHONS,
+                    Filter(
+                        DL_SAN_PHAM_QLCT_CHONS,
+                        MA_SAN_PHAM=valMaSP
+                    ),
                     "cr282_ma_ql_chitiet",
                     SortOrder.Ascending
                 ),
@@ -1128,8 +1131,8 @@
 
             "'3.1 DmNhomQuyenloi' As groupContainer.manualLayoutContainer":
                 Height: =488
-                Width: =1214
-                X: =150
+                Width: =1293
+                X: =71
                 Y: =964
                 ZIndex: =6
 
@@ -1141,7 +1144,7 @@
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
                     TemplateSize: =41
-                    Width: =1210
+                    Width: =1270
                     X: =4
                     Y: =183
                     ZIndex: =1
@@ -1223,7 +1226,7 @@
                                 Notify("Bắt buộc nhập loại", NotificationType.Error,800),
                                 IsBlank(CbxNhomTPNQLSP_1.Selected.Value),
                                 Notify("Bắt buộc nhập nhóm tính phí", NotificationType.Error,800),
-                                IsBlank(CbxCTADNQLSP_1.Selected.Value),
+                                IsBlank(CbxCTADNQLSP_1.Selected.MA_CHUONG_TRINH),
                                 Notify("Bắt buộc nhập chương trình áp dụng", NotificationType.Error,800),
                                 CountIf(DL_SAN_PHAM_NHOMQLS,MA_SP=valMaSP && MA_NHOM_QL=CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL && MA_DL<>ThisItem.cr282_ma_dl)>0,
                                 Notify("Đã tồn tại nhóm quyền lợi này trong sản phẩm", NotificationType.Error,800),
@@ -1233,7 +1236,7 @@
                                         DL_SAN_PHAM_NHOMQLS,
                                         {
                                             MA_DL:ThisItem.cr282_ma_dl,
-                                            CHUONGTRINH_APDUNG:Concat(CbxCTADNQLSP_1.SelectedItems,Value,"|"),
+                                            CHUONGTRINH_APDUNG:Concat(CbxCTADNQLSP_1.SelectedItems,MA_CHUONG_TRINH,"|"),
                                             LOAI:CbxLoaiNQLSP_1.Selected.Value,
                                             MA_NHOM_QL:CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL,
                                             PHAMVI_DIALY:CbxPVDLNQLSP_1.Selected.MA_PHAMVI,
@@ -1246,7 +1249,7 @@
                                         DL_SAN_PHAM_NHOMQLS,
                                         MA_DL=ThisItem.cr282_ma_dl,
                                         {
-                                            CHUONGTRINH_APDUNG:Concat(CbxCTADNQLSP_1.SelectedItems,Value,"|"),
+                                            CHUONGTRINH_APDUNG:Concat(CbxCTADNQLSP_1.SelectedItems,MA_CHUONG_TRINH,"|"),
                                             LOAI:CbxLoaiNQLSP_1.Selected.Value,
                                             MA_NHOM_QL:CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL,
                                             PHAMVI_DIALY:CbxPVDLNQLSP_1.Selected.MA_PHAMVI,
@@ -1261,7 +1264,7 @@
                                     cr282_ma_dl=ThisItem.cr282_ma_dl,
                                     {
                                         cr282_ma_dl:ThisItem.cr282_ma_dl,
-                                        cr282_chuongtrinh_apdung:Concat(CbxCTADNQLSP_1.SelectedItems,Value,"|"),
+                                        cr282_chuongtrinh_apdung:Concat(CbxCTADNQLSP_1.SelectedItems,MA_CHUONG_TRINH,"|"),
                                         cr282_loai:CbxLoaiNQLSP_1.Selected.Value,
                                         cr282_ma_nhom_ql:CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL,
                                         cr282_phamvi_dialy:CbxPVDLNQLSP_1.Selected.MA_PHAMVI,
@@ -1277,7 +1280,10 @@
                                     ShowColumns(
                                         AddColumns(
                                             SortByColumns(
-                                                DL_SAN_PHAM_NHOMQLS,
+                                                Filter(
+                                                    DL_SAN_PHAM_NHOMQLS,
+                                                    MA_SP=valMaSP
+                                                ),
                                                 "cr282_ma_dl",
                                                 SortOrder.Ascending
                                             ),
@@ -1477,25 +1483,25 @@
                         ChevronFill: =RGBA(72, 163, 62, 1)
                         ChevronHoverBackground: =RGBA(255, 255, 255, 1)
                         ChevronHoverFill: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: =Filter(["Vàng","Bạc","Đồng","Kim cương","Bạch Kim","Titan"],Value in Split(ThisItem.cr282_chuongtrinh_apdung,"|"))
+                        DefaultSelectedItems: =Filter(' DL_SAN_PHAM_CT',MA_CHUONG_TRINH in Split(ThisItem.cr282_chuongtrinh_apdung,"|"))
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
-                        DisplayFields: =["Value"]
+                        DisplayFields: =["cr282_ten_chuong_trinh"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
                         IsSearchable: =false
-                        Items: =["Vàng","Bạc","Đồng","Kim cương","Bạch Kim","Titan"]
+                        Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=valMaSP)
                         OnSelect: =Select(Parent)
                         PressedColor: =RGBA(72, 163, 62, 1)
                         PressedFill: =RGBA(255, 255, 255, 1)
-                        SearchFields: =["Value"]
+                        SearchFields: =["cr282_ten_chuong_trinh"]
                         SearchItems: =[]
                         SelectionColor: =RGBA(0, 0, 0, 1)
                         SelectionFill: =RGBA(214, 221, 224, 1)
-                        Tooltip: =Concat(CbxCTADNQLSP_1.SelectedItems,Value,", ")
+                        Tooltip: =Concat(CbxCTADNQLSP_1.SelectedItems,TEN_CHUONG_TRINH,", ")
                         Width: =187
                         X: =948
                         ZIndex: =27
