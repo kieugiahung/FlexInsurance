@@ -218,6 +218,39 @@
                 "edited"
             )
         );
+        ClearCollect(
+            TmpBangPhiCT,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                        Filter(
+                            DL_CHUONG_TRINH_BANG_PHIS,
+                            MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=valMaSP
+                        ),
+                        "cr282_ma_bang_phi",
+                        SortOrder.Ascending
+                    ),
+                    "edited",
+                    0
+                ),
+                "cr282_ma_bang_phi",
+                "cr282_ma_san_pham",
+                "cr282_ma_chuong_trinh",
+                "cr282_nhom_tinh_phi",
+                "cr282_ma_phamvi_dialy",
+                "cr282_ma_do_tuoi",
+                "cr282_ma_gioi_tinh",
+                "cr282_so_tien",
+                "cr282_phi_bh",
+                "cr282_tyle_phi",
+                "cr282_pthuc_dong_phi",
+                "cr282_ten_chuong_trinh",
+                "cr282_ten_san_pham",
+                "cr282_thoi_han_bh",
+                "cr282_doi_tuong",
+                "edited"
+            )
+        );
         UpdateContext({
             maAddedMatranCT:"",
             maUpdateMatranCT:""
