@@ -2658,7 +2658,8 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
-                    DefaultSelectedItems: =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHUONG_TRINH,"|")
+                    DefaultSelectedItems: |
+                        =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHUONG_TRINH,"|")
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_chuong_trinh"]
                     Height: =45
@@ -2681,7 +2682,8 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
-                    DefaultSelectedItems: =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).NHOM_TINH_PHI,"|")
+                    DefaultSelectedItems: |
+                        =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).NHOM_TINH_PHI,"|")
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_nhom_tp"]
                     Height: =45
@@ -3628,7 +3630,7 @@
                         If(
                             !IsEmpty(DL_SAN_PHAM_BANGYT),
                             ForAll(
-                                DL_SAN_PHAM_BANGYT As ct,
+                                Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM = valMaSP )As ct,
                                 If(
                                     ct.DO_TUOI = true && CountRows(Datafield_DT_1.SelectedItems) > 0,
                                     ForAll(
@@ -11147,6 +11149,7 @@
                     ZIndex: =1
 
                 btnXuatFile As button:
+                    DisplayMode: =If(!IsEmpty(Filter(DL_SAN_PHAM_MATRANPHI, MA_SAN_PHAM=valMaSP)), DisplayMode.Edit,DisplayMode.Disabled)
                     OnSelect: |
                         =Clear(OldCollection);
                         Set(

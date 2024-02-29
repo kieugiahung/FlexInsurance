@@ -178,11 +178,16 @@ TraCuuSP As screen:
                         Clear(tmpBYTCollect);
                         Clear(tmpLTCollect);
                         
-                        /*If(!IsEmpty(Filter(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP)),
+                        If(!IsEmpty(Filter(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP)),
                         ClearCollect(
                             tmpCbxChuongTrinh,
-                            
-                        ));*/
+                            Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHUONG_TRINH,"|")
+                        );
+                        ClearCollect(
+                            tmpCbxNhom,
+                            Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).NHOM_TINH_PHI,"|")
+                        );
+                        );
                     Text: ="Chi tiết"
                     Width: =111
                     X: =1189
