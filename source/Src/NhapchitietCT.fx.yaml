@@ -2610,14 +2610,14 @@
                                 Or(maAddedMatranCT<>"",maUpdateMatranCT<>""),
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                                 UpdateIf(
-                                    TmpMaTraPhiCT,
-                                    cr282_id=ThisItem.cr282_id,
+                                    TmpBangPhiCT,
+                                    cr282_ma_bang_phi=ThisItem.cr282_ma_bang_phi,
                                     {
                                         edited:1
                                     }
                                 );
                                 UpdateContext({
-                                    maUpdateMatranCT:ThisItem.cr282_id
+                                    maUpdateMatranCT:ThisItem.cr282_ma_bang_phi
                                 })
                             )
                         Text: ="Sửa"
