@@ -2312,7 +2312,7 @@
                                 Notify("Bắt buộc nhập nhóm quyền lợi", NotificationType.Error,800),
                                 IsBlank(TiMoTaQLKCT.Text),
                                 Notify("Bắt buộc nhập mô tả", NotificationType.Error,800),
-                                !IsBlank(LookUp(tmpDKCCTCollect,cr282_ma_nhom_ql_ct=ThisItem.cr282_ma_nhom_ql_ct && cr282_ma_dl_ct<>ThisItem.cr282_ma_dl_ct)),
+                                !IsBlank(LookUp(tmpQLKCTCollect,cr282_ma_nhom_ql_ct=ThisItem.cr282_ma_nhom_ql_ct && cr282_ma_dl_ct<>ThisItem.cr282_ma_dl_ct)),
                                 Notify("Tồn tại dữ liệu có cùng nhóm quyền lợi", NotificationType.Error,800),
                                 If(
                                     ThisItem.cr282_ma_dl_ct=maAddedQLKCT,
@@ -2540,7 +2540,7 @@
                                 )
                             });
                             Collect(
-                                tmpDKCCTCollect,
+                                tmpQLKCTCollect,
                                 {
                                     cr282_ma_dl_ct:Text(idMaQLKCT),
                                     cr282_ma_nhom_ql_ct:Blank(),
