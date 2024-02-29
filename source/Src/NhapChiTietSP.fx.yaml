@@ -11135,7 +11135,7 @@
                     ZIndex: =18
 
             CtnXuLyExcel As groupContainer.manualLayoutContainer:
-                Height: =240
+                Height: =244
                 Width: =1207
                 X: =148
                 Y: =788
@@ -11362,12 +11362,191 @@
                     Y: =57
                     ZIndex: =2
 
-                Button2 As button:
-                    Text: ="Nhận bảng phí từ file"
-                    Width: =230
-                    X: =776
-                    Y: =57
-                    ZIndex: =3
+                Label2_3 As label:
+                    Height: =53
+                    Text: =gbl_var_excel_data
+                    Visible: =false
+                    Width: =208
+                    X: =853
+                    Y: =125
+                    ZIndex: =4
+
+                "gal_UL_Attachments As gallery.'BrowseLayout_Vertical_OneTextOneImageVariant_ver4.0'":
+                    Fill: =RGBA(255, 255, 255, 1)
+                    Height: =48
+                    Items: =col_attachment
+                    Layout: =Layout.Vertical
+                    TemplatePadding: =0
+                    TemplateSize: =48
+                    Visible: =false
+                    Width: =142
+                    X: =685
+                    Y: =146
+                    ZIndex: =5
+
+                    img_Data_Stream As image:
+                        Height: =42
+                        Image: =ThisItem.Value
+                        OnSelect: =Select(Parent)
+                        Width: =96
+                        X: =46
+                        ZIndex: =1
+
+                    lbl_File_Name As label:
+                        Height: =Self.Size * 1.8
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Text: =ThisItem.Name
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =Parent.TemplateWidth - img_Data_Stream.Width - 104
+                        X: =img_Data_Stream.X + img_Data_Stream.Width + 24
+                        Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                        ZIndex: =2
+
+                    Separator4 As rectangle:
+                        Height: =1
+                        OnSelect: =Select(Parent)
+                        Width: =Parent.TemplateWidth
+                        Y: =Parent.TemplateHeight - 1
+                        ZIndex: =4
+
+                grp_upload_Excel As group:
+                    Height: =5
+                    Width: =5
+                    X: =-417
+                    Y: =-47
+                    ZIndex: =11
+
+                    att_attachExcel As attachments:
+                        BorderColor: =
+                        DisplayMode: =
+                        Height: =78
+                        IsInDataCard: =true
+                        Items: =
+                        NoAttachmentsText: =
+                        OnAddFile: |+
+                            =ClearCollect(col_attachment, Self.Attachments)
+                            
+                            
+                            /*
+                            Switch(Right(Last(Self.Attachments.Name).Name,4) = "xlsx", true, 
+                            ClearCollect(col_attachment, Self.Attachments), Notify("Kindly Use the Provided Template", NotificationType.Warning);Set(gbl_var_reset, true);
+                            Set(gbl_var_reset, false);)*/
+                            
+                            
+                        OnRemoveFile: =ClearCollect(col_attachment, Self.Attachments)
+                        PaddingBottom: =5
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PaddingRight: =5
+                        PaddingTop: =5
+                        Reset: =gbl_var_reset
+                        Size: =12
+                        Tooltip: =
+                        Width: =269
+                        X: =659
+                        Y: =43
+                        ZIndex: =6
+
+                    circleButton_3 As button:
+                        BorderColor: =RGBA(15, 84, 140, 1)
+                        BorderStyle: =BorderStyle.None
+                        Fill: =RGBA(39, 113, 194, 1)
+                        FocusedBorderColor: =Color.Transparent
+                        FontWeight: =FontWeight.Bold
+                        Height: =78
+                        HoverColor: =RGBA(0, 0, 0, 0)
+                        HoverFill: =RGBA(0, 0, 0, 0.1)
+                        OnSelect: |
+                            =Clear(col_response);
+                            Clear(col_attachment_flow);
+                            Set(
+                                gbl_var_spinner,
+                                true
+                            );
+                            ForAll(
+                                gal_UL_Attachments.AllItems,
+                                Collect(
+                                    col_attachment_flow,
+                                    {
+                                        Title: lbl_File_Name.Text,
+                                        Datastream: img_Data_Stream.Image
+                                    }
+                                )
+                            );
+                            Set(
+                                gbl_var_excel_data,
+                                ImportExcel.Run(
+                                    JSON(
+                                        col_attachment_flow,
+                                        JSONFormat.IncludeBinaryData
+                                    )
+                                ).response
+                            );
+                            Set(
+                                gbl_var_reset,
+                                true
+                            );
+                            Set(
+                                gbl_var_reset,
+                                false
+                            );
+                            ClearCollect(
+                                col_response,
+                                MatchAll(
+                                    gbl_var_excel_data,
+                                    "(""ma_san_pham"":""(?<ma_san_pham>[^""]*)"",""ma_chuong_trinh"":""(?<ma_chuong_trinh>[^""]*)"",""ten_san_pham"":""(?<ten_san_pham>[^""]*)"",""ten_chuong_trinh"":""(?<ten_chuong_trinh>[^""]*)"",""nhom_tinh_phi"":""(?<nhom_tinh_phi>[^""]*)"",""phamvi"":""(?<phamvi>[^""]*)"",""do_tuoi"":""(?<do_tuoi>[^""]*)"",""gioi_tinh"":""(?<gioi_tinh>[^""]*)"",""nganh_nghe"":""(?<nganh_nghe>[^""]*)"",""so_tien"":""(?<so_tien>[^""]*)"",""so_nguoi"":""(?<so_nguoi>[^""]*)"",""thoi_han"":""(?<thoi_han>[^""]*)"",""phuong_thuc"":""(?<phuong_thuc>[^""]*)"",""phi"":""(?<phi>[^""]*)"",""ty_le"":""(?<ty_le>[^""]*)"")"
+                                )
+                            );
+                            // XOÁ DỮ LIỆU CŨ
+                             If(CountRows(col_response) > 0,
+                             RemoveIf(
+                                    DL_CHUONG_TRINH_BANG_PHIS,
+                                    MA_SAN_PHAM =""
+                                );
+                            // THÊM DỮ LIỆU MỚI    
+                            ForAll(
+                                col_response As x,
+                                Patch(
+                                    DL_CHUONG_TRINH_BANG_PHIS,
+                                    Defaults(DL_CHUONG_TRINH_BANG_PHIS),
+                                    {
+                                        MA_BANG_PHI: Max(DL_CHUONG_TRINH_BANG_PHIS, MA_BANG_PHI) + 1,
+                                        MA_SAN_PHAM: x.ma_san_pham,
+                                        MA_CHUONG_TRINH:x.ma_chuong_trinh,
+                                        TEN_SAN_PHAM:x.ten_san_pham,
+                                        TEN_CHUONG_TRINH:x.ten_chuong_trinh,
+                                        NHOM_TINH_PHI:x.nhom_tinh_phi,
+                                        MA_PHAMVI_DIALY:x.phamvi,
+                                        MA_DO_TUOI:x.do_tuoi,
+                                        MA_GIOI_TINH:x.gioi_tinh,
+                                        SO_TIEN_BH:Value(x.so_tien),
+                                        PHI_BH:Value(x.phi),
+                                        TYLE_PHI:Value(x.ty_le),
+                                        NHOM_NGANH_NGHE:x.nganh_nghe,
+                                        PTHUC_DONG_PHI:x.phuong_thuc,
+                                        THOI_HAN_BH:x.thoi_han
+                                    }
+                                )
+                            );
+                            
+                            Set(
+                                gbl_var_spinner,
+                                false
+                            );
+                        PressedColor: =Color.Transparent
+                        PressedFill: =RGBA(0, 0, 0, 0.2)
+                        RadiusBottomLeft: =3
+                        RadiusBottomRight: =3
+                        RadiusTopLeft: =3
+                        RadiusTopRight: =3
+                        Text: ="Nhận dữ liệu bảng phí"
+                        Width: =177
+                        X: =938
+                        Y: =43
+                        ZIndex: =9
 
         DataCard5_1 As dataCard.blankCard:
             BorderColor: =RGBA(0, 0, 0, 1)
