@@ -210,7 +210,7 @@
                 "cr282_so_nguoi",
                 "cr282_thoi_han",
                 "cr282_phuong_thuc_dp",
-        
+                "cr282_ty_le",
                 "edited"
             )
         );
@@ -1278,7 +1278,7 @@
                     Text: ="Nhóm thông tin"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =119
-                    X: =35
+                    X: =73
                     Y: =97
                     ZIndex: =3
 
@@ -1289,8 +1289,8 @@
                     Size: =14
                     Text: ="Thông tin"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =121
-                    X: =260
+                    Width: =81
+                    X: =352
                     Y: =99
                     ZIndex: =4
 
@@ -1301,9 +1301,9 @@
                     Size: =14
                     Text: ="Nội dung"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =151
-                    X: =525
-                    Y: =97
+                    Width: =75
+                    X: =746
+                    Y: =99
                     ZIndex: =5
 
                 TextCanvas1_11 As Text:
@@ -1321,13 +1321,13 @@
                 TextCanvas2_112 As Text:
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =38
+                    Height: =39
                     Size: =14
                     Text: ="Thao tác"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =96
-                    X: =1100
-                    Y: =97
+                    Width: =69
+                    X: =1133
+                    Y: =98
                     ZIndex: =15
 
                 BtnTaiLaiDKCTCT As Button:
@@ -2640,7 +2640,8 @@
                                             SO_NGUOI:TxtSonguoi.Text,
                                             GIOI_TINH:TxtGioitinh.Text,
                                             PHAM_VI_DL:TxtPhamvidl.Text,
-                                            NHOM_TINH_PHI:TxtNhomtinhphi.Text
+                                            NHOM_TINH_PHI:TxtNhomtinhphi.Text,
+                                            TY_LE:Value(TxtTyLe.Text)
                                         }
                                     ),
                                     UpdateIf(
@@ -2657,7 +2658,8 @@
                                             SO_NGUOI:TxtSonguoi.Text,
                                             GIOI_TINH:TxtGioitinh.Text,
                                             PHAM_VI_DL:TxtPhamvidl.Text,
-                                            NHOM_TINH_PHI:TxtNhomtinhphi.Text
+                                            NHOM_TINH_PHI:TxtNhomtinhphi.Text,
+                                            TY_LE:Value(TxtTyLe.Text)
                                         }
                                     )
                                 );
@@ -2677,6 +2679,7 @@
                                     cr282_so_nguoi:TxtSonguoi.Text,
                                     cr282_thoi_han:TxtThoihan.Text,
                                     cr282_phuong_thuc_dp: TxtPhuongthuc.Text,
+                                    cr282_ty_le:Value(TxtTyLe.Text),
                                     cr282_phi:Value(TxtPhi.Text),
                                         edited:0
                                     }
@@ -2707,6 +2710,7 @@
                                     "cr282_so_nguoi",
                                     "cr282_thoi_han",
                                     "cr282_phuong_thuc_dp",
+                                    "cr282_ty_le",
                                     "edited"
                                     )
                                 );
@@ -2764,7 +2768,7 @@
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         OnChange: =
                         OnSelect: =Select(Parent)
-                        Width: =154
+                        Width: =134
                         X: =3
                         ZIndex: =22
 
@@ -2777,8 +2781,8 @@
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         OnChange: =
                         OnSelect: =Select(Parent)
-                        Width: =152
-                        X: =157
+                        Width: =122
+                        X: =137
                         ZIndex: =23
 
                     TxtGioitinh As text:
@@ -2790,8 +2794,8 @@
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         OnChange: =
                         OnSelect: =Select(Parent)
-                        Width: =113
-                        X: =439
+                        Width: =93
+                        X: =357
                         ZIndex: =25
 
                     TxtSonguoi As text:
@@ -2804,7 +2808,7 @@
                         OnChange: =
                         OnSelect: =Select(Parent)
                         Width: =99
-                        X: =778
+                        X: =676
                         ZIndex: =26
 
                     TxtNganhnghe As text:
@@ -2817,7 +2821,7 @@
                         OnChange: =
                         OnSelect: =Select(Parent)
                         Width: =113
-                        X: =552
+                        X: =450
                         ZIndex: =27
 
                     TxtSotien As text:
@@ -2830,7 +2834,7 @@
                         OnChange: =
                         OnSelect: =Select(Parent)
                         Width: =113
-                        X: =665
+                        X: =563
                         ZIndex: =28
 
                     TxtThoihan As text:
@@ -2843,7 +2847,7 @@
                         OnChange: =
                         OnSelect: =Select(Parent)
                         Width: =82
-                        X: =877
+                        X: =775
                         ZIndex: =29
 
                     TxtPhuongthuc As text:
@@ -2856,7 +2860,7 @@
                         OnChange: =
                         OnSelect: =Select(Parent)
                         Width: =91
-                        X: =959
+                        X: =859
                         ZIndex: =30
 
                     TxtPhi As text:
@@ -2869,7 +2873,7 @@
                         OnChange: =
                         OnSelect: =Select(Parent)
                         Width: =76
-                        X: =1050
+                        X: =950
                         ZIndex: =31
 
                     TxtDotuoi As text:
@@ -2881,8 +2885,8 @@
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         OnChange: =
                         OnSelect: =Select(Parent)
-                        Width: =130
-                        X: =309
+                        Width: =98
+                        X: =259
                         ZIndex: =32
 
                     TxtID_MT As text:
@@ -2897,8 +2901,20 @@
                         Visible: =false
                         Width: =154
                         X: =40
-                        Y: =1
                         ZIndex: =33
+
+                    TxtTyLe As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_phi
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =76
+                        X: =1030
+                        ZIndex: =34
 
                 BadgeCanvas1_31 As Badge:
                     BasePaletteColor: =
@@ -2919,33 +2935,33 @@
                     Size: =14
                     Text: ="Nhóm tính phí"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =147
-                    X: =13
+                    Width: =107
+                    X: =14
                     Y: =73
                     ZIndex: =3
 
                 TextCanvas2_143 As Text:
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =34
+                    Height: =30
                     Size: =14
                     Text: ="Phạm vi địa lý"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =96
-                    X: =160
-                    Y: =69
+                    X: =141
+                    Y: =73
                     ZIndex: =4
 
                 TextCanvas2_145 As Text:
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =34
+                    Height: =30
                     Size: =14
                     Text: ="Thao tác"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =96
                     X: =1166
-                    Y: =69
+                    Y: =73
                     ZIndex: =5
 
                 ThemMoiCT_9 As button:
@@ -2993,7 +3009,7 @@
                                     cr282_thoi_han: "",
                                     cr282_phuong_thuc_dp: "",
                                     cr282_phi: "",
-                                    cr282_ty_le: "",
+                                    cr282_ty_le: 0,
                                     edited: 1
                                 }
                             );
@@ -3007,36 +3023,36 @@
                 TextCanvas2_146 As Text:
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =34
+                    Height: =30
                     Size: =14
                     Text: ="Độ tuổi"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =96
-                    X: =312
-                    Y: =69
+                    X: =267
+                    Y: =73
                     ZIndex: =14
 
                 TextCanvas2_147 As Text:
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =34
+                    Height: =30
                     Size: =14
                     Text: ="Giới tính"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =96
-                    X: =447
-                    Y: =69
+                    Width: =67
+                    X: =363
+                    Y: =73
                     ZIndex: =15
 
                 TextCanvas2_144 As Text:
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =34
+                    Height: =30
                     Size: =14
                     Text: ="Số người"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =96
-                    X: =779
+                    Width: =71
+                    X: =681
                     Y: =73
                     ZIndex: =16
 
@@ -3051,25 +3067,25 @@
                 TextCanvas2_148 As Text:
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =34
+                    Height: =30
                     Size: =14
                     Text: ="Ngành nghề"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =96
-                    X: =559
-                    Y: =69
+                    X: =458
+                    Y: =73
                     ZIndex: =18
 
                 TextCanvas2_149 As Text:
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =34
+                    Height: =30
                     Size: =14
                     Text: ="Số tiền"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =96
-                    X: =668
-                    Y: =69
+                    Width: =64
+                    X: =569
+                    Y: =73
                     ZIndex: =19
 
                 TextCanvas2_150 As Text:
@@ -3079,8 +3095,8 @@
                     Size: =14
                     Text: ="Thời hạn"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =96
-                    X: =875
+                    Width: =67
+                    X: =773
                     Y: =73
                     ZIndex: =20
 
@@ -3092,8 +3108,8 @@
                     Text: ="Phương thức"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =96
-                    X: =957
-                    Y: =71
+                    X: =862
+                    Y: =73
                     ZIndex: =21
 
                 TextCanvas2_152 As Text:
@@ -3103,10 +3119,22 @@
                     Size: =14
                     Text: ="Phí"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =96
-                    X: =1053
+                    Width: =39
+                    X: =958
                     Y: =73
                     ZIndex: =22
+
+                TextCanvas2_153 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =30
+                    Size: =14
+                    Text: ="Tỷ lệ"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =60
+                    X: =1042
+                    Y: =73
+                    ZIndex: =23
 
     LeftNavigation_23 As LeftNavigation_9:
         Width: =LeftNavigation_23.MenuWidth
