@@ -2691,34 +2691,34 @@
                                     )
                                 );
                                 UpdateIf(
-                                    TmpMaTraPhiCT,
-                                    cr282_id=ThisItem.cr282_id,
+                                    TmpBangPhiCT,
+                                    cr282_ma_bang_phi=ThisItem.cr282_ma_bang_phi,
                                     {
                                     cr282_ma_san_pham: valMaSP,
                                     cr282_ma_chuong_trinh : VarCT,
-                              
+                                    cr282_ten_chuong_trinh:objCT.TEN_CHUONG_TRINH,
+                                    cr282_ten_san_pham:objSP.TEN_SAN_PHAM,
                                     cr282_nhom_tinh_phi:TxtNhomtinhphi.Text,
-                                    cr282_pham_vi_dl:TxtPhamvidl.Text,
-                                    cr282_do_tuoi: TxtDotuoi.Text,
-                                    cr282_gioi_tinh:TxtGioitinh.Text,
-                                    cr282_nganh_nghe:TxtNganhnghe.Text,
+                                    cr282_ma_phamvi_dialy:TxtPhamvidl.Text,
+                                    cr282_ma_do_tuoi: TxtDotuoi.Text,
+                                    cr282_ma_gioi_tinh:TxtGioitinh.Text,
+                                    cr282_nhom_nganh_nghe:TxtNganhnghe.Text,
                                     cr282_so_tien:TxtSotien.Text,
-                                    cr282_so_nguoi:TxtSonguoi.Text,
-                                    cr282_thoi_han:TxtThoihan.Text,
-                                    cr282_phuong_thuc_dp: TxtPhuongthuc.Text,
-                                    cr282_ty_le:Value(TxtTyLe.Text),
-                                    cr282_phi:Value(TxtPhi.Text),
+                                    cr282_thoi_han_bh:TxtThoihan.Text,
+                                    cr282_pthuc_dong_phi: TxtPhuongthuc.Text,
+                                    cr282_tyle_phi:Value(TxtTyLe.Text),
+                                    cr282_phi_bh:Value(TxtPhi.Text),
                                         edited:0
                                     }
                                 );
                                 Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
                                 ClearCollect(
-                                    TmpMaTraPhiCT,
+                                    TmpBangPhiCT,
                                     ShowColumns(
                                         AddColumns(
                                             SortByColumns(
-                                                Filter(DL_CHUONGTRINH_MATRANPHIS,MA_SAN_PHAM=valMaSP && MA_CHUONG_TRINH = VarCT),
-                                                "cr282_id",
+                                                Filter(DL_CHUONG_TRINH_BANG_PHIS,MA_SAN_PHAM=valMaSP && MA_CHUONG_TRINH = VarCT),
+                                                "cr282_ma_bang_phi",
                                                 SortOrder.Ascending
                                             ),
                                             "edited",
