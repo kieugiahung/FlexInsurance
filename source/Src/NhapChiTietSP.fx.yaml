@@ -3397,6 +3397,7 @@
                                         MA_SAN_PHAM: valMaSP,
                                         TEN_CHUONG_TRINH: ct.TEN_CHUONG_TRINH,
                                         NHOM_TINH_PHI: Dropdown_TP_1.Selected.TEN_NHOM_TP,
+                                        TEN_NHOM_TP: Dropdown_TP_1.Selected.TEN_NHOM_TP,
                                         GIOI_TINH: Checkbox_GT_1.Value,
                                         PHAM_VI_DL: Checkbox_PV_1.Value,
                                         DO_TUOI: Checkbox_DT_1.Value,
@@ -10725,7 +10726,7 @@
                                 =//RemoveIf(DL_SAN_PHAM_LOAITRU,true);
                                 If(
                                     Or(maLTAdded<>"",maLTUpdated<>""),
-                                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                    Select(IconTaiLaiLT),
                                     UpdateContext({
                                         idMaLT:If(
                                             CountIf(DL_SAN_PHAM_LOAITRU,true)=0,
@@ -10830,6 +10831,7 @@
                                     "cr282_chuongtrinh_nhomtp",
                                     "cr282_ten_chuong_trinh",
                                     "cr282_nhom_tinh_phi",
+                                    "cr282_ten_nhom_tp",
                                     "cr282_pham_vi_dl",
                                     "cr282_do_tuoi",
                                     "cr282_gioi_tinh",
