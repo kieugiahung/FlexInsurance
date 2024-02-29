@@ -2648,42 +2648,41 @@
                     Btn_LuuCT_9 As button:
                         OnSelect: |
                             =
-                                If( ThisItem.cr282_id=maAddedMatranCT,
+                                If( ThisItem.cr282_ma_bang_phi=maAddedMatranCT,
                                     Patch(
-                                        DL_CHUONGTRINH_MATRANPHIS,
+                                        DL_CHUONG_TRINH_BANG_PHIS,
                                         {
-                                            ID:ThisItem.cr282_id,
+                                            MA_BANG_PHI:ThisItem.cr282_ma_bang_phi,
                                             MA_SAN_PHAM:valMaSP,
                                             MA_CHUONG_TRINH:VarCT, 
-                                            DO_TUOI: TxtDotuoi.Text, 
-                                            PHI:Value(TxtPhi.Text),
-                                            PHUONG_THUC_DP: TxtPhuongthuc.Text,
-                                            THOI_HAN:TxtThoihan.Text,
+                                            MA_DO_TUOI: TxtDotuoi.Text, 
+                                            PHI_BH:Value(TxtPhi.Text),
+                                            PTHUC_DONG_PHI: TxtPhuongthuc.Text,
+                                            THOI_HAN_BH:TxtThoihan.Text,
                                             SO_TIEN:TxtSotien.Text,
-                                            NGANH_NGHE:TxtNganhnghe.Text,
-                                            SO_NGUOI:TxtSonguoi.Text,
-                                            GIOI_TINH:TxtGioitinh.Text,
-                                            PHAM_VI_DL:TxtPhamvidl.Text,
+                                            NHOM_NGANH_NGHE:TxtNganhnghe.Text,
+                                            MA_GIOI_TINH:TxtGioitinh.Text,
+                                            MA_PHAMVI_DIALY:TxtPhamvidl.Text,
                                             NHOM_TINH_PHI:TxtNhomtinhphi.Text,
-                                            TY_LE:Value(TxtTyLe.Text)
+                                            TYLE_PHI:Value(TxtTyLe.Text)
                                         }
                                     ),
                                     UpdateIf(
-                                        DL_CHUONGTRINH_MATRANPHIS,
-                                        ID=ThisItem.cr282_id,
+                                        DL_CHUONG_TRINH_BANG_PHIS,
+                                        MA_BANG_PHI=ThisItem.cr282_ma_bang_phi,
                                         {
+                                            MA_SAN_PHAM:valMaSP,
                                             MA_CHUONG_TRINH:VarCT, 
-                                            DO_TUOI: TxtDotuoi.Text, 
-                                            PHI:Value(TxtPhi.Text),
-                                            PHUONG_THUC_DP: TxtPhuongthuc.Text,
-                                            THOI_HAN:TxtThoihan.Text,
+                                            MA_DO_TUOI: TxtDotuoi.Text, 
+                                            PHI_BH:Value(TxtPhi.Text),
+                                            PTHUC_DONG_PHI: TxtPhuongthuc.Text,
+                                            THOI_HAN_BH:TxtThoihan.Text,
                                             SO_TIEN:TxtSotien.Text,
-                                            NGANH_NGHE:TxtNganhnghe.Text,
-                                            SO_NGUOI:TxtSonguoi.Text,
-                                            GIOI_TINH:TxtGioitinh.Text,
-                                            PHAM_VI_DL:TxtPhamvidl.Text,
+                                            NHOM_NGANH_NGHE:TxtNganhnghe.Text,
+                                            MA_GIOI_TINH:TxtGioitinh.Text,
+                                            MA_PHAMVI_DIALY:TxtPhamvidl.Text,
                                             NHOM_TINH_PHI:TxtNhomtinhphi.Text,
-                                            TY_LE:Value(TxtTyLe.Text)
+                                            TYLE_PHI:Value(TxtTyLe.Text)
                                         }
                                     )
                                 );
