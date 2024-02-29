@@ -3383,6 +3383,7 @@
                                 );
                                 
                             );
+                            
                             ForAll(
                                 Combo_CT_1.SelectedItems As ct,
                                 Patch(
@@ -3397,7 +3398,7 @@
                                         ),
                                         MA_SAN_PHAM: valMaSP,
                                         TEN_CHUONG_TRINH: ct.TEN_CHUONG_TRINH,
-                                        MA_CHUONG_TRINH: ct.MA_CHUONG_TRINH,
+                                        MA_CHUONG_TRINH: LookUp(' DL_SAN_PHAM_CT', MA_SAN_PHAM = valMaSP && TEN_CHUONG_TRINH =ct.TEN_CHUONG_TRINH).MA_CHUONG_TRINH,
                                         NHOM_TINH_PHI: Dropdown_TP_1.Selected.TEN_NHOM_TP,
                                         TEN_NHOM_TP: Dropdown_TP_1.Selected.TEN_NHOM_TP,
                                         GIOI_TINH: Checkbox_GT_1.Value,
@@ -11123,7 +11124,7 @@
                             }
                         );
                     Tooltip: ="Tải lại"
-                    Visible: =showGrid
+                    Visible: =showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP))
                     Width: =32
                     X: =408
                     Y: =59
