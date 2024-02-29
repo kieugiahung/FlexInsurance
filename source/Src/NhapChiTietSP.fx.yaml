@@ -655,7 +655,7 @@
                                 )
                             );
                             // chuyển dữ liệu quyền lợi chi tiết
-                        
+                            
                             // chuyển dữ liệu quyền lợi khác
                             ForAll(Filter(DL_SAN_PHAM_QL_KHACS,MA_SP = valMaSP ) As qlk,
                                 Patch(
@@ -2400,8 +2400,12 @@
                 ZIndex: =1
 
                 ChuongTrinh_1 As checkbox:
+                    BorderColor: =RGBA(45, 128, 40, 1)
+                    CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                     Default: =true
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayMode: =DisplayMode.Disabled
+                    HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Chương trình"
                     Width: =192
                     X: =38
@@ -2409,6 +2413,11 @@
                     ZIndex: =1
 
                 GioiTinh_1 As checkbox:
+                    BorderColor: =RGBA(45, 128, 40, 1)
+                    CheckboxBorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHECKED_GIOITINH
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Giới tính"
                     Visible: |-
                         =LookUp(
@@ -2429,6 +2438,11 @@
                     ZIndex: =3
 
                 NganhNghe_1 As checkbox:
+                    BorderColor: =RGBA(45, 128, 40, 1)
+                    CheckboxBorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHECKED_NGANHNGHE
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Ngành nghề"
                     Visible: |-
                         =LookUp(
@@ -2449,8 +2463,12 @@
                     ZIndex: =4
 
                 NhomTP_1 As checkbox:
+                    BorderColor: =RGBA(45, 128, 40, 1)
+                    CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                     Default: =true
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayMode: =DisplayMode.Disabled
+                    HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Nhóm tính phí"
                     Width: =192
                     X: =38
@@ -2458,7 +2476,11 @@
                     ZIndex: =5
 
                 PVDiaLy_1 As checkbox:
-                    Default: =true
+                    BorderColor: =RGBA(45, 128, 40, 1)
+                    CheckboxBorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =!IsBlank(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).PHAM_VI_DL)
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Phạm vi địa lý"
                     Visible: |-
                         =LookUp(
@@ -2479,8 +2501,12 @@
                     ZIndex: =6
 
                 BH_SoTien_1 As checkbox:
-                    Default: =true
+                    BorderColor: =RGBA(45, 128, 40, 1)
+                    CheckboxBorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHECKED_SOTIEN
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     Height: =38
+                    HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Số tiền bảo hiểm"
                     Visible: |-
                         =LookUp(
@@ -2501,6 +2527,11 @@
                     ZIndex: =7
 
                 BH_SoNguoi_1 As checkbox:
+                    BorderColor: =RGBA(45, 128, 40, 1)
+                    CheckboxBorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHECKED_SONGUOI
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Số người được BH"
                     Visible: |-
                         =LookUp(
@@ -2521,6 +2552,11 @@
                     ZIndex: =8
 
                 BH_ThoiHan_1 As checkbox:
+                    BorderColor: =RGBA(45, 128, 40, 1)
+                    CheckboxBorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHECKED_THOIHAN
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Thời hạn bảo hiểm"
                     Visible: |-
                         =LookUp(
@@ -2541,7 +2577,12 @@
                     ZIndex: =9
 
                 BH_PhuongThuc_1 As checkbox:
+                    BorderColor: =RGBA(45, 128, 40, 1)
+                    CheckboxBorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHECKED_DONGPHI
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     Height: =38
+                    HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Phương thức đóng phí"
                     Visible: |-
                         =LookUp(
@@ -2568,47 +2609,83 @@
                     ZIndex: =11
 
                 DsTienTe_1 As dropdown:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    ChevronBackground: =RGBA(255, 255, 255, 1)
+                    ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                    ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                    ChevronFill: =RGBA(72, 163, 62, 1)
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     Height: =45
                     Items: =BH_DM_TIENTES
+                    PressedFill: =RGBA(166, 215, 153, 1)
+                    SelectionColor: =RGBA(72, 163, 62, 1)
+                    SelectionFill: =RGBA(255, 255, 255, 1)
                     X: =296
                     Y: =706
                     ZIndex: =12
 
                 Datafield_CT_1 As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    ChevronBackground: =RGBA(255, 255, 255, 1)
+                    ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                    ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                    ChevronFill: =RGBA(72, 163, 62, 1)
                     DefaultSelectedItems: =
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_chuong_trinh"]
                     Height: =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
                     Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=valMaSP)
+                    PressedFill: =RGBA(166, 215, 153, 1)
                     SearchFields: =["cr282_ten_chuong_trinh"]
                     SearchItems: =[]
+                    SelectionColor: =RGBA(72, 163, 62, 1)
+                    SelectionFill: =RGBA(255, 255, 255, 1)
                     Width: =840
                     X: =296
                     Y: =80
                     ZIndex: =13
 
                 Datafield_Nhom_1 As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    ChevronBackground: =RGBA(255, 255, 255, 1)
+                    ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                    ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                    ChevronFill: =RGBA(72, 163, 62, 1)
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_nhom_tp"]
                     Height: =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
                     Items: =BH_DM_NHOMTP
+                    PressedFill: =RGBA(166, 215, 153, 1)
                     SearchFields: =["cr282_id"]
                     SearchItems: =[]
+                    SelectionColor: =RGBA(72, 163, 62, 1)
+                    SelectionFill: =RGBA(255, 255, 255, 1)
                     Width: =840
                     X: =296
                     Y: =150
                     ZIndex: =14
 
                 Datafield_DT_1 As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    ChevronBackground: =RGBA(255, 255, 255, 1)
+                    ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                    ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                    ChevronFill: =RGBA(72, 163, 62, 1)
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_mo_ta"]
                     Height: =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
                     Items: =DM_DO_TUOIS
+                    PressedFill: =RGBA(166, 215, 153, 1)
                     SearchFields: =["cr282_mo_ta"]
                     SearchItems: =[]
+                    SelectionColor: =RGBA(72, 163, 62, 1)
+                    SelectionFill: =RGBA(255, 255, 255, 1)
                     Visible: =If(DoTuoi_1.Value=true && DoTuoi_1.Visible=true,true,false)
                     Width: =840
                     X: =296
@@ -2616,13 +2693,22 @@
                     ZIndex: =15
 
                 Datafield_GT_1 As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    ChevronBackground: =RGBA(255, 255, 255, 1)
+                    ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                    ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                    ChevronFill: =RGBA(72, 163, 62, 1)
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_gioi_tinh"]
                     Height: =45
                     InputTextPlaceholder: ="Find items"
                     IsSearchable: =false
                     Items: =DM_GIOI_TINHS
+                    PressedFill: =RGBA(166, 215, 153, 1)
                     SearchFields: =["cr282_ten_gioi_tinh"]
                     SearchItems: =[]
+                    SelectionColor: =RGBA(72, 163, 62, 1)
+                    SelectionFill: =RGBA(255, 255, 255, 1)
                     Visible: =If(GioiTinh_1.Value=true && GioiTinh_1.Visible=true, true,false)
                     Width: =840
                     X: =296
@@ -2786,8 +2872,17 @@
                     ZIndex: =17
 
                 Datafield_PV_1 As dropdown:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    ChevronBackground: =RGBA(255, 255, 255, 1)
+                    ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                    ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                    ChevronFill: =RGBA(72, 163, 62, 1)
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     Height: =45
                     Items: =DM_PHAMVI_DIALYS
+                    PressedFill: =RGBA(166, 215, 153, 1)
+                    SelectionColor: =RGBA(72, 163, 62, 1)
+                    SelectionFill: =RGBA(255, 255, 255, 1)
                     Visible: =If(PVDiaLy_1.Value=true && PVDiaLy_1.Visible=true,true,false)
                     Width: =840
                     X: =296
@@ -2795,13 +2890,22 @@
                     ZIndex: =18
 
                 Datafield_NN_1 As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    ChevronBackground: =RGBA(255, 255, 255, 1)
+                    ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                    ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                    ChevronFill: =RGBA(72, 163, 62, 1)
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_nganh"]
                     Height: =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
                     Items: =BH_DM_NGANHNGHES
+                    PressedFill: =RGBA(166, 215, 153, 1)
                     SearchFields: =["cr282_ten_nganh"]
                     SearchItems: =[]
+                    SelectionColor: =RGBA(72, 163, 62, 1)
+                    SelectionFill: =RGBA(255, 255, 255, 1)
                     Visible: =If(NganhNghe_1.Value=true && NganhNghe_1.Visible=true,true,false)
                     Width: =840
                     X: =296
@@ -2809,13 +2913,22 @@
                     ZIndex: =19
 
                 Datafield_ST_1 As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    ChevronBackground: =RGBA(255, 255, 255, 1)
+                    ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                    ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                    ChevronFill: =RGBA(72, 163, 62, 1)
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_sotien"]
                     Height: =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
                     Items: =BH_DM_SOTIEN
+                    PressedFill: =RGBA(166, 215, 153, 1)
                     SearchFields: =["cr282_ten_sotien"]
                     SearchItems: =[]
+                    SelectionColor: =RGBA(72, 163, 62, 1)
+                    SelectionFill: =RGBA(255, 255, 255, 1)
                     Visible: =If(BH_SoTien_1.Value=true && BH_SoTien_1.Visible=true,true,false)
                     Width: =840
                     X: =296
@@ -2823,13 +2936,22 @@
                     ZIndex: =20
 
                 Datafield_SN_1 As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    ChevronBackground: =RGBA(255, 255, 255, 1)
+                    ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                    ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                    ChevronFill: =RGBA(72, 163, 62, 1)
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_so_nguoi"]
                     Height: =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
                     Items: =BH_DM_SONGUOI
+                    PressedFill: =RGBA(166, 215, 153, 1)
                     SearchFields: =["cr282_ten_so_nguoi"]
                     SearchItems: =[]
+                    SelectionColor: =RGBA(72, 163, 62, 1)
+                    SelectionFill: =RGBA(255, 255, 255, 1)
                     Visible: =If(BH_SoNguoi_1.Value=true && BH_SoNguoi_1.Visible=true,true,false)
                     Width: =840
                     X: =296
@@ -2837,13 +2959,22 @@
                     ZIndex: =21
 
                 Datafield_TH_1 As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    ChevronBackground: =RGBA(255, 255, 255, 1)
+                    ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                    ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                    ChevronFill: =RGBA(72, 163, 62, 1)
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_thoi_han"]
                     Height: =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
                     Items: =BH_DM_THOIHAN
+                    PressedFill: =RGBA(166, 215, 153, 1)
                     SearchFields: =["cr282_ten_thoi_han"]
                     SearchItems: =[]
+                    SelectionColor: =RGBA(72, 163, 62, 1)
+                    SelectionFill: =RGBA(255, 255, 255, 1)
                     Visible: =If(BH_ThoiHan_1.Value=true && BH_ThoiHan_1.Visible=true,true,false)
                     Width: =840
                     X: =296
@@ -2851,14 +2982,23 @@
                     ZIndex: =22
 
                 Datafield_DP_1 As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    ChevronBackground: =RGBA(255, 255, 255, 1)
+                    ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                    ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                    ChevronFill: =RGBA(72, 163, 62, 1)
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_pt"]
                     Height: |
                         =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
                     Items: =BH_DM_PT_DONG
+                    PressedFill: =RGBA(166, 215, 153, 1)
                     SearchFields: =["cr282_ten_pt"]
                     SearchItems: =[]
+                    SelectionColor: =RGBA(72, 163, 62, 1)
+                    SelectionFill: =RGBA(255, 255, 255, 1)
                     Visible: =If(BH_PhuongThuc_1.Value=true && BH_PhuongThuc_1.Visible=true,true,false)
                     Width: =840
                     X: =296
@@ -2898,7 +3038,11 @@
                     ZIndex: =25
 
                 DoTuoi_1 As checkbox:
-                    Default: =true
+                    BorderColor: =RGBA(45, 128, 40, 1)
+                    CheckboxBorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHECKED_DOTUOI
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Độ tuổi"
                     Visible: |-
                         =LookUp(
