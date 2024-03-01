@@ -469,62 +469,6 @@ DMQuyenLoiChiTiet As screen:
             Y: =36
             ZIndex: =9
 
-        IconFilterQLCT As icon.FilterFlat:
-            Color: =RGBA(71, 158, 245, 1)
-            DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
-            Height: =47
-            Icon: =Icon.FilterFlat
-            OnSelect: |-
-                =ClearCollect(
-                    tmpQLCTCollect,
-                    ShowColumns(
-                        AddColumns(
-                            SortByColumns(
-                                Filter(
-                                    DM_QUYENLOI_CHITIETS,
-                                    Or(
-                                        And(
-                                            TextFilterQLCT.Value="",
-                                            loaiFilter<>1
-                                        ),
-                                        And(
-                                            IsBlank(CbxFilterValueQLCT.Selected.MA_NHOM_QL),
-                                            loaiFilter=1
-                                        ),
-                                        And(
-                                            CbxFilterQLCT.Selected.Value="Mã quyền lợi",
-                                            StartsWith(MA_QL_CHITIET,TextFilterQLCT.Value)
-                                        ),
-                                        And(
-                                            CbxFilterQLCT.Selected.Value="Tên quyền lợi",
-                                            !IsBlank(Find(TextFilterQLCT.Value,TEN_QL_CHITIET))
-                                        ),
-                                        And(
-                                            CbxFilterQLCT.Selected.Value="Nhóm quyền lợi",
-                                            MA_NHOM_QL=CbxFilterValueQLCT.Selected.MA_NHOM_QL
-                                        )
-                                    )
-                                ),
-                                "cr282_ma_ql_chitiet",
-                                SortOrder.Ascending
-                            ),
-                            "edited",
-                            0
-                        ),
-                        "cr282_ma_ql_chitiet",
-                        "cr282_ten_ql_chitiet",
-                        "cr282_cap",
-                        "cr282_ma_nhom_ql",
-                        "cr282_ma_ql_cha",
-                        "edited"
-                    )
-                );
-            Tooltip: ="Lọc"
-            Width: =32
-            X: =737
-            Y: =30
-            ZIndex: =10
-
         CbxFilterQLCT As Combobox.pcfdataset:
             DefaultSelectedItems: =Filter(["Mã quyền lợi", "Tên quyền lợi","Nhóm quyền lợi"],Value="Mã quyền lợi")
             DisplayMode: =DisplayMode.Edit
@@ -589,6 +533,63 @@ DMQuyenLoiChiTiet As screen:
                 FieldVariantName: ="textualColumn"
                 Order: =3
                 ZIndex: =22
+
+        ButtonCanvas4_2 As Button:
+            BasePaletteColor: =
+            DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
+            FontColor: =
+            FontSize: =16
+            Height: =43
+            OnSelect: |-
+                =ClearCollect(
+                    tmpQLCTCollect,
+                    ShowColumns(
+                        AddColumns(
+                            SortByColumns(
+                                Filter(
+                                    DM_QUYENLOI_CHITIETS,
+                                    Or(
+                                        And(
+                                            TextFilterQLCT.Value="",
+                                            loaiFilter<>1
+                                        ),
+                                        And(
+                                            IsBlank(CbxFilterValueQLCT.Selected.MA_NHOM_QL),
+                                            loaiFilter=1
+                                        ),
+                                        And(
+                                            CbxFilterQLCT.Selected.Value="Mã quyền lợi",
+                                            !IsBlank(Find(TextFilterQLCT.Value,MA_QL_CHITIET))
+                                        ),
+                                        And(
+                                            CbxFilterQLCT.Selected.Value="Tên quyền lợi",
+                                            !IsBlank(Find(TextFilterQLCT.Value,TEN_QL_CHITIET))
+                                        ),
+                                        And(
+                                            CbxFilterQLCT.Selected.Value="Nhóm quyền lợi",
+                                            MA_NHOM_QL=CbxFilterValueQLCT.Selected.MA_NHOM_QL
+                                        )
+                                    )
+                                ),
+                                "cr282_ma_ql_chitiet",
+                                SortOrder.Ascending
+                            ),
+                            "edited",
+                            0
+                        ),
+                        "cr282_ma_ql_chitiet",
+                        "cr282_ten_ql_chitiet",
+                        "cr282_cap",
+                        "cr282_ma_nhom_ql",
+                        "cr282_ma_ql_cha",
+                        "edited"
+                    )
+                );
+            Text: ="Tra cứu"
+            Width: =96
+            X: =736
+            Y: =32
+            ZIndex: =14
 
     ContainerConfirmQLCT As groupContainer.manualLayoutContainer:
         BorderColor: =RGBA(180, 214, 250, 1)
