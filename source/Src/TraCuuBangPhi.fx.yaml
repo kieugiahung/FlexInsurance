@@ -25,6 +25,9 @@ TraCuuBangPhi As screen:
                 "cr282_tyle_phi"
             )
         );
+        Clear(tmpDSTCBPCollect);
+        Reset(CbxMaSPTCBP);Reset(CbxMaCTTCBP);Reset(CbxNhomTPTCBP);Reset(CbxDTTCBP);Reset(CbxGTTCBP);Reset(CbxPVTCBP);
+        Reset(TiPhiTuTCBP);Reset(TiPhiDenTCBP);
         Clear(tmpDSCTTCBPCollect);Clear(tmpDSNhomTPTCBPCollect)
     Width: =Max(1370, App.MinScreenWidth)
 
@@ -377,7 +380,7 @@ TraCuuBangPhi As screen:
                         "cr282_tyle_phi"
                     )
                 );
-                Clear(tmpDSTCBPCollect); Refresh(DL_SAN_PHAM_NHOMQLS);
+                Clear(tmpDSTCBPCollect);
                 Reset(CbxMaSPTCBP);Reset(CbxMaCTTCBP);Reset(CbxNhomTPTCBP);Reset(CbxDTTCBP);Reset(CbxGTTCBP);Reset(CbxPVTCBP);
                 Reset(TiPhiTuTCBP);Reset(TiPhiDenTCBP);
                 Clear(tmpDSCTTCBPCollect);Clear(tmpDSNhomTPTCBPCollect)
@@ -982,7 +985,32 @@ TraCuuBangPhi As screen:
             FontSize: =13
             Height: =30
             OnSelect: |+
-                =If(
+                =ClearCollect(
+                    tmpKQTCBPCollect,
+                    ShowColumns(
+                        SortByColumns(
+                            DL_CHUONG_TRINH_BANG_PHIS,
+                            "cr282_ma_bang_phi",
+                            SortOrder.Ascending
+                        ),
+                        "cr282_ma_bang_phi",
+                        "cr282_ma_chuong_trinh",
+                        "cr282_ma_san_pham",
+                        "cr282_ma_do_tuoi",
+                        "cr282_ma_gioi_tinh",
+                        "cr282_ma_phamvi_dialy",
+                        "cr282_nhom_tinh_phi",
+                        "cr282_nhom_nganh_nghe",
+                        "cr282_so_ndbh",
+                        "cr282_thoi_han_bh",
+                        "cr282_doi_tuong",
+                        "cr282_pthuc_dong_phi",
+                        "cr282_phi_bh",
+                        "cr282_so_tien",
+                        "cr282_tyle_phi"
+                    )
+                );
+                If(
                     !IsBlank(CbxMaSPTCBP.Selected.MA_SAN_PHAM),
                     ClearCollect(
                         tmpKQTCBPCollect,
