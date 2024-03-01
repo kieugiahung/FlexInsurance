@@ -327,12 +327,22 @@
                                 Or(maAdded<>"",maUpdated<>""),
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                                 Refresh(' DL_SAN_PHAM_CT');
+                                UpdateContext({varTrangThai:LookUp(' DL_SAN_PHAM_CT', ID=ThisItem.cr282_ma_chuong_trinh).TRANG_THAI});
                                 RemoveIf(
                                     ' DL_SAN_PHAM_CT',
                                     ID=ThisItem.cr282_ma_chuong_trinh
                                 );
+                                If(varTrangThai=1,
+                                    RemoveIf(DL_CHUONGTRINH_DKCHUNGS, MA_CHUONG_TRINH=ThisItem.cr282_ma_chuongtrinh);
+                                    RemoveIf(DL_CHUONGTRINH_GPS, MA_CHUONG_TRINH=ThisItem.cr282_ma_chuongtrinh);
+                                    RemoveIf(DL_CHUONGTRINH_MATRANPHIS, MA_CHUONG_TRINH=ThisItem.cr282_ma_chuongtrinh);
+                                    RemoveIf(DL_CHUONGTRINH_PHIKHACS, MA_CHUONG_TRINH=ThisItem.cr282_ma_chuongtrinh);
+                                    RemoveIf(DL_CHUONGTRINH_QLCTS, MA_CHUONG_TRINH=ThisItem.cr282_ma_chuongtrinh);
+                                    RemoveIf(DL_CHUONGTRINH_QL_KHACS, MA_CHUONG_TRINH=ThisItem.cr282_ma_chuongtrinh);
+                                    RemoveIf(DL_CHUONG_TRINH_BANG_PHIS, MA_CHUONG_TRINH=ThisItem.cr282_ma_chuongtrinh);
+                                );
                                 Remove(tmpCTCollect,ThisItem);
-                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
+                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
                             )
                         Size: =13
                         Text: ="Xóa"
@@ -446,7 +456,7 @@
                         Size: =13
                         Text: ="Chi tiết"
                         Visible: =ThisItem.edited=0 && ThisItem.cr282_trang_thai=1
-                        Width: =103
+                        Width: =87
                         X: =963
                         ZIndex: =21
 
