@@ -656,7 +656,7 @@ DMCauHinhThamSoSP As screen:
                                         ),
                                         And(
                                             CbxFilterNQLNV.Selected.Value="Mã dữ liệu",
-                                            !IsBlank(Find(TextFilterNQLNV.Value,MA_NHOMQL_LHNV))
+                                            !IsBlank(Find(Lower(TextFilterNQLNV.Value),Lower(MA_NHOMQL_LHNV)))
                                         ),
                                         And(
                                             CbxFilterNQLNV.Selected.Value="Nhóm quyền lợi",
@@ -664,7 +664,7 @@ DMCauHinhThamSoSP As screen:
                                         ),
                                         And(
                                             CbxFilterNQLNV.Selected.Value="Loại hình nghiệp vụ",
-                                            !IsBlank(Find(CbxFilterValueNQLNVLHNV.Selected.Value,LHNV))
+                                            !IsBlank(Find(Lower(CbxFilterValueNQLNVLHNV.Selected.Value),Lower(LHNV)))
                                         )
                                     )
                                 ),
@@ -1220,11 +1220,11 @@ DMCauHinhThamSoSP As screen:
                                         ),
                                         And(
                                             CbxFilterYTAH.Selected.Value="Mã yếu tố",
-                                            !IsBlank(Find(TextFilterYTAH.Value,MA_YEU_TO))
+                                            !IsBlank(Find(Lower(TextFilterYTAH.Value),Lower(MA_YEU_TO)))
                                         ),
                                         And(
                                             CbxFilterYTAH.Selected.Value="Tên yếu tố",
-                                            !IsBlank(Find(TextFilterYTAH.Value,TEN_YEU_TO))
+                                            !IsBlank(Find(Lower(TextFilterYTAH.Value),Lower(TEN_YEU_TO)))
                                         ),
                                         And(
                                             CbxFilterYTAH.Selected.Value="Loại hình nghiệp vụ",

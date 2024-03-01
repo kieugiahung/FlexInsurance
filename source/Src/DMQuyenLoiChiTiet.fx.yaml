@@ -507,7 +507,7 @@ DMQuyenLoiChiTiet As screen:
             Visible: =loaiFilter=1
             Width: =204
             X: =522
-            Y: =38
+            Y: =32
             ZIndex: =13
 
             MA_NHOM_QL1 As pcfDataField.textualColumn:
@@ -559,11 +559,11 @@ DMQuyenLoiChiTiet As screen:
                                         ),
                                         And(
                                             CbxFilterQLCT.Selected.Value="Mã quyền lợi",
-                                            !IsBlank(Find(TextFilterQLCT.Value,MA_QL_CHITIET))
+                                            !IsBlank(Find(Lower(TextFilterQLCT.Value),Lower(MA_QL_CHITIET)))
                                         ),
                                         And(
                                             CbxFilterQLCT.Selected.Value="Tên quyền lợi",
-                                            !IsBlank(Find(TextFilterQLCT.Value,TEN_QL_CHITIET))
+                                            !IsBlank(Find(Lower(TextFilterQLCT.Value),Lower(TEN_QL_CHITIET)))
                                         ),
                                         And(
                                             CbxFilterQLCT.Selected.Value="Nhóm quyền lợi",
