@@ -2716,10 +2716,12 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
-                    DefaultSelectedItems: |
-                        =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHUONG_TRINH,"|")
+                    DefaultSelectedItems: |-
+                        =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=valMaSP)
+                        //Split(Concatenate(Filter(DL_SAN_PHAM_NHOMQLS, MA_SP=valMaSP).CHUONGTRINH_APDUNG, "|" ),"|")
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_chuong_trinh"]
+                    DisplayMode: =DisplayMode.Disabled
                     Height: =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
@@ -2740,10 +2742,10 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
-                    DefaultSelectedItems: |
-                        =Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).NHOM_TINH_PHI,"|")
+                    DefaultSelectedItems: =Filter(DL_SAN_PHAM_NHOMQLS, MA_SP=valMaSP)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ma_nhom_tinhphi"]
+                    DisplayMode: =DisplayMode.Disabled
                     Height: =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
@@ -2764,7 +2766,7 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
-                    DefaultSelectedItems: =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).DO_TUOI,"|")
+                    DefaultSelectedItems: =Filter(DM_DO_TUOIS,MO_TA in LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).DO_TUOI)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_mo_ta"]
                     Height: =45
@@ -2788,7 +2790,7 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
-                    DefaultSelectedItems: =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).GIOI_TINH,"|")
+                    DefaultSelectedItems: =Filter(DM_GIOI_TINHS,TEN_GIOI_TINH in LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).GIOI_TINH)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_gioi_tinh"]
                     Height: =45
@@ -2807,7 +2809,7 @@
                     ZIndex: =16
 
                 LuuYT_1 As button:
-                    OnSelect: |
+                    OnSelect: |-
                         =Select(SuaYT_1);
                         UpdateContext(
                             {
@@ -2855,12 +2857,12 @@
                                     CHUONG_TRINH: Concat(
                                         Datafield_CT_1.SelectedItems,
                                         TEN_CHUONG_TRINH,
-                                        "| "
+                                        "|"
                                     ),
                                     NHOM_TINH_PHI: Concat(
                                         Datafield_Nhom_1.SelectedItems,
                                         MA_NHOM_TINHPHI,
-                                        "| "
+                                        "|"
                                     ),
                                     PHAM_VI_DL: Datafield_PV_1.Selected.TEN_PHAMVI,
                                     CHECKED_DOTUOI: If(
@@ -2902,37 +2904,37 @@
                                     DO_TUOI: Concat(
                                         Datafield_DT_1.SelectedItems,
                                         MO_TA,
-                                        ", "
+                                        "|"
                                     ),
                                     GIOI_TINH: Concat(
                                         Datafield_GT_1.SelectedItems,
                                         TEN_GIOI_TINH,
-                                        "| "
+                                        "|"
                                     ),
                                     NGANH_NGHE: Concat(
                                         Datafield_NN_1.SelectedItems,
                                         TEN_NGANH,
-                                        "| "
+                                        "|"
                                     ),
                                     BH_SO_TIEN: Concat(
                                         Datafield_ST_1.SelectedItems,
                                         TEN_SOTIEN,
-                                        "| "
+                                        "|"
                                     ),
                                     BH_SO_NGUOI: Concat(
                                         Datafield_SN_1.SelectedItems,
                                         TEN_SO_NGUOI,
-                                        "| "
+                                        "|"
                                     ),
                                     BH_THOI_HAN: Concat(
                                         Datafield_TH_1.SelectedItems,
                                         TEN_THOI_HAN,
-                                        "| "
+                                        "|"
                                     ),
                                     BH_PHUONG_THUC_DP: Concat(
                                         Datafield_DP_1.SelectedItems,
                                         TEN_PT,
-                                        "| "
+                                        "|"
                                     )
                                 }
                             ),
@@ -2942,6 +2944,7 @@
                             );*/
                             UpdateIf(
                                 DL_SAN_PHAM_YT,
+                                //Defaults(DL_SAN_PHAM_YT),//
                                 MA_SAN_PHAM = valMaSP,
                                 {
                                     MA_SAN_PHAM: valMaSP,
@@ -2960,12 +2963,12 @@
                                     CHUONG_TRINH: Concat(
                                         Datafield_CT_1.SelectedItems,
                                         TEN_CHUONG_TRINH,
-                                        "| "
+                                        "|"
                                     ),
                                     NHOM_TINH_PHI: Concat(
                                         Datafield_Nhom_1.SelectedItems,
                                         MA_NHOM_TINHPHI,
-                                        "| "
+                                        "|"
                                     ),
                                     PHAM_VI_DL: Datafield_PV_1.Selected.TEN_PHAMVI,
                                     CHECKED_DOTUOI: If(
@@ -3007,37 +3010,37 @@
                                     DO_TUOI: Concat(
                                         Datafield_DT_1.SelectedItems,
                                         MO_TA,
-                                        ", "
+                                        "|"
                                     ),
                                     GIOI_TINH: Concat(
                                         Datafield_GT_1.SelectedItems,
                                         TEN_GIOI_TINH,
-                                        "| "
+                                        "|"
                                     ),
                                     NGANH_NGHE: Concat(
                                         Datafield_NN_1.SelectedItems,
                                         TEN_NGANH,
-                                        "| "
+                                        "|"
                                     ),
                                     BH_SO_TIEN: Concat(
                                         Datafield_ST_1.SelectedItems,
                                         TEN_SOTIEN,
-                                        "| "
+                                        "|"
                                     ),
                                     BH_SO_NGUOI: Concat(
                                         Datafield_SN_1.SelectedItems,
                                         TEN_SO_NGUOI,
-                                        "| "
+                                        "|"
                                     ),
                                     BH_THOI_HAN: Concat(
                                         Datafield_TH_1.SelectedItems,
                                         TEN_THOI_HAN,
-                                        "| "
+                                        "|"
                                     ),
                                     BH_PHUONG_THUC_DP: Concat(
                                         Datafield_DP_1.SelectedItems,
                                         TEN_PT,
-                                        "| "
+                                        "|"
                                     )
                                 }
                             )
@@ -3120,7 +3123,7 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
-                    DefaultSelectedItems: =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).NGANH_NGHE,"|")
+                    DefaultSelectedItems: =Filter(BH_DM_NGANHNGHES,TEN_NGANH in LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).NGANH_NGHE)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_nganh"]
                     Height: =45
@@ -3144,7 +3147,7 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
-                    DefaultSelectedItems: =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_SO_TIEN,"|")
+                    DefaultSelectedItems: =Filter(BH_DM_SOTIEN,TEN_SOTIEN in LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_SO_TIEN)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_sotien"]
                     Height: =45
@@ -3168,7 +3171,9 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
-                    DefaultSelectedItems: =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_SO_NGUOI,"|")
+                    DefaultSelectedItems: |-
+                        =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_SO_NGUOI,"|")
+                        Filter(BH_DM_SONGUOI,TEN_SO_NGUOI in LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_SO_NGUOI)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_so_nguoi"]
                     Height: =45
@@ -3192,7 +3197,9 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
-                    DefaultSelectedItems: =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_THOI_HAN,"|")
+                    DefaultSelectedItems: |-
+                        =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_THOI_HAN,"|")
+                        Filter(BH_DM_THOIHAN,TEN_THOI_HAN in LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_THOI_HAN)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_thoi_han"]
                     Height: =45
@@ -3216,7 +3223,9 @@
                     ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
-                    DefaultSelectedItems: =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_PHUONG_THUC_DP,"|")
+                    DefaultSelectedItems: |-
+                        =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_PHUONG_THUC_DP,"|")
+                        Filter(BH_DM_PT_DONG,TEN_PT in LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_PHUONG_THUC_DP)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_pt"]
                     Height: |
@@ -3360,8 +3369,8 @@
                         InputTextPlaceholder: =""
                         IsSearchable: =false
                         Items: |-
-                            =//Filter(' DL_SAN_PHAM_CT',TEN_CHUONG_TRINH in Datafield_CT_1.Selected.TEN_CHUONG_TRINH)
-                            Datafield_CT_1.SelectedItems
+                            =Filter(' DL_SAN_PHAM_CT', MA_SAN_PHAM=valMaSP)
+                            //Datafield_CT_1.SelectedItems
                         OnSelect: =Select(Parent)
                         SearchFields: =["cr282_ten_chuong_trinh"]
                         SearchItems: =[]
@@ -7506,8 +7515,8 @@
                                 InputTextPlaceholder: ="Chọn đơn vị tuổi"
                                 IsSearchable: =false
                                 Items: |-
-                                    =//' DL_SAN_PHAM_CT'
-                                    Datafield_CT_1.SelectedItems
+                                    =Filter(' DL_SAN_PHAM_CT', MA_SAN_PHAM=valMaSP)
+                                    //Datafield_CT_1.SelectedItems
                                 OnSelect: =Select(Parent)
                                 PressedColor: =RGBA(72, 163, 62, 1)
                                 PressedFill: =RGBA(255, 255, 255, 1)
