@@ -692,7 +692,7 @@
                             // chuyển dữ liệu ma trận phí
                             // Nếu đã nhận file excel thì k chuyển sang nữa
                             If(CountRows(Filter( DL_CHUONG_TRINH_BANG_PHIS, MA_SAN_PHAM =valMaSP && MA_CHUONG_TRINH= CT.MA_CHUONG_TRINH )) <= 0,
-                            ForAll(Filter(DL_SAN_PHAM_MATRANPHI, MA_SAN_PHAM = valMaSP ) As mtp,
+                            ForAll(Filter(DL_SAN_PHAM_MATRANPHI, MA_SAN_PHAM = valMaSP  && MA_CHUONG_TRINH= CT.MA_CHUONG_TRINH) As mtp,
                                 Patch(
                                     DL_CHUONG_TRINH_BANG_PHIS,
                                     Defaults(DL_CHUONG_TRINH_BANG_PHIS),
