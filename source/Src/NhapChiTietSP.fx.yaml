@@ -2808,17 +2808,7 @@
 
                 LuuYT_1 As button:
                     OnSelect: |
-                        =RemoveIf(
-                            DL_SAN_PHAM_MATRANPHI,
-                            MA_SAN_PHAM = valMaSP
-                            //true
-                        );
-                        
-                        RemoveIf(
-                            DL_SAN_PHAM_BANGYT,
-                            MA_SAN_PHAM = valMaSP
-                            //true
-                        );
+                        =Select(SuaYT_1);
                         UpdateContext(
                             {
                                 valMaYT: If(
@@ -2951,7 +2941,8 @@
                                 MA_SAN_PHAM = valMaSP
                             );*/
                             UpdateIf(
-                                DL_SAN_PHAM_YT,MA_SAN_PHAM = valMaSP,
+                                DL_SAN_PHAM_YT,
+                                MA_SAN_PHAM = valMaSP,
                                 {
                                     MA_SAN_PHAM: valMaSP,
                                     MA_YEU_TO_SP: Concatenate(
@@ -3051,7 +3042,54 @@
                                 }
                             )
                         );
+                        If(
+                            !IsEmpty(
+                                Filter(
+                                    DL_SAN_PHAM_NHOMQLS,
+                                    MA_SP = valMaSP
+                                )
+                            ),
+                            ForAll(
+                                Filter(
+                                    DL_SAN_PHAM_NHOMQLS,
+                                    MA_SP = valMaSP
+                                ) As nql,
+                                ForAll(
+                                    Split(
+                                        nql.CHUONGTRINH_APDUNG,
+                                        "|"
+                                    ) As ct,
+                                    Patch(
+                                        DL_SAN_PHAM_BANGYT,
+                                        Defaults(DL_SAN_PHAM_BANGYT),
+                                        {
+                                            ID: 
+                                            If(!IsBlank(LookUp(DL_SAN_PHAM_BANGYT,MA_SAN_PHAM = valMaSP && NHOM_TINH_PHI=nql.MA_NHOM_TINHPHI).ID),
+                                            LookUp(DL_SAN_PHAM_BANGYT,MA_SAN_PHAM = valMaSP && NHOM_TINH_PHI=nql.MA_NHOM_TINHPHI).ID,
+                                            If(
+                                                CountIf(DL_SAN_PHAM_BANGYT,true) = 0,1000,
+                                                Value(Last(SortByColumns(DL_SAN_PHAM_BANGYT,"cr282_id", SortOrder.Ascending)).ID)) + 1),
+                                            CHUONGTRINH_NHOMTP: Concatenate(
+                                                nql.MA_NHOM_TINHPHI,
+                                                "- ",
+                                                ct.Value
+                                            ),
+                                            MA_SAN_PHAM: valMaSP,
+                                            TEN_CHUONG_TRINH: LookUp(
+                                                ' DL_SAN_PHAM_CT',
+                                                MA_SAN_PHAM = valMaSP && MA_CHUONG_TRINH = ct.Value
+                                            ).TEN_CHUONG_TRINH,
+                                            MA_CHUONG_TRINH: ct.Value,
+                                            NHOM_TINH_PHI: nql.MA_NHOM_TINHPHI,
+                                            TEN_NHOM_TP: nql.MA_NHOM_TINHPHI
+                                        }
+                                    )
+                                )
+                            );
+                            
+                        );
                         UpdateContext({showGrid: true});
+                        Select(IconTaiLaiBYT);
                     Text: ="Lưu"
                     X: =976
                     Y: =708
@@ -3199,21 +3237,16 @@
 
                 SuaYT_1 As button:
                     OnSelect: |
-                        =If(
-                            CountRows(DL_SAN_PHAM_BANGYT) > 0,
-                            RemoveIf(
-                                DL_SAN_PHAM_BANGYT,
-                                MA_SAN_PHAM=valMaSP
-                            )
+                        =RemoveIf(
+                            DL_SAN_PHAM_BANGYT,
+                            MA_SAN_PHAM = valMaSP
                         );
-                        If(
-                            CountRows(DL_SAN_PHAM_MATRANPHI) > 0,
-                            RemoveIf(
-                                DL_SAN_PHAM_MATRANPHI,
-                                MA_SAN_PHAM=valMaSP
-                            )
+                        RemoveIf(
+                            DL_SAN_PHAM_MATRANPHI,
+                            MA_SAN_PHAM = valMaSP
                         );
                         UpdateContext({showGrid: false});
+                        Select(IconTaiLaiBYT);
                     Text: ="Sửa"
                     X: =751
                     Y: =708
