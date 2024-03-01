@@ -1,5 +1,4 @@
 DMCauHinhThamSoSP As screen:
-    Height: =Max(1170, App.MinScreenHeight)
     OnVisible: |
         =ClearCollect(
             tmpYTAHCollect,
@@ -55,16 +54,16 @@ DMCauHinhThamSoSP As screen:
     Width: =Max(1390, App.MinScreenWidth)
 
     ContainerNQLNV As groupContainer.manualLayoutContainer:
-        Height: =574
+        Height: =370
         Visible: =showConfirm=0
         Width: =1288
         X: =90
-        Y: =576
+        Y: =381
         ZIndex: =2
 
         GalleryNQLNV As gallery.galleryVertical:
             DelayItemLoading: =true
-            Height: =435
+            Height: =231
             Items: =SortByColumns(tmpNQLLHNVCollect,"cr282_ma_nhomql_lhnv",SortOrder.Ascending)
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
@@ -520,66 +519,6 @@ DMCauHinhThamSoSP As screen:
             Y: =40
             ZIndex: =9
 
-        IconFilterNQLNV As icon.FilterFlat:
-            Color: =RGBA(71, 158, 245, 1)
-            DisplayMode: =If(Or(maAddedNQL<>"",maUpdatedNQL<>""),DisplayMode.Disabled,DisplayMode.Edit)
-            Height: =47
-            Icon: =Icon.FilterFlat
-            OnSelect: |-
-                =ClearCollect(
-                    tmpNQLLHNVCollect,
-                    ShowColumns(
-                        AddColumns(
-                            SortByColumns(
-                                Filter(
-                                    DM_NHOMQL_LHNVS,
-                                    Or(
-                                        And(
-                                            TextFilterNQLNV.Value="",
-                                            loaiFilterNQL=0
-                                        ),
-                                        And(
-                                            IsBlank(CbxFilterValueNQLNVNQL.Selected.MA_NHOM_QL),
-                                            loaiFilterNQL=1
-                                        ),
-                                        And(
-                                            IsBlank(CbxFilterValueNQLNVLHNV.Selected.Value),
-                                            loaiFilterNQL=2
-                                        ),
-                                        And(
-                                            CbxFilterNQLNV.Selected.Value="Mã dữ liệu",
-                                            StartsWith(MA_NHOMQL_LHNV,TextFilterNQLNV.Value)
-                                        ),
-                                        And(
-                                            CbxFilterNQLNV.Selected.Value="Nhóm quyền lợi",
-                                            MA_NHOM_QL=CbxFilterValueNQLNVNQL.Selected.MA_NHOM_QL
-                                        ),
-                                        And(
-                                            CbxFilterNQLNV.Selected.Value="Loại hình nghiệp vụ",
-                                            !IsBlank(Find(CbxFilterValueNQLNVLHNV.Selected.Value,LHNV))
-                                        )
-                                    )
-                                ),
-                                "cr282_ma_nhomql_lhnv",
-                                SortOrder.Ascending
-                            ),
-                            "edited",
-                            0
-                        ),
-                        "cr282_ma_nhomql_lhnv",
-                        "cr282_ma_nhom_ql",
-                        "cr282_lhnv",
-                        "cr282_hieu_luc_tu",
-                        "cr282_hieu_luc_den",
-                        "edited"
-                    )
-                );
-            Tooltip: ="Lọc"
-            Width: =32
-            X: =820
-            Y: =35
-            ZIndex: =10
-
         CbxFilterNQLNV As Combobox.pcfdataset:
             DefaultSelectedItems: =Filter(["Mã dữ liệu", "Nhóm quyền lợi","Loại hình nghiệp vụ"],Value="Mã dữ liệu")
             DisplayMode: =DisplayMode.Edit
@@ -688,8 +627,69 @@ DMCauHinhThamSoSP As screen:
                 Order: =1
                 ZIndex: =24
 
+        ButtonCanvas4_1 As Button:
+            BasePaletteColor: =
+            DisplayMode: =If(Or(maAddedNQL<>"",maUpdatedNQL<>""),DisplayMode.Disabled,DisplayMode.Edit)
+            FontColor: =
+            FontSize: =16
+            Height: =43
+            OnSelect: |-
+                =ClearCollect(
+                    tmpNQLLHNVCollect,
+                    ShowColumns(
+                        AddColumns(
+                            SortByColumns(
+                                Filter(
+                                    DM_NHOMQL_LHNVS,
+                                    Or(
+                                        And(
+                                            TextFilterNQLNV.Value="",
+                                            loaiFilterNQL=0
+                                        ),
+                                        And(
+                                            IsBlank(CbxFilterValueNQLNVNQL.Selected.MA_NHOM_QL),
+                                            loaiFilterNQL=1
+                                        ),
+                                        And(
+                                            IsBlank(CbxFilterValueNQLNVLHNV.Selected.Value),
+                                            loaiFilterNQL=2
+                                        ),
+                                        And(
+                                            CbxFilterNQLNV.Selected.Value="Mã dữ liệu",
+                                            StartsWith(MA_NHOMQL_LHNV,TextFilterNQLNV.Value)
+                                        ),
+                                        And(
+                                            CbxFilterNQLNV.Selected.Value="Nhóm quyền lợi",
+                                            MA_NHOM_QL=CbxFilterValueNQLNVNQL.Selected.MA_NHOM_QL
+                                        ),
+                                        And(
+                                            CbxFilterNQLNV.Selected.Value="Loại hình nghiệp vụ",
+                                            !IsBlank(Find(CbxFilterValueNQLNVLHNV.Selected.Value,LHNV))
+                                        )
+                                    )
+                                ),
+                                "cr282_ma_nhomql_lhnv",
+                                SortOrder.Ascending
+                            ),
+                            "edited",
+                            0
+                        ),
+                        "cr282_ma_nhomql_lhnv",
+                        "cr282_ma_nhom_ql",
+                        "cr282_lhnv",
+                        "cr282_hieu_luc_tu",
+                        "cr282_hieu_luc_den",
+                        "edited"
+                    )
+                );
+            Text: ="Tra cứu"
+            Width: =96
+            X: =822
+            Y: =36
+            ZIndex: =17
+
     ContainerYTAH As groupContainer.manualLayoutContainer:
-        Height: =530
+        Height: =345
         Visible: =showConfirm=0
         Width: =1288
         X: =90
@@ -698,7 +698,7 @@ DMCauHinhThamSoSP As screen:
 
         GalleryYTAH As gallery.galleryVertical:
             DelayItemLoading: =true
-            Height: =391
+            Height: =206
             Items: =SortByColumns(tmpYTAHCollect,"cr282_ma_yeu_to",SortOrder.Ascending)
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
@@ -1136,63 +1136,6 @@ DMCauHinhThamSoSP As screen:
             Y: =40
             ZIndex: =9
 
-        IconFilterYTAH As icon.FilterFlat:
-            Color: =RGBA(71, 158, 245, 1)
-            DisplayMode: =If(Or(maAddedYTAH<>"",maUpdatedYTAH<>""),DisplayMode.Disabled,DisplayMode.Edit)
-            Height: =47
-            Icon: =Icon.FilterFlat
-            OnSelect: |-
-                =ClearCollect(
-                    tmpYTAHCollect,
-                    ShowColumns(
-                        AddColumns(
-                            SortByColumns(
-                                Filter(
-                                    DM_YEUTO_AH_PHIS,
-                                    Or(
-                                        And(
-                                            TextFilterYTAH.Value="",
-                                            loaiFilterYTAH<>1
-                                        ),
-                                        And(
-                                            IsBlank(CbxFilterValueYTAH.Selected.Value),
-                                            loaiFilterYTAH=1
-                                        ),
-                                        And(
-                                            CbxFilterYTAH.Selected.Value="Mã yếu tố",
-                                            StartsWith(MA_YEU_TO,TextFilterYTAH.Value)
-                                        ),
-                                        And(
-                                            CbxFilterYTAH.Selected.Value="Tên yếu tố",
-                                            !IsBlank(Find(TextFilterYTAH.Value,TEN_YEU_TO))
-                                        ),
-                                        And(
-                                            CbxFilterYTAH.Selected.Value="Loại hình nghiệp vụ",
-                                            !IsBlank(Find(CbxFilterValueYTAH.Selected.Value,LHNV))
-                                        )
-                                    )
-                                ),
-                                "cr282_ma_yeu_to",
-                                SortOrder.Ascending
-                            ),
-                            "edited",
-                            0
-                        ),
-                        "cr282_ma_yeu_to",
-                        "cr282_ten_yeu_to",
-                        "cr282_lhnv",
-                        "cr282_hieu_luc_tu",
-                        "cr282_hieu_luc_den",
-                        "cr282_ghi_chu",
-                        "edited"
-                    )
-                );
-            Tooltip: ="Lọc"
-            Width: =32
-            X: =820
-            Y: =35
-            ZIndex: =10
-
         CbxFilterYTAH As Combobox.pcfdataset:
             DefaultSelectedItems: =Filter(["Mã yếu tố", "Tên yếu tố","Loại hình nghiệp vụ"],Value="Mã yếu tố")
             DisplayMode: =DisplayMode.Edit
@@ -1254,6 +1197,62 @@ DMCauHinhThamSoSP As screen:
             Y: =98
             ZIndex: =15
 
+        ButtonCanvas4 As Button:
+            DisplayMode: =If(Or(maAddedYTAH<>"",maUpdatedYTAH<>""),DisplayMode.Disabled,DisplayMode.Edit)
+            FontSize: =16
+            Height: =43
+            OnSelect: |-
+                =ClearCollect(
+                    tmpYTAHCollect,
+                    ShowColumns(
+                        AddColumns(
+                            SortByColumns(
+                                Filter(
+                                    DM_YEUTO_AH_PHIS,
+                                    Or(
+                                        And(
+                                            TextFilterYTAH.Value="",
+                                            loaiFilterYTAH<>1
+                                        ),
+                                        And(
+                                            IsBlank(CbxFilterValueYTAH.Selected.Value),
+                                            loaiFilterYTAH=1
+                                        ),
+                                        And(
+                                            CbxFilterYTAH.Selected.Value="Mã yếu tố",
+                                            StartsWith(MA_YEU_TO,TextFilterYTAH.Value)
+                                        ),
+                                        And(
+                                            CbxFilterYTAH.Selected.Value="Tên yếu tố",
+                                            !IsBlank(Find(TextFilterYTAH.Value,TEN_YEU_TO))
+                                        ),
+                                        And(
+                                            CbxFilterYTAH.Selected.Value="Loại hình nghiệp vụ",
+                                            !IsBlank(Find(CbxFilterValueYTAH.Selected.Value,LHNV))
+                                        )
+                                    )
+                                ),
+                                "cr282_ma_yeu_to",
+                                SortOrder.Ascending
+                            ),
+                            "edited",
+                            0
+                        ),
+                        "cr282_ma_yeu_to",
+                        "cr282_ten_yeu_to",
+                        "cr282_lhnv",
+                        "cr282_hieu_luc_tu",
+                        "cr282_hieu_luc_den",
+                        "cr282_ghi_chu",
+                        "edited"
+                    )
+                );
+            Text: ="Tra cứu"
+            Width: =96
+            X: =822
+            Y: =36
+            ZIndex: =16
+
     ContainerConfirmTSSP As groupContainer.manualLayoutContainer:
         BorderColor: =RGBA(180, 214, 250, 1)
         BorderThickness: =2
@@ -1262,7 +1261,7 @@ DMCauHinhThamSoSP As screen:
         Visible: =showConfirm=1
         Width: =438
         X: =515
-        Y: =462
+        Y: =281
         ZIndex: =4
 
         TextCanvas1_20 As Text:
@@ -1335,7 +1334,6 @@ DMCauHinhThamSoSP As screen:
             ZIndex: =3
 
     LeftNavigation_15 As LeftNavigation_9:
-        Height: =Max(1170, App.DesignHeight)
         Width: =LeftNavigation_15.MenuWidth
         ZIndex: =5
 
