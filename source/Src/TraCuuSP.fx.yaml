@@ -32,10 +32,18 @@ TraCuuSP As screen:
                                 !IsBlank(TxtFilterMSP.Text),
                                 TxtFilterMSP.Text in MA_SAN_PHAM,
                                 true
-                            ) && LHNV = Drop_Filter_LHNV.Selected.Value && HL_TU >= Date_HLT.SelectedDate && 
-                            If(
+                            ) && If(
+                                !IsBlank(Drop_Filter_LHNV.Selected.Value),
+                                LHNV = Drop_Filter_LHNV.Selected.Value,
+                                true
+                            ) && If(
+                                !IsBlank(Date_HLT.SelectedDate),
+                                HL_TU >= Date_HLT.SelectedDate,
+                                true
+                            ) && If(
                                 !IsBlank(Date_HLD.SelectedDate) && !IsBlank(HL_DEN),
-                                HL_DEN <= Date_HLD.SelectedDate,true
+                                HL_DEN <= Date_HLD.SelectedDate,
+                                true
                             )
                         ),
                         "cr282_ma",

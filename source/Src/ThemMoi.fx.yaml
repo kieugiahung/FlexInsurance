@@ -754,39 +754,82 @@ ThemMoi As screen:
                     ZIndex: =7
 
         Btn_Luu As button:
-            OnSelect: |+
-                =UpdateContext({
-                        newID:If(
-                            CountIf(DL_SAN_PHAM,true)=0,
-                            1000,
-                            Value(Last(SortByColumns(DL_SAN_PHAM,"cr282_ma",SortOrder.Ascending)).MA)+1
-                        )
-                    });
-                UpdateContext({errorMsg:""});
-                If(IsBlank(DataCardValue4.SelectedText), UpdateContext({errorMsg:"Loại hình nghiệp vụ là bắt buộc"}));
-                
-                If(IsBlank(errorMsg),
-                If(IsBlank(DataCardValue5.Text), UpdateContext({errorMsg:"Mã sản phẩm là bắt buộc"})));
-                
-                If(IsBlank(errorMsg),
-                If(IsBlank(DataCardValue6.Text), UpdateContext({errorMsg:"Tên sản phẩm là bắt buộc"})));
-                
-                If(IsBlank(errorMsg),
-                If(IsBlank(DateValue1.SelectedDate), UpdateContext({errorMsg:"Hiệu lực từ là bắt buộc"})));
-                
-                If(IsBlank(errorMsg),
-                If(!IsBlank(DateValue2.SelectedDate), 
-                If(DateValue1.SelectedDate > DateValue2.SelectedDate,
-                UpdateContext({errorMsg:"Hiệu lực đến phải sau hoặc bằng hiệu lực từ"}))));
-                
-                If(!IsBlank(errorMsg),
-                Notify(errorMsg, NotificationType.Error,800), 
-                SubmitForm(ThemMoiSP);
-                Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
-                ResetForm(ThemMoiSP);
+            OnSelect: |
+                =If(
+                    IsBlank(DataCardValue1.Text),
+                    UpdateContext(
+                        {
+                            newID: If(
+                                CountIf(
+                                    DL_SAN_PHAM,
+                                    true
+                                ) = 0,
+                                1000,
+                                Value(
+                                    Last(
+                                        SortByColumns(
+                                            DL_SAN_PHAM,
+                                            "cr282_ma",
+                                            SortOrder.Ascending
+                                        )
+                                    ).MA
+                                ) + 1
+                            )
+                        }
+                    )
                 );
-                
-                
+                UpdateContext({errorMsg: ""});
+                If(
+                    IsBlank(DataCardValue4.SelectedText),
+                    UpdateContext({errorMsg: "Loại hình nghiệp vụ là bắt buộc"})
+                );
+                If(
+                    IsBlank(errorMsg),
+                    If(
+                        IsBlank(DataCardValue5.Text),
+                        UpdateContext({errorMsg: "Mã sản phẩm là bắt buộc"})
+                    )
+                );
+                If(
+                    IsBlank(errorMsg),
+                    If(
+                        IsBlank(DataCardValue6.Text),
+                        UpdateContext({errorMsg: "Tên sản phẩm là bắt buộc"})
+                    )
+                );
+                If(
+                    IsBlank(errorMsg),
+                    If(
+                        IsBlank(DateValue1.SelectedDate),
+                        UpdateContext({errorMsg: "Hiệu lực từ là bắt buộc"})
+                    )
+                );
+                If(
+                    IsBlank(errorMsg),
+                    If(
+                        !IsBlank(DateValue2.SelectedDate),
+                        If(
+                            DateValue1.SelectedDate > DateValue2.SelectedDate,
+                            UpdateContext({errorMsg: "Hiệu lực đến phải sau hoặc bằng hiệu lực từ"})
+                        )
+                    )
+                );
+                If(
+                    !IsBlank(errorMsg),
+                    Notify(
+                        errorMsg,
+                        NotificationType.Error,
+                        800
+                    ),
+                    SubmitForm(ThemMoiSP);
+                    Notify(
+                        "Lưu dữ liệu thành công",
+                        NotificationType.Success,
+                        800
+                    );
+                    ResetForm(ThemMoiSP);
+                    
+                );
             Text: ="Lưu"
             X: =877
             Y: =711
