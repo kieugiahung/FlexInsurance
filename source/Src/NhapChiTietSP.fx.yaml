@@ -2741,7 +2741,7 @@
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
                     DefaultSelectedItems: |
-                        =//Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).NHOM_TINH_PHI,"|")
+                        =Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).NHOM_TINH_PHI,"|")
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ma_nhom_tinhphi"]
                     Height: =45
@@ -7469,6 +7469,7 @@
                     MaTran As groupContainer.manualLayoutContainer:
                         AlignInContainer: =AlignInContainer.SetByContainer
                         FillPortions: =0
+                        Height: =350
                         LayoutMinHeight: =100
                         LayoutMinWidth: =250
                         Width: =1835
@@ -7476,7 +7477,7 @@
 
                         GalleryNQL_1 As gallery.galleryVertical:
                             DelayItemLoading: =true
-                            Height: =615
+                            Height: =200
                             Items: =tmpLTCollect
                             Layout: =Layout.Vertical
                             LoadingSpinner: =LoadingSpinner.Data
@@ -7529,9 +7530,7 @@
                                 DisabledFill: =RGBA(255, 255, 255, 1)
                                 DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                                 HoverBorderColor: =RGBA(9, 33, 98, 1)
-                                Items: |-
-                                    =//BH_DM_NHOMTP
-                                    Datafield_Nhom_1.SelectedItems
+                                Items: =Filter(DL_SAN_PHAM_NHOMQLS, MA_SP=valMaSP)
                                 OnSelect: =Select(Parent)
                                 PaddingBottom: =5
                                 PaddingLeft: =5
