@@ -20,384 +20,530 @@ DMNhomQuyenLoi As screen:
         );
         UpdateContext({
             maAdded:"",
-            maUpdated:""
+            maUpdated:"",
+            showConfirm:0
         });
+    Width: =Max(1390, App.MinScreenWidth)
 
-    GalleryNQL As gallery.galleryVertical:
-        DelayItemLoading: =true
-        Height: =615
-        Items: =SortByColumns(tmpNQLCollect,"cr282_ma_nhom_ql",SortOrder.Ascending)
-        Layout: =Layout.Vertical
-        LoadingSpinner: =LoadingSpinner.Data
-        NavigationStep: =0
-        TemplateSize: =40
-        Width: =1283
-        X: =83
-        Y: =111
-        ZIndex: =1
-
-        IconXoaNQL As icon.Trash:
-            Color: =RGBA(233, 79, 76, 1)
-            Height: =40
-            Icon: =Icon.Trash
-            OnSelect: |-
-                =If(
-                    Or(maAdded<>"",maUpdated<>""),
-                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                    Refresh(DM_NHOM_QUYENLOIS);
-                    RemoveIf(
-                        DM_NHOM_QUYENLOIS,
-                        MA_NHOM_QL=ThisItem.cr282_ma_nhom_ql
-                    );
-                    Remove(tmpNQLCollect,ThisItem);
-                    Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
-                )
-            Tooltip: ="Xóa"
-            Visible: =ThisItem.edited=0
-            Width: =37
-            X: =1235
-            ZIndex: =7
-
-        TextMaNQL As text:
-            BorderColor: =RGBA(15, 108, 189, 1)
-            Default: =ThisItem.cr282_ma_nhom_ql
-            DisabledBorderColor: =RGBA(180, 214, 250, 1)
-            DisabledColor: =RGBA(0, 0, 0, 1)
-            DisabledFill: =RGBA(255, 255, 255, 1)
-            DisplayMode: =DisplayMode.Disabled
-            OnChange: =
-            OnSelect: =Select(Parent)
-            Width: =199
-            ZIndex: =8
-
-        TextTenNQL As text:
-            BorderColor: =RGBA(72, 163, 62, 1)
-            Default: =ThisItem.cr282_ten_nhom_ql
-            DisabledBorderColor: =RGBA(180, 214, 250, 1)
-            DisabledColor: =RGBA(0, 0, 0, 1)
-            DisabledFill: =RGBA(255, 255, 255, 1)
-            DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-            OnChange: =
-            OnSelect: =Select(Parent)
-            Width: =610
-            X: =205
-            ZIndex: =9
-
-        TextGhiChuNQL As text:
-            BorderColor: =RGBA(72, 163, 62, 1)
-            Default: =ThisItem.cr282_ghi_chu
-            DisabledBorderColor: =RGBA(180, 214, 250, 1)
-            DisabledColor: =RGBA(0, 0, 0, 1)
-            DisabledFill: =RGBA(255, 255, 255, 1)
-            DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-            OnChange: =
-            OnSelect: =Select(Parent)
-            Width: =376
-            X: =821
-            ZIndex: =13
-
-        IconEditNQL As icon.Edit:
-            Color: =RGBA(83, 144, 164, 1)
-            Height: =40
-            Icon: =Icon.Edit
-            OnSelect: |-
-                =If(
-                    Or(maAdded<>"",maUpdated<>""),
-                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                    UpdateIf(
-                        tmpNQLCollect,
-                        cr282_ma_nhom_ql=ThisItem.cr282_ma_nhom_ql,
+    LeftNavigation_13 As LeftNavigation_9:
+        NavItems: |-
+            =Table(
+                {
+                    Title: "Hệ thống",
+                    Screen: App.ActiveScreen,
+                    Icon: Icon.Home,
+                    MenuID: 1,
+                    Subtable: Table(
                         {
-                            edited:1
+                       Title: "Danh mục phạm vi địa lý",
+                       Screen: DMPhamViDiaLy,
+                       Icon: Icon.Home, 
+                       MenuID: 1.1
+            
+                        },
+                        {
+                       Title: "Danh mục nhóm quyền lợi",
+                       Screen: DMNhomQuyenLoi,
+                       Icon: Icon.Home, 
+                       MenuID: 1.2
+            
+                        },
+                          {
+                       Title: "Danh mục quyền lợi chi tiết",
+                       Screen: DMQuyenLoiChiTiet,
+                       Icon: Icon.Home, 
+                       MenuID: 1.3
+            
+                        },
+                          {
+                       Title: "Danh mục độ tuổi",
+                       Screen: DMDoTuoi,
+                       Icon: Icon.Home, 
+                       MenuID: 1.4
+            
                         }
-                    );
-                    UpdateContext({
-                        maUpdated:ThisItem.cr282_ma_nhom_ql
-                    })
-                )
-            Tooltip: ="Sửa"
-            Visible: =ThisItem.edited=0
-            Width: =29
-            X: =1206
-            ZIndex: =14
+            			,
+                          {
+                       Title: "Danh mục giới tính",
+                       Screen: DMGioiTinh,
+                       Icon: Icon.Home, 
+                       MenuID: 1.5
+                        }
+            			,
+                          {
+                       Title: "Cấu hình tham số sản phẩm",
+                       Screen: DMCauHinhThamSoSP,
+                       Icon: Icon.Home, 
+                       MenuID: 1.6
+                        }
+                    )
+                }, {
+                    Title: "Sản phẩm",
+                    Screen: App.ActiveScreen,
+                    Icon: Icon.Shop,
+                    MenuID: 2,
+                    Subtable: Table(
+            		   {
+                       Title: "Tra cứu sản phẩm",
+                       Screen: TraCuuSP,
+                       Icon: Icon.Home, 
+                       MenuID: 2.2
+                        },
+                        {
+                       Title: "Thêm mới sản phẩm",
+                       Screen: ThemMoi,
+                       Icon: Icon.Home, 
+                       MenuID: 2.1
+            
+                        }
+                    
+                    )
+                }
+            )
+        Width: =LeftNavigation_13.MenuWidth
 
-        IconLuuNQL As icon.Save:
-            Color: =RGBA(72, 163, 62, 1)
-            Height: =40
-            Icon: =Icon.Save
-            OnSelect: |
-                =If(
-                    TextTenNQL.Text="",
-                    Notify("Bắt buộc nhập tên nhóm quyền lợi", NotificationType.Error,800),
-                    If(
-                        ThisItem.cr282_ma_nhom_ql=maAdded,
-                        Patch(
-                            DM_NHOM_QUYENLOIS,
-                            {
-                                MA_NHOM_QL:ThisItem.cr282_ma_nhom_ql,
-                                TEN_NHOM_QL:TextTenNQL.Text,
-                                GHI_CHU:TextGhiChuNQL.Text
-                            }
-                        ),
+    ContainerNQL As groupContainer.manualLayoutContainer:
+        Height: =768
+        Width: =1309
+        X: =70
+        ZIndex: =2
+
+        GalleryNQL As gallery.galleryVertical:
+            DelayItemLoading: =true
+            Height: =551
+            Items: =SortByColumns(tmpNQLCollect,"cr282_ma_nhom_ql",SortOrder.Ascending)
+            Layout: =Layout.Vertical
+            LoadingSpinner: =LoadingSpinner.Data
+            NavigationStep: =0
+            TemplateSize: =40
+            Width: =1283
+            X: =15
+            Y: =159
+            ZIndex: =1
+
+            IconXoaNQL As icon.Trash:
+                Color: =RGBA(233, 79, 76, 1)
+                Height: =40
+                Icon: =Icon.Trash
+                OnSelect: |-
+                    =If(
+                        Or(maAdded<>"",maUpdated<>""),
+                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                        UpdateContext({
+                            showConfirm:1,
+                            maDelete:ThisItem.cr282_ma_nhom_ql,
+                            objDelete:ThisItem
+                        });
+                    )
+                Tooltip: ="Xóa"
+                Visible: =ThisItem.edited=0
+                Width: =37
+                X: =1233
+                ZIndex: =7
+
+            TextMaNQL As text:
+                BorderColor: =RGBA(15, 108, 189, 1)
+                Default: =ThisItem.cr282_ma_nhom_ql
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Width: =199
+                ZIndex: =8
+
+            TextTenNQL As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_ten_nhom_ql
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Width: =610
+                X: =205
+                ZIndex: =9
+
+            TextGhiChuNQL As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_ghi_chu
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Width: =358
+                X: =821
+                ZIndex: =13
+
+            IconSuaNQL As icon.Edit:
+                Color: =RGBA(83, 144, 164, 1)
+                Height: =40
+                Icon: =Icon.Edit
+                OnSelect: |-
+                    =If(
+                        Or(maAdded<>"",maUpdated<>""),
+                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                         UpdateIf(
-                            DM_NHOM_QUYENLOIS,
-                            MA_NHOM_QL=ThisItem.cr282_ma_nhom_ql,
+                            tmpNQLCollect,
+                            cr282_ma_nhom_ql=ThisItem.cr282_ma_nhom_ql,
                             {
-                                TEN_NHOM_QL:TextTenNQL.Text,
-                                GHI_CHU:TextGhiChuNQL.Text
+                                edited:1
                             }
-                        )
-                    );
-                    UpdateIf(
-                        tmpNQLCollect,
-                        cr282_ma_nhom_ql=ThisItem.cr282_ma_nhom_ql,
-                        {
-                            cr282_ten_nhom_ql:TextTenNQL.Text,
-                            cr282_ghi_chu:TextGhiChuNQL.Text,
-                            edited:0
-                        }
-                    );
-                    Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
-                    ClearCollect(
-                        tmpNQLCollect,
-                        ShowColumns(
-                            AddColumns(
-                                SortByColumns(
-                                    DM_NHOM_QUYENLOIS,
-                                    "cr282_ma_nhom_ql",
-                                    SortOrder.Ascending
-                                ),
-                                "edited",
-                                0
+                        );
+                        UpdateContext({
+                            maUpdated:ThisItem.cr282_ma_nhom_ql
+                        })
+                    )
+                Tooltip: ="Sửa"
+                Visible: =ThisItem.edited=0
+                Width: =29
+                X: =1194
+                ZIndex: =14
+
+            IconLuuNQL As icon.Save:
+                Color: =RGBA(72, 163, 62, 1)
+                Height: =40
+                Icon: =Icon.Save
+                OnSelect: |
+                    =If(
+                        TextTenNQL.Text="",
+                        Notify("Bắt buộc nhập tên nhóm quyền lợi", NotificationType.Error,800),
+                        If(
+                            ThisItem.cr282_ma_nhom_ql=maAdded,
+                            Patch(
+                                DM_NHOM_QUYENLOIS,
+                                {
+                                    MA_NHOM_QL:ThisItem.cr282_ma_nhom_ql,
+                                    TEN_NHOM_QL:TextTenNQL.Text,
+                                    GHI_CHU:TextGhiChuNQL.Text
+                                }
                             ),
-                            "cr282_ma_nhom_ql",
-                            "cr282_ten_nhom_ql",
-                            "cr282_ghi_chu",
-                            "edited"
+                            UpdateIf(
+                                DM_NHOM_QUYENLOIS,
+                                MA_NHOM_QL=ThisItem.cr282_ma_nhom_ql,
+                                {
+                                    TEN_NHOM_QL:TextTenNQL.Text,
+                                    GHI_CHU:TextGhiChuNQL.Text
+                                }
+                            )
+                        );
+                        UpdateIf(
+                            tmpNQLCollect,
+                            cr282_ma_nhom_ql=ThisItem.cr282_ma_nhom_ql,
+                            {
+                                cr282_ten_nhom_ql:TextTenNQL.Text,
+                                cr282_ghi_chu:TextGhiChuNQL.Text,
+                                edited:0
+                            }
+                        );
+                        Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
+                        ClearCollect(
+                            tmpNQLCollect,
+                            ShowColumns(
+                                AddColumns(
+                                    SortByColumns(
+                                        DM_NHOM_QUYENLOIS,
+                                        "cr282_ma_nhom_ql",
+                                        SortOrder.Ascending
+                                    ),
+                                    "edited",
+                                    0
+                                ),
+                                "cr282_ma_nhom_ql",
+                                "cr282_ten_nhom_ql",
+                                "cr282_ghi_chu",
+                                "edited"
+                            )
+                        );
+                        UpdateContext({
+                            maAdded:"",
+                            maUpdated:""
+                        });
+                        Reset(TextFilterNQL); Reset(CbxFilterNQL)
+                    )
+                Tooltip: ="Lưu"
+                Visible: =ThisItem.edited=1
+                Width: =33
+                X: =1194
+                ZIndex: =15
+
+            IconHuyNQL As icon.CancelBadge:
+                Color: =RGBA(139, 154, 159, 1)
+                Height: =40
+                Icon: =Icon.CancelBadge
+                OnSelect: |-
+                    =If(
+                        ThisItem.cr282_ma_nhom_ql=maAdded,
+                        Remove(tmpNQLCollect,ThisItem),
+                        UpdateIf(
+                            tmpNQLCollect,
+                            cr282_ma_nhom_ql=ThisItem.cr282_ma_nhom_ql,
+                            {
+                                edited:0
+                            }
                         )
                     );
                     UpdateContext({
                         maAdded:"",
                         maUpdated:""
                     });
-                    Reset(TextFilterNQL); Reset(CbxFilterNQL)
-                )
-            Tooltip: ="Lưu"
-            Visible: =ThisItem.edited=1
-            Width: =33
-            X: =1204
-            ZIndex: =15
+                Tooltip: ="Hủy"
+                Visible: =ThisItem.edited=1
+                Width: =28
+                X: =1238
+                ZIndex: =16
 
-        IconHuyNQL As icon.CancelBadge:
-            Color: =RGBA(139, 154, 159, 1)
-            Height: =40
-            Icon: =Icon.CancelBadge
+        BadgeCanvas1_6 As Badge:
+            BasePaletteColor: =
+            Content: =""
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Width: =1189
+            X: =15
+            Y: =117
+            ZIndex: =2
+
+        TextCanvas2_26 As Text:
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =14
+            Text: ="Mã nhóm quyền lợi"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =142
+            X: =27
+            Y: =117
+            ZIndex: =3
+
+        TextCanvas2_27 As Text:
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =14
+            Text: ="Tên nhóm quyền lợi"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =159
+            X: =228
+            Y: =117
+            ZIndex: =4
+
+        TextCanvas2_30 As Text:
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =14
+            Text: ="Ghi chú"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =96
+            X: =842
+            Y: =118
+            ZIndex: =5
+
+        "TextFilterNQL As 'Text input'":
+            BasePaletteColor: =
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =43
+            OnChange: =
+            Placeholder: ="Nhập giá trị lọc"
+            Width: =204
+            X: =519
+            Y: =55
+            ZIndex: =6
+
+        IconTaiLaiNQL As icon.Sync:
+            Color: =RGBA(83, 144, 164, 1)
+            Height: =36
+            Icon: =Icon.Sync
             OnSelect: |-
-                =If(
-                    ThisItem.cr282_ma_nhom_ql=maAdded,
-                    Remove(tmpNQLCollect,ThisItem),
-                    UpdateIf(
-                        tmpNQLCollect,
-                        cr282_ma_nhom_ql=ThisItem.cr282_ma_nhom_ql,
-                        {
-                            edited:0
-                        }
+                =ClearCollect(
+                    tmpNQLCollect,
+                    ShowColumns(
+                        AddColumns(
+                            SortByColumns(
+                                DM_NHOM_QUYENLOIS,
+                                "cr282_ma_nhom_ql",
+                                SortOrder.Ascending
+                            ),
+                            "edited",
+                            0
+                        ),
+                        "cr282_ma_nhom_ql",
+                        "cr282_ten_nhom_ql",
+                        "cr282_ghi_chu",
+                        "edited"
                     )
                 );
                 UpdateContext({
                     maAdded:"",
                     maUpdated:""
                 });
-            Tooltip: ="Hủy"
-            Visible: =ThisItem.edited=1
-            Width: =28
-            X: =1240
-            ZIndex: =16
+                Reset(TextFilterNQL); Reset(CbxFilterNQL);
+            Tooltip: ="Tải lại"
+            Width: =32
+            X: =50
+            Y: =64
+            ZIndex: =7
 
-    BadgeCanvas1_6 As Badge:
-        BasePaletteColor: =
-        Content: =""
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =39
-        Width: =1208
-        X: =83
-        Y: =69
-        ZIndex: =2
-
-    TextCanvas2_26 As Text:
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =38
-        Size: =14
-        Text: ="Mã nhóm quyền lợi"
-        Weight: ='TextCanvas.Weight'.Bold
-        Width: =142
-        X: =95
-        Y: =69
-        ZIndex: =3
-
-    TextCanvas2_27 As Text:
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =38
-        Size: =14
-        Text: ="Tên nhóm quyền lợi"
-        Weight: ='TextCanvas.Weight'.Bold
-        Width: =159
-        X: =296
-        Y: =69
-        ZIndex: =4
-
-    TextCanvas2_30 As Text:
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =38
-        Size: =14
-        Text: ="Ghi chú"
-        Weight: ='TextCanvas.Weight'.Bold
-        Width: =96
-        X: =910
-        Y: =70
-        ZIndex: =5
-
-    "TextFilterNQL As 'Text input'":
-        BasePaletteColor: =
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =43
-        OnChange: =
-        Placeholder: ="Nhập giá trị lọc"
-        Width: =204
-        X: =587
-        Y: =14
-        ZIndex: =6
-
-    IconTaiLaiNQL As icon.Sync:
-        Color: =RGBA(83, 144, 164, 1)
-        Height: =36
-        Icon: =Icon.Sync
-        OnSelect: |-
-            =ClearCollect(
-                tmpNQLCollect,
-                ShowColumns(
-                    AddColumns(
-                        SortByColumns(
-                            DM_NHOM_QUYENLOIS,
-                            "cr282_ma_nhom_ql",
-                            SortOrder.Ascending
-                        ),
-                        "edited",
-                        0
-                    ),
-                    "cr282_ma_nhom_ql",
-                    "cr282_ten_nhom_ql",
-                    "cr282_ghi_chu",
-                    "edited"
+        IconThemNQL As icon.AddDocument:
+            Color: =RGBA(72, 163, 62, 1)
+            DisplayMode: =If(And(maAdded="",maUpdated=""), DisplayMode.Edit,DisplayMode.Disabled)
+            Height: =42
+            Icon: =Icon.AddDocument
+            OnSelect: |
+                =If(
+                    Or(maAdded<>"",maUpdated<>""),
+                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                    UpdateContext({
+                        idMa:If(
+                            CountIf(DM_NHOM_QUYENLOIS,true)=0,
+                            1000,
+                            Value(Last(SortByColumns(DM_NHOM_QUYENLOIS,"cr282_ma_nhom_ql",SortOrder.Ascending)).MA_NHOM_QL)+1
+                        )
+                    });
+                    Collect(
+                        tmpNQLCollect,
+                        {
+                            cr282_ma_nhom_ql:Text(idMa),
+                            cr282_ten_nhom_ql:"",
+                            cr282_ghi_chu:"",
+                            edited:1
+                        }
+                    );
+                    UpdateContext({maAdded:Text(idMa)})
                 )
-            );
-            UpdateContext({
-                maAdded:"",
-                maUpdated:""
-            });
-            Reset(TextFilterNQL); Reset(CbxFilterNQL);
-        Tooltip: ="Tải lại"
-        Width: =32
-        X: =118
-        Y: =16
-        ZIndex: =7
+            Tooltip: ="Thêm mới"
+            Width: =40
+            X: =101
+            Y: =60
+            ZIndex: =8
 
-    IconThemNQL As icon.AddDocument:
-        Color: =RGBA(72, 163, 62, 1)
-        DisplayMode: =If(And(maAdded="",maUpdated=""), DisplayMode.Edit,DisplayMode.Disabled)
-        Height: =42
-        Icon: =Icon.AddDocument
-        OnSelect: |
-            =If(
-                Or(maAdded<>"",maUpdated<>""),
-                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                UpdateContext({
-                    idMa:If(
-                        CountIf(DM_NHOM_QUYENLOIS,true)=0,
-                        1000,
-                        Value(Last(SortByColumns(DM_NHOM_QUYENLOIS,"cr282_ma_nhom_ql",SortOrder.Ascending)).MA_NHOM_QL)+1
-                    )
-                });
-                Collect(
+        IconFilterNQL As icon.FilterFlat:
+            Color: =RGBA(71, 158, 245, 1)
+            DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
+            Height: =47
+            Icon: =Icon.FilterFlat
+            OnSelect: |-
+                =ClearCollect(
                     tmpNQLCollect,
-                    {
-                        cr282_ma_nhom_ql:Text(idMa),
-                        cr282_ten_nhom_ql:"",
-                        cr282_ghi_chu:"",
-                        edited:1
-                    }
-                );
-                UpdateContext({maAdded:Text(idMa)})
-            )
-        Tooltip: ="Thêm mới"
-        Width: =40
-        X: =169
-        Y: =12
-        ZIndex: =8
-
-    IconFilterNQL As icon.FilterFlat:
-        Color: =RGBA(71, 158, 245, 1)
-        DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
-        Height: =47
-        Icon: =Icon.FilterFlat
-        OnSelect: |-
-            =ClearCollect(
-                tmpNQLCollect,
-                ShowColumns(
-                    AddColumns(
-                        SortByColumns(
-                            Filter(
-                                DM_NHOM_QUYENLOIS,
-                                Or(
-                                    TextFilterNQL.Value="",
+                    ShowColumns(
+                        AddColumns(
+                            SortByColumns(
+                                Filter(
+                                    DM_NHOM_QUYENLOIS,
                                     Or(
-                                        And(
-                                            CbxFilterNQL.Selected.Value="Mã nhóm quyền lợi",
-                                            StartsWith(MA_NHOM_QL,TextFilterNQL.Value)
-                                        ),
-                                        And(
-                                            CbxFilterNQL.Selected.Value="Tên nhóm quyền lợi",
-                                            !IsBlank(Find(TextFilterNQL.Value,TEN_NHOM_QL))
+                                        TextFilterNQL.Value="",
+                                        Or(
+                                            And(
+                                                CbxFilterNQL.Selected.Value="Mã nhóm quyền lợi",
+                                                StartsWith(MA_NHOM_QL,TextFilterNQL.Value)
+                                            ),
+                                            And(
+                                                CbxFilterNQL.Selected.Value="Tên nhóm quyền lợi",
+                                                !IsBlank(Find(TextFilterNQL.Value,TEN_NHOM_QL))
+                                            )
                                         )
                                     )
-                                )
+                                ),
+                                "cr282_ma_nhom_ql",
+                                SortOrder.Ascending
                             ),
-                            "cr282_ma_nhom_ql",
-                            SortOrder.Ascending
+                            "edited",
+                            0
                         ),
-                        "edited",
-                        0
-                    ),
-                    "cr282_ma_nhom_ql",
-                    "cr282_ten_nhom_ql",
-                    "cr282_ghi_chu",
-                    "edited"
+                        "cr282_ma_nhom_ql",
+                        "cr282_ten_nhom_ql",
+                        "cr282_ghi_chu",
+                        "edited"
+                    )
                 )
-            )
-        Tooltip: ="Lọc"
-        Width: =32
-        X: =802
-        Y: =12
-        ZIndex: =9
+            Tooltip: ="Lọc"
+            Width: =32
+            X: =734
+            Y: =54
+            ZIndex: =9
 
-    CbxFilterNQL As Combobox.pcfdataset:
-        DefaultSelectedItems: =Filter(["Mã nhóm quyền lợi", "Tên nhóm quyền lợi"],Value="Mã nhóm quyền lợi")
-        DisplayMode: =DisplayMode.Edit
-        Height: =43
-        InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
-        Items: =["Mã nhóm quyền lợi", "Tên nhóm quyền lợi"]
-        OnChange: =Reset(TextFilterNQL)
-        Width: =152
-        X: =426
-        Y: =14
-        ZIndex: =10
+        CbxFilterNQL As Combobox.pcfdataset:
+            DefaultSelectedItems: =Filter(["Mã nhóm quyền lợi", "Tên nhóm quyền lợi"],Value="Mã nhóm quyền lợi")
+            DisplayMode: =DisplayMode.Edit
+            Height: =43
+            InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
+            Items: =["Mã nhóm quyền lợi", "Tên nhóm quyền lợi"]
+            OnChange: =Reset(TextFilterNQL)
+            Width: =152
+            X: =358
+            Y: =55
+            ZIndex: =10
 
-    LeftNavigation_13 As LeftNavigation_9:
-        Width: =LeftNavigation_13.MenuWidth
-        ZIndex: =11
+    ContainerConfirmNQL As groupContainer.manualLayoutContainer:
+        BorderColor: =RGBA(180, 214, 250, 1)
+        BorderThickness: =2
+        Fill: =Color.White
+        Height: =221
+        Visible: =showConfirm=1
+        Width: =438
+        X: =505
+        Y: =253
+        ZIndex: =3
+
+        TextCanvas1_18 As Text:
+            DisplayMode: =DisplayMode.Disabled
+            FontColor: =
+            Height: =31
+            Size: =16
+            Text: ="Bạn có chắc chắn muốn xóa?"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =233
+            X: =108
+            Y: =52
+            ZIndex: =1
+
+        OKNQL As icon.Check:
+            Color: =RGBA(72, 163, 62, 1)
+            Height: =46
+            Icon: =Icon.Check
+            OnSelect: |-
+                =UpdateContext({
+                    showConfirm:0
+                });
+                If(
+                    CountIf(
+                        DM_QUYENLOI_CHITIETS,
+                        MA_NHOM_QL=maDelete
+                    )>0,
+                    Notify("Đã tồn tại quyền lợi chi tiết gắn với nhóm quyền lợi này", NotificationType.Error,800),
+                    Refresh(DM_NHOM_QUYENLOIS);
+                    RemoveIf(
+                        DM_NHOM_QUYENLOIS,
+                        MA_NHOM_QL=maDelete
+                    );
+                    Remove(tmpNQLCollect,objDelete);
+                    Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
+                )
+            Tooltip: ="OK"
+            Width: =47
+            X: =128
+            Y: =105
+            ZIndex: =2
+
+        CancelNQL As icon.CancelBadge:
+            Color: =RGBA(233, 79, 76, 1)
+            Height: =46
+            Icon: =Icon.CancelBadge
+            OnSelect: |-
+                =UpdateContext({
+                    showConfirm:0,
+                    maDelete:Blank(),
+                    objDelete:Blank()
+                })
+            Tooltip: ="Hủy"
+            Width: =41
+            X: =261
+            Y: =105
+            ZIndex: =3
 

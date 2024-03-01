@@ -14,7 +14,6 @@ DMPhamViDiaLy As screen:
                 ),
                 "cr282_ma_phamvi",
                 "cr282_ten_phamvi",
-                "cr282_dnbh",
                 "cr282_ghi_chu",
                 "cr282_mota",
                 "edited"
@@ -22,462 +21,542 @@ DMPhamViDiaLy As screen:
         );
         UpdateContext({
             maAdded:"",
-            maUpdated:""
+            maUpdated:"",
+            showConfirm:0
         });
+    Width: =Max(1380, App.MinScreenWidth)
 
-    GalleryPV As gallery.galleryVertical:
-        DelayItemLoading: =true
-        Height: =615
-        Items: =SortByColumns(tmpPVDLCollect,"cr282_ma_phamvi",SortOrder.Ascending)
-        Layout: =Layout.Vertical
-        LoadingSpinner: =LoadingSpinner.Data
-        NavigationStep: =0
-        TemplateSize: =40
-        Width: =1283
-        X: =83
-        Y: =153
-        ZIndex: =1
-
-        IconXoaPV As icon.Trash:
-            Color: =RGBA(233, 79, 76, 1)
-            Height: =40
-            Icon: =Icon.Trash
-            OnSelect: |-
-                =If(
-                    Or(maAdded<>"",maUpdated<>""),
-                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                    Refresh(DM_PHAMVI_DIALYS);
-                    RemoveIf(
-                        DM_PHAMVI_DIALYS,
-                        MA_PHAMVI=ThisItem.cr282_ma_phamvi
-                    );
-                    Remove(tmpPVDLCollect,ThisItem);
-                    Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
-                )
-            Tooltip: ="Xóa"
-            Visible: =ThisItem.edited=0
-            Width: =37
-            X: =1235
-            ZIndex: =7
-
-        TextMaPV As text:
-            BorderColor: =RGBA(15, 108, 189, 1)
-            Default: =ThisItem.cr282_ma_phamvi
-            DisabledBorderColor: =RGBA(180, 214, 250, 1)
-            DisabledColor: =RGBA(0, 0, 0, 1)
-            DisabledFill: =RGBA(255, 255, 255, 1)
-            DisplayMode: =DisplayMode.Disabled
-            OnChange: =
-            OnSelect: =Select(Parent)
-            Width: =115
-            ZIndex: =8
-
-        TextTenPV As text:
-            BorderColor: =RGBA(72, 163, 62, 1)
-            Default: =ThisItem.cr282_ten_phamvi
-            DisabledBorderColor: =RGBA(180, 214, 250, 1)
-            DisabledColor: =RGBA(0, 0, 0, 1)
-            DisabledFill: =RGBA(255, 255, 255, 1)
-            DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-            OnChange: =
-            OnSelect: =Select(Parent)
-            Width: =324
-            X: =120
-            ZIndex: =9
-
-        TextMoTa As text:
-            BorderColor: =RGBA(72, 163, 62, 1)
-            Default: =ThisItem.cr282_mota
-            DisabledBorderColor: =RGBA(180, 214, 250, 1)
-            DisabledColor: =RGBA(0, 0, 0, 1)
-            DisabledFill: =RGBA(255, 255, 255, 1)
-            DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-            OnChange: =
-            OnSelect: =Select(Parent)
-            Width: =267
-            X: =449
-            ZIndex: =10
-
-        TextDNBH As text:
-            BorderColor: =RGBA(72, 163, 62, 1)
-            Default: =ThisItem.cr282_dnbh
-            DisabledBorderColor: =RGBA(180, 214, 250, 1)
-            DisabledColor: =RGBA(0, 0, 0, 1)
-            DisabledFill: =RGBA(255, 255, 255, 1)
-            DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-            OnChange: =
-            OnSelect: =Select(Parent)
-            Width: =179
-            X: =721
-            ZIndex: =11
-
-        TextMaSP As text:
-            BorderColor: =RGBA(72, 163, 62, 1)
-            Default: =ThisItem.cr282_ma_sp
-            DisabledBorderColor: =RGBA(180, 214, 250, 1)
-            DisabledColor: =RGBA(0, 0, 0, 1)
-            DisabledFill: =RGBA(255, 255, 255, 1)
-            DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-            OnChange: =
-            OnSelect: =Select(Parent)
-            Width: =136
-            X: =905
-            ZIndex: =12
-
-        TextGhiChu As text:
-            BorderColor: =RGBA(72, 163, 62, 1)
-            Default: =ThisItem.cr282_ghi_chu
-            DisabledBorderColor: =RGBA(180, 214, 250, 1)
-            DisabledColor: =RGBA(0, 0, 0, 1)
-            DisabledFill: =RGBA(255, 255, 255, 1)
-            DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-            OnChange: =
-            OnSelect: =Select(Parent)
-            Width: =152
-            X: =1046
-            ZIndex: =13
-
-        IconEditPV As icon.Edit:
-            Color: =RGBA(83, 144, 164, 1)
-            Height: =40
-            Icon: =Icon.Edit
-            OnSelect: |-
-                =If(
-                    Or(maAdded<>"",maUpdated<>""),
-                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                    UpdateIf(
-                        tmpPVDLCollect,
-                        cr282_ma_phamvi=ThisItem.cr282_ma_phamvi,
+    LeftNavigation_12 As LeftNavigation_9:
+        NavItems: |-
+            =Table(
+                {
+                    Title: "Hệ thống",
+                    Screen: App.ActiveScreen,
+                    Icon: Icon.Home,
+                    MenuID: 1,
+                    Subtable: Table(
                         {
-                            edited:1
+                       Title: "Danh mục phạm vi địa lý",
+                       Screen: DMPhamViDiaLy,
+                       Icon: Icon.Home, 
+                       MenuID: 1.1
+            
+                        },
+                        {
+                       Title: "Danh mục nhóm quyền lợi",
+                       Screen: DMNhomQuyenLoi,
+                       Icon: Icon.Home, 
+                       MenuID: 1.2
+            
+                        },
+                          {
+                       Title: "Danh mục quyền lợi chi tiết",
+                       Screen: DMQuyenLoiChiTiet,
+                       Icon: Icon.Home, 
+                       MenuID: 1.3
+            
+                        },
+                          {
+                       Title: "Danh mục độ tuổi",
+                       Screen: DMDoTuoi,
+                       Icon: Icon.Home, 
+                       MenuID: 1.4
+            
                         }
-                    );
-                    UpdateContext({
-                        maUpdated:ThisItem.cr282_ma_phamvi
-                    })
-                )
-            Tooltip: ="Sửa"
-            Visible: =ThisItem.edited=0
-            Width: =29
-            X: =1206
-            ZIndex: =14
+            			,
+                          {
+                       Title: "Danh mục giới tính",
+                       Screen: DMGioiTinh,
+                       Icon: Icon.Home, 
+                       MenuID: 1.5
+                        }
+            			,
+                          {
+                       Title: "Cấu hình tham số sản phẩm",
+                       Screen: DMCauHinhThamSoSP,
+                       Icon: Icon.Home, 
+                       MenuID: 1.6
+                        }
+                    )
+                }, {
+                    Title: "Sản phẩm",
+                    Screen: App.ActiveScreen,
+                    Icon: Icon.Shop,
+                    MenuID: 2,
+                    Subtable: Table(
+            		   {
+                       Title: "Tra cứu sản phẩm",
+                       Screen: TraCuuSP,
+                       Icon: Icon.Home, 
+                       MenuID: 2.2
+                        },
+                        {
+                       Title: "Thêm mới sản phẩm",
+                       Screen: ThemMoi,
+                       Icon: Icon.Home, 
+                       MenuID: 2.1
+            
+                        }
+                    
+                    )
+                }
+            )
+        Width: =LeftNavigation_12.MenuWidth
 
-        IconLuuPV As icon.Save:
-            Color: =RGBA(72, 163, 62, 1)
-            Height: =40
-            Icon: =Icon.Save
-            OnSelect: |
-                =If(
-                    TextTenPV.Text="",
-                    Notify("Bắt buộc nhập tên phạm vi", NotificationType.Error,800),
-                    If(
-                        ThisItem.cr282_ma_phamvi=maAdded,
-                        Patch(
-                            DM_PHAMVI_DIALYS,
-                            {
-                                MA_PHAMVI:ThisItem.cr282_ma_phamvi,
-                                TEN_PHAMVI:TextTenPV.Text,
-                                MOTA:TextMoTa.Text,
-                                DNBH:TextDNBH.Text,
-                                MA_SP:TextMaSP.Text,
-                                GHI_CHU:TextGhiChu.Text
-                            }
-                        ),
+    ContainerPV As groupContainer.manualLayoutContainer:
+        Height: =768
+        Visible: =showConfirm=0
+        Width: =1306
+        X: =70
+        ZIndex: =2
+
+        GalleryPV As gallery.galleryVertical:
+            DelayItemLoading: =true
+            Height: =561
+            Items: =SortByColumns(tmpPVDLCollect,"cr282_ma_phamvi",SortOrder.Ascending)
+            Layout: =Layout.Vertical
+            LoadingSpinner: =LoadingSpinner.Data
+            NavigationStep: =0
+            TemplateSize: =40
+            Width: =1283
+            X: =21
+            Y: =140
+            ZIndex: =1
+
+            IconXoaPV As icon.Trash:
+                Color: =RGBA(233, 79, 76, 1)
+                Height: =40
+                Icon: =Icon.Trash
+                OnSelect: |-
+                    =If(
+                        Or(maAdded<>"",maUpdated<>""),
+                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                        UpdateContext({
+                            showConfirm:1,
+                            maDelete:ThisItem.cr282_ma_phamvi,
+                            objDelete:ThisItem
+                        });
+                    )
+                Tooltip: ="Xóa"
+                Visible: =ThisItem.edited=0
+                Width: =37
+                X: =1228
+                ZIndex: =7
+
+            TextMaPV As text:
+                BorderColor: =RGBA(15, 108, 189, 1)
+                Default: =ThisItem.cr282_ma_phamvi
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Width: =115
+                ZIndex: =8
+
+            TextTenPV As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_ten_phamvi
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Width: =350
+                X: =120
+                ZIndex: =9
+
+            TextMoTa As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_mota
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Width: =439
+                X: =475
+                ZIndex: =10
+
+            TextGhiChu As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_ghi_chu
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Width: =247
+                X: =919
+                ZIndex: =13
+
+            IconSuaPV As icon.Edit:
+                Color: =RGBA(83, 144, 164, 1)
+                Height: =40
+                Icon: =Icon.Edit
+                OnSelect: |-
+                    =If(
+                        Or(maAdded<>"",maUpdated<>""),
+                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                         UpdateIf(
-                            DM_PHAMVI_DIALYS,
-                            MA_PHAMVI=ThisItem.cr282_ma_phamvi,
+                            tmpPVDLCollect,
+                            cr282_ma_phamvi=ThisItem.cr282_ma_phamvi,
                             {
-                                TEN_PHAMVI:TextTenPV.Text,
-                                MOTA:TextMoTa.Text,
-                                DNBH:TextDNBH.Text,
-                                MA_SP:TextMaSP.Text,
-                                GHI_CHU:TextGhiChu.Text
+                                edited:1
                             }
-                        )
-                    );
-                    UpdateIf(
-                        tmpPVDLCollect,
-                        cr282_ma_phamvi=ThisItem.cr282_ma_phamvi,
-                        {
-                            cr282_ten_phamvi:TextTenPV.Text,
-                            cr282_mota:TextMoTa.Text,
-                            cr282_dnbh:TextDNBH.Text,
-                            cr282_ma_sp:TextMaSP.Text,
-                            cr282_ghi_chu:TextGhiChu.Text,
-                            edited:0
-                        }
-                    );
-                    Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
-                    ClearCollect(
-                        tmpPVDLCollect,
-                        ShowColumns(
-                            AddColumns(
-                                SortByColumns(
-                                    DM_PHAMVI_DIALYS,
-                                    "cr282_ma_phamvi",
-                                    SortOrder.Ascending
-                                ),
-                                "edited",
-                                0
+                        );
+                        UpdateContext({
+                            maUpdated:ThisItem.cr282_ma_phamvi
+                        })
+                    )
+                Tooltip: ="Sửa"
+                Visible: =ThisItem.edited=0
+                Width: =29
+                X: =1186
+                ZIndex: =14
+
+            IconLuuPV As icon.Save:
+                Color: =RGBA(72, 163, 62, 1)
+                Height: =40
+                Icon: =Icon.Save
+                OnSelect: |
+                    =If(
+                        TextTenPV.Text="",
+                        Notify("Bắt buộc nhập tên phạm vi", NotificationType.Error,800),
+                        If(
+                            ThisItem.cr282_ma_phamvi=maAdded,
+                            Patch(
+                                DM_PHAMVI_DIALYS,
+                                {
+                                    MA_PHAMVI:ThisItem.cr282_ma_phamvi,
+                                    TEN_PHAMVI:TextTenPV.Text,
+                                    MOTA:TextMoTa.Text,
+                                    GHI_CHU:TextGhiChu.Text
+                                }
                             ),
-                            "cr282_ma_phamvi",
-                            "cr282_ten_phamvi",
-                            "cr282_dnbh",
-                            "cr282_ghi_chu",
-                            "cr282_mota",
-                            "edited"
+                            UpdateIf(
+                                DM_PHAMVI_DIALYS,
+                                MA_PHAMVI=ThisItem.cr282_ma_phamvi,
+                                {
+                                    TEN_PHAMVI:TextTenPV.Text,
+                                    MOTA:TextMoTa.Text,
+                                    GHI_CHU:TextGhiChu.Text
+                                }
+                            )
+                        );
+                        UpdateIf(
+                            tmpPVDLCollect,
+                            cr282_ma_phamvi=ThisItem.cr282_ma_phamvi,
+                            {
+                                cr282_ten_phamvi:TextTenPV.Text,
+                                cr282_mota:TextMoTa.Text,
+                                cr282_ghi_chu:TextGhiChu.Text,
+                                edited:0
+                            }
+                        );
+                        Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
+                        ClearCollect(
+                            tmpPVDLCollect,
+                            ShowColumns(
+                                AddColumns(
+                                    SortByColumns(
+                                        DM_PHAMVI_DIALYS,
+                                        "cr282_ma_phamvi",
+                                        SortOrder.Ascending
+                                    ),
+                                    "edited",
+                                    0
+                                ),
+                                "cr282_ma_phamvi",
+                                "cr282_ten_phamvi",
+                                "cr282_ghi_chu",
+                                "cr282_mota",
+                                "edited"
+                            )
+                        );
+                        UpdateContext({
+                            maAdded:"",
+                            maUpdated:""
+                        });
+                        Reset(TextFilterPV); Reset(CbxFilterPV)
+                    )
+                Tooltip: ="Lưu"
+                Visible: =ThisItem.edited=1
+                Width: =33
+                X: =1185
+                ZIndex: =15
+
+            IconHuyPV As icon.CancelBadge:
+                Color: =RGBA(139, 154, 159, 1)
+                Height: =40
+                Icon: =Icon.CancelBadge
+                OnSelect: |-
+                    =If(
+                        ThisItem.cr282_ma_phamvi=maAdded,
+                        Remove(tmpPVDLCollect,ThisItem),
+                        UpdateIf(
+                            tmpPVDLCollect,
+                            cr282_ma_phamvi=ThisItem.cr282_ma_phamvi,
+                            {
+                                edited:0
+                            }
                         )
                     );
                     UpdateContext({
                         maAdded:"",
                         maUpdated:""
                     });
-                    Reset(TextFilterPV); Reset(CbxFilterPV)
-                )
-            Tooltip: ="Lưu"
-            Visible: =ThisItem.edited=1
-            Width: =33
-            X: =1204
-            ZIndex: =15
+                Tooltip: ="Hủy"
+                Visible: =ThisItem.edited=1
+                Width: =28
+                X: =1231
+                ZIndex: =16
 
-        IconHuyPV As icon.CancelBadge:
-            Color: =RGBA(139, 154, 159, 1)
-            Height: =40
-            Icon: =Icon.CancelBadge
+        BadgeCanvas1 As Badge:
+            BasePaletteColor: =
+            Content: =""
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =39
+            Width: =1178
+            X: =21
+            Y: =98
+            ZIndex: =2
+
+        TextCanvas2 As Text:
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =14
+            Text: ="Mã phạm vi"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =96
+            X: =33
+            Y: =98
+            ZIndex: =3
+
+        TextCanvas2_1 As Text:
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =14
+            Text: ="Tên phạm vi"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =96
+            X: =153
+            Y: =98
+            ZIndex: =4
+
+        TextCanvas2_2 As Text:
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =14
+            Text: ="Mô tả"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =96
+            X: =512
+            Y: =98
+            ZIndex: =5
+
+        TextCanvas2_5 As Text:
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =14
+            Text: ="Ghi chú"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =96
+            X: =948
+            Y: =98
+            ZIndex: =8
+
+        "TextFilterPV As 'Text input'":
+            BasePaletteColor: =
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =43
+            OnChange: =
+            Placeholder: ="Nhập giá trị lọc"
+            Width: =204
+            X: =525
+            Y: =36
+            ZIndex: =9
+
+        IconTaiLaiPV As icon.Sync:
+            Color: =RGBA(83, 144, 164, 1)
+            Height: =36
+            Icon: =Icon.Sync
             OnSelect: |-
-                =If(
-                    ThisItem.cr282_ma_phamvi=maAdded,
-                    Remove(tmpPVDLCollect,ThisItem),
-                    UpdateIf(
-                        tmpPVDLCollect,
-                        cr282_ma_phamvi=ThisItem.cr282_ma_phamvi,
-                        {
-                            edited:0
-                        }
+                =ClearCollect(
+                    tmpPVDLCollect,
+                    ShowColumns(
+                        AddColumns(
+                            SortByColumns(
+                                DM_PHAMVI_DIALYS,
+                                "cr282_ma_phamvi",
+                                SortOrder.Ascending
+                            ),
+                            "edited",
+                            0
+                        ),
+                        "cr282_ma_phamvi",
+                        "cr282_ten_phamvi",
+                        "cr282_ghi_chu",
+                        "cr282_mota",
+                        "edited"
                     )
                 );
                 UpdateContext({
                     maAdded:"",
                     maUpdated:""
                 });
-            Tooltip: ="Hủy"
-            Visible: =ThisItem.edited=1
-            Width: =28
-            X: =1240
-            ZIndex: =16
+                Reset(TextFilterPV); Reset(CbxFilterPV);
+            Tooltip: ="Tải lại"
+            Width: =32
+            X: =56
+            Y: =45
+            ZIndex: =10
 
-    BadgeCanvas1 As Badge:
-        BasePaletteColor: =
-        Content: =""
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =39
-        Width: =1208
-        X: =83
-        Y: =111
-        ZIndex: =2
+        IconThemPV As icon.AddDocument:
+            Color: =RGBA(72, 163, 62, 1)
+            DisplayMode: =If(And(maAdded="",maUpdated=""), DisplayMode.Edit,DisplayMode.Disabled)
+            Height: =42
+            Icon: =Icon.AddDocument
+            OnSelect: |
+                =If(
+                    Or(maAdded<>"",maUpdated<>""),
+                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                    UpdateContext({
+                        idMa:If(
+                            CountIf(DM_PHAMVI_DIALYS,true)=0,
+                            1000,
+                            Value(Last(SortByColumns(DM_PHAMVI_DIALYS,"cr282_ma_phamvi",SortOrder.Ascending)).MA_PHAMVI)+1
+                        )
+                    });
+                    Collect(
+                        tmpPVDLCollect,
+                        {
+                            cr282_ma_phamvi:Text(idMa),
+                            cr282_ten_phamvi:"",
+                            cr282_ghi_chu:"",
+                            cr282_mota:"",
+                            edited:1
+                        }
+                    );
+                    UpdateContext({maAdded:Text(idMa)})
+                )
+            Tooltip: ="Thêm mới"
+            Width: =40
+            X: =107
+            Y: =41
+            ZIndex: =11
 
-    TextCanvas2 As Text:
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =38
-        Size: =14
-        Text: ="Mã phạm vi"
-        Weight: ='TextCanvas.Weight'.Bold
-        Width: =96
-        X: =95
-        Y: =111
+        IconFilterPV As icon.FilterFlat:
+            Color: =RGBA(71, 158, 245, 1)
+            DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
+            Height: =47
+            Icon: =Icon.FilterFlat
+            OnSelect: |-
+                =ClearCollect(
+                    tmpPVDLCollect,
+                    ShowColumns(
+                        AddColumns(
+                            SortByColumns(
+                                Filter(DM_PHAMVI_DIALYS,Or(TextFilterPV.Value="",Or(And(CbxFilterPV.Selected.Value="Mã phạm vi",StartsWith(MA_PHAMVI,TextFilterPV.Value)),And(CbxFilterPV.Selected.Value="Tên phạm vi",!IsBlank(Find(TextFilterPV.Value,TEN_PHAMVI)))))),
+                                "cr282_ma_phamvi",
+                                SortOrder.Ascending
+                            ),
+                            "edited",
+                            0
+                        ),
+                        "cr282_ma_phamvi",
+                        "cr282_ten_phamvi",
+                        "cr282_dnbh",
+                        "cr282_ghi_chu",
+                        "cr282_mota",
+                        "edited"
+                    )
+                )
+            Tooltip: ="Lọc"
+            Width: =32
+            X: =740
+            Y: =35
+            ZIndex: =12
+
+        CbxFilterPV As Combobox.pcfdataset:
+            DefaultSelectedItems: =Filter(["Mã phạm vi", "Tên phạm vi"],Value="Mã phạm vi")
+            DisplayMode: =DisplayMode.Edit
+            Height: =43
+            InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
+            Items: =["Mã phạm vi", "Tên phạm vi"]
+            OnChange: =Reset(TextFilterPV)
+            Width: =152
+            X: =364
+            Y: =36
+            ZIndex: =13
+
+    ContainerConfirmPV As groupContainer.manualLayoutContainer:
+        BorderColor: =RGBA(180, 214, 250, 1)
+        BorderThickness: =2
+        Fill: =Color.White
+        Height: =205
+        Visible: =showConfirm=1
+        Width: =438
+        X: =505
+        Y: =253
         ZIndex: =3
 
-    TextCanvas2_1 As Text:
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =38
-        Size: =14
-        Text: ="Tên phạm vi"
-        Weight: ='TextCanvas.Weight'.Bold
-        Width: =96
-        X: =215
-        Y: =111
-        ZIndex: =4
+        TextCanvas1_16 As Text:
+            DisplayMode: =DisplayMode.Disabled
+            FontColor: =
+            Height: =31
+            Size: =16
+            Text: ="Bạn có chắc chắn muốn xóa?"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =233
+            X: =108
+            Y: =52
+            ZIndex: =1
 
-    TextCanvas2_2 As Text:
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =38
-        Size: =14
-        Text: ="Mô tả"
-        Weight: ='TextCanvas.Weight'.Bold
-        Width: =96
-        X: =545
-        Y: =111
-        ZIndex: =5
-
-    TextCanvas2_3 As Text:
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =38
-        Size: =14
-        Text: ="Doanh nghiệp bảo hiểm"
-        Weight: ='TextCanvas.Weight'.Bold
-        Width: =178
-        X: =817
-        Y: =111
-        ZIndex: =6
-
-    TextCanvas2_4 As Text:
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =38
-        Size: =14
-        Text: ="Sản phẩm"
-        Weight: ='TextCanvas.Weight'.Bold
-        Width: =96
-        X: =995
-        Y: =111
-        ZIndex: =7
-
-    TextCanvas2_5 As Text:
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =38
-        Size: =14
-        Text: ="Ghi chú"
-        Weight: ='TextCanvas.Weight'.Bold
-        Width: =96
-        X: =1142
-        Y: =111
-        ZIndex: =8
-
-    "TextFilterPV As 'Text input'":
-        BasePaletteColor: =
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =43
-        OnChange: =
-        Placeholder: ="Nhập giá trị lọc"
-        Width: =204
-        X: =587
-        Y: =56
-        ZIndex: =9
-
-    IconTaiLaiPV As icon.Sync:
-        Color: =RGBA(83, 144, 164, 1)
-        Height: =36
-        Icon: =Icon.Sync
-        OnSelect: |-
-            =ClearCollect(
-                tmpPVDLCollect,
-                ShowColumns(
-                    AddColumns(
-                        SortByColumns(
-                            DM_PHAMVI_DIALYS,
-                            "cr282_ma_phamvi",
-                            SortOrder.Ascending
-                        ),
-                        "edited",
-                        0
-                    ),
-                    "cr282_ma_phamvi",
-                    "cr282_ten_phamvi",
-                    "cr282_dnbh",
-                    "cr282_ghi_chu",
-                    "cr282_mota",
-                    "edited"
-                )
-            );
-            UpdateContext({
-                maAdded:"",
-                maUpdated:""
-            });
-            Reset(TextFilterPV); Reset(CbxFilterPV);
-        Tooltip: ="Tải lại"
-        Width: =32
-        X: =118
-        Y: =58
-        ZIndex: =10
-
-    IconThemPV As icon.AddDocument:
-        Color: =RGBA(72, 163, 62, 1)
-        DisplayMode: =If(And(maAdded="",maUpdated=""), DisplayMode.Edit,DisplayMode.Disabled)
-        Height: =42
-        Icon: =Icon.AddDocument
-        OnSelect: |
-            =If(
-                Or(maAdded<>"",maUpdated<>""),
-                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                UpdateContext({
-                    idMa:If(
-                        CountIf(DM_PHAMVI_DIALYS,true)=0,
-                        1000,
-                        Value(Last(SortByColumns(DM_PHAMVI_DIALYS,"cr282_ma_phamvi",SortOrder.Ascending)).MA_PHAMVI)+1
-                    )
+        OKPV As icon.Check:
+            Color: =RGBA(72, 163, 62, 1)
+            Height: =46
+            Icon: =Icon.Check
+            OnSelect: |-
+                =UpdateContext({
+                    showConfirm:0
                 });
-                Collect(
-                    tmpPVDLCollect,
-                    {
-                        cr282_ma_phamvi:Text(idMa),
-                        cr282_ten_phamvi:"",
-                        cr282_dnbh:"",
-                        cr282_ghi_chu:"",
-                        cr282_mota:"",
-                        cr282_ma_sp:"",
-                        edited:1
-                    }
+                Refresh(DM_PHAMVI_DIALYS);
+                RemoveIf(
+                    DM_PHAMVI_DIALYS,
+                    MA_PHAMVI=maDelete
                 );
-                UpdateContext({maAdded:Text(idMa)})
-            )
-        Tooltip: ="Thêm mới"
-        Width: =40
-        X: =169
-        Y: =54
-        ZIndex: =11
+                Remove(tmpPVDLCollect,objDelete);
+                Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
+            Tooltip: ="OK"
+            Width: =47
+            X: =128
+            Y: =105
+            ZIndex: =2
 
-    IconFilterPV As icon.FilterFlat:
-        Color: =RGBA(71, 158, 245, 1)
-        DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
-        Height: =47
-        Icon: =Icon.FilterFlat
-        OnSelect: |-
-            =ClearCollect(
-                tmpPVDLCollect,
-                ShowColumns(
-                    AddColumns(
-                        SortByColumns(
-                            Filter(DM_PHAMVI_DIALYS,Or(TextFilterPV.Value="",Or(And(CbxFilterPV.Selected.Value="Mã phạm vi",StartsWith(MA_PHAMVI,TextFilterPV.Value)),And(CbxFilterPV.Selected.Value="Tên phạm vi",!IsBlank(Find(TextFilterPV.Value,TEN_PHAMVI)))))),
-                            "cr282_ma_phamvi",
-                            SortOrder.Ascending
-                        ),
-                        "edited",
-                        0
-                    ),
-                    "cr282_ma_phamvi",
-                    "cr282_ten_phamvi",
-                    "cr282_dnbh",
-                    "cr282_ghi_chu",
-                    "cr282_mota",
-                    "edited"
-                )
-            )
-        Tooltip: ="Lọc"
-        Width: =32
-        X: =802
-        Y: =54
-        ZIndex: =12
-
-    CbxFilterPV As Combobox.pcfdataset:
-        DefaultSelectedItems: =Filter(["Mã phạm vi", "Tên phạm vi"],Value="Mã phạm vi")
-        DisplayMode: =DisplayMode.Edit
-        Height: =43
-        InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
-        Items: =["Mã phạm vi", "Tên phạm vi"]
-        OnChange: =Reset(TextFilterPV)
-        Width: =152
-        X: =426
-        Y: =56
-        ZIndex: =13
-
-    LeftNavigation_12 As LeftNavigation_9:
-        Width: =LeftNavigation_12.MenuWidth
-        ZIndex: =14
+        CancelPV As icon.CancelBadge:
+            Color: =RGBA(233, 79, 76, 1)
+            Height: =46
+            Icon: =Icon.CancelBadge
+            OnSelect: |-
+                =UpdateContext({
+                    showConfirm:0,
+                    maDelete:Blank(),
+                    objDelete:Blank()
+                })
+            Tooltip: ="Hủy"
+            Width: =41
+            X: =261
+            Y: =105
+            ZIndex: =3
 
