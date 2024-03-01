@@ -315,13 +315,7 @@ DLSanPhamQLCT As screen:
             );
             Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
             Navigate(NhapChiTietSP);
-            UpdateIf(
-                tmpQLTVCollect,
-                true,
-                {
-                    che_do:0
-                }
-            );
+            Clear(tmpQLTVCollect);
         Tooltip: ="Lưu"
         Width: =53
         X: =1358
@@ -332,7 +326,9 @@ DLSanPhamQLCT As screen:
         Color: =RGBA(233, 79, 76, 1)
         Height: =48
         Icon: =Icon.CancelBadge
-        OnSelect: =Navigate(NhapChiTietSP)
+        OnSelect: |-
+            =Navigate(NhapChiTietSP);
+            Clear(tmpQLTVCollect);
         Tooltip: ="Hủy"
         Width: =54
         X: =1287

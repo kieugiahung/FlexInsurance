@@ -164,7 +164,6 @@
                 "cr282_loai",
                 "cr282_ma_nhom_ql",
                 "cr282_ma_nhom_tinhphi",
-                "cr282_ma_sp",
                 "cr282_phamvi_dialy",
                 "cr282_ten_hien_thi",
                 "edited"
@@ -183,7 +182,8 @@
                 ),
                 "cr282_ma_ql_chitiet",
                 "cr282_ma_nhomql_sp",
-                "cr282_ten_hien_thi"
+                "cr282_ten_hien_thi",
+                "cr282_ma_nhom_ql"
             )
         );
         UpdateContext({
@@ -1169,13 +1169,17 @@
                                     tmpQLCTTBCollect,
                                     ShowColumns(
                                         SortByColumns(
-                                            DL_SAN_PHAM_QLCT_CHONS,
+                                            Filter(
+                                                DL_SAN_PHAM_QLCT_CHONS,
+                                                MA_SAN_PHAM=valMaSP
+                                            ),
                                             "cr282_ma_ql_chitiet",
                                             SortOrder.Ascending
                                         ),
                                         "cr282_ma_ql_chitiet",
                                         "cr282_ma_nhomql_sp",
-                                        "cr282_ten_hien_thi"
+                                        "cr282_ten_hien_thi",
+                                        "cr282_ma_nhom_ql"
                                     )
                                 );
                                 Refresh(DL_SAN_PHAM_NHOMQLS);
@@ -1231,7 +1235,7 @@
                                 Notify("Bắt buộc nhập nhóm tính phí", NotificationType.Error,800),
                                 IsBlank(CbxCTADNQLSP_1.Selected.MA_CHUONG_TRINH),
                                 Notify("Bắt buộc nhập chương trình áp dụng", NotificationType.Error,800),
-                                CountIf(DL_SAN_PHAM_NHOMQLS,MA_SP=valMaSP && MA_NHOM_QL=CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL && MA_DL<>ThisItem.cr282_ma_dl)>0,
+                                CountIf(tmpNQLSPCollect,cr282_ma_nhom_ql=CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL && cr282_ma_dl<>ThisItem.cr282_ma_dl)>0,
                                 Notify("Đã tồn tại nhóm quyền lợi này trong sản phẩm", NotificationType.Error,800),
                                 If(
                                     ThisItem.cr282_ma_dl=maAddedNQLSP,
@@ -1254,10 +1258,8 @@
                                         {
                                             CHUONGTRINH_APDUNG:Concat(CbxCTADNQLSP_1.SelectedItems,MA_CHUONG_TRINH,"|"),
                                             LOAI:CbxLoaiNQLSP_1.Selected.Value,
-                                            MA_NHOM_QL:CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL,
                                             PHAMVI_DIALY:CbxPVDLNQLSP_1.Selected.MA_PHAMVI,
                                             MA_NHOM_TINHPHI:CbxNhomTPNQLSP_1.Selected.Value,
-                                            MA_SP:valMaSP,
                                             TEN_HIEN_THI:If(IsBlank(TextTenHTNQLSP_1.Text),LookUp(DM_NHOM_QUYENLOIS,MA_NHOM_QL=CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL,TEN_NHOM_QL),TextTenHTNQLSP_1.Text)
                                         }
                                     )
@@ -1266,14 +1268,12 @@
                                     tmpNQLSPCollect,
                                     cr282_ma_dl=ThisItem.cr282_ma_dl,
                                     {
-                                        cr282_ma_dl:ThisItem.cr282_ma_dl,
                                         cr282_chuongtrinh_apdung:Concat(CbxCTADNQLSP_1.SelectedItems,MA_CHUONG_TRINH,"|"),
                                         cr282_loai:CbxLoaiNQLSP_1.Selected.Value,
                                         cr282_ma_nhom_ql:CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL,
                                         cr282_phamvi_dialy:CbxPVDLNQLSP_1.Selected.MA_PHAMVI,
                                         cr282_ma_nhom_tinhphi:CbxNhomTPNQLSP_1.Selected.Value,
                                         cr282_ten_hien_thi:If(IsBlank(TextTenHTNQLSP_1.Text),LookUp(DM_NHOM_QUYENLOIS,MA_NHOM_QL=CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL,TEN_NHOM_QL),TextTenHTNQLSP_1.Text),
-                                        cr282_ma_sp:valMaSP,
                                         edited:0
                                     }
                                 );
@@ -1298,7 +1298,6 @@
                                         "cr282_loai",
                                         "cr282_ma_nhom_ql",
                                         "cr282_ma_nhom_tinhphi",
-                                        "cr282_ma_sp",
                                         "cr282_phamvi_dialy",
                                         "cr282_ten_hien_thi",
                                         "edited"
@@ -1586,9 +1585,9 @@
                             Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                             UpdateContext({
                                 idMaNQLSP:If(
-                                    CountIf(DL_SAN_PHAM_NHOMQLS,MA_SP=valMaSP)=0,
+                                    CountIf(DL_SAN_PHAM_NHOMQLS,true)=0,
                                     1000,
-                                    Value(Last(SortByColumns(Filter(DL_SAN_PHAM_NHOMQLS,MA_SP=valMaSP),"cr282_ma_dl",SortOrder.Ascending)).MA_DL)+1
+                                    Value(Last(SortByColumns(DL_SAN_PHAM_NHOMQLS,"cr282_ma_dl",SortOrder.Ascending)).MA_DL)+1
                                 )
                             });
                             Collect(
@@ -1599,7 +1598,6 @@
                                     cr282_loai:Blank(),
                                     cr282_ma_nhom_ql:Blank(),
                                     cr282_ma_nhom_tinhphi:Blank(),
-                                    cr282_ma_sp:valMaSP,
                                     cr282_phamvi_dialy:Blank(),
                                     cr282_ten_hien_thi:Blank(),
                                     edited:1
@@ -1695,15 +1693,15 @@
 
                     TextTenYTAH_4 As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =LookUp(DM_NHOM_QUYENLOIS,MA_NHOM_QL=LookUp(DM_QUYENLOI_CHITIETS,MA_QL_CHITIET=ThisItem.cr282_ma_ql_chitiet,MA_NHOM_QL),TEN_NHOM_QL)
+                        Default: =LookUp(DM_NHOM_QUYENLOIS,MA_NHOM_QL=ThisItem.cr282_ma_nhom_ql,TEN_NHOM_QL)
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =DisplayMode.Disabled
                         OnChange: =
                         OnSelect: =Select(Parent)
-                        Width: =265
-                        X: =8
+                        Width: =256
+                        X: =181
                         ZIndex: =9
 
                     TextTenYTAH_5 As text:
@@ -1715,8 +1713,8 @@
                         DisplayMode: =DisplayMode.Disabled
                         OnChange: =
                         OnSelect: =Select(Parent)
-                        Width: =504
-                        X: =280
+                        Width: =423
+                        X: =437
                         ZIndex: =10
 
                     TextTenYTAH_6 As text:
@@ -1728,9 +1726,22 @@
                         DisplayMode: =DisplayMode.Disabled
                         OnChange: =
                         OnSelect: =Select(Parent)
-                        Width: =405
-                        X: =784
+                        Width: =327
+                        X: =861
                         ZIndex: =11
+
+                    TextMaQLCTQLCTTB As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_ma_ql_chitiet
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =169
+                        X: =12
+                        ZIndex: =12
 
                 BadgeCanvas1_21 As Badge:
                     BasePaletteColor: =
@@ -1751,7 +1762,7 @@
                     Text: ="Nhóm quyền lợi"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =123
-                    X: =38
+                    X: =200
                     Y: =104
                     ZIndex: =3
 
@@ -1763,7 +1774,7 @@
                     Text: ="Tên quyền lợi"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =128
-                    X: =294
+                    X: =453
                     Y: =104
                     ZIndex: =5
 
@@ -1775,7 +1786,7 @@
                     Text: ="Tên hiển thị"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =96
-                    X: =803
+                    X: =874
                     Y: =104
                     ZIndex: =6
 
@@ -1831,22 +1842,25 @@
                                 SortByColumns(
                                     Filter(
                                         DL_SAN_PHAM_QLCT_CHONS,
-                                        Or(
-                                            And(
-                                                TextFilterQLCTTB_1.Value="",
-                                                loaiFilterQLCTTB=0
-                                            ),
-                                            And(
-                                                IsBlank(CbxFilterValueQLCTTB_1.Selected.MA_NHOM_QL),
-                                                loaiFilterQLCTTB=1
-                                            ),
-                                            And(
-                                                CbxFilterQLCTTB_1.Selected.Value="Nhóm quyền lợi",
-                                                !IsBlank(LookUp(filterNQLSPCollectNQL,MA_QLCT=MA_QL_CHITIET))
-                                            ),
-                                            And(
-                                                CbxFilterQLCTTB_1.Selected.Value="Tên quyền lợi",
-                                                !IsBlank(LookUp(filterNQLSPCollect,MA_QLCT=MA_QL_CHITIET))
+                                        And(
+                                            MA_SAN_PHAM=valMaSP,
+                                            Or(
+                                                And(
+                                                    TextFilterQLCTTB_1.Value="",
+                                                    loaiFilterQLCTTB=0
+                                                ),
+                                                And(
+                                                    IsBlank(CbxFilterValueQLCTTB_1.Selected.MA_NHOM_QL),
+                                                    loaiFilterQLCTTB=1
+                                                ),
+                                                And(
+                                                    CbxFilterQLCTTB_1.Selected.Value="Nhóm quyền lợi",
+                                                    !IsBlank(LookUp(filterNQLSPCollectNQL,MA_QLCT=MA_QL_CHITIET))
+                                                ),
+                                                And(
+                                                    CbxFilterQLCTTB_1.Selected.Value="Tên quyền lợi",
+                                                    !IsBlank(LookUp(filterNQLSPCollect,MA_QLCT=MA_QL_CHITIET))
+                                                )
                                             )
                                         )
                                     ),
@@ -1855,7 +1869,8 @@
                                 ),
                                 "cr282_ma_ql_chitiet",
                                 "cr282_ma_nhomql_sp",
-                                "cr282_ten_hien_thi"
+                                "cr282_ten_hien_thi",
+                                "cr282_ma_nhom_ql"
                             )
                         )
                     Tooltip: ="Lọc"
@@ -1908,6 +1923,18 @@
                         FieldVariantName: ="textualColumn"
                         Order: =2
                         ZIndex: =20
+
+                TextCanvas2_168 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =38
+                    Size: =14
+                    Text: ="Mã quyền lợi"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =123
+                    X: =35
+                    Y: =104
+                    ZIndex: =19
 
             "'3.3 Thongtinqlkhac' As groupContainer.manualLayoutContainer":
                 Height: =322
