@@ -24,23 +24,23 @@ TraCuuSP As screen:
                 DelayItemLoading: =true
                 Height: =551
                 Items: |-
-                    =SortByColumns(DL_SAN_PHAM,"cr282_ma",SortOrder.Ascending)
-                    /*SortByColumns(
+                    =//SortByColumns(DL_SAN_PHAM,"cr282_ma",SortOrder.Ascending)
+                    SortByColumns(
                         Filter(
                             DL_SAN_PHAM,
                             If(
                                 !IsBlank(TxtFilterMSP.Text),
-                                MA_SAN_PHAM = TxtFilterMSP.Text,true
-                            ) && 
-                            LHNV = Drop_Filter_LHNV.Selected.Value// && HL_TU >= Date_HLT.SelectedDate
-                                        //&& If(
-                    //!IsBlank(HL_DEN) && !IsBlank(Date_HLD.SelectedDate),
-                    //HL_DEN <= Date_HLD.SelectedDate
-                    //)
+                                TxtFilterMSP.Text in MA_SAN_PHAM,
+                                true
+                            ) && LHNV = Drop_Filter_LHNV.Selected.Value && HL_TU >= Date_HLT.SelectedDate && 
+                            If(
+                                !IsBlank(Date_HLD.SelectedDate) && !IsBlank(HL_DEN),
+                                HL_DEN <= Date_HLD.SelectedDate,true
+                            )
                         ),
                         "cr282_ma",
                         SortOrder.Ascending
-                    )*/
+                    )
                 Layout: =Layout.Vertical
                 LoadingSpinner: =LoadingSpinner.Data
                 NavigationStep: =0
@@ -306,6 +306,11 @@ TraCuuSP As screen:
 
             TxtFilterMSP As text:
                 Default: =
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
                 Width: =160
                 X: =157
                 Y: =37
@@ -319,6 +324,7 @@ TraCuuSP As screen:
                 ZIndex: =17
 
             Drop_Filter_LHNV As dropdown:
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 Items: =["Sức khỏe","Tai nạn","Trách nhiệm dân sự"]
                 Width: =203
                 X: =514
@@ -333,7 +339,9 @@ TraCuuSP As screen:
                 ZIndex: =19
 
             Date_HLT As datepicker:
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 Format: ="dd/mm/yyyy"
+                InputTextPlaceholder: =
                 Width: =203
                 X: =842
                 Y: =37
@@ -347,7 +355,11 @@ TraCuuSP As screen:
                 ZIndex: =21
 
             Date_HLD As datepicker:
+                BorderColor: =RGBA(12, 59, 94, 1)
+                DefaultDate: =
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 Format: ="dd/mm/yyyy"
+                InputTextPlaceholder: =
                 Width: =203
                 X: =1205
                 Y: =37
