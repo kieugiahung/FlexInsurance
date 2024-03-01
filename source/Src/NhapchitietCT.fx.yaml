@@ -92,7 +92,7 @@
                     SortByColumns(
                         Filter(
                             DL_CHUONGTRINH_QLCTS,
-                            MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=objCT.MA_SAN_PHAM
+                            MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SAN_PHAM=objCT.MA_SAN_PHAM
                         ),
                         "cr282_ma_ql_ct",
                         SortOrder.Ascending
@@ -112,8 +112,6 @@
                 "cr282_pt_tu_chitra",
                 "cr282_so_tien_bh",
                 "cr282_tt_hienthi",
-                "cr282_ma_san_pham",
-                "cr282_ma_chuong_trinh",
                 "edited"
             )
         );
@@ -128,7 +126,7 @@
                     SortByColumns(
                         Filter(
                             DL_CHUONGTRINH_QL_KHACS,
-                            MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=objCT.MA_SAN_PHAM
+                            MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SAN_PHAM=objCT.MA_SAN_PHAM
                         ),
                         "cr282_ma_dl_ct",
                         SortOrder.Ascending
@@ -137,8 +135,6 @@
                     0
                 ),
                 "cr282_ma_dl_ct",
-                "cr282_ma_san_pham",
-                "cr282_ma_chuong_trinh",
                 "cr282_ma_nhom_ql_ct",
                 "cr282_mo_ta_ct",
                 "edited"
@@ -1192,13 +1188,12 @@
                                     Patch(
                                         DL_CHUONGTRINH_DKCHUNGS,
                                         {
-                                            //cuongbs
                                             MA_DIEU_KHOAN:ThisItem.cr282_ma_dieu_khoan,
                                             NHOM_THONG_TIN:CbxNhomTTDKCCT.Selected.Value,
                                             THONG_TIN:CbxTTinDKCCT.Selected.MA_TTIN,
                                             NOI_DUNG:TiNDDCKCT.Text,
                                             MA_CHUONG_TRINH:objCT.MA_CHUONG_TRINH,
-                                            MA_SP:objCT.MA_SAN_PHAM
+                                            MA_SAN_PHAM:objCT.MA_SAN_PHAM
                                         }
                                     ),
                                     UpdateIf(
@@ -1207,9 +1202,7 @@
                                         {
                                             NHOM_THONG_TIN:CbxNhomTTDKCCT.Selected.Value,
                                             THONG_TIN:CbxTTinDKCCT.Selected.MA_TTIN,
-                                            NOI_DUNG:TiNDDCKCT.Text,
-                                            MA_CHUONG_TRINH:objCT.MA_CHUONG_TRINH,
-                                            MA_SP:objCT.MA_SAN_PHAM
+                                            NOI_DUNG:TiNDDCKCT.Text
                                         }
                                     )
                                 );
@@ -1231,8 +1224,7 @@
                                             SortByColumns(
                                                 Filter(
                                                     DL_CHUONGTRINH_DKCHUNGS,
-                                                    //cuong_bs
-                                                    MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SP=objCT.MA_SAN_PHAM
+                                                    MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SAN_PHAM=objCT.MA_SAN_PHAM
                                                 ),
                                                 "cr282_ma_dieu_khoan",
                                                 SortOrder.Ascending
@@ -1657,8 +1649,6 @@
                                         "cr282_pt_tu_chitra",
                                         "cr282_so_tien_bh",
                                         "cr282_tt_hienthi",
-                                        "cr282_ma_san_pham",
-                                        "cr282_ma_chuong_trinh",
                                         "edited"
                                     )
                                 );
@@ -2062,7 +2052,7 @@
                                     SortByColumns(
                                         Filter(
                                             DL_CHUONGTRINH_QLCTS,
-                                            MA_CHUONG_TRINH=VarCT && MA_SAN_PHAM=objCT.MA_SAN_PHAM
+                                            MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SAN_PHAM=objCT.MA_SAN_PHAM
                                         ),
                                         "cr282_ma_ql_ct",
                                         SortOrder.Ascending
@@ -2082,8 +2072,6 @@
                                 "cr282_pt_tu_chitra",
                                 "cr282_so_tien_bh",
                                 "cr282_tt_hienthi",
-                                "cr282_ma_san_pham",
-                                "cr282_ma_chuong_trinh",
                                 "edited"
                             )
                         );
@@ -2123,8 +2111,6 @@
                                     cr282_pt_tu_chitra:Blank(),
                                     cr282_so_tien_bh:Blank(),
                                     cr282_tt_hienthi:Blank(),
-                                    cr282_ma_san_pham:objCT.MA_SAN_PHAM,
-                                    cr282_ma_chuong_trinh:objCT.MA_CHUONG_TRINH,
                                     edited:1
                                 }
                             );
@@ -2447,7 +2433,6 @@
                                     Patch(
                                         DL_CHUONGTRINH_QL_KHACS,
                                         {
-                                            //cuongbs
                                             MA_DL_CT:ThisItem.cr282_ma_dl_ct,
                                             MA_SAN_PHAM:objCT.MA_SAN_PHAM,
                                             MA_CHUONG_TRINH:objCT.MA_CHUONG_TRINH,
@@ -2490,8 +2475,6 @@
                                             0
                                         ),
                                         "cr282_ma_dl_ct",
-                                        "cr282_ma_san_pham",
-                                        "cr282_ma_chuong_trinh",
                                         "cr282_ma_nhom_ql_ct",
                                         "cr282_mo_ta_ct",
                                         "edited"
@@ -2644,8 +2627,6 @@
                                     0
                                 ),
                                 "cr282_ma_dl_ct",
-                                "cr282_ma_san_pham",
-                                "cr282_ma_chuong_trinh",
                                 "cr282_ma_nhom_ql_ct",
                                 "cr282_mo_ta_ct",
                                 "edited"
