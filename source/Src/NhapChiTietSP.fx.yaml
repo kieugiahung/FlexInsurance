@@ -3714,17 +3714,17 @@
 
                 LuuYeuTo_1 As button:
                     OnSelect: |
-                        =If(
-                            CountRows(DL_SAN_PHAM_MATRANPHI) > 0,
-                            RemoveIf(
-                                DL_SAN_PHAM_MATRANPHI,
-                                MA_SAN_PHAM = valMaSP
-                            )
+                        =RemoveIf(
+                            DL_SAN_PHAM_MATRANPHI,
+                            MA_SAN_PHAM = valMaSP
                         );
                         If(
                             !IsEmpty(DL_SAN_PHAM_BANGYT),
                             ForAll(
-                                Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM = valMaSP )As ct,
+                                Filter(
+                                    DL_SAN_PHAM_BANGYT,
+                                    MA_SAN_PHAM = valMaSP
+                                )As ct,
                                 If(
                                     ct.DO_TUOI = true && CountRows(Datafield_DT_1.SelectedItems) > 0,
                                     ForAll(
@@ -12341,7 +12341,9 @@
                     ZIndex: =13
 
             ButtonCanvas3 As Button:
+                BasePaletteColor: =
                 DisplayMode: =DisplayMode.Edit
+                FontColor: =
                 Height: =32
                 OnSelect: =Back();
                 Text: ="Quay lại"
