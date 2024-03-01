@@ -616,7 +616,8 @@ ThemMoi As screen:
                     DefaultDate: =ThisItem.HL_TU
                     DisplayMode: =Parent.DisplayMode
                     EndYear: =Year(Today())+100
-                    InputTextPlaceholder: =If(IsBlank(Self.SelectedDate), Text(Today(), Self.Format, Self.Language))
+                    Format: ="dd/mm/yyyy"
+                    InputTextPlaceholder: =
                     IsEditable: =true
                     PaddingBottom: =0
                     PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
@@ -699,6 +700,7 @@ ThemMoi As screen:
                     DefaultDate: =ThisItem.HL_DEN
                     DisplayMode: =Parent.DisplayMode
                     EndYear: =Year(Today())+100
+                    Format: ="dd/mm/yyyy"
                     InputTextPlaceholder: =
                     IsEditable: =true
                     PaddingBottom: =0
@@ -771,6 +773,11 @@ ThemMoi As screen:
                 
                 If(IsBlank(errorMsg),
                 If(IsBlank(DateValue1.SelectedDate), UpdateContext({errorMsg:"Hiệu lực từ là bắt buộc"})));
+                
+                If(IsBlank(errorMsg),
+                If(!IsBlank(DateValue2.SelectedDate), 
+                If(DateValue1.SelectedDate > DateValue2.SelectedDate,
+                UpdateContext({errorMsg:"Hiệu lực đến phải sau hoặc bằng hiệu lực từ"}))));
                 
                 If(!IsBlank(errorMsg),
                 Notify(errorMsg, NotificationType.Error,800), 
