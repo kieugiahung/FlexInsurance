@@ -98,7 +98,9 @@
                         SortOrder.Ascending
                     ),
                     "edited",
-                    0
+                    0,
+                    "idQLCT",
+                    "0"
                 ),
                 "cr282_ma_ql_ct",
                 "cr282_gh_solan_nam",
@@ -112,7 +114,9 @@
                 "cr282_pt_tu_chitra",
                 "cr282_so_tien_bh",
                 "cr282_tt_hienthi",
-                "edited"
+                "cr282_ten_quyen_loi_ht",
+                "edited",
+                "idQLCT"
             )
         );
         UpdateContext({
@@ -1564,8 +1568,13 @@
                                 Notify("Bắt buộc nhập nhóm quyền lợi", NotificationType.Error,800),
                                 IsBlank(CbxQLQLCTCT.Selected.MA_QL_CHITIET),
                                 Notify("Bắt buộc nhập quyền lợi", NotificationType.Error,800),
+                                CountIf(
+                                    tmpQLCTCTCollect,
+                                    cr282_ma_ql_ct=CbxQLQLCTCT.Selected.MA_QL_CHITIET && idQLCT<>ThisItem.idQLCT
+                                ),
+                                Notify("Bắt buộc nhập quyền lợi", NotificationType.Error,800),
                                 If(
-                                    ThisItem.cr282_ma_ql_ct=maAddedQLCTCT,
+                                    ThisItem.idQLCT=maAddedQLCTCT,
                                     Patch(
                                         DL_CHUONGTRINH_QLCTS,
                                         {
@@ -1582,7 +1591,8 @@
                                             GH_SOTIEN_NGAY:Value(TiGHSTNgay.Text),
                                             GH_SOTIEN_VU:Value(TiGHSTVu.Text),
                                             PT_TU_CHITRA:Value(TiTuChiTra.Text),
-                                            SO_TIEN_BH:Value(TiSTBH.Text)
+                                            SO_TIEN_BH:Value(TiSTBH.Text),
+                                            TEN_QUYEN_LOI_HT:TiTenQLHTQLCTCT.Text
                                         }
                                     ),
                                     UpdateIf(
@@ -1599,7 +1609,8 @@
                                             GH_SOTIEN_NGAY:Value(TiGHSTNgay.Text),
                                             GH_SOTIEN_VU:Value(TiGHSTVu.Text),
                                             PT_TU_CHITRA:Value(TiTuChiTra.Text),
-                                            SO_TIEN_BH:Value(TiSTBH.Text)
+                                            SO_TIEN_BH:Value(TiSTBH.Text),
+                                            TEN_QUYEN_LOI_HT:TiTenQLHTQLCTCT.Text
                                         }
                                     )
                                 );
@@ -1618,7 +1629,9 @@
                                         cr282_gh_sotien_vu:Value(TiGHSTVu.Text),
                                         cr282_pt_tu_chitra:Value(TiTuChiTra.Text),
                                         cr282_so_tien_bh:Value(TiSTBH.Text),
-                                        edited:0
+                                        cr282_ten_quyen_loi_ht:TiTenQLHTQLCTCT.Text,
+                                        edited:0,
+                                        idQLCT:"0"
                                     }
                                 );
                                 Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
@@ -1635,7 +1648,9 @@
                                                 SortOrder.Ascending
                                             ),
                                             "edited",
-                                            0
+                                            0,
+                                            "idQLCT",
+                                            "0"
                                         ),
                                         "cr282_ma_ql_ct",
                                         "cr282_gh_solan_nam",
@@ -1649,7 +1664,9 @@
                                         "cr282_pt_tu_chitra",
                                         "cr282_so_tien_bh",
                                         "cr282_tt_hienthi",
-                                        "edited"
+                                        "cr282_ten_quyen_loi_ht",
+                                        "edited",
+                                        "idQLCT"
                                     )
                                 );
                                 UpdateContext({
@@ -1672,13 +1689,14 @@
                         Height: =28
                         OnSelect: |-
                             =If(
-                                ThisItem.cr282_ma_ql_ct=maAddedQLCTCT,
+                                ThisItem.idQLCT=maAddedQLCTCT,
                                 Remove(tmpQLCTCTCollect,ThisItem),
                                 UpdateIf(
                                     tmpQLCTCTCollect,
                                     cr282_ma_ql_ct=ThisItem.cr282_ma_ql_ct,
                                     {
-                                        edited:0
+                                        edited:0,
+                                        idQLCT:"0"
                                     }
                                 )
                             );
@@ -1734,7 +1752,7 @@
 
                     TiTenQLHTQLCTCT As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =LookUp(DL_SAN_PHAM_QLCT_CHONS,MA_QL_CHITIET=ThisItem.cr282_ma_ql_ct,TEN_HIEN_THI)
+                        Default: =ThisItem.cr282_ten_quyen_loi_ht
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
@@ -2058,7 +2076,9 @@
                                         SortOrder.Ascending
                                     ),
                                     "edited",
-                                    0
+                                    0,
+                                    "idQLCT",
+                                    "0"
                                 ),
                                 "cr282_ma_ql_ct",
                                 "cr282_gh_solan_nam",
@@ -2072,7 +2092,9 @@
                                 "cr282_pt_tu_chitra",
                                 "cr282_so_tien_bh",
                                 "cr282_tt_hienthi",
-                                "edited"
+                                "cr282_ten_quyen_loi_ht",
+                                "edited",
+                                "idQLCT"
                             )
                         );
                         UpdateContext({
@@ -2099,7 +2121,7 @@
                             Collect(
                                 tmpQLCTCTCollect,
                                 {
-                                    cr282_ma_ql_ct:"99999",
+                                    cr282_ma_ql_ct:Blank(),
                                     cr282_gh_solan_nam:Blank(),
                                     cr282_gh_songay_nam:Blank(),
                                     cr282_gh_sotien_benh:Blank(),
@@ -2111,10 +2133,12 @@
                                     cr282_pt_tu_chitra:Blank(),
                                     cr282_so_tien_bh:Blank(),
                                     cr282_tt_hienthi:Blank(),
-                                    edited:1
+                                    cr282_ten_quyen_loi_ht:Blank(),
+                                    edited:1,
+                                    idQLCT:"1"
                                 }
                             );
-                            UpdateContext({maAddedQLCTCT:"99999"})
+                            UpdateContext({maAddedQLCTCT:"1"})
                         )
                     Text: ="Thêm mới"
                     Width: =102
