@@ -3184,7 +3184,7 @@
                         )
                     Size: =13
                     Text: ="Thêm mới"
-                    Y: =84
+                    Y: =32
                     ZIndex: =11
 
                 TextCanvas2_146 As Text:
@@ -3298,6 +3298,110 @@
                     X: =994
                     Y: =120
                     ZIndex: =23
+
+                Button1_1 As button:
+                    Height: =31
+                    OnSelect: |-
+                        =
+                        Set(varAnhHienCTPhi, true);
+                    Size: =13
+                    Text: ="Sao chép từ CT khác"
+                    Width: =224
+                    X: =186
+                    Y: =77
+                    ZIndex: =24
+
+                Button2_1 As button:
+                    Height: =33
+                    OnSelect: |
+                        =
+                        // xoá dữ liệu quyền lợi chi tiết của chương trình hiện tại
+                        RemoveIf(
+                            DL_CHUONG_TRINH_BANG_PHIS,
+                            MA_SAN_PHAM = "" && MA_CHUONG_TRINH = ""
+                        );
+                        // lấy dữ liệu từ chương trình được chọn
+                        ClearCollect(
+                            temPhiCtrinh,
+                            Filter(
+                                DL_CHUONG_TRINH_BANG_PHIS,
+                                MA_SAN_PHAM = "" && MA_CHUONG_TRINH = CtPhi.Selected.MA_CHUONG_TRINH
+                            )
+                        );
+                        // insert dữ liệu được chọn vào bảng
+                        ForAll(
+                            temPhiCtrinh As ct,
+                            Patch(
+                                DL_CHUONG_TRINH_BANG_PHIS,
+                                Defaults(DL_CHUONG_TRINH_BANG_PHIS),
+                                {
+                                        MA_BANG_PHI:ct.MA_BANG_PHI,
+                                        MA_SAN_PHAM:"",
+                                        MA_CHUONG_TRINH:"", 
+                                        TEN_CHUONG_TRINH:"",
+                                        TEN_SAN_PHAM:"",
+                                        MA_DO_TUOI: ct.MA_DO_TUOI, 
+                                        PHI_BH:ct.PHI_BH,
+                                        PTHUC_DONG_PHI: ct.PTHUC_DONG_PHI,
+                                        THOI_HAN_BH:ct.THOI_HAN_BH,
+                                        SO_TIEN:ct.SO_TIEN,
+                                        NHOM_NGANH_NGHE:ct.NHOM_NGANH_NGHE,
+                                        MA_GIOI_TINH:ct.MA_GIOI_TINH,
+                                        MA_PHAMVI_DIALY:ct.MA_PHAMVI_DIALY,
+                                        NHOM_TINH_PHI:"",
+                                        TYLE_PHI:ct.TYLE_PHI
+                                }
+                            )
+                        );
+                    Size: =13
+                    Text: ="Sao phép"
+                    Visible: =varAnhHienCTPhi
+                    Width: =179
+                    X: =990
+                    Y: =77
+                    ZIndex: =25
+
+                Label5_1 As label:
+                    Height: =33
+                    Text: ="Chương trình gốc"
+                    Visible: =varAnhHienCTPhi
+                    Width: =169
+                    X: =531
+                    Y: =77
+                    ZIndex: =26
+
+                CtPhi As dropdown:
+                    BorderColor: =RGBA(50, 86, 160, 1)
+                    ChevronBackground: =RGBA(255, 255, 255, 1)
+                    ChevronDisabledBackground: =RGBA(153, 207, 236, 1)
+                    ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                    ChevronFill: =RGBA(39, 113, 194, 1)
+                    ChevronHoverBackground: =RGBA(212, 212, 212, 1)
+                    ChevronHoverFill: =RGBA(33, 33, 33, 1)
+                    Color: =RGBA(51, 51, 51, 1)
+                    DisabledBorderColor: =RGBA(153, 207, 236, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    Height: =34
+                    HoverBorderColor: =RGBA(9, 33, 98, 1)
+                    HoverColor: =RGBA(51, 51, 51, 1)
+                    HoverFill: =RGBA(212, 212, 212, 1)
+                    Items: |
+                        =Filter(' DL_SAN_PHAM_CT', MA_SAN_PHAM = "TRONG_ANH_CARE" && TRANG_THAI = 1 && MA_CHUONG_TRINH <> "TRONG_ANH_CARE_001" )
+                    OnSelect: =Filter(' DL_SAN_PHAM_CT', MA_SAN_PHAM = "TRONG_ANH_CARE" && TRANG_THAI = 1 && MA_CHUONG_TRINH <> "TRONG_ANH_CARE_001" )
+                    PaddingBottom: =5
+                    PaddingLeft: =5
+                    PaddingRight: =5
+                    PaddingTop: =5
+                    PressedBorderColor: =ColorFade(RGBA(202, 80, 16, 1), -30%)
+                    PressedColor: =RGBA(127, 178, 57, 1)
+                    PressedFill: =RGBA(237, 237, 237, 1)
+                    SelectionFill: =RGBA(237, 237, 237, 1)
+                    Visible: =varAnhHienCTPhi
+                    Width: =221
+                    X: =692
+                    Y: =77
+                    ZIndex: =27
 
     LeftNavigation_23 As LeftNavigation_9:
         Width: =LeftNavigation_23.MenuWidth
