@@ -346,11 +346,24 @@ DMNhomQuyenLoi As screen:
             Y: =60
             ZIndex: =8
 
-        IconFilterNQL As icon.FilterFlat:
-            Color: =RGBA(71, 158, 245, 1)
+        CbxFilterNQL As Combobox.pcfdataset:
+            DefaultSelectedItems: =Filter(["Mã nhóm quyền lợi", "Tên nhóm quyền lợi"],Value="Mã nhóm quyền lợi")
+            DisplayMode: =DisplayMode.Edit
+            Height: =43
+            InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
+            Items: =["Mã nhóm quyền lợi", "Tên nhóm quyền lợi"]
+            OnChange: =Reset(TextFilterNQL)
+            Width: =186
+            X: =324
+            Y: =55
+            ZIndex: =10
+
+        ButtonCanvas4_3 As Button:
+            BasePaletteColor: =
             DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
-            Height: =47
-            Icon: =Icon.FilterFlat
+            FontColor: =
+            FontSize: =16
+            Height: =43
             OnSelect: |-
                 =ClearCollect(
                     tmpNQLCollect,
@@ -364,11 +377,11 @@ DMNhomQuyenLoi As screen:
                                         Or(
                                             And(
                                                 CbxFilterNQL.Selected.Value="Mã nhóm quyền lợi",
-                                                StartsWith(MA_NHOM_QL,TextFilterNQL.Value)
+                                                !IsBlank(Find(Lower(TextFilterNQL.Value),Lower(MA_NHOM_QL)))
                                             ),
                                             And(
                                                 CbxFilterNQL.Selected.Value="Tên nhóm quyền lợi",
-                                                !IsBlank(Find(TextFilterNQL.Value,TEN_NHOM_QL))
+                                                !IsBlank(Find(Lower(TextFilterNQL.Value),Lower(TEN_NHOM_QL)))
                                             )
                                         )
                                     )
@@ -385,23 +398,11 @@ DMNhomQuyenLoi As screen:
                         "edited"
                     )
                 )
-            Tooltip: ="Lọc"
-            Width: =32
-            X: =734
-            Y: =54
-            ZIndex: =9
-
-        CbxFilterNQL As Combobox.pcfdataset:
-            DefaultSelectedItems: =Filter(["Mã nhóm quyền lợi", "Tên nhóm quyền lợi"],Value="Mã nhóm quyền lợi")
-            DisplayMode: =DisplayMode.Edit
-            Height: =43
-            InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
-            Items: =["Mã nhóm quyền lợi", "Tên nhóm quyền lợi"]
-            OnChange: =Reset(TextFilterNQL)
-            Width: =152
-            X: =358
+            Text: ="Tra cứu"
+            Width: =96
+            X: =733
             Y: =55
-            ZIndex: =10
+            ZIndex: =11
 
     ContainerConfirmNQL As groupContainer.manualLayoutContainer:
         BorderColor: =RGBA(180, 214, 250, 1)
@@ -440,6 +441,11 @@ DMNhomQuyenLoi As screen:
                         MA_NHOM_QL=maDelete
                     )>0,
                     Notify("Đã tồn tại quyền lợi chi tiết gắn với nhóm quyền lợi này", NotificationType.Error,800),
+                    CountIf(
+                        DM_NHOMQL_LHNVS,
+                        MA_NHOM_QL=maDelete
+                    )>0,
+                    Notify("Đã tồn tại dữ liệu cấu hình nhóm quyền lợi theo loại hình nghiệp vụ gắn với nhóm quyền lợi này", NotificationType.Error,800),
                     Refresh(DM_NHOM_QUYENLOIS);
                     RemoveIf(
                         DM_NHOM_QUYENLOIS,
