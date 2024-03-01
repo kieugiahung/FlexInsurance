@@ -25,7 +25,7 @@ TraCuuBangPhi As screen:
                 "cr282_tyle_phi"
             )
         );
-        Clear(tmpDSCTTCBPCollect)
+        Clear(tmpDSCTTCBPCollect);Clear(tmpDSNhomTPTCBPCollect)
     Width: =Max(1370, App.MinScreenWidth)
 
     ContainerTCBP As groupContainer.manualLayoutContainer:
@@ -380,11 +380,11 @@ TraCuuBangPhi As screen:
                 Clear(tmpDSTCBPCollect); Refresh(DL_SAN_PHAM_NHOMQLS);
                 Reset(CbxMaSPTCBP);Reset(CbxMaCTTCBP);Reset(CbxNhomTPTCBP);Reset(CbxDTTCBP);Reset(CbxGTTCBP);Reset(CbxPVTCBP);
                 Reset(TiPhiTuTCBP);Reset(TiPhiDenTCBP);
-                Clear(tmpDSCTTCBPCollect)
+                Clear(tmpDSCTTCBPCollect);Clear(tmpDSNhomTPTCBPCollect)
             Text: ="Tải lại"
             Width: =76
             X: =1004
-            Y: =165
+            Y: =164
             ZIndex: =16
 
         TextCanvas2_154 As Text:
@@ -535,10 +535,10 @@ TraCuuBangPhi As screen:
                                 ' DL_SAN_PHAM_CT',
                                 MA_SAN_PHAM=CbxMaSPTCBP.Selected.MA_SAN_PHAM
                             ),
-                            "cr282_ma_chuong_trinh",
+                            "cr282_ma_chuongtrinh",
                             SortOrder.Ascending
                         ),
-                        "cr282_ma_chuong_trinh",
+                        "cr282_ma_chuongtrinh",
                         "cr282_ten_chuong_trinh"
                     )
                 );
@@ -655,21 +655,32 @@ TraCuuBangPhi As screen:
             ZIndex: =40
 
         CbxMaCTTCBP As Combobox.pcfdataset:
+            BasePaletteColor: =
             DisplayMode: =DisplayMode.Edit
             Height: =32
             InputTextPlaceholder: ="Nhập giá trị lọc"
-            Items: =SortByColumns(tmpDSCTTCBPCollect,"cr282_ma_chuong_trinh",SortOrder.Ascending)
+            Items: =SortByColumns(tmpDSCTTCBPCollect,"cr282_ma_chuongtrinh",SortOrder.Ascending)
             OnChange: |-
                 =ClearCollect(
                     tmpDSTCBPCollect,
                     ShowColumns(
                         Filter(
                             DL_CHUONG_TRINH_BANG_PHIS,
-                            MA_SAN_PHAM=CbxMaSPTCBP.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=CbxMaCTTCBP.Selected.cr282_ma_chuong_trinh
+                            MA_SAN_PHAM=CbxMaSPTCBP.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh
                         ),
                         "cr282_ma_phamvi_dialy",
                         "cr282_ma_do_tuoi",
                         "cr282_ma_gioi_tinh"
+                    )
+                );
+                ClearCollect(
+                    tmpDSNhomTPTCBPCollect,
+                    Distinct(
+                        Filter(
+                            DL_SAN_PHAM_NHOMQLS,
+                            MA_SP=CbxMaSPTCBP.Selected.MA_SAN_PHAM && !IsBlank(Find(CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh,CHUONGTRINH_APDUNG))
+                        ),
+                        MA_NHOM_TINHPHI
                     )
                 );
             Width: =200
@@ -677,53 +688,21 @@ TraCuuBangPhi As screen:
             Y: =51
             ZIndex: =41
 
-            ID1 As pcfDataField.textualColumn:
-                FieldDisplayName: ="ID"
-                FieldName: ="cr282_ma_chuong_trinh"
+            cr282_ma_chuongtrinh1 As pcfDataField.textualColumn:
+                FieldDisplayName: ="cr282_ma_chuongtrinh"
+                FieldName: ="cr282_ma_chuongtrinh"
                 FieldType: ="s"
                 FieldVariantName: ="textualColumn"
                 Order: =2
-                ZIndex: =71
+                ZIndex: =97
 
-            TEN_CHUONG_TRINH1 As pcfDataField.textualColumn:
-                FieldDisplayName: ="TEN_CHUONG_TRINH"
+            cr282_ten_chuong_trinh1 As pcfDataField.textualColumn:
+                FieldDisplayName: ="cr282_ten_chuong_trinh"
                 FieldName: ="cr282_ten_chuong_trinh"
                 FieldType: ="s"
                 FieldVariantName: ="textualColumn"
                 Order: =1
-                ZIndex: =72
-
-            MA_SAN_PHAM2 As pcfDataField.textualColumn:
-                FieldDisplayName: ="MA_SAN_PHAM"
-                FieldName: ="cr282_ma_san_pham"
-                FieldType: ="s"
-                FieldVariantName: ="textualColumn"
-                Order: =3
-                ZIndex: =73
-
-            MO_TA2 As pcfDataField.textualColumn:
-                FieldDisplayName: ="MO_TA"
-                FieldName: ="cr282_mo_ta"
-                FieldType: ="s"
-                FieldVariantName: ="textualColumn"
-                Order: =4
-                ZIndex: =74
-
-            TRANG_THAI2 As pcfDataField.textualColumn:
-                FieldDisplayName: ="TRANG_THAI"
-                FieldName: ="cr282_trang_thai"
-                FieldType: ="n"
-                FieldVariantName: ="textualColumn"
-                Order: =5
-                ZIndex: =75
-
-            MA_CHUONG_TRINH1 As pcfDataField.textualColumn:
-                FieldDisplayName: ="MA_CHUONG_TRINH"
-                FieldName: ="cr282_ma_chuongtrinh"
-                FieldType: ="s"
-                FieldVariantName: ="textualColumn"
-                Order: =6
-                ZIndex: =76
+                ZIndex: =98
 
         TextCanvas4_2 As Text:
             DisplayMode: =DisplayMode.Edit
@@ -737,17 +716,18 @@ TraCuuBangPhi As screen:
             ZIndex: =42
 
         CbxNhomTPTCBP As Combobox.pcfdataset:
+            BasePaletteColor: =
             DisplayMode: =DisplayMode.Edit
             Height: =32
             InputTextPlaceholder: ="Nhập giá trị lọc"
-            Items: =Filter(DL_SAN_PHAM_NHOMQLS,MA_SP=CbxMaSPTCBP.Selected.MA_SAN_PHAM && !IsBlank(Find(CbxMaCTTCBP.Selected.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG)),MA_NHOM_TINHPHI)
+            Items: =tmpDSNhomTPTCBPCollect
             OnChange: |-
                 =ClearCollect(
                     tmpDSTCBPCollect,
                     ShowColumns(
                         Filter(
                             DL_CHUONG_TRINH_BANG_PHIS,
-                            MA_SAN_PHAM=CbxMaSPTCBP.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=CbxMaCTTCBP.Selected.MA_CHUONG_TRINH && NHOM_TINH_PHI=CbxNhomTPTCBP.Selected.MA_NHOM_TINHPHI
+                            MA_SAN_PHAM=CbxMaSPTCBP.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh && NHOM_TINH_PHI=CbxNhomTPTCBP.Selected.Value
                         ),
                         "cr282_ma_phamvi_dialy",
                         "cr282_ma_do_tuoi",
@@ -759,69 +739,13 @@ TraCuuBangPhi As screen:
             Y: =49
             ZIndex: =43
 
-            MA_DL1 As pcfDataField.textualColumn:
-                FieldDisplayName: ="MA_DL"
-                FieldName: ="cr282_ma_dl"
-                FieldType: ="s"
-                FieldVariantName: ="textualColumn"
-                Order: =2
-                ZIndex: =96
-
-            LOAI1 As pcfDataField.textualColumn:
-                FieldDisplayName: ="LOAI"
-                FieldName: ="cr282_loai"
-                FieldType: ="s"
-                FieldVariantName: ="textualColumn"
-                Order: =3
-                ZIndex: =97
-
-            CHUONGTRINH_APDUNG1 As pcfDataField.textualColumn:
-                FieldDisplayName: ="CHUONGTRINH_APDUNG"
-                FieldName: ="cr282_chuongtrinh_apdung"
-                FieldType: ="s"
-                FieldVariantName: ="textualColumn"
-                Order: =4
-                ZIndex: =98
-
-            MA_SP1 As pcfDataField.textualColumn:
-                FieldDisplayName: ="MA_SP"
-                FieldName: ="cr282_ma_sp"
-                FieldType: ="s"
-                FieldVariantName: ="textualColumn"
-                Order: =5
-                ZIndex: =99
-
-            MA_NHOM_TINHPHI1 As pcfDataField.textualColumn:
-                FieldDisplayName: ="MA_NHOM_TINHPHI"
-                FieldName: ="cr282_ma_nhom_tinhphi"
+            Value3 As pcfDataField.textualColumn:
+                FieldDisplayName: ="Value"
+                FieldName: ="Value"
                 FieldType: ="s"
                 FieldVariantName: ="textualColumn"
                 Order: =1
-                ZIndex: =100
-
-            PHAMVI_DIALY1 As pcfDataField.textualColumn:
-                FieldDisplayName: ="PHAMVI_DIALY"
-                FieldName: ="cr282_phamvi_dialy"
-                FieldType: ="s"
-                FieldVariantName: ="textualColumn"
-                Order: =6
-                ZIndex: =101
-
-            MA_NHOM_QL3 As pcfDataField.textualColumn:
-                FieldDisplayName: ="MA_NHOM_QL"
-                FieldName: ="cr282_ma_nhom_ql"
-                FieldType: ="s"
-                FieldVariantName: ="textualColumn"
-                Order: =7
-                ZIndex: =102
-
-            TEN_HIEN_THI1 As pcfDataField.textualColumn:
-                FieldDisplayName: ="TEN_HIEN_THI"
-                FieldName: ="cr282_ten_hien_thi"
-                FieldType: ="s"
-                FieldVariantName: ="textualColumn"
-                Order: =8
-                ZIndex: =103
+                ZIndex: =96
 
         TextCanvas4_3 As Text:
             DisplayMode: =DisplayMode.Edit
@@ -843,8 +767,8 @@ TraCuuBangPhi As screen:
                     Filter(
                         DM_PHAMVI_DIALYS,
                         (IsBlank(CbxMaSPTCBP.Selected.MA_SAN_PHAM) && 
-                        IsBlank(CbxMaCTTCBP.Selected.cr282_ma_chuong_trinh) && 
-                        IsBlank(CbxNhomTPTCBP.Selected.MA_NHOM_TINHPHI) 
+                        IsBlank(CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh) && 
+                        IsBlank(CbxNhomTPTCBP.Selected.Value) 
                         && CountIf(tmpDSTCBPCollect,true)=0)||
                         CountIf(tmpDSTCBPCollect,cr282_ma_phamvi_dialy=MA_PHAMVI)>0
                     ),"cr282_ma_phamvi",
@@ -883,8 +807,8 @@ TraCuuBangPhi As screen:
                     Filter(
                         DM_DO_TUOIS,
                         (IsBlank(CbxMaSPTCBP.Selected.MA_SAN_PHAM) && 
-                        IsBlank(CbxMaCTTCBP.Selected.cr282_ma_chuong_trinh) && 
-                        IsBlank(CbxNhomTPTCBP.Selected.MA_NHOM_TINHPHI) 
+                        IsBlank(CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh) && 
+                        IsBlank(CbxNhomTPTCBP.Selected.Value) 
                         && CountIf(tmpDSTCBPCollect,true)=0)||
                         CountIf(tmpDSTCBPCollect,cr282_ma_do_tuoi=MA_DO_TUOI)>0
                     ),"cr282_ma_do_tuoi",
@@ -971,8 +895,8 @@ TraCuuBangPhi As screen:
                     Filter(
                         DM_GIOI_TINHS,
                         (IsBlank(CbxMaSPTCBP.Selected.MA_SAN_PHAM) && 
-                        IsBlank(CbxMaCTTCBP.Selected.cr282_ma_chuong_trinh) && 
-                        IsBlank(CbxNhomTPTCBP.Selected.MA_NHOM_TINHPHI) 
+                        IsBlank(CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh) && 
+                        IsBlank(CbxNhomTPTCBP.Selected.Value) 
                         && CountIf(tmpDSTCBPCollect,true)=0)||
                         CountIf(tmpDSTCBPCollect,cr282_ma_gioi_tinh=MA_GIOI_TINH)>0
                     ),"cr282_ma_gioi_tinh",
@@ -1090,14 +1014,14 @@ TraCuuBangPhi As screen:
                     );
                 );
                 If(
-                    !IsBlank(CbxMaCTTCBP.Selected.cr282_ma_chuong_trinh),
+                    !IsBlank(CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh),
                     ClearCollect(
                         tmpKQTCBPCollect,
                         ShowColumns(
                             SortByColumns(
                                 Filter(
                                     tmpKQTCBPCollect,
-                                    cr282_ma_chuong_trinh=CbxMaCTTCBP.Selected.cr282_ma_chuong_trinh
+                                    cr282_ma_chuong_trinh=CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh
                                 ),
                                 "cr282_ma_bang_phi",
                                 SortOrder.Ascending
@@ -1121,14 +1045,14 @@ TraCuuBangPhi As screen:
                     );
                 );
                 If(
-                    !IsBlank(CbxNhomTPTCBP.Selected.MA_NHOM_TINHPHI),
+                    !IsBlank(CbxNhomTPTCBP.Selected.Value),
                     ClearCollect(
                         tmpKQTCBPCollect,
                         ShowColumns(
                             SortByColumns(
                                 Filter(
                                     tmpKQTCBPCollect,
-                                    cr282_nhom_tinh_phi=CbxNhomTPTCBP.Selected.MA_NHOM_TINHPHI
+                                    cr282_nhom_tinh_phi=CbxNhomTPTCBP.Selected.Value
                                 ),
                                 "cr282_ma_bang_phi",
                                 SortOrder.Ascending
@@ -1388,7 +1312,7 @@ TraCuuBangPhi As screen:
             Y: =216
             ZIndex: =63
 
-    LeftNavigation_16 As LeftNavigation_9:
-        Width: =LeftNavigation_16.MenuWidth
+    LeftNavigation_10 As LeftNavigation_9:
+        Width: =LeftNavigation_10.MenuWidth
         ZIndex: =2
 
