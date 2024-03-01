@@ -656,7 +656,7 @@ DMCauHinhThamSoSP As screen:
                                         ),
                                         And(
                                             CbxFilterNQLNV.Selected.Value="Mã dữ liệu",
-                                            StartsWith(MA_NHOMQL_LHNV,TextFilterNQLNV.Value)
+                                            !IsBlank(Find(TextFilterNQLNV.Value,MA_NHOMQL_LHNV))
                                         ),
                                         And(
                                             CbxFilterNQLNV.Selected.Value="Nhóm quyền lợi",
@@ -1220,7 +1220,7 @@ DMCauHinhThamSoSP As screen:
                                         ),
                                         And(
                                             CbxFilterYTAH.Selected.Value="Mã yếu tố",
-                                            StartsWith(MA_YEU_TO,TextFilterYTAH.Value)
+                                            !IsBlank(Find(TextFilterYTAH.Value,MA_YEU_TO))
                                         ),
                                         And(
                                             CbxFilterYTAH.Selected.Value="Tên yếu tố",
