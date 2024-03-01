@@ -11333,109 +11333,25 @@
                            )
                         );
                         
+                        ForAll(Filter(DL_SAN_PHAM_LOAITRU, MA_SAN_PHAM=valMaSP) As lt,
+                        RemoveIf(OldCollection,
+                            MA_SAN_PHAM=lt.MA_SAN_PHAM &&
+                                 TEN_CHUONG_TRINH=lt.TEN_CHUONG_TRINH &&
+                                 NHOM_TINH_PHI=lt.TEN_NHOM_TP &&
+                                 PHAMVI=lt.TEN_PHAMVI &&
+                                 DO_TUOI=lt.MO_TA &&
+                                 GIOI_TINH=lt.TEN_GIOI_TINH &&
+                                 NGANH_NGHE=lt.TEN_NGANH &&
+                                 SOTIEN=lt.TEN_SOTIEN &&
+                                 SO_NGUOI=lt.TEN_SO_NGUOI &&
+                                 THOI_HAN=lt.TEN_THOI_HAN &&
+                                 PHUONG_THUC=lt.TEN_PT
+                        )
+                        );
+                        
                         ClearCollect(
                             NewCollection,
                             OldCollection
-                        );
-                        If(
-                            varCheck_CT = false,
-                            ClearCollect(
-                                NewCollection,
-                                DropColumns(
-                                    NewCollection,
-                                    "MA_CHUONG_TRINH","TEN_CHUONG_TRINH"
-                                )
-                            )
-                        );
-                        If(
-                            varCheck_NTP = false,
-                            ClearCollect(
-                                NewCollection,
-                                DropColumns(
-                                    NewCollection,
-                                    "NHOM_TINH_PHI"
-                                )
-                            )
-                        );
-                        If(
-                            varCheck_PV = false,
-                            ClearCollect(
-                                NewCollection,
-                                DropColumns(
-                                    NewCollection,
-                                    "PHAMVI"
-                                )
-                            )
-                        );
-                        If(
-                            varCheck_DT = false,
-                            ClearCollect(
-                                NewCollection,
-                                DropColumns(
-                                    NewCollection,
-                                    "DO_TUOI"
-                                )
-                            )
-                        );
-                        If(
-                            varCheck_GT = false,
-                            ClearCollect(
-                                NewCollection,
-                                DropColumns(
-                                    NewCollection,
-                                    "GIOI_TINH"
-                                )
-                            )
-                        );
-                        If(
-                            varCheck_NN = false,
-                            ClearCollect(
-                                NewCollection,
-                                DropColumns(
-                                    NewCollection,
-                                    "NGANH_NGHE"
-                                )
-                            )
-                        );
-                        If(
-                            varCheck_ST = false,
-                            ClearCollect(
-                                NewCollection,
-                                DropColumns(
-                                    NewCollection,
-                                    "SOTIEN"
-                                )
-                            )
-                        );
-                        If(
-                            varCheck_SN = false,
-                            ClearCollect(
-                                NewCollection,
-                                DropColumns(
-                                    NewCollection,
-                                    "SO_NGUOI"
-                                )
-                            )
-                        );
-                        If(
-                            varCheck_TH = false,
-                            ClearCollect(
-                                NewCollection,
-                                DropColumns(
-                                    NewCollection,
-                                    "THOI_HAN"
-                                )
-                            )
-                        );
-                        If(
-                            varCheck_PT = false,
-                            ClearCollect(
-                                NewCollection,
-                                DropColumns(
-                                    NewCollection,
-                                    "PHUONG_THUC"
-                                )
-                            )
                         );
                         
                         
