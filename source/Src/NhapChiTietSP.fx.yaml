@@ -221,6 +221,7 @@
         Select(IconTaiLaiBYT);
         Select(IconTaiLaiLT);
         Reset(CbxFilterQLCTTB_1);Reset(CbxFilterValueQLCTTB_1);Reset(TextFilterQLCTTB_1)
+    Width: =Max(1800, App.MinScreenWidth)
 
     CanvasSP_1 As fluidGrid.fluidGridWithBlankCard:
         BorderThickness: =0
@@ -1969,16 +1970,15 @@
 
             "'3.3 Thongtinqlkhac' As groupContainer.manualLayoutContainer":
                 Height: =322
-                Width: =1293
-                X: =71
+                Width: =1216
+                X: =150
                 Y: =1976
                 ZIndex: =8
 
                 ContainerQLK_1 As groupContainer.manualLayoutContainer:
                     Height: =322
                     Visible: =showConfirmQLK=0
-                    Width: =1215
-                    X: =78
+                    Width: =1216
                     ZIndex: =1
 
                     GalleryQLK_1 As gallery.galleryVertical:
@@ -1989,58 +1989,64 @@
                         LoadingSpinner: =LoadingSpinner.Data
                         NavigationStep: =0
                         TemplateSize: =52
-                        Width: =1280
-                        X: =5
-                        Y: =139
+                        Width: =1204
+                        Y: =135
                         ZIndex: =1
 
-                        IconXoaQLK_1 As icon.Trash:
-                            Color: =RGBA(233, 79, 76, 1)
-                            Height: =40
-                            Icon: =Icon.Trash
-                            OnSelect: |-
-                                =UpdateContext({
-                                    showConfirmQLK:1,
-                                    maDeleteQLK:ThisItem.cr282_ma_dl,
-                                    objDeleteQLK:ThisItem
-                                });
-                            Tooltip: ="Xóa"
-                            Visible: =ThisItem.edited=0
-                            Width: =54
-                            X: =1109
-                            Y: =6
-                            ZIndex: =7
+                        CbxNhomQLQLK_1 As combobox:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            ChevronBackground: =RGBA(255, 255, 255, 1)
+                            ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                            ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                            ChevronFill: =RGBA(72, 163, 62, 1)
+                            ChevronHoverBackground: =RGBA(255, 255, 255, 1)
+                            ChevronHoverFill: =RGBA(72, 163, 62, 1)
+                            DefaultSelectedItems: =Filter(DM_NHOM_QUYENLOIS,MA_NHOM_QL=ThisItem.cr282_ma_nhom_ql)
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            DisplayFields: =["cr282_ten_nhom_ql"]
+                            DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                            Height: =50
+                            HoverBorderColor: =RGBA(9, 33, 98, 1)
+                            HoverFill: =RGBA(180, 214, 250, 1)
+                            InputTextPlaceholder: ="Chọn nhóm quyền lợi"
+                            IsSearchable: =false
+                            Items: =SortByColumns(DM_NHOM_QUYENLOIS,"cr282_ma_nhom_ql",SortOrder.Ascending)
+                            OnSelect: =Select(Parent)
+                            PressedColor: =RGBA(72, 163, 62, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            SearchFields: =["cr282_ten_nhom_ql"]
+                            SearchItems: =[]
+                            SelectionColor: =RGBA(0, 0, 0, 1)
+                            SelectionFill: =RGBA(214, 221, 224, 1)
+                            SelectMultiple: =false
+                            Width: =272
+                            X: =13
+                            ZIndex: =22
 
-                        IconSuaQLK_1 As icon.Edit:
-                            Color: =RGBA(83, 144, 164, 1)
-                            Height: =40
-                            Icon: =Icon.Edit
-                            OnSelect: |-
-                                =If(
-                                    Or(maAddedQLK<>"",maUpdatedQLK<>""),
-                                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                                    UpdateIf(
-                                        tmpQLKCollect,
-                                        cr282_ma_dl=ThisItem.cr282_ma_dl,
-                                        {
-                                            edited:1
-                                        }
-                                    );
-                                    UpdateContext({
-                                        maUpdatedQLK:ThisItem.cr282_ma_dl
-                                    })
-                                )
-                            Tooltip: ="Sửa"
-                            Visible: =ThisItem.edited=0
-                            Width: =63
-                            X: =1031
-                            Y: =6
-                            ZIndex: =14
+                        TextMoTaQLK_1 As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Default: =ThisItem.cr282_mo_ta
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                            Height: =50
+                            MaxLength: =500
+                            Mode: =TextMode.MultiLine
+                            OnChange: =
+                            OnSelect: =Select(Parent)
+                            Width: =715
+                            X: =291
+                            ZIndex: =23
 
-                        IconLuuQLK_1 As icon.Save:
-                            Color: =RGBA(72, 163, 62, 1)
-                            Height: =44
-                            Icon: =Icon.Save
+                        ButtonLuuQLK As Button:
+                            BasePaletteColor: =
+                            DisplayMode: =DisplayMode.Edit
+                            FontColor: =
+                            FontSize: =16
+                            Height: =42
                             OnSelect: |
                                 =If(
                                     IsBlank(CbxNhomQLQLK_1.Selected.MA_NHOM_QL),
@@ -2110,17 +2116,66 @@
                                     });
                                     Reset(CbxFilterQLK_1); Reset(CbxFilterValueQLK_1)
                                 )
-                            Tooltip: ="Lưu"
+                            Text: ="Lưu"
                             Visible: =ThisItem.edited=1
-                            Width: =51
-                            X: =1031
-                            Y: =6
-                            ZIndex: =15
+                            Width: =75
+                            X: =1022
+                            Y: =3
+                            ZIndex: =24
 
-                        IconHuyQLK_1 As icon.CancelBadge:
-                            Color: =RGBA(139, 154, 159, 1)
-                            Height: =40
-                            Icon: =Icon.CancelBadge
+                        ButtonSuaQLK As Button:
+                            BasePaletteColor: =
+                            DisplayMode: =DisplayMode.Edit
+                            FontColor: =
+                            FontSize: =16
+                            Height: =42
+                            OnSelect: |-
+                                =If(
+                                    Or(maAddedQLK<>"",maUpdatedQLK<>""),
+                                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                    UpdateIf(
+                                        tmpQLKCollect,
+                                        cr282_ma_dl=ThisItem.cr282_ma_dl,
+                                        {
+                                            edited:1
+                                        }
+                                    );
+                                    UpdateContext({
+                                        maUpdatedQLK:ThisItem.cr282_ma_dl
+                                    })
+                                )
+                            Text: ="Sửa"
+                            Visible: =ThisItem.edited=0
+                            Width: =75
+                            X: =1022
+                            Y: =3
+                            ZIndex: =25
+
+                        ButtonXoaQLK As Button:
+                            BasePaletteColor: =
+                            DisplayMode: =DisplayMode.Edit
+                            FontColor: =
+                            FontSize: =16
+                            Height: =42
+                            OnSelect: |-
+                                =UpdateContext({
+                                    showConfirmQLK:1,
+                                    maDeleteQLK:ThisItem.cr282_ma_dl,
+                                    objDeleteQLK:ThisItem
+                                });
+                            Text: ="Xóa"
+                            Visible: =ThisItem.edited=0
+                            Width: =75
+                            X: =1108
+                            Y: =3
+                            ZIndex: =26
+
+                        ButtonHuyQLK As Button:
+                            BasePaletteColor: =
+                            DisplayMode: =DisplayMode.Edit
+                            FontColor: =
+                            FontSize: =16
+                            Height: =42
                             OnSelect: |-
                                 =If(
                                     ThisItem.cr282_ma_dl=maAddedQLK,
@@ -2137,68 +2192,20 @@
                                     maAddedQLK:"",
                                     maUpdatedQLK:""
                                 });
-                            Tooltip: ="Hủy"
+                            Text: ="Hủy"
                             Visible: =ThisItem.edited=1
-                            Width: =54
-                            X: =1109
-                            Y: =6
-                            ZIndex: =16
-
-                        CbxNhomQLQLK_1 As combobox:
-                            BorderColor: =RGBA(72, 163, 62, 1)
-                            ChevronBackground: =RGBA(255, 255, 255, 1)
-                            ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
-                            ChevronDisabledFill: =RGBA(255, 255, 255, 1)
-                            ChevronFill: =RGBA(72, 163, 62, 1)
-                            ChevronHoverBackground: =RGBA(255, 255, 255, 1)
-                            ChevronHoverFill: =RGBA(72, 163, 62, 1)
-                            DefaultSelectedItems: =Filter(DM_NHOM_QUYENLOIS,MA_NHOM_QL=ThisItem.cr282_ma_nhom_ql)
-                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                            DisabledColor: =RGBA(0, 0, 0, 1)
-                            DisabledFill: =RGBA(255, 255, 255, 1)
-                            DisplayFields: =["cr282_ten_nhom_ql"]
-                            DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                            Height: =50
-                            HoverBorderColor: =RGBA(9, 33, 98, 1)
-                            HoverFill: =RGBA(180, 214, 250, 1)
-                            InputTextPlaceholder: ="Chọn nhóm quyền lợi"
-                            IsSearchable: =false
-                            Items: =SortByColumns(DM_NHOM_QUYENLOIS,"cr282_ma_nhom_ql",SortOrder.Ascending)
-                            OnSelect: =Select(Parent)
-                            PressedColor: =RGBA(72, 163, 62, 1)
-                            PressedFill: =RGBA(255, 255, 255, 1)
-                            SearchFields: =["cr282_ten_nhom_ql"]
-                            SearchItems: =[]
-                            SelectionColor: =RGBA(0, 0, 0, 1)
-                            SelectionFill: =RGBA(214, 221, 224, 1)
-                            SelectMultiple: =false
-                            Width: =272
-                            X: =13
-                            ZIndex: =22
-
-                        TextMoTaQLK_1 As text:
-                            BorderColor: =RGBA(72, 163, 62, 1)
-                            Default: =ThisItem.cr282_mo_ta
-                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                            DisabledColor: =RGBA(0, 0, 0, 1)
-                            DisabledFill: =RGBA(255, 255, 255, 1)
-                            DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                            Height: =50
-                            MaxLength: =500
-                            Mode: =TextMode.MultiLine
-                            OnChange: =
-                            OnSelect: =Select(Parent)
-                            Width: =460
-                            X: =291
-                            ZIndex: =23
+                            Width: =75
+                            X: =1108
+                            Y: =3
+                            ZIndex: =27
 
                     BadgeCanvas1_22 As Badge:
                         BasePaletteColor: =
                         Content: =""
                         DisplayMode: =DisplayMode.Edit
                         FontColor: =
-                        Height: =39
-                        Width: =1175
+                        Height: =38
+                        Width: =1179
                         X: =17
                         Y: =97
                         ZIndex: =2
@@ -2415,8 +2422,8 @@
                         Size: =14
                         Text: ="Thao tác"
                         Weight: ='TextCanvas.Weight'.Bold
-                        Width: =151
-                        X: =990
+                        Width: =100
+                        X: =1033
                         Y: =97
                         ZIndex: =18
 
