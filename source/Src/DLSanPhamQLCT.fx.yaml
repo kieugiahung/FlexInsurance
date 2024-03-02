@@ -72,270 +72,275 @@ DLSanPhamQLCT As screen:
         
     Width: =Max(1500, App.MinScreenWidth)
 
-    GalleryQLTV As gallery.variableTemplateHeightGallery:
-        DelayItemLoading: =true
-        Height: =55*CountRows(tmpQLTVCollect)
-        Items: =SortByColumns(tmpQLTVCollect,"cr282_ma_ql_chitiet",SortOrder.Ascending)
-        Layout: =Layout.Vertical
-        LoadingSpinner: =LoadingSpinner.Data
-        TemplateSize: =48
-        Width: =1314
-        X: =128
-        Y: =93
-        ZIndex: =1
+    ContainerQLTV As groupContainer.manualLayoutContainer:
+        Height: =768
+        Width: =1430
+        X: =70
+        ZIndex: =7
 
-        TextTenHTQLCT As text:
-            BorderColor: =RGBA(72, 163, 62, 1)
-            BorderThickness: =3
-            Default: =ThisItem.ten_hien_thi
-            DisabledBorderColor: =RGBA(180, 214, 250, 1)
-            DisabledColor: =RGBA(0, 0, 0, 1)
-            DisabledFill: =RGBA(255, 255, 255, 1)
-            DisplayMode: =If(ThisItem.chon=1,DisplayMode.Edit,DisplayMode.Disabled)
-            Height: =48
-            OnChange: |-
-                =UpdateIf(
-                    tmpQLTVCollect,
-                    cr282_ma_ql_chitiet=ThisItem.cr282_ma_ql_chitiet,
-                    {
-                        ten_hien_thi:TextTenHTQLCT.Text
-                    }
-                );
-                UpdateIf(
-                    chonQLCTDTCollect,
-                    ma_ql_chitiet=ThisItem.cr282_ma_ql_chitiet,
-                    {
-                        ten_hienthi:TextTenHTQLCT.Text
-                    }
-                );
-            OnSelect: =Select(Parent)
-            Width: =302
-            X: =986
-            ZIndex: =2
+        GalleryQLTV As gallery.variableTemplateHeightGallery:
+            DelayItemLoading: =true
+            Height: =599
+            Items: =SortByColumns(tmpQLTVCollect,"cr282_ma_ql_chitiet",SortOrder.Ascending)
+            Layout: =Layout.Vertical
+            LoadingSpinner: =LoadingSpinner.Data
+            TemplateSize: =48
+            Width: =1314
+            X: =54
+            Y: =66
+            ZIndex: =1
 
-        Container1_1 As groupContainer.manualLayoutContainer:
-            BorderStyle: =BorderStyle.None
-            Height: =48
-            Width: =657
-            X: =(ThisItem.cr282_cap-1)*50
-            ZIndex: =4
-
-            TextQLCT As text:
-                BorderStyle: =BorderStyle.None
-                Default: =ThisItem.cr282_ten_ql_chitiet
-                DisplayMode: =DisplayMode.View
-                Width: =543
-                X: =55
-                Y: =2
-                ZIndex: =1
-
-            cbChonQLCT As checkbox:
-                Default: =If(ThisItem.chon=1,true,false)
-                Height: =40
-                OnCheck: |
+            TextTenHTQLCT As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                BorderThickness: =3
+                Default: =ThisItem.ten_hien_thi
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.chon=1,DisplayMode.Edit,DisplayMode.Disabled)
+                Height: =48
+                OnChange: |-
                     =UpdateIf(
                         tmpQLTVCollect,
-                        StartsWith(cr282_ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet),
+                        cr282_ma_ql_chitiet=ThisItem.cr282_ma_ql_chitiet,
                         {
-                            chon:1
+                            ten_hien_thi:TextTenHTQLCT.Text
                         }
                     );
-                    ForAll(
-                        Filter(
-                            DM_QUYENLOI_CHITIETS,
-                            StartsWith(MA_QL_CHITIET,ThisItem.cr282_ma_ql_chitiet)
-                        ),
-                        Collect(
-                            chonQLCTDTCollect,
-                            {
-                                ma_ql_chitiet:ThisRecord.MA_QL_CHITIET,
-                                ten_hienthi:ThisRecord.TEN_QL_CHITIET
-                            }
-                        )
-                    );
-                OnUncheck: |-
-                    =UpdateIf(
-                        tmpQLTVCollect,
-                        StartsWith(cr282_ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet),
-                        {
-                            chon:0
-                        }
-                    );
-                    RemoveIf(
+                    UpdateIf(
                         chonQLCTDTCollect,
-                        StartsWith(ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet)
-                    )
-                Text: =
-                Width: =39
-                X: =5
-                Y: =2
+                        ma_ql_chitiet=ThisItem.cr282_ma_ql_chitiet,
+                        {
+                            ten_hienthi:TextTenHTQLCT.Text
+                        }
+                    );
+                OnSelect: =Select(Parent)
+                Width: =302
+                X: =986
                 ZIndex: =2
 
-            IconMo As icon.NextArrow:
-                Height: =36
-                Icon: =Icon.NextArrow
-                OnSelect: |
-                    =Collect(
-                        tmpQLTVCollect,
-                        ShowColumns(
-                            AddColumns(
-                                SortByColumns(
-                                    Filter(
-                                        DM_QUYENLOI_CHITIETS,
-                                        MA_QL_CHA=ThisItem.cr282_ma_ql_chitiet
-                                    ),
-                                    "cr282_ma_ql_chitiet",
-                                    SortOrder.Ascending
-                                ),
-                                "chon",
-                                0,
-                                "che_do",
-                                0,
-                                "ten_hien_thi",
-                                Blank()
-                            ),
-                            "cr282_ma_ql_chitiet",
-                            "cr282_cap",
-                            "cr282_ma_nhom_ql",
-                            "cr282_ma_ql_cha",
-                            "cr282_ten_ql_chitiet",
-                            "chon",
-                            "che_do",
-                            "ten_hien_thi"
-                        )
-                    );
-                    UpdateIf(
-                        tmpQLTVCollect,
-                        true,
-                        {
-                            ten_hien_thi:cr282_ten_ql_chitiet
-                        }
-                    );
-                    UpdateIf(
-                        tmpQLTVCollect,
-                        cr282_ma_ql_chitiet=ThisItem.cr282_ma_ql_chitiet,
-                        {
-                            che_do:1
-                        }
-                    );
-                    UpdateIf(
-                        tmpQLTVCollect,
-                        !IsEmpty(
-                            Filter(
-                                chonQLCTDTCollect,
-                                ma_ql_chitiet=cr282_ma_ql_chitiet
-                            )
-                        ),
-                        {
-                            chon:1,
-                            ten_hien_thi:LookUp(chonQLCTDTCollect,ma_ql_chitiet=cr282_ma_ql_chitiet,ten_hienthi)
-                        }
-                    )
-                Visible: =ThisItem.che_do=0 && !IsEmpty(Filter(DM_QUYENLOI_CHITIETS,MA_QL_CHA=ThisItem.cr282_ma_ql_chitiet))
-                Width: =37
-                X: =610
-                Y: =6
-                ZIndex: =3
-
-            IconDong As icon.ChevronUp:
-                Height: =34
-                Icon: =Icon.ChevronUp
-                OnSelect: |-
-                    =RemoveIf(
-                        tmpQLTVCollect,
-                        cr282_ma_ql_chitiet<>ThisItem.cr282_ma_ql_chitiet && StartsWith(cr282_ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet)
-                    );
-                    UpdateIf(
-                        tmpQLTVCollect,
-                        cr282_ma_ql_chitiet=ThisItem.cr282_ma_ql_chitiet,
-                        {
-                            che_do:0
-                        }
-                    );
-                Visible: =ThisItem.che_do=1 && !IsEmpty(Filter(DM_QUYENLOI_CHITIETS,MA_QL_CHA=ThisItem.cr282_ma_ql_chitiet))
-                Width: =32
-                X: =613
-                Y: =6
+            Container1_1 As groupContainer.manualLayoutContainer:
+                BorderStyle: =BorderStyle.None
+                Height: =48
+                Width: =657
                 ZIndex: =4
 
-    BadgeCanvas1_16 As Badge:
-        BasePaletteColor: =
-        Content: =""
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =54
-        Width: =1244
-        X: =180
-        Y: =36
-        ZIndex: =2
+                TextQLCT As text:
+                    BorderStyle: =BorderStyle.None
+                    Default: =ThisItem.cr282_ten_ql_chitiet
+                    DisplayMode: =DisplayMode.View
+                    Width: =543
+                    X: =55
+                    Y: =2
+                    ZIndex: =1
 
-    TextCanvas2_71 As Text:
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =57
-        Size: =16
-        Text: ="Quyền lợi chi tiết"
-        Weight: ='TextCanvas.Weight'.Bold
-        Width: =171
-        X: =218
-        Y: =36
-        ZIndex: =3
+                cbChonQLCT As checkbox:
+                    Default: =If(ThisItem.chon=1,true,false)
+                    Height: =40
+                    OnCheck: |
+                        =UpdateIf(
+                            tmpQLTVCollect,
+                            StartsWith(cr282_ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet),
+                            {
+                                chon:1
+                            }
+                        );
+                        ForAll(
+                            Filter(
+                                DM_QUYENLOI_CHITIETS,
+                                StartsWith(MA_QL_CHITIET,ThisItem.cr282_ma_ql_chitiet)
+                            ),
+                            Collect(
+                                chonQLCTDTCollect,
+                                {
+                                    ma_ql_chitiet:ThisRecord.MA_QL_CHITIET,
+                                    ten_hienthi:ThisRecord.TEN_QL_CHITIET
+                                }
+                            )
+                        );
+                    OnUncheck: |-
+                        =UpdateIf(
+                            tmpQLTVCollect,
+                            StartsWith(cr282_ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet),
+                            {
+                                chon:0
+                            }
+                        );
+                        RemoveIf(
+                            chonQLCTDTCollect,
+                            StartsWith(ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet)
+                        )
+                    Text: =
+                    Width: =39
+                    X: =5
+                    Y: =2
+                    ZIndex: =2
 
-    TextCanvas2_72 As Text:
-        DisplayMode: =DisplayMode.Edit
-        FontColor: =
-        Height: =57
-        Size: =16
-        Text: ="Tên hiển thị"
-        Weight: ='TextCanvas.Weight'.Bold
-        Width: =151
-        X: =1119
-        Y: =36
-        ZIndex: =4
+                IconMo As icon.NextArrow:
+                    Height: =36
+                    Icon: =Icon.NextArrow
+                    OnSelect: |
+                        =Collect(
+                            tmpQLTVCollect,
+                            ShowColumns(
+                                AddColumns(
+                                    SortByColumns(
+                                        Filter(
+                                            DM_QUYENLOI_CHITIETS,
+                                            MA_QL_CHA=ThisItem.cr282_ma_ql_chitiet
+                                        ),
+                                        "cr282_ma_ql_chitiet",
+                                        SortOrder.Ascending
+                                    ),
+                                    "chon",
+                                    0,
+                                    "che_do",
+                                    0,
+                                    "ten_hien_thi",
+                                    Blank()
+                                ),
+                                "cr282_ma_ql_chitiet",
+                                "cr282_cap",
+                                "cr282_ma_nhom_ql",
+                                "cr282_ma_ql_cha",
+                                "cr282_ten_ql_chitiet",
+                                "chon",
+                                "che_do",
+                                "ten_hien_thi"
+                            )
+                        );
+                        UpdateIf(
+                            tmpQLTVCollect,
+                            true,
+                            {
+                                ten_hien_thi:cr282_ten_ql_chitiet
+                            }
+                        );
+                        UpdateIf(
+                            tmpQLTVCollect,
+                            cr282_ma_ql_chitiet=ThisItem.cr282_ma_ql_chitiet,
+                            {
+                                che_do:1
+                            }
+                        );
+                        UpdateIf(
+                            tmpQLTVCollect,
+                            !IsEmpty(
+                                Filter(
+                                    chonQLCTDTCollect,
+                                    ma_ql_chitiet=cr282_ma_ql_chitiet
+                                )
+                            ),
+                            {
+                                chon:1,
+                                ten_hien_thi:LookUp(chonQLCTDTCollect,ma_ql_chitiet=cr282_ma_ql_chitiet,ten_hienthi)
+                            }
+                        )
+                    Visible: =ThisItem.che_do=0 && !IsEmpty(Filter(DM_QUYENLOI_CHITIETS,MA_QL_CHA=ThisItem.cr282_ma_ql_chitiet))
+                    Width: =37
+                    X: =610
+                    Y: =6
+                    ZIndex: =3
 
-    IconLuuQLTV As icon.Save:
-        Color: =RGBA(72, 163, 62, 1)
-        Height: =69
-        Icon: =Icon.Save
-        OnSelect: |-
-            =Refresh(DL_SAN_PHAM_QLCT_CHONS);
-            RemoveIf(DL_SAN_PHAM_QLCT_CHONS,MA_NHOMQL_SP=maDLNhomQLFwd);
-            ForAll(
-                chonQLCTDTCollect,
-                Patch(
-                    DL_SAN_PHAM_QLCT_CHONS,
-                    {
-                        MA_QL_CHITIET:ThisRecord.ma_ql_chitiet,
-                        MA_NHOMQL_SP:maDLNhomQLFwd,
-                        TEN_HIEN_THI:ThisRecord.ten_hienthi,
-                        MA_SAN_PHAM:maSPFwd,
-                        MA_NHOM_QL:maNQLFwd
-                    }
-                )
-            );
-            Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
-            Navigate(NhapChiTietSP);
-            Clear(tmpQLTVCollect);
-        Tooltip: ="Lưu"
-        Width: =53
-        X: =1358
-        Y: =55*CountRows(tmpQLTVCollect)+120
-        ZIndex: =5
+                IconDong As icon.ChevronUp:
+                    Height: =34
+                    Icon: =Icon.ChevronUp
+                    OnSelect: |-
+                        =RemoveIf(
+                            tmpQLTVCollect,
+                            cr282_ma_ql_chitiet<>ThisItem.cr282_ma_ql_chitiet && StartsWith(cr282_ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet)
+                        );
+                        UpdateIf(
+                            tmpQLTVCollect,
+                            cr282_ma_ql_chitiet=ThisItem.cr282_ma_ql_chitiet,
+                            {
+                                che_do:0
+                            }
+                        );
+                    Visible: =ThisItem.che_do=1 && !IsEmpty(Filter(DM_QUYENLOI_CHITIETS,MA_QL_CHA=ThisItem.cr282_ma_ql_chitiet))
+                    Width: =32
+                    X: =613
+                    Y: =6
+                    ZIndex: =4
 
-    IconHuyQLTV As icon.CancelBadge:
-        Color: =RGBA(233, 79, 76, 1)
-        Height: =48
-        Icon: =Icon.CancelBadge
-        OnSelect: |-
-            =Navigate(NhapChiTietSP);
-            Clear(tmpQLTVCollect);
-        Tooltip: ="Hủy"
-        Width: =54
-        X: =1287
-        Y: =55*CountRows(tmpQLTVCollect)+130
-        ZIndex: =6
+        BadgeCanvas1_16 As Badge:
+            BasePaletteColor: =
+            Content: =""
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =54
+            Width: =1244
+            X: =106
+            Y: =9
+            ZIndex: =2
 
-    LeftNavigation_22 As LeftNavigation_9:
-        Width: =LeftNavigation_22.MenuWidth
-        ZIndex: =7
+        TextCanvas2_71 As Text:
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =57
+            Size: =16
+            Text: ="Quyền lợi chi tiết"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =171
+            X: =144
+            Y: =9
+            ZIndex: =3
+
+        TextCanvas2_72 As Text:
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =57
+            Size: =16
+            Text: ="Tên hiển thị"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =151
+            X: =1045
+            Y: =9
+            ZIndex: =4
+
+        IconLuuQLTV As icon.Save:
+            Color: =RGBA(72, 163, 62, 1)
+            Height: =69
+            Icon: =Icon.Save
+            OnSelect: |-
+                =Refresh(DL_SAN_PHAM_QLCT_CHONS);
+                RemoveIf(DL_SAN_PHAM_QLCT_CHONS,MA_NHOMQL_SP=maDLNhomQLFwd);
+                ForAll(
+                    chonQLCTDTCollect,
+                    Patch(
+                        DL_SAN_PHAM_QLCT_CHONS,
+                        {
+                            MA_QL_CHITIET:ThisRecord.ma_ql_chitiet,
+                            MA_NHOMQL_SP:maDLNhomQLFwd,
+                            TEN_HIEN_THI:ThisRecord.ten_hienthi,
+                            MA_SAN_PHAM:maSPFwd,
+                            MA_NHOM_QL:maNQLFwd
+                        }
+                    )
+                );
+                Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
+                Navigate(NhapChiTietSP);
+                Clear(tmpQLTVCollect);
+            Tooltip: ="Lưu"
+            Width: =53
+            X: =1297
+            Y: =677
+            ZIndex: =5
+
+        IconHuyQLTV As icon.CancelBadge:
+            Color: =RGBA(233, 79, 76, 1)
+            Height: =48
+            Icon: =Icon.CancelBadge
+            OnSelect: |-
+                =Navigate(NhapChiTietSP);
+                Clear(tmpQLTVCollect);
+            Tooltip: ="Hủy"
+            Width: =54
+            X: =1206
+            Y: =688
+            ZIndex: =6
+
+    LeftNavigation_16 As LeftNavigation_9:
+        Width: =LeftNavigation_16.MenuWidth
+        ZIndex: =8
 
