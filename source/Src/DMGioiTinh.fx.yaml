@@ -347,18 +347,46 @@ DMGioiTinh As screen:
             Y: =40
             ZIndex: =8
 
-        IconFilterGT As icon.FilterFlat:
-            Color: =RGBA(71, 158, 245, 1)
+        CbxFilterGT As Combobox.pcfdataset:
+            DefaultSelectedItems: =Filter(["Mã giới tính", "Tên giới tính"],Value="Mã giới tính")
+            DisplayMode: =DisplayMode.Edit
+            Height: =43
+            InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
+            Items: =["Mã giới tính", "Tên giới tính"]
+            OnChange: =Reset(TextFilterGT)
+            Width: =152
+            X: =363
+            Y: =34
+            ZIndex: =10
+
+        ButtonCanvas4_6 As Button:
+            BasePaletteColor: =
             DisplayMode: =If(Or(maAddedGT<>"",maUpdatedGT<>""),DisplayMode.Disabled,DisplayMode.Edit)
-            Height: =47
-            Icon: =Icon.FilterFlat
+            FontColor: =
+            FontSize: =16
+            Height: =43
             OnSelect: |-
                 =ClearCollect(
                     tmpGTCollect,
                     ShowColumns(
                         AddColumns(
                             SortByColumns(
-                                Filter(DM_GIOI_TINHS,Or(TextFilterGT.Value="",Or(And(CbxFilterGT.Selected.Value="Mã giới tính",StartsWith(MA_GIOI_TINH,TextFilterGT.Value)),And(CbxFilterGT.Selected.Value="Tên giới tính",!IsBlank(Find(TextFilterGT.Value,TEN_GIOI_TINH)))))),
+                                Filter(
+                                    DM_GIOI_TINHS,
+                                    Or(
+                                        TextFilterGT.Value="",
+                                        Or(
+                                            And(
+                                                CbxFilterGT.Selected.Value="Mã giới tính",
+                                                !IsBlank(Find(Lower(TextFilterGT.Value),Lower(MA_GIOI_TINH)))
+                                            ),
+                                            And(
+                                                CbxFilterGT.Selected.Value="Tên giới tính",
+                                                !IsBlank(Find(Lower(TextFilterGT.Value),Lower(TEN_GIOI_TINH)))
+                                            )
+                                        )
+                                    )
+                                ),
                                 "cr282_ma_gioi_tinh",
                                 SortOrder.Ascending
                             ),
@@ -371,23 +399,11 @@ DMGioiTinh As screen:
                         "edited"
                     )
                 )
-            Tooltip: ="Lọc"
-            Width: =32
+            Text: ="Tra cứu"
+            Width: =96
             X: =739
-            Y: =32
-            ZIndex: =9
-
-        CbxFilterGT As Combobox.pcfdataset:
-            DefaultSelectedItems: =Filter(["Mã giới tính", "Tên giới tính"],Value="Mã giới tính")
-            DisplayMode: =DisplayMode.Edit
-            Height: =43
-            InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
-            Items: =["Mã giới tính", "Tên giới tính"]
-            OnChange: =Reset(TextFilterGT)
-            Width: =152
-            X: =363
             Y: =34
-            ZIndex: =10
+            ZIndex: =11
 
     ContainerConfirmGT As groupContainer.manualLayoutContainer:
         BorderColor: =RGBA(180, 214, 250, 1)

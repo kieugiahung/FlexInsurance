@@ -660,40 +660,6 @@ DMDoTuoi As screen:
             Y: =67
             ZIndex: =11
 
-        IconFilterDT As icon.FilterFlat:
-            Color: =RGBA(71, 158, 245, 1)
-            DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
-            Height: =47
-            Icon: =Icon.FilterFlat
-            OnSelect: |-
-                =ClearCollect(
-                    tmpDTCollect,
-                    ShowColumns(
-                        AddColumns(
-                            SortByColumns(
-                                Filter(DM_DO_TUOIS,Or(TextFilterDT.Value="",Or(And(CbxFilterDT.Selected.Value="Mã độ tuổi",StartsWith(MA_DO_TUOI,TextFilterDT.Value)),And(CbxFilterDT.Selected.Value="Mô tả",!IsBlank(Find(TextFilterDT.Value,MO_TA)))))),
-                                "cr282_ma_do_tuoi",
-                                SortOrder.Ascending
-                            ),
-                            "edited",
-                            0
-                        ),
-                        "cr282_ma_do_tuoi",
-                        "cr282_mo_ta",
-                        "cr282_tuoi_tu",
-                        "cr282_tuoi_den",
-                        "cr282_donvi_tuoi_tu",
-                        "cr282_donvi_tuoi_den",
-                        "cr282_ghi_chu",
-                        "edited"
-                    )
-                );
-            Tooltip: ="Lọc"
-            Width: =32
-            X: =739
-            Y: =61
-            ZIndex: =12
-
         CbxFilterDT As Combobox.pcfdataset:
             DefaultSelectedItems: =Filter(["Mã độ tuổi", "Mô tả"],Value="Mã độ tuổi")
             DisplayMode: =DisplayMode.Edit
@@ -717,6 +683,56 @@ DMDoTuoi As screen:
             X: =664
             Y: =125
             ZIndex: =14
+
+        ButtonCanvas4_4 As Button:
+            BasePaletteColor: =
+            DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
+            FontColor: =
+            FontSize: =16
+            Height: =43
+            OnSelect: |-
+                =ClearCollect(
+                    tmpDTCollect,
+                    ShowColumns(
+                        AddColumns(
+                            SortByColumns(
+                                Filter(
+                                    DM_DO_TUOIS,
+                                    Or(
+                                        TextFilterDT.Value="",
+                                        Or(
+                                            And(
+                                                CbxFilterDT.Selected.Value="Mã độ tuổi",
+                                                !IsBlank(Find(Lower(TextFilterDT.Value),Lower(MA_DO_TUOI)))
+                                            ),
+                                            And(
+                                                CbxFilterDT.Selected.Value="Mô tả",
+                                                !IsBlank(Find(Lower(TextFilterDT.Value),Lower(MO_TA)))
+                                            )
+                                        )
+                                    )
+                                ),
+                                "cr282_ma_do_tuoi",
+                                SortOrder.Ascending
+                            ),
+                            "edited",
+                            0
+                        ),
+                        "cr282_ma_do_tuoi",
+                        "cr282_mo_ta",
+                        "cr282_tuoi_tu",
+                        "cr282_tuoi_den",
+                        "cr282_donvi_tuoi_tu",
+                        "cr282_donvi_tuoi_den",
+                        "cr282_ghi_chu",
+                        "edited"
+                    )
+                );
+            Text: ="Tra cứu"
+            Width: =96
+            X: =740
+            Y: =61
+            ZIndex: =15
 
     ContainerConfirmDT As groupContainer.manualLayoutContainer:
         BorderColor: =RGBA(180, 214, 250, 1)

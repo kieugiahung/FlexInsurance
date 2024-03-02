@@ -379,18 +379,46 @@ DMPhamViDiaLy As screen:
             Y: =41
             ZIndex: =11
 
-        IconFilterPV As icon.FilterFlat:
-            Color: =RGBA(71, 158, 245, 1)
+        CbxFilterPV As Combobox.pcfdataset:
+            DefaultSelectedItems: =Filter(["Mã phạm vi", "Tên phạm vi"],Value="Mã phạm vi")
+            DisplayMode: =DisplayMode.Edit
+            Height: =43
+            InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
+            Items: =["Mã phạm vi", "Tên phạm vi"]
+            OnChange: =Reset(TextFilterPV)
+            Width: =152
+            X: =364
+            Y: =36
+            ZIndex: =13
+
+        ButtonCanvas4_5 As Button:
+            BasePaletteColor: =
             DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
-            Height: =47
-            Icon: =Icon.FilterFlat
+            FontColor: =
+            FontSize: =16
+            Height: =43
             OnSelect: |-
                 =ClearCollect(
                     tmpPVDLCollect,
                     ShowColumns(
                         AddColumns(
                             SortByColumns(
-                                Filter(DM_PHAMVI_DIALYS,Or(TextFilterPV.Value="",Or(And(CbxFilterPV.Selected.Value="Mã phạm vi",StartsWith(MA_PHAMVI,TextFilterPV.Value)),And(CbxFilterPV.Selected.Value="Tên phạm vi",!IsBlank(Find(TextFilterPV.Value,TEN_PHAMVI)))))),
+                                Filter(
+                                    DM_PHAMVI_DIALYS,
+                                    Or(
+                                        TextFilterPV.Value="",
+                                        Or(
+                                            And(
+                                                CbxFilterPV.Selected.Value="Mã phạm vi",
+                                                !IsBlank(Find(Lower(TextFilterPV.Value),Lower(MA_PHAMVI)))
+                                            ),
+                                            And(
+                                                CbxFilterPV.Selected.Value="Tên phạm vi",
+                                                !IsBlank(Find(Lower(TextFilterPV.Value),Lower(TEN_PHAMVI)))
+                                            )
+                                        )
+                                    )
+                                ),
                                 "cr282_ma_phamvi",
                                 SortOrder.Ascending
                             ),
@@ -405,23 +433,11 @@ DMPhamViDiaLy As screen:
                         "edited"
                     )
                 )
-            Tooltip: ="Lọc"
-            Width: =32
+            Text: ="Tra cứu"
+            Width: =96
             X: =740
-            Y: =35
-            ZIndex: =12
-
-        CbxFilterPV As Combobox.pcfdataset:
-            DefaultSelectedItems: =Filter(["Mã phạm vi", "Tên phạm vi"],Value="Mã phạm vi")
-            DisplayMode: =DisplayMode.Edit
-            Height: =43
-            InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
-            Items: =["Mã phạm vi", "Tên phạm vi"]
-            OnChange: =Reset(TextFilterPV)
-            Width: =152
-            X: =364
             Y: =36
-            ZIndex: =13
+            ZIndex: =14
 
     ContainerConfirmPV As groupContainer.manualLayoutContainer:
         BorderColor: =RGBA(180, 214, 250, 1)
