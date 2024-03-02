@@ -80,7 +80,7 @@ DLSanPhamQLCT As screen:
 
         GalleryQLTV As gallery.variableTemplateHeightGallery:
             DelayItemLoading: =true
-            Height: =599
+            Height: =619
             Items: =SortByColumns(tmpQLTVCollect,"cr282_ma_ql_chitiet",SortOrder.Ascending)
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
@@ -298,10 +298,25 @@ DLSanPhamQLCT As screen:
             Y: =9
             ZIndex: =4
 
-        IconLuuQLTV As icon.Save:
-            Color: =RGBA(72, 163, 62, 1)
-            Height: =69
-            Icon: =Icon.Save
+        ButtonCanvas5 As Button:
+            BasePaletteColor: =RGBA(232, 116, 116, 1)
+            DisplayMode: =DisplayMode.Edit
+            FontSize: =16
+            Height: =38
+            OnSelect: |-
+                =Navigate(NhapChiTietSP);
+                Clear(tmpQLTVCollect);
+            Text: ="Hủy"
+            Width: =96
+            X: =1100
+            Y: =705
+            ZIndex: =7
+
+        ButtonCanvas6 As Button:
+            BasePaletteColor: =
+            DisplayMode: =DisplayMode.Edit
+            FontSize: =16
+            Height: =38
             OnSelect: |-
                 =Refresh(DL_SAN_PHAM_QLCT_CHONS);
                 RemoveIf(DL_SAN_PHAM_QLCT_CHONS,MA_NHOMQL_SP=maDLNhomQLFwd);
@@ -321,24 +336,11 @@ DLSanPhamQLCT As screen:
                 Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
                 Navigate(NhapChiTietSP);
                 Clear(tmpQLTVCollect);
-            Tooltip: ="Lưu"
-            Width: =53
-            X: =1297
-            Y: =677
-            ZIndex: =5
-
-        IconHuyQLTV As icon.CancelBadge:
-            Color: =RGBA(233, 79, 76, 1)
-            Height: =48
-            Icon: =Icon.CancelBadge
-            OnSelect: |-
-                =Navigate(NhapChiTietSP);
-                Clear(tmpQLTVCollect);
-            Tooltip: ="Hủy"
-            Width: =54
-            X: =1206
-            Y: =688
-            ZIndex: =6
+            Text: ="Lưu"
+            Width: =96
+            X: =1239
+            Y: =705
+            ZIndex: =8
 
     LeftNavigation_16 As LeftNavigation_9:
         Width: =LeftNavigation_16.MenuWidth
