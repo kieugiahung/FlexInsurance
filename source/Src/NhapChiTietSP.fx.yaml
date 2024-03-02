@@ -1844,70 +1844,6 @@
                     Y: =29
                     ZIndex: =15
 
-                IconFilterQLCTTB_1 As icon.FilterFlat:
-                    Color: =RGBA(71, 158, 245, 1)
-                    Height: =47
-                    Icon: =Icon.FilterFlat
-                    OnSelect: |-
-                        =ClearCollect(
-                            filterNQLSPCollect,
-                            RenameColumns(
-                                Filter(DM_QUYENLOI_CHITIETS,!IsBlank(Find(TextFilterQLCTTB_1.Value,TEN_QL_CHITIET))),
-                                "cr282_ma_ql_chitiet",
-                                "MA_QLCT"
-                            )
-                        );
-                        ClearCollect(
-                            filterNQLSPCollectNQL,
-                            RenameColumns(
-                                Filter(DM_QUYENLOI_CHITIETS,MA_NHOM_QL=CbxFilterValueQLCTTB_1.Selected.MA_NHOM_QL),
-                                "cr282_ma_ql_chitiet",
-                                "MA_QLCT"
-                            )
-                        );
-                        ClearCollect(
-                            tmpQLCTTBCollect,
-                            ShowColumns(
-                                SortByColumns(
-                                    Filter(
-                                        DL_SAN_PHAM_QLCT_CHONS,
-                                        And(
-                                            MA_SAN_PHAM=valMaSP,
-                                            Or(
-                                                And(
-                                                    TextFilterQLCTTB_1.Value="",
-                                                    loaiFilterQLCTTB=0
-                                                ),
-                                                And(
-                                                    IsBlank(CbxFilterValueQLCTTB_1.Selected.MA_NHOM_QL),
-                                                    loaiFilterQLCTTB=1
-                                                ),
-                                                And(
-                                                    CbxFilterQLCTTB_1.Selected.Value="Nhóm quyền lợi",
-                                                    !IsBlank(LookUp(filterNQLSPCollectNQL,MA_QLCT=MA_QL_CHITIET))
-                                                ),
-                                                And(
-                                                    CbxFilterQLCTTB_1.Selected.Value="Tên quyền lợi",
-                                                    !IsBlank(LookUp(filterNQLSPCollect,MA_QLCT=MA_QL_CHITIET))
-                                                )
-                                            )
-                                        )
-                                    ),
-                                    "cr282_ma_ql_chitiet",
-                                    SortOrder.Ascending
-                                ),
-                                "cr282_ma_ql_chitiet",
-                                "cr282_ma_nhomql_sp",
-                                "cr282_ten_hien_thi",
-                                "cr282_ma_nhom_ql"
-                            )
-                        )
-                    Tooltip: ="Lọc"
-                    Width: =32
-                    X: =771
-                    Y: =29
-                    ZIndex: =16
-
                 CbxFilterQLCTTB_1 As Combobox.pcfdataset:
                     DefaultSelectedItems: =Filter(["Nhóm quyền lợi", "Tên quyền lợi"],Value="Nhóm quyền lợi")
                     DisplayMode: =DisplayMode.Edit
@@ -1964,6 +1900,72 @@
                     X: =27
                     Y: =90
                     ZIndex: =19
+
+                ButtonCanvas4_7 As Button:
+                    BasePaletteColor: =
+                    DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
+                    FontColor: =
+                    FontSize: =16
+                    Height: =43
+                    OnSelect: |-
+                        =ClearCollect(
+                            filterNQLSPCollect,
+                            RenameColumns(
+                                Filter(DM_QUYENLOI_CHITIETS,!IsBlank(Find(TextFilterQLCTTB_1.Value,TEN_QL_CHITIET))),
+                                "cr282_ma_ql_chitiet",
+                                "MA_QLCT"
+                            )
+                        );
+                        ClearCollect(
+                            filterNQLSPCollectNQL,
+                            RenameColumns(
+                                Filter(DM_QUYENLOI_CHITIETS,MA_NHOM_QL=CbxFilterValueQLCTTB_1.Selected.MA_NHOM_QL),
+                                "cr282_ma_ql_chitiet",
+                                "MA_QLCT"
+                            )
+                        );
+                        ClearCollect(
+                            tmpQLCTTBCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        DL_SAN_PHAM_QLCT_CHONS,
+                                        And(
+                                            MA_SAN_PHAM=valMaSP,
+                                            Or(
+                                                And(
+                                                    TextFilterQLCTTB_1.Value="",
+                                                    loaiFilterQLCTTB=0
+                                                ),
+                                                And(
+                                                    IsBlank(CbxFilterValueQLCTTB_1.Selected.MA_NHOM_QL),
+                                                    loaiFilterQLCTTB=1
+                                                ),
+                                                And(
+                                                    CbxFilterQLCTTB_1.Selected.Value="Nhóm quyền lợi",
+                                                    !IsBlank(LookUp(filterNQLSPCollectNQL,MA_QLCT=MA_QL_CHITIET))
+                                                ),
+                                                And(
+                                                    CbxFilterQLCTTB_1.Selected.Value="Tên quyền lợi",
+                                                    !IsBlank(LookUp(filterNQLSPCollect,MA_QLCT=MA_QL_CHITIET))
+                                                )
+                                            )
+                                        )
+                                    ),
+                                    "cr282_ma_ql_chitiet",
+                                    SortOrder.Ascending
+                                ),
+                                "cr282_ma_ql_chitiet",
+                                "cr282_ma_nhomql_sp",
+                                "cr282_ten_hien_thi",
+                                "cr282_ma_nhom_ql"
+                            )
+                        )
+                    Text: ="Tra cứu"
+                    Width: =96
+                    X: =770
+                    Y: =29
+                    ZIndex: =20
 
             "'3.3 Thongtinqlkhac' As groupContainer.manualLayoutContainer":
                 Height: =322
@@ -2186,7 +2188,7 @@
                             Mode: =TextMode.MultiLine
                             OnChange: =
                             OnSelect: =Select(Parent)
-                            Width: =725
+                            Width: =460
                             X: =291
                             ZIndex: =23
 
@@ -2224,119 +2226,6 @@
                         X: =305
                         Y: =97
                         ZIndex: =5
-
-                    IconTaiLaiQLK_1 As icon.Sync:
-                        Color: =RGBA(83, 144, 164, 1)
-                        Height: =36
-                        Icon: =Icon.Sync
-                        OnSelect: |-
-                            =ClearCollect(
-                                tmpQLKCollect,
-                                ShowColumns(
-                                    AddColumns(
-                                        SortByColumns(
-                                            Filter(
-                                                DL_SAN_PHAM_QL_KHACS,
-                                                MA_SP=valMaSP
-                                            ),
-                                            "cr282_ma_dl",
-                                            SortOrder.Ascending
-                                        ),
-                                        "edited",
-                                        0
-                                    ),
-                                    "cr282_ma_dl",
-                                    "cr282_ma_sp",
-                                    "cr282_ma_nhom_ql",
-                                    "cr282_mo_ta",
-                                    "edited"
-                                )
-                            );
-                            UpdateContext({
-                                maAddedQLK:"",
-                                maUpdatedQLK:"",
-                                showConfirmQLK:0
-                            });
-                            Reset(CbxFilterQLK_1);Reset(CbxFilterValueQLK_1)
-                        Tooltip: ="Tải lại"
-                        Width: =32
-                        X: =40
-                        Y: =44
-                        ZIndex: =8
-
-                    IconThemQLK_1 As icon.AddDocument:
-                        Color: =RGBA(72, 163, 62, 1)
-                        DisplayMode: =If(And(maAddedQLK="",maUpdatedQLK=""), DisplayMode.Edit,DisplayMode.Disabled)
-                        Height: =42
-                        Icon: =Icon.AddDocument
-                        OnSelect: |
-                            =If(
-                                Or(maAddedQLK<>"",maUpdatedQLK<>""),
-                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                                UpdateContext({
-                                    idMaQLK:If(
-                                        CountIf(DL_SAN_PHAM_QL_KHACS,MA_SP=valMaSP)=0,
-                                        1000,
-                                        Value(Last(SortByColumns(Filter(DL_SAN_PHAM_QL_KHACS,MA_SP=valMaSP),"cr282_ma_dl",SortOrder.Ascending)).MA_DL)+1
-                                    )
-                                });
-                                Collect(
-                                    tmpQLKCollect,
-                                    {
-                                        cr282_ma_dl:Text(idMaQLK),
-                                        cr282_ma_sp:valMaSP,
-                                        cr282_ma_nhom_ql:Blank(),
-                                        cr282_mo_ta:Blank(),
-                                        edited:1
-                                    }
-                                );
-                                UpdateContext({maAddedQLK:Text(idMaQLK)})
-                            )
-                        Tooltip: ="Thêm mới"
-                        Width: =40
-                        X: =91
-                        Y: =40
-                        ZIndex: =9
-
-                    IconFilterQLK_1 As icon.FilterFlat:
-                        Color: =RGBA(71, 158, 245, 1)
-                        DisplayMode: =If(Or(maAddedQLK<>"",maUpdatedQLK<>""),DisplayMode.Disabled,DisplayMode.Edit)
-                        Height: =47
-                        Icon: =Icon.FilterFlat
-                        OnSelect: |-
-                            =ClearCollect(
-                                tmpQLKCollect,
-                                ShowColumns(
-                                    AddColumns(
-                                        SortByColumns(
-                                            Filter(
-                                                Filter(
-                                                    DL_SAN_PHAM_QL_KHACS,
-                                                    MA_SP=valMaSP
-                                                ),
-                                                Or(
-                                                    IsBlank(CbxFilterValueQLK_1.Selected.MA_NHOM_QL),
-                                                    MA_NHOM_QL=CbxFilterValueQLK_1.Selected.MA_NHOM_QL
-                                                )
-                                            ),
-                                            "cr282_ma_dl",
-                                            SortOrder.Ascending
-                                        ),
-                                        "edited",
-                                        0
-                                    ),
-                                    "cr282_ma_dl",
-                                    "cr282_ma_sp",
-                                    "cr282_ma_nhom_ql",
-                                    "cr282_mo_ta",
-                                    "edited"
-                                )
-                            );
-                        Tooltip: ="Lọc"
-                        Width: =32
-                        X: =724
-                        Y: =37
-                        ZIndex: =10
 
                     CbxFilterQLK_1 As Combobox.pcfdataset:
                         DefaultSelectedItems: =Filter(["Nhóm quyền lợi"],Value="Nhóm quyền lợi")
@@ -2401,6 +2290,135 @@
                         X: =5
                         Y: =0
                         ZIndex: =14
+
+                    ButtonCanvas4_8 As Button:
+                        BasePaletteColor: =
+                        DisplayMode: =If(Or(maAddedQLK<>"",maUpdatedQLK<>""),DisplayMode.Disabled,DisplayMode.Edit)
+                        FontColor: =
+                        FontSize: =16
+                        Height: =43
+                        OnSelect: |-
+                            =ClearCollect(
+                                tmpQLKCollect,
+                                ShowColumns(
+                                    AddColumns(
+                                        SortByColumns(
+                                            Filter(
+                                                Filter(
+                                                    DL_SAN_PHAM_QL_KHACS,
+                                                    MA_SP=valMaSP
+                                                ),
+                                                Or(
+                                                    IsBlank(CbxFilterValueQLK_1.Selected.MA_NHOM_QL),
+                                                    MA_NHOM_QL=CbxFilterValueQLK_1.Selected.MA_NHOM_QL
+                                                )
+                                            ),
+                                            "cr282_ma_dl",
+                                            SortOrder.Ascending
+                                        ),
+                                        "edited",
+                                        0
+                                    ),
+                                    "cr282_ma_dl",
+                                    "cr282_ma_sp",
+                                    "cr282_ma_nhom_ql",
+                                    "cr282_mo_ta",
+                                    "edited"
+                                )
+                            );
+                        Text: ="Tra cứu"
+                        Width: =96
+                        X: =724
+                        Y: =37
+                        ZIndex: =15
+
+                    ButtonCanvas4_9 As Button:
+                        BasePaletteColor: =
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        FontSize: =16
+                        Height: =43
+                        OnSelect: |-
+                            =ClearCollect(
+                                tmpQLKCollect,
+                                ShowColumns(
+                                    AddColumns(
+                                        SortByColumns(
+                                            Filter(
+                                                DL_SAN_PHAM_QL_KHACS,
+                                                MA_SP=valMaSP
+                                            ),
+                                            "cr282_ma_dl",
+                                            SortOrder.Ascending
+                                        ),
+                                        "edited",
+                                        0
+                                    ),
+                                    "cr282_ma_dl",
+                                    "cr282_ma_sp",
+                                    "cr282_ma_nhom_ql",
+                                    "cr282_mo_ta",
+                                    "edited"
+                                )
+                            );
+                            UpdateContext({
+                                maAddedQLK:"",
+                                maUpdatedQLK:"",
+                                showConfirmQLK:0
+                            });
+                            Reset(CbxFilterQLK_1);Reset(CbxFilterValueQLK_1)
+                        Text: ="Tải lại"
+                        Width: =105
+                        X: =24
+                        Y: =37
+                        ZIndex: =16
+
+                    ButtonCanvas4_10 As Button:
+                        BasePaletteColor: =
+                        DisplayMode: =If(And(maAddedQLK="",maUpdatedQLK=""), DisplayMode.Edit,DisplayMode.Disabled)
+                        FontColor: =
+                        FontSize: =16
+                        Height: =43
+                        OnSelect: |
+                            =If(
+                                Or(maAddedQLK<>"",maUpdatedQLK<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                UpdateContext({
+                                    idMaQLK:If(
+                                        CountIf(DL_SAN_PHAM_QL_KHACS,MA_SP=valMaSP)=0,
+                                        1000,
+                                        Value(Last(SortByColumns(Filter(DL_SAN_PHAM_QL_KHACS,MA_SP=valMaSP),"cr282_ma_dl",SortOrder.Ascending)).MA_DL)+1
+                                    )
+                                });
+                                Collect(
+                                    tmpQLKCollect,
+                                    {
+                                        cr282_ma_dl:Text(idMaQLK),
+                                        cr282_ma_sp:valMaSP,
+                                        cr282_ma_nhom_ql:Blank(),
+                                        cr282_mo_ta:Blank(),
+                                        edited:1
+                                    }
+                                );
+                                UpdateContext({maAddedQLK:Text(idMaQLK)})
+                            )
+                        Text: ="Thêm mới"
+                        Width: =105
+                        X: =141
+                        Y: =37
+                        ZIndex: =17
+
+                    TextCanvas2_169 As Text:
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =38
+                        Size: =14
+                        Text: ="Thao tác"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =151
+                        X: =990
+                        Y: =97
+                        ZIndex: =18
 
                 ContainerConfirmQLK_1 As groupContainer.manualLayoutContainer:
                     BorderColor: =RGBA(180, 214, 250, 1)
