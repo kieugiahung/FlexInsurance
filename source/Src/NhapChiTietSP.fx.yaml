@@ -141,8 +141,7 @@
         );
         UpdateContext({
             maAddedQLK:"",
-            maUpdatedQLK:"",
-            showConfirmQLK:0
+            maUpdatedQLK:""
         });
         ClearCollect(
             tmpNQLSPCollect,
@@ -1811,7 +1810,7 @@
                         DisplayMode: =DisplayMode.Disabled
                         OnChange: =
                         OnSelect: =Select(Parent)
-                        Width: =256
+                        Width: =250
                         X: =181
                         ZIndex: =9
 
@@ -1824,7 +1823,7 @@
                         DisplayMode: =DisplayMode.Disabled
                         OnChange: =
                         OnSelect: =Select(Parent)
-                        Width: =423
+                        Width: =418
                         X: =437
                         ZIndex: =10
 
@@ -1850,7 +1849,7 @@
                         DisplayMode: =DisplayMode.Disabled
                         OnChange: =
                         OnSelect: =Select(Parent)
-                        Width: =169
+                        Width: =163
                         X: =12
                         ZIndex: =12
 
@@ -1860,7 +1859,7 @@
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
                     Height: =39
-                    Width: =1182
+                    Width: =1187
                     X: =12
                     Y: =90
                     ZIndex: =2
@@ -1923,7 +1922,7 @@
                     Visible: =loaiFilterQLCTTB=0
                     Width: =204
                     X: =556
-                    Y: =29
+                    Y: =33
                     ZIndex: =15
 
                 CbxFilterQLCTTB_1 As Combobox.pcfdataset:
@@ -1993,7 +1992,10 @@
                         =ClearCollect(
                             filterNQLSPCollect,
                             RenameColumns(
-                                Filter(DM_QUYENLOI_CHITIETS,!IsBlank(Find(TextFilterQLCTTB_1.Value,TEN_QL_CHITIET))),
+                                Filter(
+                                    DM_QUYENLOI_CHITIETS,
+                                    !IsBlank(Find(Lower(TextFilterQLCTTB_1.Value),Lower(TEN_QL_CHITIET)))
+                                ),
                                 "cr282_ma_ql_chitiet",
                                 "MA_QLCT"
                             )
@@ -2058,20 +2060,19 @@
 
                 ContainerQLK_1 As groupContainer.manualLayoutContainer:
                     Height: =322
-                    Visible: =showConfirmQLK=0
                     Width: =1216
                     ZIndex: =1
 
                     GalleryQLK_1 As gallery.galleryVertical:
                         DelayItemLoading: =true
-                        Height: =183
+                        Height: =196
                         Items: =SortByColumns(tmpQLKCollect,"cr282_ma_dl",SortOrder.Ascending)
                         Layout: =Layout.Vertical
                         LoadingSpinner: =LoadingSpinner.Data
                         NavigationStep: =0
                         TemplateSize: =52
                         Width: =1204
-                        Y: =135
+                        Y: =126
                         ZIndex: =1
 
                         CbxNhomQLQLK_1 As combobox:
@@ -2239,11 +2240,17 @@
                             FontSize: =16
                             Height: =42
                             OnSelect: |-
-                                =UpdateContext({
-                                    showConfirmQLK:1,
-                                    maDeleteQLK:ThisItem.cr282_ma_dl,
-                                    objDeleteQLK:ThisItem
-                                });
+                                =If(
+                                    Or(maAddedQLK<>"",maUpdatedQLK<>""),
+                                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                    Refresh(DL_SAN_PHAM_QL_KHACS);
+                                    RemoveIf(
+                                        DL_SAN_PHAM_QL_KHACS,
+                                        MA_DL=ThisItem.cr282_ma_dl
+                                    );
+                                    Remove(tmpQLKCollect,ThisItem);
+                                    Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
+                                )
                             Text: ="Xóa"
                             Visible: =ThisItem.edited=0
                             Width: =75
@@ -2288,7 +2295,7 @@
                         Height: =38
                         Width: =1179
                         X: =17
-                        Y: =97
+                        Y: =88
                         ZIndex: =2
 
                     TextCanvas2_92 As Text:
@@ -2300,7 +2307,7 @@
                         Weight: ='TextCanvas.Weight'.Bold
                         Width: =121
                         X: =40
-                        Y: =97
+                        Y: =88
                         ZIndex: =4
 
                     TextCanvas2_93 As Text:
@@ -2312,7 +2319,7 @@
                         Weight: ='TextCanvas.Weight'.Bold
                         Width: =151
                         X: =305
-                        Y: =97
+                        Y: =88
                         ZIndex: =5
 
                     CbxFilterQLK_1 As Combobox.pcfdataset:
@@ -2324,7 +2331,7 @@
                         OnChange: =
                         Width: =152
                         X: =348
-                        Y: =37
+                        Y: =34
                         ZIndex: =11
 
                     CbxFilterValueQLK_1 As Combobox.pcfdataset:
@@ -2340,7 +2347,7 @@
                         Visible: =true
                         Width: =204
                         X: =509
-                        Y: =37
+                        Y: =34
                         ZIndex: =13
 
                         MA_NHOM_QL1_7 As pcfDataField.textualColumn:
@@ -2417,7 +2424,7 @@
                         Text: ="Tra cứu"
                         Width: =96
                         X: =724
-                        Y: =37
+                        Y: =34
                         ZIndex: =15
 
                     ButtonCanvas4_9 As Button:
@@ -2458,7 +2465,7 @@
                         Text: ="Tải lại"
                         Width: =105
                         X: =24
-                        Y: =37
+                        Y: =34
                         ZIndex: =16
 
                     ButtonCanvas4_10 As Button:
@@ -2493,7 +2500,7 @@
                         Text: ="Thêm mới"
                         Width: =105
                         X: =141
-                        Y: =37
+                        Y: =34
                         ZIndex: =17
 
                     TextCanvas2_169 As Text:
@@ -2505,72 +2512,8 @@
                         Weight: ='TextCanvas.Weight'.Bold
                         Width: =100
                         X: =1033
-                        Y: =97
+                        Y: =88
                         ZIndex: =18
-
-                ContainerConfirmQLK_1 As groupContainer.manualLayoutContainer:
-                    BorderColor: =RGBA(180, 214, 250, 1)
-                    BorderThickness: =2
-                    Fill: =Color.White
-                    Height: =205
-                    Visible: =showConfirmQLK=1
-                    Width: =438
-                    X: =427
-                    Y: =58
-                    ZIndex: =2
-
-                    TextCanvas1_10 As Text:
-                        DisplayMode: =DisplayMode.Edit
-                        FontColor: =
-                        Height: =31
-                        Size: =16
-                        Text: ="Bạn có chắc chắn muốn xóa?"
-                        Weight: ='TextCanvas.Weight'.Bold
-                        Width: =233
-                        X: =108
-                        Y: =52
-                        ZIndex: =1
-
-                    OKCFQLK_1 As icon.Check:
-                        Color: =RGBA(72, 163, 62, 1)
-                        Height: =46
-                        Icon: =Icon.Check
-                        OnSelect: |-
-                            =UpdateContext({
-                                showConfirmQLK:0
-                            });
-                            If(
-                                Or(maAddedQLK<>"",maUpdatedQLK<>""),
-                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                                Refresh(DL_SAN_PHAM_QL_KHACS);
-                                RemoveIf(
-                                    DL_SAN_PHAM_QL_KHACS,
-                                    MA_DL=maDeleteQLK
-                                );
-                                Remove(tmpQLKCollect,objDeleteQLK);
-                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
-                            )
-                        Tooltip: ="OK"
-                        Width: =47
-                        X: =128
-                        Y: =105
-                        ZIndex: =2
-
-                    CancelCFQLK_1 As icon.CancelBadge:
-                        Color: =RGBA(233, 79, 76, 1)
-                        Height: =46
-                        Icon: =Icon.CancelBadge
-                        OnSelect: |-
-                            =UpdateContext({
-                                showConfirmQLK:0,
-                                maDeleteQLK:Blank(),
-                                objDeleteQLK:Blank()
-                            })
-                        Tooltip: ="Hủy"
-                        Width: =41
-                        X: =261
-                        Y: =105
-                        ZIndex: =3
 
         DataCard2_1 As dataCard.blankCard:
             BorderColor: =RGBA(0, 0, 0, 1)
