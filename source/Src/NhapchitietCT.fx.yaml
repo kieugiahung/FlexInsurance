@@ -3356,7 +3356,7 @@
 
                 Button2_1 As button:
                     Height: =39
-                    OnSelect: |
+                    OnSelect: |-
                         =
                         // xoá dữ liệu quyền lợi chi tiết của chương trình hiện tại
                         RemoveIf(
@@ -3396,6 +3396,41 @@
                                 }
                             )
                         );
+                           ClearCollect(
+                                TmpBangPhiCT,
+                                ShowColumns(
+                                    AddColumns(
+                                        SortByColumns(
+                                            Filter(DL_CHUONG_TRINH_BANG_PHIS,MA_SAN_PHAM=valMaSP && MA_CHUONG_TRINH = VarCT),
+                                            "cr282_ma_bang_phi",
+                                            SortOrder.Ascending
+                                        ),
+                                        "edited",
+                                        0
+                                    ),
+                                "cr282_ma_bang_phi",
+                                "cr282_ma_san_pham",
+                                "cr282_ma_chuong_trinh",
+                                "cr282_nhom_tinh_phi",
+                                "cr282_ma_phamvi_dialy",
+                                "cr282_ma_do_tuoi",
+                                "cr282_ma_gioi_tinh",
+                                "cr282_so_tien",
+                                "cr282_phi_bh",
+                                "cr282_tyle_phi",
+                                "cr282_pthuc_dong_phi",
+                                "cr282_ten_chuong_trinh",
+                                "cr282_ten_san_pham",
+                                "cr282_thoi_han_bh",
+                                "cr282_doi_tuong",
+                                "cr282_nhom_nganh_nghe",
+                                "edited"
+                                )
+                            );
+                            UpdateContext({
+                                maAddedMatranCT:"",
+                                maUpdateMatranCT:""
+                            });
                     Size: =13
                     Text: ="Sao phép"
                     Visible: =varAnhHienCTPhi
