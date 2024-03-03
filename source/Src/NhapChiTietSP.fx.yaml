@@ -870,8 +870,8 @@
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         OnChange: =
                         OnSelect: =Select(Parent)
-                        Width: =215
-                        X: =293
+                        Width: =58
+                        X: =457
                         ZIndex: =9
 
                     Btn_SuaCT_6 As button:
@@ -1061,6 +1061,38 @@
                         Width: =290
                         X: =3
                         ZIndex: =24
+
+                    CbxTTinDKCCT_1 As combobox:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                        ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
+                        ChevronHoverBackground: =RGBA(255, 255, 255, 1)
+                        ChevronHoverFill: =RGBA(72, 163, 62, 1)
+                        DefaultSelectedItems: =Filter(DM_THONGTIN_DK_CHUNGS,MA_TTIN=ThisItem.cr282_thong_tin)
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayFields: =["cr282_ten_ttin"]
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =39
+                        HoverBorderColor: =RGBA(9, 33, 98, 1)
+                        HoverFill: =RGBA(180, 214, 250, 1)
+                        InputTextPlaceholder: ="Chọn nhóm quyền lợi"
+                        IsSearchable: =false
+                        Items: =SortByColumns(Filter(DM_THONGTIN_DK_CHUNGS,MA_NHOM_TTIN=Text(CbxNhomTT_2.Selected.Value)),"cr282_ma_ttin",SortOrder.Ascending)
+                        OnSelect: =Select(Parent)
+                        PressedColor: =RGBA(72, 163, 62, 1)
+                        PressedFill: =RGBA(255, 255, 255, 1)
+                        SearchFields: =["cr282_ten_ttin"]
+                        SearchItems: =[]
+                        SelectionColor: =RGBA(0, 0, 0, 1)
+                        SelectionFill: =RGBA(214, 221, 224, 1)
+                        SelectMultiple: =false
+                        Width: =129
+                        X: =311
+                        ZIndex: =25
 
                 BadgeCanvas1_24 As Badge:
                     BasePaletteColor: =
