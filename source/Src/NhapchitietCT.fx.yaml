@@ -1096,7 +1096,7 @@
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
                     TemplateSize: =54
-                    Width: =1262
+                    Width: =1257
                     Y: =128
                     ZIndex: =1
 
@@ -1128,7 +1128,8 @@
                         SelectionColor: =RGBA(0, 0, 0, 1)
                         SelectionFill: =RGBA(214, 221, 224, 1)
                         SelectMultiple: =false
-                        Width: =232
+                        Width: =220
+                        X: =5
                         ZIndex: =19
 
                     BtnSuaDKCTCT As Button:
@@ -1182,7 +1183,7 @@
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =67
-                        X: =1168
+                        X: =1165
                         Y: =6
                         ZIndex: =21
 
@@ -1293,7 +1294,7 @@
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =67
-                        X: =1168
+                        X: =1165
                         Y: =6
                         ZIndex: =23
 
@@ -1325,7 +1326,7 @@
                         SelectionColor: =RGBA(0, 0, 0, 1)
                         SelectionFill: =RGBA(214, 221, 224, 1)
                         SelectMultiple: =false
-                        Width: =264
+                        Width: =257
                         X: =232
                         ZIndex: =24
 
@@ -1355,8 +1356,8 @@
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
                     Height: =39
-                    Width: =1262
-                    X: =0
+                    Width: =1248
+                    X: =4
                     Y: =89
                     ZIndex: =2
 
@@ -1370,7 +1371,7 @@
                     Text: ="Nhóm thông tin"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =236
-                    X: =0
+                    X: =4
                     Y: =89
                     ZIndex: =3
 
@@ -1424,8 +1425,8 @@
                     Size: =13
                     Text: ="Thao tác"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =184
-                    X: =1078
+                    Width: =124
+                    X: =1100
                     Y: =91
                     ZIndex: =15
 
@@ -1435,7 +1436,7 @@
                     Font: =Font.'Open Sans'
                     FontColor: =
                     FontSize: =13
-                    Height: =34
+                    Height: =38
                     OnSelect: |-
                         =ClearCollect(
                             tmpDKCCTCollect,
@@ -1465,8 +1466,8 @@
                         });
                     Text: ="Tải lại"
                     Width: =102
-                    X: =0
-                    Y: =42
+                    X: =11
+                    Y: =35
                     ZIndex: =16
 
                 BtnThemDKCTCT As Button:
@@ -1475,7 +1476,7 @@
                     Font: =Font.'Open Sans'
                     FontColor: =
                     FontSize: =13
-                    Height: =34
+                    Height: =38
                     OnSelect: |
                         =If(
                             Or(maAddedDKCCT<>"",maUpdatedDKCCT<>""),
@@ -1501,8 +1502,8 @@
                         )
                     Text: ="Thêm mới"
                     Width: =102
-                    X: =119
-                    Y: =42
+                    X: =130
+                    Y: =35
                     ZIndex: =17
 
             ContainerDKCTCT_1 As groupContainer.manualLayoutContainer:
@@ -1514,15 +1515,15 @@
 
                 GalleryDKCTCT_1 As gallery.galleryVertical:
                     DelayItemLoading: =true
-                    Height: =404
+                    Height: =466
                     Items: =SortByColumns(tmpQLCTCTCollect,"cr282_ma_ql_ct",SortOrder.Ascending)
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
                     TemplatePadding: =1
                     TemplateSize: =33
-                    Width: =1262
-                    Y: =192
+                    Width: =1256
+                    Y: =155
                     ZIndex: =1
 
                     BtnSuaQLCTCT As Button:
@@ -1733,25 +1734,6 @@
                         Y: =3
                         ZIndex: =23
 
-                    TiSttQLCTCT As text:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =ThisItem.cr282_tt_hienthi
-                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                        DisabledColor: =RGBA(0, 0, 0, 1)
-                        DisabledFill: =RGBA(255, 255, 255, 1)
-                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =29
-                        OnChange: =
-                        OnSelect: =Select(Parent)
-                        RadiusBottomLeft: =0
-                        RadiusBottomRight: =0
-                        RadiusTopLeft: =0
-                        RadiusTopRight: =0
-                        Size: =10
-                        Width: =54
-                        Y: =2
-                        ZIndex: =26
-
                     TiTthtQLCTCT As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_tt_hienthi
@@ -1767,8 +1749,8 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =10
-                        Width: =49
-                        X: =54
+                        Width: =60
+                        X: =14
                         Y: =2
                         ZIndex: =27
 
@@ -1989,8 +1971,8 @@
                         SelectionFill: =RGBA(214, 221, 224, 1)
                         SelectMultiple: =false
                         Size: =9
-                        Width: =118
-                        X: =103
+                        Width: =147
+                        X: =74
                         Y: =2
                         ZIndex: =39
 
@@ -2034,23 +2016,10 @@
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
                     Height: =39
-                    Width: =1262
-                    X: =0
-                    Y: =153
+                    Width: =1245
+                    X: =8
+                    Y: =116
                     ZIndex: =2
-
-                TextCanvas2_114 As Text:
-                    Align: ='TextCanvas.Align'.Center
-                    DisplayMode: =DisplayMode.Edit
-                    FontColor: =
-                    Height: =39
-                    Size: =10
-                    Text: ="STT"
-                    Weight: ='TextCanvas.Weight'.Bold
-                    Width: =57
-                    X: =0
-                    Y: =153
-                    ZIndex: =3
 
                 TextCanvas1_12 As Text:
                     DisplayMode: =DisplayMode.Edit
@@ -2075,7 +2044,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =106
                     X: =1156
-                    Y: =154
+                    Y: =117
                     ZIndex: =15
 
                 BtnTaiLaiDKCTCT_1 As Button:
@@ -2084,7 +2053,7 @@
                     Font: =Font.'Open Sans'
                     FontColor: =
                     FontSize: =13
-                    Height: =30
+                    Height: =38
                     OnSelect: |-
                         =ClearCollect(
                             tmpQLCTCTCollect,
@@ -2126,8 +2095,8 @@
                         });
                     Text: ="Tải lại"
                     Width: =102
-                    X: =0
-                    Y: =58
+                    X: =16
+                    Y: =63
                     ZIndex: =16
 
                 BtnThemDKCTCT_1 As Button:
@@ -2136,7 +2105,7 @@
                     Font: =Font.'Open Sans'
                     FontColor: =
                     FontSize: =13
-                    Height: =30
+                    Height: =38
                     OnSelect: |
                         =If(
                             Or(maAddedQLCTCT<>"",maUpdatedQLCTCT<>""),
@@ -2165,23 +2134,23 @@
                         )
                     Text: ="Thêm mới"
                     Width: =102
-                    X: =121
-                    Y: =58
+                    X: =137
+                    Y: =63
                     ZIndex: =17
 
                 TextCanvas2_116 As Text:
                     Align: ='TextCanvas.Align'.Center
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =36
+                    Height: =38
                     Size: =10
                     Text: |-
                         ="Thứ tự 
                         hiển thị"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =45
-                    X: =57
-                    Y: =154
+                    Width: =74
+                    X: =9
+                    Y: =117
                     ZIndex: =21
 
                 TextCanvas2_115 As Text:
@@ -2196,7 +2165,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =59
                     X: =121
-                    Y: =154
+                    Y: =117
                     ZIndex: =22
 
                 TextCanvas2_117 As Text:
@@ -2211,7 +2180,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =71
                     X: =264
-                    Y: =154
+                    Y: =117
                     ZIndex: =23
 
                 TextCanvas2_118 As Text:
@@ -2226,7 +2195,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =125
                     X: =394
-                    Y: =154
+                    Y: =117
                     ZIndex: =24
 
                 TextCanvas2_119 As Text:
@@ -2239,9 +2208,9 @@
                         ="Giới hạn/ngày 
                         (số tiền)"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =78
-                    X: =519
-                    Y: =154
+                    Width: =80
+                    X: =518
+                    Y: =117
                     ZIndex: =25
 
                 TextCanvas2_120 As Text:
@@ -2256,7 +2225,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =77
                     X: =598
-                    Y: =154
+                    Y: =117
                     ZIndex: =26
 
                 TextCanvas2_121 As Text:
@@ -2271,7 +2240,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =73
                     X: =680
-                    Y: =154
+                    Y: =117
                     ZIndex: =27
 
                 TextCanvas2_122 As Text:
@@ -2286,7 +2255,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =83
                     X: =758
-                    Y: =154
+                    Y: =117
                     ZIndex: =28
 
                 TextCanvas2_123 As Text:
@@ -2301,7 +2270,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =74
                     X: =841
-                    Y: =154
+                    Y: =117
                     ZIndex: =31
 
                 TextCanvas2_126 As Text:
@@ -2316,7 +2285,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =76
                     X: =1080
-                    Y: =154
+                    Y: =117
                     ZIndex: =32
 
                 TextCanvas2_124 As Text:
@@ -2331,7 +2300,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =79
                     X: =917
-                    Y: =154
+                    Y: =117
                     ZIndex: =34
 
                 TextCanvas2_125 As Text:
@@ -2346,7 +2315,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =78
                     X: =1002
-                    Y: =154
+                    Y: =117
                     ZIndex: =35
 
                 TextCanvas1_13 As Text:
@@ -2372,7 +2341,7 @@
                     Text: ="Sao chép từ CT khác"
                     Width: =202
                     X: =328
-                    Y: =88
+                    Y: =63
                     ZIndex: =37
 
                 Label5 As label:
@@ -2517,13 +2486,13 @@
 
                 GalleryDKCTCT_2 As gallery.galleryVertical:
                     DelayItemLoading: =true
-                    Height: =241
+                    Height: =178
                     Items: =SortByColumns(tmpQLKCTCollect,"cr282_ma_dl_ct",SortOrder.Ascending)
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
                     TemplateSize: =54
-                    Width: =1262
+                    Width: =1255
                     Y: =124
                     ZIndex: =1
 
@@ -2555,7 +2524,8 @@
                         SelectionColor: =RGBA(0, 0, 0, 1)
                         SelectionFill: =RGBA(214, 221, 224, 1)
                         SelectMultiple: =false
-                        Width: =301
+                        Width: =284
+                        X: =10
                         ZIndex: =19
 
                     BtnSuaDKCTCT_1 As Button:
@@ -2583,7 +2553,7 @@
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
                         Width: =67
-                        X: =1089
+                        X: =1088
                         Y: =6
                         ZIndex: =20
 
@@ -2609,7 +2579,7 @@
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =67
-                        X: =1168
+                        X: =1162
                         Y: =6
                         ZIndex: =21
 
@@ -2686,7 +2656,7 @@
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
                         Width: =67
-                        X: =1089
+                        X: =1088
                         Y: =6
                         ZIndex: =22
 
@@ -2714,7 +2684,7 @@
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =67
-                        X: =1168
+                        X: =1162
                         Y: =6
                         ZIndex: =23
 
@@ -2744,8 +2714,8 @@
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
                     Height: =40
-                    Width: =1262
-                    X: =0
+                    Width: =1230
+                    X: =9
                     Y: =84
                     ZIndex: =2
 
@@ -2796,8 +2766,8 @@
                     Size: =14
                     Text: ="Thao tác"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =172
-                    X: =1090
+                    Width: =107
+                    X: =1107
                     Y: =84
                     ZIndex: =15
 
@@ -2837,7 +2807,7 @@
                     Text: ="Tải lại"
                     Width: =105
                     X: =15
-                    Y: =31
+                    Y: =33
                     ZIndex: =16
 
                 BtnThemDKCTCT_2 As Button:
@@ -2872,7 +2842,7 @@
                     Text: ="Thêm mới"
                     Width: =102
                     X: =131
-                    Y: =31
+                    Y: =33
                     ZIndex: =17
 
             "'3Bangphi' As groupContainer.manualLayoutContainer":
