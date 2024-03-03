@@ -2439,6 +2439,45 @@
                                 }
                             )
                         );
+                            Notify("Sao chép dữ liệu thành công", NotificationType.Success,800);
+                            ClearCollect(
+                                tmpQLCTCTCollect,
+                                ShowColumns(
+                                    AddColumns(
+                                        SortByColumns(
+                                            Filter(
+                                                DL_CHUONGTRINH_QLCTS,
+                                                MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SAN_PHAM=objCT.MA_SAN_PHAM
+                                            ),
+                                            "cr282_ma_ql_ct",
+                                            SortOrder.Ascending
+                                        ),
+                                        "edited",
+                                        0,
+                                        "idQLCT",
+                                        "0"
+                                    ),
+                                    "cr282_ma_ql_ct",
+                                    "cr282_gh_solan_nam",
+                                    "cr282_gh_songay_nam",
+                                    "cr282_gh_sotien_benh",
+                                    "cr282_gh_sotien_nam",
+                                    "cr282_gh_sotien_ngay",
+                                    "cr282_gh_sotien_vu",
+                                    "cr282_ma_nhomql_sp",
+                                    "cr282_ma_nhom_ql",
+                                    "cr282_pt_tu_chitra",
+                                    "cr282_so_tien_bh",
+                                    "cr282_tt_hienthi",
+                                    "cr282_ten_quyen_loi_ht",
+                                    "edited",
+                                    "idQLCT"
+                                )
+                            );
+                            UpdateContext({
+                                maAddedQLCTCT:"",
+                                maUpdatedQLCTCT:""
+                            });
                     Size: =13
                     Text: ="Sao phép"
                     Visible: =varAnhHienCT
