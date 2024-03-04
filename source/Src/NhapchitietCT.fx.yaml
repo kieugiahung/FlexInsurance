@@ -2821,6 +2821,7 @@
                         =If(
                             Or(maAddedQLKCT<>"",maUpdatedQLKCT<>""),
                             Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                            Refresh(DL_CHUONGTRINH_QL_KHACS);
                             UpdateContext({
                                 idMaQLKCT:If(
                                     CountIf(DL_CHUONGTRINH_QL_KHACS,true)=0,
