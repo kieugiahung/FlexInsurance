@@ -1480,6 +1480,7 @@
                         =If(
                             Or(maAddedDKCCT<>"",maUpdatedDKCCT<>""),
                             Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                            Refresh(DL_CHUONGTRINH_DKCHUNGS);
                             UpdateContext({
                                 idMaDKCCT:If(
                                     CountIf(DL_CHUONGTRINH_DKCHUNGS,true)=0,
