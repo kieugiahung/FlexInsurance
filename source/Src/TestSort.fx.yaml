@@ -7242,7 +7242,45 @@
                         Y: =105
                         ZIndex: =3
 
-    LeftNavigation_20 As LeftNavigation_9:
-        Width: =LeftNavigation_20.MenuWidth - 10
+    LeftNavigation_6 As LeftNavigation_5:
+        NavItems: |-
+            =Table(
+                {
+                    Title: "Home",
+                    Screen: App.ActiveScreen,
+                    Icon: Icon.Home,
+                    MenuID: 1,
+                    Subtable: Table(
+                        {
+                       Title: "Home1",
+                       Screen: App.ActiveScreen,
+                       Icon: Icon.Home, 
+                       MenuID: 1.1
+            
+                        },
+                        {
+                       Title: "Home2",
+                       Screen: App.ActiveScreen,
+                       Icon: Icon.Home, 
+                       MenuID: 1.2
+            
+                        },
+                          {
+                       Title: "Home3",
+                       Screen: App.ActiveScreen,
+                       Icon: Icon.Home, 
+                       MenuID: 1.3
+            
+                        }
+                    )
+                }, {
+                    Title: "Task",
+                    Screen: App.ActiveScreen,
+                    Icon: Icon.DetailList,
+                    MenuID: 2
+                    
+                }
+            )
+        Width: =LeftNavigation_6.MenuWidth
         ZIndex: =4
 
