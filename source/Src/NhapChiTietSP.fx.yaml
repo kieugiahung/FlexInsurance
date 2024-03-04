@@ -1214,14 +1214,14 @@
 
                 GalleryNQLSP_1 As gallery.galleryVertical:
                     DelayItemLoading: =true
-                    Height: =305
+                    Height: =339
                     Items: =SortByColumns(tmpNQLSPCollect,"cr282_ma_dl",SortOrder.Ascending)
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
                     TemplateSize: =41
                     Width: =1203
-                    Y: =125
+                    Y: =149
                     ZIndex: =1
 
                     CbxNhomTPNQLSP_1 As combobox:
@@ -1406,7 +1406,7 @@
                         ZIndex: =34
 
                     BtnLuuNQLSP As button:
-                        Height: =38
+                        Height: =30
                         OnSelect: |
                             =If(
                                 IsBlank(CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL),
@@ -1495,11 +1495,11 @@
                         Visible: =ThisItem.edited=1
                         Width: =68
                         X: =940
-                        Y: =1
+                        Y: =5
                         ZIndex: =35
 
                     BtnSuaNQLSP As button:
-                        Height: =37
+                        Height: =30
                         OnSelect: |-
                             =If(
                                 Or(maAddedNQLSP<>"",maUpdatedNQLSP<>""),
@@ -1520,11 +1520,11 @@
                         Visible: =ThisItem.edited=0
                         Width: =68
                         X: =940
-                        Y: =1
+                        Y: =5
                         ZIndex: =36
 
                     BtnXoaNQLSP As button:
-                        Height: =38
+                        Height: =30
                         OnSelect: |-
                             =If(
                                 Or(maAddedNQLSP<>"",maUpdatedNQLSP<>""),
@@ -1563,11 +1563,11 @@
                         Visible: =ThisItem.edited=0
                         Width: =68
                         X: =1018
-                        Y: =1
+                        Y: =5
                         ZIndex: =37
 
                     BtnHuyNQLSP As button:
-                        Height: =37
+                        Height: =30
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_ma_dl=maAddedNQLSP,
@@ -1589,11 +1589,11 @@
                         Visible: =ThisItem.edited=1
                         Width: =68
                         X: =1018
-                        Y: =1
+                        Y: =5
                         ZIndex: =38
 
                     BtnCTNQLSP As button:
-                        Height: =37
+                        Height: =30
                         OnSelect: |-
                             =If(
                                 Or(maAddedNQLSP<>"",maUpdatedNQLSP<>""),
@@ -1608,7 +1608,7 @@
                         Visible: =ThisItem.edited=0
                         Width: =85
                         X: =1096
-                        Y: =1
+                        Y: =5
                         ZIndex: =39
 
                 BadgeCanvas1_19 As Badge:
@@ -1619,7 +1619,7 @@
                     Height: =38
                     Width: =1203
                     X: =0
-                    Y: =87
+                    Y: =111
                     ZIndex: =2
 
                 TextCanvas2_77 As Text:
@@ -1632,7 +1632,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =165
                     X: =0
-                    Y: =87
+                    Y: =111
                     ZIndex: =4
 
                 TextCanvas2_78 As Text:
@@ -1645,7 +1645,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =160
                     X: =295
-                    Y: =87
+                    Y: =111
                     ZIndex: =5
 
                 TextCanvas2_88 As Text:
@@ -1658,7 +1658,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =171
                     X: =748
-                    Y: =86
+                    Y: =110
                     ZIndex: =6
 
                 TextCanvas1_6 As Text:
@@ -1683,7 +1683,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =128
                     X: =465
-                    Y: =87
+                    Y: =111
                     ZIndex: =15
 
                 TextCanvas2_80 As Text:
@@ -1696,7 +1696,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =119
                     X: =165
-                    Y: =87
+                    Y: =111
                     ZIndex: =17
 
                 TextCanvas2_79 As Text:
@@ -1709,7 +1709,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =142
                     X: =598
-                    Y: =87
+                    Y: =111
                     ZIndex: =18
 
                 TextCanvas1_7 As Text:
@@ -1724,49 +1724,6 @@
                     Y: =29
                     ZIndex: =19
 
-                ButtonCanvas4_11 As Button:
-                    BasePaletteColor: =RGBA(5, 72, 179, 1)
-                    DisplayMode: =DisplayMode.Edit
-                    Font: =Font.'Open Sans'
-                    FontColor: =
-                    FontSize: =16
-                    Height: =25
-                    OnSelect: |-
-                        =ClearCollect(
-                            tmpNQLSPCollect,
-                            ShowColumns(
-                                AddColumns(
-                                    SortByColumns(
-                                        Filter(
-                                            DL_SAN_PHAM_NHOMQLS,
-                                            MA_SP=valMaSP
-                                        ),
-                                        "cr282_ma_dl",
-                                        SortOrder.Ascending
-                                    ),
-                                    "edited",
-                                    0
-                                ),
-                                "cr282_ma_dl",
-                                "cr282_chuongtrinh_apdung",
-                                "cr282_loai",
-                                "cr282_ma_nhom_ql",
-                                "cr282_ma_nhom_tinhphi",
-                                "cr282_phamvi_dialy",
-                                "cr282_ten_hien_thi",
-                                "edited"
-                            )
-                        );
-                        UpdateContext({
-                            maAddedNQLSP:"",
-                            maUpdatedNQLSP:""
-                        });
-                    Text: ="Tải lại"
-                    Width: =105
-                    X: =4
-                    Y: =58
-                    ZIndex: =20
-
                 TextCanvas2_170 As Text:
                     Align: ='TextCanvas.Align'.Center
                     DisplayMode: =DisplayMode.Edit
@@ -1777,47 +1734,8 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =167
                     X: =966
-                    Y: =88
+                    Y: =112
                     ZIndex: =21
-
-                ButtonCanvas4_12 As Button:
-                    BasePaletteColor: =RGBA(5, 102, 178, 1)
-                    DisplayMode: =If(And(maAddedNQLSP="",maUpdatedNQLSP=""), DisplayMode.Edit,DisplayMode.Disabled)
-                    Font: =Font.'Open Sans'
-                    FontColor: =
-                    FontSize: =16
-                    Height: =25
-                    OnSelect: |
-                        =If(
-                            Or(maAddedNQLSP<>"",maUpdatedNQLSP<>""),
-                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                            UpdateContext({
-                                idMaNQLSP:If(
-                                    CountIf(DL_SAN_PHAM_NHOMQLS,true)=0,
-                                    1000,
-                                    Value(Last(SortByColumns(DL_SAN_PHAM_NHOMQLS,"cr282_ma_dl",SortOrder.Ascending)).MA_DL)+1
-                                )
-                            });
-                            Collect(
-                                tmpNQLSPCollect,
-                                {
-                                    cr282_ma_dl:Text(idMaNQLSP),
-                                    cr282_chuongtrinh_apdung:Blank(),
-                                    cr282_loai:Blank(),
-                                    cr282_ma_nhom_ql:Blank(),
-                                    cr282_ma_nhom_tinhphi:Blank(),
-                                    cr282_phamvi_dialy:Blank(),
-                                    cr282_ten_hien_thi:Blank(),
-                                    edited:1
-                                }
-                            );
-                            UpdateContext({maAddedNQLSP:Text(idMaNQLSP)})
-                        )
-                    Text: ="Thêm mới"
-                    Width: =105
-                    X: =126
-                    Y: =58
-                    ZIndex: =22
 
                 Button4 As button:
                     Height: =30
@@ -1854,17 +1772,44 @@
                     Size: =11
                     Text: ="Tải lại"
                     Width: =96
-                    X: =341
-                    Y: =42
+                    X: =4
+                    Y: =69
                     ZIndex: =23
 
                 Button5 As button:
+                    DisplayMode: =If(And(maAddedNQLSP="",maUpdatedNQLSP=""), DisplayMode.Edit,DisplayMode.Disabled)
                     Height: =30
+                    OnSelect: |
+                        =If(
+                            Or(maAddedNQLSP<>"",maUpdatedNQLSP<>""),
+                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                            UpdateContext({
+                                idMaNQLSP:If(
+                                    CountIf(DL_SAN_PHAM_NHOMQLS,true)=0,
+                                    1000,
+                                    Value(Last(SortByColumns(DL_SAN_PHAM_NHOMQLS,"cr282_ma_dl",SortOrder.Ascending)).MA_DL)+1
+                                )
+                            });
+                            Collect(
+                                tmpNQLSPCollect,
+                                {
+                                    cr282_ma_dl:Text(idMaNQLSP),
+                                    cr282_chuongtrinh_apdung:Blank(),
+                                    cr282_loai:Blank(),
+                                    cr282_ma_nhom_ql:Blank(),
+                                    cr282_ma_nhom_tinhphi:Blank(),
+                                    cr282_phamvi_dialy:Blank(),
+                                    cr282_ten_hien_thi:Blank(),
+                                    edited:1
+                                }
+                            );
+                            UpdateContext({maAddedNQLSP:Text(idMaNQLSP)})
+                        )
                     Size: =11
                     Text: ="Thêm mới"
                     Width: =96
-                    X: =455
-                    Y: =42
+                    X: =118
+                    Y: =69
                     ZIndex: =24
 
             "'3.2 Danhmucqlct' As groupContainer.manualLayoutContainer":
@@ -2070,12 +2015,9 @@
                     Y: =84
                     ZIndex: =19
 
-                ButtonCanvas4_7 As Button:
-                    BasePaletteColor: =
+                Button5_1 As button:
                     DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
-                    FontColor: =
-                    FontSize: =16
-                    Height: =43
+                    Height: =30
                     OnSelect: |-
                         =ClearCollect(
                             filterNQLSPCollect,
@@ -2133,11 +2075,12 @@
                                 "cr282_ma_nhom_ql"
                             )
                         )
+                    Size: =11
                     Text: ="Tra cứu"
                     Width: =96
                     X: =770
-                    Y: =33
-                    ZIndex: =20
+                    Y: =40
+                    ZIndex: =21
 
             "'3.3 Thongtinqlkhac' As groupContainer.manualLayoutContainer":
                 Height: =322
@@ -2158,7 +2101,7 @@
                         Layout: =Layout.Vertical
                         LoadingSpinner: =LoadingSpinner.Data
                         NavigationStep: =0
-                        TemplateSize: =43
+                        TemplateSize: =29
                         Width: =1204
                         Y: =126
                         ZIndex: =1
@@ -2177,6 +2120,7 @@
                             DisabledFill: =RGBA(255, 255, 255, 1)
                             DisplayFields: =["cr282_ten_nhom_ql"]
                             DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                            Height: =28
                             HoverBorderColor: =RGBA(9, 33, 98, 1)
                             HoverFill: =RGBA(180, 214, 250, 1)
                             InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -2200,6 +2144,7 @@
                             DisabledColor: =RGBA(0, 0, 0, 1)
                             DisabledFill: =RGBA(255, 255, 255, 1)
                             DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                            Height: =28
                             MaxLength: =500
                             Mode: =TextMode.MultiLine
                             OnChange: =
@@ -2208,12 +2153,8 @@
                             X: =285
                             ZIndex: =23
 
-                        ButtonLuuQLK As Button:
-                            BasePaletteColor: =
-                            DisplayMode: =DisplayMode.Edit
-                            FontColor: =
-                            FontSize: =16
-                            Height: =40
+                        BtnLuuQLKSP As button:
+                            Height: =26
                             OnSelect: |
                                 =If(
                                     IsBlank(CbxNhomQLQLK_1.Selected.MA_NHOM_QL),
@@ -2283,19 +2224,15 @@
                                     });
                                     Reset(CbxFilterQLK_1); Reset(CbxFilterValueQLK_1)
                                 )
+                            Size: =11
                             Text: ="Lưu"
                             Visible: =ThisItem.edited=1
                             Width: =75
                             X: =1019
-                            Y: =0
-                            ZIndex: =24
+                            ZIndex: =28
 
-                        ButtonSuaQLK As Button:
-                            BasePaletteColor: =
-                            DisplayMode: =DisplayMode.Edit
-                            FontColor: =
-                            FontSize: =16
-                            Height: =40
+                        BtnSuaQLKSP As button:
+                            Height: =26
                             OnSelect: |-
                                 =If(
                                     Or(maAddedQLK<>"",maUpdatedQLK<>""),
@@ -2311,19 +2248,15 @@
                                         maUpdatedQLK:ThisItem.cr282_ma_dl
                                     })
                                 )
+                            Size: =11
                             Text: ="Sửa"
                             Visible: =ThisItem.edited=0
                             Width: =75
                             X: =1019
-                            Y: =0
-                            ZIndex: =25
+                            ZIndex: =29
 
-                        ButtonXoaQLK As Button:
-                            BasePaletteColor: =
-                            DisplayMode: =DisplayMode.Edit
-                            FontColor: =
-                            FontSize: =16
-                            Height: =40
+                        BtnXoaQLKSP As button:
+                            Height: =26
                             OnSelect: |-
                                 =If(
                                     Or(maAddedQLK<>"",maUpdatedQLK<>""),
@@ -2340,15 +2273,10 @@
                             Visible: =ThisItem.edited=0
                             Width: =75
                             X: =1108
-                            Y: =0
-                            ZIndex: =26
+                            ZIndex: =30
 
-                        ButtonHuyQLK As Button:
-                            BasePaletteColor: =
-                            DisplayMode: =DisplayMode.Edit
-                            FontColor: =
-                            FontSize: =16
-                            Height: =40
+                        BtnHuyQLKSP As button:
+                            Height: =26
                             OnSelect: |-
                                 =If(
                                     ThisItem.cr282_ma_dl=maAddedQLK,
@@ -2365,12 +2293,12 @@
                                     maAddedQLK:"",
                                     maUpdatedQLK:""
                                 });
+                            Size: =11
                             Text: ="Hủy"
                             Visible: =ThisItem.edited=1
                             Width: =75
                             X: =1108
-                            Y: =0
-                            ZIndex: =27
+                            ZIndex: =31
 
                     BadgeCanvas1_22 As Badge:
                         BasePaletteColor: =
@@ -2473,12 +2401,22 @@
                         Y: =0
                         ZIndex: =14
 
-                    ButtonCanvas4_8 As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =If(Or(maAddedQLK<>"",maUpdatedQLK<>""),DisplayMode.Disabled,DisplayMode.Edit)
+                    TextCanvas2_169 As Text:
+                        Align: ='TextCanvas.Align'.Center
+                        DisplayMode: =DisplayMode.Edit
                         FontColor: =
-                        FontSize: =16
-                        Height: =43
+                        Height: =38
+                        Size: =14
+                        Text: ="Thao tác"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =196
+                        X: =1008
+                        Y: =88
+                        ZIndex: =18
+
+                    Button5_2 As button:
+                        DisplayMode: =If(Or(maAddedQLK<>"",maUpdatedQLK<>""),DisplayMode.Disabled,DisplayMode.Edit)
+                        Height: =30
                         OnSelect: |-
                             =ClearCollect(
                                 tmpQLKCollect,
@@ -2508,18 +2446,15 @@
                                     "edited"
                                 )
                             );
+                        Size: =11
                         Text: ="Tra cứu"
                         Width: =96
                         X: =724
-                        Y: =34
-                        ZIndex: =15
+                        Y: =40
+                        ZIndex: =19
 
-                    ButtonCanvas4_9 As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        FontColor: =
-                        FontSize: =16
-                        Height: =43
+                    Button4_1 As button:
+                        Height: =30
                         OnSelect: |-
                             =ClearCollect(
                                 tmpQLKCollect,
@@ -2549,18 +2484,16 @@
                                 showConfirmQLK:0
                             });
                             Reset(CbxFilterQLK_1);Reset(CbxFilterValueQLK_1)
+                        Size: =11
                         Text: ="Tải lại"
-                        Width: =105
+                        Width: =96
                         X: =5
-                        Y: =34
-                        ZIndex: =16
+                        Y: =40
+                        ZIndex: =20
 
-                    ButtonCanvas4_10 As Button:
-                        BasePaletteColor: =
+                    Button5_3 As button:
                         DisplayMode: =If(And(maAddedQLK="",maUpdatedQLK=""), DisplayMode.Edit,DisplayMode.Disabled)
-                        FontColor: =
-                        FontSize: =16
-                        Height: =43
+                        Height: =30
                         OnSelect: |
                             =If(
                                 Or(maAddedQLK<>"",maUpdatedQLK<>""),
@@ -2584,24 +2517,12 @@
                                 );
                                 UpdateContext({maAddedQLK:Text(idMaQLK)})
                             )
+                        Size: =11
                         Text: ="Thêm mới"
-                        Width: =105
-                        X: =122
-                        Y: =34
-                        ZIndex: =17
-
-                    TextCanvas2_169 As Text:
-                        Align: ='TextCanvas.Align'.Center
-                        DisplayMode: =DisplayMode.Edit
-                        FontColor: =
-                        Height: =38
-                        Size: =14
-                        Text: ="Thao tác"
-                        Weight: ='TextCanvas.Weight'.Bold
-                        Width: =196
-                        X: =1008
-                        Y: =88
-                        ZIndex: =18
+                        Width: =96
+                        X: =119
+                        Y: =40
+                        ZIndex: =21
 
         DataCard2_1 As dataCard.blankCard:
             BorderColor: =RGBA(0, 0, 0, 1)
