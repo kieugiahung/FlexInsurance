@@ -1223,7 +1223,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Height: =35
-                        MaxLength: =1000
+                        MaxLength: =4000
                         Mode: =TextMode.MultiLine
                         OnChange: =
                         OnSelect: =Select(Parent)
@@ -1502,12 +1502,11 @@
                         =If(
                             Or(maAddedDKCCT<>"",maUpdatedDKCCT<>""),
                             Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                            Refresh(DL_CHUONGTRINH_DKCHUNGS);
                             UpdateContext({
                                 idMaDKCCT:If(
                                     CountIf(DL_CHUONGTRINH_DKCHUNGS,true)=0,
                                     1000,
-                                    Value(Last(SortByColumns(DL_CHUONGTRINH_DKCHUNGS,"cr282_ma_dieu_khoan",SortOrder.Ascending)).MA_DIEU_KHOAN)+1
+                                    Max(DL_CHUONGTRINH_DKCHUNGS,MA_DIEU_KHOAN)+1
                                 )
                             });
                             Collect(
@@ -2585,7 +2584,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Height: =28
-                        MaxLength: =500
+                        MaxLength: =4000
                         Mode: =TextMode.MultiLine
                         OnChange: =
                         OnSelect: =Select(Parent)
@@ -2846,12 +2845,11 @@
                         =If(
                             Or(maAddedQLKCT<>"",maUpdatedQLKCT<>""),
                             Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                            Refresh(DL_CHUONGTRINH_QL_KHACS);
                             UpdateContext({
                                 idMaQLKCT:If(
                                     CountIf(DL_CHUONGTRINH_QL_KHACS,true)=0,
                                     1000,
-                                    Value(Last(SortByColumns(DL_CHUONGTRINH_QL_KHACS,"cr282_ma_dl_ct",SortOrder.Ascending)).MA_DL_CT)+1
+                                    Max(DL_CHUONGTRINH_QL_KHACS,MA_DL_CT)+1
                                 )
                             });
                             Collect(
