@@ -1171,7 +1171,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Height: =51
-                        MaxLength: =500
+                        MaxLength: =1000
                         Mode: =TextMode.MultiLine
                         OnChange: =
                         OnSelect: =Select(Parent)
@@ -2209,15 +2209,15 @@
                     ZIndex: =36
 
                 Button1 As button:
-                    Height: =34
+                    Height: =30
                     OnSelect: |
                         =ClearCollect(TempCT,Filter(' DL_SAN_PHAM_CT', MA_SAN_PHAM = "TRONG_ANH_CARE" && TRANG_THAI = 1 && MA_CHUONG_TRINH <> "TRONG_ANH_CARE_001" ));
                         Set(varAnhHienCT, true);
-                    Size: =13
+                    Size: =11
                     Text: ="Sao chép từ CT khác"
                     Width: =202
                     X: =428
-                    Y: =68
+                    Y: =72
                     ZIndex: =37
 
                 Label5 As label:
@@ -2240,7 +2240,7 @@
                     DisabledBorderColor: =RGBA(153, 207, 236, 1)
                     DisabledColor: =RGBA(0, 0, 0, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
-                    Height: =34
+                    Height: =30
                     HoverBorderColor: =RGBA(9, 33, 98, 1)
                     HoverColor: =RGBA(51, 51, 51, 1)
                     HoverFill: =RGBA(212, 212, 212, 1)
@@ -2255,14 +2255,15 @@
                     PressedColor: =RGBA(127, 178, 57, 1)
                     PressedFill: =RGBA(237, 237, 237, 1)
                     SelectionFill: =RGBA(237, 237, 237, 1)
+                    Size: =11
                     Visible: =varAnhHienCT
                     Width: =231
-                    X: =785
-                    Y: =63
+                    X: =650
+                    Y: =72
                     ZIndex: =39
 
                 Button2 As button:
-                    Height: =34
+                    Height: =30
                     OnSelect: |
                         =
                         // xoá dữ liệu quyền lợi chi tiết của chương trình hiện tại
@@ -2345,12 +2346,12 @@
                                 maAddedQLCTCT:"",
                                 maUpdatedQLCTCT:""
                             });
-                    Size: =13
-                    Text: ="Sao phép"
+                    Size: =11
+                    Text: ="Sao chép"
                     Visible: =varAnhHienCT
                     Width: =122
-                    X: =1038
-                    Y: =63
+                    X: =290
+                    Y: =72
                     ZIndex: =40
 
                 Button4_3 As button:
