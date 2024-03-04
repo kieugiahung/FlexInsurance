@@ -7,7 +7,7 @@ DLSanPhamQLCT As screen:
                     SortByColumns(
                         Filter(
                             DM_QUYENLOI_CHITIETS,
-                            MA_NHOM_QL=maNQLFwd && IsBlank(MA_QL_CHA)
+                            MA_NHOM_QL=maNQLFwd
                         ),
                         "cr282_ma_ql_chitiet",
                         SortOrder.Ascending
@@ -17,7 +17,9 @@ DLSanPhamQLCT As screen:
                     "che_do",
                     0,
                     "ten_hien_thi",
-                    ""
+                    "cr282_ten_ql_chitiet",
+                    "hien_thi",
+                    0
                 ),
                 "cr282_ma_ql_chitiet",
                 "cr282_cap",
@@ -26,7 +28,8 @@ DLSanPhamQLCT As screen:
                 "cr282_ten_ql_chitiet",
                 "chon",
                 "che_do",
-                "ten_hien_thi"
+                "ten_hien_thi",
+                "hien_thi"
             )
         );
         UpdateIf(
@@ -36,39 +39,26 @@ DLSanPhamQLCT As screen:
                 ten_hien_thi:cr282_ten_ql_chitiet
             }
         );
-        ClearCollect(
-            chonQLCTCollect,
-            ShowColumns(
-                Filter(
-                    DL_SAN_PHAM_QLCT_CHONS,
-                    MA_NHOMQL_SP=maDLNhomQLFwd
-                ),
-                "cr282_ma_ql_chitiet",
-                "cr282_ten_hien_thi"
-            )
-        );
-        ClearCollect(
-            chonQLCTDTCollect,
-            RenameColumns(chonQLCTCollect,
-            "cr282_ma_ql_chitiet",
-            "ma_ql_chitiet",
-            "cr282_ten_hien_thi",
-            "ten_hienthi"
-            )
+        Collect(
+            tmpQLTVCollect,
+            {
+                cr282_ma_ql_chitiet:"1",
+                cr282_cap:1,
+                cr282_ten_ql_chitiet:LookUp(DM_NHOM_QUYENLOIS,MA_NHOM_QL=maNQLFwd,TEN_NHOM_QL),
+                chon:Value(LookUp(DL_SAN_PHAM_NHOMQLS,MA_DL=maDLNhomQLFwd,CO_CHON_ALL)),
+                che_do:0,
+                hien_thi:1
+            }
         );
         UpdateIf(
-            tmpQLTVCollect,
-            !IsEmpty(
-                Filter(
-                    chonQLCTDTCollect,
-                    ma_ql_chitiet=cr282_ma_ql_chitiet
-                )
-            ),
+            tmpQLTVCollect As ds,
+            CountIf(DL_SAN_PHAM_QLCT_CHONS,MA_QL_CHITIET=ds.cr282_ma_ql_chitiet)>0,
             {
                 chon:1,
-                ten_hien_thi:LookUp(chonQLCTDTCollect,ma_ql_chitiet=cr282_ma_ql_chitiet,ten_hienthi)
+                ten_hien_thi:LookUp(DL_SAN_PHAM_QLCT_CHONS,MA_QL_CHITIET=ds.cr282_ma_ql_chitiet,TEN_HIEN_THI)
             }
         )
+        
         
     Width: =Max(1500, App.MinScreenWidth)
 
@@ -81,7 +71,7 @@ DLSanPhamQLCT As screen:
         GalleryQLTV As gallery.variableTemplateHeightGallery:
             DelayItemLoading: =true
             Height: =637
-            Items: =SortByColumns(tmpQLTVCollect,"cr282_ma_ql_chitiet",SortOrder.Ascending)
+            Items: =SortByColumns(Filter(tmpQLTVCollect,hien_thi=1),"cr282_ma_ql_chitiet",SortOrder.Ascending)
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
             TemplateSize: =48
@@ -123,7 +113,7 @@ DLSanPhamQLCT As screen:
                 BorderStyle: =BorderStyle.None
                 Height: =48
                 Width: =657
-                X: =(ThisItem.cr282_cap-1)*50
+                X: =ThisItem.cr282_cap*50
                 ZIndex: =4
 
                 TextQLCT As text:
@@ -139,37 +129,46 @@ DLSanPhamQLCT As screen:
                     Default: =If(ThisItem.chon=1,true,false)
                     Height: =40
                     OnCheck: |
-                        =UpdateIf(
-                            tmpQLTVCollect,
-                            StartsWith(cr282_ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet),
-                            {
-                                chon:1
-                            }
-                        );
-                        ForAll(
-                            Filter(
-                                DM_QUYENLOI_CHITIETS,
-                                StartsWith(MA_QL_CHITIET,ThisItem.cr282_ma_ql_chitiet)
-                            ),
-                            Collect(
-                                chonQLCTDTCollect,
+                        =If(
+                            ThisItem.cr282_cap=1,
+                            UpdateContext({
+                                chonAll:1
+                            });
+                            UpdateIf(
+                                tmpQLTVCollect,
+                                true,
                                 {
-                                    ma_ql_chitiet:ThisRecord.MA_QL_CHITIET,
-                                    ten_hienthi:ThisRecord.TEN_QL_CHITIET
+                                    chon:1
+                                }
+                            ),
+                            UpdateIf(
+                                tmpQLTVCollect,
+                                StartsWith(cr282_ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet),
+                                {
+                                    chon:1
                                 }
                             )
-                        );
+                        )
                     OnUncheck: |-
-                        =UpdateIf(
-                            tmpQLTVCollect,
-                            StartsWith(cr282_ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet),
-                            {
-                                chon:0
-                            }
-                        );
-                        RemoveIf(
-                            chonQLCTDTCollect,
-                            StartsWith(ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet)
+                        =If(
+                            ThisItem.cr282_cap=1,
+                            UpdateContext({
+                                chonAll:0
+                            });
+                            UpdateIf(
+                                tmpQLTVCollect,
+                                true,
+                                {
+                                    chon:0
+                                }
+                            ),
+                            UpdateIf(
+                                tmpQLTVCollect,
+                                StartsWith(cr282_ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet),
+                                {
+                                    chon:0
+                                }
+                            )
                         )
                     Text: =
                     Width: =39
@@ -180,64 +179,47 @@ DLSanPhamQLCT As screen:
                 IconMo As icon.NextArrow:
                     Height: =34
                     Icon: =Icon.NextArrow
-                    OnSelect: |
-                        =Collect(
-                            tmpQLTVCollect,
-                            ShowColumns(
-                                AddColumns(
-                                    SortByColumns(
-                                        Filter(
-                                            DM_QUYENLOI_CHITIETS,
-                                            MA_QL_CHA=ThisItem.cr282_ma_ql_chitiet
-                                        ),
-                                        "cr282_ma_ql_chitiet",
-                                        SortOrder.Ascending
-                                    ),
-                                    "chon",
-                                    0,
-                                    "che_do",
-                                    0,
-                                    "ten_hien_thi",
-                                    Blank()
-                                ),
-                                "cr282_ma_ql_chitiet",
-                                "cr282_cap",
-                                "cr282_ma_nhom_ql",
-                                "cr282_ma_ql_cha",
-                                "cr282_ten_ql_chitiet",
-                                "chon",
-                                "che_do",
-                                "ten_hien_thi"
-                            )
-                        );
-                        UpdateIf(
-                            tmpQLTVCollect,
-                            true,
-                            {
-                                ten_hien_thi:cr282_ten_ql_chitiet
-                            }
-                        );
-                        UpdateIf(
-                            tmpQLTVCollect,
-                            cr282_ma_ql_chitiet=ThisItem.cr282_ma_ql_chitiet,
-                            {
-                                che_do:1
-                            }
-                        );
-                        UpdateIf(
-                            tmpQLTVCollect,
-                            !IsEmpty(
-                                Filter(
-                                    chonQLCTDTCollect,
-                                    ma_ql_chitiet=cr282_ma_ql_chitiet
-                                )
+                    OnSelect: |+
+                        =If(
+                            ThisItem.cr282_cap=1,
+                            UpdateIf(
+                                tmpQLTVCollect,
+                                cr282_cap=ThisItem.cr282_cap,
+                                {
+                                    che_do:1
+                                }
+                            );
+                            UpdateIf(
+                                tmpQLTVCollect,
+                                cr282_ma_nhom_ql=maNQLFwd && IsBlank(cr282_ma_ql_cha),
+                                {
+                                    hien_thi:1,
+                                    che_do:0
+                                }
                             ),
-                            {
-                                chon:1,
-                                ten_hien_thi:LookUp(chonQLCTDTCollect,ma_ql_chitiet=cr282_ma_ql_chitiet,ten_hienthi)
-                            }
+                            UpdateIf(
+                                tmpQLTVCollect,
+                                cr282_ma_ql_chitiet=ThisItem.cr282_ma_ql_chitiet,
+                                {
+                                    che_do:1
+                                }
+                            );
+                            UpdateIf(
+                                tmpQLTVCollect,
+                                cr282_ma_ql_cha=ThisItem.cr282_ma_ql_chitiet,
+                                {
+                                    hien_thi:1,
+                                    che_do:0
+                                }
+                            )
                         )
-                    Visible: =ThisItem.che_do=0 && !IsEmpty(Filter(DM_QUYENLOI_CHITIETS,MA_QL_CHA=ThisItem.cr282_ma_ql_chitiet))
+                        
+                    Visible: |-
+                        =If(
+                            ThisItem.cr282_cap=1,
+                            ThisItem.che_do=0 && !IsEmpty(Filter(DM_QUYENLOI_CHITIETS,MA_NHOM_QL=maNQLFwd)),
+                            ThisItem.che_do=0 && !IsEmpty(Filter(DM_QUYENLOI_CHITIETS,MA_QL_CHA=ThisItem.cr282_ma_ql_chitiet))
+                        )
                     Width: =37
                     X: =610
                     Y: =7
@@ -247,18 +229,43 @@ DLSanPhamQLCT As screen:
                     Height: =34
                     Icon: =Icon.ChevronUp
                     OnSelect: |-
-                        =RemoveIf(
-                            tmpQLTVCollect,
-                            cr282_ma_ql_chitiet<>ThisItem.cr282_ma_ql_chitiet && StartsWith(cr282_ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet)
-                        );
-                        UpdateIf(
-                            tmpQLTVCollect,
-                            cr282_ma_ql_chitiet=ThisItem.cr282_ma_ql_chitiet,
-                            {
-                                che_do:0
-                            }
-                        );
-                    Visible: =ThisItem.che_do=1 && !IsEmpty(Filter(DM_QUYENLOI_CHITIETS,MA_QL_CHA=ThisItem.cr282_ma_ql_chitiet))
+                        =If(
+                            ThisItem.cr282_cap=1,
+                            UpdateIf(
+                                tmpQLTVCollect,
+                                cr282_cap>1,
+                                {
+                                    hien_thi:0
+                                }
+                            );
+                            UpdateIf(
+                                tmpQLTVCollect,
+                                cr282_cap=ThisItem.cr282_cap,
+                                {
+                                    che_do:0
+                                }
+                            ),
+                            UpdateIf(
+                                tmpQLTVCollect,
+                                cr282_ma_ql_chitiet<>ThisItem.cr282_ma_ql_chitiet && StartsWith(cr282_ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet),
+                                {
+                                    hien_thi:0
+                                }
+                            );
+                            UpdateIf(
+                                tmpQLTVCollect,
+                                cr282_ma_ql_chitiet=ThisItem.cr282_ma_ql_chitiet,
+                                {
+                                    che_do:0
+                                }
+                            );
+                        )
+                    Visible: |
+                        =If(
+                            ThisItem.cr282_cap=1,
+                            ThisItem.che_do=1 && !IsEmpty(Filter(DM_QUYENLOI_CHITIETS,MA_NHOM_QL=maNQLFwd)),
+                            ThisItem.che_do=1 && !IsEmpty(Filter(DM_QUYENLOI_CHITIETS,MA_QL_CHA=ThisItem.cr282_ma_ql_chitiet))
+                        )
                     Width: =32
                     X: =613
                     Y: =7
@@ -347,7 +354,7 @@ DLSanPhamQLCT As screen:
                     )
                 );
                 Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
-                Navigate(DLSanPhamQL);
+                Navigate(NhapChiTietSP);
                 Clear(tmpQLTVCollect)
             Size: =11
             Text: ="Lưu"
