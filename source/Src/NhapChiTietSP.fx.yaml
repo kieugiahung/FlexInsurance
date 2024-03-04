@@ -12364,6 +12364,7 @@
                         ForAll(
                                 tempCTTrangThai0 As CT,
                             // chuyển dữ liệu điều khoản chung
+                            RemoveIf(DL_CHUONGTRINH_DKCHUNGS, MA_SAN_PHAM = valMaSP && MA_CHUONG_TRINH = CT.MA_CHUONG_TRINH);
                             ForAll(Filter(DL_SAN_PHAM_DKCHUNGS,ma_san_pham = valMaSP ) As dkc,
                                 Patch(
                                     DL_CHUONGTRINH_DKCHUNGS,
@@ -12379,6 +12380,7 @@
                                 )
                             );
                             // chuyển dữ liệu quyền lợi chi tiết
+                            RemoveIf(DL_SAN_PHAM_QLCT_CHONS, MA_SAN_PHAM = valMaSP && MaCT = CT.MA_CHUONG_TRINH);
                             ForAll(Filter(DL_SAN_PHAM_QLCT_CHONS,MA_SAN_PHAM = valMaSP ) As qlc,
                                 Patch(
                                     DL_CHUONGTRINH_QLCTS,
@@ -12397,6 +12399,7 @@
                                 )
                             );
                             // chuyển dữ liệu quyền lợi khác
+                            //RemoveIf(DL_SAN_PHAM_QL_KHACS, MA_SAN_PHAM = valMaSP &&  MA_CHUONG_TRINH= CT.MA_CHUONG_TRINH);
                             ForAll(Filter(DL_SAN_PHAM_QL_KHACS,MA_SP = valMaSP ) As qlk,
                                 Patch(
                                     DL_CHUONGTRINH_QL_KHACS,
@@ -12413,6 +12416,7 @@
                             // chuyển dữ liệu ma trận phí
                             // Nếu đã nhận file excel thì k chuyển sang nữa
                             If(CountRows(Filter( DL_CHUONG_TRINH_BANG_PHIS, MA_SAN_PHAM =valMaSP && MA_CHUONG_TRINH= CT.MA_CHUONG_TRINH )) <= 0,
+                            RemoveIf(DL_SAN_PHAM_MATRANPHI, MA_SAN_PHAM = valMaSP &&  MA_CHUONG_TRINH= CT.MA_CHUONG_TRINH);
                             ForAll(Filter(DL_SAN_PHAM_MATRANPHI, MA_SAN_PHAM = valMaSP  && MA_CHUONG_TRINH= CT.MA_CHUONG_TRINH) As mtp,
                                 Patch(
                                     DL_CHUONG_TRINH_BANG_PHIS,
