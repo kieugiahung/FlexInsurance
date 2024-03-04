@@ -317,21 +317,38 @@ DLSanPhamQLCT As screen:
                 =Refresh(DL_SAN_PHAM_QLCT_CHONS);
                 RemoveIf(DL_SAN_PHAM_QLCT_CHONS,MA_NHOMQL_SP=maDLNhomQLFwd);
                 ForAll(
-                    chonQLCTDTCollect,
+                    Filter(tmpQLTVCollect,chon=1 && cr282_cap>1),
                     Patch(
                         DL_SAN_PHAM_QLCT_CHONS,
                         {
-                            MA_QL_CHITIET:ThisRecord.ma_ql_chitiet,
+                            MA_QL_CHITIET:ThisRecord.cr282_ma_ql_chitiet,
                             MA_NHOMQL_SP:maDLNhomQLFwd,
-                            TEN_HIEN_THI:ThisRecord.ten_hienthi,
+                            TEN_HIEN_THI:ThisRecord.ten_hien_thi,
                             MA_SAN_PHAM:maSPFwd,
                             MA_NHOM_QL:maNQLFwd
                         }
                     )
                 );
+                If(
+                    LookUp(tmpQLTVCollect,cr282_cap=1,chon)=1,
+                    UpdateIf(
+                        DL_SAN_PHAM_NHOMQLS,
+                        MA_DL=maDLNhomQLFwd,
+                        {
+                            CO_CHON_ALL:"1"
+                        }
+                    ),
+                    UpdateIf(
+                        DL_SAN_PHAM_NHOMQLS,
+                        MA_DL=maDLNhomQLFwd,
+                        {
+                            CO_CHON_ALL:"0"
+                        }
+                    )
+                );
                 Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
-                Navigate(NhapChiTietSP);
-                Clear(tmpQLTVCollect);
+                Navigate(DLSanPhamQL);
+                Clear(tmpQLTVCollect)
             Size: =11
             Text: ="Lưu"
             Width: =96
