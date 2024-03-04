@@ -80,7 +80,7 @@ DLSanPhamQLCT As screen:
 
         GalleryQLTV As gallery.variableTemplateHeightGallery:
             DelayItemLoading: =true
-            Height: =619
+            Height: =637
             Items: =SortByColumns(tmpQLTVCollect,"cr282_ma_ql_chitiet",SortOrder.Ascending)
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
@@ -299,27 +299,20 @@ DLSanPhamQLCT As screen:
             Y: =9
             ZIndex: =4
 
-        ButtonCanvas5 As Button:
-            BasePaletteColor: =RGBA(219, 15, 53, 1)
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            FontSize: =16
-            Height: =38
+        Button5_4 As button:
+            Height: =30
             OnSelect: |-
                 =Navigate(NhapChiTietSP);
                 Clear(tmpQLTVCollect);
+            Size: =11
             Text: ="Hủy"
             Width: =96
-            X: =1115
-            Y: =705
-            ZIndex: =7
+            X: =1118
+            Y: =721
+            ZIndex: =9
 
-        ButtonCanvas6 As Button:
-            BasePaletteColor: =
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            FontSize: =16
-            Height: =38
+        Button5_5 As button:
+            Height: =30
             OnSelect: |-
                 =Refresh(DL_SAN_PHAM_QLCT_CHONS);
                 RemoveIf(DL_SAN_PHAM_QLCT_CHONS,MA_NHOMQL_SP=maDLNhomQLFwd);
@@ -339,11 +332,12 @@ DLSanPhamQLCT As screen:
                 Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
                 Navigate(NhapChiTietSP);
                 Clear(tmpQLTVCollect);
+            Size: =11
             Text: ="Lưu"
             Width: =96
-            X: =1239
-            Y: =705
-            ZIndex: =8
+            X: =1254
+            Y: =721
+            ZIndex: =10
 
     LeftNavigation_16 As LeftNavigation_9:
         Width: =LeftNavigation_16.MenuWidth

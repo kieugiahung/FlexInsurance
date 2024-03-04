@@ -1131,65 +1131,59 @@
                         X: =5
                         ZIndex: =19
 
-                    BtnSuaDKCTCT As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        Font: =Font.'Open Sans'
-                        FontColor: =
-                        FontSize: =13
-                        Height: =42
-                        OnSelect: |-
-                            =If(
-                                Or(maAddedDKCCT<>"",maUpdatedDKCCT<>""),
-                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                                UpdateIf(
-                                    tmpDKCCTCollect,
-                                    cr282_ma_dieu_khoan=ThisItem.cr282_ma_dieu_khoan,
-                                    {
-                                        edited:1
-                                    }
-                                );
-                                UpdateContext({
-                                    maUpdatedDKCCT:ThisItem.cr282_ma_dieu_khoan
-                                })
-                            )
-                        Text: ="Sửa"
-                        Visible: =ThisItem.edited=0
-                        Width: =67
-                        X: =1089
-                        Y: =6
-                        ZIndex: =20
+                    CbxTTinDKCCT As combobox:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                        ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
+                        ChevronHoverBackground: =RGBA(255, 255, 255, 1)
+                        ChevronHoverFill: =RGBA(72, 163, 62, 1)
+                        DefaultSelectedItems: =Filter(DM_THONGTIN_DK_CHUNGS,MA_TTIN=ThisItem.cr282_thong_tin)
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayFields: =["cr282_ten_ttin"]
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =51
+                        HoverBorderColor: =RGBA(9, 33, 98, 1)
+                        HoverFill: =RGBA(180, 214, 250, 1)
+                        InputTextPlaceholder: ="Chọn nhóm quyền lợi"
+                        IsSearchable: =false
+                        Items: =SortByColumns(Filter(DM_THONGTIN_DK_CHUNGS,MA_NHOM_TTIN=Text(CbxNhomTTDKCCT.Selected.Value)),"cr282_ma_ttin",SortOrder.Ascending)
+                        OnSelect: =Select(Parent)
+                        PressedColor: =RGBA(72, 163, 62, 1)
+                        PressedFill: =RGBA(255, 255, 255, 1)
+                        SearchFields: =["cr282_ten_ttin"]
+                        SearchItems: =[]
+                        SelectionColor: =RGBA(0, 0, 0, 1)
+                        SelectionFill: =RGBA(214, 221, 224, 1)
+                        SelectMultiple: =false
+                        Width: =257
+                        X: =225
+                        ZIndex: =24
 
-                    BtnXoaDKCTCT As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        Font: =Font.'Open Sans'
-                        FontColor: =
-                        FontSize: =13
-                        Height: =42
-                        OnSelect: |-
-                            =If(
-                                Or(maAddedDKCCT<>"",maUpdatedDKCCT<>""),
-                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                                Refresh(DL_CHUONGTRINH_DKCHUNGS);
-                                RemoveIf(
-                                    DL_CHUONGTRINH_DKCHUNGS,
-                                    MA_DIEU_KHOAN=ThisItem.cr282_ma_dieu_khoan
-                                );
-                                Remove(tmpDKCCTCollect,ThisItem);
-                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
-                            )
-                        Text: ="Xóa"
-                        Visible: =ThisItem.edited=0
-                        Width: =67
-                        X: =1165
-                        Y: =6
-                        ZIndex: =21
+                    TiNDDCKCT As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_noi_dung
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =51
+                        MaxLength: =500
+                        Mode: =TextMode.MultiLine
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =593
+                        X: =482
+                        ZIndex: =25
 
-                    BtnLuuDKCTCT As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        FontColor: =
+                    BtnLuuDKCTCT_2 As button:
                         Height: =42
                         OnSelect: |
                             =If(
@@ -1262,17 +1256,61 @@
                                     maUpdatedDKCCT:""
                                 });
                             )
+                        Size: =11
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
                         Width: =67
                         X: =1089
                         Y: =6
-                        ZIndex: =22
+                        ZIndex: =26
 
-                    BtnHuyDKCTCT As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        FontColor: =
+                    BtnSuaDKCTCT_2 As button:
+                        Height: =42
+                        OnSelect: |-
+                            =If(
+                                Or(maAddedDKCCT<>"",maUpdatedDKCCT<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                UpdateIf(
+                                    tmpDKCCTCollect,
+                                    cr282_ma_dieu_khoan=ThisItem.cr282_ma_dieu_khoan,
+                                    {
+                                        edited:1
+                                    }
+                                );
+                                UpdateContext({
+                                    maUpdatedDKCCT:ThisItem.cr282_ma_dieu_khoan
+                                })
+                            )
+                        Size: =11
+                        Text: ="Sửa"
+                        Visible: =ThisItem.edited=0
+                        Width: =67
+                        X: =1089
+                        Y: =6
+                        ZIndex: =27
+
+                    BtnXoaDKCTCT_2 As button:
+                        Height: =42
+                        OnSelect: |-
+                            =If(
+                                Or(maAddedDKCCT<>"",maUpdatedDKCCT<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                Refresh(DL_CHUONGTRINH_DKCHUNGS);
+                                RemoveIf(
+                                    DL_CHUONGTRINH_DKCHUNGS,
+                                    MA_DIEU_KHOAN=ThisItem.cr282_ma_dieu_khoan
+                                );
+                                Remove(tmpDKCCTCollect,ThisItem);
+                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
+                            )
+                        Text: ="Xóa"
+                        Visible: =ThisItem.edited=0
+                        Width: =67
+                        X: =1165
+                        Y: =6
+                        ZIndex: =28
+
+                    BtnHuyDKCTCT_2 As button:
                         Height: =42
                         OnSelect: |-
                             =If(
@@ -1290,64 +1328,13 @@
                                 maAddedDKCCT:"",
                                 maUpdatedDKCCT:""
                             });
+                        Size: =11
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =67
                         X: =1165
                         Y: =6
-                        ZIndex: =23
-
-                    CbxTTinDKCCT As combobox:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        ChevronBackground: =RGBA(255, 255, 255, 1)
-                        ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
-                        ChevronDisabledFill: =RGBA(255, 255, 255, 1)
-                        ChevronFill: =RGBA(72, 163, 62, 1)
-                        ChevronHoverBackground: =RGBA(255, 255, 255, 1)
-                        ChevronHoverFill: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: =Filter(DM_THONGTIN_DK_CHUNGS,MA_TTIN=ThisItem.cr282_thong_tin)
-                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                        DisabledColor: =RGBA(0, 0, 0, 1)
-                        DisabledFill: =RGBA(255, 255, 255, 1)
-                        DisplayFields: =["cr282_ten_ttin"]
-                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =51
-                        HoverBorderColor: =RGBA(9, 33, 98, 1)
-                        HoverFill: =RGBA(180, 214, 250, 1)
-                        InputTextPlaceholder: ="Chọn nhóm quyền lợi"
-                        IsSearchable: =false
-                        Items: =SortByColumns(Filter(DM_THONGTIN_DK_CHUNGS,MA_NHOM_TTIN=Text(CbxNhomTTDKCCT.Selected.Value)),"cr282_ma_ttin",SortOrder.Ascending)
-                        OnSelect: =Select(Parent)
-                        PressedColor: =RGBA(72, 163, 62, 1)
-                        PressedFill: =RGBA(255, 255, 255, 1)
-                        SearchFields: =["cr282_ten_ttin"]
-                        SearchItems: =[]
-                        SelectionColor: =RGBA(0, 0, 0, 1)
-                        SelectionFill: =RGBA(214, 221, 224, 1)
-                        SelectMultiple: =false
-                        Width: =257
-                        X: =225
-                        ZIndex: =24
-
-                    TiNDDCKCT As text:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =ThisItem.cr282_noi_dung
-                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                        DisabledColor: =RGBA(0, 0, 0, 1)
-                        DisabledFill: =RGBA(255, 255, 255, 1)
-                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =51
-                        MaxLength: =500
-                        Mode: =TextMode.MultiLine
-                        OnChange: =
-                        OnSelect: =Select(Parent)
-                        RadiusBottomLeft: =0
-                        RadiusBottomRight: =0
-                        RadiusTopLeft: =0
-                        RadiusTopRight: =0
-                        Width: =593
-                        X: =482
-                        ZIndex: =25
+                        ZIndex: =29
 
                 BadgeCanvas1_27 As Badge:
                     BasePaletteColor: =
@@ -1429,13 +1416,8 @@
                     Y: =91
                     ZIndex: =15
 
-                BtnTaiLaiDKCTCT As Button:
-                    BasePaletteColor: =
-                    DisplayMode: =DisplayMode.Edit
-                    Font: =Font.'Open Sans'
-                    FontColor: =
-                    FontSize: =13
-                    Height: =38
+                Button4_2 As button:
+                    Height: =30
                     OnSelect: |-
                         =ClearCollect(
                             tmpDKCCTCollect,
@@ -1463,19 +1445,16 @@
                             maAddedDKCCT:"",
                             maUpdatedDKCCT:""
                         });
+                    Size: =11
                     Text: ="Tải lại"
-                    Width: =102
-                    X: =11
-                    Y: =35
-                    ZIndex: =16
+                    Width: =96
+                    X: =4
+                    Y: =45
+                    ZIndex: =18
 
-                BtnThemDKCTCT As Button:
-                    BasePaletteColor: =
+                Button5_6 As button:
                     DisplayMode: =If(And(maAddedDKCCT="",maUpdatedDKCCT=""), DisplayMode.Edit,DisplayMode.Disabled)
-                    Font: =Font.'Open Sans'
-                    FontColor: =
-                    FontSize: =13
-                    Height: =38
+                    Height: =30
                     OnSelect: |
                         =If(
                             Or(maAddedDKCCT<>"",maUpdatedDKCCT<>""),
@@ -1500,11 +1479,12 @@
                             );
                             UpdateContext({maAddedDKCCT:Text(idMaDKCCT)})
                         )
+                    Size: =11
                     Text: ="Thêm mới"
-                    Width: =102
-                    X: =130
-                    Y: =35
-                    ZIndex: =17
+                    Width: =96
+                    X: =118
+                    Y: =45
+                    ZIndex: =19
 
             ContainerDKCTCT_1 As groupContainer.manualLayoutContainer:
                 Height: =621
@@ -1525,214 +1505,6 @@
                     Width: =1256
                     Y: =155
                     ZIndex: =1
-
-                    BtnSuaQLCTCT As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        FontColor: =
-                        FontSize: =13
-                        Height: =28
-                        OnSelect: |-
-                            =If(
-                                Or(maAddedQLCTCT<>"",maUpdatedQLCTCT<>""),
-                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                                UpdateIf(
-                                    tmpQLCTCTCollect,
-                                    cr282_ma_ql_ct=ThisItem.cr282_ma_ql_ct,
-                                    {
-                                        edited:1
-                                    }
-                                );
-                                UpdateContext({
-                                    maUpdatedQLCTCT:ThisItem.cr282_ma_ql_ct
-                                })
-                            )
-                        Text: ="Sửa"
-                        Visible: =true
-                        Width: =37
-                        X: =1162
-                        Y: =3
-                        ZIndex: =20
-
-                    BtnXoaQLCTCT As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        FontColor: =
-                        FontSize: =13
-                        Height: =28
-                        OnSelect: |-
-                            =If(
-                                Or(maAddedQLCTCT<>"",maUpdatedQLCTCT<>""),
-                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                                Refresh(DL_CHUONGTRINH_QLCTS);
-                                RemoveIf(
-                                    DL_CHUONGTRINH_QLCTS,
-                                    MA_QL_CT=ThisItem.cr282_ma_ql_ct && MA_SAN_PHAM=objCT.MA_SAN_PHAM && MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH
-                                );
-                                Remove(tmpQLCTCTCollect,ThisItem);
-                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
-                            )
-                        Text: ="Xóa"
-                        Visible: =true
-                        Width: =37
-                        X: =1204
-                        Y: =3
-                        ZIndex: =21
-
-                    BtnLuuQLCTCT As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        FontColor: =
-                        FontSize: =13
-                        Height: =28
-                        OnSelect: |
-                            =If(
-                                IsBlank(CbxNhomQLQLCTCT.Selected.MA_NHOM_QL),
-                                Notify("Bắt buộc nhập nhóm quyền lợi", NotificationType.Error,800),
-                                IsBlank(CbxQLQLCTCT.Selected.MA_QL_CHITIET),
-                                Notify("Bắt buộc nhập quyền lợi", NotificationType.Error,800),
-                                CountIf(
-                                    tmpQLCTCTCollect,
-                                    cr282_ma_ql_ct=CbxQLQLCTCT.Selected.MA_QL_CHITIET && idQLCT<>ThisItem.idQLCT
-                                ),
-                                Notify("Bắt buộc nhập quyền lợi", NotificationType.Error,800),
-                                If(
-                                    ThisItem.idQLCT=maAddedQLCTCT,
-                                    Patch(
-                                        DL_CHUONGTRINH_QLCTS,
-                                        {
-                                            MA_QL_CT:CbxQLQLCTCT.Selected.MA_QL_CHITIET,
-                                            MA_SAN_PHAM:objCT.MA_SAN_PHAM,
-                                            MA_CHUONG_TRINH:objCT.MA_CHUONG_TRINH,
-                                            TT_HIENTHI:Value(TiTthtQLCTCT.Text),
-                                            MA_NHOM_QL:CbxNhomQLQLCTCT.Selected.MA_NHOM_QL,
-                                            MA_NHOMQL_SP:Blank(),
-                                            GH_SOLAN_NAM:Value(TiGHSLNam.Text),
-                                            GH_SONGAY_NAM:Value(TiGHSNNam.Text),
-                                            GH_SOTIEN_BENH:Value(TiGHSTBenh.Text),
-                                            GH_SOTIEN_NAM:Value(TiGHSTNam.Text),
-                                            GH_SOTIEN_NGAY:Value(TiGHSTNgay.Text),
-                                            GH_SOTIEN_VU:Value(TiGHSTVu.Text),
-                                            PT_TU_CHITRA:Value(TiTuChiTra.Text),
-                                            SO_TIEN_BH:Value(TiSTBH.Text),
-                                            TEN_QUYEN_LOI_HT:TiTenQLHTQLCTCT.Text
-                                        }
-                                    ),
-                                    UpdateIf(
-                                        DL_CHUONGTRINH_QLCTS,
-                                        MA_QL_CT=ThisItem.cr282_ma_ql_ct && MA_SAN_PHAM=objCT.MA_SAN_PHAM && MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH,
-                                        {
-                                            TT_HIENTHI:Value(TiTthtQLCTCT.Text),
-                                            MA_NHOM_QL:CbxNhomQLQLCTCT.Selected.MA_NHOM_QL,
-                                            MA_NHOMQL_SP:Blank(),
-                                            GH_SOLAN_NAM:Value(TiGHSLNam.Text),
-                                            GH_SONGAY_NAM:Value(TiGHSNNam.Text),
-                                            GH_SOTIEN_BENH:Value(TiGHSTBenh.Text),
-                                            GH_SOTIEN_NAM:Value(TiGHSTNam.Text),
-                                            GH_SOTIEN_NGAY:Value(TiGHSTNgay.Text),
-                                            GH_SOTIEN_VU:Value(TiGHSTVu.Text),
-                                            PT_TU_CHITRA:Value(TiTuChiTra.Text),
-                                            SO_TIEN_BH:Value(TiSTBH.Text),
-                                            TEN_QUYEN_LOI_HT:TiTenQLHTQLCTCT.Text
-                                        }
-                                    )
-                                );
-                                UpdateIf(
-                                    tmpQLCTCTCollect,
-                                    cr282_ma_ql_ct=ThisItem.cr282_ma_ql_ct,
-                                    {
-                                        cr282_tt_hienthi:Value(TiTthtQLCTCT.Text),
-                                        cr282_ma_nhom_ql:CbxNhomQLQLCTCT.Selected.MA_NHOM_QL,
-                                        cr282_ma_nhomql_sp:Blank(),
-                                        cr282_gh_solan_nam:Value(TiGHSLNam.Text),
-                                        cr282_gh_songay_nam:Value(TiGHSNNam.Text),
-                                        cr282_gh_sotien_benh:Value(TiGHSTBenh.Text),
-                                        cr282_gh_sotien_nam:Value(TiGHSTNam.Text),
-                                        cr282_gh_sotien_ngay:Value(TiGHSTNgay.Text),
-                                        cr282_gh_sotien_vu:Value(TiGHSTVu.Text),
-                                        cr282_pt_tu_chitra:Value(TiTuChiTra.Text),
-                                        cr282_so_tien_bh:Value(TiSTBH.Text),
-                                        cr282_ten_quyen_loi_ht:TiTenQLHTQLCTCT.Text,
-                                        edited:0,
-                                        idQLCT:"0"
-                                    }
-                                );
-                                Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
-                                ClearCollect(
-                                    tmpQLCTCTCollect,
-                                    ShowColumns(
-                                        AddColumns(
-                                            SortByColumns(
-                                                Filter(
-                                                    DL_CHUONGTRINH_QLCTS,
-                                                    MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SAN_PHAM=objCT.MA_SAN_PHAM
-                                                ),
-                                                "cr282_ma_ql_ct",
-                                                SortOrder.Ascending
-                                            ),
-                                            "edited",
-                                            0,
-                                            "idQLCT",
-                                            "0"
-                                        ),
-                                        "cr282_ma_ql_ct",
-                                        "cr282_gh_solan_nam",
-                                        "cr282_gh_songay_nam",
-                                        "cr282_gh_sotien_benh",
-                                        "cr282_gh_sotien_nam",
-                                        "cr282_gh_sotien_ngay",
-                                        "cr282_gh_sotien_vu",
-                                        "cr282_ma_nhomql_sp",
-                                        "cr282_ma_nhom_ql",
-                                        "cr282_pt_tu_chitra",
-                                        "cr282_so_tien_bh",
-                                        "cr282_tt_hienthi",
-                                        "cr282_ten_quyen_loi_ht",
-                                        "edited",
-                                        "idQLCT"
-                                    )
-                                );
-                                UpdateContext({
-                                    maAddedQLCTCT:"",
-                                    maUpdatedQLCTCT:""
-                                });
-                            )
-                        Text: ="Lưu"
-                        Visible: =ThisItem.edited=1
-                        Width: =37
-                        X: =1162
-                        Y: =3
-                        ZIndex: =22
-
-                    BtnHuyQLCTCT As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        FontColor: =
-                        FontSize: =13
-                        Height: =28
-                        OnSelect: |-
-                            =If(
-                                ThisItem.idQLCT=maAddedQLCTCT,
-                                Remove(tmpQLCTCTCollect,ThisItem),
-                                UpdateIf(
-                                    tmpQLCTCTCollect,
-                                    cr282_ma_ql_ct=ThisItem.cr282_ma_ql_ct,
-                                    {
-                                        edited:0,
-                                        idQLCT:"0"
-                                    }
-                                )
-                            );
-                            UpdateContext({
-                                maAddedQLCTCT:"",
-                                maUpdatedQLCTCT:""
-                            });
-                        Text: ="Hủy"
-                        Visible: =ThisItem.edited=1
-                        Width: =37
-                        X: =1204
-                        Y: =3
-                        ZIndex: =23
 
                     TiTthtQLCTCT As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
@@ -2010,6 +1782,202 @@
                         Y: =2
                         ZIndex: =40
 
+                    ButtonLuuQLCTCT As button:
+                        Height: =28
+                        OnSelect: |
+                            =If(
+                                IsBlank(CbxNhomQLQLCTCT.Selected.MA_NHOM_QL),
+                                Notify("Bắt buộc nhập nhóm quyền lợi", NotificationType.Error,800),
+                                IsBlank(CbxQLQLCTCT.Selected.MA_QL_CHITIET),
+                                Notify("Bắt buộc nhập quyền lợi", NotificationType.Error,800),
+                                CountIf(
+                                    tmpQLCTCTCollect,
+                                    cr282_ma_ql_ct=CbxQLQLCTCT.Selected.MA_QL_CHITIET && idQLCT<>ThisItem.idQLCT
+                                ),
+                                Notify("Đã tồn tại quyền lợi này gắn với chương trình", NotificationType.Error,800),
+                                If(
+                                    ThisItem.idQLCT=maAddedQLCTCT,
+                                    Patch(
+                                        DL_CHUONGTRINH_QLCTS,
+                                        {
+                                            MA_QL_CT:CbxQLQLCTCT.Selected.MA_QL_CHITIET,
+                                            MA_SAN_PHAM:objCT.MA_SAN_PHAM,
+                                            MA_CHUONG_TRINH:objCT.MA_CHUONG_TRINH,
+                                            TT_HIENTHI:Value(TiTthtQLCTCT.Text),
+                                            MA_NHOM_QL:CbxNhomQLQLCTCT.Selected.MA_NHOM_QL,
+                                            MA_NHOMQL_SP:Blank(),
+                                            GH_SOLAN_NAM:Value(TiGHSLNam.Text),
+                                            GH_SONGAY_NAM:Value(TiGHSNNam.Text),
+                                            GH_SOTIEN_BENH:Value(TiGHSTBenh.Text),
+                                            GH_SOTIEN_NAM:Value(TiGHSTNam.Text),
+                                            GH_SOTIEN_NGAY:Value(TiGHSTNgay.Text),
+                                            GH_SOTIEN_VU:Value(TiGHSTVu.Text),
+                                            PT_TU_CHITRA:Value(TiTuChiTra.Text),
+                                            SO_TIEN_BH:Value(TiSTBH.Text),
+                                            TEN_QUYEN_LOI_HT:TiTenQLHTQLCTCT.Text
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        DL_CHUONGTRINH_QLCTS,
+                                        MA_QL_CT=ThisItem.cr282_ma_ql_ct && MA_SAN_PHAM=objCT.MA_SAN_PHAM && MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH,
+                                        {
+                                            TT_HIENTHI:Value(TiTthtQLCTCT.Text),
+                                            MA_NHOM_QL:CbxNhomQLQLCTCT.Selected.MA_NHOM_QL,
+                                            MA_NHOMQL_SP:Blank(),
+                                            GH_SOLAN_NAM:Value(TiGHSLNam.Text),
+                                            GH_SONGAY_NAM:Value(TiGHSNNam.Text),
+                                            GH_SOTIEN_BENH:Value(TiGHSTBenh.Text),
+                                            GH_SOTIEN_NAM:Value(TiGHSTNam.Text),
+                                            GH_SOTIEN_NGAY:Value(TiGHSTNgay.Text),
+                                            GH_SOTIEN_VU:Value(TiGHSTVu.Text),
+                                            PT_TU_CHITRA:Value(TiTuChiTra.Text),
+                                            SO_TIEN_BH:Value(TiSTBH.Text),
+                                            TEN_QUYEN_LOI_HT:TiTenQLHTQLCTCT.Text
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpQLCTCTCollect,
+                                    cr282_ma_ql_ct=ThisItem.cr282_ma_ql_ct,
+                                    {
+                                        cr282_tt_hienthi:Value(TiTthtQLCTCT.Text),
+                                        cr282_ma_nhom_ql:CbxNhomQLQLCTCT.Selected.MA_NHOM_QL,
+                                        cr282_ma_nhomql_sp:Blank(),
+                                        cr282_gh_solan_nam:Value(TiGHSLNam.Text),
+                                        cr282_gh_songay_nam:Value(TiGHSNNam.Text),
+                                        cr282_gh_sotien_benh:Value(TiGHSTBenh.Text),
+                                        cr282_gh_sotien_nam:Value(TiGHSTNam.Text),
+                                        cr282_gh_sotien_ngay:Value(TiGHSTNgay.Text),
+                                        cr282_gh_sotien_vu:Value(TiGHSTVu.Text),
+                                        cr282_pt_tu_chitra:Value(TiTuChiTra.Text),
+                                        cr282_so_tien_bh:Value(TiSTBH.Text),
+                                        cr282_ten_quyen_loi_ht:TiTenQLHTQLCTCT.Text,
+                                        edited:0,
+                                        idQLCT:"0"
+                                    }
+                                );
+                                Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
+                                ClearCollect(
+                                    tmpQLCTCTCollect,
+                                    ShowColumns(
+                                        AddColumns(
+                                            SortByColumns(
+                                                Filter(
+                                                    DL_CHUONGTRINH_QLCTS,
+                                                    MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SAN_PHAM=objCT.MA_SAN_PHAM
+                                                ),
+                                                "cr282_ma_ql_ct",
+                                                SortOrder.Ascending
+                                            ),
+                                            "edited",
+                                            0,
+                                            "idQLCT",
+                                            "0"
+                                        ),
+                                        "cr282_ma_ql_ct",
+                                        "cr282_gh_solan_nam",
+                                        "cr282_gh_songay_nam",
+                                        "cr282_gh_sotien_benh",
+                                        "cr282_gh_sotien_nam",
+                                        "cr282_gh_sotien_ngay",
+                                        "cr282_gh_sotien_vu",
+                                        "cr282_ma_nhomql_sp",
+                                        "cr282_ma_nhom_ql",
+                                        "cr282_pt_tu_chitra",
+                                        "cr282_so_tien_bh",
+                                        "cr282_tt_hienthi",
+                                        "cr282_ten_quyen_loi_ht",
+                                        "edited",
+                                        "idQLCT"
+                                    )
+                                );
+                                UpdateContext({
+                                    maAddedQLCTCT:"",
+                                    maUpdatedQLCTCT:""
+                                });
+                            )
+                        Size: =9
+                        Text: ="Lưu"
+                        Visible: =ThisItem.edited=1
+                        Width: =37
+                        X: =1162
+                        Y: =3
+                        ZIndex: =41
+
+                    ButtonSuaQLCTCT As button:
+                        Height: =28
+                        OnSelect: |-
+                            =If(
+                                Or(maAddedQLCTCT<>"",maUpdatedQLCTCT<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                UpdateIf(
+                                    tmpQLCTCTCollect,
+                                    cr282_ma_ql_ct=ThisItem.cr282_ma_ql_ct,
+                                    {
+                                        edited:1
+                                    }
+                                );
+                                UpdateContext({
+                                    maUpdatedQLCTCT:ThisItem.cr282_ma_ql_ct
+                                })
+                            )
+                        Size: =9
+                        Text: ="Sửa"
+                        Visible: =ThisItem.edited=0
+                        Width: =37
+                        X: =1162
+                        Y: =3
+                        ZIndex: =42
+
+                    ButtonXoaQLCTCT As button:
+                        Height: =28
+                        OnSelect: |-
+                            =If(
+                                Or(maAddedQLCTCT<>"",maUpdatedQLCTCT<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                Refresh(DL_CHUONGTRINH_QLCTS);
+                                RemoveIf(
+                                    DL_CHUONGTRINH_QLCTS,
+                                    MA_QL_CT=ThisItem.cr282_ma_ql_ct && MA_SAN_PHAM=objCT.MA_SAN_PHAM && MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH
+                                );
+                                Remove(tmpQLCTCTCollect,ThisItem);
+                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
+                            )
+                        Size: =9
+                        Text: ="Xóa"
+                        Visible: =ThisItem.edited=0
+                        Width: =37
+                        X: =1204
+                        Y: =3
+                        ZIndex: =43
+
+                    ButtonHuyQLCTCT As button:
+                        Height: =28
+                        OnSelect: |-
+                            =If(
+                                ThisItem.idQLCT=maAddedQLCTCT,
+                                Remove(tmpQLCTCTCollect,ThisItem),
+                                UpdateIf(
+                                    tmpQLCTCTCollect,
+                                    cr282_ma_ql_ct=ThisItem.cr282_ma_ql_ct,
+                                    {
+                                        edited:0,
+                                        idQLCT:"0"
+                                    }
+                                )
+                            );
+                            UpdateContext({
+                                maAddedQLCTCT:"",
+                                maUpdatedQLCTCT:""
+                            });
+                        Size: =9
+                        Text: ="Hủy"
+                        Visible: =ThisItem.edited=1
+                        Width: =37
+                        X: =1204
+                        Y: =3
+                        ZIndex: =44
+
                 BadgeCanvas1_28 As Badge:
                     BasePaletteColor: =
                     Content: =""
@@ -2046,100 +2014,6 @@
                     X: =1160
                     Y: =117
                     ZIndex: =15
-
-                BtnTaiLaiDKCTCT_1 As Button:
-                    BasePaletteColor: =
-                    DisplayMode: =DisplayMode.Edit
-                    Font: =Font.'Open Sans'
-                    FontColor: =
-                    FontSize: =13
-                    Height: =38
-                    OnSelect: |-
-                        =ClearCollect(
-                            tmpQLCTCTCollect,
-                            ShowColumns(
-                                AddColumns(
-                                    SortByColumns(
-                                        Filter(
-                                            DL_CHUONGTRINH_QLCTS,
-                                            MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SAN_PHAM=objCT.MA_SAN_PHAM
-                                        ),
-                                        "cr282_ma_ql_ct",
-                                        SortOrder.Ascending
-                                    ),
-                                    "edited",
-                                    0,
-                                    "idQLCT",
-                                    "0"
-                                ),
-                                "cr282_ma_ql_ct",
-                                "cr282_gh_solan_nam",
-                                "cr282_gh_songay_nam",
-                                "cr282_gh_sotien_benh",
-                                "cr282_gh_sotien_nam",
-                                "cr282_gh_sotien_ngay",
-                                "cr282_gh_sotien_vu",
-                                "cr282_ma_nhomql_sp",
-                                "cr282_ma_nhom_ql",
-                                "cr282_pt_tu_chitra",
-                                "cr282_so_tien_bh",
-                                "cr282_tt_hienthi",
-                                "cr282_ten_quyen_loi_ht",
-                                "edited",
-                                "idQLCT"
-                            )
-                        );
-                        UpdateContext({
-                            maAddedQLCTCT:"",
-                            maUpdatedQLCTCT:""
-                        });
-                    Text: ="Tải lại"
-                    Width: =102
-                    X: =16
-                    Y: =63
-                    ZIndex: =16
-
-                BtnThemDKCTCT_1 As Button:
-                    BasePaletteColor: =
-                    DisplayMode: =If(And(maAddedQLCTCT="",maUpdatedQLCTCT=""), DisplayMode.Edit,DisplayMode.Disabled)
-                    Font: =Font.'Open Sans'
-                    FontColor: =
-                    FontItalic: =false
-                    FontSize: =13
-                    FontStrikethrough: =false
-                    FontUnderline: =false
-                    Height: =38
-                    OnSelect: |
-                        =If(
-                            Or(maAddedQLCTCT<>"",maUpdatedQLCTCT<>""),
-                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                            Collect(
-                                tmpQLCTCTCollect,
-                                {
-                                    cr282_ma_ql_ct:Blank(),
-                                    cr282_gh_solan_nam:Blank(),
-                                    cr282_gh_songay_nam:Blank(),
-                                    cr282_gh_sotien_benh:Blank(),
-                                    cr282_gh_sotien_nam:Blank(),
-                                    cr282_gh_sotien_ngay:Blank(),
-                                    cr282_gh_sotien_vu:Blank(),
-                                    cr282_ma_nhomql_sp:Blank(),
-                                    cr282_ma_nhom_ql:Blank(),
-                                    cr282_pt_tu_chitra:Blank(),
-                                    cr282_so_tien_bh:Blank(),
-                                    cr282_tt_hienthi:Blank(),
-                                    cr282_ten_quyen_loi_ht:Blank(),
-                                    edited:1,
-                                    idQLCT:"1"
-                                }
-                            );
-                            UpdateContext({maAddedQLCTCT:"1"})
-                        )
-                    Text: ="Thêm mới"
-                    Width: =102
-                    X: =137
-                    Y: =63
-                    ZIndex: =17
 
                 TextCanvas2_116 As Text:
                     Align: ='TextCanvas.Align'.Center
@@ -2342,8 +2216,8 @@
                     Size: =13
                     Text: ="Sao chép từ CT khác"
                     Width: =202
-                    X: =406
-                    Y: =63
+                    X: =428
+                    Y: =68
                     ZIndex: =37
 
                 Label5 As label:
@@ -2479,6 +2353,90 @@
                     Y: =63
                     ZIndex: =40
 
+                Button4_3 As button:
+                    Height: =30
+                    OnSelect: |-
+                        =ClearCollect(
+                            tmpQLCTCTCollect,
+                            ShowColumns(
+                                AddColumns(
+                                    SortByColumns(
+                                        Filter(
+                                            DL_CHUONGTRINH_QLCTS,
+                                            MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SAN_PHAM=objCT.MA_SAN_PHAM
+                                        ),
+                                        "cr282_ma_ql_ct",
+                                        SortOrder.Ascending
+                                    ),
+                                    "edited",
+                                    0,
+                                    "idQLCT",
+                                    "0"
+                                ),
+                                "cr282_ma_ql_ct",
+                                "cr282_gh_solan_nam",
+                                "cr282_gh_songay_nam",
+                                "cr282_gh_sotien_benh",
+                                "cr282_gh_sotien_nam",
+                                "cr282_gh_sotien_ngay",
+                                "cr282_gh_sotien_vu",
+                                "cr282_ma_nhomql_sp",
+                                "cr282_ma_nhom_ql",
+                                "cr282_pt_tu_chitra",
+                                "cr282_so_tien_bh",
+                                "cr282_tt_hienthi",
+                                "cr282_ten_quyen_loi_ht",
+                                "edited",
+                                "idQLCT"
+                            )
+                        );
+                        UpdateContext({
+                            maAddedQLCTCT:"",
+                            maUpdatedQLCTCT:""
+                        });
+                    Size: =11
+                    Text: ="Tải lại"
+                    Width: =96
+                    X: =8
+                    Y: =72
+                    ZIndex: =41
+
+                Button5_7 As button:
+                    DisplayMode: =If(And(maAddedQLCTCT="",maUpdatedQLCTCT=""), DisplayMode.Edit,DisplayMode.Disabled)
+                    Height: =30
+                    OnSelect: |
+                        =If(
+                            Or(maAddedQLCTCT<>"",maUpdatedQLCTCT<>""),
+                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                            Collect(
+                                tmpQLCTCTCollect,
+                                {
+                                    cr282_ma_ql_ct:Blank(),
+                                    cr282_gh_solan_nam:Blank(),
+                                    cr282_gh_songay_nam:Blank(),
+                                    cr282_gh_sotien_benh:Blank(),
+                                    cr282_gh_sotien_nam:Blank(),
+                                    cr282_gh_sotien_ngay:Blank(),
+                                    cr282_gh_sotien_vu:Blank(),
+                                    cr282_ma_nhomql_sp:Blank(),
+                                    cr282_ma_nhom_ql:Blank(),
+                                    cr282_pt_tu_chitra:Blank(),
+                                    cr282_so_tien_bh:Blank(),
+                                    cr282_tt_hienthi:Blank(),
+                                    cr282_ten_quyen_loi_ht:Blank(),
+                                    edited:1,
+                                    idQLCT:"1"
+                                }
+                            );
+                            UpdateContext({maAddedQLCTCT:"1"})
+                        )
+                    Size: =11
+                    Text: ="Thêm mới"
+                    Width: =96
+                    X: =122
+                    Y: =72
+                    ZIndex: =42
+
             ContainerDKCTCT_2 As groupContainer.manualLayoutContainer:
                 Height: =303
                 Width: =1262
@@ -2493,7 +2451,7 @@
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
-                    TemplateSize: =40
+                    TemplateSize: =28
                     Width: =1255
                     Y: =124
                     ZIndex: =1
@@ -2512,6 +2470,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayFields: =["cr282_ten_nhom_ql"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =28
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -2528,66 +2487,28 @@
                         Width: =284
                         ZIndex: =19
 
-                    BtnSuaDKCTCT_1 As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        Font: =Font.'Open Sans'
-                        FontColor: =
-                        FontSize: =13
-                        Height: =40
-                        OnSelect: |-
-                            =If(
-                                Or(maAddedQLKCT<>"",maUpdatedQLKCT<>""),
-                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                                UpdateIf(
-                                    tmpQLKCTCollect,
-                                    cr282_ma_dl_ct=ThisItem.cr282_ma_dl_ct,
-                                    {
-                                        edited:1
-                                    }
-                                );
-                                UpdateContext({
-                                    maUpdatedQLKCT:ThisItem.cr282_ma_dl_ct
-                                })
-                            )
-                        Text: ="Sửa"
-                        Visible: =ThisItem.edited=0
-                        Width: =67
-                        X: =1088
-                        Y: =0
-                        ZIndex: =20
+                    TiMoTaQLKCT As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_mo_ta_ct
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =28
+                        MaxLength: =500
+                        Mode: =TextMode.MultiLine
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =794
+                        X: =284
+                        ZIndex: =25
 
-                    BtnXoaDKCTCT_1 As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        Font: =Font.'Open Sans'
-                        FontColor: =
-                        FontSize: =13
-                        Height: =40
-                        OnSelect: |-
-                            =If(
-                                Or(maAddedQLKCT<>"",maUpdatedQLKCT<>""),
-                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                                Refresh(DL_CHUONGTRINH_QL_KHACS);
-                                RemoveIf(
-                                    DL_CHUONGTRINH_QL_KHACS,
-                                    MA_DL_CT=ThisItem.cr282_ma_dl_ct
-                                );
-                                Remove(tmpQLKCTCollect,ThisItem);
-                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
-                            )
-                        Text: ="Xóa"
-                        Visible: =ThisItem.edited=0
-                        Width: =67
-                        X: =1162
-                        Y: =0
-                        ZIndex: =21
-
-                    BtnLuuDKCTCT_1 As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        FontColor: =
-                        Height: =40
+                    BtnLuuQLKCT As button:
+                        Height: =26
                         OnSelect: |
                             =If(
                                 IsBlank(CbxNhomQLQLKCT.Selected.MA_NHOM_QL),
@@ -2653,18 +2574,62 @@
                                     maUpdatedQLKCT:""
                                 });
                             )
+                        Size: =11
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
                         Width: =67
                         X: =1088
-                        Y: =0
-                        ZIndex: =22
+                        Y: =2
+                        ZIndex: =26
 
-                    BtnHuyDKCTCT_1 As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        FontColor: =
-                        Height: =40
+                    BtnSuaQLKCT As button:
+                        Height: =26
+                        OnSelect: |-
+                            =If(
+                                Or(maAddedQLKCT<>"",maUpdatedQLKCT<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                UpdateIf(
+                                    tmpQLKCTCollect,
+                                    cr282_ma_dl_ct=ThisItem.cr282_ma_dl_ct,
+                                    {
+                                        edited:1
+                                    }
+                                );
+                                UpdateContext({
+                                    maUpdatedQLKCT:ThisItem.cr282_ma_dl_ct
+                                })
+                            )
+                        Size: =11
+                        Text: ="Sửa"
+                        Visible: =ThisItem.edited=0
+                        Width: =67
+                        X: =1088
+                        Y: =2
+                        ZIndex: =27
+
+                    BtnXoaQLKCT As button:
+                        Height: =26
+                        OnSelect: |-
+                            =If(
+                                Or(maAddedQLKCT<>"",maUpdatedQLKCT<>""),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                Refresh(DL_CHUONGTRINH_QL_KHACS);
+                                RemoveIf(
+                                    DL_CHUONGTRINH_QL_KHACS,
+                                    MA_DL_CT=ThisItem.cr282_ma_dl_ct
+                                );
+                                Remove(tmpQLKCTCollect,ThisItem);
+                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
+                            )
+                        Text: ="Xóa"
+                        Visible: =ThisItem.edited=0
+                        Width: =67
+                        X: =1162
+                        Y: =2
+                        ZIndex: =28
+
+                    BtnHuyQLKCT As button:
+                        Height: =26
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_ma_dl_ct=maAddedQLKCT,
@@ -2681,31 +2646,13 @@
                                 maAddedQLKCT:"",
                                 maUpdatedQLKCT:""
                             });
+                        Size: =11
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =67
                         X: =1162
-                        Y: =0
-                        ZIndex: =23
-
-                    TiMoTaQLKCT As text:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =ThisItem.cr282_mo_ta_ct
-                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                        DisabledColor: =RGBA(0, 0, 0, 1)
-                        DisabledFill: =RGBA(255, 255, 255, 1)
-                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        MaxLength: =500
-                        Mode: =TextMode.MultiLine
-                        OnChange: =
-                        OnSelect: =Select(Parent)
-                        RadiusBottomLeft: =0
-                        RadiusBottomRight: =0
-                        RadiusTopLeft: =0
-                        RadiusTopRight: =0
-                        Width: =794
-                        X: =284
-                        ZIndex: =25
+                        Y: =2
+                        ZIndex: =29
 
                 BadgeCanvas1_29 As Badge:
                     BasePaletteColor: =
@@ -2810,13 +2757,9 @@
                     Y: =33
                     ZIndex: =16
 
-                BtnThemDKCTCT_2 As Button:
-                    BasePaletteColor: =
+                Button5_8 As button:
                     DisplayMode: =If(And(maAddedQLKCT="",maUpdatedQLKCT=""), DisplayMode.Edit,DisplayMode.Disabled)
-                    Font: =Font.'Open Sans'
-                    FontColor: =
-                    FontSize: =13
-                    Height: =38
+                    Height: =30
                     OnSelect: |
                         =If(
                             Or(maAddedQLKCT<>"",maUpdatedQLKCT<>""),
@@ -2840,11 +2783,11 @@
                             );
                             UpdateContext({maAddedQLKCT:Text(idMaQLKCT)})
                         )
+                    Size: =11
                     Text: ="Thêm mới"
-                    Width: =102
-                    X: =0
-                    Y: =33
-                    ZIndex: =17
+                    Width: =96
+                    Y: =42
+                    ZIndex: =18
 
             "'3Bangphi' As groupContainer.manualLayoutContainer":
                 Height: =469
