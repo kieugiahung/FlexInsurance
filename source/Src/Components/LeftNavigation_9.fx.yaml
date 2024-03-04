@@ -90,7 +90,17 @@ LeftNavigation_9 As CanvasComponent:
                 )
             }
         )
-    Trangchu: =Manhinh
+    Trangchu: |-
+        =Table(
+            {
+                Title: "Danh mục",
+                Screen: Manhinh,
+                Icon: Icon.Home,
+                MenuID: 1
+                
+        	
+            }
+        )
     Width: =LeftNavigation_9.MenuWidth - 10
     X: =0
     Y: =0
@@ -214,4 +224,14 @@ LeftNavigation_9 As CanvasComponent:
         X: =10
         Y: =22
         ZIndex: =8
+
+    Gallery3 As gallery.galleryVertical:
+        DelayItemLoading: =true
+        Height: =22
+        Items: =CustomGallerySample
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        TemplateSize: =If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(280, Self.Height - 60))
+        Width: =77
+        ZIndex: =9
 
