@@ -2440,6 +2440,13 @@
                         =If(
                             Or(maAddedQLCTCT<>"",maUpdatedQLCTCT<>""),
                             Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                            UpdateContext({
+                                ttHT:If(
+                                    CountIf(DL_CHUONGTRINH_QLCTS,MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SAN_PHAM=objCT.MA_SAN_PHAM)=0,
+                                    1,
+                                    Value(Last(SortByColumns(Filter(DL_CHUONGTRINH_QLCTS,MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH && MA_SAN_PHAM=objCT.MA_SAN_PHAM),"cr282_tt_hienthi",SortOrder.Ascending)).TT_HIENTHI)+1
+                                )
+                            });
                             Collect(
                                 tmpQLCTCTCollect,
                                 {
@@ -2454,7 +2461,7 @@
                                     cr282_ma_nhom_ql:Blank(),
                                     cr282_pt_tu_chitra:Blank(),
                                     cr282_so_tien_bh:Blank(),
-                                    cr282_tt_hienthi:Blank(),
+                                    cr282_tt_hienthi:ttHT,
                                     cr282_ten_quyen_loi_ht:Blank(),
                                     edited:1,
                                     idQLCT:"1"
