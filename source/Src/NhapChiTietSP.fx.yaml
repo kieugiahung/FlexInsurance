@@ -660,7 +660,7 @@
                     Size: =13
                     Text: ="Thêm mới"
                     X: =5
-                    Y: =160
+                    Y: =144
                     ZIndex: =11
 
                 Label1_8 As label:
@@ -704,6 +704,7 @@
                             maUpdated:""
                         });
                     Tooltip: ="Tải lại"
+                    Visible: =false
                     Width: =32
                     X: =1167
                     Y: =160
@@ -1621,6 +1622,7 @@
                         });
                     Size: =11
                     Text: ="Tải lại"
+                    Visible: =false
                     Width: =96
                     X: =4
                     Y: =69
@@ -1658,7 +1660,7 @@
                     Size: =11
                     Text: ="Thêm mới"
                     Width: =96
-                    X: =118
+                    X: =4
                     Y: =69
                     ZIndex: =24
 
@@ -1678,7 +1680,7 @@
                     NavigationStep: =0
                     TemplateSize: =41
                     Width: =1205
-                    Y: =122
+                    Y: =70
                     ZIndex: =1
 
                     TextTenYTAH_4 As text:
@@ -1740,7 +1742,7 @@
                     Height: =38
                     Width: =1205
                     X: =0
-                    Y: =84
+                    Y: =32
                     ZIndex: =2
 
                 TextCanvas2_89 As Text:
@@ -1753,7 +1755,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =250
                     X: =165
-                    Y: =84
+                    Y: =32
                     ZIndex: =3
 
                 TextCanvas2_90 As Text:
@@ -1766,7 +1768,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =423
                     X: =415
-                    Y: =84
+                    Y: =32
                     ZIndex: =5
 
                 TextCanvas2_91 As Text:
@@ -1779,7 +1781,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =354
                     X: =838
-                    Y: =84
+                    Y: =32
                     ZIndex: =6
 
                 TextCanvas1_8 As Text:
@@ -1820,6 +1822,7 @@
                             UpdateContext({loaiFilterQLCTTB:0})
                         );
                         Reset(TextFilterQLCTTB_1);Reset(CbxFilterValueQLCTTB_1)
+                    Visible: =false
                     Width: =188
                     X: =358
                     Y: =33
@@ -1830,7 +1833,7 @@
                     Height: =43
                     InputTextPlaceholder: ="Chọn nhóm quyền lợi"
                     Items: =SortByColumns(DM_NHOM_QUYENLOIS,"cr282_ma_nhom_ql",SortOrder.Ascending)
-                    Visible: =loaiFilterQLCTTB=1
+                    Visible: =false
                     Width: =204
                     X: =556
                     Y: =33
@@ -1862,7 +1865,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =165
                     X: =0
-                    Y: =84
+                    Y: =32
                     ZIndex: =19
 
                 Button5_1 As button:
@@ -1927,6 +1930,7 @@
                         )
                     Size: =11
                     Text: ="Tra cứu"
+                    Visible: =false
                     Width: =96
                     X: =770
                     Y: =40
@@ -2195,6 +2199,7 @@
                         InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
                         Items: =["Nhóm quyền lợi"]
                         OnChange: =
+                        Visible: =false
                         Width: =152
                         X: =348
                         Y: =34
@@ -2210,7 +2215,7 @@
                         Items: |+
                             =SortByColumns(DM_NHOM_QUYENLOIS,"cr282_ma_nhom_ql",SortOrder.Ascending)
                             
-                        Visible: =true
+                        Visible: =false
                         Width: =204
                         X: =509
                         Y: =34
@@ -2299,6 +2304,7 @@
                             );
                         Size: =11
                         Text: ="Tra cứu"
+                        Visible: =false
                         Width: =96
                         X: =724
                         Y: =40
@@ -2336,6 +2342,7 @@
                             Reset(CbxFilterQLK_1);Reset(CbxFilterValueQLK_1)
                         Size: =11
                         Text: ="Tải lại"
+                        Visible: =false
                         Width: =96
                         X: =5
                         Y: =40
@@ -2370,8 +2377,8 @@
                         Size: =11
                         Text: ="Thêm mới"
                         Width: =96
-                        X: =119
-                        Y: =40
+                        X: =5
+                        Y: =43
                         ZIndex: =21
 
         DataCard2_1 As dataCard.blankCard:
@@ -3247,7 +3254,7 @@
             Container3_1 As groupContainer.manualLayoutContainer:
                 Height: =788
                 Width: =1214
-                X: =77
+                X: =67
                 ZIndex: =1
 
                 BadgeCanvas1_18 As Badge:
@@ -11313,8 +11320,8 @@
                         //Download("https://5ddm0q.sharepoint.com/:x:/s/Test/EW4AFywm7c9EhhALbkXGoEEBKRl3CeUjPhJpm75mUbZ4Ug?e=ZyjhT1");
                     Size: =13
                     Text: ="Xuất file mẫu"
-                    X: =257
-                    Y: =73
+                    X: =28
+                    Y: =65
                     ZIndex: =2
 
                 Label2_3 As label:
@@ -11368,137 +11375,129 @@
                         Y: =Parent.TemplateHeight - 1
                         ZIndex: =4
 
-                grp_upload_Excel As group:
-                    Height: =5
-                    Width: =5
-                    X: =-417
-                    Y: =-47
-                    ZIndex: =11
+                att_attachExcel As attachments:
+                    BorderColor: =
+                    DisplayMode: =
+                    Height: =91
+                    IsInDataCard: =true
+                    Items: =
+                    NoAttachmentsText: ="Bảng phí"
+                    OnAddFile: |+
+                        =ClearCollect(col_attachment, Self.Attachments)
+                        
+                        
+                        /*
+                        Switch(Right(Last(Self.Attachments.Name).Name,4) = "xlsx", true, 
+                        ClearCollect(col_attachment, Self.Attachments), Notify("Kindly Use the Provided Template", NotificationType.Warning);Set(gbl_var_reset, true);
+                        Set(gbl_var_reset, false);)*/
+                        
+                        
+                    OnRemoveFile: =ClearCollect(col_attachment, Self.Attachments)
+                    PaddingBottom: =5
+                    PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                    PaddingRight: =5
+                    PaddingTop: =5
+                    Reset: =gbl_var_reset
+                    Size: =12
+                    Tooltip: =
+                    Width: =199
+                    X: =251
+                    Y: =34
+                    ZIndex: =6
 
-                    att_attachExcel As attachments:
-                        BorderColor: =
-                        DisplayMode: =
-                        Height: =91
-                        IsInDataCard: =true
-                        Items: =
-                        NoAttachmentsText: ="Bảng phí"
-                        OnAddFile: |+
-                            =ClearCollect(col_attachment, Self.Attachments)
-                            
-                            
-                            /*
-                            Switch(Right(Last(Self.Attachments.Name).Name,4) = "xlsx", true, 
-                            ClearCollect(col_attachment, Self.Attachments), Notify("Kindly Use the Provided Template", NotificationType.Warning);Set(gbl_var_reset, true);
-                            Set(gbl_var_reset, false);)*/
-                            
-                            
-                        OnRemoveFile: =ClearCollect(col_attachment, Self.Attachments)
-                        PaddingBottom: =5
-                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
-                        PaddingRight: =5
-                        PaddingTop: =5
-                        Reset: =gbl_var_reset
-                        Size: =12
-                        Tooltip: =
-                        Width: =162
-                        X: =685
-                        Y: =40
-                        ZIndex: =6
-
-                    circleButton_3 As button:
-                        BorderStyle: =BorderStyle.None
-                        Fill: =RGBA(39, 113, 194, 1)
-                        FocusedBorderColor: =Color.Transparent
-                        Height: =81
-                        HoverColor: =RGBA(0, 0, 0, 0)
-                        HoverFill: =RGBA(0, 0, 0, 0.1)
-                        OnSelect: |
-                            =Clear(col_response);
-                            Clear(col_attachment_flow);
-                            Set(
-                                gbl_var_spinner,
-                                true
-                            );
-                            ForAll(
-                                gal_UL_Attachments.AllItems,
-                                Collect(
+                circleButton_3 As button:
+                    BorderStyle: =BorderStyle.None
+                    Fill: =RGBA(39, 113, 194, 1)
+                    FocusedBorderColor: =Color.Transparent
+                    HoverColor: =RGBA(0, 0, 0, 0)
+                    HoverFill: =RGBA(0, 0, 0, 0.1)
+                    OnSelect: |
+                        =Clear(col_response);
+                        Clear(col_attachment_flow);
+                        Set(
+                            gbl_var_spinner,
+                            true
+                        );
+                        ForAll(
+                            gal_UL_Attachments.AllItems,
+                            Collect(
+                                col_attachment_flow,
+                                {
+                                    Title: lbl_File_Name.Text,
+                                    Datastream: img_Data_Stream.Image
+                                }
+                            )
+                        );
+                        Set(
+                            gbl_var_excel_data,
+                            ImportExcel.Run(
+                                JSON(
                                     col_attachment_flow,
-                                    {
-                                        Title: lbl_File_Name.Text,
-                                        Datastream: img_Data_Stream.Image
-                                    }
+                                    JSONFormat.IncludeBinaryData
                                 )
-                            );
-                            Set(
+                            ).response
+                        );
+                        Set(
+                            gbl_var_reset,
+                            true
+                        );
+                        Set(
+                            gbl_var_reset,
+                            false
+                        );
+                        ClearCollect(
+                            col_response,
+                            MatchAll(
                                 gbl_var_excel_data,
-                                ImportExcel.Run(
-                                    JSON(
-                                        col_attachment_flow,
-                                        JSONFormat.IncludeBinaryData
-                                    )
-                                ).response
-                            );
-                            Set(
-                                gbl_var_reset,
-                                true
-                            );
-                            Set(
-                                gbl_var_reset,
-                                false
-                            );
-                            ClearCollect(
-                                col_response,
-                                MatchAll(
-                                    gbl_var_excel_data,
-                                    "(""ma_san_pham"":""(?<ma_san_pham>[^""]*)"",""ma_chuong_trinh"":""(?<ma_chuong_trinh>[^""]*)"",""ten_san_pham"":""(?<ten_san_pham>[^""]*)"",""ten_chuong_trinh"":""(?<ten_chuong_trinh>[^""]*)"",""nhom_tinh_phi"":""(?<nhom_tinh_phi>[^""]*)"",""phamvi"":""(?<phamvi>[^""]*)"",""do_tuoi"":""(?<do_tuoi>[^""]*)"",""gioi_tinh"":""(?<gioi_tinh>[^""]*)"",""nganh_nghe"":""(?<nganh_nghe>[^""]*)"",""so_tien"":""(?<so_tien>[^""]*)"",""so_nguoi"":""(?<so_nguoi>[^""]*)"",""thoi_han"":""(?<thoi_han>[^""]*)"",""phuong_thuc"":""(?<phuong_thuc>[^""]*)"",""phi"":""(?<phi>[^""]*)"",""ty_le"":""(?<ty_le>[^""]*)"")"
-                                )
-                            );
-                            // XOÁ DỮ LIỆU CŨ
-                             If(CountRows(col_response) > 0,
-                             RemoveIf(
-                                    DL_CHUONG_TRINH_BANG_PHIS,
-                                    MA_SAN_PHAM =valMaSP
-                                )
-                             );
-                            // THÊM DỮ LIỆU MỚI    
-                            ForAll(
-                                col_response As x,
-                                Patch(
-                                    DL_CHUONG_TRINH_BANG_PHIS,
-                                    Defaults(DL_CHUONG_TRINH_BANG_PHIS),
-                                    {
-                                        MA_BANG_PHI: Max(DL_CHUONG_TRINH_BANG_PHIS, MA_BANG_PHI) + 1,
-                                        MA_SAN_PHAM: valMaSP,
-                                        MA_CHUONG_TRINH:x.ma_chuong_trinh,
-                                        TEN_SAN_PHAM:x.ten_san_pham,
-                                        TEN_CHUONG_TRINH:x.ten_chuong_trinh,
-                                        NHOM_TINH_PHI:x.nhom_tinh_phi,
-                                        MA_PHAMVI_DIALY:x.phamvi,
-                                        MA_DO_TUOI:x.do_tuoi,
-                                        MA_GIOI_TINH:x.gioi_tinh,
-                                        SO_TIEN:x.so_tien,
-                                        PHI_BH:Value(x.phi),
-                                        TYLE_PHI:Value(x.ty_le),
-                                        NHOM_NGANH_NGHE:x.nganh_nghe,
-                                        PTHUC_DONG_PHI:x.phuong_thuc,
-                                        THOI_HAN_BH:x.thoi_han
-                                    }
-                                )
-                            );
-                            Notify("Nhận dữ liệu từ file excel thành công", NotificationType.Success,800);
-                            
-                            Set(
-                                gbl_var_spinner,
-                                false
-                            );
-                        PressedColor: =Color.Transparent
-                        PressedFill: =RGBA(0, 0, 0, 0.2)
-                        Size: =13
-                        Text: ="Nhận File"
-                        Width: =97
-                        X: =853
-                        Y: =44
-                        ZIndex: =9
+                                "(""ma_san_pham"":""(?<ma_san_pham>[^""]*)"",""ma_chuong_trinh"":""(?<ma_chuong_trinh>[^""]*)"",""ten_san_pham"":""(?<ten_san_pham>[^""]*)"",""ten_chuong_trinh"":""(?<ten_chuong_trinh>[^""]*)"",""nhom_tinh_phi"":""(?<nhom_tinh_phi>[^""]*)"",""phamvi"":""(?<phamvi>[^""]*)"",""do_tuoi"":""(?<do_tuoi>[^""]*)"",""gioi_tinh"":""(?<gioi_tinh>[^""]*)"",""nganh_nghe"":""(?<nganh_nghe>[^""]*)"",""so_tien"":""(?<so_tien>[^""]*)"",""so_nguoi"":""(?<so_nguoi>[^""]*)"",""thoi_han"":""(?<thoi_han>[^""]*)"",""phuong_thuc"":""(?<phuong_thuc>[^""]*)"",""phi"":""(?<phi>[^""]*)"",""ty_le"":""(?<ty_le>[^""]*)"")"
+                            )
+                        );
+                        // XOÁ DỮ LIỆU CŨ
+                         If(CountRows(col_response) > 0,
+                         RemoveIf(
+                                DL_CHUONG_TRINH_BANG_PHIS,
+                                MA_SAN_PHAM =valMaSP
+                            )
+                         );
+                        // THÊM DỮ LIỆU MỚI    
+                        ForAll(
+                            col_response As x,
+                            Patch(
+                                DL_CHUONG_TRINH_BANG_PHIS,
+                                Defaults(DL_CHUONG_TRINH_BANG_PHIS),
+                                {
+                                    MA_BANG_PHI: Max(DL_CHUONG_TRINH_BANG_PHIS, MA_BANG_PHI) + 1,
+                                    MA_SAN_PHAM: valMaSP,
+                                    MA_CHUONG_TRINH:x.ma_chuong_trinh,
+                                    TEN_SAN_PHAM:x.ten_san_pham,
+                                    TEN_CHUONG_TRINH:x.ten_chuong_trinh,
+                                    NHOM_TINH_PHI:x.nhom_tinh_phi,
+                                    MA_PHAMVI_DIALY:x.phamvi,
+                                    MA_DO_TUOI:x.do_tuoi,
+                                    MA_GIOI_TINH:x.gioi_tinh,
+                                    SO_TIEN:x.so_tien,
+                                    PHI_BH:Value(x.phi),
+                                    TYLE_PHI:Value(x.ty_le),
+                                    NHOM_NGANH_NGHE:x.nganh_nghe,
+                                    PTHUC_DONG_PHI:x.phuong_thuc,
+                                    THOI_HAN_BH:x.thoi_han
+                                }
+                            )
+                        );
+                        Notify("Nhận dữ liệu từ file excel thành công", NotificationType.Success,800);
+                        
+                        Set(
+                            gbl_var_spinner,
+                            false
+                        );
+                    PressedColor: =Color.Transparent
+                    PressedFill: =RGBA(0, 0, 0, 0.2)
+                    Size: =13
+                    Text: ="Nhận file excel"
+                    Width: =154
+                    X: =461
+                    Y: =65
+                    ZIndex: =7
 
         DataCard5_1 As dataCard.blankCard:
             BorderColor: =RGBA(0, 0, 0, 1)
