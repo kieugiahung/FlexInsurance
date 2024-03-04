@@ -1819,6 +1819,54 @@
                     Y: =58
                     ZIndex: =22
 
+                Button4 As button:
+                    Height: =30
+                    OnSelect: |-
+                        =ClearCollect(
+                            tmpNQLSPCollect,
+                            ShowColumns(
+                                AddColumns(
+                                    SortByColumns(
+                                        Filter(
+                                            DL_SAN_PHAM_NHOMQLS,
+                                            MA_SP=valMaSP
+                                        ),
+                                        "cr282_ma_dl",
+                                        SortOrder.Ascending
+                                    ),
+                                    "edited",
+                                    0
+                                ),
+                                "cr282_ma_dl",
+                                "cr282_chuongtrinh_apdung",
+                                "cr282_loai",
+                                "cr282_ma_nhom_ql",
+                                "cr282_ma_nhom_tinhphi",
+                                "cr282_phamvi_dialy",
+                                "cr282_ten_hien_thi",
+                                "edited"
+                            )
+                        );
+                        UpdateContext({
+                            maAddedNQLSP:"",
+                            maUpdatedNQLSP:""
+                        });
+                    Size: =11
+                    Text: ="Tải lại"
+                    Width: =96
+                    X: =341
+                    Y: =42
+                    ZIndex: =23
+
+                Button5 As button:
+                    Height: =30
+                    Size: =11
+                    Text: ="Thêm mới"
+                    Width: =96
+                    X: =455
+                    Y: =42
+                    ZIndex: =24
+
             "'3.2 Danhmucqlct' As groupContainer.manualLayoutContainer":
                 Height: =524
                 Width: =1214
