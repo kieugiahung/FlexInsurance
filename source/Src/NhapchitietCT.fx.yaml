@@ -298,6 +298,8 @@
                     ZIndex: =1
 
                     Btn_SuaCT_7 As button:
+                        FontWeight: =FontWeight.Bold
+                        Height: =35
                         OnSelect: |-
                             =If(
                                 Or(maAddedPhiKhac<>"",maUpdatedPhiKhac<>""),
@@ -313,13 +315,17 @@
                                     maUpdatedPhiKhac:ThisItem.cr282_id
                                 })
                             )
+                        Size: =11
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
-                        Width: =75
-                        X: =989
+                        Width: =85
+                        X: =1012
+                        Y: =5
                         ZIndex: =17
 
                     Btn_XoaCT_7 As button:
+                        FontWeight: =FontWeight.Bold
+                        Height: =35
                         OnSelect: |-
                             =If(
                                 Or(maAddedPhiKhac<>"",maAddedPhiKhac<>""),
@@ -332,14 +338,17 @@
                                 Remove(tmpPhiKhacCollectCT,ThisItem);
                                 Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
                             )
-                        Size: =13
+                        Size: =11
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =85
-                        X: =1093
+                        X: =1116
+                        Y: =5
                         ZIndex: =18
 
                     Btn_LuuCT_7 As button:
+                        FontWeight: =FontWeight.Bold
+                        Height: =35
                         OnSelect: |
                             =
                                 If( ThisItem.cr282_id=maAddedPhiKhac,
@@ -399,13 +408,17 @@
                                     maAddedPhiKhac:"",
                                     maUpdatedPhiKhac:""
                                 });
+                        Size: =11
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
-                        Width: =75
-                        X: =989
+                        Width: =85
+                        X: =1012
+                        Y: =5
                         ZIndex: =19
 
                     Btn_HuyCT_7 As button:
+                        FontWeight: =FontWeight.Bold
+                        Height: =35
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_id=maAddedPhiKhac,
@@ -420,10 +433,12 @@
                             );
                              Set(  maAddedPhiKhac, "");
                              Set(  maUpdatedPhiKhac,"");
+                        Size: =11
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =85
-                        X: =1093
+                        X: =1116
+                        Y: =5
                         ZIndex: =20
 
                     TxtID_3 As text:
@@ -453,6 +468,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =494
                         X: =451
                         ZIndex: =23
@@ -484,6 +500,7 @@
                         SelectionColor: =RGBA(0, 0, 0, 1)
                         SelectionFill: =RGBA(214, 221, 224, 1)
                         SelectMultiple: =false
+                        Size: =11
                         Width: =448
                         ZIndex: =24
 
@@ -539,7 +556,7 @@
                     ZIndex: =5
 
                 ThemMoiCT_7 As button:
-                    Height: =36
+                    Height: =30
                     OnSelect: |
                         =If( Or(maAddedPhiKhac<>"",maUpdatedPhiKhac<>""),
                             Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
@@ -567,6 +584,7 @@
                         )
                     Size: =13
                     Text: ="Thêm mới"
+                    Width: =96
                     Y: =31
                     ZIndex: =11
 
@@ -574,15 +592,16 @@
                     Align: =Align.Justify
                     FontWeight: =FontWeight.Bold
                     Height: =31
-                    Size: =12
+                    Size: =11
                     Text: ="3.2. Thông tin phí khác"
                     Width: =1059
                     ZIndex: =13
 
                 ThemMoiCT_11 As button:
+                    FontWeight: =FontWeight.Bold
                     Height: =43
                     OnSelect: =Back()
-                    Size: =13
+                    Size: =11
                     Text: ="Quay lại"
                     X: =1086
                     Y: =467
@@ -608,6 +627,8 @@
                     ZIndex: =1
 
                     Btn_SuaCT_8 As button:
+                        FontWeight: =FontWeight.Bold
+                        Height: =35
                         OnSelect: |-
                             =If(
                                 Or(maAddedGP<>"",maUpdatedGP<>""),
@@ -623,13 +644,17 @@
                                     maUpdatedGP:ThisItem.cr282_id
                                 })
                             )
+                        Size: =11
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
                         Width: =75
                         X: =1035
+                        Y: =5
                         ZIndex: =17
 
                     Btn_XoaCT_8 As button:
+                        FontWeight: =FontWeight.Bold
+                        Height: =35
                         OnSelect: |-
                             =If(
                                 Or(maAddedGP<>"",maUpdatedGP<>""),
@@ -642,13 +667,17 @@
                                 Remove(tmpGPCCollectCT,ThisItem);
                                 Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
                             )
+                        Size: =11
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =85
-                        X: =1113
+                        X: =1142
+                        Y: =2
                         ZIndex: =18
 
                     Btn_LuuCT_8 As button:
+                        FontWeight: =FontWeight.Bold
+                        Height: =35
                         OnSelect: |
                             =
                                 If( ThisItem.cr282_id=maAddedGP,
@@ -719,13 +748,17 @@
                                     maAddedGP:"",
                                     maUpdatedGP:""
                                 });
+                        Size: =11
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
                         Width: =75
                         X: =1035
+                        Y: =5
                         ZIndex: =19
 
                     Btn_HuyCT_8 As button:
+                        FontWeight: =FontWeight.Bold
+                        Height: =35
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_id=maAddedGP,
@@ -740,10 +773,12 @@
                             );
                              Set(   maAddedGP, "");
                               Set(  maUpdated,"");
+                        Size: =11
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =85
-                        X: =1113
+                        X: =1131
+                        Y: =5
                         ZIndex: =20
 
                     TxtID_GP_3 As text:
@@ -773,6 +808,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =205
                         ZIndex: =22
 
@@ -789,6 +825,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =227
                         X: =205
                         ZIndex: =23
@@ -807,6 +844,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =163
                         X: =432
                         ZIndex: =24
@@ -824,6 +862,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =191
                         X: =595
                         ZIndex: =25
@@ -841,6 +880,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =205
                         X: =786
                         ZIndex: =26
@@ -897,7 +937,7 @@
                     ZIndex: =5
 
                 ThemMoiCT_8 As button:
-                    Height: =36
+                    Height: =30
                     OnSelect: |
                         =If( Or(maAddedGP<>"",maUpdatedGP<>""),
                             Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
@@ -926,8 +966,9 @@
                         )
                     Size: =13
                     Text: ="Thêm mới"
+                    Width: =96
                     X: =4
-                    Y: =35
+                    Y: =46
                     ZIndex: =11
 
                 TextCanvas2_108 As Text:
@@ -972,7 +1013,7 @@
                 Label2_1 As label:
                     FontWeight: =FontWeight.Bold
                     Height: =31
-                    Size: =12
+                    Size: =11
                     Text: ="3.1 Thông tin giảm trừ phí"
                     Width: =1176
                     X: =4
@@ -990,7 +1031,7 @@
                     Font: =Font.'Open Sans'
                     FontColor: =
                     Height: =32
-                    Size: =15
+                    Size: =11
                     Text: ="Mã sản phẩm"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =140
@@ -1003,7 +1044,7 @@
                     Font: =Font.'Open Sans'
                     FontColor: =
                     Height: =32
-                    Size: =15
+                    Size: =11
                     Text: ="Mã chương trình"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =139
@@ -1016,7 +1057,7 @@
                     Font: =Font.'Open Sans'
                     FontColor: =
                     Height: =32
-                    Size: =15
+                    Size: =11
                     Text: ="Tên chương trình"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =163
@@ -1029,7 +1070,7 @@
                     Font: =Font.'Open Sans'
                     FontColor: =
                     Height: =32
-                    Size: =15
+                    Size: =11
                     Text: ="Tên sản phẩm"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =136
@@ -1042,7 +1083,7 @@
                     DisplayMode: =DisplayMode.View
                     Font: =Font.'Open Sans'
                     FontColor: =
-                    FontSize: =15
+                    FontSize: =11
                     Height: =32
                     Value: =objSP.MA_SAN_PHAM
                     Width: =320
@@ -1055,7 +1096,7 @@
                     DisplayMode: =DisplayMode.View
                     Font: =Font.'Open Sans'
                     FontColor: =
-                    FontSize: =15
+                    FontSize: =11
                     Height: =32
                     Value: =objSP.TEN_SAN_PHAM
                     Width: =320
@@ -1068,7 +1109,7 @@
                     DisplayMode: =DisplayMode.View
                     Font: =Font.'Open Sans'
                     FontColor: =
-                    FontSize: =15
+                    FontSize: =11
                     Height: =32
                     Value: =objCT.MA_CHUONG_TRINH
                     Width: =320
@@ -1081,7 +1122,7 @@
                     DisplayMode: =DisplayMode.View
                     Font: =Font.'Open Sans'
                     FontColor: =
-                    FontSize: =15
+                    FontSize: =11
                     Height: =32
                     Value: =objCT.TEN_CHUONG_TRINH
                     Width: =320
@@ -1122,7 +1163,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayFields: =["Key"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =51
+                        Height: =45
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -1136,8 +1177,10 @@
                         SelectionColor: =RGBA(0, 0, 0, 1)
                         SelectionFill: =RGBA(214, 221, 224, 1)
                         SelectMultiple: =false
+                        Size: =11
                         Width: =220
                         X: =5
+                        Y: =6
                         ZIndex: =19
 
                     CbxTTinDKCCT As combobox:
@@ -1154,7 +1197,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayFields: =["cr282_ten_ttin"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =51
+                        Height: =45
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -1168,8 +1211,10 @@
                         SelectionColor: =RGBA(0, 0, 0, 1)
                         SelectionFill: =RGBA(214, 221, 224, 1)
                         SelectMultiple: =false
+                        Size: =11
                         Width: =257
                         X: =225
+                        Y: =6
                         ZIndex: =24
 
                     TiNDDCKCT As text:
@@ -1179,7 +1224,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =51
+                        Height: =45
                         MaxLength: =1000
                         Mode: =TextMode.MultiLine
                         OnChange: =
@@ -1188,11 +1233,14 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =593
                         X: =482
+                        Y: =6
                         ZIndex: =25
 
                     BtnLuuDKCTCT_2 As button:
+                        FontWeight: =FontWeight.Bold
                         Height: =42
                         OnSelect: |
                             =If(
@@ -1274,6 +1322,7 @@
                         ZIndex: =26
 
                     BtnSuaDKCTCT_2 As button:
+                        FontWeight: =FontWeight.Bold
                         Height: =42
                         OnSelect: |-
                             =If(
@@ -1299,6 +1348,7 @@
                         ZIndex: =27
 
                     BtnXoaDKCTCT_2 As button:
+                        FontWeight: =FontWeight.Bold
                         Height: =42
                         OnSelect: |-
                             =If(
@@ -1312,6 +1362,7 @@
                                 Remove(tmpDKCCTCollect,ThisItem);
                                 Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
                             )
+                        Size: =11
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =67
@@ -1320,6 +1371,7 @@
                         ZIndex: =28
 
                     BtnHuyDKCTCT_2 As button:
+                        FontWeight: =FontWeight.Bold
                         Height: =42
                         OnSelect: |-
                             =If(
@@ -1398,19 +1450,6 @@
                     Y: =91
                     ZIndex: =5
 
-                TextCanvas1_11 As Text:
-                    DisplayMode: =DisplayMode.Edit
-                    Font: =Font.'Open Sans'
-                    FontColor: =
-                    Height: =29
-                    Size: =13
-                    Text: ="1. Điều khoản chung (Trừ quyền lợi, Phí)"
-                    Weight: ='TextCanvas.Weight'.Bold
-                    Width: =451
-                    X: =0
-                    Y: =0
-                    ZIndex: =14
-
                 TextCanvas2_112 As Text:
                     Align: ='TextCanvas.Align'.Center
                     DisplayMode: =DisplayMode.Edit
@@ -1464,6 +1503,7 @@
 
                 Button5_6 As button:
                     DisplayMode: =If(And(maAddedDKCCT="",maUpdatedDKCCT=""), DisplayMode.Edit,DisplayMode.Disabled)
+                    FontWeight: =FontWeight.Bold
                     Height: =30
                     OnSelect: |
                         =If(
@@ -1496,6 +1536,14 @@
                     Y: =45
                     ZIndex: =19
 
+                Label2_5 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =33
+                    Size: =11
+                    Text: ="1. Điều khoản chung (Trừ quyền lợi, Phí)"
+                    Width: =1176
+                    ZIndex: =20
+
             ContainerDKCTCT_1 As groupContainer.manualLayoutContainer:
                 Height: =621
                 Width: =1262
@@ -1523,17 +1571,17 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =29
+                        Height: =26
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
-                        Size: =10
+                        Size: =11
                         Width: =60
-                        X: =102
-                        Y: =2
+                        X: =97
+                        Y: =5
                         ZIndex: =27
 
                     TiTenQLHTQLCTCT As text:
@@ -1543,17 +1591,17 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =29
+                        Height: =26
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
-                        Size: =10
+                        Size: =11
                         Width: =100
-                        X: =415
-                        Y: =2
+                        X: =410
+                        Y: =5
                         ZIndex: =30
 
                     TiSTBH As text:
@@ -1564,17 +1612,17 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =29
+                        Height: =26
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
-                        Size: =10
+                        Size: =11
                         Width: =79
-                        X: =1076
-                        Y: =2
+                        X: =1071
+                        Y: =5
                         ZIndex: =31
 
                     TiTuChiTra As text:
@@ -1585,17 +1633,17 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =29
+                        Height: =26
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
-                        Size: =10
+                        Size: =11
                         Width: =79
-                        X: =997
-                        Y: =2
+                        X: =992
+                        Y: =5
                         ZIndex: =32
 
                     TiGHSTBenh As text:
@@ -1606,17 +1654,17 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =29
+                        Height: =26
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
-                        Size: =10
+                        Size: =11
                         Width: =80
-                        X: =917
-                        Y: =2
+                        X: =912
+                        Y: =5
                         ZIndex: =33
 
                     TiGHSNNam As text:
@@ -1627,17 +1675,17 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =29
+                        Height: =26
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
-                        Size: =10
+                        Size: =11
                         Width: =80
-                        X: =837
-                        Y: =2
+                        X: =832
+                        Y: =5
                         ZIndex: =34
 
                     TiGHSLNam As text:
@@ -1648,17 +1696,17 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =29
+                        Height: =26
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
-                        Size: =10
+                        Size: =11
                         Width: =80
-                        X: =757
-                        Y: =2
+                        X: =752
+                        Y: =5
                         ZIndex: =35
 
                     TiGHSTVu As text:
@@ -1669,17 +1717,17 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =29
+                        Height: =26
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
-                        Size: =10
+                        Size: =11
                         Width: =80
-                        X: =677
-                        Y: =2
+                        X: =672
+                        Y: =5
                         ZIndex: =36
 
                     TiGHSTNam As text:
@@ -1690,17 +1738,17 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =29
+                        Height: =26
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
-                        Size: =10
+                        Size: =11
                         Width: =80
-                        X: =597
-                        Y: =2
+                        X: =592
+                        Y: =5
                         ZIndex: =37
 
                     TiGHSTNgay As text:
@@ -1711,17 +1759,17 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =29
+                        Height: =26
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
-                        Size: =10
+                        Size: =11
                         Width: =80
-                        X: =517
-                        Y: =2
+                        X: =512
+                        Y: =5
                         ZIndex: =38
 
                     CbxNhomQLQLCTCT As combobox:
@@ -1738,7 +1786,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayFields: =["cr282_ten_nhom_ql"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =29
+                        Height: =26
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -1752,10 +1800,10 @@
                         SelectionColor: =RGBA(0, 0, 0, 1)
                         SelectionFill: =RGBA(214, 221, 224, 1)
                         SelectMultiple: =false
-                        Size: =9
+                        Size: =11
                         Width: =108
-                        X: =162
-                        Y: =2
+                        X: =157
+                        Y: =5
                         ZIndex: =39
 
                     CbxQLQLCTCT As combobox:
@@ -1772,7 +1820,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayFields: =["cr282_ten_ql_chitiet"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =29
+                        Height: =26
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -1786,13 +1834,14 @@
                         SelectionColor: =RGBA(0, 0, 0, 1)
                         SelectionFill: =RGBA(214, 221, 224, 1)
                         SelectMultiple: =false
-                        Size: =9
+                        Size: =11
                         Width: =143
-                        X: =271
-                        Y: =2
+                        X: =266
+                        Y: =5
                         ZIndex: =40
 
                     ButtonLuuQLCTCT As button:
+                        FontWeight: =FontWeight.Bold
                         Height: =28
                         OnSelect: |
                             =If(
@@ -1915,6 +1964,7 @@
                         ZIndex: =41
 
                     ButtonSuaQLCTCT As button:
+                        FontWeight: =FontWeight.Bold
                         Height: =28
                         OnSelect: |-
                             =If(
@@ -1940,6 +1990,7 @@
                         ZIndex: =42
 
                     ButtonXoaQLCTCT As button:
+                        FontWeight: =FontWeight.Bold
                         Height: =28
                         OnSelect: |-
                             =If(
@@ -1962,6 +2013,7 @@
                         ZIndex: =43
 
                     ButtonHuyQLCTCT As button:
+                        FontWeight: =FontWeight.Bold
                         Height: =28
                         OnSelect: |-
                             =If(
@@ -1995,17 +2047,17 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =DisplayMode.Disabled
-                        Height: =29
+                        Height: =26
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
-                        Size: =10
+                        Size: =11
                         Width: =90
-                        X: =12
-                        Y: =2
+                        X: =7
+                        Y: =5
                         ZIndex: =45
 
                 BadgeCanvas1_28 As Badge:
@@ -2018,19 +2070,6 @@
                     X: =8
                     Y: =116
                     ZIndex: =2
-
-                TextCanvas1_12 As Text:
-                    DisplayMode: =DisplayMode.Edit
-                    Font: =Font.'Open Sans'
-                    FontColor: =
-                    Height: =29
-                    Size: =13
-                    Text: ="2. Quyền lợi chương trình"
-                    Weight: ='TextCanvas.Weight'.Bold
-                    Width: =451
-                    X: =0
-                    Y: =0
-                    ZIndex: =14
 
                 TextCanvas2_127 As Text:
                     Align: ='TextCanvas.Align'.Center
@@ -2225,20 +2264,8 @@
                     Y: =117
                     ZIndex: =35
 
-                TextCanvas1_13 As Text:
-                    DisplayMode: =DisplayMode.Edit
-                    Font: =Font.'Open Sans'
-                    FontColor: =
-                    Height: =29
-                    Size: =13
-                    Text: ="2.1. Bảng quyền lợi"
-                    Weight: ='TextCanvas.Weight'.Bold
-                    Width: =451
-                    X: =0
-                    Y: =29
-                    ZIndex: =36
-
                 Button1 As button:
+                    FontWeight: =FontWeight.Bold
                     Height: =30
                     OnSelect: |
                         =ClearCollect(TempCT,Filter(' DL_SAN_PHAM_CT', MA_SAN_PHAM = "TRONG_ANH_CARE" && TRANG_THAI = 1 && MA_CHUONG_TRINH <> "TRONG_ANH_CARE_001" ));
@@ -2435,6 +2462,7 @@
 
                 Button5_7 As button:
                     DisplayMode: =If(And(maAddedQLCTCT="",maUpdatedQLCTCT=""), DisplayMode.Edit,DisplayMode.Disabled)
+                    FontWeight: =FontWeight.Bold
                     Height: =30
                     OnSelect: |
                         =If(
@@ -2488,6 +2516,23 @@
                     Y: =117
                     ZIndex: =43
 
+                Label2_6 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =33
+                    Size: =11
+                    Text: ="2. Quyền lợi chương trình"
+                    Width: =1176
+                    ZIndex: =44
+
+                Label2_7 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =33
+                    Size: =11
+                    Text: ="2.1. Bảng quyền lợi"
+                    Width: =1176
+                    Y: =25
+                    ZIndex: =45
+
             ContainerDKCTCT_2 As groupContainer.manualLayoutContainer:
                 Height: =303
                 Width: =1262
@@ -2535,6 +2580,7 @@
                         SelectionColor: =RGBA(0, 0, 0, 1)
                         SelectionFill: =RGBA(214, 221, 224, 1)
                         SelectMultiple: =false
+                        Size: =11
                         Width: =284
                         ZIndex: =19
 
@@ -2554,11 +2600,13 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =794
                         X: =284
                         ZIndex: =25
 
                     BtnLuuQLKCT As button:
+                        FontWeight: =FontWeight.Bold
                         Height: =26
                         OnSelect: |
                             =If(
@@ -2680,6 +2728,7 @@
                         ZIndex: =28
 
                     BtnHuyQLKCT As button:
+                        FontWeight: =FontWeight.Bold
                         Height: =26
                         OnSelect: |-
                             =If(
@@ -2742,19 +2791,6 @@
                     Y: =84
                     ZIndex: =5
 
-                TextCanvas1_14 As Text:
-                    DisplayMode: =DisplayMode.Edit
-                    Font: =Font.'Open Sans'
-                    FontColor: =
-                    Height: =29
-                    Size: =13
-                    Text: ="2.2. Thông tin quyền lợi khác"
-                    Weight: ='TextCanvas.Weight'.Bold
-                    Width: =451
-                    X: =0
-                    Y: =2
-                    ZIndex: =14
-
                 TextCanvas2_130 As Text:
                     Align: ='TextCanvas.Align'.Center
                     DisplayMode: =DisplayMode.Edit
@@ -2810,6 +2846,7 @@
 
                 Button5_8 As button:
                     DisplayMode: =If(And(maAddedQLKCT="",maUpdatedQLKCT=""), DisplayMode.Edit,DisplayMode.Disabled)
+                    FontWeight: =FontWeight.Bold
                     Height: =30
                     OnSelect: |
                         =If(
@@ -2840,6 +2877,14 @@
                     Y: =42
                     ZIndex: =18
 
+                Label2_4 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =33
+                    Size: =11
+                    Text: ="2.2. Thông tin quyền lợi khác"
+                    Width: =1176
+                    ZIndex: =19
+
             "'3Bangphi' As groupContainer.manualLayoutContainer":
                 Height: =469
                 Width: =1262
@@ -2856,10 +2901,11 @@
                     NavigationStep: =0
                     TemplateSize: =41
                     Width: =1262
-                    Y: =126
+                    Y: =114
                     ZIndex: =1
 
                     Btn_SuaCT_9 As button:
+                        FontWeight: =FontWeight.Bold
                         OnSelect: |-
                             =If(
                                 Or(maAddedMatranCT<>"",maUpdateMatranCT<>""),
@@ -2875,7 +2921,7 @@
                                     maUpdateMatranCT:ThisItem.cr282_ma_bang_phi
                                 })
                             )
-                        Size: =13
+                        Size: =11
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
                         Width: =67
@@ -2883,6 +2929,7 @@
                         ZIndex: =17
 
                     Btn_XoaCT_9 As button:
+                        FontWeight: =FontWeight.Bold
                         OnSelect: |-
                             =If(
                                 Or(maAddedMatranCT<>"",maUpdateMatranCT<>""),
@@ -2895,7 +2942,7 @@
                                 Remove(TmpBangPhiCT,ThisItem);
                                 Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 
                             )
-                        Size: =13
+                        Size: =11
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =71
@@ -2903,6 +2950,7 @@
                         ZIndex: =18
 
                     Btn_LuuCT_9 As button:
+                        FontWeight: =FontWeight.Bold
                         OnSelect: |
                             =
                                 If( ThisItem.cr282_ma_bang_phi=maAddedMatranCT,
@@ -3004,7 +3052,7 @@
                                     maAddedMatranCT:"",
                                     maUpdateMatranCT:""
                                 });
-                        Size: =13
+                        Size: =11
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
                         Width: =67
@@ -3012,6 +3060,7 @@
                         ZIndex: =19
 
                     Btn_HuyCT_9 As button:
+                        FontWeight: =FontWeight.Bold
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_ma_bang_phi=maAddedMatranCT,
@@ -3026,7 +3075,7 @@
                             );
                              Set(   maAddedMatranCT, "");
                               Set(  maUpdateMatranCT,"");
-                        Size: =13
+                        Size: =11
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =71
@@ -3046,6 +3095,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =144
                         ZIndex: =22
 
@@ -3063,6 +3113,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =152
                         X: =144
                         ZIndex: =23
@@ -3080,6 +3131,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =93
                         X: =415
                         ZIndex: =25
@@ -3097,6 +3149,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =113
                         X: =508
                         ZIndex: =27
@@ -3114,6 +3167,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =113
                         X: =621
                         ZIndex: =28
@@ -3131,6 +3185,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =82
                         X: =734
                         ZIndex: =29
@@ -3148,6 +3203,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =99
                         X: =815
                         ZIndex: =30
@@ -3165,6 +3221,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =76
                         X: =914
                         ZIndex: =31
@@ -3183,6 +3240,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =119
                         X: =296
                         ZIndex: =32
@@ -3196,6 +3254,7 @@
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         OnChange: =
                         OnSelect: =Select(Parent)
+                        Size: =11
                         Visible: =false
                         Width: =154
                         X: =40
@@ -3214,6 +3273,7 @@
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Size: =11
                         Width: =76
                         X: =990
                         ZIndex: =34
@@ -3227,7 +3287,7 @@
                     Visible: =true
                     Width: =1262
                     X: =0
-                    Y: =96
+                    Y: =84
                     ZIndex: =2
 
                 TextCanvas2_142 As Text:
@@ -3240,7 +3300,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =148
                     X: =0
-                    Y: =96
+                    Y: =84
                     ZIndex: =3
 
                 TextCanvas2_143 As Text:
@@ -3253,7 +3313,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =151
                     X: =148
-                    Y: =96
+                    Y: =84
                     ZIndex: =4
 
                 TextCanvas2_145 As Text:
@@ -3266,11 +3326,11 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =193
                     X: =1069
-                    Y: =96
+                    Y: =84
                     ZIndex: =5
 
                 ThemMoiCT_9 As button:
-                    Height: =36
+                    Height: =30
                     OnSelect: |-
                         =If(
                             Or(
@@ -3323,7 +3383,8 @@
                         )
                     Size: =13
                     Text: ="Thêm mới"
-                    Y: =32
+                    Width: =96
+                    Y: =38
                     ZIndex: =11
 
                 TextCanvas2_146 As Text:
@@ -3336,7 +3397,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =123
                     X: =299
-                    Y: =96
+                    Y: =84
                     ZIndex: =14
 
                 TextCanvas2_147 As Text:
@@ -3349,13 +3410,13 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =89
                     X: =422
-                    Y: =94
+                    Y: =82
                     ZIndex: =15
 
                 Label2_2 As label:
                     FontWeight: =FontWeight.Bold
                     Height: =33
-                    Size: =12
+                    Size: =11
                     Text: ="3 Bảng phí"
                     Width: =1176
                     ZIndex: =17
@@ -3370,7 +3431,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =110
                     X: =511
-                    Y: =96
+                    Y: =84
                     ZIndex: =18
 
                 TextCanvas2_149 As Text:
@@ -3383,7 +3444,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =114
                     X: =621
-                    Y: =96
+                    Y: =84
                     ZIndex: =19
 
                 TextCanvas2_150 As Text:
@@ -3396,7 +3457,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =82
                     X: =735
-                    Y: =96
+                    Y: =84
                     ZIndex: =20
 
                 TextCanvas2_151 As Text:
@@ -3409,7 +3470,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =95
                     X: =822
-                    Y: =96
+                    Y: =84
                     ZIndex: =21
 
                 TextCanvas2_152 As Text:
@@ -3422,7 +3483,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =77
                     X: =917
-                    Y: =96
+                    Y: =84
                     ZIndex: =22
 
                 TextCanvas2_153 As Text:
@@ -3435,11 +3496,11 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =71
                     X: =994
-                    Y: =94
+                    Y: =82
                     ZIndex: =23
 
                 Button1_1 As button:
-                    Height: =35
+                    Height: =30
                     OnSelect: |-
                         =
                         Set(varAnhHienCTPhi, true);
@@ -3447,7 +3508,7 @@
                     Text: ="Sao chép từ CT khác"
                     Width: =199
                     X: =466
-                    Y: =33
+                    Y: =38
                     ZIndex: =24
 
                 Label5_1 As label:
