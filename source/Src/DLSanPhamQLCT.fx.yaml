@@ -52,10 +52,10 @@ DLSanPhamQLCT As screen:
         );
         UpdateIf(
             tmpQLTVCollect As ds,
-            CountIf(DL_SAN_PHAM_QLCT_CHONS,MA_QL_CHITIET=ds.cr282_ma_ql_chitiet)>0,
+            CountIf(DL_SAN_PHAM_QLCT_CHONS,MA_QL_CHITIET=ds.cr282_ma_ql_chitiet && MA_SAN_PHAM=maSPFwd)>0,
             {
                 chon:1,
-                ten_hien_thi:LookUp(DL_SAN_PHAM_QLCT_CHONS,MA_QL_CHITIET=ds.cr282_ma_ql_chitiet,TEN_HIEN_THI)
+                ten_hien_thi:LookUp(DL_SAN_PHAM_QLCT_CHONS,MA_QL_CHITIET=ds.cr282_ma_ql_chitiet && MA_SAN_PHAM=maSPFwd,TEN_HIEN_THI)
             }
         )
         
