@@ -133,7 +133,6 @@
                     0
                 ),
                 "cr282_ma_dl",
-                "cr282_ma_sp",
                 "cr282_ma_nhom_ql",
                 "cr282_mo_ta",
                 "edited"
@@ -2170,7 +2169,7 @@
                                             {
                                                 MA_DL:ThisItem.cr282_ma_dl,
                                                 MA_NHOM_QL:CbxNhomQLQLK_1.Selected.MA_NHOM_QL,
-                                                MA_SP:ThisItem.cr282_ma_sp,
+                                                MA_SP:valMaSP,
                                                 MO_TA:TextMoTaQLK_1.Text
                                             }
                                         ),
@@ -2179,7 +2178,6 @@
                                             MA_DL=ThisItem.cr282_ma_dl,
                                             {
                                                 MA_NHOM_QL:CbxNhomQLQLK_1.Selected.MA_NHOM_QL,
-                                                MA_SP:ThisItem.cr282_ma_sp,
                                                 MO_TA:TextMoTaQLK_1.Text
                                             }
                                         )
@@ -2190,7 +2188,6 @@
                                         {
                                             cr282_ma_dl:ThisItem.cr282_ma_dl,
                                             cr282_ma_nhom_ql:CbxNhomQLQLK_1.Selected.MA_NHOM_QL,
-                                            cr282_ma_sp:ThisItem.cr282_ma_sp,
                                             cr282_mo_ta:TextMoTaQLK_1.Text,
                                             edited:0
                                         }
@@ -2212,7 +2209,6 @@
                                                 0
                                             ),
                                             "cr282_ma_dl",
-                                            "cr282_ma_sp",
                                             "cr282_ma_nhom_ql",
                                             "cr282_mo_ta",
                                             "edited"
@@ -2472,7 +2468,6 @@
                                         0
                                     ),
                                     "cr282_ma_dl",
-                                    "cr282_ma_sp",
                                     "cr282_ma_nhom_ql",
                                     "cr282_mo_ta",
                                     "edited"
@@ -2498,18 +2493,18 @@
                             =If(
                                 Or(maAddedQLK<>"",maUpdatedQLK<>""),
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                Refresh(DL_SAN_PHAM_QL_KHACS);
                                 UpdateContext({
                                     idMaQLK:If(
-                                        CountIf(DL_SAN_PHAM_QL_KHACS,MA_SP=valMaSP)=0,
+                                        CountIf(DL_SAN_PHAM_QL_KHACS,true)=0,
                                         1000,
-                                        Value(Last(SortByColumns(Filter(DL_SAN_PHAM_QL_KHACS,MA_SP=valMaSP),"cr282_ma_dl",SortOrder.Ascending)).MA_DL)+1
+                                        Value(Last(SortByColumns(DL_SAN_PHAM_QL_KHACS,"cr282_ma_dl",SortOrder.Ascending)).MA_DL)+1
                                     )
                                 });
                                 Collect(
                                     tmpQLKCollect,
                                     {
                                         cr282_ma_dl:Text(idMaQLK),
-                                        cr282_ma_sp:valMaSP,
                                         cr282_ma_nhom_ql:Blank(),
                                         cr282_mo_ta:Blank(),
                                         edited:1
