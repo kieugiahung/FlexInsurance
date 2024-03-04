@@ -759,24 +759,27 @@ ThemMoi As screen:
                     IsBlank(DataCardValue1.Text),
                     UpdateContext(
                         {
-                            newID: If(
-                                CountIf(
-                                    DL_SAN_PHAM,
-                                    true
-                                ) = 0,
-                                1000,
-                                Value(
-                                    Last(
-                                        SortByColumns(
-                                            DL_SAN_PHAM,
-                                            "cr282_ma",
-                                            SortOrder.Ascending
-                                        )
-                                    ).MA
-                                ) + 1
+                            newID: Text(
+                                If(
+                                    CountIf(
+                                        DL_SAN_PHAM,
+                                        true
+                                    ) = 0,
+                                    1000,
+                                    Value(
+                                        Last(
+                                            SortByColumns(
+                                                DL_SAN_PHAM,
+                                                "cr282_ma",
+                                                SortOrder.Ascending
+                                            )
+                                        ).MA
+                                    ) + 1
+                                )
                             )
                         }
-                    )
+                    ),
+                    UpdateContext({newID: DataCardValue1.Text})
                 );
                 UpdateContext({errorMsg: ""});
                 If(
@@ -828,6 +831,7 @@ ThemMoi As screen:
                         800
                     );
                     ResetForm(ThemMoiSP);
+                    Navigate(TraCuuSP);
                     
                 );
             Text: ="Lưu"
