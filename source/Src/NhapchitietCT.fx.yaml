@@ -1238,7 +1238,7 @@
 
                     BtnLuuDKCTCT_2 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =42
+                        Height: =35
                         OnSelect: |
                             =If(
                                 IsBlank(CbxNhomTTDKCCT.Selected.Value),
@@ -1310,12 +1310,11 @@
                                     maUpdatedDKCCT:""
                                 });
                             )
-                        Size: =11
+                        Size: =9
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
-                        Width: =67
-                        X: =1089
-                        Y: =6
+                        Width: =53
+                        X: =1102
                         ZIndex: =26
 
                     BtnSuaDKCTCT_2 As button:
@@ -1336,7 +1335,7 @@
                                     maUpdatedDKCCT:ThisItem.cr282_ma_dieu_khoan
                                 })
                             )
-                        Size: =11
+                        Size: =9
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
                         Width: =53
@@ -1358,7 +1357,7 @@
                                 Remove(tmpDKCCTCollect,ThisItem);
                                 Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
                             )
-                        Size: =11
+                        Size: =9
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =50
@@ -1367,7 +1366,7 @@
 
                     BtnHuyDKCTCT_2 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =42
+                        Height: =35
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_ma_dieu_khoan=maAddedDKCCT,
@@ -1384,12 +1383,11 @@
                                 maAddedDKCCT:"",
                                 maUpdatedDKCCT:""
                             });
-                        Size: =11
+                        Size: =9
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
-                        Width: =67
+                        Width: =50
                         X: =1165
-                        Y: =6
                         ZIndex: =29
 
                 BadgeCanvas1_27 As Badge:
@@ -2715,6 +2713,7 @@
                                 Remove(tmpQLKCTCollect,ThisItem);
                                 Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
                             )
+                        Size: =11
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =67
