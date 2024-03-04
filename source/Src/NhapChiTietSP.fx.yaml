@@ -12380,7 +12380,7 @@
                                 )
                             );
                             // chuyển dữ liệu quyền lợi chi tiết
-                            RemoveIf(DL_SAN_PHAM_QLCT_CHONS, MA_SAN_PHAM = valMaSP && MaCT = CT.MA_CHUONG_TRINH);
+                            RemoveIf(DL_CHUONGTRINH_QLCTS, MA_SAN_PHAM = valMaSP && MaCT = CT.MA_CHUONG_TRINH);
                             ForAll(Filter(DL_SAN_PHAM_QLCT_CHONS,MA_SAN_PHAM = valMaSP ) As qlc,
                                 Patch(
                                     DL_CHUONGTRINH_QLCTS,
@@ -12399,7 +12399,7 @@
                                 )
                             );
                             // chuyển dữ liệu quyền lợi khác
-                            //RemoveIf(DL_SAN_PHAM_QL_KHACS, MA_SAN_PHAM = valMaSP &&  MA_CHUONG_TRINH= CT.MA_CHUONG_TRINH);
+                            RemoveIf(DL_CHUONGTRINH_QL_KHACS, MA_SAN_PHAM = valMaSP &&  MA_CHUONG_TRINH= CT.MA_CHUONG_TRINH);
                             ForAll(Filter(DL_SAN_PHAM_QL_KHACS,MA_SP = valMaSP ) As qlk,
                                 Patch(
                                     DL_CHUONGTRINH_QL_KHACS,
