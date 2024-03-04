@@ -1251,9 +1251,8 @@
                         SelectionColor: =RGBA(0, 0, 0, 1)
                         SelectionFill: =RGBA(214, 221, 224, 1)
                         SelectMultiple: =false
-                        Width: =140
+                        Width: =139
                         X: =457
-                        Y: =1
                         ZIndex: =19
 
                     CbxNhomQLNQLSP_1 As combobox:
@@ -1374,7 +1373,6 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayFields: =["cr282_ten_chuong_trinh"]
-                        Height: =37
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -1391,14 +1389,23 @@
                         Visible: =ThisItem.edited=1
                         Width: =186
                         X: =737
-                        Y: =2
                         ZIndex: =27
 
-                    ButtonLuuNQLSP As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        FontColor: =
-                        FontSize: =16
+                    TextCTADNQLSP As text:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =Concat(CbxCTADNQLSP_1.SelectedItems,TEN_CHUONG_TRINH,", ")
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Visible: =ThisItem.edited=0
+                        Width: =186
+                        X: =737
+                        ZIndex: =34
+
+                    BtnLuuNQLSP As button:
                         Height: =38
                         OnSelect: |
                             =If(
@@ -1483,19 +1490,16 @@
                                     maUpdatedNQLSP:""
                                 });
                             )
+                        Size: =11
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
                         Width: =68
-                        X: =1036
-                        Y: =2
-                        ZIndex: =29
+                        X: =940
+                        Y: =1
+                        ZIndex: =35
 
-                    ButtonSuaNQLSP As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        FontColor: =
-                        FontSize: =16
-                        Height: =38
+                    BtnSuaNQLSP As button:
+                        Height: =37
                         OnSelect: |-
                             =If(
                                 Or(maAddedNQLSP<>"",maUpdatedNQLSP<>""),
@@ -1511,18 +1515,15 @@
                                     maUpdatedNQLSP:ThisItem.cr282_ma_dl
                                 })
                             )
+                        Size: =11
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
                         Width: =68
-                        X: =1036
+                        X: =940
                         Y: =1
-                        ZIndex: =30
+                        ZIndex: =36
 
-                    ButtonXoaNQLSP As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        FontColor: =
-                        FontSize: =16
+                    BtnXoaNQLSP As button:
                         Height: =38
                         OnSelect: |-
                             =If(
@@ -1561,16 +1562,12 @@
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =68
-                        X: =1119
+                        X: =1018
                         Y: =1
-                        ZIndex: =31
+                        ZIndex: =37
 
-                    ButtonHuyNQLSP As Button:
-                        BasePaletteColor: =
-                        DisplayMode: =DisplayMode.Edit
-                        FontColor: =
-                        FontSize: =16
-                        Height: =38
+                    BtnHuyNQLSP As button:
+                        Height: =37
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_ma_dl=maAddedNQLSP,
@@ -1587,20 +1584,16 @@
                                 maAddedNQLSP:"",
                                 maUpdatedNQLSP:""
                             });
+                        Size: =11
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =68
-                        X: =1119
+                        X: =1018
                         Y: =1
-                        ZIndex: =32
+                        ZIndex: =38
 
-                    ButtonCTNQLSP As Button:
-                        BasePaletteColor: =RGBA(5, 101, 179, 1)
-                        DisplayMode: =DisplayMode.Edit
-                        Font: =Font.'Open Sans'
-                        FontColor: =
-                        FontSize: =16
-                        Height: =38
+                    BtnCTNQLSP As button:
+                        Height: =37
                         OnSelect: |-
                             =If(
                                 Or(maAddedNQLSP<>"",maUpdatedNQLSP<>""),
@@ -1610,28 +1603,13 @@
                                 Set(maNQLFwd,CbxNhomQLNQLSP_1.Selected.MA_NHOM_QL);
                                 Set(maSPFwd,valMaSP)
                             )
+                        Size: =11
                         Text: ="Chi tiết"
                         Visible: =ThisItem.edited=0
                         Width: =85
-                        X: =941
+                        X: =1096
                         Y: =1
-                        ZIndex: =33
-
-                    TextCTADNQLSP As text:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =Concat(CbxCTADNQLSP_1.SelectedItems,TEN_CHUONG_TRINH,", ")
-                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                        DisabledColor: =RGBA(0, 0, 0, 1)
-                        DisabledFill: =RGBA(255, 255, 255, 1)
-                        DisplayMode: =DisplayMode.Disabled
-                        Height: =37
-                        OnChange: =
-                        OnSelect: =Select(Parent)
-                        Visible: =ThisItem.edited=0
-                        Width: =186
-                        X: =737
-                        Y: =2
-                        ZIndex: =34
+                        ZIndex: =39
 
                 BadgeCanvas1_19 As Badge:
                     BasePaletteColor: =
@@ -1674,13 +1652,13 @@
                     Align: ='TextCanvas.Align'.Center
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =38
+                    Height: =40
                     Size: =14
                     Text: ="Chương trình áp dụng"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =201
-                    X: =746
-                    Y: =87
+                    Width: =171
+                    X: =748
+                    Y: =86
                     ZIndex: =6
 
                 TextCanvas1_6 As Text:
@@ -1798,8 +1776,8 @@
                     Text: ="Thao tác"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =167
-                    X: =1036
-                    Y: =87
+                    X: =966
+                    Y: =88
                     ZIndex: =21
 
                 ButtonCanvas4_12 As Button:
