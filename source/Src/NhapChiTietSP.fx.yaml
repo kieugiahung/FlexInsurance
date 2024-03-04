@@ -12416,7 +12416,6 @@
                             // chuyển dữ liệu ma trận phí
                             // Nếu đã nhận file excel thì k chuyển sang nữa
                             If(CountRows(Filter( DL_CHUONG_TRINH_BANG_PHIS, MA_SAN_PHAM =valMaSP && MA_CHUONG_TRINH= CT.MA_CHUONG_TRINH )) <= 0,
-                            RemoveIf(DL_SAN_PHAM_MATRANPHI, MA_SAN_PHAM = valMaSP &&  MA_CHUONG_TRINH= CT.MA_CHUONG_TRINH);
                             ForAll(Filter(DL_SAN_PHAM_MATRANPHI, MA_SAN_PHAM = valMaSP  && MA_CHUONG_TRINH= CT.MA_CHUONG_TRINH) As mtp,
                                 Patch(
                                     DL_CHUONG_TRINH_BANG_PHIS,
@@ -12440,6 +12439,7 @@
                             )
                             );
                             // chuyển dữ liệu thông tin giảm trừ phí
+                            RemoveIf(DL_CHUONGTRINH_GPS, MA_SAN_PHAM = valMaSP &&  MA_CHUONG_TRINH= CT.MA_CHUONG_TRINH);
                             ForAll(Filter(DL_SAN_PHAM_GPS, MA_SAN_PHAM = valMaSP ) As gp,
                                 Patch(
                                     DL_CHUONGTRINH_GPS,
@@ -12457,6 +12457,7 @@
                                 )
                             );
                            // chuyển dữ liệu phí khác
+                            RemoveIf(DL_CHUONGTRINH_PHIKHACS, MA_SAN_PHAM = valMaSP &&  MA_CHUONG_TRINH= CT.MA_CHUONG_TRINH);
                             ForAll(Filter(DL_SAN_PHAM_PHIKHACS, MA_SAN_PHAM = valMaSP ) As pk,
                                 Patch(
                                     DL_CHUONGTRINH_PHIKHACS,
