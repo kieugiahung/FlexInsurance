@@ -11401,13 +11401,13 @@
                     Size: =12
                     Tooltip: =
                     Width: =199
-                    X: =251
+                    X: =291
                     Y: =34
                     ZIndex: =6
 
                 circleButton_3 As button:
                     BorderStyle: =BorderStyle.None
-                    Fill: =RGBA(39, 113, 194, 1)
+                    Fill: =RGBA(12, 59, 94, 1)
                     FocusedBorderColor: =Color.Transparent
                     HoverColor: =RGBA(0, 0, 0, 0)
                     HoverFill: =RGBA(0, 0, 0, 0.1)
@@ -11495,9 +11495,96 @@
                     Size: =13
                     Text: ="Nhận file excel"
                     Width: =154
-                    X: =461
+                    X: =502
                     Y: =65
                     ZIndex: =7
+
+                ThemMoiCT_12 As button:
+                    Height: =36
+                    OnSelect: |
+                        =Clear(col_response);
+                        Clear(col_attachment_flow);
+                        Set(
+                            gbl_var_spinner,
+                            true
+                        );
+                        ForAll(
+                            gal_UL_Attachments.AllItems,
+                            Collect(
+                                col_attachment_flow,
+                                {
+                                    Title: lbl_File_Name.Text,
+                                    Datastream: img_Data_Stream.Image
+                                }
+                            )
+                        );
+                        Set(
+                            gbl_var_excel_data,
+                            ImportExcel.Run(
+                                JSON(
+                                    col_attachment_flow,
+                                    JSONFormat.IncludeBinaryData
+                                )
+                            ).response
+                        );
+                        Set(
+                            gbl_var_reset,
+                            true
+                        );
+                        Set(
+                            gbl_var_reset,
+                            false
+                        );
+                        ClearCollect(
+                            col_response,
+                            MatchAll(
+                                gbl_var_excel_data,
+                                "(""ma_san_pham"":""(?<ma_san_pham>[^""]*)"",""ma_chuong_trinh"":""(?<ma_chuong_trinh>[^""]*)"",""ten_san_pham"":""(?<ten_san_pham>[^""]*)"",""ten_chuong_trinh"":""(?<ten_chuong_trinh>[^""]*)"",""nhom_tinh_phi"":""(?<nhom_tinh_phi>[^""]*)"",""phamvi"":""(?<phamvi>[^""]*)"",""do_tuoi"":""(?<do_tuoi>[^""]*)"",""gioi_tinh"":""(?<gioi_tinh>[^""]*)"",""nganh_nghe"":""(?<nganh_nghe>[^""]*)"",""so_tien"":""(?<so_tien>[^""]*)"",""so_nguoi"":""(?<so_nguoi>[^""]*)"",""thoi_han"":""(?<thoi_han>[^""]*)"",""phuong_thuc"":""(?<phuong_thuc>[^""]*)"",""phi"":""(?<phi>[^""]*)"",""ty_le"":""(?<ty_le>[^""]*)"")"
+                            )
+                        );
+                        // XOÁ DỮ LIỆU CŨ
+                         If(CountRows(col_response) > 0,
+                         RemoveIf(
+                                DL_CHUONG_TRINH_BANG_PHIS,
+                                MA_SAN_PHAM =valMaSP
+                            )
+                         );
+                        // THÊM DỮ LIỆU MỚI    
+                        ForAll(
+                            col_response As x,
+                            Patch(
+                                DL_CHUONG_TRINH_BANG_PHIS,
+                                Defaults(DL_CHUONG_TRINH_BANG_PHIS),
+                                {
+                                    MA_BANG_PHI: Max(DL_CHUONG_TRINH_BANG_PHIS, MA_BANG_PHI) + 1,
+                                    MA_SAN_PHAM: valMaSP,
+                                    MA_CHUONG_TRINH:x.ma_chuong_trinh,
+                                    TEN_SAN_PHAM:x.ten_san_pham,
+                                    TEN_CHUONG_TRINH:x.ten_chuong_trinh,
+                                    NHOM_TINH_PHI:x.nhom_tinh_phi,
+                                    MA_PHAMVI_DIALY:x.phamvi,
+                                    MA_DO_TUOI:x.do_tuoi,
+                                    MA_GIOI_TINH:x.gioi_tinh,
+                                    SO_TIEN:x.so_tien,
+                                    PHI_BH:Value(x.phi),
+                                    TYLE_PHI:Value(x.ty_le),
+                                    NHOM_NGANH_NGHE:x.nganh_nghe,
+                                    PTHUC_DONG_PHI:x.phuong_thuc,
+                                    THOI_HAN_BH:x.thoi_han
+                                }
+                            )
+                        );
+                        Notify("Nhận dữ liệu từ file excel thành công", NotificationType.Success,800);
+                        
+                        Set(
+                            gbl_var_spinner,
+                            false
+                        );
+                    Size: =13
+                    Text: ="Thêm mới"
+                    X: =674
+                    Y: =65
+                    ZIndex: =8
 
         DataCard5_1 As dataCard.blankCard:
             BorderColor: =RGBA(0, 0, 0, 1)
