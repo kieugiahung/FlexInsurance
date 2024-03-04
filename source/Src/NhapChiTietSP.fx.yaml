@@ -2560,6 +2560,7 @@
                     CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                     Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHECKED_GIOITINH
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Giới tính"
                     Visible: |-
@@ -2585,6 +2586,7 @@
                     CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                     Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHECKED_NGANHNGHE
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Ngành nghề"
                     Visible: |-
@@ -2623,6 +2625,7 @@
                     CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                     Default: =!IsBlank(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).PHAM_VI_DL)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Phạm vi địa lý"
                     Visible: |-
@@ -2648,6 +2651,7 @@
                     CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                     Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHECKED_SOTIEN
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     Height: =38
                     HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Số tiền bảo hiểm"
@@ -2674,6 +2678,7 @@
                     CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                     Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHECKED_SONGUOI
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Số người được BH"
                     Visible: |-
@@ -2699,6 +2704,7 @@
                     CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                     Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHECKED_THOIHAN
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Thời hạn bảo hiểm"
                     Visible: |-
@@ -2724,6 +2730,7 @@
                     CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                     Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHECKED_DONGPHI
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     Height: =38
                     HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Phương thức đóng phí"
@@ -2746,6 +2753,7 @@
                     ZIndex: =10
 
                 Label_TienTe_1 As label:
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     Text: ="Đơn vị tiền"
                     X: =38
                     Y: =706
@@ -2759,6 +2767,7 @@
                     ChevronFill: =RGBA(72, 163, 62, 1)
                     Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).DON_VI_TIEN
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     Height: =45
                     Items: =BH_DM_TIENTES
                     PressedFill: =RGBA(166, 215, 153, 1)
@@ -2827,6 +2836,7 @@
                     DefaultSelectedItems: =Filter(DM_DO_TUOIS,MO_TA in LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).DO_TUOI)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_mo_ta"]
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     Height: =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
@@ -2851,6 +2861,7 @@
                     DefaultSelectedItems: =Filter(DM_GIOI_TINHS,TEN_GIOI_TINH in LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).GIOI_TINH)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_gioi_tinh"]
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     Height: =45
                     InputTextPlaceholder: ="Find items"
                     IsSearchable: =false
@@ -3165,6 +3176,7 @@
                     ChevronFill: =RGBA(72, 163, 62, 1)
                     Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).PHAM_VI_DL
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     Height: =45
                     Items: =DM_PHAMVI_DIALYS
                     PressedFill: =RGBA(166, 215, 153, 1)
@@ -3185,6 +3197,7 @@
                     DefaultSelectedItems: =Filter(BH_DM_NGANHNGHES,TEN_NGANH in LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).NGANH_NGHE)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_nganh"]
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     Height: =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
@@ -3209,6 +3222,7 @@
                     DefaultSelectedItems: =Filter(BH_DM_SOTIEN,TEN_SOTIEN in LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_SO_TIEN)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_sotien"]
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     Height: =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
@@ -3235,6 +3249,7 @@
                         Filter(BH_DM_SONGUOI,TEN_SO_NGUOI in LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_SO_NGUOI)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_so_nguoi"]
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     Height: =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
@@ -3261,6 +3276,7 @@
                         Filter(BH_DM_THOIHAN,TEN_THOI_HAN in LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_THOI_HAN)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_thoi_han"]
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     Height: =45
                     InputTextPlaceholder: =""
                     IsSearchable: =false
@@ -3287,6 +3303,7 @@
                         Filter(BH_DM_PT_DONG,TEN_PT in LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).BH_PHUONG_THUC_DP)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisplayFields: =["cr282_ten_pt"]
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     Height: |
                         =45
                     InputTextPlaceholder: =""
@@ -3336,6 +3353,7 @@
                     CheckboxBorderColor: =RGBA(72, 163, 62, 1)
                     Default: =LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHECKED_DOTUOI
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisplayMode: =If(showGrid||!IsEmpty(Filter(DL_SAN_PHAM_BANGYT, MA_SAN_PHAM=valMaSP)),DisplayMode.Disabled, DisplayMode.Edit)
                     HoverColor: =RGBA(180, 214, 250, 1)
                     Text: ="Độ tuổi"
                     Visible: |-
