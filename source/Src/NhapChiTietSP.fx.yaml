@@ -233,14 +233,14 @@
             BorderThickness: =0
             DisplayMode: =DisplayMode.Edit
             Fill: =RGBA(0, 0, 0, 0)
-            Height: =2320
+            Height: =1954
             Width: =1366
             X: =0
             Y: =0
             ZIndex: =1
 
             "'1. ChuongTrinh_1' As groupContainer.manualLayoutContainer":
-                Height: =529
+                Height: =391
                 Width: =1212
                 X: =67
                 ZIndex: =1
@@ -252,7 +252,7 @@
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
-                    TemplateSize: =42
+                    TemplateSize: =40
                     Width: =1200
                     Y: =177
                     ZIndex: =1
@@ -308,6 +308,7 @@
 
                     Btn_SuaCT_3 As button:
                         FontWeight: =FontWeight.Bold
+                        Height: =33
                         OnSelect: |-
                             =If(
                                 Or(maAdded<>"",maUpdated<>""),
@@ -326,12 +327,14 @@
                         Size: =11
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
-                        Width: =68
+                        Width: =60
                         X: =940
+                        Y: =5
                         ZIndex: =17
 
                     Btn_XoaCT_3 As button:
                         FontWeight: =FontWeight.Bold
+                        Height: =33
                         OnSelect: |-
                             =If(
                                 Or(maAdded<>"",maUpdated<>""),
@@ -357,12 +360,14 @@
                         Size: =11
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
-                        Width: =68
-                        X: =1020
+                        Width: =60
+                        X: =1010
+                        Y: =5
                         ZIndex: =18
 
                     Btn_LuuCT_3 As button:
                         FontWeight: =FontWeight.Bold
+                        Height: =33
                         OnSelect: |-
                             =If(
                                 TxtTenCT_1.Text="",
@@ -434,12 +439,14 @@
                         Size: =11
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
-                        Width: =68
-                        X: =988
+                        Width: =60
+                        X: =985
+                        Y: =5
                         ZIndex: =19
 
                     Btn_HuyCT_3 As button:
                         FontWeight: =FontWeight.Bold
+                        Height: =33
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_ma_chuong_trinh=maAdded,
@@ -459,12 +466,14 @@
                         Size: =11
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
-                        Width: =68
-                        X: =1068
+                        Width: =60
+                        X: =1055
+                        Y: =5
                         ZIndex: =20
 
                     Btn_ChiTiet_1 As button:
                         FontWeight: =FontWeight.Bold
+                        Height: =33
                         OnSelect: |-
                             =Set(VarCT, TxtMaCT_1.Text);
                             Navigate(NhapchitietCT);
@@ -472,7 +481,8 @@
                         Text: ="Chi tiết"
                         Visible: =ThisItem.edited=0 && ThisItem.cr282_trang_thai=1
                         Width: =82
-                        X: =1100
+                        X: =1080
+                        Y: =5
                         ZIndex: =21
 
                     TxtID_1 As text:
@@ -728,10 +738,10 @@
                     ZIndex: =14
 
             "'2. Dieukhoanchung_2' As groupContainer.manualLayoutContainer":
-                Height: =435
+                Height: =365
                 Width: =1214
                 X: =67
-                Y: =529
+                Y: =391
                 ZIndex: =2
 
                 GalleryCT_6 As gallery.galleryVertical:
@@ -748,6 +758,7 @@
 
                     Btn_SuaCT_6 As button:
                         FontWeight: =FontWeight.Bold
+                        Height: =33
                         OnSelect: |-
                             =If(
                                 Or(maAddedDKC<>"",maUpdatedDKC<>""),
@@ -766,12 +777,14 @@
                         Size: =11
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
-                        Width: =68
-                        X: =1009
+                        Width: =60
+                        X: =1019
+                        Y: =2
                         ZIndex: =17
 
                     Btn_XoaCT_6 As button:
                         FontWeight: =FontWeight.Bold
+                        Height: =33
                         OnSelect: |-
                             =If(
                                 Or(maAddedDKC<>"",maUpdatedDKC<>""),
@@ -787,12 +800,14 @@
                         Size: =11
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
-                        Width: =68
+                        Width: =60
                         X: =1099
+                        Y: =2
                         ZIndex: =18
 
                     Btn_LuuCT_6 As button:
                         FontWeight: =FontWeight.Bold
+                        Height: =33
                         OnSelect: |
                             =
                                 If( ThisItem.cr282_id_dkc=maAddedDKC,
@@ -855,12 +870,14 @@
                         Size: =11
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
-                        Width: =68
+                        Width: =60
                         X: =1019
+                        Y: =2
                         ZIndex: =19
 
                     Btn_HuyCT_6 As button:
                         FontWeight: =FontWeight.Bold
+                        Height: =33
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_id_dkc=maAddedDKC,
@@ -880,8 +897,9 @@
                         Size: =11
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
-                        Width: =68
+                        Width: =60
                         X: =1099
+                        Y: =2
                         ZIndex: =20
 
                     TxtID_DKC_2 As text:
@@ -1079,24 +1097,23 @@
                     Size: =11
                     Text: ="2. Điều khoản chung (Trừ quyền lợi, phí)"
                     Width: =1076
-                    Y: =4
                     ZIndex: =13
 
             "'3.1 DmNhomQuyenloi' As groupContainer.manualLayoutContainer":
-                Height: =488
+                Height: =456
                 Width: =1216
                 X: =67
-                Y: =964
+                Y: =756
                 ZIndex: =6
 
                 GalleryNQLSP_1 As gallery.galleryVertical:
                     DelayItemLoading: =true
-                    Height: =339
+                    Height: =307
                     Items: =SortByColumns(tmpNQLSPCollect,"cr282_ma_dl",SortOrder.Ascending)
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
-                    TemplateSize: =41
+                    TemplateSize: =40
                     Width: =1203
                     Y: =149
                     ZIndex: =1
@@ -1688,10 +1705,10 @@
                     ZIndex: =26
 
             "'3.2 Danhmucqlct' As groupContainer.manualLayoutContainer":
-                Height: =524
+                Height: =422
                 Width: =1214
                 X: =67
-                Y: =1452
+                Y: =1212
                 ZIndex: =7
 
                 GalleryYTAH_2 As gallery.galleryVertical:
@@ -1962,10 +1979,10 @@
                     ZIndex: =22
 
             "'3.3 Thongtinqlkhac' As groupContainer.manualLayoutContainer":
-                Height: =322
+                Height: =326
                 Width: =1289
                 X: =67
-                Y: =1976
+                Y: =1634
                 ZIndex: =8
 
                 ContainerQLK_1 As groupContainer.manualLayoutContainer:
@@ -2412,7 +2429,7 @@
             BorderStyle: =BorderStyle.Solid
             DisplayMode: =DisplayMode.Edit
             Fill: =RGBA(0, 0, 0, 0)
-            Height: =705
+            Height: =709
             Width: =1366
             X: =0
             Y: =1
