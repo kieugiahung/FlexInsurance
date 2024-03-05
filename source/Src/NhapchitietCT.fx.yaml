@@ -1144,8 +1144,9 @@
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
-                    TemplateSize: =35
-                    Width: =1257
+                    TemplatePadding: =0
+                    TemplateSize: =30
+                    Width: =Parent.Width
                     Y: =128
                     ZIndex: =1
 
@@ -1163,7 +1164,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayFields: =["Key"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =35
+                        Height: =30
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -1196,7 +1197,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayFields: =["cr282_ten_ttin"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =35
+                        Height: =30
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -1222,7 +1223,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =35
+                        Height: =30
                         MaxLength: =4000
                         Mode: =TextMode.MultiLine
                         OnChange: =
@@ -1232,13 +1233,13 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =593
+                        Width: =647
                         X: =482
                         ZIndex: =25
 
                     BtnLuuDKCTCT_2 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |
                             =If(
                                 IsBlank(CbxNhomTTDKCCT.Selected.Value),
@@ -1314,12 +1315,13 @@
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
                         Width: =53
-                        X: =1100
+                        X: =1140
+                        Y: =2
                         ZIndex: =26
 
                     BtnSuaDKCTCT_2 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedDKCCT<>"",maUpdatedDKCCT<>""),
@@ -1343,12 +1345,13 @@
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
                         Width: =53
-                        X: =1100
+                        X: =1140
+                        Y: =2
                         ZIndex: =27
 
                     BtnXoaDKCTCT_2 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedDKCCT<>"",maUpdatedDKCCT<>""),
@@ -1369,12 +1372,13 @@
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =50
-                        X: =1165
+                        X: =1205
+                        Y: =2
                         ZIndex: =28
 
                     BtnHuyDKCTCT_2 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_ma_dieu_khoan=maAddedDKCCT,
@@ -1395,7 +1399,8 @@
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =50
-                        X: =1165
+                        X: =1205
+                        Y: =2
                         ZIndex: =29
 
                 BadgeCanvas1_27 As Badge:
@@ -1404,7 +1409,7 @@
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
                     Height: =39
-                    Width: =1248
+                    Width: =Parent.Width
                     X: =4
                     Y: =89
                     ZIndex: =2
@@ -1447,8 +1452,8 @@
                     Text: ="Nội dung"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =590
-                    X: =488
-                    Y: =91
+                    X: =512
+                    Y: =89
                     ZIndex: =5
 
                 TextCanvas2_112 As Text:
@@ -1461,7 +1466,7 @@
                     Text: ="Thao tác"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =124
-                    X: =1100
+                    X: =1126
                     Y: =91
                     ZIndex: =15
 
@@ -1532,7 +1537,6 @@
                     Size: =11
                     Text: ="Thêm mới"
                     Width: =96
-                    X: =4
                     Y: =45
                     ZIndex: =19
 
@@ -1545,10 +1549,10 @@
                     ZIndex: =20
 
             ContainerDKCTCT_1 As groupContainer.manualLayoutContainer:
-                Height: =519
+                Height: =533
                 Width: =1262
                 X: =67
-                Y: =488
+                Y: =474
                 ZIndex: =5
 
                 GalleryDKCTCT_1 As gallery.galleryVertical:
@@ -1558,9 +1562,9 @@
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
-                    TemplatePadding: =1
-                    TemplateSize: =27
-                    Width: =1256
+                    TemplatePadding: =0
+                    TemplateSize: =30
+                    Width: =Parent.Width
                     Y: =155
                     ZIndex: =1
 
@@ -1571,7 +1575,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =26
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -1590,7 +1594,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =26
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -1610,7 +1614,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =26
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -1630,7 +1634,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =26
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -1650,7 +1654,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =26
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -1670,7 +1674,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =26
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -1690,7 +1694,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =26
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -1710,7 +1714,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =26
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -1730,7 +1734,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =26
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -1750,7 +1754,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
-                        Height: =26
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -1776,7 +1780,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayFields: =["cr282_ten_nhom_ql"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =26
+                        Height: =30
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -1809,7 +1813,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayFields: =["cr282_ten_ql_chitiet"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =26
+                        Height: =30
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -1830,7 +1834,7 @@
 
                     ButtonLuuQLCTCT As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =27
+                        Height: =25
                         OnSelect: |
                             =If(
                                 IsBlank(CbxNhomQLQLCTCT.Selected.MA_NHOM_QL),
@@ -1947,12 +1951,13 @@
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
                         Width: =37
-                        X: =1160
+                        X: =1168
+                        Y: =2
                         ZIndex: =41
 
                     ButtonSuaQLCTCT As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =27
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedQLCTCT<>"",maUpdatedQLCTCT<>""),
@@ -1972,12 +1977,13 @@
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
                         Width: =37
-                        X: =1160
+                        X: =1168
+                        Y: =2
                         ZIndex: =42
 
                     ButtonXoaQLCTCT As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =27
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedQLCTCT<>"",maUpdatedQLCTCT<>""),
@@ -1994,12 +2000,13 @@
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =37
-                        X: =1205
+                        X: =1217
+                        Y: =2
                         ZIndex: =43
 
                     ButtonHuyQLCTCT As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =27
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 ThisItem.idQLCT=maAddedQLCTCT,
@@ -2021,7 +2028,8 @@
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =37
-                        X: =1205
+                        X: =1217
+                        Y: =2
                         ZIndex: =44
 
                     TiTthtQLCTCT_2 As text:
@@ -2031,7 +2039,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =DisplayMode.Disabled
-                        Height: =26
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -2049,7 +2057,7 @@
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
                     Height: =39
-                    Width: =1245
+                    Width: =1254
                     X: =8
                     Y: =116
                     ZIndex: =2
@@ -2530,8 +2538,9 @@
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
-                    TemplateSize: =28
-                    Width: =1255
+                    TemplatePadding: =0
+                    TemplateSize: =30
+                    Width: =Parent.Width
                     Y: =124
                     ZIndex: =1
 
@@ -2549,7 +2558,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayFields: =["cr282_ten_nhom_ql"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =28
+                        Height: =30
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -2574,7 +2583,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =28
+                        Height: =30
                         MaxLength: =4000
                         Mode: =TextMode.MultiLine
                         OnChange: =
@@ -2584,13 +2593,13 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =794
+                        Width: =825
                         X: =284
                         ZIndex: =25
 
                     BtnLuuQLKCT As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =26
+                        Height: =25
                         OnSelect: |
                             =If(
                                 IsBlank(CbxNhomQLQLKCT.Selected.MA_NHOM_QL),
@@ -2660,12 +2669,12 @@
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
                         Width: =67
-                        X: =1088
+                        X: =1116
                         Y: =2
                         ZIndex: =26
 
                     BtnSuaQLKCT As button:
-                        Height: =26
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedQLKCT<>"",maUpdatedQLKCT<>""),
@@ -2685,12 +2694,12 @@
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
                         Width: =67
-                        X: =1088
+                        X: =1116
                         Y: =2
                         ZIndex: =27
 
                     BtnXoaQLKCT As button:
-                        Height: =26
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedQLKCT<>"",maUpdatedQLKCT<>""),
@@ -2707,13 +2716,13 @@
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =67
-                        X: =1162
+                        X: =1190
                         Y: =2
                         ZIndex: =28
 
                     BtnHuyQLKCT As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =26
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_ma_dl_ct=maAddedQLKCT,
@@ -2734,7 +2743,7 @@
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =67
-                        X: =1162
+                        X: =1190
                         Y: =2
                         ZIndex: =29
 
@@ -2744,7 +2753,7 @@
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
                     Height: =38
-                    Width: =1239
+                    Width: =Parent.Width
                     X: =0
                     Y: =84
                     ZIndex: =2
@@ -2784,7 +2793,7 @@
                     Text: ="Thao tác"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =107
-                    X: =1107
+                    X: =1125
                     Y: =84
                     ZIndex: =15
 
@@ -2882,14 +2891,15 @@
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
-                    TemplateSize: =40
-                    Width: =1262
+                    TemplatePadding: =0
+                    TemplateSize: =30
+                    Width: =Parent.Width
                     Y: =114
                     ZIndex: =1
 
                     Btn_SuaCT_9 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedMatranCT<>"",maUpdateMatranCT<>""),
@@ -2909,12 +2919,13 @@
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
                         Width: =60
-                        X: =1092
+                        X: =1116
+                        Y: =2
                         ZIndex: =17
 
                     Btn_XoaCT_9 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedMatranCT<>"",maUpdateMatranCT<>""),
@@ -2931,12 +2942,13 @@
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =60
-                        X: =1172
+                        X: =1196
+                        Y: =2
                         ZIndex: =18
 
                     Btn_LuuCT_9 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |
                             =
                                 If( ThisItem.cr282_ma_bang_phi=maAddedMatranCT,
@@ -3042,12 +3054,13 @@
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
                         Width: =60
-                        X: =1092
+                        X: =1116
+                        Y: =2
                         ZIndex: =19
 
                     Btn_HuyCT_9 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_ma_bang_phi=maAddedMatranCT,
@@ -3066,7 +3079,8 @@
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =60
-                        X: =1172
+                        X: =1196
+                        Y: =2
                         ZIndex: =20
 
                     TxtNhomtinhphi As text:
@@ -3076,6 +3090,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -3093,6 +3108,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         PaddingRight: =0
@@ -3112,6 +3128,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -3130,6 +3147,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -3148,6 +3166,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -3166,6 +3185,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -3184,6 +3204,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -3191,7 +3212,7 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =99
+                        Width: =138
                         X: =815
                         ZIndex: =30
 
@@ -3202,6 +3223,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -3210,7 +3232,7 @@
                         RadiusTopRight: =0
                         Size: =11
                         Width: =76
-                        X: =914
+                        X: =953
                         ZIndex: =31
 
                     TxtDotuoi As text:
@@ -3220,6 +3242,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         PaddingRight: =0
@@ -3239,6 +3262,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         Size: =11
@@ -3254,6 +3278,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -3262,7 +3287,7 @@
                         RadiusTopRight: =0
                         Size: =11
                         Width: =76
-                        X: =990
+                        X: =1029
                         ZIndex: =34
 
                 BadgeCanvas1_31 As Badge:
@@ -3273,7 +3298,7 @@
                     FontColor: =
                     Height: =30
                     Visible: =true
-                    Width: =1262
+                    Width: =Parent.Width
                     X: =0
                     Y: =84
                     ZIndex: =2
@@ -3311,12 +3336,12 @@
                     DisplayMode: =DisplayMode.Edit
                     Font: =Font.'Open Sans'
                     FontColor: =
-                    Height: =30
+                    Height: =28
                     Size: =11
                     Text: ="Thao tác"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =193
-                    X: =1069
+                    Width: =149
+                    X: =1113
                     Y: =84
                     ZIndex: =5
 
@@ -3403,7 +3428,7 @@
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =89
                     X: =422
-                    Y: =82
+                    Y: =84
                     ZIndex: =15
 
                 Label2_2 As label:
@@ -3465,7 +3490,7 @@
                     Size: =11
                     Text: ="Phương thức"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =95
+                    Width: =131
                     X: =822
                     Y: =84
                     ZIndex: =21
@@ -3480,7 +3505,7 @@
                     Text: ="Phí"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =77
-                    X: =917
+                    X: =953
                     Y: =84
                     ZIndex: =22
 
@@ -3494,8 +3519,8 @@
                     Text: ="Tỷ lệ"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =71
-                    X: =994
-                    Y: =82
+                    X: =1030
+                    Y: =84
                     ZIndex: =23
 
                 Button1_1 As button:
