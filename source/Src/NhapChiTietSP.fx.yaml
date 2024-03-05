@@ -12178,12 +12178,14 @@
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
-                    TemplateSize: =40
-                    Width: =1214
+                    TemplatePadding: =0
+                    TemplateSize: =30
+                    Width: =Parent.Width
                     Y: =122
                     ZIndex: =1
 
                     Btn_SuaCT_4 As button:
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedPhiKhac<>"",maUpdatedPhiKhac<>""),
@@ -12202,11 +12204,13 @@
                         Size: =11
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
-                        Width: =68
-                        X: =1032
+                        Width: =60
+                        X: =1068
+                        Y: =2
                         ZIndex: =17
 
                     Btn_XoaCT_4 As button:
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedPhiKhac<>"",maAddedPhiKhac<>""),
@@ -12222,12 +12226,13 @@
                         Size: =11
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
-                        Width: =68
-                        X: =1112
+                        Width: =60
+                        X: =1148
+                        Y: =2
                         ZIndex: =18
 
                     Btn_LuuCT_4 As button:
-                        Height: =39
+                        Height: =25
                         OnSelect: |
                             =
                                 If( ThisItem.cr282_id=maAddedPhiKhac,
@@ -12287,11 +12292,13 @@
                         Size: =11
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
-                        Width: =68
-                        X: =1032
+                        Width: =60
+                        X: =1068
+                        Y: =2
                         ZIndex: =19
 
                     Btn_HuyCT_4 As button:
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_id=maAddedPhiKhac,
@@ -12309,8 +12316,9 @@
                         Size: =11
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
-                        Width: =68
-                        X: =1112
+                        Width: =60
+                        X: =1148
+                        Y: =2
                         ZIndex: =20
 
                     TxtID_2 As text:
@@ -12334,6 +12342,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -12341,7 +12350,7 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =558
+                        Width: =605
                         X: =451
                         ZIndex: =23
 
@@ -12359,6 +12368,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayFields: =["cr282_ten_yeu_to"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -12383,7 +12393,7 @@
                     FontColor: =
                     Height: =27
                     Visible: =true
-                    Width: =1198
+                    Width: =Parent.Width
                     X: =0
                     Y: =95
                     ZIndex: =2
@@ -12418,12 +12428,12 @@
                     Align: ='TextCanvas.Align'.Center
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =26
+                    Height: =27
                     Size: =14
                     Text: ="Thao tác"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =185
-                    X: =1004
+                    Width: =166
+                    X: =1046
                     Y: =95
                     ZIndex: =5
 
