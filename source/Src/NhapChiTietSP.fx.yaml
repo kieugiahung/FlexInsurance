@@ -252,7 +252,8 @@
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
-                    TemplateSize: =40
+                    TemplatePadding: =0
+                    TemplateSize: =30
                     Width: =1212
                     Y: =177
                     ZIndex: =1
@@ -264,10 +265,11 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =DisplayMode.Disabled
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         Size: =11
-                        Width: =262
+                        Width: =193
                         ZIndex: =8
 
                     TxtTenCT_1 As text:
@@ -277,6 +279,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -284,8 +287,8 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =249
-                        X: =262
+                        Width: =188
+                        X: =193
                         ZIndex: =9
 
                     TxtMoTa_1 As text:
@@ -295,6 +298,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -302,13 +306,13 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =453
-                        X: =511
+                        Width: =583
+                        X: =381
                         ZIndex: =10
 
                     Btn_SuaCT_3 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =30
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAdded<>"",maUpdated<>""),
@@ -329,12 +333,12 @@
                         Visible: =ThisItem.edited=0
                         Width: =60
                         X: =975
-                        Y: =6
+                        Y: =2
                         ZIndex: =17
 
                     Btn_XoaCT_3 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =30
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAdded<>"",maUpdated<>""),
@@ -362,12 +366,12 @@
                         Visible: =ThisItem.edited=0
                         Width: =60
                         X: =1045
-                        Y: =6
+                        Y: =2
                         ZIndex: =18
 
                     Btn_LuuCT_3 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =30
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 TxtTenCT_1.Text="",
@@ -441,12 +445,12 @@
                         Visible: =ThisItem.edited=1
                         Width: =60
                         X: =1021
-                        Y: =6
+                        Y: =2
                         ZIndex: =19
 
                     Btn_HuyCT_3 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =30
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_ma_chuong_trinh=maAdded,
@@ -468,12 +472,12 @@
                         Visible: =ThisItem.edited=1
                         Width: =60
                         X: =1091
-                        Y: =6
+                        Y: =2
                         ZIndex: =20
 
                     Btn_ChiTiet_1 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =30
+                        Height: =25
                         OnSelect: |-
                             =Set(VarCT, TxtMaCT_1.Text);
                             Navigate(NhapchitietCT);
@@ -482,7 +486,7 @@
                         Visible: =ThisItem.edited=0 && ThisItem.cr282_trang_thai=1
                         Width: =82
                         X: =1115
-                        Y: =6
+                        Y: =2
                         ZIndex: =21
 
                     TxtID_1 As text:
@@ -524,8 +528,8 @@
                     Size: =14
                     Text: ="Tên chương trình"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =274
-                    X: =270
+                    Width: =187
+                    X: =193
                     Y: =142
                     ZIndex: =3
 
@@ -538,7 +542,7 @@
                     Text: ="Mô tả"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =447
-                    X: =520
+                    X: =440
                     Y: =143
                     ZIndex: =4
 
@@ -601,7 +605,7 @@
                     Size: =14
                     Text: ="Mã chương trình"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =265
+                    Width: =188
                     X: =5
                     Y: =141
                     ZIndex: =10
