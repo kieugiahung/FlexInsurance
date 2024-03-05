@@ -621,14 +621,15 @@
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
-                    TemplateSize: =40
-                    Width: =1262
+                    TemplatePadding: =0
+                    TemplateSize: =30
+                    Width: =Parent.Width
                     Y: =117
                     ZIndex: =1
 
                     Btn_SuaCT_8 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedGP<>"",maUpdatedGP<>""),
@@ -648,13 +649,13 @@
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
                         Width: =60
-                        X: =1059
-                        Y: =5
+                        X: =1103
+                        Y: =2
                         ZIndex: =17
 
                     Btn_XoaCT_8 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedGP<>"",maUpdatedGP<>""),
@@ -671,13 +672,13 @@
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =60
-                        X: =1134
-                        Y: =5
+                        X: =1178
+                        Y: =2
                         ZIndex: =18
 
                     Btn_LuuCT_8 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |
                             =
                                 If( ThisItem.cr282_id=maAddedGP,
@@ -752,13 +753,13 @@
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
                         Width: =60
-                        X: =1059
-                        Y: =5
+                        X: =1103
+                        Y: =2
                         ZIndex: =19
 
                     Btn_HuyCT_8 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_id=maAddedGP,
@@ -777,8 +778,8 @@
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =60
-                        X: =1134
-                        Y: =5
+                        X: =1178
+                        Y: =2
                         ZIndex: =20
 
                     TxtID_GP_3 As text:
@@ -788,6 +789,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         Visible: =false
@@ -802,6 +804,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -819,6 +822,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -826,7 +830,6 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =227
                         X: =205
                         ZIndex: =23
 
@@ -838,6 +841,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Format: =TextFormat.Number
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -846,7 +850,7 @@
                         RadiusTopRight: =0
                         Size: =11
                         Width: =163
-                        X: =432
+                        X: =525
                         ZIndex: =24
 
                     TxtDonvi_tien_3 As text:
@@ -856,6 +860,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -864,7 +869,7 @@
                         RadiusTopRight: =0
                         Size: =11
                         Width: =191
-                        X: =595
+                        X: =688
                         ZIndex: =25
 
                     TxtTy_le_3 As text:
@@ -874,6 +879,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -882,7 +888,7 @@
                         RadiusTopRight: =0
                         Size: =11
                         Width: =205
-                        X: =786
+                        X: =879
                         ZIndex: =26
 
                 BadgeCanvas1_26 As Badge:
@@ -892,7 +898,7 @@
                     FontColor: =
                     Height: =30
                     Visible: =true
-                    Width: =1258
+                    Width: =Parent.Width
                     X: =4
                     Y: =87
                     ZIndex: =2
@@ -918,7 +924,7 @@
                     Size: =14
                     Text: ="Mô tả"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =229
+                    Width: =317
                     X: =207
                     Y: =87
                     ZIndex: =4
@@ -931,8 +937,8 @@
                     Size: =14
                     Text: ="Thao tác"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =268
-                    X: =994
+                    Width: =180
+                    X: =1082
                     Y: =89
                     ZIndex: =5
 
@@ -980,8 +986,8 @@
                     Text: ="Số tiền"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =166
-                    X: =436
-                    Y: =87
+                    X: =524
+                    Y: =85
                     ZIndex: =14
 
                 TextCanvas2_109 As Text:
@@ -993,8 +999,8 @@
                     Text: ="Đơn vị tiền"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =186
-                    X: =602
-                    Y: =87
+                    X: =690
+                    Y: =85
                     ZIndex: =15
 
                 TextCanvas2_106 As Text:
@@ -1006,8 +1012,8 @@
                     Text: ="Tỷ lệ"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =206
-                    X: =788
-                    Y: =87
+                    X: =876
+                    Y: =85
                     ZIndex: =16
 
                 Label2_1 As label:
