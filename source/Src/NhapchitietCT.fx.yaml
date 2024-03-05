@@ -272,7 +272,7 @@
             BorderThickness: =0
             DisplayMode: =DisplayMode.Edit
             Fill: =RGBA(0, 0, 0, 0)
-            Height: =2783
+            Height: =2433
             Width: =Parent.Width
             X: =0
             Y: =0
@@ -292,14 +292,15 @@
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
-                    TemplateSize: =40
-                    Width: =1262
+                    TemplatePadding: =0
+                    TemplateSize: =30
+                    Width: =Parent.Width
                     Y: =105
                     ZIndex: =1
 
                     Btn_SuaCT_7 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedPhiKhac<>"",maUpdatedPhiKhac<>""),
@@ -319,13 +320,13 @@
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
                         Width: =60
-                        X: =1042
-                        Y: =3
+                        X: =1126
+                        Y: =2
                         ZIndex: =17
 
                     Btn_XoaCT_7 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedPhiKhac<>"",maAddedPhiKhac<>""),
@@ -342,13 +343,13 @@
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =60
-                        X: =1112
-                        Y: =3
+                        X: =1196
+                        Y: =2
                         ZIndex: =18
 
                     Btn_LuuCT_7 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |
                             =
                                 If( ThisItem.cr282_id=maAddedPhiKhac,
@@ -412,13 +413,13 @@
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
                         Width: =60
-                        X: =1042
-                        Y: =3
+                        X: =1126
+                        Y: =2
                         ZIndex: =19
 
                     Btn_HuyCT_7 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_id=maAddedPhiKhac,
@@ -437,8 +438,8 @@
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =60
-                        X: =1112
-                        Y: =3
+                        X: =1196
+                        Y: =2
                         ZIndex: =20
 
                     TxtID_3 As text:
@@ -462,6 +463,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -469,7 +471,7 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =528
+                        Width: =664
                         X: =451
                         ZIndex: =23
 
@@ -487,6 +489,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayFields: =["cr282_ten_yeu_to"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -511,7 +514,7 @@
                     FontColor: =
                     Height: =26
                     Visible: =true
-                    Width: =1262
+                    Width: =Parent.Width
                     X: =0
                     Y: =79
                     ZIndex: =2
@@ -537,7 +540,7 @@
                     Size: =14
                     Text: ="Mô tả"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =496
+                    Width: =652
                     X: =456
                     Y: =79
                     ZIndex: =4
@@ -550,8 +553,8 @@
                     Size: =14
                     Text: ="Thao tác"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =310
-                    X: =952
+                    Width: =154
+                    X: =1108
                     Y: =79
                     ZIndex: =5
 
@@ -973,7 +976,6 @@
                     Size: =11
                     Text: ="Thêm mới"
                     Width: =96
-                    X: =4
                     Y: =46
                     ZIndex: =11
 
