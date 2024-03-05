@@ -752,19 +752,20 @@
 
                 GalleryCT_6 As gallery.galleryVertical:
                     DelayItemLoading: =true
-                    Height: =303
+                    Height: =247
                     Items: =tmpDKCCollect
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
-                    TemplateSize: =40
-                    Width: =1199
+                    TemplatePadding: =0
+                    TemplateSize: =30
+                    Width: =1212
                     Y: =118
                     ZIndex: =1
 
                     Btn_SuaCT_6 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedDKC<>"",maUpdatedDKC<>""),
@@ -784,13 +785,13 @@
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
                         Width: =60
-                        X: =1019
+                        X: =1070
                         Y: =2
                         ZIndex: =17
 
                     Btn_XoaCT_6 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 Or(maAddedDKC<>"",maUpdatedDKC<>""),
@@ -807,13 +808,13 @@
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =60
-                        X: =1099
+                        X: =1143
                         Y: =2
                         ZIndex: =18
 
                     Btn_LuuCT_6 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |
                             =
                                 If( ThisItem.cr282_id_dkc=maAddedDKC,
@@ -877,13 +878,13 @@
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
                         Width: =60
-                        X: =1019
+                        X: =1070
                         Y: =2
                         ZIndex: =19
 
                     Btn_HuyCT_6 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =25
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_id_dkc=maAddedDKC,
@@ -904,7 +905,7 @@
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =60
-                        X: =1099
+                        X: =1143
                         Y: =2
                         ZIndex: =20
 
@@ -929,11 +930,12 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =27
                         MaxLength: =4000
                         OnChange: =
                         OnSelect: =Select(Parent)
                         Size: =11
-                        Width: =463
+                        Width: =523
                         X: =532
                         ZIndex: =22
 
@@ -951,6 +953,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayFields: =["Key"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn đơn vị tuổi"
@@ -982,6 +985,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayFields: =["cr282_ten_ttin"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -1007,7 +1011,7 @@
                     FontColor: =
                     Height: =32
                     Visible: =true
-                    Width: =1199
+                    Width: =Parent.Width
                     X: =0
                     Y: =86
                     ZIndex: =2
@@ -1047,8 +1051,8 @@
                     Text: ="Thao tác"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =173
-                    X: =1001
-                    Y: =86
+                    X: =1039
+                    Y: =87
                     ZIndex: =5
 
                 TextCanvas2_99 As Text:
