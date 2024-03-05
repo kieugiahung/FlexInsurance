@@ -247,13 +247,13 @@
 
                 GalleryCT_3 As gallery.galleryVertical:
                     DelayItemLoading: =true
-                    Height: =281
+                    Height: =214
                     Items: =SortByColumns(Filter( tmpCTCollect, cr282_ma_san_pham = valMaSP ),"cr282_ma_chuong_trinh",SortOrder.Ascending)
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     NavigationStep: =0
                     TemplateSize: =40
-                    Width: =1200
+                    Width: =1212
                     Y: =177
                     ZIndex: =1
 
@@ -295,7 +295,6 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =38
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
@@ -303,13 +302,13 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =429
+                        Width: =453
                         X: =511
                         ZIndex: =10
 
                     Btn_SuaCT_3 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =30
                         OnSelect: |-
                             =If(
                                 Or(maAdded<>"",maUpdated<>""),
@@ -329,13 +328,13 @@
                         Text: ="Sửa"
                         Visible: =ThisItem.edited=0
                         Width: =60
-                        X: =950
-                        Y: =5
+                        X: =975
+                        Y: =6
                         ZIndex: =17
 
                     Btn_XoaCT_3 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =30
                         OnSelect: |-
                             =If(
                                 Or(maAdded<>"",maUpdated<>""),
@@ -362,13 +361,13 @@
                         Text: ="Xóa"
                         Visible: =ThisItem.edited=0
                         Width: =60
-                        X: =1020
-                        Y: =5
+                        X: =1045
+                        Y: =6
                         ZIndex: =18
 
                     Btn_LuuCT_3 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =30
                         OnSelect: |-
                             =If(
                                 TxtTenCT_1.Text="",
@@ -441,13 +440,13 @@
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
                         Width: =60
-                        X: =985
-                        Y: =5
+                        X: =1021
+                        Y: =6
                         ZIndex: =19
 
                     Btn_HuyCT_3 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =30
                         OnSelect: |-
                             =If(
                                 ThisItem.cr282_ma_chuong_trinh=maAdded,
@@ -468,13 +467,13 @@
                         Text: ="Hủy"
                         Visible: =ThisItem.edited=1
                         Width: =60
-                        X: =1055
-                        Y: =5
+                        X: =1091
+                        Y: =6
                         ZIndex: =20
 
                     Btn_ChiTiet_1 As button:
                         FontWeight: =FontWeight.Bold
-                        Height: =33
+                        Height: =30
                         OnSelect: |-
                             =Set(VarCT, TxtMaCT_1.Text);
                             Navigate(NhapchitietCT);
@@ -482,8 +481,8 @@
                         Text: ="Chi tiết"
                         Visible: =ThisItem.edited=0 && ThisItem.cr282_trang_thai=1
                         Width: =82
-                        X: =1090
-                        Y: =5
+                        X: =1115
+                        Y: =6
                         ZIndex: =21
 
                     TxtID_1 As text:
@@ -510,7 +509,9 @@
                     FontColor: =
                     Height: =35
                     Visible: =true
-                    Width: =1199
+                    Width: |-
+                        =//1199
+                        Parent.Width
                     X: =0
                     Y: =142
                     ZIndex: =2
@@ -536,8 +537,8 @@
                     Size: =14
                     Text: ="Mô tả"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =365
-                    X: =544
+                    Width: =447
+                    X: =520
                     Y: =143
                     ZIndex: =4
 
@@ -549,8 +550,8 @@
                     Size: =14
                     Text: ="Thao tác"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =277
-                    X: =921
+                    Width: =215
+                    X: =983
                     Y: =142
                     ZIndex: =5
 
