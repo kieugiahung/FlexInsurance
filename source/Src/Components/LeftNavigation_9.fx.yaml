@@ -208,6 +208,30 @@ LeftNavigation_9 As CanvasComponent:
                     Y: =4
                     ZIndex: =1
 
+                ThemMoiCT_17 As button:
+                    BorderThickness: =0
+                    Fill: =RGBA(0, 0, 0, 0)
+                    FontWeight: =FontWeight.Bold
+                    Height: =50
+                    HoverColor: =RGBA(0, 0, 0, 0)
+                    HoverFill: =Self.Fill
+                    OnSelect: |-
+                        =Navigate(ThisItem.Screen);
+                        ClearCollect(colLHNV,{Ten_lhnv:"Bảo hiểm sức khỏe"},{Ten_lhnv:"Bảo hiểm nhân thọ"},{Ten_lhnv:"Bảo hiểm phi nhân thọ"});
+                        Set(varOpenMenu,!varOpenMenu);
+                        Set(openMenu, Blank());
+                    PressedFill: =Self.Fill
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Size: =11
+                    Text: =
+                    Width: =Parent.Width
+                    X: =60
+                    Y: =4
+                    ZIndex: =2
+
             Label3_3 As label:
                 BorderColor: =RGBA(32, 54, 71, 1)
                 FontWeight: =FontWeight.Bold
@@ -223,6 +247,30 @@ LeftNavigation_9 As CanvasComponent:
                 Width: =Parent.Width
                 X: =60
                 ZIndex: =4
+
+            ThemMoiCT_16 As button:
+                BorderThickness: =0
+                Fill: =RGBA(0, 0, 0, 0)
+                FontWeight: =FontWeight.Bold
+                Height: =50
+                HoverColor: =RGBA(0, 0, 0, 0)
+                HoverFill: =Self.Fill
+                OnSelect: |-
+                    =Set(varOpenMenu,true); Navigate(ThisItem.Screen);
+                    If (openMenu = ThisItem.MenuID,
+                    Set(openMenu, Blank()),
+                    Set(openMenu, ThisItem.MenuID)
+                    );
+                PressedFill: =Self.Fill
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Text: =
+                Width: =Parent.Width
+                X: =60
+                ZIndex: =5
 
     Icon1 As icon.ExpandView:
         BorderColor: =RGBA(0, 0, 0, 1)
