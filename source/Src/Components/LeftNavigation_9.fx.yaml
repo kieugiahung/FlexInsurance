@@ -211,7 +211,12 @@ LeftNavigation_9 As CanvasComponent:
                 BorderColor: =RGBA(32, 54, 71, 1)
                 FontWeight: =FontWeight.Bold
                 Height: =50
-                OnSelect: =Select(Parent)
+                OnSelect: |-
+                    =Set(varOpenMenu,true); Navigate(ThisItem.Screen);
+                    If (openMenu = ThisItem.MenuID,
+                    Set(openMenu, Blank()),
+                    Set(openMenu, ThisItem.MenuID)
+                    );
                 Size: =11
                 Text: =ThisItem.Title
                 Width: =Parent.Width
