@@ -152,6 +152,31 @@ Quanlykhachhang As screen:
                 X: =807
                 ZIndex: =25
 
+            Btn_editKH As button:
+                FontWeight: =FontWeight.Bold
+                Height: =25
+                OnSelect: |-
+                    =ResetForm(ThemMoiKH);
+                    EditForm(ThemMoiKH);
+                    Navigate(ThemKhachHang);
+                Size: =11
+                Text: ="Sửa"
+                Width: =78
+                X: =1114
+                Y: =5
+                ZIndex: =26
+
+            Btn_XoaKH As button:
+                FontWeight: =FontWeight.Bold
+                Height: =25
+                OnSelect: =RemoveIf(DM_KHACH_HANG, ID=ThisItem.ID)
+                Size: =11
+                Text: ="Xóa"
+                Width: =78
+                X: =1200
+                Y: =5
+                ZIndex: =27
+
         BadgeCanvas1_33 As Badge:
             BasePaletteColor: =
             Content: =""
@@ -221,7 +246,10 @@ Quanlykhachhang As screen:
         ThemMoiCT_13 As button:
             FontWeight: =FontWeight.Bold
             Height: =30
-            OnSelect: =
+            OnSelect: |-
+                =ResetForm(ThemMoiKH);
+                NewForm(ThemMoiKH);
+                Navigate(ThemKhachHang);
             Size: =11
             Text: ="Thêm mới"
             Width: =96
