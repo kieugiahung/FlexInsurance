@@ -1,5 +1,5 @@
 LeftNavigation_9 As CanvasComponent:
-    Fill: =RGBA(244,244,244,1)
+    Fill: =RGBA(237, 243, 245, 1)
     Height: =Max(App.Height, App.DesignHeight)
     MenuWidth: =If(varOpenMenu,Max(App.Width, App.DesignWidth)/10+100,70)
     NavItems: |-
@@ -114,15 +114,13 @@ LeftNavigation_9 As CanvasComponent:
                 Title: "Quản lý hợp đồng",
                 Screen: App.ActiveScreen,
                 Icon: Icon.Settings,
-                MenuID: 6,
-                Subtable: Table({})
+                MenuID: 6
             },
             {
                 Title: "Khai thác dữ liệu",
                 Screen: App.ActiveScreen,
                 Icon: Icon.Settings,
-                MenuID: 7,
-                Subtable: Table({})
+                MenuID: 7
             }
         )
     Width: =LeftNavigation_9.MenuWidth - 10
@@ -190,7 +188,7 @@ LeftNavigation_9 As CanvasComponent:
                 LoadingSpinner: =LoadingSpinner.Data
                 TemplateSize: =147
                 Visible: =openMenu = ThisItem.MenuID
-                Width: =176
+                Width: =Parent.Width -15
                 Y: =50
                 ZIndex: =3
 
@@ -204,7 +202,7 @@ LeftNavigation_9 As CanvasComponent:
                         Set(openMenu, Blank());
                     Size: =10
                     Text: =ThisItem.Title
-                    Width: =166
+                    Width: =Parent.Width
                     Y: =4
                     ZIndex: =1
 
