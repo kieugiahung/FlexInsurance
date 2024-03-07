@@ -159,6 +159,10 @@ Quanlykenhban As screen:
                 OnSelect: |-
                     =Refresh(DM_KENH_BANS);
                     RemoveIf(
+                        tmpKenhbanCollect,
+                        MA_KENH_BAN=ThisItem.MA_KENH_BAN
+                    );
+                    RemoveIf(
                         DM_KENH_BANS,
                         MA_KENH_BAN=ThisItem.MA_KENH_BAN
                     );
