@@ -375,27 +375,27 @@ Quanlykhachhang As screen:
             Height: =30
             OnSelect: |-
                 =ClearCollect(
-                    tmpKenhbanCollect,
+                    tmpKhacCollect,
                     Filter(
-                        DM_KENH_BANS,
+                        DM_KHACH_HANG,
                         Or(
                             TextFilterPV_2.Value = "",
                             Or(
                                 And(
-                                    CbxFilterPV_2.Selected.Value = "Mã kênh bán",
+                                    CbxFilterPV_2.Selected.Value = "Mã khách hàng",
                                     !IsBlank(
                                         Find(
                                             Lower(TextFilterPV_2.Value),
-                                            Lower(MA_KENH_BAN)
+                                            Lower(MA_KHACH_HANG)
                                         )
                                     )
                                 ),
                                 And(
-                                    CbxFilterPV_2.Selected.Value = "Tên kênh bán",
+                                    CbxFilterPV_2.Selected.Value = "Tên khách hàng",
                                     !IsBlank(
                                         Find(
                                             Lower(TextFilterPV_2.Value),
-                                            Lower(TEN_KENH_BAN)
+                                            Lower(TEN_KHACH_HANG)
                                         )
                                     )
                                 )
