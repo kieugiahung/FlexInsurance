@@ -1,6 +1,10 @@
 Quanlykenhban As screen:
     Fill: =RGBA(0, 0, 0, 0)
-    OnVisible: =Refresh(DM_KENH_BANS)
+    OnVisible: |-
+        =Refresh(DM_KENH_BANS);
+        ClearCollect(
+            tmpKenhbanCollect,
+            DM_KENH_BANS)
 
     "'1. ChuongTrinh_5' As groupContainer.manualLayoutContainer":
         Height: =768
