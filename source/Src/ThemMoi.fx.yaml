@@ -167,6 +167,7 @@ ThemMoi As screen:
                     ChevronDisabledFill: =RGBA(255, 255, 255, 1)
                     ChevronFill: =RGBA(72, 163, 62, 1)
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisplayMode: =If(varEditSP, DisplayMode.Disabled)  
                     Height: =44
                     Items: =["Sức khỏe","Tai nạn","Trách nhiệm dân sự"]
                     Width: =604
@@ -203,7 +204,7 @@ ThemMoi As screen:
                     BorderColor: =If(IsBlank(Parent.Error), RGBA(72, 163, 62, 1), Color.Red)
                     Default: =Parent.Default
                     DelayOutput: =true
-                    DisplayMode: =Parent.DisplayMode
+                    DisplayMode: =If(varEditSP, DisplayMode.Disabled)  
                     MaxLength: =Parent.MaxLength
                     PaddingLeft: =5
                     RadiusBottomLeft: =0
@@ -272,7 +273,7 @@ ThemMoi As screen:
                     BorderColor: =If(IsBlank(Parent.Error), RGBA(72, 163, 62, 1), Color.Red)
                     Default: =Parent.Default
                     DelayOutput: =true
-                    DisplayMode: =Parent.DisplayMode
+                    DisplayMode: =If(varEditSP, DisplayMode.Disabled)  
                     MaxLength: =Parent.MaxLength
                     PaddingLeft: =5
                     RadiusBottomLeft: =0
@@ -341,7 +342,8 @@ ThemMoi As screen:
                     BorderColor: =If(IsBlank(Parent.Error), RGBA(72, 163, 62, 1), Color.Red)
                     Default: =Parent.Default
                     DelayOutput: =true
-                    DisplayMode: =Parent.DisplayMode
+                    DisplayMode: |
+                        =
                     MaxLength: =Parent.MaxLength
                     PaddingLeft: =5
                     RadiusBottomLeft: =0
@@ -807,13 +809,12 @@ ThemMoi As screen:
                 
                 If(
                     IsBlank(errorMsg),
-                    If(
-                        varEditSP && CountRows(
+                    If(varEditSP = false && CountRows(
                             Filter(
                                 DL_SAN_PHAM,
-                                MA_SAN_PHAM = DataCardValue1.Text && MA = MA_DataCard1.Text
+                                MA_SAN_PHAM = DataCardValue1.Text 
                             )
-                        ) > 1,
+                        ) >= 1,
                         UpdateContext({errorMsg: "Mã sản phẩm là duy nhất"})
                     )
                 );
