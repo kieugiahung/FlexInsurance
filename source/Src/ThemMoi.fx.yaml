@@ -811,7 +811,7 @@ ThemMoi As screen:
                         UpdateContext({errorMsg: "Mã sản phẩm là bắt buộc"})
                     )
                 );
-                
+                // nếu thêm mới trùng mã sản phẩm thì bị lỗi
                 If(
                     IsBlank(errorMsg),
                     If(varEditSP = false && CountRows(
@@ -820,7 +820,7 @@ ThemMoi As screen:
                                 MA_SAN_PHAM = DataCardValue5.Text 
                             )
                         ) >= 1,
-                        UpdateContext({errorMsg: "Mã sản phẩm là duy nhất"})
+                        UpdateContext({errorMsg: Concatenate("Mã sản phẩm ",  DataCardValue5.Text, " là duy nhất")});
                     )
                 );
                 If(
