@@ -154,7 +154,9 @@ Quanlykhachhang As screen:
             Btn_XoaKH As button:
                 FontWeight: =FontWeight.Bold
                 Height: =25
-                OnSelect: =RemoveIf(DM_KHACH_HANG, ID=ThisItem.ID)
+                OnSelect: |-
+                    =RemoveIf(DM_KHACH_HANG, ID=ThisItem.ID);
+                    RemoveIf(tmpKhacCollect, ID=ThisItem.ID)
                 Size: =11
                 Text: ="Xóa"
                 Width: =78
