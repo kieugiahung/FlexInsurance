@@ -148,7 +148,7 @@ Quanlykhachhang As screen:
                 Text: ="Sửa"
                 Width: =78
                 X: =1114
-                Y: =3
+                Y: =5
                 ZIndex: =26
 
             Btn_XoaKH As button:
@@ -159,7 +159,7 @@ Quanlykhachhang As screen:
                 Text: ="Xóa"
                 Width: =78
                 X: =1200
-                Y: =3
+                Y: =5
                 ZIndex: =27
 
             TxtTenCT_3 As text:
@@ -359,11 +359,11 @@ Quanlykhachhang As screen:
             ZIndex: =20
 
         CbxFilterPV_2 As Combobox.pcfdataset:
-            DefaultSelectedItems: =Filter(["Mã khách hàng", "Tên khách hàng", "Loại khách hàng", "Số giấy tờ"],Value="Mã khách hàng")
+            DefaultSelectedItems: =Filter(["Mã khách hàng", "Tên khách hàng", "Số giấy tờ"],Value="Mã khách hàng")
             DisplayMode: =DisplayMode.Edit
             Height: =43
             InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
-            Items: =["Mã khách hàng", "Tên khách hàng", "Loại khách hàng", "Số giấy tờ"]
+            Items: =["Mã khách hàng", "Tên khách hàng", "Số giấy tờ"]
             OnChange: =Reset(TextFilterPV_2)
             Width: =152
             X: =409
@@ -396,6 +396,15 @@ Quanlykhachhang As screen:
                                         Find(
                                             Lower(TextFilterPV_2.Value),
                                             Lower(TEN_KHACH_HANG)
+                                        )
+                                    )
+                                ),
+                                And(
+                                    CbxFilterPV_2.Selected.Value = "Số giấy tờ",
+                                    !IsBlank(
+                                        Find(
+                                            Lower(TextFilterPV_2.Value),
+                                            Lower(SO_GIAY_TO)
                                         )
                                     )
                                 )

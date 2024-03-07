@@ -367,11 +367,11 @@ Quanlykenhban As screen:
             ZIndex: =20
 
         CbxFilterPV_1 As Combobox.pcfdataset:
-            DefaultSelectedItems: =Filter(["Mã kênh bán", "Tên kênh bán", "Loại kênh bán", "Số giấy tờ"],Value="Mã kênh bán")
+            DefaultSelectedItems: =Filter(["Mã kênh bán", "Tên kênh bán",  "Số giấy tờ"],Value="Mã kênh bán")
             DisplayMode: =DisplayMode.Edit
             Height: =43
             InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
-            Items: =["Mã kênh bán", "Tên kênh bán", "Loại kênh bán", "Số giấy tờ"]
+            Items: =["Mã kênh bán", "Tên kênh bán", "Số giấy tờ"]
             OnChange: =Reset(TextFilterPV_1)
             Width: =152
             X: =387
@@ -404,6 +404,16 @@ Quanlykenhban As screen:
                                         Find(
                                             Lower(TextFilterPV_1.Value),
                                             Lower(TEN_KENH_BAN)
+                                        )
+                                    )
+                                )
+                                ,
+                                And(
+                                    CbxFilterPV_1.Selected.Value = "Số giấy tờ",
+                                    !IsBlank(
+                                        Find(
+                                            Lower(TextFilterPV_1.Value),
+                                            Lower(SO_GIAY_TO)
                                         )
                                     )
                                 )
