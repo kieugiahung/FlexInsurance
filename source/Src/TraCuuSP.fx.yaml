@@ -226,7 +226,7 @@ TraCuuSP As screen:
                     FontWeight: =FontWeight.Bold
                     Height: =30
                     OnSelect: |-
-                        =Set(varEditSP, false);
+                        =
                         Set(valMaSP,ThisItem.MA_SAN_PHAM);
                         Set(valTenSP,ThisItem.TEN_SAN_PHAM);
                         Navigate(NhapChiTietSP);
@@ -255,7 +255,8 @@ TraCuuSP As screen:
                     FontWeight: =FontWeight.Bold
                     Height: =30
                     OnSelect: |-
-                        =ResetForm(ThemMoiSP);
+                        =Set(varEditSP, true);
+                        ResetForm(ThemMoiSP);
                         EditForm(ThemMoiSP);
                         Navigate(ThemMoi);
                     Size: =11
