@@ -380,37 +380,31 @@ Quanlykenhban As screen:
             OnSelect: |-
                 =ClearCollect(
                     tmpKenhbanCollect,
-                    ShowColumns(
-                        AddColumns(
-                            SortByColumns(
-                                Filter(
-                                    DM_PHAMVI_DIALYS,
-                                    Or(
-                                        TextFilterPV_1.Value="",
-                                        Or(
-                                            And(
-                                                CbxFilterPV_1.Selected.Value="Mã phạm vi",
-                                                !IsBlank(Find(Lower(TextFilterPV_1.Value),Lower(MA_PHAMVI)))
-                                            ),
-                                            And(
-                                                CbxFilterPV_1.Selected.Value="Tên phạm vi",
-                                                !IsBlank(Find(Lower(TextFilterPV_1.Value),Lower(TEN_PHAMVI)))
-                                            )
+                    Filter(
+                        DM_PHAMVI_DIALYS,
+                        Or(
+                            TextFilterPV_1.Value = "",
+                            Or(
+                                And(
+                                    CbxFilterPV_1.Selected.Value = "Mã phạm vi",
+                                    !IsBlank(
+                                        Find(
+                                            Lower(TextFilterPV_1.Value),
+                                            Lower(MA_PHAMVI)
                                         )
                                     )
                                 ),
-                                "cr282_ma_phamvi",
-                                SortOrder.Ascending
-                            ),
-                            "edited",
-                            0
-                        ),
-                        "cr282_ma_phamvi",
-                        "cr282_ten_phamvi",
-                        "cr282_dnbh",
-                        "cr282_ghi_chu",
-                        "cr282_mota",
-                        "edited"
+                                And(
+                                    CbxFilterPV_1.Selected.Value = "Tên phạm vi",
+                                    !IsBlank(
+                                        Find(
+                                            Lower(TextFilterPV_1.Value),
+                                            Lower(TEN_PHAMVI)
+                                        )
+                                    )
+                                )
+                            )
+                        )
                     )
                 )
             Text: ="Tra cứu"
