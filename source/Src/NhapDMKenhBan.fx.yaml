@@ -584,13 +584,33 @@ NhapDMKenhBan As screen:
             ZIndex: =50
 
         ComboBoxLoaiKB As combobox:
-            DefaultSelectedItems: =If(IsBlank(LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=objKB.LOAI)),LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB="1"),LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=objKB.LOAI))
+            DefaultSelectedItems: |-
+                =If(
+                    IsBlank(LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=objKB.LOAI)),
+                    If(
+                        DropCNTC.Selected.Value="Cá nhân",
+                        LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB="1"),
+                        LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB="2")
+                    ),
+                    LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=objKB.LOAI)
+                )
             DisplayFields: =["cr282_ten_loai_kb"]
             Height: =32
             InputTextPlaceholder: ="Chọn loại kênh bán"
-            Items: =DM_LOAI_KENH_BANS
+            Items: |
+                =If(
+                    DropCNTC.Selected.Value="Cá nhân",
+                    Filter(DM_LOAI_KENH_BANS,MA_LOAI_KB<>"3" && MA_LOAI_KB<>"4"),
+                    Filter(DM_LOAI_KENH_BANS,MA_LOAI_KB<>"1")
+                )
             SearchFields: =["cr282_ten_loai_kb"]
-            SearchItems: =Search(DM_LOAI_KENH_BANS,ComboBoxLoaiKB.SearchText,"cr282_ten_loai_kb")
+            SearchItems: |-
+                =Search(If(
+                    DropCNTC.Selected.Value="Cá nhân",
+                    Filter(DM_LOAI_KENH_BANS,MA_LOAI_KB<>"3" && MA_LOAI_KB<>"4"),
+                    Filter(DM_LOAI_KENH_BANS,MA_LOAI_KB<>"1")
+                )
+                ,ComboBoxLoaiKB.SearchText,"cr282_ten_loai_kb")
             SelectMultiple: =false
             Size: =11
             Width: =200
