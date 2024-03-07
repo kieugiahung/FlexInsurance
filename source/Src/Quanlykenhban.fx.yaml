@@ -152,6 +152,36 @@ Quanlykenhban As screen:
                 X: =807
                 ZIndex: =25
 
+            Button6 As button:
+                FontWeight: =FontWeight.Bold
+                Height: =25
+                OnSelect: |-
+                    =Set(maKenhBanFwd,ThisItem.MA_KENH_BAN);
+                    Navigate(NhapDMKenhBan)
+                Size: =11
+                Text: ="Sửa"
+                Width: =71
+                X: =1123
+                Y: =3
+                ZIndex: =26
+
+            Button6_1 As button:
+                FontWeight: =FontWeight.Bold
+                Height: =25
+                OnSelect: |-
+                    =Refresh(DM_KENH_BANS);
+                    RemoveIf(
+                        DM_KENH_BANS,
+                        MA_KENH_BAN=ThisItem.MA_KENH_BAN
+                    );
+                    Notify("Xóa dữ liệu thành công",NotificationType.Success,2000)
+                Size: =11
+                Text: ="Xóa"
+                Width: =71
+                X: =1217
+                Y: =3
+                ZIndex: =27
+
         BadgeCanvas1_34 As Badge:
             BasePaletteColor: =
             Content: =""
@@ -221,7 +251,9 @@ Quanlykenhban As screen:
         ThemMoiCT_14 As button:
             FontWeight: =FontWeight.Bold
             Height: =30
-            OnSelect: =
+            OnSelect: |-
+                =Set(maKenhBanFwd,"");
+                Navigate(NhapDMKenhBan)
             Size: =11
             Text: ="Thêm mới"
             Width: =96
