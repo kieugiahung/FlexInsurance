@@ -364,7 +364,7 @@ Quanlykenhban As screen:
             DisplayMode: =DisplayMode.Edit
             Height: =43
             InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
-            Items: =["Mã phạm vi", "Tên phạm vi"]
+            Items: =["Mã kênh bán", "Tên kênh bán", "Loại kênh bán", "Số giấy tờ"]
             OnChange: =Reset(TextFilterPV_1)
             Width: =152
             X: =308
@@ -373,13 +373,13 @@ Quanlykenhban As screen:
 
         ButtonCanvas4_7 As Button:
             BasePaletteColor: =
-            DisplayMode: =true
+            DisplayMode: =DisplayMode.Edit
             FontColor: =
             FontSize: =16
             Height: =43
             OnSelect: |-
                 =ClearCollect(
-                    tmpPVDLCollect,
+                    tmpKenhbanCollect,
                     ShowColumns(
                         AddColumns(
                             SortByColumns(
