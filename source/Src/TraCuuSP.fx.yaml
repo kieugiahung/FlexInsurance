@@ -226,7 +226,8 @@ TraCuuSP As screen:
                     FontWeight: =FontWeight.Bold
                     Height: =30
                     OnSelect: |-
-                        =Set(valMaSP,ThisItem.MA_SAN_PHAM);
+                        =Set(varEditSP, false);
+                        Set(valMaSP,ThisItem.MA_SAN_PHAM);
                         Set(valTenSP,ThisItem.TEN_SAN_PHAM);
                         Navigate(NhapChiTietSP);
                         UpdateContext({showGrid: false});
@@ -357,8 +358,9 @@ TraCuuSP As screen:
             Btn_ThemMoi As button:
                 FontWeight: =FontWeight.Bold
                 Height: =30
-                OnSelect: |-
-                    =ResetForm(ThemMoiSP);
+                OnSelect: |
+                    =Set(varEditSP, false);
+                    ResetForm(ThemMoiSP);
                     ClearCollect(colLHNV,{Ten_lhnv:"Bảo hiểm sức khỏe"},{Ten_lhnv:"Bảo hiểm nhân thọ"},{Ten_lhnv:"Bảo hiểm phi nhân thọ"});
                     NewForm(ThemMoiSP);
                     Navigate(ThemMoi);

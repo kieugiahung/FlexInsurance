@@ -800,18 +800,21 @@ ThemMoi As screen:
                 If(
                     IsBlank(errorMsg),
                     If(
-                         CountRows(Filter(DL_SAN_PHAM, MA_SAN_PHAM = DataCardValue1.Text)) <= 0,
-                        If(
-                            DateValue1.SelectedDate > DateValue2.SelectedDate,
-                            UpdateContext({errorMsg: "Mã sản phẩm là duy nhất"})
-                        )
+                        IsBlank(DataCardValue5.Text),
+                        UpdateContext({errorMsg: "Mã sản phẩm là bắt buộc"})
                     )
                 );
+                
                 If(
                     IsBlank(errorMsg),
                     If(
-                        IsBlank(DataCardValue5.Text),
-                        UpdateContext({errorMsg: "Mã sản phẩm là bắt buộc"})
+                        CountRows(
+                            Filter(
+                                DL_SAN_PHAM,
+                                MA_SAN_PHAM = DataCardValue1.Text
+                            )
+                        ) <= 0,
+                        UpdateContext({errorMsg: "Mã sản phẩm là duy nhất"})
                     )
                 );
                 If(
@@ -846,7 +849,6 @@ ThemMoi As screen:
                         800
                     ),
                     SubmitForm(ThemMoiSP);
-                    
                     ResetForm(ThemMoiSP);
                     Navigate(TraCuuSP);
                     
