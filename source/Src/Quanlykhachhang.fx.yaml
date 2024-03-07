@@ -342,6 +342,70 @@ Quanlykhachhang As screen:
             Y: =92
             ZIndex: =19
 
+        "TextFilterPV_2 As 'Text input'":
+            BasePaletteColor: =
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =43
+            OnChange: =
+            Placeholder: ="Nhập giá trị lọc"
+            Width: =204
+            X: =570
+            Y: =31
+            ZIndex: =20
+
+        CbxFilterPV_2 As Combobox.pcfdataset:
+            DefaultSelectedItems: =Filter(["Mã kênh bán", "Tên kênh bán", "Loại kênh bán", "Số giấy tờ"],Value="Mã kênh bán")
+            DisplayMode: =DisplayMode.Edit
+            Height: =43
+            InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
+            Items: =["Mã kênh bán", "Tên kênh bán", "Loại kênh bán", "Số giấy tờ"]
+            OnChange: =Reset(TextFilterPV_2)
+            Width: =152
+            X: =409
+            Y: =31
+            ZIndex: =21
+
+        ThemMoiCT_21 As button:
+            FontWeight: =FontWeight.Bold
+            Height: =30
+            OnSelect: |-
+                =ClearCollect(
+                    tmpKenhbanCollect,
+                    Filter(
+                        DM_KENH_BANS,
+                        Or(
+                            TextFilterPV_2.Value = "",
+                            Or(
+                                And(
+                                    CbxFilterPV_2.Selected.Value = "Mã kênh bán",
+                                    !IsBlank(
+                                        Find(
+                                            Lower(TextFilterPV_2.Value),
+                                            Lower(MA_KENH_BAN)
+                                        )
+                                    )
+                                ),
+                                And(
+                                    CbxFilterPV_2.Selected.Value = "Tên kênh bán",
+                                    !IsBlank(
+                                        Find(
+                                            Lower(TextFilterPV_2.Value),
+                                            Lower(TEN_KENH_BAN)
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            Size: =11
+            Text: ="Tra cứu"
+            Width: =96
+            X: =811
+            Y: =37
+            ZIndex: =22
+
     LeftNavigation_20 As LeftNavigation_9:
         Width: =LeftNavigation_20.MenuWidth - 10
         ZIndex: =2
