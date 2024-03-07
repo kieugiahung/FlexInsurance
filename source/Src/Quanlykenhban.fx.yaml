@@ -347,6 +347,78 @@ Quanlykenhban As screen:
             Y: =92
             ZIndex: =19
 
+        "TextFilterPV_1 As 'Text input'":
+            BasePaletteColor: =
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =43
+            OnChange: =
+            Placeholder: ="Nhập giá trị lọc"
+            Width: =204
+            X: =469
+            Y: =31
+            ZIndex: =20
+
+        CbxFilterPV_1 As Combobox.pcfdataset:
+            DefaultSelectedItems: =Filter(["Mã kênh bán", "Tên kênh bán", "Loại kênh bán", "Số giấy tờ"],Value="Mã kênh bán")
+            DisplayMode: =DisplayMode.Edit
+            Height: =43
+            InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
+            Items: =["Mã phạm vi", "Tên phạm vi"]
+            OnChange: =Reset(TextFilterPV_1)
+            Width: =152
+            X: =308
+            Y: =31
+            ZIndex: =21
+
+        ButtonCanvas4_7 As Button:
+            BasePaletteColor: =
+            DisplayMode: =true
+            FontColor: =
+            FontSize: =16
+            Height: =43
+            OnSelect: |-
+                =ClearCollect(
+                    tmpPVDLCollect,
+                    ShowColumns(
+                        AddColumns(
+                            SortByColumns(
+                                Filter(
+                                    DM_PHAMVI_DIALYS,
+                                    Or(
+                                        TextFilterPV_1.Value="",
+                                        Or(
+                                            And(
+                                                CbxFilterPV_1.Selected.Value="Mã phạm vi",
+                                                !IsBlank(Find(Lower(TextFilterPV_1.Value),Lower(MA_PHAMVI)))
+                                            ),
+                                            And(
+                                                CbxFilterPV_1.Selected.Value="Tên phạm vi",
+                                                !IsBlank(Find(Lower(TextFilterPV_1.Value),Lower(TEN_PHAMVI)))
+                                            )
+                                        )
+                                    )
+                                ),
+                                "cr282_ma_phamvi",
+                                SortOrder.Ascending
+                            ),
+                            "edited",
+                            0
+                        ),
+                        "cr282_ma_phamvi",
+                        "cr282_ten_phamvi",
+                        "cr282_dnbh",
+                        "cr282_ghi_chu",
+                        "cr282_mota",
+                        "edited"
+                    )
+                )
+            Text: ="Tra cứu"
+            Width: =96
+            X: =684
+            Y: =31
+            ZIndex: =22
+
     LeftNavigation_24 As LeftNavigation_9:
         Width: =LeftNavigation_24.MenuWidth - 10
         ZIndex: =2
