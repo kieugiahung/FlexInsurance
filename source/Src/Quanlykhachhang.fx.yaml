@@ -140,10 +140,42 @@ Quanlykhachhang As screen:
             Btn_editKH As button:
                 FontWeight: =FontWeight.Bold
                 Height: =25
-                OnSelect: |-
+                OnSelect: |
                     =ResetForm(ThemMoiKH);
                     EditForm(ThemMoiKH);
                     Navigate(ThemKhachHang);
+                    ClearCollect(
+                        tmpDaiDienKH,
+                        ShowColumns(
+                            AddColumns(
+                                SortByColumns(
+                                    Filter(
+                                        DM_DAIDIEN_KH,
+                                        MA_KHACH_HANG = DataCardValue1_1.Text
+                                    ),
+                                    "cr282_id",
+                                    SortOrder.Ascending
+                                ),
+                                "edited",
+                                0
+                            ),
+                            "cr282_id",
+                            "cr282_mst",
+                            "cr282_ten_nguoi_dai_dien",
+                            "cr282_dia_chi",
+                            "cr282_so_dien_thoai",
+                            "cr282_email",
+                            "cr282_chuc_vu",
+                            "cr282_ma_khach_hang",
+                            "edited"
+                        )
+                    );
+                    UpdateContext(
+                        {
+                            maAddedDD: "",
+                            maUpdatedDD: ""
+                        }
+                    );
                 Size: =11
                 Text: ="Sửa"
                 Width: =78
