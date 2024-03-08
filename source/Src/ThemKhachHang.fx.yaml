@@ -2994,7 +2994,11 @@ ThemKhachHang As screen:
                             //Xu ly thong tin khach hang
                             SubmitForm(ThemMoiKH);
                             //Xu ly DS dai dien
-                        If(
+                        RemoveIf(
+                                DM_DAIDIEN_KH,
+                                MA_KHACH_HANG = newMaKH
+                            );
+                            If(
                                 !IsEmpty(tmpDaiDienKH),
                                 ForAll (
                                     tmpDaiDienKH As dd,
@@ -3051,6 +3055,7 @@ ThemKhachHang As screen:
                                 800
                             );
                             Navigate(Quanlykhachhang);
+                            
                         );
                     Size: =11
                     Text: ="Lưu"
