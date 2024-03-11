@@ -4,7 +4,7 @@ NhapDMKenhBan As screen:
         =Reset(DropCNTC);Reset(ComboBoxLoaiKB);Reset(ComboBoxLGT);Reset(DropQGia);Reset(DropQTich);Reset(ComboBoxNHang);Reset(ComboBoxLGTNDD);
         Reset(TextMaKB);Reset(TextTenKB);Reset(TextSGT);Reset(TextSGTNDD);Reset(TextSDT);Reset(TextSDTNDD);Reset(TextMST);Reset(TextSoHD);Reset(TextMaNV);
         Reset(DateNSinh);Reset(DateNTLap);Reset(TextDChi);Reset(TextTenNDD);Reset(TextSTK);
-        Reset(DropTThai);Reset(ComboBoxTinhTP);Reset(ComboBoxQHuyen);Reset(DateNHDong);Reset(DateNHLTuHD);Reset(DateNHLDenHD);Reset(DataCardValue3);Reset(ComboBoxNHangBA);
+        Reset(DropTThai);Reset(ComboBoxTinhTP);Reset(ComboBoxQHuyen);Reset(DateNHDong);Reset(DateNHLTuHD);Reset(DateNHLDenHD);Reset(DataCardValue3_3);Reset(ComboBoxNHangBA);
         If(
             IsBlank(LookUp(DM_KENH_BANS,MA_KENH_BAN=maKenhBanFwd)),
             UpdateContext({
@@ -242,7 +242,7 @@ NhapDMKenhBan As screen:
                         )
                     );
                     Notify("Lưu dữ liệu thành công",NotificationType.Success,2000);
-                    Navigate(TestNhapDMKenhBan)
+                    Navigate(Quanlykenhban)
                 )
             Size: =11
             Text: ="Lưu"
@@ -254,7 +254,7 @@ NhapDMKenhBan As screen:
         Button3 As button:
             FontWeight: =FontWeight.Bold
             Height: =32
-            OnSelect: =Navigate(TestNhapDMKenhBan)
+            OnSelect: =Navigate(Quanlykenhban)
             Size: =11
             Text: ="Hủy"
             Width: =85
