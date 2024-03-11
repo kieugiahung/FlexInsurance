@@ -73,6 +73,12 @@ NhapDMKenhBan As screen:
                 	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"))
                 	&& IsBlank(TextSGTNDD.Text),
                 	Notify("Bắt buộc nhập số giấy tờ của người đại diện",NotificationType.Error,2000),
+                	!IsBlank(DateNTLap.SelectedDate) && DateNTLap.SelectedDate>DateNHDong.SelectedDate,
+                    Notify("Bắt buộc ngày thành lập phải trước ngày hợp đồng",NotificationType.Error,2000),
+                	DateNHDong.SelectedDate>DateNHLTuHD.SelectedDate,
+                    Notify("Bắt buộc ngày hợp đồng phải trước ngày hiệu lực từ của hợp đồng",NotificationType.Error,2000),
+                	!IsBlank(DateNHLDenHD.SelectedDate) && DateNHLDenHD.SelectedDate<DateNHLTuHD.SelectedDate,
+                    Notify("Bắt buộc ngày hiệu lực từ phải trước ngày hiệu lực đến của hợp đồng",NotificationType.Error,2000),
                     Refresh(DM_KENH_BANS);
                     If(
                         CountIf(DM_KENH_BANS,StartsWith(MA_KENH_BAN,ComboBoxLoaiKB.Selected.CODE_KENH_BAN))=0,
@@ -160,8 +166,8 @@ NhapDMKenhBan As screen:
                                     HLUC_TU_HDONG:DateNHLTuHD.SelectedDate,
                                     HLUC_DEN_HDONG:DateNHLDenHD.SelectedDate,
                                     FILE_HDONG:{
-                                        FileName:First(DataCardValue3_3.Attachments).Name,
-                                        Value:First(DataCardValue3_3.Attachments).Value
+                                        FileName:First(DataCardValue3.Attachments).Name,
+                                        Value:First(DataCardValue3.Attachments).Value
                                     }
                                 }
                             )
@@ -234,8 +240,8 @@ NhapDMKenhBan As screen:
                                     HLUC_TU_HDONG:DateNHLTuHD.SelectedDate,
                                     HLUC_DEN_HDONG:DateNHLDenHD.SelectedDate,
                                     FILE_HDONG:{
-                                        FileName:First(DataCardValue3_3.Attachments).Name,
-                                        Value:First(DataCardValue3_3.Attachments).Value
+                                        FileName:First(DataCardValue3.Attachments).Name,
+                                        Value:First(DataCardValue3.Attachments).Value
                                     }
                                 }
                             )
