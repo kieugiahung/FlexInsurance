@@ -1,8 +1,10 @@
 NhapDMKenhBan As screen:
+    Height: =Max(810, App.MinScreenHeight)
     OnVisible: |-
         =Reset(DropCNTC);Reset(ComboBoxLoaiKB);Reset(ComboBoxLGT);Reset(DropQGia);Reset(DropQTich);Reset(ComboBoxNHang);Reset(ComboBoxLGTNDD);
         Reset(TextMaKB);Reset(TextTenKB);Reset(TextSGT);Reset(TextSGTNDD);Reset(TextSDT);Reset(TextSDTNDD);Reset(TextMST);Reset(TextSoHD);Reset(TextMaNV);
         Reset(DateNSinh);Reset(DateNTLap);Reset(TextDChi);Reset(TextTenNDD);Reset(TextSTK);
+        Reset(DropTThai);Reset(ComboBoxTinhTP);Reset(ComboBoxQHuyen);Reset(DateNHDong);Reset(DateNHLTuHD);Reset(DateNHLDenHD);Reset(DataCardValue3);Reset(ComboBoxNHangBA);
         If(
             IsBlank(LookUp(DM_KENH_BANS,MA_KENH_BAN=maKenhBanFwd)),
             UpdateContext({
@@ -17,624 +19,991 @@ NhapDMKenhBan As screen:
         )
 
     Container2_1 As groupContainer.manualLayoutContainer:
-        Height: =768
+        Height: =808
         Width: =1306
         X: =60
         ZIndex: =1
-
-        Label3_1 As label:
-            Height: =36
-            Size: =11
-            Text: ="Mã kênh bán"
-            Width: =120
-            X: =160
-            Y: =48
-            ZIndex: =1
-
-        TextMaKB As text:
-            Default: =objKB.MA_KENH_BAN
-            DisplayMode: =DisplayMode.Disabled
-            Height: =32
-            Size: =11
-            Width: =200
-            X: =314
-            Y: =50
-            ZIndex: =2
-
-        Label3_2 As label:
-            Height: =36
-            Size: =11
-            Text: ="Tên kênh bán (*)"
-            Width: =140
-            X: =160
-            Y: =108
-            ZIndex: =3
-
-        TextTenKB As text:
-            Default: =objKB.TEN_KENH_BAN
-            Height: =32
-            Size: =11
-            Width: =200
-            X: =314
-            Y: =110
-            ZIndex: =4
-
-        Label3_4 As label:
-            Size: =11
-            Text: ="Loại giấy tờ (*)"
-            Width: =118
-            X: =160
-            Y: =164
-            ZIndex: =5
-
-        Label3_5 As label:
-            Size: =11
-            Text: ="Số giấy tờ (*)"
-            Width: =105
-            X: =750
-            Y: =164
-            ZIndex: =6
-
-        TextSGT As text:
-            Default: =objKB.SO_GIAY_TO
-            Height: =32
-            Size: =11
-            Width: =200
-            X: =914
-            Y: =168
-            ZIndex: =7
-
-        Label3_6 As label:
-            Size: =11
-            Text: ="Ngày sinh"
-            Visible: =DropCNTC.Selected.Value="Cá nhân"
-            Width: =95
-            X: =750
-            Y: =222
-            ZIndex: =9
-
-        Label3_8 As label:
-            Size: =11
-            Text: ="Ngày thành lập"
-            Visible: =DropCNTC.Selected.Value="Tổ chức"
-            Width: =126
-            X: =750
-            Y: =222
-            ZIndex: =10
-
-        Label3_9 As label:
-            Height: =36
-            Size: =11
-            Text: ="Địa chỉ"
-            Width: =61
-            X: =160
-            Y: =224
-            ZIndex: =11
-
-        Label3_7 As label:
-            Height: =36
-            Size: =11
-            Text: ="Mã số thuế (*)"
-            Width: =110
-            X: =750
-            Y: =107
-            ZIndex: =12
-
-        Label3_14 As label:
-            Height: =32
-            Size: =11
-            Text: ="Loại kênh bán (*)"
-            Width: =135
-            X: =160
-            Y: =408
-            ZIndex: =13
-
-        Label3_10 As label:
-            Height: =30
-            Size: =11
-            Text: ="Số điện thoại"
-            Width: =108
-            X: =160
-            Y: =284
-            ZIndex: =14
-
-        Label3_11 As label:
-            Height: =33
-            Size: =11
-            Text: ="Email"
-            Width: =55
-            X: =750
-            Y: =284
-            ZIndex: =15
-
-        Label3_20 As label:
-            Height: =33
-            Size: =11
-            Text: ="Tên người đại diện"
-            Visible: =DropCNTC.Selected.Value="Tổ chức"
-            Width: =139
-            X: =750
-            Y: =470
-            ZIndex: =16
-
-        Label3_12 As label:
-            Height: =31
-            Size: =11
-            Text: ="Ngân hàng"
-            Width: =118
-            X: =160
-            Y: =346
-            ZIndex: =17
-
-        Label3_13 As label:
-            Height: =46
-            Size: =11
-            Text: ="Số tài khoản ngân hàng"
-            Width: =95
-            X: =750
-            Y: =340
-            ZIndex: =18
-
-        Label3_15 As label:
-            Height: =36
-            Size: =11
-            Text: ="Quốc gia"
-            Visible: =DropCNTC.Selected.Value="Tổ chức"
-            Width: =97
-            X: =160
-            Y: =468
-            ZIndex: =19
-
-        Label3_19 As label:
-            Height: =36
-            Size: =11
-            Text: ="Quốc tịch"
-            Visible: =DropCNTC.Selected.Value="Cá nhân"
-            Width: =97
-            X: =160
-            Y: =470
-            ZIndex: =20
-
-        Label3_16 As label:
-            Height: =36
-            Size: =11
-            Text: ="Số hợp đồng"
-            Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB<>"1"
-            Width: =97
-            X: =750
-            Y: =408
-            ZIndex: =21
-
-        Label3_17 As label:
-            Height: =36
-            Size: =11
-            Text: ="Mã nhân viên"
-            Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB="1"
-            Width: =116
-            X: =750
-            Y: =408
-            ZIndex: =22
-
-        Label3_22 As label:
-            Height: =46
-            Size: =11
-            Text: ="Loại giấy tờ của người đại diện"
-            Visible: =DropCNTC.Selected.Value="Tổ chức"
-            Width: =126
-            X: =160
-            Y: =530
-            ZIndex: =24
-
-        Label3_21 As label:
-            Height: =46
-            Size: =11
-            Text: ="Số giấy tờ của người đại diện"
-            Visible: =DropCNTC.Selected.Value="Tổ chức"
-            Width: =126
-            X: =750
-            Y: =528
-            ZIndex: =25
-
-        Label3_23 As label:
-            Height: =46
-            Size: =11
-            Text: ="Số điện thoại của người đại diện"
-            Visible: =DropCNTC.Selected.Value="Tổ chức"
-            Width: =128
-            X: =160
-            Y: =592
-            ZIndex: =26
-
-        DateNSinh As datepicker:
-            DefaultDate: =objKB.NGAY_SINH
-            Format: ="dd/mm/yyyy"
-            Height: =32
-            InputTextPlaceholder: =
-            Size: =11
-            Visible: =DropCNTC.Selected.Value="Cá nhân"
-            Width: =200
-            X: =914
-            Y: =226
-            ZIndex: =27
-
-        DateNTLap As datepicker:
-            DefaultDate: =objKB.NGAY_THANH_LAP
-            Format: ="dd/mm/yyyy"
-            Height: =32
-            InputTextPlaceholder: =
-            Size: =11
-            Visible: =DropCNTC.Selected.Value="Tổ chức"
-            Width: =200
-            X: =914
-            Y: =226
-            ZIndex: =28
-
-        TextDChi As text:
-            Default: =objKB.DIA_CHI
-            Height: =32
-            Size: =11
-            Width: =200
-            X: =314
-            Y: =226
-            ZIndex: =29
-
-        TextMST As text:
-            Default: =objKB.MA_SO_THUE
-            Height: =32
-            Size: =11
-            Width: =200
-            X: =914
-            Y: =110
-            ZIndex: =30
-
-        TextSDT As text:
-            Default: =objKB.SO_DIEN_THOAI
-            Height: =32
-            Size: =11
-            Width: =200
-            X: =314
-            Y: =284
-            ZIndex: =32
-
-        TextEmail As text:
-            Default: =objKB.EMAIL
-            Height: =32
-            Size: =11
-            Width: =200
-            X: =914
-            Y: =284
-            ZIndex: =33
-
-        TextTenNDD As text:
-            Default: =objKB.NGUOI_DAI_DIEN
-            Height: =32
-            Size: =11
-            Visible: =DropCNTC.Selected.Value="Tổ chức"
-            Width: =200
-            X: =914
-            Y: =470
-            ZIndex: =34
-
-        TextSTK As text:
-            Default: =objKB.SO_TK_NGANHANG
-            Height: =32
-            Size: =11
-            Width: =200
-            X: =914
-            Y: =346
-            ZIndex: =35
-
-        TextSoHD As text:
-            Default: =objKB.SO_HOP_DONG
-            Height: =32
-            Size: =11
-            Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB<>"1"
-            Width: =200
-            X: =914
-            Y: =408
-            ZIndex: =36
-
-        TextMaNV As text:
-            Default: =objKB.MA_NHAN_VIEN
-            Height: =32
-            Size: =11
-            Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB="1"
-            Width: =200
-            X: =914
-            Y: =408
-            ZIndex: =37
-
-        TextSDTNDD As text:
-            Default: =objKB.SO_DIEN_THOAI_NDD
-            Height: =32
-            Size: =11
-            Visible: =DropCNTC.Selected.Value="Tổ chức"
-            Width: =200
-            X: =314
-            Y: =596
-            ZIndex: =38
-
-        TextSGTNDD As text:
-            Default: =objKB.SO_GIAY_TO_NDD
-            Height: =32
-            Size: =11
-            Visible: =DropCNTC.Selected.Value="Tổ chức"
-            Width: =200
-            X: =914
-            Y: =535
-            ZIndex: =39
-
-        DropQGia As dropdown:
-            Height: =32
-            Items: =DM_QUOC_GIAS
-            Size: =11
-            Visible: =DropCNTC.Selected.Value="Tổ chức"
-            Width: =200
-            X: =314
-            Y: =470
-            ZIndex: =41
-
-        DropQTich As dropdown:
-            Height: =32
-            Items: =DM_QUOC_TICHES
-            Size: =11
-            Visible: =DropCNTC.Selected.Value="Cá nhân"
-            Width: =200
-            X: =314
-            Y: =470
-            ZIndex: =43
 
         Button2_2 As button:
             FontWeight: =FontWeight.Bold
             Height: =32
             OnSelect: |-
                 =If(
-                    IsBlank(LookUp(DM_KENH_BANS,MA_KENH_BAN=TextMaKB.Text)),
+                    IsBlank(TextTenKB.Text),
+                    Notify("Bắt buộc nhập tên kênh bán",NotificationType.Error,2000),
+                    IsBlank(ComboBoxLoaiKB.Selected.MA_LOAI_KB),
+                    Notify("Bắt buộc nhập loại kênh bán",NotificationType.Error,2000),
+                	IsBlank(ComboBoxLGT.Selected.MA_LOAI_GT),
+                	Notify("Bắt buộc nhập loại giấy tờ",NotificationType.Error,2000),
+                	IsBlank(TextSGT.Text),
+                	Notify("Bắt buộc nhập số giấy tờ",NotificationType.Error,2000),
+                	IsBlank(TextMST.Text),
+                	Notify("Bắt buộc nhập mã số thuế",NotificationType.Error,2000),
+                	IsBlank(ComboBoxTinhTP.Selected.MA_PHAMVI),
+                	Notify("Bắt buộc nhập tỉnh/thành phố",NotificationType.Error,2000),
+                	IsBlank(ComboBoxQHuyen.Selected.MA_PHAMVI),
+                	Notify("Bắt buộc nhập quận/huyện",NotificationType.Error,2000),
+                	ComboBoxLoaiKB.Selected.MA_LOAI_KB="4" && IsBlank(ComboBoxNHangBA.Selected.MA_NGAN_HANG),
+                	Notify("Bắt buộc nhập ngân hàng",NotificationType.Error,2000),
+                	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || 
+                	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân")) 
+                	&& IsBlank(TextMaNV.Text),
+                	Notify("Bắt buộc nhập mã nhân viên",NotificationType.Error,2000),
+                	(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || 
+                	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"))
+                	&& IsBlank(TextSoHD.Text),
+                	Notify("Bắt buộc nhập số hợp đồng",NotificationType.Error,2000),
+                	(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || 
+                	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"))
+                	&& IsBlank(DateNHDong.SelectedDate),
+                	Notify("Bắt buộc nhập ngày hợp đồng",NotificationType.Error,2000),
+                	(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || 
+                	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"))
+                	&& IsBlank(DateNHLTuHD.SelectedDate),
+                	Notify("Bắt buộc nhập ngày hiệu lực từ của hợp đồng",NotificationType.Error,2000),
+                	(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || 
+                	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"))
+                	&& IsBlank(TextTenNDD.Text),
+                	Notify("Bắt buộc nhập tên người đại diện",NotificationType.Error,2000),
+                	(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || 
+                	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"))
+                	&& IsBlank(ComboBoxLGTNDD.Selected.MA_LOAI_GT),
+                	Notify("Bắt buộc nhập loại giấy tờ của người đại diện",NotificationType.Error,2000),
+                	(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || 
+                	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"))
+                	&& IsBlank(TextSGTNDD.Text),
+                	Notify("Bắt buộc nhập số giấy tờ của người đại diện",NotificationType.Error,2000),
+                    Refresh(DM_KENH_BANS);
                     If(
-                        DropCNTC.Selected.Value="Cá nhân",
-                        Patch(
-                            DM_KENH_BANS,
-                            {
-                                MA_KENH_BAN:If(
-                                    CountIf(DM_KENH_BANS,true)=0,
-                                    1000,
-                                    Max(DM_KENH_BANS,MA_KENH_BAN)+1
-                                ),
-                                TEN_KENH_BAN:TextTenKB.Text,
-                                LOAI_GIAY_TO:ComboBoxLGT.Selected.MA_LOAI_GT,
-                                SO_GIAY_TO:TextSGT.Text,
-                                NGAY_SINH:DateNSinh.SelectedDate,
-                                NGAY_THANH_LAP:Blank(),
-                                LOAI:ComboBoxLoaiKB.Selected.MA_LOAI_KB,
-                                DIA_CHI:TextDChi.Text,
-                                MA_SO_THUE:TextMST.Text,
-                                SO_DIEN_THOAI:TextSDT.Text,
-                                EMAIL:TextEmail.Text,
-                                TEN_NGAN_HANG:ComboBoxNHang.Selected.MA_DU_LIEU,
-                                SO_TK_NGANHANG:TextSTK.Text,
-                                QUOC_GIA:Blank(),
-                                QUOC_TICH:DropQTich.Selected.MA_QUOC_TICH,
-                                SO_HOP_DONG:If(ComboBoxLoaiKB.Selected.MA_LOAI_KB="1",Blank(),TextSoHD.Text),
-                                MA_NHAN_VIEN:If(ComboBoxLoaiKB.Selected.MA_LOAI_KB="1",TextMaNV.Text,Blank()),
-                                LOAI_CANHAN_TOCHUC:DropCNTC.Selected.Value,
-                                LOAI_GIAY_TO_NDD:Blank(),
-                                SO_GIAY_TO_NDD:Blank(),
-                                SO_DIEN_THOAI_NDD:Blank(),
-                                NGUOI_DAI_DIEN:Blank()
-                            }
-                        ),
-                        Patch(
-                            DM_KENH_BANS,
-                            {
-                                MA_KENH_BAN:If(
-                                    CountIf(DM_KENH_BANS,true)=0,
-                                    1000,
-                                    Max(DM_KENH_BANS,MA_KENH_BAN)+1
-                                ),
-                                TEN_KENH_BAN:TextTenKB.Text,
-                                LOAI_GIAY_TO:ComboBoxLGT.Selected.MA_LOAI_GT,
-                                SO_GIAY_TO:TextSGT.Text,
-                                NGAY_SINH:Blank(),
-                                NGAY_THANH_LAP:DateNTLap.SelectedDate,
-                                LOAI:ComboBoxLoaiKB.Selected.MA_LOAI_KB,
-                                DIA_CHI:TextDChi.Text,
-                                MA_SO_THUE:TextMST.Text,
-                                SO_DIEN_THOAI:TextSDT.Text,
-                                EMAIL:TextEmail.Text,
-                                NGUOI_DAI_DIEN:TextTenNDD.Text,
-                                TEN_NGAN_HANG:ComboBoxNHang.Selected.MA_DU_LIEU,
-                                SO_TK_NGANHANG:TextSTK.Text,
-                                QUOC_GIA:DropQGia.Selected.MA_QUOC_GIA,
-                                QUOC_TICH:Blank(),
-                                LOAI_GIAY_TO_NDD:ComboBoxLGTNDD.Selected.MA_LOAI_GT,
-                                SO_GIAY_TO_NDD:TextSGTNDD.Text,
-                                SO_DIEN_THOAI_NDD:TextSDTNDD.Text,
-                                SO_HOP_DONG:If(ComboBoxLoaiKB.Selected.MA_LOAI_KB="1",Blank(),TextSoHD.Text),
-                                MA_NHAN_VIEN:If(ComboBoxLoaiKB.Selected.MA_LOAI_KB="1",TextMaNV.Text,Blank()),
-                                LOAI_CANHAN_TOCHUC:DropCNTC.Selected.Value
-                            }
-                        )
-                    ),
+                        CountIf(DM_KENH_BANS,StartsWith(MA_KENH_BAN,ComboBoxLoaiKB.Selected.CODE_KENH_BAN))=0,
+                        UpdateContext({
+                            genMaKB:Concatenate(ComboBoxLoaiKB.Selected.CODE_KENH_BAN,"0001")
+                        }),
+                        UpdateContext({
+                            sampleID:"000",
+                            maxIdKB:Last(SortByColumns(Filter(DM_KENH_BANS,StartsWith(MA_KENH_BAN,ComboBoxLoaiKB.Selected.CODE_KENH_BAN)),"cr282_ma_kenh_ban",SortOrder.Ascending)).MA_KENH_BAN
+                        });
+                        UpdateContext({
+                            maIdKB:Text((Right(maxIdKB,4))+1)
+                        });
+                        UpdateContext({
+                            genMaKB:Concatenate(ComboBoxLoaiKB.Selected.CODE_KENH_BAN,If(Len(maIdKB)>3,"",Left(sampleID,4-Len(maIdKB))),maIdKB)
+                        });
+                    );
                     If(
-                        DropCNTC.Selected.Value="Cá nhân",
-                        UpdateIf(
-                            DM_KENH_BANS,
-                            MA_KENH_BAN=TextMaKB.Text,
-                            {
-                                TEN_KENH_BAN:TextTenKB.Text,
-                                LOAI_GIAY_TO:ComboBoxLGT.Selected.MA_LOAI_GT,
-                                SO_GIAY_TO:TextSGT.Text,
-                                NGAY_SINH:DateNSinh.SelectedDate,
-                                NGAY_THANH_LAP:Blank(),
-                                LOAI:ComboBoxLoaiKB.Selected.MA_LOAI_KB,
-                                DIA_CHI:TextDChi.Text,
-                                MA_SO_THUE:TextMST.Text,
-                                SO_DIEN_THOAI:TextSDT.Text,
-                                EMAIL:TextEmail.Text,
-                                TEN_NGAN_HANG:ComboBoxNHang.Selected.MA_DU_LIEU,
-                                SO_TK_NGANHANG:TextSTK.Text,
-                                QUOC_GIA:Blank(),
-                                QUOC_TICH:DropQTich.Selected.MA_QUOC_TICH,
-                                SO_HOP_DONG:If(ComboBoxLoaiKB.Selected.MA_LOAI_KB="1",Blank(),TextSoHD.Text),
-                                MA_NHAN_VIEN:If(ComboBoxLoaiKB.Selected.MA_LOAI_KB="1",TextMaNV.Text,Blank()),
-                                LOAI_CANHAN_TOCHUC:DropCNTC.Selected.Value,
-                                LOAI_GIAY_TO_NDD:Blank(),
-                                SO_GIAY_TO_NDD:Blank(),
-                                SO_DIEN_THOAI_NDD:Blank(),
-                                NGUOI_DAI_DIEN:Blank()
-                            }
+                        IsBlank(LookUp(DM_KENH_BANS,MA_KENH_BAN=TextMaKB.Text)),
+                        If(
+                            ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân"),
+                            Patch(
+                                DM_KENH_BANS,
+                                {
+                                    MA_KENH_BAN:genMaKB,
+                                    TEN_KENH_BAN:TextTenKB.Text,
+                                    LOAI_GIAY_TO:ComboBoxLGT.Selected.MA_LOAI_GT,
+                                    SO_GIAY_TO:TextSGT.Text,
+                                    NGAY_SINH:DateNSinh.SelectedDate,
+                                    NGAY_THANH_LAP:Blank(),
+                                    LOAI:ComboBoxLoaiKB.Selected.MA_LOAI_KB,
+                                    DIA_CHI:TextDChi.Text,
+                                    MA_SO_THUE:TextMST.Text,
+                                    SO_DIEN_THOAI:TextSDT.Text,
+                                    EMAIL:TextEmail.Text,
+                                    TEN_NGAN_HANG:ComboBoxNHang.Selected.MA_DU_LIEU,
+                                    SO_TK_NGANHANG:TextSTK.Text,
+                                    QUOC_GIA:Blank(),
+                                    QUOC_TICH:DropQTich.Selected.MA_QUOC_TICH,
+                                    SO_HOP_DONG:Blank(),
+                                    MA_NHAN_VIEN:TextMaNV.Text,
+                                    LOAI_CANHAN_TOCHUC:If(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý",DropCNTC.Selected.Value,Blank()),
+                                    LOAI_GIAY_TO_NDD:Blank(),
+                                    SO_GIAY_TO_NDD:Blank(),
+                                    SO_DIEN_THOAI_NDD:Blank(),
+                                    NGUOI_DAI_DIEN:Blank(),
+                                    TRANG_THAI:DropTThai.Selected.Value,
+                                    QUAN_HUYEN:ComboBoxQHuyen.Selected.MA_PHAMVI,
+                                    TINH_TP:ComboBoxTinhTP.Selected.MA_PHAMVI,
+                                    NGAY_HDONG:Blank(),
+                                    HLUC_TU_HDONG:Blank(),
+                                    HLUC_DEN_HDONG:Blank(),
+                                    FILE_HDONG:Blank()
+                                }
+                            ),
+                            Patch(
+                                DM_KENH_BANS,
+                                {
+                                    MA_KENH_BAN:genMaKB,
+                                    TEN_KENH_BAN:TextTenKB.Text,
+                                    LOAI_GIAY_TO:ComboBoxLGT.Selected.MA_LOAI_GT,
+                                    SO_GIAY_TO:TextSGT.Text,
+                                    NGAY_SINH:Blank(),
+                                    NGAY_THANH_LAP:DateNTLap.SelectedDate,
+                                    LOAI:ComboBoxLoaiKB.Selected.MA_LOAI_KB,
+                                    DIA_CHI:TextDChi.Text,
+                                    MA_SO_THUE:TextMST.Text,
+                                    SO_DIEN_THOAI:TextSDT.Text,
+                                    EMAIL:TextEmail.Text,
+                                    NGUOI_DAI_DIEN:TextTenNDD.Text,
+                                    TEN_NGAN_HANG:If(ComboBoxLoaiKB.Selected.MA_LOAI_KB="4",ComboBoxNHangBA.Selected.MA_DU_LIEU,ComboBoxNHang.Selected.MA_DU_LIEU),
+                                    SO_TK_NGANHANG:TextSTK.Text,
+                                    QUOC_GIA:DropQGia.Selected.MA_PHAMVI,
+                                    QUOC_TICH:Blank(),
+                                    LOAI_GIAY_TO_NDD:ComboBoxLGTNDD.Selected.MA_LOAI_GT,
+                                    SO_GIAY_TO_NDD:TextSGTNDD.Text,
+                                    SO_DIEN_THOAI_NDD:TextSDTNDD.Text,
+                                    SO_HOP_DONG:TextSoHD.Text,
+                                    MA_NHAN_VIEN:Blank(),
+                                    LOAI_CANHAN_TOCHUC:If(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý",DropCNTC.Selected.Value,Blank()),
+                                    TRANG_THAI:DropTThai.Selected.Value,
+                                    QUAN_HUYEN:ComboBoxQHuyen.Selected.MA_PHAMVI,
+                                    TINH_TP:ComboBoxTinhTP.Selected.MA_PHAMVI,
+                                    NGAY_HDONG:DateNHDong.SelectedDate,
+                                    HLUC_TU_HDONG:DateNHLTuHD.SelectedDate,
+                                    HLUC_DEN_HDONG:DateNHLDenHD.SelectedDate,
+                                    FILE_HDONG:{
+                                        FileName:First(DataCardValue3_3.Attachments).Name,
+                                        Value:First(DataCardValue3_3.Attachments).Value
+                                    }
+                                }
+                            )
                         ),
-                        UpdateIf(
-                            DM_KENH_BANS,
-                            MA_KENH_BAN=TextMaKB.Text,
-                            {
-                                TEN_KENH_BAN:TextTenKB.Text,
-                                LOAI_GIAY_TO:ComboBoxLGT.Selected.MA_LOAI_GT,
-                                SO_GIAY_TO:TextSGT.Text,
-                                NGAY_SINH:Blank(),
-                                NGAY_THANH_LAP:DateNTLap.SelectedDate,
-                                LOAI:ComboBoxLoaiKB.Selected.MA_LOAI_KB,
-                                DIA_CHI:TextDChi.Text,
-                                MA_SO_THUE:TextMST.Text,
-                                SO_DIEN_THOAI:TextSDT.Text,
-                                EMAIL:TextEmail.Text,
-                                NGUOI_DAI_DIEN:TextTenNDD.Text,
-                                TEN_NGAN_HANG:ComboBoxNHang.Selected.MA_DU_LIEU,
-                                SO_TK_NGANHANG:TextSTK.Text,
-                                QUOC_GIA:DropQGia.Selected.MA_QUOC_GIA,
-                                QUOC_TICH:Blank(),
-                                LOAI_GIAY_TO_NDD:ComboBoxLGTNDD.Selected.MA_LOAI_GT,
-                                SO_GIAY_TO_NDD:TextSGTNDD.Text,
-                                SO_DIEN_THOAI_NDD:TextSDTNDD.Text,
-                                SO_HOP_DONG:If(ComboBoxLoaiKB.Selected.MA_LOAI_KB="1",Blank(),TextSoHD.Text),
-                                MA_NHAN_VIEN:If(ComboBoxLoaiKB.Selected.MA_LOAI_KB="1",TextMaNV.Text,Blank()),
-                                LOAI_CANHAN_TOCHUC:DropCNTC.Selected.Value
-                            }
+                        If(
+                            ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân"),
+                            UpdateIf(
+                                DM_KENH_BANS,
+                                MA_KENH_BAN=TextMaKB.Text,
+                                {
+                                    TEN_KENH_BAN:TextTenKB.Text,
+                                    LOAI_GIAY_TO:ComboBoxLGT.Selected.MA_LOAI_GT,
+                                    SO_GIAY_TO:TextSGT.Text,
+                                    NGAY_SINH:DateNSinh.SelectedDate,
+                                    NGAY_THANH_LAP:Blank(),
+                                    LOAI:ComboBoxLoaiKB.Selected.MA_LOAI_KB,
+                                    DIA_CHI:TextDChi.Text,
+                                    MA_SO_THUE:TextMST.Text,
+                                    SO_DIEN_THOAI:TextSDT.Text,
+                                    EMAIL:TextEmail.Text,
+                                    TEN_NGAN_HANG:ComboBoxNHang.Selected.MA_DU_LIEU,
+                                    SO_TK_NGANHANG:TextSTK.Text,
+                                    QUOC_GIA:Blank(),
+                                    QUOC_TICH:DropQTich.Selected.MA_QUOC_TICH,
+                                    SO_HOP_DONG:Blank(),
+                                    MA_NHAN_VIEN:TextMaNV.Text,
+                                    LOAI_CANHAN_TOCHUC:If(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý",DropCNTC.Selected.Value,Blank()),
+                                    LOAI_GIAY_TO_NDD:Blank(),
+                                    SO_GIAY_TO_NDD:Blank(),
+                                    SO_DIEN_THOAI_NDD:Blank(),
+                                    NGUOI_DAI_DIEN:Blank(),
+                                    TRANG_THAI:DropTThai.Selected.Value,
+                                    QUAN_HUYEN:ComboBoxQHuyen.Selected.MA_PHAMVI,
+                                    TINH_TP:ComboBoxTinhTP.Selected.MA_PHAMVI,
+                                    NGAY_HDONG:Blank(),
+                                    HLUC_TU_HDONG:Blank(),
+                                    HLUC_DEN_HDONG:Blank(),
+                                    FILE_HDONG:Blank()
+                                }
+                            ),
+                            UpdateIf(
+                                DM_KENH_BANS,
+                                MA_KENH_BAN=TextMaKB.Text,
+                                {
+                                    TEN_KENH_BAN:TextTenKB.Text,
+                                    LOAI_GIAY_TO:ComboBoxLGT.Selected.MA_LOAI_GT,
+                                    SO_GIAY_TO:TextSGT.Text,
+                                    NGAY_SINH:Blank(),
+                                    NGAY_THANH_LAP:DateNTLap.SelectedDate,
+                                    LOAI:ComboBoxLoaiKB.Selected.MA_LOAI_KB,
+                                    DIA_CHI:TextDChi.Text,
+                                    MA_SO_THUE:TextMST.Text,
+                                    SO_DIEN_THOAI:TextSDT.Text,
+                                    EMAIL:TextEmail.Text,
+                                    NGUOI_DAI_DIEN:TextTenNDD.Text,
+                                    TEN_NGAN_HANG:If(ComboBoxLoaiKB.Selected.MA_LOAI_KB="4",ComboBoxNHangBA.Selected.MA_DU_LIEU,ComboBoxNHang.Selected.MA_DU_LIEU),
+                                    SO_TK_NGANHANG:TextSTK.Text,
+                                    QUOC_GIA:DropQGia.Selected.MA_PHAMVI,
+                                    QUOC_TICH:Blank(),
+                                    LOAI_GIAY_TO_NDD:ComboBoxLGTNDD.Selected.MA_LOAI_GT,
+                                    SO_GIAY_TO_NDD:TextSGTNDD.Text,
+                                    SO_DIEN_THOAI_NDD:TextSDTNDD.Text,
+                                    SO_HOP_DONG:TextSoHD.Text,
+                                    MA_NHAN_VIEN:Blank(),
+                                    LOAI_CANHAN_TOCHUC:If(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý",DropCNTC.Selected.Value,Blank()),
+                                    TRANG_THAI:DropTThai.Selected.Value,
+                                    QUAN_HUYEN:ComboBoxQHuyen.Selected.MA_PHAMVI,
+                                    TINH_TP:ComboBoxTinhTP.Selected.MA_PHAMVI,
+                                    NGAY_HDONG:DateNHDong.SelectedDate,
+                                    HLUC_TU_HDONG:DateNHLTuHD.SelectedDate,
+                                    HLUC_DEN_HDONG:DateNHLDenHD.SelectedDate,
+                                    FILE_HDONG:{
+                                        FileName:First(DataCardValue3_3.Attachments).Name,
+                                        Value:First(DataCardValue3_3.Attachments).Value
+                                    }
+                                }
+                            )
                         )
-                    )
-                );
-                Notify("Lưu dữ liệu thành công",NotificationType.Success,2000);
-                Navigate(Quanlykenhban)
+                    );
+                    Notify("Lưu dữ liệu thành công",NotificationType.Success,2000);
+                    Navigate(TestNhapDMKenhBan)
+                )
             Size: =11
             Text: ="Lưu"
             Width: =85
-            X: =1030
-            Y: =642
+            X: =1156
+            Y: =763
             ZIndex: =45
 
         Button3 As button:
             FontWeight: =FontWeight.Bold
             Height: =32
-            OnSelect: =Navigate(Quanlykenhban)
+            OnSelect: =Navigate(TestNhapDMKenhBan)
             Size: =11
             Text: ="Hủy"
             Width: =85
-            X: =910
-            Y: =642
+            X: =1036
+            Y: =763
             ZIndex: =46
 
-        ComboBoxNHang As combobox:
-            DefaultSelectedItems: =LookUp(DM_NGAN_HANGS,MA_DU_LIEU=objKB.TEN_NGAN_HANG)
-            DisplayFields: =["cr282_ma_ngan_hang","cr282_ten_ngan_hang"]
-            Height: =32
-            InputTextPlaceholder: ="Chọn ngân hàng"
-            Items: =DM_NGAN_HANGS
-            SearchFields: =["cr282_ma_ngan_hang"]
-            SearchItems: =Search(DM_NGAN_HANGS,ComboBoxNHang.SearchText,"cr282_ma_ngan_hang")
-            SelectMultiple: =false
-            Size: =11
-            Template: =ListItemTemplate.Double
-            Width: =200
-            X: =314
-            Y: =346
+        Container3 As groupContainer.manualLayoutContainer:
+            Height: =145
+            Width: =1267
+            X: =8
+            Y: =8
             ZIndex: =47
 
-        Label3_18 As label:
-            Height: =34
-            Size: =11
-            Text: ="Loại cá nhân/tổ chức"
-            Width: =160
-            X: =750
-            Y: =48
+            Label3_1 As label:
+                Height: =36
+                Size: =11
+                Text: ="Mã kênh bán"
+                Width: =120
+                X: =120
+                Y: =10
+                ZIndex: =1
+
+            TextMaKB As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =objKB.MA_KENH_BAN
+                DisplayMode: =DisplayMode.Disabled
+                Height: =32
+                Size: =11
+                Width: =200
+                X: =290
+                Y: =12
+                ZIndex: =2
+
+            Label3_2 As label:
+                Height: =36
+                Size: =11
+                Text: ="Tên kênh bán (*)"
+                Width: =140
+                X: =120
+                Y: =53
+                ZIndex: =3
+
+            TextTenKB As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =objKB.TEN_KENH_BAN
+                Height: =32
+                Size: =11
+                Width: =200
+                X: =290
+                Y: =56
+                ZIndex: =4
+
+            Label3_18 As label:
+                Height: =34
+                Size: =11
+                Text: ="Loại cá nhân/tổ chức"
+                Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB="2"
+                Width: =160
+                X: =674
+                Y: =100
+                ZIndex: =5
+
+            DropCNTC As dropdown:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =If(IsBlank(objKB.LOAI_CANHAN_TOCHUC),"Cá nhân",objKB.LOAI_CANHAN_TOCHUC)
+                Height: =32
+                Items: =["Cá nhân","Tổ chức"]
+                Size: =11
+                Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB="2"
+                Width: =200
+                X: =840
+                Y: =102
+                ZIndex: =6
+
+            Label3_8 As label:
+                Height: =32
+                Size: =11
+                Text: ="Loại kênh bán (*)"
+                Width: =135
+                X: =120
+                Y: =99
+                ZIndex: =7
+
+            ComboBoxLoaiKB As combobox:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultSelectedItems: =If(IsBlank(LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=objKB.LOAI)),LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB="1"),LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=objKB.LOAI))
+                DisplayFields: =["cr282_ten_loai_kb"]
+                Height: =32
+                InputTextPlaceholder: ="Chọn loại kênh bán"
+                Items: =DM_LOAI_KENH_BANS
+                OnSelect: =Reset(ComboBoxNHangBA)
+                SearchFields: =["cr282_ten_loai_kb"]
+                SearchItems: =Search(DM_LOAI_KENH_BANS,ComboBoxLoaiKB.SearchText,"cr282_ten_loai_kb")
+                SelectMultiple: =false
+                Size: =11
+                Width: =200
+                X: =290
+                Y: =100
+                ZIndex: =8
+
+            Label3_28 As label:
+                Height: =36
+                Size: =11
+                Text: ="Trạng thái"
+                Width: =140
+                X: =674
+                Y: =54
+                ZIndex: =9
+
+            DropTThai As dropdown:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: |-
+                    =If(
+                        IsBlank(objKB.TRANG_THAI),
+                        "Hoạt động",
+                        objKB.TRANG_THAI
+                    )
+                Height: =32
+                Items: =["Hoạt động","Ngừng hoạt động","Tạm khóa"]
+                Size: =11
+                Width: =200
+                X: =840
+                Y: =56
+                ZIndex: =10
+
+            Label3_29 As label:
+                Height: =31
+                Size: =11
+                Text: ="Ngân hàng (*)"
+                Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB="4"
+                Width: =118
+                X: =674
+                Y: =102
+                ZIndex: =11
+
+            ComboBoxNHangBA As combobox:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultSelectedItems: =LookUp(DM_NGAN_HANGS,MA_DU_LIEU=objKB.TEN_NGAN_HANG)
+                DisplayFields: =["cr282_ma_ngan_hang","cr282_ten_ngan_hang"]
+                Height: =32
+                InputTextPlaceholder: ="Chọn ngân hàng"
+                Items: =DM_NGAN_HANGS
+                OnChange: =Reset(TextMST);Reset(DateNTLap);Reset(TextSTK);
+                SearchFields: =["cr282_ma_ngan_hang"]
+                SearchItems: =Search(DM_NGAN_HANGS,ComboBoxNHangBA.SearchText,"cr282_ma_ngan_hang")
+                SelectMultiple: =false
+                Size: =11
+                Template: =ListItemTemplate.Double
+                Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB="4"
+                Width: =200
+                X: =840
+                Y: =102
+                ZIndex: =12
+
+        Container4_1 As groupContainer.manualLayoutContainer:
+            Height: =286
+            Width: =1267
+            X: =8
+            Y: =153
             ZIndex: =48
 
-        DropCNTC As dropdown:
-            Default: =If(IsBlank(objKB.LOAI_CANHAN_TOCHUC),"Cá nhân",objKB.LOAI_CANHAN_TOCHUC)
-            Height: =32
-            Items: =["Cá nhân","Tổ chức"]
-            Size: =11
-            Width: =200
-            X: =914
-            Y: =50
+            Label3_4 As label:
+                Size: =11
+                Text: ="Loại giấy tờ (*)"
+                Width: =118
+                X: =120
+                Y: =8
+                ZIndex: =1
+
+            Label3_5 As label:
+                Size: =11
+                Text: ="Số giấy tờ (*)"
+                Width: =105
+                X: =670
+                Y: =8
+                ZIndex: =2
+
+            TextSGT As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =objKB.SO_GIAY_TO
+                Height: =32
+                Size: =11
+                Width: =200
+                X: =840
+                Y: =12
+                ZIndex: =3
+
+            ComboBoxLGT As combobox:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultSelectedItems: =LookUp(DM_LOAI_GIAYTO,MA_LOAI_GT=objKB.LOAI_GIAY_TO)
+                DisplayFields: =["cr282_ten_loai_gt"]
+                Height: =32
+                InputTextPlaceholder: ="Chọn loại giấy tờ"
+                Items: =DM_LOAI_GIAYTO
+                SearchFields: =["cr282_ten_loai_gt"]
+                SearchItems: =Search(DM_LOAI_GIAYTO,ComboBoxLGT.SearchText,"cr282_ten_loai_gt")
+                SelectMultiple: =false
+                Size: =11
+                Width: =200
+                X: =290
+                Y: =12
+                ZIndex: =4
+
+            Label3_7 As label:
+                Height: =36
+                Size: =11
+                Text: ="Mã số thuế (*)"
+                Width: =110
+                X: =120
+                Y: =55
+                ZIndex: =5
+
+            TextMST As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: |-
+                    =If(
+                        ComboBoxLoaiKB.Selected.MA_LOAI_KB="4" && !IsBlank(ComboBoxNHangBA.Selected.MA_NGAN_HANG),
+                        LookUp(
+                            DM_NGAN_HANGS,
+                            MA_NGAN_HANG=ComboBoxNHangBA.Selected.MA_NGAN_HANG,
+                            MA_SO_THUE
+                        ),
+                        objKB.MA_SO_THUE
+                    )
+                Height: =32
+                Size: =11
+                Width: =200
+                X: =290
+                Y: =55
+                ZIndex: =6
+
+            Label3_14 As label:
+                Height: =36
+                Size: =11
+                Text: ="Quốc gia (*)"
+                Visible: =!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức")
+                Width: =97
+                X: =670
+                Y: =55
+                ZIndex: =7
+
+            Label3_15 As label:
+                Height: =36
+                Size: =11
+                Text: ="Quốc tịch (*)"
+                Visible: =ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân")
+                Width: =97
+                X: =670
+                Y: =55
+                ZIndex: =8
+
+            DropQGia As dropdown:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=objKB.QUOC_GIA,TEN_PHAMVI)
+                Height: =32
+                Items: =Filter(DM_PHAMVI_DIALYS,LOAI="QUOC_GIA")
+                Size: =11
+                Visible: =!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức")
+                Width: =200
+                X: =840
+                Y: =55
+                ZIndex: =9
+
+            DropQTich As dropdown:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Height: =32
+                Items: =DM_QUOC_TICHES
+                Size: =11
+                Visible: =ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân")
+                Width: =200
+                X: =840
+                Y: =55
+                ZIndex: =10
+
+            Label3_22 As label:
+                Height: =41
+                Size: =11
+                Text: ="Quận/Huyện (*)"
+                Width: =145
+                X: =670
+                Y: =100
+                ZIndex: =11
+
+            Label3_23 As label:
+                Height: =41
+                Size: =11
+                Text: ="Tỉnh/Thành phố (*)"
+                Width: =145
+                X: =120
+                Y: =100
+                ZIndex: =12
+
+            ComboBoxTinhTP As combobox:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultSelectedItems: =LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=objKB.TINH_TP)
+                DisplayFields: =["cr282_ten_phamvi"]
+                Height: =32
+                InputTextPlaceholder: ="Chọn tỉnh/thành phố"
+                Items: =Filter(DM_PHAMVI_DIALYS,LOAI="TINH_TP")
+                OnChange: =Reset(ComboBoxQHuyen)
+                SearchFields: =["cr282_ten_phamvi"]
+                SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="TINH_TP"),ComboBoxTinhTP.SearchText,"cr282_ten_phamvi")
+                SelectMultiple: =false
+                Size: =11
+                Width: =200
+                X: =290
+                Y: =100
+                ZIndex: =13
+
+            ComboBoxQHuyen As combobox:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultSelectedItems: =LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=objKB.QUAN_HUYEN)
+                DisplayFields: =["cr282_ten_phamvi"]
+                Height: =32
+                InputTextPlaceholder: ="Chọn quận/huyện"
+                Items: =Filter(DM_PHAMVI_DIALYS,LOAI="QUAN_HUYEN" && MA_CHA=ComboBoxTinhTP.Selected.MA_PHAMVI)
+                SearchFields: =["cr282_ten_phamvi"]
+                SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="QUAN_HUYEN" && MA_CHA=ComboBoxTinhTP.Selected.MA_PHAMVI),ComboBoxQHuyen.SearchText,"cr282_ten_phamvi")
+                SelectMultiple: =false
+                Size: =11
+                Width: =200
+                X: =840
+                Y: =100
+                ZIndex: =14
+
+            Label3_9 As label:
+                Size: =11
+                Text: ="Ngày sinh"
+                Visible: =ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân")
+                Width: =95
+                X: =670
+                Y: =145
+                ZIndex: =15
+
+            Label3_10 As label:
+                Size: =11
+                Text: ="Ngày thành lập"
+                Visible: =!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức")
+                Width: =126
+                X: =670
+                Y: =145
+                ZIndex: =16
+
+            Label3_6 As label:
+                Height: =36
+                Size: =11
+                Text: ="Địa chỉ"
+                Width: =61
+                X: =120
+                Y: =145
+                ZIndex: =17
+
+            Label3_11 As label:
+                Height: =30
+                Size: =11
+                Text: ="Số điện thoại"
+                Width: =108
+                X: =120
+                Y: =190
+                ZIndex: =18
+
+            Label3_12 As label:
+                Height: =33
+                Size: =11
+                Text: ="Email"
+                Width: =55
+                X: =670
+                Y: =190
+                ZIndex: =19
+
+            Label3_13 As label:
+                Height: =31
+                Size: =11
+                Text: ="Ngân hàng"
+                Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB<>"4"
+                Width: =118
+                X: =120
+                Y: =235
+                ZIndex: =20
+
+            Label3_16 As label:
+                Height: =46
+                Size: =11
+                Text: ="Số tài khoản ngân hàng"
+                Width: =95
+                X: =670
+                Y: =235
+                ZIndex: =21
+
+            DateNSinh As datepicker:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultDate: =objKB.NGAY_SINH
+                Format: ="dd/mm/yyyy"
+                Height: =32
+                InputTextPlaceholder: =
+                Size: =11
+                Visible: =ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân")
+                Width: =200
+                X: =840
+                Y: =145
+                ZIndex: =22
+
+            DateNTLap As datepicker:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultDate: |-
+                    =If(
+                        ComboBoxLoaiKB.Selected.MA_LOAI_KB="4" && !IsBlank(ComboBoxNHangBA.Selected.MA_NGAN_HANG),
+                        LookUp(
+                            DM_NGAN_HANGS,
+                            MA_NGAN_HANG=ComboBoxNHangBA.Selected.MA_NGAN_HANG,
+                            NGAY_THANH_LAP
+                        ),
+                        objKB.NGAY_THANH_LAP
+                    )
+                EndYear: =2100
+                Format: ="dd/mm/yyyy"
+                Height: =32
+                InputTextPlaceholder: =
+                Size: =11
+                StartYear: =1900
+                Visible: =!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức")
+                Width: =200
+                X: =840
+                Y: =145
+                ZIndex: =23
+
+            TextDChi As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =objKB.DIA_CHI
+                Height: =32
+                Size: =11
+                Width: =200
+                X: =290
+                Y: =145
+                ZIndex: =24
+
+            TextSDT As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =objKB.SO_DIEN_THOAI
+                Height: =32
+                Size: =11
+                Width: =200
+                X: =290
+                Y: =190
+                ZIndex: =25
+
+            TextEmail As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Color: =RGBA(15, 84, 140, 1)
+                Default: =objKB.EMAIL
+                Height: =32
+                Size: =11
+                Width: =200
+                X: =840
+                Y: =190
+                ZIndex: =26
+
+            TextSTK As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Color: =RGBA(15, 84, 140, 1)
+                Default: |-
+                    =If(
+                        ComboBoxLoaiKB.Selected.MA_LOAI_KB="4" && !IsBlank(ComboBoxNHangBA.Selected.MA_NGAN_HANG),
+                        LookUp(
+                            DM_NGAN_HANGS,
+                            MA_NGAN_HANG=ComboBoxNHangBA.Selected.MA_NGAN_HANG,
+                            SO_TAI_KHOAN
+                        ),
+                        objKB.SO_TK_NGANHANG
+                    )
+                Height: =32
+                Size: =11
+                Width: =200
+                X: =840
+                Y: =235
+                ZIndex: =27
+
+            ComboBoxNHang As combobox:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultSelectedItems: =LookUp(DM_NGAN_HANGS,MA_DU_LIEU=objKB.TEN_NGAN_HANG)
+                DisplayFields: =["cr282_ma_ngan_hang","cr282_ten_ngan_hang"]
+                Height: =32
+                InputTextPlaceholder: ="Chọn ngân hàng"
+                Items: =DM_NGAN_HANGS
+                SearchFields: =["cr282_ma_ngan_hang"]
+                SearchItems: =Search(DM_NGAN_HANGS,ComboBoxNHang.SearchText,"cr282_ma_ngan_hang")
+                SelectMultiple: =false
+                Size: =11
+                Template: =ListItemTemplate.Double
+                Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB<>"4"
+                Width: =200
+                X: =290
+                Y: =235
+                ZIndex: =28
+
+        Container6 As groupContainer.manualLayoutContainer:
+            Height: =If(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"),208,0)
+            Width: =1267
+            X: =8
+            Y: =439
             ZIndex: =49
 
-        ComboBoxLGT As combobox:
-            DefaultSelectedItems: =LookUp(DM_LOAI_GIAYTO,MA_LOAI_GT=objKB.LOAI_GIAY_TO)
-            DisplayFields: =["cr282_ten_loai_gt"]
-            Height: =32
-            InputTextPlaceholder: ="Chọn loại giấy tờ"
-            Items: =DM_LOAI_GIAYTO
-            SearchFields: =["cr282_ten_loai_gt"]
-            SearchItems: =Search(DM_LOAI_GIAYTO,ComboBoxLGT.SearchText,"cr282_ten_loai_gt")
-            SelectMultiple: =false
-            Size: =11
-            Width: =200
-            X: =314
-            Y: =168
+            Label3_17 As label:
+                Height: =36
+                Size: =11
+                Text: ="Số hợp đồng (*)"
+                Width: =120
+                X: =120
+                Y: =10
+                ZIndex: =1
+
+            TextSoHD As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =objKB.SO_HOP_DONG
+                Height: =32
+                Size: =11
+                Width: =200
+                X: =290
+                Y: =12
+                ZIndex: =2
+
+            Label3_24 As label:
+                Height: =36
+                Size: =11
+                Text: ="Ngày hợp đồng (*)"
+                Width: =140
+                X: =670
+                Y: =10
+                ZIndex: =3
+
+            DateNHDong As datepicker:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultDate: =objKB.NGAY_HDONG
+                EndYear: =2100
+                Format: ="dd/mm/yyyy"
+                Height: =32
+                InputTextPlaceholder: =
+                Size: =11
+                StartYear: =1900
+                Width: =200
+                X: =840
+                Y: =12
+                ZIndex: =4
+
+            Label3_25 As label:
+                Size: =11
+                Text: ="Ngày hiệu lực từ của hợp đồng (*)"
+                Width: =127
+                X: =120
+                Y: =52
+                ZIndex: =5
+
+            DateNHLTuHD As datepicker:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultDate: =objKB.HLUC_TU_HDONG
+                EndYear: =2100
+                Format: ="dd/mm/yyyy"
+                Height: =32
+                InputTextPlaceholder: =
+                Size: =11
+                StartYear: =1900
+                Width: =200
+                X: =290
+                Y: =56
+                ZIndex: =6
+
+            DateNHLDenHD As datepicker:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultDate: =objKB.HLUC_DEN_HDONG
+                EndYear: =2100
+                Format: ="dd/mm/yyyy"
+                Height: =32
+                InputTextPlaceholder: =
+                Size: =11
+                StartYear: =1900
+                Width: =200
+                X: =840
+                Y: =56
+                ZIndex: =8
+
+            Label3_27 As label:
+                Height: =36
+                Size: =11
+                Text: ="File hợp đồng đính kèm"
+                Width: =127
+                X: =120
+                Y: =102
+                ZIndex: =9
+
+            Label3_26 As label:
+                Size: =11
+                Text: ="Ngày hiệu lực đến của hợp đồng"
+                Width: =142
+                X: =670
+                Y: =52
+                ZIndex: =11
+
+            DataCardValue3_3 As attachments:
+                AddAttachmentText: ="Upload file"
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: |-
+                    ={
+                        FileName:objKB.FILE_HDONG.FileName,
+                        Value:objKB.FILE_HDONG.Value
+                    }
+                DisplayMode: =Parent.DisplayMode
+                DropTargetBorderColor: =RGBA(72, 163, 62, 1)
+                Height: =89
+                IsInDataCard: =true
+                Items: |-
+                    =If(
+                        IsBlank(objKB.MA_KENH_BAN),
+                        Blank(),
+                        {
+                            FileName:objKB.FILE_HDONG.FileName,
+                            Value:objKB.FILE_HDONG.Value
+                        }
+                    )
+                MaxAttachments: =1
+                MaxAttachmentsText: =""
+                NoAttachmentsText: =""
+                OnAddFile: =
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Width: =200
+                X: =290
+                Y: =104
+                ZIndex: =13
+
+        Container7 As groupContainer.manualLayoutContainer:
+            Height: =If(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân"),58,0)
+            Width: =1267
+            X: =8
+            Y: =441
             ZIndex: =50
 
-        ComboBoxLoaiKB As combobox:
-            DefaultSelectedItems: |-
-                =If(
-                    IsBlank(LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=objKB.LOAI)),
-                    If(
-                        DropCNTC.Selected.Value="Cá nhân",
-                        LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB="1"),
-                        LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB="2")
-                    ),
-                    LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=objKB.LOAI)
-                )
-            DisplayFields: =["cr282_ten_loai_kb"]
-            Height: =32
-            InputTextPlaceholder: ="Chọn loại kênh bán"
-            Items: |
-                =If(
-                    DropCNTC.Selected.Value="Cá nhân",
-                    Filter(DM_LOAI_KENH_BANS,MA_LOAI_KB<>"3" && MA_LOAI_KB<>"4"),
-                    Filter(DM_LOAI_KENH_BANS,MA_LOAI_KB<>"1")
-                )
-            SearchFields: =["cr282_ten_loai_kb"]
-            SearchItems: |-
-                =Search(If(
-                    DropCNTC.Selected.Value="Cá nhân",
-                    Filter(DM_LOAI_KENH_BANS,MA_LOAI_KB<>"3" && MA_LOAI_KB<>"4"),
-                    Filter(DM_LOAI_KENH_BANS,MA_LOAI_KB<>"1")
-                )
-                ,ComboBoxLoaiKB.SearchText,"cr282_ten_loai_kb")
-            SelectMultiple: =false
-            Size: =11
-            Width: =200
-            X: =314
-            Y: =408
+            Label3_19 As label:
+                Height: =36
+                Size: =11
+                Text: ="Mã nhân viên (*)"
+                Width: =130
+                X: =120
+                Y: =12
+                ZIndex: =1
+
+            TextMaNV As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =objKB.MA_NHAN_VIEN
+                Height: =32
+                Size: =11
+                Width: =200
+                X: =290
+                Y: =12
+                ZIndex: =2
+
+        Container5 As groupContainer.manualLayoutContainer:
+            Height: =If(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"),102,0)
+            Width: =1267
+            X: =8
+            Y: =647
             ZIndex: =51
 
-        ComboBoxLGTNDD As combobox:
-            DefaultSelectedItems: =LookUp(DM_LOAI_GIAYTO,MA_LOAI_GT=objKB.LOAI_GIAY_TO_NDD)
-            DisplayFields: =["cr282_ten_loai_gt"]
-            Height: =32
-            InputTextPlaceholder: ="Chọn loại giấy tờ"
-            Items: =DM_LOAI_GIAYTO
-            SearchFields: =["cr282_ten_loai_gt"]
-            SearchItems: =Search(DM_LOAI_GIAYTO,ComboBoxLGTNDD.SearchText,"cr282_ten_loai_gt")
-            SelectMultiple: =false
-            Size: =11
-            Visible: =DropCNTC.Selected.Value="Tổ chức"
-            Width: =200
-            X: =314
-            Y: =535
-            ZIndex: =52
+            Label3_20 As label:
+                Height: =33
+                Size: =11
+                Text: ="Tên người đại diện (*)"
+                Width: =160
+                X: =120
+                Y: =12
+                ZIndex: =1
+
+            Label3_30 As label:
+                Height: =46
+                Size: =11
+                Text: ="Loại giấy tờ của người đại diện (*)"
+                Width: =140
+                X: =120
+                Y: =48
+                ZIndex: =4
+
+            Label3_31 As label:
+                Height: =46
+                Size: =11
+                Text: ="Số giấy tờ của người đại diện (*)"
+                Width: =140
+                X: =670
+                Y: =48
+                ZIndex: =5
+
+            Label3_21 As label:
+                Height: =46
+                Size: =11
+                Text: ="Số điện thoại của người đại diện"
+                Width: =128
+                X: =670
+                Y: =6
+                ZIndex: =6
+
+            TextTenNDD As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =objKB.NGUOI_DAI_DIEN
+                Height: =32
+                Size: =11
+                Width: =200
+                X: =290
+                Y: =12
+                ZIndex: =7
+
+            TextSDTNDD As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =objKB.SO_DIEN_THOAI_NDD
+                Height: =32
+                Size: =11
+                Width: =200
+                X: =840
+                Y: =12
+                ZIndex: =10
+
+            TextSGTNDD As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =objKB.SO_GIAY_TO_NDD
+                Height: =32
+                Size: =11
+                Width: =200
+                X: =840
+                Y: =56
+                ZIndex: =11
+
+            ComboBoxLGTNDD As combobox:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultSelectedItems: =LookUp(DM_LOAI_GIAYTO,MA_LOAI_GT=objKB.LOAI_GIAY_TO_NDD)
+                DisplayFields: =["cr282_ten_loai_gt"]
+                Height: =32
+                InputTextPlaceholder: ="Chọn loại giấy tờ"
+                Items: =DM_LOAI_GIAYTO
+                SearchFields: =["cr282_ten_loai_gt"]
+                SearchItems: =Search(DM_LOAI_GIAYTO,ComboBoxLGTNDD.SearchText,"cr282_ten_loai_gt")
+                SelectMultiple: =false
+                Size: =11
+                Width: =200
+                X: =290
+                Y: =56
+                ZIndex: =12
 
     LeftNavigation_25 As LeftNavigation_9:
+        Height: =808
         Width: =LeftNavigation_25.MenuWidth - 10
         ZIndex: =2
 
