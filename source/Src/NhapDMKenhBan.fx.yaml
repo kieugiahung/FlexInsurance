@@ -1,7 +1,7 @@
 NhapDMKenhBan As screen:
     Height: =Max(810, App.MinScreenHeight)
     OnVisible: |-
-        =Reset(DropCNTC);Reset(ComboBoxLoaiKB);Reset(ComboBoxLGT);Reset(DropQGia);Reset(DropQTich);Reset(ComboBoxNHang);Reset(ComboBoxLGTNDD);
+        =Reset(DropCNTC);Reset(ComboBoxLoaiKB);Reset(ComboBoxLGT);Reset(CbxQTichDMKB);Reset(ComboBoxQGiaDMKB);Reset(ComboBoxNHang);Reset(ComboBoxLGTNDD);
         Reset(TextMaKB);Reset(TextTenKB);Reset(TextSGT);Reset(TextSGTNDD);Reset(TextSDT);Reset(TextSDTNDD);Reset(TextMST);Reset(TextSoHD);Reset(TextMaNV);
         Reset(DateNSinh);Reset(DateNTLap);Reset(TextDChi);Reset(TextTenNDD);Reset(TextSTK);
         Reset(DropTThai);Reset(ComboBoxTinhTP);Reset(ComboBoxQHuyen);Reset(DateNHDong);Reset(DateNHLTuHD);Reset(DateNHLDenHD);Reset(DataCardValue3_3);Reset(ComboBoxNHangBA);
@@ -39,6 +39,14 @@ NhapDMKenhBan As screen:
                 	Notify("Bắt buộc nhập số giấy tờ",NotificationType.Error,2000),
                 	IsBlank(TextMST.Text),
                 	Notify("Bắt buộc nhập mã số thuế",NotificationType.Error,2000),
+                    (!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || 
+                	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"))
+                    && IsBlank(ComboBoxQGiaDMKB.Selected.MA_PHAMVI),
+                	Notify("Bắt buộc nhập quốc gia",NotificationType.Error,2000),
+                    (ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || 
+                	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân"))
+                    && IsBlank(CbxQTichDMKB.Selected.MA_QUOC_TICH),
+                	Notify("Bắt buộc nhập quốc tịch",NotificationType.Error,2000),
                 	IsBlank(ComboBoxTinhTP.Selected.MA_PHAMVI),
                 	Notify("Bắt buộc nhập tỉnh/thành phố",NotificationType.Error,2000),
                 	IsBlank(ComboBoxQHuyen.Selected.MA_PHAMVI),
@@ -117,7 +125,7 @@ NhapDMKenhBan As screen:
                                     TEN_NGAN_HANG:ComboBoxNHang.Selected.MA_DU_LIEU,
                                     SO_TK_NGANHANG:TextSTK.Text,
                                     QUOC_GIA:Blank(),
-                                    QUOC_TICH:DropQTich.Selected.MA_QUOC_TICH,
+                                    QUOC_TICH:CbxQTichDMKB.Selected.MA_QUOC_TICH,
                                     SO_HOP_DONG:Blank(),
                                     MA_NHAN_VIEN:TextMaNV.Text,
                                     LOAI_CANHAN_TOCHUC:If(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý",DropCNTC.Selected.Value,Blank()),
@@ -151,7 +159,7 @@ NhapDMKenhBan As screen:
                                     NGUOI_DAI_DIEN:TextTenNDD.Text,
                                     TEN_NGAN_HANG:If(ComboBoxLoaiKB.Selected.MA_LOAI_KB="4",ComboBoxNHangBA.Selected.MA_DU_LIEU,ComboBoxNHang.Selected.MA_DU_LIEU),
                                     SO_TK_NGANHANG:TextSTK.Text,
-                                    QUOC_GIA:DropQGia.Selected.MA_PHAMVI,
+                                    QUOC_GIA:ComboBoxQGiaDMKB.Selected.MA_PHAMVI,
                                     QUOC_TICH:Blank(),
                                     LOAI_GIAY_TO_NDD:ComboBoxLGTNDD.Selected.MA_LOAI_GT,
                                     SO_GIAY_TO_NDD:TextSGTNDD.Text,
@@ -195,7 +203,7 @@ NhapDMKenhBan As screen:
                                     TEN_NGAN_HANG:ComboBoxNHang.Selected.MA_DU_LIEU,
                                     SO_TK_NGANHANG:TextSTK.Text,
                                     QUOC_GIA:Blank(),
-                                    QUOC_TICH:DropQTich.Selected.MA_QUOC_TICH,
+                                    QUOC_TICH:CbxQTichDMKB.Selected.MA_QUOC_TICH,
                                     SO_HOP_DONG:Blank(),
                                     MA_NHAN_VIEN:TextMaNV.Text,
                                     LOAI_CANHAN_TOCHUC:If(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý",DropCNTC.Selected.Value,Blank()),
@@ -229,7 +237,7 @@ NhapDMKenhBan As screen:
                                     NGUOI_DAI_DIEN:TextTenNDD.Text,
                                     TEN_NGAN_HANG:If(ComboBoxLoaiKB.Selected.MA_LOAI_KB="4",ComboBoxNHangBA.Selected.MA_DU_LIEU,ComboBoxNHang.Selected.MA_DU_LIEU),
                                     SO_TK_NGANHANG:TextSTK.Text,
-                                    QUOC_GIA:DropQGia.Selected.MA_PHAMVI,
+                                    QUOC_GIA:ComboBoxQGiaDMKB.Selected.MA_PHAMVI,
                                     QUOC_TICH:Blank(),
                                     LOAI_GIAY_TO_NDD:ComboBoxLGTNDD.Selected.MA_LOAI_GT,
                                     SO_GIAY_TO_NDD:TextSGTNDD.Text,
@@ -762,14 +770,14 @@ NhapDMKenhBan As screen:
 
             CbxQTichDMKB As combobox:
                 BorderColor: =RGBA(72, 163, 62, 1)
-                DefaultSelectedItems: =LookUp(DM_QUOC_TICHES,MA_QUOC_TICH=objKB.QUOC_TICH)
-                DisplayFields: =["cr282_ma_quoc_tich"]
+                DefaultSelectedItems: =If(IsBlank(objKB.QUOC_TICH),LookUp(DM_QUOC_TICHES,MA_QUOC_TICH="1"),LookUp(DM_QUOC_TICHES,MA_QUOC_TICH=objKB.QUOC_TICH))
+                DisplayFields: =["cr282_ten_quoc_tich"]
                 Height: =32
                 InputTextPlaceholder: ="Chọn quốc tịch"
                 Items: =DM_QUOC_TICHES
                 OnChange: =Reset(ComboBoxQHuyen)
-                SearchFields: =["cr282_ma_quoc_tich"]
-                SearchItems: =Search(DM_QUOC_TICHES,CbxQTichDMKB.SearchText,"cr282_ma_quoc_tich")
+                SearchFields: =["cr282_ten_quoc_tich"]
+                SearchItems: =Search(DM_QUOC_TICHES,CbxQTichDMKB.SearchText,"cr282_ten_quoc_tich")
                 SelectMultiple: =false
                 Size: =11
                 Visible: =ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân")
