@@ -165,10 +165,14 @@ NhapDMKenhBan As screen:
                                     NGAY_HDONG:DateNHDong.SelectedDate,
                                     HLUC_TU_HDONG:DateNHLTuHD.SelectedDate,
                                     HLUC_DEN_HDONG:DateNHLDenHD.SelectedDate,
-                                    FILE_HDONG:{
-                                        FileName:First(DataCardValue3.Attachments).Name,
-                                        Value:First(DataCardValue3.Attachments).Value
-                                    }
+                                    FILE_HDONG:If(
+                                        IsEmpty(DataCardValue3_3.Attachments),
+                                        Blank(),
+                                        {
+                                            FileName:First(DataCardValue3_3.Attachments).Name,
+                                            Value:First(DataCardValue3_3.Attachments).Value
+                                        }
+                                    )
                                 }
                             )
                         ),
@@ -239,10 +243,14 @@ NhapDMKenhBan As screen:
                                     NGAY_HDONG:DateNHDong.SelectedDate,
                                     HLUC_TU_HDONG:DateNHLTuHD.SelectedDate,
                                     HLUC_DEN_HDONG:DateNHLDenHD.SelectedDate,
-                                    FILE_HDONG:{
-                                        FileName:First(DataCardValue3.Attachments).Name,
-                                        Value:First(DataCardValue3.Attachments).Value
-                                    }
+                                    FILE_HDONG:If(
+                                        IsEmpty(DataCardValue3_3.Attachments),
+                                        Blank(),
+                                        {
+                                            FileName:First(DataCardValue3_3.Attachments).Name,
+                                            Value:First(DataCardValue3_3.Attachments).Value
+                                        }
+                                    )
                                 }
                             )
                         )
@@ -513,29 +521,6 @@ NhapDMKenhBan As screen:
                 Y: =55
                 ZIndex: =8
 
-            DropQGia As dropdown:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=objKB.QUOC_GIA,TEN_PHAMVI)
-                Height: =32
-                Items: =Filter(DM_PHAMVI_DIALYS,LOAI="QUOC_GIA")
-                Size: =11
-                Visible: =!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức")
-                Width: =200
-                X: =840
-                Y: =55
-                ZIndex: =9
-
-            DropQTich As dropdown:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Height: =32
-                Items: =DM_QUOC_TICHES
-                Size: =11
-                Visible: =ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân")
-                Width: =200
-                X: =840
-                Y: =55
-                ZIndex: =10
-
             Label3_22 As label:
                 Height: =41
                 Size: =11
@@ -757,6 +742,42 @@ NhapDMKenhBan As screen:
                 Y: =235
                 ZIndex: =28
 
+            ComboBoxQGiaDMKB As combobox:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultSelectedItems: =If(IsBlank(objKB.QUOC_GIA),LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI="1000"),LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=objKB.QUOC_GIA))
+                DisplayFields: =["cr282_ten_phamvi"]
+                Height: =32
+                InputTextPlaceholder: ="Chọn quốc gia"
+                Items: =Filter(DM_PHAMVI_DIALYS,LOAI="QUOC_GIA")
+                OnChange: =
+                SearchFields: =["cr282_ten_phamvi"]
+                SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="QUOC_GIA"),ComboBoxQGiaDMKB.SearchText,"cr282_ten_phamvi")
+                SelectMultiple: =false
+                Size: =11
+                Visible: =!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức")
+                Width: =200
+                X: =840
+                Y: =55
+                ZIndex: =29
+
+            CbxQTichDMKB As combobox:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultSelectedItems: =LookUp(DM_QUOC_TICHES,MA_QUOC_TICH=objKB.QUOC_TICH)
+                DisplayFields: =["cr282_ma_quoc_tich"]
+                Height: =32
+                InputTextPlaceholder: ="Chọn quốc tịch"
+                Items: =DM_QUOC_TICHES
+                OnChange: =Reset(ComboBoxQHuyen)
+                SearchFields: =["cr282_ma_quoc_tich"]
+                SearchItems: =Search(DM_QUOC_TICHES,CbxQTichDMKB.SearchText,"cr282_ma_quoc_tich")
+                SelectMultiple: =false
+                Size: =11
+                Visible: =ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân")
+                Width: =200
+                X: =840
+                Y: =55
+                ZIndex: =30
+
         Container6 As groupContainer.manualLayoutContainer:
             Height: =If(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"),208,0)
             Width: =1267
@@ -862,18 +883,13 @@ NhapDMKenhBan As screen:
             DataCardValue3_3 As attachments:
                 AddAttachmentText: ="Upload file"
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: |-
-                    ={
-                        FileName:objKB.FILE_HDONG.FileName,
-                        Value:objKB.FILE_HDONG.Value
-                    }
                 DisplayMode: =Parent.DisplayMode
                 DropTargetBorderColor: =RGBA(72, 163, 62, 1)
                 Height: =89
                 IsInDataCard: =true
                 Items: |-
                     =If(
-                        IsBlank(objKB.MA_KENH_BAN),
+                        IsBlank(objKB.MA_KENH_BAN) || IsBlank(objKB.FILE_HDONG),
                         Blank(),
                         {
                             FileName:objKB.FILE_HDONG.FileName,
