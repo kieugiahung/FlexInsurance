@@ -1133,13 +1133,13 @@ Nhapdieukien As screen:
                         DefaultSelectedItems: =ThisItem.group_apdung_kh
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
-                        DisplayFields: =["TEN_GIA_TRI"]
+                        DisplayFields: =["cr282_ten_gia_tri"]
                         Height: =30
                         IsSearchable: =false
-                        Items: =Filter( tmpDsGiatri, LOAI = DropKH.Selected.MA_CHI_TIEU)
+                        Items: =Filter( tmpDsGiatri, Loai = DropKH.Selected.MA_CHI_TIEU)
                         OnSelect: =Select(Parent)
-                        SearchFields: =["TEN_GIA_TRI"]
-                        SearchItems: =[]
+                        SearchFields: =["cr282_ten_gia_tri"]
+                        SearchItems: =Search(Filter( tmpDsGiatri, Loai = DropKH.Selected.MA_CHI_TIEU),ComboBoxGTKH.SearchText,"cr282_ten_gia_tri")
                         Size: =11
                         Width: =263
                         X: =402
@@ -1234,13 +1234,13 @@ Nhapdieukien As screen:
                         DefaultSelectedItems: =ThisItem.group_loaitru_kh
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
-                        DisplayFields: =["TEN_GIA_TRI"]
+                        DisplayFields: =["cr282_ten_gia_tri"]
                         Height: =30
                         IsSearchable: =false
-                        Items: =Filter( tmpDsGiatri, LOAI = DropKH_LoaiTru.Selected.MA_CHI_TIEU)
+                        Items: =Filter( tmpDsGiatri, Loai = DropKH_LoaiTru.Selected.MA_CHI_TIEU)
                         OnSelect: =Select(Parent)
-                        SearchFields: =["TEN_GIA_TRI"]
-                        SearchItems: =[]
+                        SearchFields: =["cr282_ten_gia_tri"]
+                        SearchItems: =Search(Filter( tmpDsGiatri, Loai = DropKH_LoaiTru.Selected.MA_CHI_TIEU),ComboBoxGTKH_LT.SearchText,"cr282_ten_gia_tri")
                         Size: =11
                         Width: =263
                         X: =402
@@ -1378,13 +1378,13 @@ Nhapdieukien As screen:
                         DefaultSelectedItems: =ThisItem.group_apdung_pv
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
-                        DisplayFields: =["TEN_GIA_TRI"]
+                        DisplayFields: =["cr282_ten_gia_tri"]
                         Height: =30
                         IsSearchable: =false
-                        Items: =Filter( tmpDsGiatri, LOAI = DropPV.Selected.MA_CHI_TIEU)
+                        Items: =Filter( tmpDsGiatri, Loai = DropPV.Selected.MA_CHI_TIEU)
                         OnSelect: =Select(Parent)
-                        SearchFields: =["TEN_GIA_TRI"]
-                        SearchItems: =[]
+                        SearchFields: =["cr282_ten_gia_tri"]
+                        SearchItems: =Search(Filter( tmpDsGiatri, Loai = DropPV.Selected.MA_CHI_TIEU),ComboBoxGTPV.SearchText,"cr282_ten_gia_tri")
                         Size: =11
                         Width: =263
                         X: =402
@@ -1479,13 +1479,13 @@ Nhapdieukien As screen:
                         DefaultSelectedItems: =ThisItem.group_loaitru_pv
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
-                        DisplayFields: =["TEN_GIA_TRI"]
+                        DisplayFields: =["cr282_ten_gia_tri"]
                         Height: =30
                         IsSearchable: =false
-                        Items: =Filter( tmpDsGiatri, LOAI = DropPV_LoaiTru.Selected.MA_CHI_TIEU)
+                        Items: =Filter( tmpDsGiatri, Loai = DropPV_LoaiTru.Selected.MA_CHI_TIEU)
                         OnSelect: =Select(Parent)
-                        SearchFields: =["TEN_GIA_TRI"]
-                        SearchItems: =[]
+                        SearchFields: =["cr282_ten_gia_tri"]
+                        SearchItems: =Search(Filter( tmpDsGiatri, Loai = DropPV_LoaiTru.Selected.MA_CHI_TIEU),ComboBoxGTPV_LT.SearchText,"cr282_ten_gia_tri")
                         Size: =11
                         Width: =263
                         X: =402
@@ -1997,8 +1997,8 @@ Nhapdieukien As screen:
                                             KIEU: RadioKH.Selected.ID,
                                             MA_TIEU_CHI: kh.DropKH.Selected.MA_CHI_TIEU,
                                             TEN_TIEU_CHI: kh.DropKH.Selected.TEN_CHI_TIEU,
-                                            MA_GIA_TRI: gt.MA_GIA_TRI,
-                                            TEN_GIA_TRI: gt.TEN_GIA_TRI
+                                            MA_GIA_TRI: gt.Ma,
+                                            TEN_GIA_TRI: gt.Ten
                                         }
                                     )
                                 )
@@ -2027,8 +2027,8 @@ Nhapdieukien As screen:
                                             KIEU: RadioKH_LoaiTru.Selected.ID,
                                             MA_TIEU_CHI: kh.DropKH_LoaiTru.Selected.MA_CHI_TIEU,
                                             TEN_TIEU_CHI: kh.DropKH_LoaiTru.Selected.TEN_CHI_TIEU,
-                                            MA_GIA_TRI: gt.MA_GIA_TRI,
-                                            TEN_GIA_TRI: gt.TEN_GIA_TRI
+                                            MA_GIA_TRI: gt.Ma,
+                                            TEN_GIA_TRI: gt.Ten
                                         }
                                     )
                                 )
@@ -2112,8 +2112,8 @@ Nhapdieukien As screen:
                                             KIEU: RadioPV.Selected.ID,
                                             MA_TIEU_CHI: pv.DropPV.Selected.MA_CHI_TIEU,
                                             TEN_TIEU_CHI: pv.DropPV.Selected.TEN_CHI_TIEU,
-                                            MA_GIA_TRI: gt.MA_GIA_TRI,
-                                            TEN_GIA_TRI: gt.TEN_GIA_TRI
+                                            MA_GIA_TRI: gt.Ma,
+                                            TEN_GIA_TRI: gt.Ten
                                         }
                                     )
                                 )
@@ -2142,8 +2142,8 @@ Nhapdieukien As screen:
                                             KIEU: RadioPV_LoaiTru.Selected.ID,
                                             MA_TIEU_CHI: kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU,
                                             TEN_TIEU_CHI: kh.DropPV_LoaiTru.Selected.TEN_CHI_TIEU,
-                                            MA_GIA_TRI: gt.MA_GIA_TRI,
-                                            TEN_GIA_TRI: gt.TEN_GIA_TRI
+                                            MA_GIA_TRI: gt.Ma,
+                                            TEN_GIA_TRI: gt.Ten
                                         }
                                     )
                                 )
