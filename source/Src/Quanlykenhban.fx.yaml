@@ -124,7 +124,7 @@ Quanlykenhban As screen:
 
             TxtMoTa_16 As text:
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.LOAI_GIAY_TO
+                Default: =LookUp(DM_LOAI_GIAYTO,MA_LOAI_GT=ThisItem.LOAI_GIAY_TO,TEN_LOAI_GT)
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -143,7 +143,7 @@ Quanlykenhban As screen:
 
             Button6_4 As button:
                 FontWeight: =FontWeight.Bold
-                Height: =25
+                Height: =24
                 OnSelect: |-
                     =Set(maKenhBanFwd,ThisItem.MA_KENH_BAN);
                     Navigate(NhapDMKenhBan)
@@ -151,11 +151,12 @@ Quanlykenhban As screen:
                 Text: ="Sửa"
                 Width: =71
                 X: =1133
+                Y: =3
                 ZIndex: =26
 
             Button6_5 As button:
                 FontWeight: =FontWeight.Bold
-                Height: =25
+                Height: =24
                 OnSelect: |-
                     =Refresh(DM_KENH_BANS);
                     RemoveIf(
@@ -204,7 +205,7 @@ Quanlykenhban As screen:
                 =//1199
                 Parent.Width -10
             X: =10
-            Y: =90
+            Y: =88
             ZIndex: =2
 
         TextCanvas2_194 As Text:
@@ -217,7 +218,7 @@ Quanlykenhban As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =187
             X: =193
-            Y: =90
+            Y: =88
             ZIndex: =3
 
         TextCanvas2_198 As Text:
@@ -230,7 +231,7 @@ Quanlykenhban As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =169
             X: =1135
-            Y: =92
+            Y: =88
             ZIndex: =5
 
         TextCanvas2_192 As Text:
@@ -243,7 +244,7 @@ Quanlykenhban As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =188
             X: =5
-            Y: =90
+            Y: =88
             ZIndex: =10
 
         ThemMoiCT_19 As button:
@@ -315,7 +316,7 @@ Quanlykenhban As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =213
             X: =593
-            Y: =90
+            Y: =88
             ZIndex: =16
 
         TextCanvas2_197 As Text:
@@ -328,7 +329,7 @@ Quanlykenhban As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =133
             X: =806
-            Y: =90
+            Y: =88
             ZIndex: =17
 
         TextCanvas2_193 As Text:
@@ -341,7 +342,7 @@ Quanlykenhban As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =165
             X: =948
-            Y: =90
+            Y: =88
             ZIndex: =18
 
         TextCanvas2_195 As Text:
@@ -354,7 +355,7 @@ Quanlykenhban As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =213
             X: =380
-            Y: =92
+            Y: =88
             ZIndex: =19
 
         "TextFilterPV_1 As 'Text input'":
