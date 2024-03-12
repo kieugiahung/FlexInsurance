@@ -2296,6 +2296,8 @@ Nhapdieukien As screen:
                         ZIndex: =3
 
                     DropQTich_1 As dropdown:
+                        Default: |
+                            =LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT, MA_DIEU_KIEN =varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "2" && KIEU = "2" && MA_TIEU_CHI = ThisItem.cr282_ma_tieu_chi).TEN_TIEU_CHI
                         Height: =32
                         Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "SP")
                         OnChange: =Reset(ComboBox3_1)
