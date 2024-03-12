@@ -1,36 +1,68 @@
 Screen2 As screen:
-    OnVisible: |-
+    OnVisible: |
         =ClearCollect(
             tmpApdungKH,
-            [
-                
-            ]
+            GroupBy(
+                Filter(
+                    DL_DIEUKIEN_APDUNG_LOAI_CT,
+                    MA_DIEU_KIEN = "AD0003" && THANH_PHAN = "KH" && AP_DUNG = "1"
+                ),
+                "cr282_ma_dieu_kien",
+                "cr282_thanh_phan",
+                "cr282_ap_dung",
+                "cr282_ma_tieu_chi",
+                "cr282_ten_tieu_chi","group_apdung_kh"
+            )
         );
         ClearCollect(
             tmpLoaitruKH,
-            [
-                
-            ]
+            GroupBy(
+                Filter(
+                    DL_DIEUKIEN_APDUNG_LOAI_CT,
+                    MA_DIEU_KIEN = "AD0003" && THANH_PHAN = "KH" && AP_DUNG = "2"
+                ),
+                "cr282_ma_dieu_kien",
+                "cr282_thanh_phan",
+                "cr282_ap_dung",
+                "cr282_ma_tieu_chi",
+                "cr282_ten_tieu_chi","group_loaitru_kh"
+            )
         );
         ClearCollect(
             tmpApdungPV,
-            [
-                
-            ]
+            GroupBy(
+                Filter(
+                    DL_DIEUKIEN_APDUNG_LOAI_CT,
+                    MA_DIEU_KIEN = "AD0003" && THANH_PHAN = "PV" && AP_DUNG = "1"
+                ),
+                "cr282_ma_dieu_kien",
+                "cr282_thanh_phan",
+                "cr282_ap_dung",
+                "cr282_ma_tieu_chi",
+                "cr282_ten_tieu_chi","group_apdung_pv"
+            )
         );
         ClearCollect(
             tmpLoaitruPV,
-            [
-                
-            ]
+            GroupBy(
+                Filter(
+                    DL_DIEUKIEN_APDUNG_LOAI_CT,
+                    MA_DIEU_KIEN = "AD0003" && THANH_PHAN = "PV" && AP_DUNG = "2"
+                ),
+                "cr282_ma_dieu_kien",
+                "cr282_thanh_phan",
+                "cr282_ap_dung",
+                "cr282_ma_tieu_chi",
+                "cr282_ten_tieu_chi","group_loaitru_pv"
+            )
         );
         ClearCollect(
             tmpDsGiatri,
             [
                 {
-                    Ma: "",
-                    Ten: "",
-                    Loai: ""
+                    MA_GIA_TRI: "",
+                    TEN_GIA_TRI: "",
+                    LOAI: ""
                 }
             ]
         );
@@ -41,9 +73,9 @@ Screen2 As screen:
                 tmpDsGiatri,
                 Defaults(tmpDsGiatri),
                 {
-                    Ma: kh.MA_NHOM_KH,
-                    Ten: kh.TEN_NHOM_KH,
-                    Loai: "MA_KH_NHOM"
+                    MA_GIA_TRI: kh.MA_NHOM_KH,
+                    TEN_GIA_TRI: kh.TEN_NHOM_KH,
+                    LOAI: "MA_KH_NHOM"
                 }
             )
         );
@@ -51,14 +83,14 @@ Screen2 As screen:
         Collect(
             tmpDsGiatri,
             {
-                Ma: "0",
-                Ten: "Cá nhân",
-                Loai: "MA_KH_LOAI"
+                MA_GIA_TRI: "0",
+                TEN_GIA_TRI: "Cá nhân",
+                LOAI: "MA_KH_LOAI"
             },
             {
-                Ma: "1",
-                Ten: "Tổ chức",
-                Loai: "MA_KH_LOAI"
+                MA_GIA_TRI: "1",
+                TEN_GIA_TRI: "Tổ chức",
+                LOAI: "MA_KH_LOAI"
             }
         );
         // them chi tieu Pham vi
@@ -68,12 +100,22 @@ Screen2 As screen:
                 tmpDsGiatri,
                 Defaults(tmpDsGiatri),
                 {
-                    Ma: pv.MA_PHAMVI,
-                    Ten: pv.TEN_PHAMVI,
-                    Loai: If(pv.LOAI="KHU_VUC","MA_KHU_VUC",
-                        If(pv.LOAI="QUOC_GIA","MA_QG",
-                            If(pv.LOAI="VUNG_MIEN","MA_VUNG_MIEN",
-                                If(pv.LOAI="TINH_TP","MA_TINH_TP","MA_QUAN_HUYEN")
+                    MA_GIA_TRI: pv.MA_PHAMVI,
+                    TEN_GIA_TRI: pv.TEN_PHAMVI,
+                    LOAI: If(
+                        pv.LOAI = "KHU_VUC",
+                        "MA_KHU_VUC",
+                        If(
+                            pv.LOAI = "QUOC_GIA",
+                            "MA_QG",
+                            If(
+                                pv.LOAI = "VUNG_MIEN",
+                                "MA_VUNG_MIEN",
+                                If(
+                                    pv.LOAI = "TINH_TP",
+                                    "MA_TINH_TP",
+                                    "MA_QUAN_HUYEN"
+                                )
                             )
                         )
                     )
@@ -101,7 +143,7 @@ Screen2 As screen:
             ZIndex: =1
 
             ContainerChung As groupContainer.manualLayoutContainer:
-                Height: =400
+                Height: =342
                 Width: =Parent.Width-130
                 X: =130
                 ZIndex: =1
@@ -127,10 +169,15 @@ Screen2 As screen:
                     BorderColor: =RGBA(245, 245, 245, 1)
                     DataSource: =DL_DIEUKIEN_APDUNG
                     DefaultMode: =FormMode.New
-                    Height: =363
+                    Height: =315
+                    Item: |-
+                        =LookUp(
+                            DL_DIEUKIEN_APDUNG,
+                            MA_DIEU_KIEN = rcd
+                        )
                     NumberOfColumns: =2
                     Width: =Parent.Width
-                    Y: =30
+                    Y: =27
                     ZIndex: =2
 
                     MA_DIEU_KIEN_DataCard1 As typedDataCard.textualEditCard:
@@ -949,98 +996,11 @@ Screen2 As screen:
                             Y: =DataCardID.Y + DataCardID.Height
                             ZIndex: =3
 
-                Btn_LuuDK As button:
-                    BorderColor: =RGBA(0, 0, 0, 0)
-                    BorderStyle: =BorderStyle.None
-                    DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                    DisabledColor: =RGBA(161, 159, 157, 1)
-                    DisabledFill: =RGBA(242, 242, 241, 0)
-                    Fill: =RGBA(0, 108, 191, 1)
-                    Font: =Font.'Segoe UI'
-                    FontWeight: =FontWeight.Bold
-                    HoverBorderColor: =RGBA(0, 0, 0, 0)
-                    HoverFill: =RGBA(16, 110, 190, 1)
-                    OnSelect: |
-                        =UpdateContext({errorMsgDK: ""});
-                        If(
-                            IsBlank(DataCardID.Text),
-                            UpdateContext(
-                                {
-                                    newIDMaDD: If(
-                                        CountIf(
-                                            DL_DIEUKIEN_APDUNG,
-                                            true
-                                        ) = 0,
-                                        1,
-                                        Max(
-                                            DL_DIEUKIEN_APDUNG,
-                                            ID
-                                        ) + 1
-                                    )
-                                }
-                            ),
-                            UpdateContext({newIDMaDD: Value(DataCardID.Text)})
-                        );
-                        If(
-                            IsBlank(DataCardValueMaDK.Text),
-                            UpdateContext(
-                                {
-                                    newMaDK: Concatenate(
-                                        "AD",
-                                        If(
-                                            newIDMaDD < 10,
-                                            "000",
-                                            If(
-                                                newIDMaDD < 100 && newIDMaDD >= 10,
-                                                "00",
-                                                If(
-                                                    newIDMaDD < 1000 && newIDMaDD >= 100,
-                                                    "0",
-                                                    ""
-                                                )
-                                            )
-                                        ),
-                                        Text(newIDMaDD)
-                                    )
-                                }
-                            ),
-                            UpdateContext({newMaDK: DataCardValueMaDK.Text})
-                        );
-                        If(
-                            IsBlank(DateValueTU.SelectedDate),
-                            UpdateContext({errorMsgDK: "Hiệu lực từ là bắt buộc"})
-                        );
-                        If(
-                            !IsBlank(errorMsgDK),
-                            Notify(
-                                errorMsgDK,
-                                NotificationType.Error,
-                                800
-                            ),
-                            SubmitForm(FormDKChung);
-                            ResetForm(FormDKChung);
-                            Notify(
-                                "Lưu dữ liệu thành công",
-                                NotificationType.Success,
-                                800
-                            );
-                            //Navigate();
-                        );
-                    PressedBorderColor: =RGBA(0, 69, 120, 1)
-                    PressedColor: =RGBA(255, 255, 255, 1)
-                    PressedFill: =RGBA(16, 110, 190, 1)
-                    Size: =11
-                    Text: ="Lưu"
-                    Width: =150
-                    X: =1038
-                    Y: =290
-                    ZIndex: =3
-
             Container2_3 As groupContainer.manualLayoutContainer:
-                Height: =609
+                Height: =532
                 Width: =Parent.Width-Self.X
                 X: =130
-                Y: =400
+                Y: =342
                 ZIndex: =2
 
                 Label6_1 As label:
@@ -1102,6 +1062,7 @@ Screen2 As screen:
                         BorderColor: =RGBA(54, 176, 75, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
                         ChevronFill: =RGBA(54, 176, 75, 1)
+                        Default: =ThisItem.cr282_ten_tieu_chi
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
                         Height: =32
@@ -1118,14 +1079,15 @@ Screen2 As screen:
                         BorderColor: =RGBA(54, 176, 75, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
                         ChevronFill: =RGBA(54, 176, 75, 1)
+                        DefaultSelectedItems: =ThisItem.group_apdung_kh
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
-                        DisplayFields: =["Ten"]
+                        DisplayFields: =["TEN_GIA_TRI"]
                         Height: =30
                         IsSearchable: =false
-                        Items: =Filter( tmpDsGiatri, Loai = DropKH.Selected.MA_CHI_TIEU)
+                        Items: =Filter( tmpDsGiatri, LOAI = DropKH.Selected.MA_CHI_TIEU)
                         OnSelect: =Select(Parent)
-                        SearchFields: =["Ten"]
+                        SearchFields: =["TEN_GIA_TRI"]
                         SearchItems: =[]
                         Size: =11
                         Width: =263
@@ -1135,7 +1097,7 @@ Screen2 As screen:
 
                     Button5_9 As button:
                         Height: =28
-                        OnSelect: =RemoveIf(tmpApdungKH, ID = ThisItem.ID)
+                        OnSelect: =RemoveIf(tmpApdungKH, ThisItem.cr282_ma_tieu_chi = DropKH.Selected.MA_CHI_TIEU)
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
@@ -1200,6 +1162,7 @@ Screen2 As screen:
                         BorderColor: =RGBA(54, 176, 75, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
                         ChevronFill: =RGBA(54, 176, 75, 1)
+                        Default: =ThisItem.cr282_ten_tieu_chi
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
                         Height: =30
@@ -1216,14 +1179,15 @@ Screen2 As screen:
                         BorderColor: =RGBA(54, 176, 75, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
                         ChevronFill: =RGBA(54, 176, 75, 1)
+                        DefaultSelectedItems: =ThisItem.group_loaitru_kh
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
-                        DisplayFields: =["Ten"]
+                        DisplayFields: =["TEN_GIA_TRI"]
                         Height: =30
                         IsSearchable: =false
-                        Items: =Filter( tmpDsGiatri, Loai = DropKH_LoaiTru.Selected.MA_CHI_TIEU)
+                        Items: =Filter( tmpDsGiatri, LOAI = DropKH_LoaiTru.Selected.MA_CHI_TIEU)
                         OnSelect: =Select(Parent)
-                        SearchFields: =["Ten"]
+                        SearchFields: =["TEN_GIA_TRI"]
                         SearchItems: =[]
                         Size: =11
                         Width: =263
@@ -1233,7 +1197,7 @@ Screen2 As screen:
 
                     Button5_10 As button:
                         Height: =28
-                        OnSelect: =RemoveIf(tmpLoaitruKH, ID = ThisItem.ID)
+                        OnSelect: =RemoveIf(tmpLoaitruKH, ThisItem.cr282_ma_tieu_chi = DropKH_LoaiTru.Selected.MA_CHI_TIEU)
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
@@ -1252,7 +1216,7 @@ Screen2 As screen:
                 Button3_1 As button:
                     Height: =25
                     OnSelect: |-
-                        =ClearCollect(
+                        =Collect(
                             tmpApdungKH,
                             [{ID: ""}]
                         );
@@ -1266,7 +1230,7 @@ Screen2 As screen:
                 Button3_2 As button:
                     Height: =25
                     OnSelect: |-
-                        =ClearCollect(
+                        =Collect(
                             tmpLoaitruKH,
                             [{ID: ""}]
                         );
@@ -1277,120 +1241,11 @@ Screen2 As screen:
                     Y: =297
                     ZIndex: =10
 
-                Button6 As button:
-                    OnSelect: |
-                        =// lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI
-                        /*Set(
-                            varIdAdKH,
-                            0
-                        );
-                        Set(
-                            varIdLtKH,
-                            0
-                        );
-                        If(
-                            CountRows(tmpApdungKH) > 0,
-                            Set(
-                                varIdAdKH,
-                                Max(
-                                    DL_DIEUKIEN_APDUNG_LOAI,
-                                    ID
-                                ) + 1
-                            );
-                            Patch(
-                                DL_DIEUKIEN_APDUNG_LOAI,
-                                Defaults(DL_DIEUKIEN_APDUNG_LOAI),
-                                {
-                                    ID: varIdAdKH,
-                                    MA_DIEU_KIEN: Concatenate(
-                                        "KHAD",
-                                        If(
-                                            newIDMaDD < 10,
-                                            "00",
-                                            If(
-                                                newIDMaDD < 100 && newIDMaDD >= 10,
-                                                "0",""
-                                            )
-                                        ),
-                                        Text(varIdAdKH)
-                                    ),
-                                    THANH_PHAN: "KH",
-                                    AP_DUNG: "1",
-                                    KIEU: RadioKH.Selected.ID
-                                }
-                            )
-                        );
-                        If(
-                            CountRows(tmpLoaitruKH) > 0,
-                            Patch(
-                                DL_DIEUKIEN_APDUNG_LOAI,
-                                Set(
-                                    varIdLtSp,
-                                    Max(
-                                        DL_DIEUKIEN_APDUNG_LOAI,
-                                        ID
-                                    ) + 1
-                                );
-                                Defaults(DL_DIEUKIEN_APDUNG_LOAI),
-                                {
-                                    ID: Max(
-                                        DL_DIEUKIEN_APDUNG_LOAI,
-                                        ID
-                                    ) + 1,
-                                    MA_DIEU_KIEN: Concatenate(
-                                        "KHLT",
-                                        If(
-                                            newIDMaDD < 10,
-                                            "00",
-                                            If(
-                                                newIDMaDD < 100 && newIDMaDD >= 10,
-                                                "0",""
-                                            )
-                                        ),
-                                        Text(varIdAdKH)
-                                    ),
-                                    THANH_PHAN: "KH",
-                                    AP_DUNG: "2",
-                                    KIEU: RadioKH_LoaiTru.Selected.ID
-                                }
-                            )
-                        );
-                        // lưu dữ liệu ở bảng chi tiết
-                        If(
-                            CountRows(tmpApdungKH) > 0,
-                            ForAll(
-                                ComboBoxGTKH.SelectedItems As gt,
-                                Patch(
-                                    DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                    Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
-                                    {
-                                        ID: Max(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                            ID
-                                        ) + 1,
-                                        ID_LOAI: varIdAdKH,
-                                        MA_DIEU_KIEN: "AD001",
-                                        THANH_PHAN: "SP",
-                                        AP_DUNG: "1",
-                                        KIEU: RadioKH.Selected.ID,
-                                        MA_TIEU_CHI: DropQTich.Selected.MA_CHI_TIEU,
-                                        TEN_TIEU_CHI: DropQTich.Selected.TEN_CHI_TIEU,
-                                        MA_GIA_TRI: gt.Ma,
-                                        TEN_GIA_TRI: gt.Ten
-                                    }
-                                )
-                            )
-                        );*/
-                    Text: ="Lưu dữ liệu"
-                    X: =1038
-                    Y: =548
-                    ZIndex: =11
-
             Container2_4 As groupContainer.manualLayoutContainer:
-                Height: =609
+                Height: =536
                 Width: =Parent.Width-Self.X
                 X: =130
-                Y: =1009
+                Y: =874
                 ZIndex: =3
 
                 Label6_2 As label:
@@ -1450,6 +1305,7 @@ Screen2 As screen:
                         BorderColor: =RGBA(54, 176, 75, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
                         ChevronFill: =RGBA(54, 176, 75, 1)
+                        Default: =ThisItem.cr282_ten_tieu_chi
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
                         Height: =30
@@ -1466,14 +1322,15 @@ Screen2 As screen:
                         BorderColor: =RGBA(54, 176, 75, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
                         ChevronFill: =RGBA(54, 176, 75, 1)
+                        DefaultSelectedItems: =ThisItem.group_apdung_pv
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
-                        DisplayFields: =["Ten"]
+                        DisplayFields: =["TEN_GIA_TRI"]
                         Height: =30
                         IsSearchable: =false
-                        Items: =Filter( tmpDsGiatri, Loai = DropPV.Selected.MA_CHI_TIEU)
+                        Items: =Filter( tmpDsGiatri, LOAI = DropPV.Selected.MA_CHI_TIEU)
                         OnSelect: =Select(Parent)
-                        SearchFields: =["Ten"]
+                        SearchFields: =["TEN_GIA_TRI"]
                         SearchItems: =[]
                         Size: =11
                         Width: =263
@@ -1483,7 +1340,7 @@ Screen2 As screen:
 
                     Button5_11 As button:
                         Height: =28
-                        OnSelect: =RemoveIf(tmpApdungPV, ID = ThisItem.ID)
+                        OnSelect: =RemoveIf(tmpApdungPV, ThisItem.cr282_ma_tieu_chi=DropPV.Selected.MA_CHI_TIEU)
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
@@ -1548,6 +1405,7 @@ Screen2 As screen:
                         BorderColor: =RGBA(54, 176, 75, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
                         ChevronFill: =RGBA(54, 176, 75, 1)
+                        Default: =ThisItem.cr282_ten_tieu_chi
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
                         Height: =30
@@ -1564,14 +1422,15 @@ Screen2 As screen:
                         BorderColor: =RGBA(54, 176, 75, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
                         ChevronFill: =RGBA(54, 176, 75, 1)
+                        DefaultSelectedItems: =ThisItem.group_loaitru_pv
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
-                        DisplayFields: =["Ten"]
+                        DisplayFields: =["TEN_GIA_TRI"]
                         Height: =30
                         IsSearchable: =false
-                        Items: =Filter( tmpDsGiatri, Loai = DropPV_LoaiTru.Selected.MA_CHI_TIEU)
+                        Items: =Filter( tmpDsGiatri, LOAI = DropPV_LoaiTru.Selected.MA_CHI_TIEU)
                         OnSelect: =Select(Parent)
-                        SearchFields: =["Ten"]
+                        SearchFields: =["TEN_GIA_TRI"]
                         SearchItems: =[]
                         Size: =11
                         Width: =263
@@ -1581,7 +1440,7 @@ Screen2 As screen:
 
                     Button5_12 As button:
                         Height: =28
-                        OnSelect: =RemoveIf(tmpLoaitruPV, ID = ThisItem.ID)
+                        OnSelect: =RemoveIf(tmpLoaitruPV, ThisItem.cr282_ma_tieu_chi=DropPV_LoaiTru.Selected.MA_CHI_TIEU)
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
@@ -1600,7 +1459,7 @@ Screen2 As screen:
                 Button3_3 As button:
                     Height: =25
                     OnSelect: |-
-                        =ClearCollect(
+                        =Collect(
                             tmpApdungPV,
                             [{ID: ""}]
                         );
@@ -1614,7 +1473,7 @@ Screen2 As screen:
                 Button3_4 As button:
                     Height: =25
                     OnSelect: |-
-                        =ClearCollect(
+                        =Collect(
                             tmpLoaitruPV,
                             [{ID: ""}]
                         );
@@ -1625,9 +1484,448 @@ Screen2 As screen:
                     Y: =297
                     ZIndex: =10
 
-                Button6_2 As button:
-                    Text: ="Lưu dữ liệu"
-                    X: =1038
-                    Y: =548
-                    ZIndex: =11
+            Button6_9 As button:
+                OnSelect: |
+                    =//Xu ly thong tin chung
+                    UpdateContext({errorMsgDK: ""});
+                    Clear(tmpCheckDup);
+                    If(
+                        IsBlank(DataCardID.Text),
+                        UpdateContext(
+                            {
+                                newIDMaDD: If(
+                                    CountIf(
+                                        DL_DIEUKIEN_APDUNG,
+                                        true
+                                    ) = 0,
+                                    1,
+                                    Max(
+                                        DL_DIEUKIEN_APDUNG,
+                                        ID
+                                    ) + 1
+                                )
+                            }
+                        ),
+                        UpdateContext({newIDMaDD: Value(DataCardID.Text)})
+                    );
+                    If(
+                        IsBlank(DataCardValueMaDK.Text),
+                        UpdateContext(
+                            {
+                                newMaDK: Concatenate(
+                                    "AD",
+                                    If(
+                                        newIDMaDD < 10,
+                                        "000",
+                                        If(
+                                            newIDMaDD < 100 && newIDMaDD >= 10,
+                                            "00",
+                                            If(
+                                                newIDMaDD < 1000 && newIDMaDD >= 100,
+                                                "0",
+                                                ""
+                                            )
+                                        )
+                                    ),
+                                    Text(newIDMaDD)
+                                )
+                            }
+                        ),
+                        UpdateContext({newMaDK: DataCardValueMaDK.Text})
+                    );
+                    If(
+                        IsBlank(DateValueTU.SelectedDate),
+                        UpdateContext({errorMsgDK: "Hiệu lực từ là bắt buộc"})
+                    );
+                    //Kiem tra tieu chi la duy nhat
+                    //Khach hang - ap dung
+                    If(
+                        IsBlank(errorMsgDK) && CountRows(tmpApdungKH) > 0,
+                        Clear(errorCol);
+                        ForAll(
+                            GalleryKH_1.AllItems As kh,
+                            Collect(
+                                tmpCheckDup,
+                                {
+                                    Type: "KH",
+                                    Value: kh.DropKH.Selected.MA_CHI_TIEU
+                                }
+                            );
+                        );
+                        ForAll(
+                            GalleryKH_1.AllItems As kh,
+                            If(
+                                CountIf(
+                                    tmpCheckDup,
+                                    Type = "KH" && Value = kh.DropKH.Selected.MA_CHI_TIEU
+                                ) > 1,
+                                Collect(
+                                    errorCol,
+                                    {Message: "Trùng tiêu chí áp dụng khách hàng"}
+                                )
+                            )
+                        );
+                        If(
+                            !IsEmpty(errorCol),
+                            UpdateContext({errorMsgDK: First(errorCol).Message})
+                        )
+                    );
+                    //Khach hang - loai tru
+                    If(
+                        IsBlank(errorMsgDK) && CountRows(tmpLoaitruKH) > 0,
+                        Clear(errorCol);
+                        Clear(tmpCheckDup);
+                        ForAll(
+                            GalleryKH_LoaiTru.AllItems As kh,
+                            Collect(
+                                tmpCheckDup,
+                                {
+                                    Type: "KH",
+                                    Value: kh.DropKH_LoaiTru.Selected.MA_CHI_TIEU
+                                }
+                            );
+                        );
+                        ForAll(
+                            GalleryKH_LoaiTru.AllItems As kh,
+                            If(
+                                CountIf(
+                                    tmpCheckDup,
+                                    Type = "KH" && Value = kh.DropKH_LoaiTru.Selected.MA_CHI_TIEU
+                                ) > 1,
+                                Collect(
+                                    errorCol,
+                                    {Message: "Trùng tiêu chí loại trừ khách hàng"}
+                                )
+                            )
+                        );
+                        If(
+                            !IsEmpty(errorCol),
+                            UpdateContext({errorMsgDK: First(errorCol).Message})
+                        )
+                    );
+                    //pham vi - ap dung
+                    If(
+                        IsBlank(errorMsgDK) && CountRows(tmpApdungPV) > 0,
+                        Clear(errorCol);
+                        Clear(tmpCheckDup);
+                        ForAll(
+                            GalleryPV_1.AllItems As kh,
+                            Collect(
+                                tmpCheckDup,
+                                {
+                                    Type: "PV",
+                                    Value: kh.DropPV.Selected.MA_CHI_TIEU
+                                }
+                            );
+                        );
+                        ForAll(
+                            GalleryPV_1.AllItems As kh,
+                            If(
+                                CountIf(
+                                    tmpCheckDup,
+                                    Type = "PV" && Value = kh.DropPV.Selected.MA_CHI_TIEU
+                                ) > 1,
+                                Collect(
+                                    errorCol,
+                                    {Message: "Trùng tiêu chí áp dụng phạm vi"}
+                                )
+                            )
+                        );
+                        If(
+                            !IsEmpty(errorCol),
+                            UpdateContext({errorMsgDK: First(errorCol).Message})
+                        )
+                    );
+                    //Pham vi - loai tru
+                    If(
+                        IsBlank(errorMsgDK) && CountRows(tmpLoaitruPV) > 0,
+                        Clear(errorCol);
+                        Clear(tmpCheckDup);
+                        ForAll(
+                            GalleryPV_LoaiTru.AllItems As kh,
+                            Collect(
+                                tmpCheckDup,
+                                {
+                                    Type: "PV",
+                                    Value: kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU
+                                }
+                            );
+                        );
+                        ForAll(
+                            GalleryPV_LoaiTru.AllItems As kh,
+                            If(
+                                CountIf(
+                                    tmpCheckDup,
+                                    Type = "PV" && Value = kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU
+                                ) > 1,
+                                Collect(
+                                    errorCol,
+                                    {Message: "Trùng tiêu chí loại trừ phạm vi"}
+                                )
+                            )
+                        );
+                        If(
+                            !IsEmpty(errorCol),
+                            UpdateContext({errorMsgDK: First(errorCol).Message})
+                        )
+                    );
+                    If(
+                        !IsBlank(errorMsgDK),
+                        Notify(
+                            errorMsgDK,
+                            NotificationType.Error,
+                            800
+                        ),
+                        SubmitForm(FormDKChung);
+                        UpdateContext({rcd: newMaDK});
+                        EditForm(FormDKChung);
+                        RemoveIf(
+                            DL_DIEUKIEN_APDUNG_LOAI,
+                            MA_DIEU_KIEN = newMaDK
+                        );
+                        RemoveIf(
+                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                            MA_DIEU_KIEN = newMaDK
+                        );
+                        
+                    // lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI KHANH HANG
+                    Set(
+                            varIdAdKH,
+                            0
+                        );
+                        Set(
+                            varIdLtKH,
+                            0
+                        );
+                        If(
+                            CountRows(tmpApdungKH) > 0,
+                            Set(
+                                varIdAdKH,
+                                Max(
+                                    DL_DIEUKIEN_APDUNG_LOAI,
+                                    ID
+                                ) + 1
+                            );
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                                {
+                                    ID: varIdAdKH,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "KH",
+                                    AP_DUNG: "1",
+                                    KIEU: RadioKH.Selected.ID
+                                }
+                            )
+                        );
+                        If(
+                            CountRows(tmpLoaitruKH) > 0,
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                Set(
+                                    varIdLtKH,
+                                    Max(
+                                        DL_DIEUKIEN_APDUNG_LOAI,
+                                        ID
+                                    ) + 1
+                                );
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                                {
+                                    ID: Max(
+                                        DL_DIEUKIEN_APDUNG_LOAI,
+                                        ID
+                                    ) + 1,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "KH",
+                                    AP_DUNG: "2",
+                                    KIEU: RadioKH_LoaiTru.Selected.ID
+                                }
+                            )
+                        );
+                        
+                    // lưu dữ liệu ở bảng chi tiết
+                    If(
+                            CountRows(tmpApdungKH) > 0,
+                            ForAll(
+                                GalleryKH_1.AllItems As kh,
+                                ForAll(
+                                    kh.ComboBoxGTKH.SelectedItems As gt,
+                                    Patch(
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                        {
+                                            ID: Max(
+                                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                                ID
+                                            ) + 1,
+                                            ID_LOAI: varIdAdKH,
+                                            MA_DIEU_KIEN: newMaDK,
+                                            THANH_PHAN: "KH",
+                                            AP_DUNG: "1",
+                                            KIEU: RadioKH.Selected.ID,
+                                            MA_TIEU_CHI: kh.DropKH.Selected.MA_CHI_TIEU,
+                                            TEN_TIEU_CHI: kh.DropKH.Selected.TEN_CHI_TIEU,
+                                            MA_GIA_TRI: gt.MA_GIA_TRI,
+                                            TEN_GIA_TRI: gt.TEN_GIA_TRI
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        
+                    // lưu dữ liệu ở bảng chi tiết loai tru
+                    If(
+                            CountRows(tmpLoaitruKH) > 0,
+                            ForAll(
+                                GalleryKH_LoaiTru.AllItems As kh,
+                                ForAll(
+                                    ComboBoxGTKH_LT.SelectedItems As gt,
+                                    Patch(
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                        {
+                                            ID: Max(
+                                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                                ID
+                                            ) + 1,
+                                            ID_LOAI: varIdLtKH,
+                                            MA_DIEU_KIEN: newMaDK,
+                                            THANH_PHAN: "KH",
+                                            AP_DUNG: "2",
+                                            KIEU: RadioKH_LoaiTru.Selected.ID,
+                                            MA_TIEU_CHI: kh.DropKH_LoaiTru.Selected.MA_CHI_TIEU,
+                                            TEN_TIEU_CHI: kh.DropKH_LoaiTru.Selected.TEN_CHI_TIEU,
+                                            MA_GIA_TRI: gt.MA_GIA_TRI,
+                                            TEN_GIA_TRI: gt.TEN_GIA_TRI
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        
+                    // lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI PHAM_VI
+                    Set(
+                            varIdAdPV,
+                            0
+                        );
+                        Set(
+                            varIdLtPV,
+                            0
+                        );
+                        If(
+                            CountRows(tmpApdungPV) > 0,
+                            Set(
+                                varIdAdPV,
+                                Max(
+                                    DL_DIEUKIEN_APDUNG_LOAI,
+                                    ID
+                                ) + 1
+                            );
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                                {
+                                    ID: varIdAdPV,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "PV",
+                                    AP_DUNG: "1",
+                                    KIEU: RadioPV.Selected.ID
+                                }
+                            )
+                        );
+                        If(
+                            CountRows(tmpLoaitruPV) > 0,
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                Set(
+                                    varIdLtPV,
+                                    Max(
+                                        DL_DIEUKIEN_APDUNG_LOAI,
+                                        ID
+                                    ) + 1
+                                );
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                                {
+                                    ID: Max(
+                                        DL_DIEUKIEN_APDUNG_LOAI,
+                                        ID
+                                    ) + 1,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "PV",
+                                    AP_DUNG: "2",
+                                    KIEU: RadioPV_LoaiTru.Selected.ID
+                                }
+                            )
+                        );
+                        
+                    // lưu dữ liệu ở bảng chi tiết
+                    If(
+                            CountRows(tmpApdungPV) > 0,
+                            ForAll(
+                                GalleryPV_1.AllItems As pv,
+                                ForAll(
+                                    ComboBoxGTPV.SelectedItems As gt,
+                                    Patch(
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                        {
+                                            ID: Max(
+                                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                                ID
+                                            ) + 1,
+                                            ID_LOAI: varIdAdPV,
+                                            MA_DIEU_KIEN: newMaDK,
+                                            THANH_PHAN: "PV",
+                                            AP_DUNG: "1",
+                                            KIEU: RadioPV.Selected.ID,
+                                            MA_TIEU_CHI: pv.DropPV.Selected.MA_CHI_TIEU,
+                                            TEN_TIEU_CHI: pv.DropPV.Selected.TEN_CHI_TIEU,
+                                            MA_GIA_TRI: gt.MA_GIA_TRI,
+                                            TEN_GIA_TRI: gt.TEN_GIA_TRI
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        
+                    // lưu dữ liệu ở bảng chi tiết loai tru
+                    If(
+                            CountRows(tmpLoaitruPV) > 0,
+                            ForAll(
+                                GalleryPV_LoaiTru.AllItems As kh,
+                                ForAll(
+                                    ComboBoxGTPV_LT.SelectedItems As gt,
+                                    Patch(
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                        {
+                                            ID: Max(
+                                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                                ID
+                                            ) + 1,
+                                            ID_LOAI: varIdLtPV,
+                                            MA_DIEU_KIEN: newMaDK,
+                                            THANH_PHAN: "PV",
+                                            AP_DUNG: "2",
+                                            KIEU: RadioPV_LoaiTru.Selected.ID,
+                                            MA_TIEU_CHI: kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU,
+                                            TEN_TIEU_CHI: kh.DropPV_LoaiTru.Selected.TEN_CHI_TIEU,
+                                            MA_GIA_TRI: gt.MA_GIA_TRI,
+                                            TEN_GIA_TRI: gt.TEN_GIA_TRI
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        Notify(
+                            "Lưu dữ liệu thành công",
+                            NotificationType.Success,
+                            800
+                        );
+                        
+                    );
+                Text: ="Lưu dữ liệu"
+                X: =1166
+                Y: =1446
+                ZIndex: =4
 
