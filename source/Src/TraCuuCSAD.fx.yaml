@@ -32,6 +32,7 @@ TraCuuCSAD As screen:
                 "pham_vi"
             )
         );
+        Clear(tmpTCCSCollect);
         ClearCollect(
             tmpdsMaTCCSCollect,
             ShowColumns(
@@ -1293,6 +1294,7 @@ TraCuuCSAD As screen:
                         "pham_vi"
                     )
                 );
+                Clear(tmpTCCSCollect);
                 ClearCollect(
                     tmpdsMaTCCSCollect,
                     ShowColumns(
@@ -1820,6 +1822,7 @@ TraCuuCSAD As screen:
                 OnSelect: |-
                     =Reset(DropApDungCSAD); Reset(DropTPhanCSAD); Reset(ComTieuChiCSAD); Reset(ComGiaTriCSAD);
                     Set(varMaDKien, ThisItem.cr282_ma_dieu_kien);
+                    EditForm(FormDKChung);
                     Navigate(Nhapdieukien);
                 Size: =9
                 Text: ="Chi tiết"
