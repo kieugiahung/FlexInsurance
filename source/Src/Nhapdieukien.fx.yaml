@@ -14,9 +14,6 @@ Nhapdieukien As screen:
                 "cr282_ten_tieu_chi","group_apdung_kh"
             )
         );
-        Reset(Radio2);
-        Reset(Radio2_1);
-        Clear(tmpApdungSp);
         ClearCollect(
             tmpLoaitruKH,
             GroupBy(
@@ -168,6 +165,10 @@ Nhapdieukien As screen:
                 }
             )
         );
+        Reset(Radio2);
+        Reset(Radio2_1);
+        Clear(tmpApdungSp);
+        Clear(tmpLoaitruSp);
 
     CanvasDK As fluidGrid.fluidGridWithBlankCard:
         BorderThickness: =0
@@ -1624,6 +1625,7 @@ Nhapdieukien As screen:
                         OnSelect: =Select(Parent)
                         SearchFields: =["cr282_ten_gia_tri"]
                         SearchItems: =Search(Filter( tmpDsGiatri, Loai = DropQTich.Selected.MA_CHI_TIEU),ComboBox3.SearchText,"cr282_ten_gia_tri")
+                        Template: =ListItemTemplate.Double
                         Width: =261
                         X: =402
                         Y: =7
@@ -2404,7 +2406,7 @@ Nhapdieukien As screen:
         Size: =11
         Text: ="Lưu dữ liệu"
         Width: =122
-        X: =1115
+        X: =1111
         Y: =728
         ZIndex: =3
 
