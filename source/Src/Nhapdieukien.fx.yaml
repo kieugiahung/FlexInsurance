@@ -147,7 +147,6 @@ Nhapdieukien As screen:
                 Defaults(tmpDsGiatri),
                 {
                     Ma: sp.MA_SAN_PHAM,
-                    Ten: sp.TEN_SAN_PHAM,
                     Loai: "MA_SP",
                     cr282_ten_gia_tri : sp.TEN_SAN_PHAM
                 }
@@ -161,7 +160,6 @@ Nhapdieukien As screen:
                 Defaults(tmpDsGiatri),
                 {
                     Ma: sp.MA_CHUONG_TRINH,
-                    Ten: sp.TEN_CHUONG_TRINH,
                     Loai: "MA_CT",
                     cr282_ten_gia_tri : sp.TEN_CHUONG_TRINH
                 }
@@ -1882,7 +1880,7 @@ Nhapdieukien As screen:
                                             MA_TIEU_CHI: ad.DropQTich.Selected.MA_CHI_TIEU,
                                             TEN_TIEU_CHI: ad.DropQTich.Selected.TEN_CHI_TIEU,
                                             MA_GIA_TRI: gt.Ma,
-                                            TEN_GIA_TRI: gt.Ten
+                                            TEN_GIA_TRI: gt.cr282_ten_gia_tri
                                         }
                                     )
                                 )
@@ -1909,7 +1907,7 @@ Nhapdieukien As screen:
                                             MA_TIEU_CHI: ad.DropQTich_1.Selected.MA_CHI_TIEU,
                                             TEN_TIEU_CHI: ad.DropQTich_1.Selected.TEN_CHI_TIEU,
                                             MA_GIA_TRI: gt.Ma,
-                                            TEN_GIA_TRI: gt.Ten
+                                            TEN_GIA_TRI: gt.cr282_ten_gia_tri
                                         }
                                     )
                                 )
@@ -2244,8 +2242,8 @@ Nhapdieukien As screen:
                         IsSearchable: =false
                         Items: =Filter( tmpDsGiatri, Loai = DropQTich.Selected.MA_CHI_TIEU)
                         OnSelect: =Select(Parent)
-                        SearchFields: =["Loai"]
-                        SearchItems: =Search(Filter( tmpDsGiatri, Loai = DropQTich.Selected.MA_CHI_TIEU),ComboBox3.SearchText,"Loai")
+                        SearchFields: =["cr282_ten_gia_tri"]
+                        SearchItems: =Search(Filter( tmpDsGiatri, Loai = DropQTich.Selected.MA_CHI_TIEU),ComboBox3.SearchText,"cr282_ten_gia_tri")
                         Width: =261
                         X: =402
                         Y: =7
@@ -2260,15 +2258,6 @@ Nhapdieukien As screen:
                         X: =688
                         Y: =9
                         ZIndex: =6
-
-                    TextInput1 As text:
-                        Default: =ThisItem.ID
-                        Format: =TextFormat.Number
-                        OnSelect: =Select(Parent)
-                        Visible: =false
-                        X: =263
-                        Y: =3
-                        ZIndex: =7
 
                 Label7_4 As label:
                     FontWeight: =FontWeight.Bold
@@ -2364,8 +2353,8 @@ Nhapdieukien As screen:
                         IsSearchable: =false
                         Items: =Filter( tmpDsGiatri, Loai = DropQTich_1.Selected.MA_CHI_TIEU)
                         OnSelect: =Select(Parent)
-                        SearchFields: =["Ten"]
-                        SearchItems: =[]
+                        SearchFields: =["cr282_ten_gia_tri"]
+                        SearchItems: =Search(Filter( tmpDsGiatri, Loai = DropQTich_1.Selected.MA_CHI_TIEU),ComboBox3_1.SearchText,"cr282_ten_gia_tri")
                         Width: =263
                         X: =402
                         Y: =7
