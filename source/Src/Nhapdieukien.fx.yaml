@@ -124,23 +124,18 @@ Nhapdieukien As screen:
                 }
             )
         );
-        
-        
-        
-        
-        
         // T.ANH xử lý sản phẩm
         If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" )) > 0,
             ClearCollect(
                 tmpApdungSp,
-                GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" ),"cr282_id", "cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
+                GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" ), "cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
                 )
             )
         );
         If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "2" && KIEU = "2" )) > 0,
             ClearCollect(
                 tmpLoaitruSp,
-                GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "2" && KIEU = "2" ),"cr282_id", "cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
+                GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "2" && KIEU = "2" ),"cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
                 )
             )
         );
@@ -1878,7 +1873,7 @@ Nhapdieukien As screen:
                                         DL_DIEUKIEN_APDUNG_LOAI_CT,
                                         Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
                                         {
-                                            ID: Value(ad.TextInput1.Text),
+                                            ID: Max(DL_DIEUKIEN_APDUNG_LOAI_CT, ID) + 1,
                                             ID_LOAI: varIdAdSP,
                                             MA_DIEU_KIEN: varMaDKien,
                                             THANH_PHAN: "SP",
@@ -1905,7 +1900,7 @@ Nhapdieukien As screen:
                                         DL_DIEUKIEN_APDUNG_LOAI_CT,
                                         Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
                                         {
-                                            ID: 1,
+                                            ID: Max(DL_DIEUKIEN_APDUNG_LOAI_CT, ID) + 1,
                                             ID_LOAI: varIdAdSP,
                                             MA_DIEU_KIEN: varMaDKien,
                                             THANH_PHAN: "SP",
@@ -2258,7 +2253,7 @@ Nhapdieukien As screen:
 
                     Button5_13 As button:
                         Height: =28
-                        OnSelect: =RemoveIf(tmpApdungSp, ID = ThisItem.ID)
+                        OnSelect: =RemoveIf(tmpApdungSp, cr282_ma_tieu_chi = ThisItem.cr282_ma_tieu_chi)
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
@@ -2378,7 +2373,7 @@ Nhapdieukien As screen:
 
                     Button5_14 As button:
                         Height: =28
-                        OnSelect: =RemoveIf(tmpLoaitruSp, ID = ThisItem.ID)
+                        OnSelect: =RemoveIf(tmpLoaitruSp, cr282_ma_tieu_chi = ThisItem.cr282_ma_tieu_chi)
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
@@ -2414,105 +2409,6 @@ Nhapdieukien As screen:
                     X: =304
                     Y: =28
                     ZIndex: =6
-
-            Button6 As button:
-                Height: =37
-                OnSelect: |
-                    =// lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI
-                    RemoveIf(
-                        DL_DIEUKIEN_APDUNG_LOAI,
-                        MA_DIEU_KIEN = "AD001"
-                    );
-                    RemoveIf(
-                        DL_DIEUKIEN_APDUNG_LOAI_CT,
-                        MA_DIEU_KIEN = "AD001"
-                    );
-                    Set(
-                        varIdAdSP,
-                        0
-                    );
-                    Set(
-                        varIdLtSp,
-                        0
-                    );
-                    // THÊM DỮ LIỆU ÁP DỤNG
-                    If(
-                        CountRows(tmpApdungSp) > 0,
-                        Set(
-                            varIdAdSP,
-                            Max(
-                                DL_DIEUKIEN_APDUNG_LOAI,
-                                ID
-                            ) + 1
-                        );
-                        Patch(
-                            DL_DIEUKIEN_APDUNG_LOAI,
-                            Defaults(DL_DIEUKIEN_APDUNG_LOAI),
-                            {
-                                ID: varIdAdSP,
-                                MA_DIEU_KIEN: "AD001",
-                                THANH_PHAN: "SP",
-                                AP_DUNG: "1",
-                                KIEU: Radio2.Selected.ID,
-                                TEN_KIEU: Radio2.Selected.Text
-                            }
-                        )
-                    );
-                    // THÊM DỮ LIỆU LOẠI TRỪ
-                    If(
-                        CountRows(tmpLoaitruSp) > 0,
-                        Patch(
-                            DL_DIEUKIEN_APDUNG_LOAI,
-                            Set(
-                                varIdLtSp,
-                                Max(
-                                    DL_DIEUKIEN_APDUNG_LOAI,
-                                    ID
-                                ) + 1
-                            );
-                            Defaults(DL_DIEUKIEN_APDUNG_LOAI),
-                            {
-                                ID: Max(
-                                    DL_DIEUKIEN_APDUNG_LOAI,
-                                    ID
-                                ) + 1,
-                                MA_DIEU_KIEN: "AD001",
-                                THANH_PHAN: "SP",
-                                AP_DUNG: "2",
-                                KIEU: Radio2_1.Selected.ID,
-                                TEN_KIEU: Radio2_1.Selected.Text
-                            }
-                        )
-                    );
-                    
-                    // lưu dữ liệu ở bảng chi tiết
-                    ForAll(
-                        Gallery5.AllItems As ad,
-                        ForAll(
-                            ad.ComboBox3.SelectedItems As gt,
-                            Patch(
-                                DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
-                                {
-                                    ID: Value(ad.TextInput1.Text),
-                                    ID_LOAI: varIdAdSP,
-                                    MA_DIEU_KIEN: "AD001",
-                                    THANH_PHAN: "SP",
-                                    AP_DUNG: "1",
-                                    KIEU: Radio2.Selected.ID,
-                                    MA_TIEU_CHI: ad.DropQTich.Selected.MA_CHI_TIEU,
-                                    TEN_TIEU_CHI: ad.DropQTich.Selected.TEN_CHI_TIEU,
-                                    MA_GIA_TRI:gt.Ma,
-                                    TEN_GIA_TRI:gt.Ten
-                                }
-                            )
-                        )
-                    );
-                Text: ="Lưu dữ liệu"
-                Width: =148
-                X: =984
-                Y: =246
-                ZIndex: =7
 
             Button6_10 As button:
                 OnSelect: =Back();
