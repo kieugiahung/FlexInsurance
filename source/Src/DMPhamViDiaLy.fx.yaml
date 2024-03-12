@@ -22,7 +22,8 @@ DMPhamViDiaLy As screen:
         UpdateContext({
             maAdded:"",
             maUpdated:"",
-            showConfirm:0
+            showConfirm:0,
+            loaiFilter:0
         });
     Width: =Max(1380, App.MinScreenWidth)
 
@@ -305,6 +306,7 @@ DMPhamViDiaLy As screen:
             Height: =43
             OnChange: =
             Placeholder: ="Nhập giá trị lọc"
+            Visible: =loaiFilter=0
             Width: =204
             X: =525
             Y: =36
@@ -380,12 +382,18 @@ DMPhamViDiaLy As screen:
             ZIndex: =11
 
         CbxFilterPV As Combobox.pcfdataset:
-            DefaultSelectedItems: =Filter(["Mã phạm vi", "Tên phạm vi"],Value="Mã phạm vi")
+            DefaultSelectedItems: =Filter(["Mã phạm vi", "Tên phạm vi","Loại"],Value="Mã phạm vi")
             DisplayMode: =DisplayMode.Edit
             Height: =43
             InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
-            Items: =["Mã phạm vi", "Tên phạm vi"]
-            OnChange: =Reset(TextFilterPV)
+            Items: =["Mã phạm vi", "Tên phạm vi","Loại"]
+            OnChange: |-
+                =If(
+                    CbxFilterPV.Selected.Value="Loại",
+                    UpdateContext({loaiFilter:1}),
+                    UpdateContext({loaiFilter:0})
+                );
+                Reset(TextFilterPV);Reset(CbxFilterValuePVDL)
             Width: =152
             X: =364
             Y: =36
@@ -438,6 +446,63 @@ DMPhamViDiaLy As screen:
             X: =740
             Y: =36
             ZIndex: =14
+
+        CbxFilterValuePVDL As Combobox.pcfdataset:
+            DisplayMode: =DisplayMode.Edit
+            Height: =43
+            InputTextPlaceholder: ="Chọn nhóm quyền lợi"
+            Items: |-
+                =[
+                    {
+                        key:"KHU_VUC",
+                        value:"Khu vực"
+                    },
+                    {
+                        key:"QUOC_GIA",
+                        value:"Quốc gia"
+                    },
+                    {
+                        key:"VUNG_MIEN",
+                        value:"Vùng miền"
+                    },
+                    {
+                        key:"TINH_TP",
+                        value:"Tỉnh/thành phố"
+                    },
+                    {
+                        key:"QUAN_HUYEN",
+                        value:"Quận/huyện"
+                    }
+                ]
+            Visible: =loaiFilter=1
+            Width: =204
+            X: =525
+            Y: =36
+            ZIndex: =15
+
+            MA_NHOM_QL1_1 As pcfDataField.textualColumn:
+                FieldDisplayName: ="MA_NHOM_QL"
+                FieldName: ="cr282_ma_nhom_ql"
+                FieldType: ="s"
+                FieldVariantName: ="textualColumn"
+                Order: =2
+                ZIndex: =20
+
+            TEN_NHOM_QL1_1 As pcfDataField.textualColumn:
+                FieldDisplayName: ="TEN_NHOM_QL"
+                FieldName: ="cr282_ten_nhom_ql"
+                FieldType: ="s"
+                FieldVariantName: ="textualColumn"
+                Order: =1
+                ZIndex: =21
+
+            GHI_CHU1_1 As pcfDataField.textualColumn:
+                FieldDisplayName: ="GHI_CHU"
+                FieldName: ="cr282_ghi_chu"
+                FieldType: ="s"
+                FieldVariantName: ="textualColumn"
+                Order: =3
+                ZIndex: =22
 
     ContainerConfirmPV As groupContainer.manualLayoutContainer:
         BorderColor: =RGBA(180, 214, 250, 1)
