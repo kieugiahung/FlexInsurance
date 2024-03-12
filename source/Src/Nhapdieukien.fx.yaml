@@ -2158,7 +2158,7 @@ Nhapdieukien As screen:
                     );
                 Text: ="Lưu dữ liệu"
                 X: =1078
-                Y: =2028
+                Y: =2106
                 ZIndex: =4
 
             SPApdung As groupContainer.manualLayoutContainer:
@@ -2288,7 +2288,7 @@ Nhapdieukien As screen:
                     OnSelect: |+
                         =Collect(
                             tmpApdungSp,
-                            [{ID:Value( Max (DL_DIEUKIEN_APDUNG_LOAI_CT, ID) + 1)}]
+                            [{ID:Value( Max (tmpApdungSp, ID) + 1)}]
                         );
                         
                     Size: =11
@@ -2364,7 +2364,7 @@ Nhapdieukien As screen:
 
                     ComboBox3_1 As combobox:
                         DefaultSelectedItems: =ThisItem.group
-                        DisplayFields: =["Ten"]
+                        DisplayFields: =["cr282_ten_gia_tri"]
                         Height: =32
                         IsSearchable: =false
                         Items: =Filter( tmpDsGiatri, Loai = DropQTich_1.Selected.MA_CHI_TIEU)
@@ -2396,11 +2396,10 @@ Nhapdieukien As screen:
                 Button3_6 As button:
                     Height: =25
                     OnSelect: |-
-                        =Collect(
+                        =
+                        Collect(
                             tmpLoaitruSp,
-                            [
-                               {ID : ""} 
-                            ]
+                            [{ID:Value( Max (tmpLoaitruSp, ID) + 1)}]
                         );
                     Size: =11
                     Text: ="Thêm mới"
@@ -2507,4 +2506,15 @@ Nhapdieukien As screen:
                 X: =984
                 Y: =246
                 ZIndex: =7
+
+            Button6_10 As button:
+                OnSelect: =Back();
+                Text: ="Quay lại"
+                X: =903
+                Y: =2106
+                ZIndex: =8
+
+    LeftNavigation_27 As LeftNavigation_9:
+        Width: =LeftNavigation_27.MenuWidth - 10
+        ZIndex: =2
 
