@@ -414,7 +414,8 @@ DMPhamViDiaLy As screen:
                                 Filter(
                                     DM_PHAMVI_DIALYS,
                                     Or(
-                                        TextFilterPV.Value="",
+                                        (TextFilterPV.Value="" && loaiFilter=0),
+                                        (IsBlank(CbxFilterValuePVDL.Selected.key) && loaiFilter=1),
                                         Or(
                                             And(
                                                 CbxFilterPV.Selected.Value="Mã phạm vi",
@@ -423,6 +424,10 @@ DMPhamViDiaLy As screen:
                                             And(
                                                 CbxFilterPV.Selected.Value="Tên phạm vi",
                                                 !IsBlank(Find(Lower(TextFilterPV.Value),Lower(TEN_PHAMVI)))
+                                            ),
+                                            And(
+                                                CbxFilterPV.Selected.Value="Loại",
+                                                LOAI=CbxFilterValuePVDL.Selected.key
                                             )
                                         )
                                     )
@@ -450,7 +455,7 @@ DMPhamViDiaLy As screen:
         CbxFilterValuePVDL As Combobox.pcfdataset:
             DisplayMode: =DisplayMode.Edit
             Height: =43
-            InputTextPlaceholder: ="Chọn nhóm quyền lợi"
+            InputTextPlaceholder: ="Chọn loại phạm vi"
             Items: |-
                 =[
                     {
@@ -467,11 +472,11 @@ DMPhamViDiaLy As screen:
                     },
                     {
                         key:"TINH_TP",
-                        value:"Tỉnh/thành phố"
+                        value:"Tỉnh/Thành phố"
                     },
                     {
                         key:"QUAN_HUYEN",
-                        value:"Quận/huyện"
+                        value:"Quận/Huyện"
                     }
                 ]
             Visible: =loaiFilter=1
@@ -480,29 +485,21 @@ DMPhamViDiaLy As screen:
             Y: =36
             ZIndex: =15
 
-            MA_NHOM_QL1_1 As pcfDataField.textualColumn:
-                FieldDisplayName: ="MA_NHOM_QL"
-                FieldName: ="cr282_ma_nhom_ql"
+            key1 As pcfDataField.textualColumn:
+                FieldDisplayName: ="key"
+                FieldName: ="key"
                 FieldType: ="s"
                 FieldVariantName: ="textualColumn"
                 Order: =2
-                ZIndex: =20
+                ZIndex: =17
 
-            TEN_NHOM_QL1_1 As pcfDataField.textualColumn:
-                FieldDisplayName: ="TEN_NHOM_QL"
-                FieldName: ="cr282_ten_nhom_ql"
+            value1 As pcfDataField.textualColumn:
+                FieldDisplayName: ="value"
+                FieldName: ="value"
                 FieldType: ="s"
                 FieldVariantName: ="textualColumn"
                 Order: =1
-                ZIndex: =21
-
-            GHI_CHU1_1 As pcfDataField.textualColumn:
-                FieldDisplayName: ="GHI_CHU"
-                FieldName: ="cr282_ghi_chu"
-                FieldType: ="s"
-                FieldVariantName: ="textualColumn"
-                Order: =3
-                ZIndex: =22
+                ZIndex: =18
 
     ContainerConfirmPV As groupContainer.manualLayoutContainer:
         BorderColor: =RGBA(180, 214, 250, 1)

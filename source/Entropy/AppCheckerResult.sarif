@@ -3826,7 +3826,7 @@
                 },
                 "region": {
                   "charLength": 57,
-                  "charOffset": 398,
+                  "charOffset": 500,
                   "snippet": {
                     "text": "IsBlank(Find(Lower(TextFilterPV.Value),Lower(MA_PHAMVI)))"
                   }
@@ -3866,7 +3866,7 @@
                 },
                 "region": {
                   "charLength": 1,
-                  "charOffset": 397,
+                  "charOffset": 499,
                   "snippet": {
                     "text": "!"
                   }
@@ -3906,7 +3906,7 @@
                 },
                 "region": {
                   "charLength": 198,
-                  "charOffset": 287,
+                  "charOffset": 389,
                   "snippet": {
                     "text": "And(\n                                CbxFilterPV.Selected.Value=\"Mã phạm vi\",\n                                !IsBlank(Find(Lower(TextFilterPV.Value),Lower(MA_PHAMVI)))\n                            )"
                   }
@@ -3945,10 +3945,10 @@
                   "relativeAddress": 0
                 },
                 "region": {
-                  "charLength": 486,
-                  "charOffset": 255,
+                  "charLength": 686,
+                  "charOffset": 357,
                   "snippet": {
-                    "text": "Or(\n                            And(\n                                CbxFilterPV.Selected.Value=\"Mã phạm vi\",\n                                !IsBlank(Find(Lower(TextFilterPV.Value),Lower(MA_PHAMVI)))\n                            ),\n                            And(\n                                CbxFilterPV.Selected.Value=\"Tên phạm vi\",\n                                !IsBlank(Find(Lower(TextFilterPV.Value),Lower(TEN_PHAMVI)))\n                            )\n                        )"
+                    "text": "Or(\n                            And(\n                                CbxFilterPV.Selected.Value=\"Mã phạm vi\",\n                                !IsBlank(Find(Lower(TextFilterPV.Value),Lower(MA_PHAMVI)))\n                            ),\n                            And(\n                                CbxFilterPV.Selected.Value=\"Tên phạm vi\",\n                                !IsBlank(Find(Lower(TextFilterPV.Value),Lower(TEN_PHAMVI)))\n                            ),\n                            And(\n                                CbxFilterPV.Selected.Value=\"Loại\",\n                                LOAI=CbxFilterValuePVDL.Selected.key\n                            )\n                        )"
                   }
                 }
               },
@@ -3985,10 +3985,10 @@
                   "relativeAddress": 0
                 },
                 "region": {
-                  "charLength": 583,
+                  "charLength": 885,
                   "charOffset": 180,
                   "snippet": {
-                    "text": "Or(\n                        TextFilterPV.Value=\"\",\n                        Or(\n                            And(\n                                CbxFilterPV.Selected.Value=\"Mã phạm vi\",\n                                !IsBlank(Find(Lower(TextFilterPV.Value),Lower(MA_PHAMVI)))\n                            ),\n                            And(\n                                CbxFilterPV.Selected.Value=\"Tên phạm vi\",\n                                !IsBlank(Find(Lower(TextFilterPV.Value),Lower(TEN_PHAMVI)))\n                            )\n                        )\n                    )"
+                    "text": "Or(\n                        (TextFilterPV.Value=\"\" && loaiFilter=0),\n                        (IsBlank(CbxFilterValuePVDL.Selected.key) && loaiFilter=1),\n                        Or(\n                            And(\n                                CbxFilterPV.Selected.Value=\"Mã phạm vi\",\n                                !IsBlank(Find(Lower(TextFilterPV.Value),Lower(MA_PHAMVI)))\n                            ),\n                            And(\n                                CbxFilterPV.Selected.Value=\"Tên phạm vi\",\n                                !IsBlank(Find(Lower(TextFilterPV.Value),Lower(TEN_PHAMVI)))\n                            ),\n                            And(\n                                CbxFilterPV.Selected.Value=\"Loại\",\n                                LOAI=CbxFilterValuePVDL.Selected.key\n                            )\n                        )\n                    )"
                   }
                 }
               },
