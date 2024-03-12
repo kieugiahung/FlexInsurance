@@ -598,7 +598,7 @@ Nhapdieukien As screen:
                         Fill: =RGBA(0, 0, 0, 0)
                         Height: =50
                         Required: =false
-                        Update: =If(Not IsBlank(DateValueVB.SelectedDate), DateValueVB.SelectedDate, 0)
+                        Update: =If(Not IsBlank(DateValueVB.SelectedDate), DateValueVB.SelectedDate, Blank())
                         Width: =618
                         X: =1
                         Y: =1
@@ -702,7 +702,7 @@ Nhapdieukien As screen:
                         Fill: =RGBA(0, 0, 0, 0)
                         Height: =50
                         Required: =false
-                        Update: =If(Not IsBlank(DateValueTU.SelectedDate), DateValueTU.SelectedDate, 0)
+                        Update: =If(Not IsBlank(DateValueTU.SelectedDate), DateValueTU.SelectedDate)
                         Width: =618
                         X: =0
                         Y: =2
@@ -806,7 +806,7 @@ Nhapdieukien As screen:
                         Fill: =RGBA(0, 0, 0, 0)
                         Height: =60
                         Required: =false
-                        Update: =If(Not IsBlank(DateValueDen.SelectedDate), DateValueDen.SelectedDate, 0)
+                        Update: =If(Not IsBlank(DateValueDen.SelectedDate), DateValueDen.SelectedDate,Blank())
                         Width: =618
                         X: =1
                         Y: =2
@@ -2628,7 +2628,7 @@ Nhapdieukien As screen:
                 
             // lưu dữ liệu ở bảng chi tiết
             If(
-                    CountRows(tmpApdungKB) > 0,
+                    RadioKB.Selected.ID = 2 && CountRows(tmpApdungKB) > 0,
                     ForAll(
                         GalleryKB.AllItems As kh,
                         ForAll(
@@ -2648,8 +2648,11 @@ Nhapdieukien As screen:
                                     KIEU: RadioKB.Selected.ID,
                                     MA_TIEU_CHI: kh.DropKB.Selected.MA_CHI_TIEU,
                                     TEN_TIEU_CHI: kh.DropKB.Selected.TEN_CHI_TIEU,
-                                    MA_GIA_TRI: gt.Ma,
-                                    TEN_GIA_TRI: gt.Ten
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKB.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri
                                 }
                             )
                         )
@@ -2658,7 +2661,7 @@ Nhapdieukien As screen:
                 
             // lưu dữ liệu ở bảng chi tiết loai tru
             If(
-                    CountRows(tmpLoaitruKB) > 0,
+                    RadioKB_LoaiTru.Selected.ID = 2 && CountRows(tmpLoaitruKB) > 0,
                     ForAll(
                         GalleryKB_LoaiTru.AllItems As kh,
                         ForAll(
@@ -2678,8 +2681,11 @@ Nhapdieukien As screen:
                                     KIEU: RadioKB_LoaiTru.Selected.ID,
                                     MA_TIEU_CHI: kh.DropKB_LoaiTru.Selected.MA_CHI_TIEU,
                                     TEN_TIEU_CHI: kh.DropKB_LoaiTru.Selected.TEN_CHI_TIEU,
-                                    MA_GIA_TRI: gt.Ma,
-                                    TEN_GIA_TRI: gt.Ten
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKB_LoaiTru.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri
                                 }
                             )
                         )
@@ -2744,7 +2750,7 @@ Nhapdieukien As screen:
                 
             // lưu dữ liệu ở bảng chi tiết
             If(
-                    CountRows(tmpApdungKH) > 0,
+                    RadioKH.Selected.ID = 2 && CountRows(tmpApdungKH) > 0,
                     ForAll(
                         GalleryKH_1.AllItems As kh,
                         ForAll(
@@ -2764,8 +2770,11 @@ Nhapdieukien As screen:
                                     KIEU: RadioKH.Selected.ID,
                                     MA_TIEU_CHI: kh.DropKH.Selected.MA_CHI_TIEU,
                                     TEN_TIEU_CHI: kh.DropKH.Selected.TEN_CHI_TIEU,
-                                    MA_GIA_TRI: gt.Ma,
-                                    TEN_GIA_TRI: gt.Ten
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKH.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri
                                 }
                             )
                         )
@@ -2774,7 +2783,7 @@ Nhapdieukien As screen:
                 
             // lưu dữ liệu ở bảng chi tiết loai tru
             If(
-                    CountRows(tmpLoaitruKH) > 0,
+                    RadioKH_LoaiTru.Selected.ID = 2 && CountRows(tmpLoaitruKH) > 0,
                     ForAll(
                         GalleryKH_LoaiTru.AllItems As kh,
                         ForAll(
@@ -2794,8 +2803,11 @@ Nhapdieukien As screen:
                                     KIEU: RadioKH_LoaiTru.Selected.ID,
                                     MA_TIEU_CHI: kh.DropKH_LoaiTru.Selected.MA_CHI_TIEU,
                                     TEN_TIEU_CHI: kh.DropKH_LoaiTru.Selected.TEN_CHI_TIEU,
-                                    MA_GIA_TRI: gt.Ma,
-                                    TEN_GIA_TRI: gt.Ten
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKH_LoaiTru.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri
                                 }
                             )
                         )
@@ -2859,7 +2871,7 @@ Nhapdieukien As screen:
                 
             // lưu dữ liệu ở bảng chi tiết
             If(
-                    CountRows(tmpApdungPV) > 0,
+                    RadioPV.Selected.ID = 2 && CountRows(tmpApdungPV) > 0,
                     ForAll(
                         GalleryPV_1.AllItems As pv,
                         ForAll(
@@ -2879,8 +2891,11 @@ Nhapdieukien As screen:
                                     KIEU: RadioPV.Selected.ID,
                                     MA_TIEU_CHI: pv.DropPV.Selected.MA_CHI_TIEU,
                                     TEN_TIEU_CHI: pv.DropPV.Selected.TEN_CHI_TIEU,
-                                    MA_GIA_TRI: gt.Ma,
-                                    TEN_GIA_TRI: gt.Ten
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = pv.DropPV.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri
                                 }
                             )
                         )
@@ -2889,7 +2904,7 @@ Nhapdieukien As screen:
                 
             // lưu dữ liệu ở bảng chi tiết loai trừ
             If(
-                    CountRows(tmpLoaitruPV) > 0,
+                    RadioPV_LoaiTru.Selected.ID = 2 && CountRows(tmpLoaitruPV) > 0,
                     ForAll(
                         GalleryPV_LoaiTru.AllItems As kh,
                         ForAll(
@@ -2909,8 +2924,11 @@ Nhapdieukien As screen:
                                     KIEU: RadioPV_LoaiTru.Selected.ID,
                                     MA_TIEU_CHI: kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU,
                                     TEN_TIEU_CHI: kh.DropPV_LoaiTru.Selected.TEN_CHI_TIEU,
-                                    MA_GIA_TRI: gt.Ma,
-                                    TEN_GIA_TRI: gt.Ten
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri
                                 }
                             )
                         )
