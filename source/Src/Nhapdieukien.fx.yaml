@@ -1,5 +1,5 @@
 Nhapdieukien As screen:
-    OnVisible: |+
+    OnVisible: |
         =ClearCollect(
             tmpApdungKH,
             GroupBy(
@@ -165,9 +165,62 @@ Nhapdieukien As screen:
                 }
             )
         );
+        //Kenh ban
+        ClearCollect(
+            tmpApdungKB,
+            GroupBy(
+                Filter(
+                    DL_DIEUKIEN_APDUNG_LOAI_CT,
+                    MA_DIEU_KIEN = varMaDKien && THANH_PHAN = "KB" && AP_DUNG = "1"
+                ),
+                "cr282_ma_dieu_kien",
+                "cr282_thanh_phan",
+                "cr282_ap_dung",
+                "cr282_ma_tieu_chi",
+                "cr282_ten_tieu_chi","group_apdung_kb"
+            )
+        );
+        ClearCollect(
+            tmpLoaitruKB,
+            GroupBy(
+                Filter(
+                    DL_DIEUKIEN_APDUNG_LOAI_CT,
+                    MA_DIEU_KIEN = varMaDKien && THANH_PHAN = "KB" && AP_DUNG = "2"
+                ),
+                "cr282_ma_dieu_kien",
+                "cr282_thanh_phan",
+                "cr282_ap_dung",
+                "cr282_ma_tieu_chi",
+                "cr282_ten_tieu_chi","group_loaitru_kb"
+            )
+        );
+        // them kenh ban
+        ForAll(
+            DM_KENH_BANS As kb,
+            Patch(
+                tmpDsGiatri,
+                Defaults(tmpDsGiatri),
+                {
+                    Ma: kb.MA_KENH_BAN,
+                    Ten: kb.TEN_KENH_BAN,
+                    Loai: If(kb.LOAI="1","MA_NHAN_VIEN",If(kb.LOAI="2","MA_DL",If(kb.LOAI="3","MA_MG","MA_NH"))),
+                    cr282_ten_gia_tri : kb.TEN_KENH_BAN
+                }
+            )
+        );
+        //End Kenh ban
+        
         Reset(Radio2);
         Reset(Radio2_1);
         
+        Reset(RadioKB);
+        Reset(RadioKB_LoaiTru);
+        
+        Reset(RadioKH);
+        Reset(RadioKH_LoaiTru);
+        
+        Reset(RadioPV);
+        Reset(RadioPV_LoaiTru);
 
     CanvasDK As fluidGrid.fluidGridWithBlankCard:
         BorderThickness: =0
@@ -1053,7 +1106,7 @@ Nhapdieukien As screen:
                 Height: =506
                 Width: =Parent.Width-Self.X
                 X: =130
-                Y: =900
+                Y: =1406
                 ZIndex: =2
 
                 Label6_1 As label:
@@ -1306,7 +1359,7 @@ Nhapdieukien As screen:
                 Height: =536
                 Width: =Parent.Width-Self.X
                 X: =130
-                Y: =1406
+                Y: =1942
                 ZIndex: =3
 
                 Label6_2 As label:
@@ -1804,6 +1857,253 @@ Nhapdieukien As screen:
                     Y: =28
                     ZIndex: =6
 
+            "'Container2.2' As groupContainer.manualLayoutContainer":
+                Height: =518
+                Width: =Parent.Width-Self.X
+                X: =130
+                Y: =880
+                ZIndex: =7
+
+                Label6_6 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =46
+                    Size: =11
+                    Text: ="2.2 Kênh bán"
+                    Width: =Parent.Width
+                    ZIndex: =2
+
+                RadioKB As radio:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    Default: =LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "1" ).TEN_KIEU
+                    HoverColor: =RGBA(0, 0, 0, 1)
+                    Items: |-
+                        =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
+                    OnSelect: =true
+                    RadioBorderColor: =RGBA(0, 84, 148, 1)
+                    Size: =11
+                    X: =40
+                    Y: =76
+                    ZIndex: =3
+
+                GalleryKB As gallery.galleryVertical:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    BorderThickness: =1
+                    DelayItemLoading: =true
+                    Height: =156
+                    Items: =tmpApdungKB
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplateSize: =46
+                    Visible: =If(RadioKB.Selected.ID = 2 , true)
+                    Width: =970
+                    X: =253.2
+                    Y: =76
+                    ZIndex: =4
+
+                    Label9_12 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Text: ="Tiêu chí"
+                        Width: =87
+                        X: =18
+                        ZIndex: =2
+
+                    Label9_13 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Text: ="Giá trị"
+                        Width: =87
+                        X: =315
+                        ZIndex: =3
+
+                    DropKB As dropdown:
+                        BorderColor: =RGBA(54, 176, 75, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(54, 176, 75, 1)
+                        Default: =ThisItem.cr282_ten_tieu_chi
+                        DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                        DisabledFill: =RGBA(230, 230, 230, 1)
+                        Height: =30
+                        Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "KB")
+                        OnChange: =Reset(ComboBoxGTKB)
+                        OnSelect: =
+                        Size: =11
+                        Width: =200
+                        X: =110
+                        Y: =5
+                        ZIndex: =4
+
+                    ComboBoxGTKB As combobox:
+                        BorderColor: =RGBA(54, 176, 75, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(54, 176, 75, 1)
+                        DefaultSelectedItems: =ThisItem.group_apdung_kb
+                        DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                        DisabledFill: =RGBA(230, 230, 230, 1)
+                        DisplayFields: =["cr282_ten_gia_tri"]
+                        Height: =30
+                        IsSearchable: =false
+                        Items: =Filter( tmpDsGiatri, Loai = DropKB.Selected.MA_CHI_TIEU)
+                        OnSelect: =Select(Parent)
+                        SearchFields: =["cr282_ten_gia_tri"]
+                        SearchItems: =[]
+                        Size: =11
+                        Width: =463
+                        X: =402
+                        Y: =5
+                        ZIndex: =5
+
+                    Button5_15 As button:
+                        Height: =28
+                        OnSelect: =RemoveIf(tmpApdungKB, ThisItem.cr282_ma_tieu_chi=DropKB.Selected.MA_CHI_TIEU)
+                        Size: =11
+                        Text: ="Xoá"
+                        Width: =73
+                        X: =880
+                        Y: =9
+                        ZIndex: =6
+
+                Label7_6 As label:
+                    FontWeight: =FontWeight.Bold
+                    Size: =11
+                    Text: ="Áp dụng"
+                    X: =25
+                    Y: =36
+                    ZIndex: =5
+
+                RadioKB_LoaiTru As radio:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    Default: =LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "2" ).TEN_KIEU
+                    HoverColor: =RGBA(0, 0, 0, 1)
+                    Items: |-
+                        =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
+                    OnSelect: =true
+                    RadioBorderColor: =RGBA(0, 84, 148, 1)
+                    Size: =11
+                    X: =41
+                    Y: =330
+                    ZIndex: =6
+
+                GalleryKB_LoaiTru As gallery.galleryVertical:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    BorderThickness: =1
+                    DelayItemLoading: =true
+                    Height: =156
+                    Items: =tmpLoaitruKB
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplateSize: =46
+                    Visible: =If(RadioKB_LoaiTru.Selected.ID = 2 , true)
+                    Width: =970
+                    X: =253.2
+                    Y: =330
+                    ZIndex: =7
+
+                    Label9_14 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Text: ="Tiêu chí"
+                        Width: =87
+                        X: =18
+                        ZIndex: =2
+
+                    Label9_15 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Text: ="Giá trị"
+                        Width: =87
+                        X: =315
+                        ZIndex: =3
+
+                    DropKB_LoaiTru As dropdown:
+                        BorderColor: =RGBA(54, 176, 75, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(54, 176, 75, 1)
+                        Default: =ThisItem.cr282_ten_tieu_chi
+                        DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                        DisabledFill: =RGBA(230, 230, 230, 1)
+                        Height: =30
+                        Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "KB")
+                        OnChange: =Reset(ComboBoxGTKB_LT)
+                        OnSelect: =
+                        Size: =11
+                        Width: =200
+                        X: =110
+                        Y: =5
+                        ZIndex: =4
+
+                    ComboBoxGTKB_LT As combobox:
+                        BorderColor: =RGBA(54, 176, 75, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(54, 176, 75, 1)
+                        DefaultSelectedItems: =ThisItem.group_loaitru_kb
+                        DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                        DisabledFill: =RGBA(230, 230, 230, 1)
+                        DisplayFields: =["cr282_ten_gia_tri"]
+                        Height: =30
+                        IsSearchable: =false
+                        Items: =Filter( tmpDsGiatri, Loai = DropKB_LoaiTru.Selected.MA_CHI_TIEU)
+                        OnSelect: =Select(Parent)
+                        SearchFields: =["cr282_ten_gia_tri"]
+                        SearchItems: =[]
+                        Size: =11
+                        Width: =463
+                        X: =402
+                        Y: =5
+                        ZIndex: =5
+
+                    Button5_16 As button:
+                        Height: =28
+                        OnSelect: =RemoveIf(tmpLoaitruKB, ThisItem.cr282_ma_tieu_chi=DropKB_LoaiTru.Selected.MA_CHI_TIEU)
+                        Size: =11
+                        Text: ="Xoá"
+                        Width: =73
+                        X: =880
+                        Y: =9
+                        ZIndex: =6
+
+                Label7_7 As label:
+                    FontWeight: =FontWeight.Bold
+                    Size: =11
+                    Text: ="Loại trừ"
+                    X: =25
+                    Y: =290
+                    ZIndex: =8
+
+                Button3_7 As button:
+                    Height: =25
+                    OnSelect: |-
+                        =Collect(
+                            tmpApdungKB,
+                            [{ID: ""}]
+                        );
+                    Size: =11
+                    Text: ="Thêm mới"
+                    Visible: =If(RadioKB.Selected.ID = 2, true)
+                    Width: =91
+                    X: =253.2
+                    Y: =40
+                    ZIndex: =9
+
+                Button3_8 As button:
+                    Height: =25
+                    OnSelect: |-
+                        =Collect(
+                            tmpLoaitruKB,
+                            [{ID: ""}]
+                        );
+                    Size: =11
+                    Text: ="Thêm mới"
+                    Visible: =If(RadioKB_LoaiTru.Selected.ID = 2 , true)
+                    Width: =91
+                    X: =253.2
+                    Y: =297
+                    ZIndex: =10
+
     LeftNavigation_27 As LeftNavigation_9:
         Width: =LeftNavigation_27.MenuWidth - 10
         ZIndex: =2
@@ -1928,6 +2228,74 @@ Nhapdieukien As screen:
                     UpdateContext({errorMsgDK: First(errorCol).Message})
                 )
             );
+            //Kenh ban
+            //Kenh ban - ap dung
+            If(
+                IsBlank(errorMsgDK) && CountRows(tmpApdungKB) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryKB.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "KB",
+                            Value: kh.DropKB.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryKB.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "KB" && Value = kh.DropKB.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí áp dụng kênh bán"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgDK: First(errorCol).Message})
+                )
+            );
+            //Kenh ban - loai tru
+            If(
+                IsBlank(errorMsgDK) && CountRows(tmpLoaitruKB) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryKB_LoaiTru.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "KB",
+                            Value: kh.DropKB_LoaiTru.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryKB_LoaiTru.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "KB" && Value = kh.DropKB_LoaiTru.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí loại trừ kênh bán"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgDK: First(errorCol).Message})
+                )
+            );
+            //End kenh ban
             //Khach hang - ap dung
             If(
                 IsBlank(errorMsgDK) && CountRows(tmpApdungKH) > 0,
@@ -2148,7 +2516,10 @@ Nhapdieukien As screen:
                                 DL_DIEUKIEN_APDUNG_LOAI_CT,
                                 Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
                                 {
-                                    ID: Max(DL_DIEUKIEN_APDUNG_LOAI_CT, ID) + 1,
+                                    ID: Max(
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        ID
+                                    ) + 1,
                                     ID_LOAI: varIdAdSP,
                                     MA_DIEU_KIEN: varMaDKien,
                                     THANH_PHAN: "SP",
@@ -2156,7 +2527,10 @@ Nhapdieukien As screen:
                                     KIEU: Radio2.Selected.ID,
                                     MA_TIEU_CHI: ad.DropQTich.Selected.MA_CHI_TIEU,
                                     TEN_TIEU_CHI: ad.DropQTich.Selected.TEN_CHI_TIEU,
-                                    MA_GIA_TRI: LookUp(tmpDsGiatri, cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai =  ad.DropQTich.Selected.MA_CHI_TIEU).Ma,
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = ad.DropQTich.Selected.MA_CHI_TIEU
+                                    ).Ma,
                                     TEN_GIA_TRI: gt.cr282_ten_gia_tri
                                 }
                             )
@@ -2175,7 +2549,10 @@ Nhapdieukien As screen:
                                 DL_DIEUKIEN_APDUNG_LOAI_CT,
                                 Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
                                 {
-                                    ID: Max(DL_DIEUKIEN_APDUNG_LOAI_CT, ID) + 1,
+                                    ID: Max(
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        ID
+                                    ) + 1,
                                     ID_LOAI: varIdAdSP,
                                     MA_DIEU_KIEN: varMaDKien,
                                     THANH_PHAN: "SP",
@@ -2183,13 +2560,133 @@ Nhapdieukien As screen:
                                     KIEU: Radio2_1.Selected.ID,
                                     MA_TIEU_CHI: ad.DropQTich_1.Selected.MA_CHI_TIEU,
                                     TEN_TIEU_CHI: ad.DropQTich_1.Selected.TEN_CHI_TIEU,
-                                    MA_GIA_TRI: LookUp(tmpDsGiatri, cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai =  ad.DropQTich_1.Selected.MA_CHI_TIEU).Ma,
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = ad.DropQTich_1.Selected.MA_CHI_TIEU
+                                    ).Ma,
                                     TEN_GIA_TRI: gt.cr282_ten_gia_tri
                                 }
                             )
                         )
                     )
                 );
+                
+            // lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI KENH BAN
+            Set(
+                    varIdAdKB,
+                    0
+                );
+                Set(
+                    varIdLtKB,
+                    0
+                );
+                If(
+                    CountRows(tmpApdungKB) > 0,
+                    Set(
+                        varIdAdKB,
+                        Max(
+                            DL_DIEUKIEN_APDUNG_LOAI,
+                            ID
+                        ) + 1
+                    );
+                    Patch(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                        {
+                            ID: varIdAdKB,
+                            MA_DIEU_KIEN: newMaDK,
+                            THANH_PHAN: "KB",
+                            AP_DUNG: "1",
+                            KIEU: RadioKB.Selected.ID
+                        }
+                    )
+                );
+                If(
+                    CountRows(tmpLoaitruKB) > 0,
+                    Patch(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        Set(
+                            varIdLtKB,
+                            Max(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                ID
+                            ) + 1
+                        );
+                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                        {
+                            ID: Max(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                ID
+                            ) + 1,
+                            MA_DIEU_KIEN: newMaDK,
+                            THANH_PHAN: "KB",
+                            AP_DUNG: "2",
+                            KIEU: RadioKB_LoaiTru.Selected.ID
+                        }
+                    )
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết
+            If(
+                    CountRows(tmpApdungKB) > 0,
+                    ForAll(
+                        GalleryKB.AllItems As kh,
+                        ForAll(
+                            kh.ComboBoxGTKB.SelectedItems As gt,
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                {
+                                    ID: Max(
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        ID
+                                    ) + 1,
+                                    ID_LOAI: varIdAdKB,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "KB",
+                                    AP_DUNG: "1",
+                                    KIEU: RadioKB.Selected.ID,
+                                    MA_TIEU_CHI: kh.DropKB.Selected.MA_CHI_TIEU,
+                                    TEN_TIEU_CHI: kh.DropKB.Selected.TEN_CHI_TIEU,
+                                    MA_GIA_TRI: gt.Ma,
+                                    TEN_GIA_TRI: gt.Ten
+                                }
+                            )
+                        )
+                    )
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết loai tru
+            If(
+                    CountRows(tmpLoaitruKB) > 0,
+                    ForAll(
+                        GalleryKB_LoaiTru.AllItems As kh,
+                        ForAll(
+                            ComboBoxGTKB_LT.SelectedItems As gt,
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                {
+                                    ID: Max(
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        ID
+                                    ) + 1,
+                                    ID_LOAI: varIdLtKB,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "KB",
+                                    AP_DUNG: "2",
+                                    KIEU: RadioKB_LoaiTru.Selected.ID,
+                                    MA_TIEU_CHI: kh.DropKB_LoaiTru.Selected.MA_CHI_TIEU,
+                                    TEN_TIEU_CHI: kh.DropKB_LoaiTru.Selected.TEN_CHI_TIEU,
+                                    MA_GIA_TRI: gt.Ma,
+                                    TEN_GIA_TRI: gt.Ten
+                                }
+                            )
+                        )
+                    )
+                );
+                
+            //End kenh ban
             // lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI KHANH HANG
             Set(
                     varIdAdKH,
