@@ -1,0 +1,2124 @@
+Nhapdieukien As screen:
+    OnVisible: |
+        =ClearCollect(
+            tmpApdungKH,
+            GroupBy(
+                Filter(
+                    DL_DIEUKIEN_APDUNG_LOAI_CT,
+                    MA_DIEU_KIEN = "AD0003" && THANH_PHAN = "KH" && AP_DUNG = "1"
+                ),
+                "cr282_ma_dieu_kien",
+                "cr282_thanh_phan",
+                "cr282_ap_dung",
+                "cr282_ma_tieu_chi",
+                "cr282_ten_tieu_chi","group_apdung_kh"
+            )
+        );
+        ClearCollect(
+            tmpLoaitruKH,
+            GroupBy(
+                Filter(
+                    DL_DIEUKIEN_APDUNG_LOAI_CT,
+                    MA_DIEU_KIEN = "AD0003" && THANH_PHAN = "KH" && AP_DUNG = "2"
+                ),
+                "cr282_ma_dieu_kien",
+                "cr282_thanh_phan",
+                "cr282_ap_dung",
+                "cr282_ma_tieu_chi",
+                "cr282_ten_tieu_chi","group_loaitru_kh"
+            )
+        );
+        ClearCollect(
+            tmpApdungPV,
+            GroupBy(
+                Filter(
+                    DL_DIEUKIEN_APDUNG_LOAI_CT,
+                    MA_DIEU_KIEN = "AD0003" && THANH_PHAN = "PV" && AP_DUNG = "1"
+                ),
+                "cr282_ma_dieu_kien",
+                "cr282_thanh_phan",
+                "cr282_ap_dung",
+                "cr282_ma_tieu_chi",
+                "cr282_ten_tieu_chi","group_apdung_pv"
+            )
+        );
+        ClearCollect(
+            tmpLoaitruPV,
+            GroupBy(
+                Filter(
+                    DL_DIEUKIEN_APDUNG_LOAI_CT,
+                    MA_DIEU_KIEN = "AD0003" && THANH_PHAN = "PV" && AP_DUNG = "2"
+                ),
+                "cr282_ma_dieu_kien",
+                "cr282_thanh_phan",
+                "cr282_ap_dung",
+                "cr282_ma_tieu_chi",
+                "cr282_ten_tieu_chi","group_loaitru_pv"
+            )
+        );
+        ClearCollect(
+            tmpDsGiatri,
+            [
+                {
+                    MA_GIA_TRI: "",
+                    TEN_GIA_TRI: "",
+                    LOAI: ""
+                }
+            ]
+        );
+        // them chi tieu Nhom khach hang
+        ForAll(
+            DM_NHOM_KH As kh,
+            Patch(
+                tmpDsGiatri,
+                Defaults(tmpDsGiatri),
+                {
+                    MA_GIA_TRI: kh.MA_NHOM_KH,
+                    TEN_GIA_TRI: kh.TEN_NHOM_KH,
+                    LOAI: "MA_KH_NHOM"
+                }
+            )
+        );
+        // them chi tieu LOAI khach hang
+        Collect(
+            tmpDsGiatri,
+            {
+                MA_GIA_TRI: "0",
+                TEN_GIA_TRI: "Cá nhân",
+                LOAI: "MA_KH_LOAI"
+            },
+            {
+                MA_GIA_TRI: "1",
+                TEN_GIA_TRI: "Tổ chức",
+                LOAI: "MA_KH_LOAI"
+            }
+        );
+        // them chi tieu Pham vi
+        ForAll(
+            DM_PHAMVI_DIALYS As pv,
+            Patch(
+                tmpDsGiatri,
+                Defaults(tmpDsGiatri),
+                {
+                    MA_GIA_TRI: pv.MA_PHAMVI,
+                    TEN_GIA_TRI: pv.TEN_PHAMVI,
+                    LOAI: If(
+                        pv.LOAI = "KHU_VUC",
+                        "MA_KHU_VUC",
+                        If(
+                            pv.LOAI = "QUOC_GIA",
+                            "MA_QG",
+                            If(
+                                pv.LOAI = "VUNG_MIEN",
+                                "MA_VUNG_MIEN",
+                                If(
+                                    pv.LOAI = "TINH_TP",
+                                    "MA_TINH_TP",
+                                    "MA_QUAN_HUYEN"
+                                )
+                            )
+                        )
+                    )
+                }
+            )
+        );
+        
+        
+        
+        
+        
+        // T.ANH
+        If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN ="AD001" && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" )) > 0,
+            ClearCollect(
+                tmpApdungSp,
+                GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN ="AD001" && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" ), "cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
+                )
+            )
+        );
+        ClearCollect(
+            tmpLoaitruSp,
+            []
+        );
+        ClearCollect(
+            tmpDsGiatri,
+            [
+                {
+                    Ma: "",
+                    Ten: "",
+                    Loai: "",
+                    cr282_ten_gia_tri: ""
+                }
+            ]
+        );
+        // them san pham
+        ForAll(
+            DL_SAN_PHAM As sp,
+            Patch(
+                tmpDsGiatri,
+                Defaults(tmpDsGiatri),
+                {
+                    Ma: sp.MA_SAN_PHAM,
+                    Ten: sp.TEN_SAN_PHAM,
+                    Loai: "MA_SP",
+                    cr282_ten_gia_tri : sp.TEN_SAN_PHAM
+                }
+            )
+        );
+        // them chuong trinh
+        ForAll(
+            ' DL_SAN_PHAM_CT' As sp,
+            Patch(
+                tmpDsGiatri,
+                Defaults(tmpDsGiatri),
+                {
+                    Ma: sp.MA_CHUONG_TRINH,
+                    Ten: sp.TEN_CHUONG_TRINH,
+                    Loai: "MA_CT",
+                    cr282_ten_gia_tri : sp.TEN_CHUONG_TRINH
+                }
+            )
+        );
+
+    CanvasDK As fluidGrid.fluidGridWithBlankCard:
+        BorderThickness: =0
+        Height: =Parent.Height - Self.Y
+        Width: =Parent.Width
+        Y: =
+        ZIndex: =1
+
+        DataCardChung As dataCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =0
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =1785
+            Width: =Parent.Width
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+            ContainerChung As groupContainer.manualLayoutContainer:
+                Height: =342
+                Width: =Parent.Width-130
+                X: =130
+                ZIndex: =1
+
+                Label1_22 As label:
+                    Align: =Align.Justify
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    BorderThickness: =2
+                    Color: =RGBA(50, 49, 48, 1)
+                    DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                    DisabledColor: =RGBA(161, 159, 157, 1)
+                    FocusedBorderThickness: =4
+                    Font: =Font.'Segoe UI'
+                    FontWeight: =FontWeight.Bold
+                    Height: =30
+                    Size: =11
+                    Text: ="1. Thông tin chung"
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                FormDKChung As form:
+                    BorderColor: =RGBA(245, 245, 245, 1)
+                    DataSource: =DL_DIEUKIEN_APDUNG
+                    DefaultMode: =FormMode.New
+                    Height: =315
+                    Item: |-
+                        =LookUp(
+                            DL_DIEUKIEN_APDUNG,
+                            MA_DIEU_KIEN = rcd
+                        )
+                    NumberOfColumns: =2
+                    Width: =Parent.Width
+                    Y: =27
+                    ZIndex: =2
+
+                    MA_DIEU_KIEN_DataCard1 As typedDataCard.textualEditCard:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_ma_dieu_kien"
+                        Default: =varMaDKien
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DL_DIEUKIEN_APDUNG],DataSourceInfo.DisplayName,"cr282_ma_dieu_kien")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =60
+                        MaxLength: =DataSourceInfo([@DL_DIEUKIEN_APDUNG], DataSourceInfo.MaxLength, "cr282_ma_dieu_kien")
+                        Required: =true
+                        Update: =newMaDK
+                        Width: =618
+                        X: =0
+                        Y: =0
+                        ZIndex: =3
+
+                        DataCardKey2_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            FontWeight: =FontWeight.Semibold
+                            Height: =34
+                            PaddingLeft: =0
+                            Size: =11
+                            Text: ="Mã điều kiện"
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (DataCardValueMaDK.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        DataCardValueMaDK As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =Parent.Default
+                            DelayOutput: =true
+                            DisabledBorderColor: =RGBA(204, 231, 246, 1)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            DisabledFill: =RGBA(230, 230, 230, 1)
+                            DisplayMode: =DisplayMode.Disabled
+                            HintText: ="Hệ thống tự sinh"
+                            HoverBorderColor: =RGBA(127, 178, 57, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            MaxLength: =Parent.MaxLength
+                            PaddingLeft: =5
+                            PressedBorderColor: =RGBA(127, 178, 57, 1)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Size: =11
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey2_1.X + DataCardKey2_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage2_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(168, 0, 0, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =13
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardValueMaDK.Y + DataCardValueMaDK.Height
+                            ZIndex: =3
+
+                    TRANG_THAI_DataCard1_1 As typedDataCard.textualEditCard:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_trang_thai"
+                        Default: =ThisItem.TRANG_THAI
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DL_DIEUKIEN_APDUNG],DataSourceInfo.DisplayName,"cr282_trang_thai")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        MaxLength: =DataSourceInfo([@DL_DIEUKIEN_APDUNG], DataSourceInfo.MaxLength, "cr282_trang_thai")
+                        Required: =false
+                        Update: =DataCardValueHoatDong.Value
+                        Width: =618
+                        X: =1
+                        Y: =0
+                        ZIndex: =3
+
+                        DataCardKey11 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            FontWeight: =FontWeight.Semibold
+                            Height: =34
+                            PaddingLeft: =0
+                            Size: =11
+                            Text: ="Hoạt động"
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (DataCardValueHoatDong.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        ErrorMessage11 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(168, 0, 0, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =13
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardValueHoatDong.Y + DataCardValueHoatDong.Height
+                            ZIndex: =3
+
+                        StarVisible11 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            FontWeight: =FontWeight.Semibold
+                            Height: =DataCardKey11.Height
+                            PaddingLeft: =0
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey11.Y
+                            ZIndex: =4
+
+                        DataCardValueHoatDong As checkbox:
+                            BorderColor: =RGBA(0, 121, 187, 1)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            CheckboxBorderColor: =RGBA(0, 94, 146, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =Parent.Default
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            FocusedBorderThickness: =4
+                            Height: =40
+                            HoverBorderColor: =RGBA(0, 0, 0, 0)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(0, 0, 0, 0)
+                            PressedBorderColor: =RGBA(0, 0, 0, 0)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(0, 0, 0, 0)
+                            Size: =11
+                            Text: =""
+                            Width: =40
+                            X: =253
+                            Y: =10
+                            ZIndex: =5
+
+                    SO_VB_DataCard1 As typedDataCard.textualEditCard:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_so_vb"
+                        Default: =ThisItem.SO_VB
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DL_DIEUKIEN_APDUNG],DataSourceInfo.DisplayName,"cr282_so_vb")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        MaxLength: =DataSourceInfo([@DL_DIEUKIEN_APDUNG], DataSourceInfo.MaxLength, "cr282_so_vb")
+                        Required: =false
+                        Update: =DataCardValueSoVB.Text
+                        Width: =618
+                        X: =0
+                        Y: =1
+                        ZIndex: =3
+
+                        DataCardKey9_2 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            FontWeight: =FontWeight.Semibold
+                            Height: =34
+                            PaddingLeft: =0
+                            Size: =11
+                            Text: ="Số văn bản"
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (DataCardValueSoVB.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        DataCardValueSoVB As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =Parent.Default
+                            DelayOutput: =true
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            DisabledFill: =RGBA(242, 242, 241, 0)
+                            DisplayMode: =Parent.DisplayMode
+                            HoverBorderColor: =RGBA(127, 178, 57, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            MaxLength: =Parent.MaxLength
+                            PaddingLeft: =5
+                            PressedBorderColor: =RGBA(127, 178, 57, 1)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Size: =11
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey9_2.X + DataCardKey9_2.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage9_2 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(168, 0, 0, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =13
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardValueSoVB.Y + DataCardValueSoVB.Height
+                            ZIndex: =3
+
+                        StarVisible9_2 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            FontWeight: =FontWeight.Semibold
+                            Height: =DataCardKey9_2.Height
+                            PaddingLeft: =0
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey9_2.Y
+                            ZIndex: =4
+
+                    NGAY_VB_DataCard1 As typedDataCard.dateTimeEditCard:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_ngay_vb"
+                        Default: =ThisItem.NGAY_VB
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DL_DIEUKIEN_APDUNG],DataSourceInfo.DisplayName,"cr282_ngay_vb")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        Required: =false
+                        Update: =If(Not IsBlank(DateValueVB.SelectedDate), DateValueVB.SelectedDate, 0)
+                        Width: =618
+                        X: =1
+                        Y: =1
+                        ZIndex: =3
+
+                        DataCardKey10_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            FontWeight: =FontWeight.Semibold
+                            Height: =34
+                            PaddingLeft: =0
+                            Size: =11
+                            Text: ="Ngày văn bản"
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        DateValueVB As datepicker:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            CalendarHeaderFill: =RGBA(16, 110, 190, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            DefaultDate: =Parent.Default
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            DisabledFill: =RGBA(242, 242, 241, 0)
+                            DisplayMode: =Parent.DisplayMode
+                            EndYear: =Year(Today())+100
+                            Format: ="dd/mm/yyyy"
+                            HoverDateFill: =RGBA(184, 187, 184, 1)
+                            InputTextPlaceholder: =
+                            IsEditable: =true
+                            PaddingBottom: =0
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SelectedDateFill: =RGBA(0, 120, 212, 1)
+                            Size: =11
+                            StartYear: =1899
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey10_1.X + DataCardKey10_1.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage10_1 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(168, 0, 0, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =13
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =
+                            ZIndex: =6
+
+                        StarVisible10_1 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            FontWeight: =FontWeight.Semibold
+                            Height: =DataCardKey10_1.Height
+                            PaddingLeft: =0
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey10_1.Y
+                            ZIndex: =7
+
+                    HIEU_LUC_TU_DataCard1 As typedDataCard.dateTimeEditCard:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_hieu_luc_tu"
+                        Default: =ThisItem.HIEU_LUC_TU
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DL_DIEUKIEN_APDUNG],DataSourceInfo.DisplayName,"cr282_hieu_luc_tu")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        Required: =false
+                        Update: =If(Not IsBlank(DateValueTU.SelectedDate), DateValueTU.SelectedDate, 0)
+                        Width: =618
+                        X: =0
+                        Y: =2
+                        ZIndex: =3
+
+                        DataCardKey14 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            FontWeight: =FontWeight.Semibold
+                            Height: =34
+                            PaddingLeft: =0
+                            Size: =11
+                            Text: ="Hiệu lực từ (*)"
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        DateValueTU As datepicker:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            CalendarHeaderFill: =RGBA(16, 110, 190, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            DefaultDate: =Parent.Default
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            DisabledFill: =RGBA(242, 242, 241, 0)
+                            DisplayMode: =Parent.DisplayMode
+                            EndYear: =Year(Today())+100
+                            Format: ="dd/mm/yyyy"
+                            HoverDateFill: =RGBA(184, 187, 184, 1)
+                            InputTextPlaceholder: =
+                            IsEditable: =true
+                            PaddingBottom: =0
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SelectedDateFill: =RGBA(0, 120, 212, 1)
+                            Size: =11
+                            StartYear: =1899
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey14.X + DataCardKey14.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage14 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(168, 0, 0, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =13
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =
+                            ZIndex: =6
+
+                        StarVisible14 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            FontWeight: =FontWeight.Semibold
+                            Height: =DataCardKey14.Height
+                            PaddingLeft: =0
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey14.Y
+                            ZIndex: =7
+
+                    HIEU_LUC_DEN_DataCard1 As typedDataCard.dateTimeEditCard:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_hieu_luc_den"
+                        Default: =ThisItem.HIEU_LUC_DEN
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DL_DIEUKIEN_APDUNG],DataSourceInfo.DisplayName,"cr282_hieu_luc_den")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =60
+                        Required: =false
+                        Update: =If(Not IsBlank(DateValueDen.SelectedDate), DateValueDen.SelectedDate, 0)
+                        Width: =618
+                        X: =1
+                        Y: =2
+                        ZIndex: =3
+
+                        DataCardKey17 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            FontWeight: =FontWeight.Semibold
+                            Height: =34
+                            PaddingLeft: =0
+                            Size: =11
+                            Text: ="Hiệu lực đến"
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        DateValueDen As datepicker:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            CalendarHeaderFill: =RGBA(16, 110, 190, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            DefaultDate: =Parent.Default
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            DisabledFill: =RGBA(242, 242, 241, 0)
+                            DisplayMode: =Parent.DisplayMode
+                            EndYear: =Year(Today())+100
+                            Format: ="dd/mm/yyyy"
+                            HoverDateFill: =RGBA(184, 187, 184, 1)
+                            InputTextPlaceholder: =
+                            IsEditable: =true
+                            PaddingBottom: =0
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SelectedDateFill: =RGBA(0, 120, 212, 1)
+                            Size: =11
+                            StartYear: =1899
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey17.X + DataCardKey17.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage17 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(168, 0, 0, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =13
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =
+                            ZIndex: =6
+
+                        StarVisible17 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            FontWeight: =FontWeight.Semibold
+                            Height: =DataCardKey17.Height
+                            PaddingLeft: =0
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey17.Y
+                            ZIndex: =7
+
+                    FILE_DataCard1 As typedDataCard.fileEditCard:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_file"
+                        Default: |-
+                            =If(!IsBlank(ThisItem.FILE.FileName), Table({DisplayName: ThisItem.FILE.FileName, Value: ThisItem.FILE.Value}), Blank())
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DL_DIEUKIEN_APDUNG],DataSourceInfo.DisplayName,"cr282_file")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =120
+                        Required: =false
+                        Update: =DataCardValueFile.Attachments
+                        Width: =618
+                        X: =0
+                        Y: =3
+                        ZIndex: =3
+
+                        DataCardKey6_2 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            FontWeight: =FontWeight.Semibold
+                            Height: =34
+                            PaddingLeft: =0
+                            Size: =11
+                            Text: ="Tên file"
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        DataCardValueFile As attachments:
+                            AddAttachmentText: ="Nhấn chọn file"
+                            BorderColor: =RGBA(230, 230, 230, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            DisabledFill: =RGBA(242, 242, 241, 0)
+                            DisplayMode: =Parent.DisplayMode
+                            Height: =101
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(245, 245, 245, 1)
+                            IsInDataCard: =true
+                            ItemColor: =RGBA(0, 0, 0, 1)
+                            ItemFill: =RGBA(0, 120, 212, 1)
+                            ItemHoverColor: =RGBA(50, 49, 48, 1)
+                            ItemHoverFill: =RGBA(245, 245, 245, 1)
+                            Items: =Parent.Default
+                            ItemSpacing: =12
+                            MaxAttachments: =1
+                            MaxAttachmentsText: =""
+                            NoAttachmentsColor: =RGBA(161, 159, 157, 1)
+                            NoAttachmentsText: =""
+                            PaddingBottom: =5
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            PaddingRight: =5
+                            PaddingTop: =5
+                            PressedFill: =RGBA(0, 120, 212, 1)
+                            Size: =11
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey6_2.X + DataCardKey6_2.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage6_2 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(168, 0, 0, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =13
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardValueFile.Y + DataCardValueFile.Height
+                            ZIndex: =3
+
+                        StarVisible6_2 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            FontWeight: =FontWeight.Semibold
+                            Height: =DataCardKey6_2.Height
+                            PaddingLeft: =0
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey6_2.Y
+                            ZIndex: =4
+
+                    ID_DataCard1 As typedDataCard.numberEditCard:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_id"
+                        Default: =ThisItem.ID
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DL_DIEUKIEN_APDUNG],DataSourceInfo.DisplayName,"cr282_id")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        Required: =true
+                        Update: =newIDMaDD
+                        Visible: =false
+                        Width: =618
+                        X: =1
+                        Y: =3
+                        ZIndex: =3
+
+                        DataCardKey8_2 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            FontWeight: =FontWeight.Semibold
+                            Height: =34
+                            PaddingLeft: =0
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (DataCardID.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        DataCardID As text:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =Parent.Default
+                            DelayOutput: =true
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            DisabledFill: =RGBA(242, 242, 241, 0)
+                            DisplayMode: =Parent.DisplayMode
+                            Font: =Font.'Segoe UI'
+                            Format: =TextFormat.Number
+                            HoverBorderColor: =RGBA(16, 110, 190, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            PaddingLeft: =5
+                            PressedBorderColor: =RGBA(0, 120, 212, 1)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey8_2.X + DataCardKey8_2.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage8_2 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(168, 0, 0, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =13
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardID.Y + DataCardID.Height
+                            ZIndex: =3
+
+            Container2_3 As groupContainer.manualLayoutContainer:
+                Height: =133
+                Width: =Parent.Width-Self.X
+                X: =130
+                Y: =740
+                ZIndex: =2
+
+                Label6_1 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =46
+                    Size: =11
+                    Text: ="2.3 Khách hàng"
+                    Width: =Parent.Width
+                    ZIndex: =2
+
+                RadioKH As radio:
+                    BorderColor: =RGBA(54, 176, 75, 1)
+                    DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                    DisabledFill: =RGBA(230, 230, 230, 1)
+                    HoverColor: =RGBA(0, 0, 0, 1)
+                    Items: |-
+                        =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
+                    OnSelect: =true
+                    RadioBorderColor: =RGBA(0, 84, 148, 1)
+                    Size: =11
+                    X: =40
+                    Y: =76
+                    ZIndex: =3
+
+                GalleryKH_1 As gallery.galleryVertical:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    BorderThickness: =1
+                    DelayItemLoading: =true
+                    Height: =178
+                    Items: =tmpApdungKH
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplateSize: =46
+                    Visible: =If(RadioKH.Selected.ID = 1 , false, true)
+                    Width: =794
+                    X: =304
+                    Y: =76
+                    ZIndex: =4
+
+                    Label9 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Text: ="Tiêu chí"
+                        Width: =87
+                        X: =18
+                        ZIndex: =2
+
+                    Label9_1 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Text: ="Giá trị"
+                        Width: =87
+                        X: =315
+                        ZIndex: =3
+
+                    DropKH As dropdown:
+                        BorderColor: =RGBA(54, 176, 75, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(54, 176, 75, 1)
+                        Default: =ThisItem.cr282_ten_tieu_chi
+                        DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                        DisabledFill: =RGBA(230, 230, 230, 1)
+                        Height: =32
+                        Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "KH")
+                        OnChange: =Reset(ComboBoxGTKH)
+                        OnSelect: =
+                        Size: =11
+                        Width: =200
+                        X: =110
+                        Y: =5
+                        ZIndex: =4
+
+                    ComboBoxGTKH As combobox:
+                        BorderColor: =RGBA(54, 176, 75, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(54, 176, 75, 1)
+                        DefaultSelectedItems: =ThisItem.group_apdung_kh
+                        DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                        DisabledFill: =RGBA(230, 230, 230, 1)
+                        DisplayFields: =["TEN_GIA_TRI"]
+                        Height: =30
+                        IsSearchable: =false
+                        Items: =Filter( tmpDsGiatri, LOAI = DropKH.Selected.MA_CHI_TIEU)
+                        OnSelect: =Select(Parent)
+                        SearchFields: =["TEN_GIA_TRI"]
+                        SearchItems: =[]
+                        Size: =11
+                        Width: =263
+                        X: =402
+                        Y: =5
+                        ZIndex: =5
+
+                    Button5_9 As button:
+                        Height: =28
+                        OnSelect: =RemoveIf(tmpApdungKH, ThisItem.cr282_ma_tieu_chi = DropKH.Selected.MA_CHI_TIEU)
+                        Size: =11
+                        Text: ="Xoá"
+                        Width: =73
+                        X: =688
+                        Y: =5
+                        ZIndex: =6
+
+                Label7 As label:
+                    FontWeight: =FontWeight.Bold
+                    Size: =11
+                    Text: ="Áp dụng"
+                    X: =25
+                    Y: =36
+                    ZIndex: =5
+
+                RadioKH_LoaiTru As radio:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    HoverColor: =RGBA(0, 0, 0, 1)
+                    Items: |-
+                        =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
+                    OnSelect: =true
+                    RadioBorderColor: =RGBA(0, 84, 148, 1)
+                    Size: =11
+                    X: =41
+                    Y: =330
+                    ZIndex: =6
+
+                GalleryKH_LoaiTru As gallery.galleryVertical:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    BorderThickness: =1
+                    DelayItemLoading: =true
+                    Height: =178
+                    Items: =tmpLoaitruKH
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplateSize: =46
+                    Visible: =If(RadioKH_LoaiTru.Selected.ID = 1 , false, true)
+                    Width: =794
+                    X: =305
+                    Y: =330
+                    ZIndex: =7
+
+                    Label9_2 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Text: ="Tiêu chí"
+                        Width: =87
+                        X: =18
+                        ZIndex: =2
+
+                    Label9_3 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Text: ="Giá trị"
+                        Width: =87
+                        X: =315
+                        ZIndex: =3
+
+                    DropKH_LoaiTru As dropdown:
+                        BorderColor: =RGBA(54, 176, 75, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(54, 176, 75, 1)
+                        Default: =ThisItem.cr282_ten_tieu_chi
+                        DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                        DisabledFill: =RGBA(230, 230, 230, 1)
+                        Height: =30
+                        Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "KH")
+                        OnChange: =Reset(ComboBoxGTKH_LT)
+                        OnSelect: =
+                        Size: =11
+                        Width: =200
+                        X: =110
+                        Y: =5
+                        ZIndex: =4
+
+                    ComboBoxGTKH_LT As combobox:
+                        BorderColor: =RGBA(54, 176, 75, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(54, 176, 75, 1)
+                        DefaultSelectedItems: =ThisItem.group_loaitru_kh
+                        DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                        DisabledFill: =RGBA(230, 230, 230, 1)
+                        DisplayFields: =["TEN_GIA_TRI"]
+                        Height: =30
+                        IsSearchable: =false
+                        Items: =Filter( tmpDsGiatri, LOAI = DropKH_LoaiTru.Selected.MA_CHI_TIEU)
+                        OnSelect: =Select(Parent)
+                        SearchFields: =["TEN_GIA_TRI"]
+                        SearchItems: =[]
+                        Size: =11
+                        Width: =263
+                        X: =402
+                        Y: =5
+                        ZIndex: =5
+
+                    Button5_10 As button:
+                        Height: =28
+                        OnSelect: =RemoveIf(tmpLoaitruKH, ThisItem.cr282_ma_tieu_chi = DropKH_LoaiTru.Selected.MA_CHI_TIEU)
+                        Size: =11
+                        Text: ="Xoá"
+                        Width: =73
+                        X: =688
+                        Y: =5
+                        ZIndex: =6
+
+                Label7_1 As label:
+                    FontWeight: =FontWeight.Bold
+                    Size: =11
+                    Text: ="Loại trừ"
+                    X: =25
+                    Y: =290
+                    ZIndex: =8
+
+                Button3_1 As button:
+                    Height: =25
+                    OnSelect: |-
+                        =Collect(
+                            tmpApdungKH,
+                            [{ID: ""}]
+                        );
+                    Size: =11
+                    Text: ="Thêm mới"
+                    Width: =91
+                    X: =304
+                    Y: =40
+                    ZIndex: =9
+
+                Button3_2 As button:
+                    Height: =25
+                    OnSelect: |-
+                        =Collect(
+                            tmpLoaitruKH,
+                            [{ID: ""}]
+                        );
+                    Size: =11
+                    Text: ="Thêm mới"
+                    Width: =91
+                    X: =304
+                    Y: =297
+                    ZIndex: =10
+
+            Container2_4 As groupContainer.manualLayoutContainer:
+                Height: =536
+                Width: =Parent.Width-Self.X
+                X: =130
+                Y: =874
+                ZIndex: =3
+
+                Label6_2 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =46
+                    Size: =11
+                    Text: ="2.4 Phạm vi"
+                    Width: =Parent.Width
+                    ZIndex: =2
+
+                RadioPV As radio:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    HoverColor: =RGBA(0, 0, 0, 1)
+                    Items: |-
+                        =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
+                    OnSelect: =true
+                    RadioBorderColor: =RGBA(0, 84, 148, 1)
+                    Size: =11
+                    X: =40
+                    Y: =76
+                    ZIndex: =3
+
+                GalleryPV_1 As gallery.galleryVertical:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    BorderThickness: =1
+                    DelayItemLoading: =true
+                    Height: =178
+                    Items: =tmpApdungPV
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplateSize: =46
+                    Visible: =If(RadioPV.Selected.ID = 1 , false, true)
+                    Width: =794
+                    X: =304
+                    Y: =76
+                    ZIndex: =4
+
+                    Label9_4 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Text: ="Tiêu chí"
+                        Width: =87
+                        X: =18
+                        ZIndex: =2
+
+                    Label9_5 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Text: ="Giá trị"
+                        Width: =87
+                        X: =315
+                        ZIndex: =3
+
+                    DropPV As dropdown:
+                        BorderColor: =RGBA(54, 176, 75, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(54, 176, 75, 1)
+                        Default: =ThisItem.cr282_ten_tieu_chi
+                        DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                        DisabledFill: =RGBA(230, 230, 230, 1)
+                        Height: =30
+                        Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "PV")
+                        OnChange: =Reset(ComboBoxGTPV)
+                        OnSelect: =
+                        Size: =11
+                        Width: =200
+                        X: =110
+                        Y: =5
+                        ZIndex: =4
+
+                    ComboBoxGTPV As combobox:
+                        BorderColor: =RGBA(54, 176, 75, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(54, 176, 75, 1)
+                        DefaultSelectedItems: =ThisItem.group_apdung_pv
+                        DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                        DisabledFill: =RGBA(230, 230, 230, 1)
+                        DisplayFields: =["TEN_GIA_TRI"]
+                        Height: =30
+                        IsSearchable: =false
+                        Items: =Filter( tmpDsGiatri, LOAI = DropPV.Selected.MA_CHI_TIEU)
+                        OnSelect: =Select(Parent)
+                        SearchFields: =["TEN_GIA_TRI"]
+                        SearchItems: =[]
+                        Size: =11
+                        Width: =263
+                        X: =402
+                        Y: =5
+                        ZIndex: =5
+
+                    Button5_11 As button:
+                        Height: =28
+                        OnSelect: =RemoveIf(tmpApdungPV, ThisItem.cr282_ma_tieu_chi=DropPV.Selected.MA_CHI_TIEU)
+                        Size: =11
+                        Text: ="Xoá"
+                        Width: =73
+                        X: =688
+                        Y: =9
+                        ZIndex: =6
+
+                Label7_2 As label:
+                    FontWeight: =FontWeight.Bold
+                    Size: =11
+                    Text: ="Áp dụng"
+                    X: =25
+                    Y: =36
+                    ZIndex: =5
+
+                RadioPV_LoaiTru As radio:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    HoverColor: =RGBA(0, 0, 0, 1)
+                    Items: |-
+                        =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
+                    OnSelect: =true
+                    RadioBorderColor: =RGBA(0, 84, 148, 1)
+                    Size: =11
+                    X: =41
+                    Y: =330
+                    ZIndex: =6
+
+                GalleryPV_LoaiTru As gallery.galleryVertical:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    BorderThickness: =1
+                    DelayItemLoading: =true
+                    Height: =178
+                    Items: =tmpLoaitruPV
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplateSize: =46
+                    Visible: =If(RadioPV_LoaiTru.Selected.ID = 1 , false, true)
+                    Width: =794
+                    X: =305
+                    Y: =330
+                    ZIndex: =7
+
+                    Label9_6 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Text: ="Tiêu chí"
+                        Width: =87
+                        X: =18
+                        ZIndex: =2
+
+                    Label9_7 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Text: ="Giá trị"
+                        Width: =87
+                        X: =315
+                        ZIndex: =3
+
+                    DropPV_LoaiTru As dropdown:
+                        BorderColor: =RGBA(54, 176, 75, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(54, 176, 75, 1)
+                        Default: =ThisItem.cr282_ten_tieu_chi
+                        DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                        DisabledFill: =RGBA(230, 230, 230, 1)
+                        Height: =30
+                        Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "PV")
+                        OnChange: =Reset(ComboBoxGTPV_LT)
+                        OnSelect: =
+                        Size: =11
+                        Width: =200
+                        X: =110
+                        Y: =5
+                        ZIndex: =4
+
+                    ComboBoxGTPV_LT As combobox:
+                        BorderColor: =RGBA(54, 176, 75, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(54, 176, 75, 1)
+                        DefaultSelectedItems: =ThisItem.group_loaitru_pv
+                        DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                        DisabledFill: =RGBA(230, 230, 230, 1)
+                        DisplayFields: =["TEN_GIA_TRI"]
+                        Height: =30
+                        IsSearchable: =false
+                        Items: =Filter( tmpDsGiatri, LOAI = DropPV_LoaiTru.Selected.MA_CHI_TIEU)
+                        OnSelect: =Select(Parent)
+                        SearchFields: =["TEN_GIA_TRI"]
+                        SearchItems: =[]
+                        Size: =11
+                        Width: =263
+                        X: =402
+                        Y: =5
+                        ZIndex: =5
+
+                    Button5_12 As button:
+                        Height: =28
+                        OnSelect: =RemoveIf(tmpLoaitruPV, ThisItem.cr282_ma_tieu_chi=DropPV_LoaiTru.Selected.MA_CHI_TIEU)
+                        Size: =11
+                        Text: ="Xoá"
+                        Width: =73
+                        X: =688
+                        Y: =9
+                        ZIndex: =6
+
+                Label7_3 As label:
+                    FontWeight: =FontWeight.Bold
+                    Size: =11
+                    Text: ="Loại trừ"
+                    X: =25
+                    Y: =290
+                    ZIndex: =8
+
+                Button3_3 As button:
+                    Height: =25
+                    OnSelect: |-
+                        =Collect(
+                            tmpApdungPV,
+                            [{ID: ""}]
+                        );
+                    Size: =11
+                    Text: ="Thêm mới"
+                    Width: =91
+                    X: =304
+                    Y: =40
+                    ZIndex: =9
+
+                Button3_4 As button:
+                    Height: =25
+                    OnSelect: |-
+                        =Collect(
+                            tmpLoaitruPV,
+                            [{ID: ""}]
+                        );
+                    Size: =11
+                    Text: ="Thêm mới"
+                    Width: =91
+                    X: =304
+                    Y: =297
+                    ZIndex: =10
+
+            Button6_9 As button:
+                OnSelect: |
+                    =//Xu ly thong tin chung
+                    UpdateContext({errorMsgDK: ""});
+                    Clear(tmpCheckDup);
+                    If(
+                        IsBlank(DataCardID.Text),
+                        UpdateContext(
+                            {
+                                newIDMaDD: If(
+                                    CountIf(
+                                        DL_DIEUKIEN_APDUNG,
+                                        true
+                                    ) = 0,
+                                    1,
+                                    Max(
+                                        DL_DIEUKIEN_APDUNG,
+                                        ID
+                                    ) + 1
+                                )
+                            }
+                        ),
+                        UpdateContext({newIDMaDD: Value(DataCardID.Text)})
+                    );
+                    If(
+                        IsBlank(DataCardValueMaDK.Text),
+                        UpdateContext(
+                            {
+                                newMaDK: Concatenate(
+                                    "AD",
+                                    If(
+                                        newIDMaDD < 10,
+                                        "000",
+                                        If(
+                                            newIDMaDD < 100 && newIDMaDD >= 10,
+                                            "00",
+                                            If(
+                                                newIDMaDD < 1000 && newIDMaDD >= 100,
+                                                "0",
+                                                ""
+                                            )
+                                        )
+                                    ),
+                                    Text(newIDMaDD)
+                                )
+                            }
+                        ),
+                        UpdateContext({newMaDK: DataCardValueMaDK.Text})
+                    );
+                    If(
+                        IsBlank(DateValueTU.SelectedDate),
+                        UpdateContext({errorMsgDK: "Hiệu lực từ là bắt buộc"})
+                    );
+                    //Kiem tra tieu chi la duy nhat
+                    //Khach hang - ap dung
+                    If(
+                        IsBlank(errorMsgDK) && CountRows(tmpApdungKH) > 0,
+                        Clear(errorCol);
+                        ForAll(
+                            GalleryKH_1.AllItems As kh,
+                            Collect(
+                                tmpCheckDup,
+                                {
+                                    Type: "KH",
+                                    Value: kh.DropKH.Selected.MA_CHI_TIEU
+                                }
+                            );
+                        );
+                        ForAll(
+                            GalleryKH_1.AllItems As kh,
+                            If(
+                                CountIf(
+                                    tmpCheckDup,
+                                    Type = "KH" && Value = kh.DropKH.Selected.MA_CHI_TIEU
+                                ) > 1,
+                                Collect(
+                                    errorCol,
+                                    {Message: "Trùng tiêu chí áp dụng khách hàng"}
+                                )
+                            )
+                        );
+                        If(
+                            !IsEmpty(errorCol),
+                            UpdateContext({errorMsgDK: First(errorCol).Message})
+                        )
+                    );
+                    //Khach hang - loai tru
+                    If(
+                        IsBlank(errorMsgDK) && CountRows(tmpLoaitruKH) > 0,
+                        Clear(errorCol);
+                        Clear(tmpCheckDup);
+                        ForAll(
+                            GalleryKH_LoaiTru.AllItems As kh,
+                            Collect(
+                                tmpCheckDup,
+                                {
+                                    Type: "KH",
+                                    Value: kh.DropKH_LoaiTru.Selected.MA_CHI_TIEU
+                                }
+                            );
+                        );
+                        ForAll(
+                            GalleryKH_LoaiTru.AllItems As kh,
+                            If(
+                                CountIf(
+                                    tmpCheckDup,
+                                    Type = "KH" && Value = kh.DropKH_LoaiTru.Selected.MA_CHI_TIEU
+                                ) > 1,
+                                Collect(
+                                    errorCol,
+                                    {Message: "Trùng tiêu chí loại trừ khách hàng"}
+                                )
+                            )
+                        );
+                        If(
+                            !IsEmpty(errorCol),
+                            UpdateContext({errorMsgDK: First(errorCol).Message})
+                        )
+                    );
+                    //pham vi - ap dung
+                    If(
+                        IsBlank(errorMsgDK) && CountRows(tmpApdungPV) > 0,
+                        Clear(errorCol);
+                        Clear(tmpCheckDup);
+                        ForAll(
+                            GalleryPV_1.AllItems As kh,
+                            Collect(
+                                tmpCheckDup,
+                                {
+                                    Type: "PV",
+                                    Value: kh.DropPV.Selected.MA_CHI_TIEU
+                                }
+                            );
+                        );
+                        ForAll(
+                            GalleryPV_1.AllItems As kh,
+                            If(
+                                CountIf(
+                                    tmpCheckDup,
+                                    Type = "PV" && Value = kh.DropPV.Selected.MA_CHI_TIEU
+                                ) > 1,
+                                Collect(
+                                    errorCol,
+                                    {Message: "Trùng tiêu chí áp dụng phạm vi"}
+                                )
+                            )
+                        );
+                        If(
+                            !IsEmpty(errorCol),
+                            UpdateContext({errorMsgDK: First(errorCol).Message})
+                        )
+                    );
+                    //Pham vi - loai tru
+                    If(
+                        IsBlank(errorMsgDK) && CountRows(tmpLoaitruPV) > 0,
+                        Clear(errorCol);
+                        Clear(tmpCheckDup);
+                        ForAll(
+                            GalleryPV_LoaiTru.AllItems As kh,
+                            Collect(
+                                tmpCheckDup,
+                                {
+                                    Type: "PV",
+                                    Value: kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU
+                                }
+                            );
+                        );
+                        ForAll(
+                            GalleryPV_LoaiTru.AllItems As kh,
+                            If(
+                                CountIf(
+                                    tmpCheckDup,
+                                    Type = "PV" && Value = kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU
+                                ) > 1,
+                                Collect(
+                                    errorCol,
+                                    {Message: "Trùng tiêu chí loại trừ phạm vi"}
+                                )
+                            )
+                        );
+                        If(
+                            !IsEmpty(errorCol),
+                            UpdateContext({errorMsgDK: First(errorCol).Message})
+                        )
+                    );
+                    If(
+                        !IsBlank(errorMsgDK),
+                        Notify(
+                            errorMsgDK,
+                            NotificationType.Error,
+                            800
+                        ),
+                        SubmitForm(FormDKChung);
+                        UpdateContext({rcd: newMaDK});
+                        EditForm(FormDKChung);
+                        RemoveIf(
+                            DL_DIEUKIEN_APDUNG_LOAI,
+                            MA_DIEU_KIEN = newMaDK
+                        );
+                        RemoveIf(
+                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                            MA_DIEU_KIEN = newMaDK
+                        );
+                        
+                    // lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI KHANH HANG
+                    Set(
+                            varIdAdKH,
+                            0
+                        );
+                        Set(
+                            varIdLtKH,
+                            0
+                        );
+                        If(
+                            CountRows(tmpApdungKH) > 0,
+                            Set(
+                                varIdAdKH,
+                                Max(
+                                    DL_DIEUKIEN_APDUNG_LOAI,
+                                    ID
+                                ) + 1
+                            );
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                                {
+                                    ID: varIdAdKH,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "KH",
+                                    AP_DUNG: "1",
+                                    KIEU: RadioKH.Selected.ID
+                                }
+                            )
+                        );
+                        If(
+                            CountRows(tmpLoaitruKH) > 0,
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                Set(
+                                    varIdLtKH,
+                                    Max(
+                                        DL_DIEUKIEN_APDUNG_LOAI,
+                                        ID
+                                    ) + 1
+                                );
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                                {
+                                    ID: Max(
+                                        DL_DIEUKIEN_APDUNG_LOAI,
+                                        ID
+                                    ) + 1,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "KH",
+                                    AP_DUNG: "2",
+                                    KIEU: RadioKH_LoaiTru.Selected.ID
+                                }
+                            )
+                        );
+                        
+                    // lưu dữ liệu ở bảng chi tiết
+                    If(
+                            CountRows(tmpApdungKH) > 0,
+                            ForAll(
+                                GalleryKH_1.AllItems As kh,
+                                ForAll(
+                                    kh.ComboBoxGTKH.SelectedItems As gt,
+                                    Patch(
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                        {
+                                            ID: Max(
+                                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                                ID
+                                            ) + 1,
+                                            ID_LOAI: varIdAdKH,
+                                            MA_DIEU_KIEN: newMaDK,
+                                            THANH_PHAN: "KH",
+                                            AP_DUNG: "1",
+                                            KIEU: RadioKH.Selected.ID,
+                                            MA_TIEU_CHI: kh.DropKH.Selected.MA_CHI_TIEU,
+                                            TEN_TIEU_CHI: kh.DropKH.Selected.TEN_CHI_TIEU,
+                                            MA_GIA_TRI: gt.MA_GIA_TRI,
+                                            TEN_GIA_TRI: gt.TEN_GIA_TRI
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        
+                    // lưu dữ liệu ở bảng chi tiết loai tru
+                    If(
+                            CountRows(tmpLoaitruKH) > 0,
+                            ForAll(
+                                GalleryKH_LoaiTru.AllItems As kh,
+                                ForAll(
+                                    ComboBoxGTKH_LT.SelectedItems As gt,
+                                    Patch(
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                        {
+                                            ID: Max(
+                                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                                ID
+                                            ) + 1,
+                                            ID_LOAI: varIdLtKH,
+                                            MA_DIEU_KIEN: newMaDK,
+                                            THANH_PHAN: "KH",
+                                            AP_DUNG: "2",
+                                            KIEU: RadioKH_LoaiTru.Selected.ID,
+                                            MA_TIEU_CHI: kh.DropKH_LoaiTru.Selected.MA_CHI_TIEU,
+                                            TEN_TIEU_CHI: kh.DropKH_LoaiTru.Selected.TEN_CHI_TIEU,
+                                            MA_GIA_TRI: gt.MA_GIA_TRI,
+                                            TEN_GIA_TRI: gt.TEN_GIA_TRI
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        
+                    // lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI PHAM_VI
+                    Set(
+                            varIdAdPV,
+                            0
+                        );
+                        Set(
+                            varIdLtPV,
+                            0
+                        );
+                        If(
+                            CountRows(tmpApdungPV) > 0,
+                            Set(
+                                varIdAdPV,
+                                Max(
+                                    DL_DIEUKIEN_APDUNG_LOAI,
+                                    ID
+                                ) + 1
+                            );
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                                {
+                                    ID: varIdAdPV,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "PV",
+                                    AP_DUNG: "1",
+                                    KIEU: RadioPV.Selected.ID
+                                }
+                            )
+                        );
+                        If(
+                            CountRows(tmpLoaitruPV) > 0,
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                Set(
+                                    varIdLtPV,
+                                    Max(
+                                        DL_DIEUKIEN_APDUNG_LOAI,
+                                        ID
+                                    ) + 1
+                                );
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                                {
+                                    ID: Max(
+                                        DL_DIEUKIEN_APDUNG_LOAI,
+                                        ID
+                                    ) + 1,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "PV",
+                                    AP_DUNG: "2",
+                                    KIEU: RadioPV_LoaiTru.Selected.ID
+                                }
+                            )
+                        );
+                        
+                    // lưu dữ liệu ở bảng chi tiết
+                    If(
+                            CountRows(tmpApdungPV) > 0,
+                            ForAll(
+                                GalleryPV_1.AllItems As pv,
+                                ForAll(
+                                    ComboBoxGTPV.SelectedItems As gt,
+                                    Patch(
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                        {
+                                            ID: Max(
+                                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                                ID
+                                            ) + 1,
+                                            ID_LOAI: varIdAdPV,
+                                            MA_DIEU_KIEN: newMaDK,
+                                            THANH_PHAN: "PV",
+                                            AP_DUNG: "1",
+                                            KIEU: RadioPV.Selected.ID,
+                                            MA_TIEU_CHI: pv.DropPV.Selected.MA_CHI_TIEU,
+                                            TEN_TIEU_CHI: pv.DropPV.Selected.TEN_CHI_TIEU,
+                                            MA_GIA_TRI: gt.MA_GIA_TRI,
+                                            TEN_GIA_TRI: gt.TEN_GIA_TRI
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        
+                    // lưu dữ liệu ở bảng chi tiết loai tru
+                    If(
+                            CountRows(tmpLoaitruPV) > 0,
+                            ForAll(
+                                GalleryPV_LoaiTru.AllItems As kh,
+                                ForAll(
+                                    ComboBoxGTPV_LT.SelectedItems As gt,
+                                    Patch(
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                        {
+                                            ID: Max(
+                                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                                ID
+                                            ) + 1,
+                                            ID_LOAI: varIdLtPV,
+                                            MA_DIEU_KIEN: newMaDK,
+                                            THANH_PHAN: "PV",
+                                            AP_DUNG: "2",
+                                            KIEU: RadioPV_LoaiTru.Selected.ID,
+                                            MA_TIEU_CHI: kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU,
+                                            TEN_TIEU_CHI: kh.DropPV_LoaiTru.Selected.TEN_CHI_TIEU,
+                                            MA_GIA_TRI: gt.MA_GIA_TRI,
+                                            TEN_GIA_TRI: gt.TEN_GIA_TRI
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        Notify(
+                            "Lưu dữ liệu thành công",
+                            NotificationType.Success,
+                            800
+                        );
+                        
+                    );
+                Text: ="Lưu dữ liệu"
+                X: =1166
+                Y: =1446
+                ZIndex: =4
+
+            SPApdung As groupContainer.manualLayoutContainer:
+                Height: =295
+                Width: =1181
+                X: =130
+                Y: =342
+                ZIndex: =5
+
+                Label6_4 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =46
+                    Size: =11
+                    Text: ="2. Điều kiện áp dụng"
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                Label6_5 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =46
+                    Size: =11
+                    Text: ="2.1 Sản phẩm"
+                    Width: =Parent.Width
+                    Y: =40
+                    ZIndex: =2
+
+                Radio2 As radio:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    Default: =LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN ="AD001"  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU
+                    HoverColor: =RGBA(0, 0, 0, 1)
+                    Items: |-
+                        =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
+                    OnSelect: =true
+                    RadioBorderColor: =RGBA(26, 26, 26, 1)
+                    Size: =11
+                    X: =48
+                    Y: =116
+                    ZIndex: =3
+
+                Gallery5 As gallery.galleryVertical:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    BorderThickness: =1
+                    DelayItemLoading: =true
+                    Height: =156
+                    Items: =tmpApdungSp
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplateSize: =46
+                    Visible: =If(Radio2.Selected.ID = 1 , false, true)
+                    Width: =794
+                    X: =304
+                    Y: =116
+                    ZIndex: =4
+
+                    Label9_8 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Text: ="Tiêu chí"
+                        Width: =87
+                        X: =18
+                        ZIndex: =2
+
+                    Label9_9 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Text: ="Giá trị"
+                        Width: =87
+                        X: =315
+                        ZIndex: =3
+
+                    DropQTich As dropdown:
+                        Default: |
+                            =LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT, MA_DIEU_KIEN ="AD001" && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = ThisItem.cr282_ma_tieu_chi).TEN_TIEU_CHI
+                        Height: =32
+                        Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "SP")
+                        OnChange: =Reset(ComboBox3)
+                        OnSelect: =
+                        Size: =11
+                        Width: =200
+                        X: =110
+                        Y: =7
+                        ZIndex: =4
+
+                    ComboBox3 As combobox:
+                        DefaultSelectedItems: =ThisItem.group
+                        DisplayFields: =["cr282_ten_gia_tri"]
+                        Height: =30
+                        IsSearchable: =false
+                        Items: =Filter( tmpDsGiatri, Loai = DropQTich.Selected.MA_CHI_TIEU)
+                        OnSelect: =Select(Parent)
+                        SearchFields: =["Loai"]
+                        SearchItems: =Search(Filter( tmpDsGiatri, Loai = DropQTich.Selected.MA_CHI_TIEU),ComboBox3.SearchText,"Loai")
+                        Width: =261
+                        X: =402
+                        Y: =7
+                        ZIndex: =5
+
+                    Button5_13 As button:
+                        Height: =28
+                        OnSelect: =RemoveIf(tmpApdungSp, ID = ThisItem.ID)
+                        Size: =11
+                        Text: ="Xoá"
+                        Width: =73
+                        X: =688
+                        Y: =9
+                        ZIndex: =6
+
+                    TextInput1 As text:
+                        Default: =ThisItem.ID
+                        Format: =TextFormat.Number
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        X: =263
+                        Y: =3
+                        ZIndex: =7
+
+                Label7_4 As label:
+                    FontWeight: =FontWeight.Bold
+                    Size: =11
+                    Text: ="Áp dụng"
+                    X: =25
+                    Y: =76
+                    ZIndex: =5
+
+                Button3_5 As button:
+                    Height: =25
+                    OnSelect: |+
+                        =Collect(
+                            tmpApdungSp,
+                            [{ID:Value( Max (DL_DIEUKIEN_APDUNG_LOAI_CT, ID) + 1)}]
+                        );
+                        
+                    Size: =11
+                    Text: ="Thêm mới"
+                    Width: =91
+                    X: =304
+                    Y: =76
+                    ZIndex: =6
+
