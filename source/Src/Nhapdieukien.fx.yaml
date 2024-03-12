@@ -133,14 +133,14 @@ Nhapdieukien As screen:
         If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" )) > 0,
             ClearCollect(
                 tmpApdungSp,
-                GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" ), "cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
+                GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" ),"cr282_id", "cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
                 )
             )
         );
         If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "2" && KIEU = "2" )) > 0,
             ClearCollect(
                 tmpLoaitruSp,
-                GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "2" && KIEU = "2" ), "cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
+                GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "2" && KIEU = "2" ),"cr282_id", "cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
                 )
             )
         );
@@ -2120,7 +2120,7 @@ Nhapdieukien As screen:
                             )
                         );
                         
-                    // lưu dữ liệu ở bảng chi tiết loai tru
+                    // lưu dữ liệu ở bảng chi tiết loai trừ
                     If(
                             CountRows(tmpLoaitruPV) > 0,
                             ForAll(
@@ -2385,6 +2385,14 @@ Nhapdieukien As screen:
                         X: =694
                         Y: =7
                         ZIndex: =6
+
+                    TextInput2 As text:
+                        Default: =ThisItem.ID
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        X: =40
+                        Y: =6
+                        ZIndex: =7
 
                 Label7_5 As label:
                     FontWeight: =FontWeight.Bold
