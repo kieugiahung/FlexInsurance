@@ -127,7 +127,7 @@ Nhapdieukien As screen:
         
         
         
-        // T.ANH
+        // T.ANH xử lý sản phẩm
         If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" )) > 0,
             ClearCollect(
                 tmpApdungSp,
@@ -135,9 +135,12 @@ Nhapdieukien As screen:
                 )
             )
         );
-        ClearCollect(
-            tmpLoaitruSp,
-            []
+        If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "2" && KIEU = "2" )) > 0,
+            ClearCollect(
+                tmpLoaitruSp,
+                GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "2" && KIEU = "2" ), "cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
+                )
+            )
         );
         ClearCollect(
             tmpDsGiatri,
@@ -1053,10 +1056,10 @@ Nhapdieukien As screen:
                             ZIndex: =3
 
             Container2_3 As groupContainer.manualLayoutContainer:
-                Height: =133
+                Height: =176
                 Width: =Parent.Width-Self.X
                 X: =130
-                Y: =740
+                Y: =944
                 ZIndex: =2
 
                 Label6_1 As label:
@@ -1093,7 +1096,7 @@ Nhapdieukien As screen:
                     Visible: =If(RadioKH.Selected.ID = 1 , false, true)
                     Width: =794
                     X: =304
-                    Y: =76
+                    Y: =107
                     ZIndex: =4
 
                     Label9 As label:
@@ -1301,7 +1304,7 @@ Nhapdieukien As screen:
                 Height: =536
                 Width: =Parent.Width-Self.X
                 X: =130
-                Y: =874
+                Y: =1172
                 ZIndex: =3
 
                 Label6_2 As label:
@@ -2047,13 +2050,13 @@ Nhapdieukien As screen:
                         )
                     );
                 Text: ="Lưu dữ liệu"
-                X: =1166
-                Y: =1446
+                X: =1072
+                Y: =1745
                 ZIndex: =4
 
             SPApdung As groupContainer.manualLayoutContainer:
                 Height: =295
-                Width: =1181
+                Width: =1222
                 X: =130
                 Y: =342
                 ZIndex: =5
@@ -2188,17 +2191,124 @@ Nhapdieukien As screen:
                     Y: =76
                     ZIndex: =6
 
+            SPLoaiTru As groupContainer.manualLayoutContainer:
+                Height: =243
+                Width: =1235
+                X: =130
+                Y: =635
+                ZIndex: =6
+
+                Radio2_1 As radio:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    HoverColor: =RGBA(0, 0, 0, 1)
+                    Items: |-
+                        =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
+                    OnSelect: =true
+                    RadioBorderColor: =RGBA(26, 26, 26, 1)
+                    Size: =11
+                    X: =43
+                    Y: =65
+                    ZIndex: =3
+
+                Gallery5_1 As gallery.galleryVertical:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    BorderThickness: =1
+                    DelayItemLoading: =true
+                    Height: =150
+                    Items: =tmpLoaitruSp
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplateSize: =46
+                    Visible: =If(Radio2_1.Selected.ID = 1 , false, true)
+                    Width: =795
+                    X: =304
+                    Y: =65
+                    ZIndex: =4
+
+                    Label9_10 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Text: ="Tiêu chí"
+                        Width: =87
+                        X: =18
+                        ZIndex: =2
+
+                    Label9_11 As label:
+                        Height: =46
+                        OnSelect: =Select(Parent)
+                        Text: ="Giá trị"
+                        Width: =87
+                        X: =315
+                        ZIndex: =3
+
+                    DropQTich_1 As dropdown:
+                        Height: =32
+                        Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "SP")
+                        OnChange: =Reset(ComboBox3_1)
+                        OnSelect: =
+                        Size: =11
+                        Width: =200
+                        X: =110
+                        Y: =7
+                        ZIndex: =4
+
+                    ComboBox3_1 As combobox:
+                        DisplayFields: =["Ten"]
+                        Height: =32
+                        IsSearchable: =false
+                        Items: =Filter( tmpDsGiatri, Loai = DropQTich_1.Selected.MA_CHI_TIEU)
+                        OnSelect: =Select(Parent)
+                        SearchFields: =["Ten"]
+                        SearchItems: =[]
+                        Width: =263
+                        X: =402
+                        Y: =7
+                        ZIndex: =5
+
+                    Button5_14 As button:
+                        Height: =28
+                        OnSelect: =RemoveIf(tmpLoaitruSp, ID = ThisItem.ID)
+                        Size: =11
+                        Text: ="Xoá"
+                        Width: =73
+                        X: =694
+                        Y: =7
+                        ZIndex: =6
+
+                Label7_5 As label:
+                    FontWeight: =FontWeight.Bold
+                    Size: =11
+                    Text: ="Loại trừ"
+                    X: =24
+                    ZIndex: =5
+
+                Button3_6 As button:
+                    Height: =25
+                    OnSelect: |-
+                        =Collect(
+                            tmpLoaitruSp,
+                            [
+                               {ID : ""} 
+                            ]
+                        );
+                    Size: =11
+                    Text: ="Thêm mới"
+                    Width: =91
+                    X: =304
+                    Y: =28
+                    ZIndex: =6
+
             Button6 As button:
                 Height: =37
                 OnSelect: |
                     =// lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI
                     RemoveIf(
                         DL_DIEUKIEN_APDUNG_LOAI,
-                        MA_DIEU_KIEN = varMaDKien
+                        MA_DIEU_KIEN = "AD001"
                     );
                     RemoveIf(
                         DL_DIEUKIEN_APDUNG_LOAI_CT,
-                        MA_DIEU_KIEN = varMaDKien
+                        MA_DIEU_KIEN = "AD001"
                     );
                     Set(
                         varIdAdSP,
@@ -2223,7 +2333,7 @@ Nhapdieukien As screen:
                             Defaults(DL_DIEUKIEN_APDUNG_LOAI),
                             {
                                 ID: varIdAdSP,
-                                MA_DIEU_KIEN: varMaDKien,
+                                MA_DIEU_KIEN: "AD001",
                                 THANH_PHAN: "SP",
                                 AP_DUNG: "1",
                                 KIEU: Radio2.Selected.ID,
@@ -2231,6 +2341,33 @@ Nhapdieukien As screen:
                             }
                         )
                     );
+                    // THÊM DỮ LIỆU LOẠI TRỪ
+                    If(
+                        CountRows(tmpLoaitruSp) > 0,
+                        Patch(
+                            DL_DIEUKIEN_APDUNG_LOAI,
+                            Set(
+                                varIdLtSp,
+                                Max(
+                                    DL_DIEUKIEN_APDUNG_LOAI,
+                                    ID
+                                ) + 1
+                            );
+                            Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                            {
+                                ID: Max(
+                                    DL_DIEUKIEN_APDUNG_LOAI,
+                                    ID
+                                ) + 1,
+                                MA_DIEU_KIEN: "AD001",
+                                THANH_PHAN: "SP",
+                                AP_DUNG: "2",
+                                KIEU: Radio2_1.Selected.ID,
+                                TEN_KIEU: Radio2_1.Selected.Text
+                            }
+                        )
+                    );
+                    
                     // lưu dữ liệu ở bảng chi tiết
                     ForAll(
                         Gallery5.AllItems As ad,
@@ -2242,7 +2379,7 @@ Nhapdieukien As screen:
                                 {
                                     ID: Value(ad.TextInput1.Text),
                                     ID_LOAI: varIdAdSP,
-                                    MA_DIEU_KIEN: varMaDKien,
+                                    MA_DIEU_KIEN: "AD001",
                                     THANH_PHAN: "SP",
                                     AP_DUNG: "1",
                                     KIEU: Radio2.Selected.ID,
@@ -2256,7 +2393,7 @@ Nhapdieukien As screen:
                     );
                 Text: ="Lưu dữ liệu"
                 Width: =148
-                X: =976
-                Y: =1446
-                ZIndex: =6
+                X: =984
+                Y: =246
+                ZIndex: =7
 
