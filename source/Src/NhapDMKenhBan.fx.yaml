@@ -1,5 +1,4 @@
 NhapDMKenhBan As screen:
-    Height: =Max(810, App.MinScreenHeight)
     OnVisible: |-
         =Reset(DropCNTC);Reset(ComboBoxLoaiKB);Reset(ComboBoxLGT);Reset(CbxQTichDMKB);Reset(ComboBoxQGiaDMKB);Reset(ComboBoxNHang);Reset(ComboBoxLGTNDD);
         Reset(TextMaKB);Reset(TextTenKB);Reset(TextSGT);Reset(TextSGTNDD);Reset(TextSDT);Reset(TextSDTNDD);Reset(TextMST);Reset(TextSoHD);Reset(TextMaNV);
@@ -19,7 +18,7 @@ NhapDMKenhBan As screen:
         )
 
     Container2_1 As groupContainer.manualLayoutContainer:
-        Height: =808
+        Height: =768
         Width: =1306
         X: =60
         ZIndex: =1
@@ -269,8 +268,8 @@ NhapDMKenhBan As screen:
             Size: =11
             Text: ="Lưu"
             Width: =85
-            X: =1156
-            Y: =763
+            X: =1164
+            Y: =712
             ZIndex: =45
 
         Button3 As button:
@@ -280,12 +279,12 @@ NhapDMKenhBan As screen:
             Size: =11
             Text: ="Hủy"
             Width: =85
-            X: =1036
-            Y: =763
+            X: =1044
+            Y: =712
             ZIndex: =46
 
         Container3 As groupContainer.manualLayoutContainer:
-            Height: =145
+            Height: =132
             Width: =1267
             X: =8
             Y: =8
@@ -297,7 +296,7 @@ NhapDMKenhBan As screen:
                 Text: ="Mã kênh bán"
                 Width: =120
                 X: =120
-                Y: =10
+                Y: =4
                 ZIndex: =1
 
             TextMaKB As text:
@@ -308,7 +307,7 @@ NhapDMKenhBan As screen:
                 Size: =11
                 Width: =200
                 X: =290
-                Y: =12
+                Y: =6
                 ZIndex: =2
 
             Label3_2 As label:
@@ -317,7 +316,7 @@ NhapDMKenhBan As screen:
                 Text: ="Tên kênh bán (*)"
                 Width: =140
                 X: =120
-                Y: =53
+                Y: =47
                 ZIndex: =3
 
             TextTenKB As text:
@@ -327,7 +326,7 @@ NhapDMKenhBan As screen:
                 Size: =11
                 Width: =200
                 X: =290
-                Y: =56
+                Y: =50
                 ZIndex: =4
 
             Label3_18 As label:
@@ -337,7 +336,7 @@ NhapDMKenhBan As screen:
                 Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB="2"
                 Width: =160
                 X: =674
-                Y: =100
+                Y: =94
                 ZIndex: =5
 
             DropCNTC As dropdown:
@@ -349,7 +348,7 @@ NhapDMKenhBan As screen:
                 Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB="2"
                 Width: =200
                 X: =840
-                Y: =102
+                Y: =96
                 ZIndex: =6
 
             Label3_8 As label:
@@ -358,7 +357,7 @@ NhapDMKenhBan As screen:
                 Text: ="Loại kênh bán (*)"
                 Width: =135
                 X: =120
-                Y: =99
+                Y: =93
                 ZIndex: =7
 
             ComboBoxLoaiKB As combobox:
@@ -375,7 +374,7 @@ NhapDMKenhBan As screen:
                 Size: =11
                 Width: =200
                 X: =290
-                Y: =100
+                Y: =94
                 ZIndex: =8
 
             Label3_28 As label:
@@ -384,7 +383,7 @@ NhapDMKenhBan As screen:
                 Text: ="Trạng thái"
                 Width: =140
                 X: =674
-                Y: =54
+                Y: =48
                 ZIndex: =9
 
             DropTThai As dropdown:
@@ -400,7 +399,7 @@ NhapDMKenhBan As screen:
                 Size: =11
                 Width: =200
                 X: =840
-                Y: =56
+                Y: =50
                 ZIndex: =10
 
             Label3_29 As label:
@@ -410,7 +409,7 @@ NhapDMKenhBan As screen:
                 Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB="4"
                 Width: =118
                 X: =674
-                Y: =102
+                Y: =96
                 ZIndex: =11
 
             ComboBoxNHangBA As combobox:
@@ -429,14 +428,14 @@ NhapDMKenhBan As screen:
                 Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB="4"
                 Width: =200
                 X: =840
-                Y: =102
+                Y: =96
                 ZIndex: =12
 
         Container4_1 As groupContainer.manualLayoutContainer:
-            Height: =286
+            Height: =274
             Width: =1267
             X: =8
-            Y: =153
+            Y: =140
             ZIndex: =48
 
             Label3_4 As label:
@@ -641,7 +640,7 @@ NhapDMKenhBan As screen:
                 Text: ="Số tài khoản ngân hàng"
                 Width: =95
                 X: =670
-                Y: =235
+                Y: =226
                 ZIndex: =21
 
             DateNSinh As datepicker:
@@ -752,7 +751,7 @@ NhapDMKenhBan As screen:
 
             ComboBoxQGiaDMKB As combobox:
                 BorderColor: =RGBA(72, 163, 62, 1)
-                DefaultSelectedItems: =If(IsBlank(objKB.QUOC_GIA),LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI="1000"),LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=objKB.QUOC_GIA))
+                DefaultSelectedItems: =If(IsBlank(objKB.QUOC_GIA),LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI="VN"),LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=objKB.QUOC_GIA))
                 DisplayFields: =["cr282_ten_phamvi"]
                 Height: =32
                 InputTextPlaceholder: ="Chọn quốc gia"
@@ -787,10 +786,10 @@ NhapDMKenhBan As screen:
                 ZIndex: =30
 
         Container6 As groupContainer.manualLayoutContainer:
-            Height: =If(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"),208,0)
+            Height: =If(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"),177,0)
             Width: =1267
             X: =8
-            Y: =439
+            Y: =414
             ZIndex: =49
 
             Label3_17 As label:
@@ -799,7 +798,7 @@ NhapDMKenhBan As screen:
                 Text: ="Số hợp đồng (*)"
                 Width: =120
                 X: =120
-                Y: =10
+                Y: =8
                 ZIndex: =1
 
             TextSoHD As text:
@@ -809,7 +808,7 @@ NhapDMKenhBan As screen:
                 Size: =11
                 Width: =200
                 X: =290
-                Y: =12
+                Y: =10
                 ZIndex: =2
 
             Label3_24 As label:
@@ -818,7 +817,7 @@ NhapDMKenhBan As screen:
                 Text: ="Ngày hợp đồng (*)"
                 Width: =140
                 X: =670
-                Y: =10
+                Y: =8
                 ZIndex: =3
 
             DateNHDong As datepicker:
@@ -832,7 +831,7 @@ NhapDMKenhBan As screen:
                 StartYear: =1900
                 Width: =200
                 X: =840
-                Y: =12
+                Y: =10
                 ZIndex: =4
 
             Label3_25 As label:
@@ -840,7 +839,7 @@ NhapDMKenhBan As screen:
                 Text: ="Ngày hiệu lực từ của hợp đồng (*)"
                 Width: =127
                 X: =120
-                Y: =52
+                Y: =48
                 ZIndex: =5
 
             DateNHLTuHD As datepicker:
@@ -854,7 +853,7 @@ NhapDMKenhBan As screen:
                 StartYear: =1900
                 Width: =200
                 X: =290
-                Y: =56
+                Y: =52
                 ZIndex: =6
 
             DateNHLDenHD As datepicker:
@@ -868,7 +867,7 @@ NhapDMKenhBan As screen:
                 StartYear: =1900
                 Width: =200
                 X: =840
-                Y: =56
+                Y: =52
                 ZIndex: =8
 
             Label3_27 As label:
@@ -885,7 +884,7 @@ NhapDMKenhBan As screen:
                 Text: ="Ngày hiệu lực đến của hợp đồng"
                 Width: =142
                 X: =670
-                Y: =52
+                Y: =48
                 ZIndex: =11
 
             DataCardValue3_3 As attachments:
@@ -893,7 +892,7 @@ NhapDMKenhBan As screen:
                 BorderColor: =RGBA(72, 163, 62, 1)
                 DisplayMode: =Parent.DisplayMode
                 DropTargetBorderColor: =RGBA(72, 163, 62, 1)
-                Height: =89
+                Height: =74
                 IsInDataCard: =true
                 Items: |-
                     =If(
@@ -912,16 +911,17 @@ NhapDMKenhBan As screen:
                 PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
                 PaddingRight: =5
                 PaddingTop: =5
+                Size: =11
                 Width: =200
                 X: =290
-                Y: =104
+                Y: =96
                 ZIndex: =13
 
         Container7 As groupContainer.manualLayoutContainer:
             Height: =If(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân"),58,0)
             Width: =1267
             X: =8
-            Y: =441
+            Y: =414
             ZIndex: =50
 
             Label3_19 As label:
@@ -944,10 +944,10 @@ NhapDMKenhBan As screen:
                 ZIndex: =2
 
         Container5 As groupContainer.manualLayoutContainer:
-            Height: =If(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"),102,0)
+            Height: =If(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"),100,0)
             Width: =1267
             X: =8
-            Y: =647
+            Y: =591
             ZIndex: =51
 
             Label3_20 As label:
@@ -956,7 +956,7 @@ NhapDMKenhBan As screen:
                 Text: ="Tên người đại diện (*)"
                 Width: =160
                 X: =120
-                Y: =12
+                Y: =6
                 ZIndex: =1
 
             Label3_30 As label:
@@ -965,7 +965,7 @@ NhapDMKenhBan As screen:
                 Text: ="Loại giấy tờ của người đại diện (*)"
                 Width: =140
                 X: =120
-                Y: =48
+                Y: =44
                 ZIndex: =4
 
             Label3_31 As label:
@@ -974,7 +974,7 @@ NhapDMKenhBan As screen:
                 Text: ="Số giấy tờ của người đại diện (*)"
                 Width: =140
                 X: =670
-                Y: =48
+                Y: =44
                 ZIndex: =5
 
             Label3_21 As label:
@@ -983,7 +983,7 @@ NhapDMKenhBan As screen:
                 Text: ="Số điện thoại của người đại diện"
                 Width: =128
                 X: =670
-                Y: =6
+                Y: =4
                 ZIndex: =6
 
             TextTenNDD As text:
@@ -993,7 +993,7 @@ NhapDMKenhBan As screen:
                 Size: =11
                 Width: =200
                 X: =290
-                Y: =12
+                Y: =9
                 ZIndex: =7
 
             TextSDTNDD As text:
@@ -1003,7 +1003,7 @@ NhapDMKenhBan As screen:
                 Size: =11
                 Width: =200
                 X: =840
-                Y: =12
+                Y: =9
                 ZIndex: =10
 
             TextSGTNDD As text:
@@ -1013,7 +1013,7 @@ NhapDMKenhBan As screen:
                 Size: =11
                 Width: =200
                 X: =840
-                Y: =56
+                Y: =52
                 ZIndex: =11
 
             ComboBoxLGTNDD As combobox:
@@ -1029,11 +1029,10 @@ NhapDMKenhBan As screen:
                 Size: =11
                 Width: =200
                 X: =290
-                Y: =56
+                Y: =52
                 ZIndex: =12
 
     LeftNavigation_25 As LeftNavigation_9:
-        Height: =808
         Width: =LeftNavigation_25.MenuWidth - 10
         ZIndex: =2
 
