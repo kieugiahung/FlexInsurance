@@ -1823,7 +1823,11 @@ TraCuuCSAD As screen:
                     =Reset(DropApDungCSAD); Reset(DropTPhanCSAD); Reset(ComTieuChiCSAD); Reset(ComGiaTriCSAD);
                     Set(varMaDKien, ThisItem.cr282_ma_dieu_kien);
                     EditForm(FormDKChung);
-                    
+                       ClearCollect(
+                            tmpApdungSp,
+                            GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" ), "cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
+                            )
+                        )
                     Navigate(Nhapdieukien);
                 Size: =9
                 Text: ="Chi tiết"
@@ -1993,9 +1997,12 @@ TraCuuCSAD As screen:
                 
                 ResetForm(FormDKChung);
                 
-                Clear(tmpApdungSp);
-                Clear(tmpLoaitruSp);
-                Set(varMaDKien,"");
+                
+                   ClearCollect(
+                        tmpApdungSp,
+                        GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" ), "cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
+                        )
+                    );
                 Navigate(Nhapdieukien)
             Size: =10
             Text: ="Thêm mới"
