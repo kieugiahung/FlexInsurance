@@ -426,110 +426,6 @@ ThemKhachHang As screen:
                             Y: =10
                             ZIndex: =5
 
-                    CNT_LOAI_KH_DataCard2 As typedDataCard.numberEditCard:
-                        BorderColor: =RGBA(166, 166, 166, 1)
-                        BorderStyle: =BorderStyle.Solid
-                        DataField: ="cr282_cnt_loai_kh"
-                        Default: =ThisItem.CNT_LOAI_KH
-                        DisplayMode: =Parent.DisplayMode
-                        DisplayName: =DataSourceInfo([@DM_KHACH_HANG],DataSourceInfo.DisplayName,"cr282_cnt_loai_kh")
-                        Fill: =RGBA(0, 0, 0, 0)
-                        Height: =50
-                        Required: =false
-                        Update: =newCntLoaiKH
-                        Visible: =false
-                        Width: =618
-                        X: =1
-                        Y: =11
-                        ZIndex: =1
-
-                        DataCardKey7_2 As label:
-                            AutoHeight: =true
-                            BorderColor: =RGBA(0, 0, 0, 0)
-                            BorderStyle: =BorderStyle.None
-                            BorderThickness: =2
-                            Color: =RGBA(51, 51, 51, 1)
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            FocusedBorderThickness: =4
-                            Font: =Font.'Segoe UI'
-                            FontWeight: =FontWeight.Semibold
-                            Height: =34
-                            PaddingLeft: =0
-                            Text: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.4
-                            Wrap: =false
-                            X: =30
-                            Y: =10 + (DataCardValue7_2.Height / 2) - (Self.Height / 2)
-                            ZIndex: =1
-
-                        DataCardValue7_2 As text:
-                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                            Color: =RGBA(51, 51, 51, 1)
-                            Default: =Parent.Default
-                            DelayOutput: =true
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisplayMode: =Parent.DisplayMode
-                            Font: =Font.'Segoe UI'
-                            Format: =TextFormat.Number
-                            HoverBorderColor: =ColorFade(RGBA(202, 80, 16, 1), -30%)
-                            HoverColor: =RGBA(51, 51, 51, 1)
-                            HoverFill: =RGBA(255, 255, 255, 1)
-                            PaddingLeft: =5
-                            PressedBorderColor: =RGBA(202, 80, 16, 1)
-                            PressedColor: =RGBA(51, 51, 51, 1)
-                            PressedFill: =RGBA(255, 255, 255, 1)
-                            RadiusBottomLeft: =0
-                            RadiusBottomRight: =0
-                            RadiusTopLeft: =0
-                            RadiusTopRight: =0
-                            Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey7_2.X + DataCardKey7_2.Width
-                            Y: =10
-                            ZIndex: =2
-
-                        ErrorMessage7_2 As label:
-                            AutoHeight: =true
-                            BorderColor: =RGBA(0, 0, 0, 0)
-                            BorderStyle: =BorderStyle.None
-                            BorderThickness: =2
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisabledColor: =RGBA(168, 0, 0, 1)
-                            FocusedBorderThickness: =4
-                            Font: =Font.'Segoe UI'
-                            Height: =10
-                            Live: =Live.Assertive
-                            PaddingBottom: =0
-                            PaddingLeft: =0
-                            PaddingRight: =0
-                            PaddingTop: =0
-                            Size: =13
-                            Text: =Parent.Error
-                            Visible: =Parent.DisplayMode=DisplayMode.Edit
-                            Width: =Parent.Width - 60
-                            X: =30
-                            Y: =DataCardValue7_2.Y + DataCardValue7_2.Height
-                            ZIndex: =3
-
-                        StarVisible7_2 As label:
-                            Align: =Align.Center
-                            BorderColor: =RGBA(0, 0, 0, 0)
-                            BorderStyle: =BorderStyle.None
-                            BorderThickness: =2
-                            Color: =RGBA(51, 51, 51, 1)
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            FocusedBorderThickness: =4
-                            Font: =Font.'Segoe UI'
-                            FontWeight: =FontWeight.Semibold
-                            Height: =DataCardKey7_2.Height
-                            PaddingLeft: =0
-                            Text: ="*"
-                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                            Width: =30
-                            Wrap: =false
-                            Y: =DataCardKey7_2.Y
-                            ZIndex: =4
-
                     MA_NHOM_KH_DataCard1 As typedDataCard.textualEditCard:
                         BorderStyle: =BorderStyle.Solid
                         DataField: ="cr282_ma_nhom_kh"
@@ -790,6 +686,110 @@ ThemKhachHang As screen:
                             X: =30
                             Y: =DataCardValue25.Y + DataCardValue25.Height
                             ZIndex: =3
+
+                    CNT_LOAI_KH_DataCard2 As typedDataCard.numberEditCard:
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_cnt_loai_kh"
+                        Default: =ThisItem.CNT_LOAI_KH
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DM_KHACH_HANG],DataSourceInfo.DisplayName,"cr282_cnt_loai_kh")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        Required: =false
+                        Update: =newCntLoaiKH
+                        Visible: =false
+                        Width: =618
+                        X: =1
+                        Y: =11
+                        ZIndex: =1
+
+                        DataCardKey7_2 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(51, 51, 51, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            FontWeight: =FontWeight.Semibold
+                            Height: =34
+                            PaddingLeft: =0
+                            Text: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (DataCardValue7_2.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        DataCardValue7_2 As text:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            Color: =RGBA(51, 51, 51, 1)
+                            Default: =Parent.Default
+                            DelayOutput: =true
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisplayMode: =Parent.DisplayMode
+                            Font: =Font.'Segoe UI'
+                            Format: =TextFormat.Number
+                            HoverBorderColor: =ColorFade(RGBA(202, 80, 16, 1), -30%)
+                            HoverColor: =RGBA(51, 51, 51, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            PaddingLeft: =5
+                            PressedBorderColor: =RGBA(202, 80, 16, 1)
+                            PressedColor: =RGBA(51, 51, 51, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey7_2.X + DataCardKey7_2.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage7_2 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(168, 0, 0, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =13
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardValue7_2.Y + DataCardValue7_2.Height
+                            ZIndex: =3
+
+                        StarVisible7_2 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(51, 51, 51, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            FontWeight: =FontWeight.Semibold
+                            Height: =DataCardKey7_2.Height
+                            PaddingLeft: =0
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey7_2.Y
+                            ZIndex: =4
 
                     MA_KHACH_HANG_DataCard1 As typedDataCard.textualEditCard:
                         BorderColor: =RGBA(166, 166, 166, 1)

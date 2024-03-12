@@ -378,18 +378,18 @@ TraCuuCSAD As screen:
 
         DropApDungCSAD As dropdown:
             Default: ="Áp dụng"
-            Height: =30
+            Height: =28
             Items: |-
                 =[{title:"Áp dụng",value:"1"},{title:"Loại trừ",value:"2"}]
             Size: =10
-            Width: =160
-            X: =448
-            Y: =34
+            Width: =200
+            X: =380
+            Y: =43
             ZIndex: =1
 
         ComTieuChiCSAD As combobox:
             DisplayFields: =["cr282_ten_chi_tieu"]
-            Height: =30
+            Height: =28
             InputTextPlaceholder: ="Chọn tiêu chí"
             IsSearchable: =false
             Items: =Filter(DM_TIEU_CHI_APDUNGS,LOAI=DropTPhanCSAD.Selected.value)
@@ -716,57 +716,57 @@ TraCuuCSAD As screen:
             SearchItems: =[]
             SelectMultiple: =false
             Size: =10
-            Width: =160
-            X: =678
-            Y: =34
+            Width: =200
+            X: =624
+            Y: =43
             ZIndex: =2
 
         Label2_8 As label:
-            Height: =27
+            Height: =25
             Size: =10
             Text: ="Loại dữ liệu"
             Width: =83
-            X: =103
-            Y: =36
+            X: =137
+            Y: =16
             ZIndex: =3
 
         DropTPhanCSAD As dropdown:
             Default: ="Sản phẩm"
-            Height: =30
+            Height: =28
             Items: |-
                 =[{title:"Sản phẩm",value:"SP"},{title:"Kênh bán",value:"KB"},{title:"Khách hàng",value:"KH"},{title:"Phạm vi",value:"PV"}]
             OnChange: =Reset(ComTieuChiCSAD);Reset(ComTieuChiCSAD)
             Size: =10
-            Width: =160
-            X: =188
-            Y: =34
+            Width: =200
+            X: =137
+            Y: =43
             ZIndex: =4
 
         Label2_9 As label:
-            Height: =30
+            Height: =25
             Size: =10
             Text: ="Loại điều kiện"
             Width: =98
-            X: =350
-            Y: =36
+            X: =378
+            Y: =16
             ZIndex: =5
 
         Label2_10 As label:
-            Height: =30
+            Height: =25
             Size: =10
             Text: ="Tiêu chí"
             Width: =60
-            X: =618
-            Y: =36
+            X: =620
+            Y: =16
             ZIndex: =6
 
         Label2_11 As label:
-            Height: =30
+            Height: =25
             Size: =10
             Text: ="Giá trị"
             Width: =50
-            X: =864
-            Y: =36
+            X: =857
+            Y: =16
             ZIndex: =7
 
         Button6_1 As button:
@@ -791,112 +791,392 @@ TraCuuCSAD As screen:
                     }
                 );
                 Clear(tmpChonCSADCollect);
-                ForAll(
-                    tmpTCCSADCollect As dsCha,
-                    If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                        THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" && KIEU="1")),
-                        Collect(
-                            tmpChonCSADCollect,
-                            {
-                                ma_dieu_kien:dsCha.cr282_ma_dieu_kien
-                            }
-                        ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                        THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" &&
-                        KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
-                        Collect(
-                            tmpChonCSADCollect,
-                            {
-                                ma_dieu_kien:dsCha.cr282_ma_dieu_kien
-                            }
+                If(
+                    DropTPhanCSAD.Selected.value="PV",
+                    ClearCollect(
+                        dsPVDLTCCSCollect,
+                        {
+                            ma_pvdl:ComGiaTriCSAD.Selected.key,
+                            ma_cha:LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=ComGiaTriCSAD.Selected.key,MA_CHA),
+                            duyet:0
+                        }
+                    );
+                    ClearCollect(
+                        dsPVDLTCCSCollect1,
+                        {
+                            ma_pvdl:ComGiaTriCSAD.Selected.key,
+                            ma_cha:LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=ComGiaTriCSAD.Selected.key,MA_CHA),
+                            duyet:0
+                        }
+                    );
+                    //lan 1
+                    ForAll(
+                        dsPVDLTCCSCollect As dsPV,
+                        If(
+                            dsPV.duyet=0,
+                            UpdateIf(
+                                dsPVDLTCCSCollect1 As dsUp,
+                                dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                {
+                                    duyet:1
+                                }
+                            );
+                            ForAll(
+                                Filter(
+                                    DM_PHAMVI_DIALYS,
+                                    MA_PHAMVI=dsPV.ma_cha
+                                ) As dsIns,
+                                Collect(
+                                    dsPVDLTCCSCollect1,
+                                    {
+                                        ma_pvdl:dsIns.MA_PHAMVI,
+                                        ma_cha:dsIns.MA_CHA,
+                                        duyet:0
+                                    }
+                                )
+                            )
                         )
                     );
-                    If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                        THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")),
-                        RemoveIf(
-                            tmpChonCSADCollect,
-                            ma_dieu_kien=dsCha.cr282_ma_dieu_kien
-                        ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                        THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
-                        KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
-                        RemoveIf(
-                            tmpChonCSADCollect,
-                            ma_dieu_kien=dsCha.cr282_ma_dieu_kien
+                    ClearCollect(
+                        dsPVDLTCCSCollect,
+                        dsPVDLTCCSCollect1
+                    );
+                
+                    // lan 2
+                    ForAll(
+                        dsPVDLTCCSCollect As dsPV,
+                        If(
+                            dsPV.duyet=0,
+                            UpdateIf(
+                                dsPVDLTCCSCollect1 As dsUp,
+                                dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                {
+                                    duyet:1
+                                }
+                            );
+                            ForAll(
+                                Filter(
+                                    DM_PHAMVI_DIALYS,
+                                    MA_PHAMVI=dsPV.ma_cha
+                                ) As dsIns,
+                                Collect(
+                                    dsPVDLTCCSCollect1,
+                                    {
+                                        ma_pvdl:dsIns.MA_PHAMVI,
+                                        ma_cha:dsIns.MA_CHA,
+                                        duyet:0
+                                    }
+                                )
+                            )
+                        )
+                    );
+                    ClearCollect(
+                        dsPVDLTCCSCollect,
+                        dsPVDLTCCSCollect1
+                    );
+                
+                    //lan 3
+                    ForAll(
+                        dsPVDLTCCSCollect As dsPV,
+                        If(
+                            dsPV.duyet=0,
+                            UpdateIf(
+                                dsPVDLTCCSCollect1 As dsUp,
+                                dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                {
+                                    duyet:1
+                                }
+                            );
+                            ForAll(
+                                Filter(
+                                    DM_PHAMVI_DIALYS,
+                                    MA_PHAMVI=dsPV.ma_cha
+                                ) As dsIns,
+                                Collect(
+                                    dsPVDLTCCSCollect1,
+                                    {
+                                        ma_pvdl:dsIns.MA_PHAMVI,
+                                        ma_cha:dsIns.MA_CHA,
+                                        duyet:0
+                                    }
+                                )
+                            )
+                        )
+                    );
+                    ClearCollect(
+                        dsPVDLTCCSCollect,
+                        dsPVDLTCCSCollect1
+                    );
+                
+                    //lan 4
+                    ForAll(
+                        dsPVDLTCCSCollect As dsPV,
+                        If(
+                            dsPV.duyet=0,
+                            UpdateIf(
+                                dsPVDLTCCSCollect1 As dsUp,
+                                dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                {
+                                    duyet:1
+                                }
+                            );
+                            ForAll(
+                                Filter(
+                                    DM_PHAMVI_DIALYS,
+                                    MA_PHAMVI=dsPV.ma_cha
+                                ) As dsIns,
+                                Collect(
+                                    dsPVDLTCCSCollect1,
+                                    {
+                                        ma_pvdl:dsIns.MA_PHAMVI,
+                                        ma_cha:dsIns.MA_CHA,
+                                        duyet:0
+                                    }
+                                )
+                            )
+                        )
+                    );
+                    ClearCollect(
+                        dsPVDLTCCSCollect,
+                        dsPVDLTCCSCollect1
+                    );
+                
+                    //lan 5
+                    ForAll(
+                        dsPVDLTCCSCollect As dsPV,
+                        If(
+                            dsPV.duyet=0,
+                            UpdateIf(
+                                dsPVDLTCCSCollect1 As dsUp,
+                                dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                {
+                                    duyet:1
+                                }
+                            );
+                            ForAll(
+                                Filter(
+                                    DM_PHAMVI_DIALYS,
+                                    MA_PHAMVI=dsPV.ma_cha
+                                ) As dsIns,
+                                Collect(
+                                    dsPVDLTCCSCollect1,
+                                    {
+                                        ma_pvdl:dsIns.MA_PHAMVI,
+                                        ma_cha:dsIns.MA_CHA,
+                                        duyet:0
+                                    }
+                                )
+                            )
+                        )
+                    );
+                    ClearCollect(
+                        dsPVDLTCCSCollect,
+                        dsPVDLTCCSCollect1
+                    );
+                
+                    //lan 6
+                    ForAll(
+                        dsPVDLTCCSCollect As dsPV,
+                        If(
+                            dsPV.duyet=0,
+                            UpdateIf(
+                                dsPVDLTCCSCollect1 As dsUp,
+                                dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                {
+                                    duyet:1
+                                }
+                            );
+                            ForAll(
+                                Filter(
+                                    DM_PHAMVI_DIALYS,
+                                    MA_PHAMVI=dsPV.ma_cha
+                                ) As dsIns,
+                                Collect(
+                                    dsPVDLTCCSCollect1,
+                                    {
+                                        ma_pvdl:dsIns.MA_PHAMVI,
+                                        ma_cha:dsIns.MA_CHA,
+                                        duyet:0
+                                    }
+                                )
+                            )
                         )
                     )
                 );
                 If(
-                    DropApDungCSAD.Selected.value="1",
-                    ClearCollect(
-                        tmpTCCSCollect,
-                        ShowColumns(
-                            AddColumns(
-                                SortByColumns(
-                                    Filter(
-                                        DL_DIEUKIEN_APDUNG,
-                                        CountIf(tmpChonCSADCollect,ma_dieu_kien=MA_DIEU_KIEN)>0
-                                    ),
-                                    "cr282_ma_dieu_kien",
-                                    SortOrder.Ascending
-                                ),
-                                "san_pham",
-                                "",
-                                "kenh_ban",
-                                "",
-                                "khach_hang",
-                                "",
-                                "pham_vi",
-                                ""
-                            ),
-                            "cr282_ma_dieu_kien",
-                            "cr282_so_vb",
-                            "cr282_ngay_vb",
-                            "cr282_hieu_luc_tu",
-                            "cr282_hieu_luc_den",
-                            "cr282_file",
-                            "cr282_trang_thai",
-                            "san_pham",
-                            "kenh_ban",
-                            "khach_hang",
-                            "pham_vi"
+                    DropTPhanCSAD.Selected.value="PV",
+                    If(
+                        DropApDungCSAD.Selected.value="1",
+                        ForAll(
+                            tmpTCCSADCollect As dsCha,
+                            If(
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" && KIEU="1")) ||
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" &&
+                                KIEU="2" && (MA_GIA_TRI="000" || CountIf(dsPVDLTCCSCollect1,ma_pvdl=MA_GIA_TRI)>0))),
+                                Collect(
+                                    tmpChonCSADCollect,
+                                    {
+                                        ma_dieu_kien:dsCha.cr282_ma_dieu_kien
+                                    }
+                                )
+                            );
+                            If(
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
+                                KIEU="2" && (MA_GIA_TRI="000" || CountIf(dsPVDLTCCSCollect1,ma_pvdl=MA_GIA_TRI)>0))),
+                                RemoveIf(
+                                    tmpChonCSADCollect,
+                                    ma_dieu_kien=dsCha.cr282_ma_dieu_kien
+                                )
+                            )
+                        ),
+                        ForAll(
+                            tmpTCCSADCollect As dsCha,
+                            If(
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
+                                KIEU="2" && (MA_GIA_TRI="000" || CountIf(dsPVDLTCCSCollect1,ma_pvdl=MA_GIA_TRI)>0))),
+                                Collect(
+                                    tmpChonCSADCollect,
+                                    {
+                                        ma_dieu_kien:dsCha.cr282_ma_dieu_kien
+                                    }
+                                )
+                            )
                         )
                     ),
-                    ClearCollect(
-                        tmpTCCSCollect,
-                        ShowColumns(
-                            AddColumns(
-                                SortByColumns(
-                                    Filter(
-                                        DL_DIEUKIEN_APDUNG,
-                                        CountIf(tmpChonCSADCollect,ma_dieu_kien=MA_DIEU_KIEN)=0
-                                    ),
-                                    "cr282_ma_dieu_kien",
-                                    SortOrder.Ascending
-                                ),
-                                "san_pham",
-                                "",
-                                "kenh_ban",
-                                "",
-                                "khach_hang",
-                                "",
-                                "pham_vi",
-                                ""
-                            ),
-                            "cr282_ma_dieu_kien",
-                            "cr282_so_vb",
-                            "cr282_ngay_vb",
-                            "cr282_hieu_luc_tu",
-                            "cr282_hieu_luc_den",
-                            "cr282_file",
-                            "cr282_trang_thai",
-                            "san_pham",
-                            "kenh_ban",
-                            "khach_hang",
-                            "pham_vi"
+                    DropTPhanCSAD.Selected.value="SP",
+                    If(
+                        DropApDungCSAD.Selected.value="1",
+                        ForAll(
+                            tmpTCCSADCollect As dsCha,
+                            If(
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" && KIEU="1")) ||
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" &&
+                                KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.key,MA_GIA_TRI))),
+                                Collect(
+                                    tmpChonCSADCollect,
+                                    {
+                                        ma_dieu_kien:dsCha.cr282_ma_dieu_kien
+                                    }
+                                )
+                            );
+                            If(
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
+                                KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.key,MA_GIA_TRI))),
+                                RemoveIf(
+                                    tmpChonCSADCollect,
+                                    ma_dieu_kien=dsCha.cr282_ma_dieu_kien
+                                )
+                            )
+                        ),
+                        ForAll(
+                            tmpTCCSADCollect As dsCha,
+                            If(
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
+                                KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.key,MA_GIA_TRI))),
+                                Collect(
+                                    tmpChonCSADCollect,
+                                    {
+                                        ma_dieu_kien:dsCha.cr282_ma_dieu_kien
+                                    }
+                                )
+                            )
                         )
+                    ),
+                    If(
+                        DropApDungCSAD.Selected.value="1",
+                        ForAll(
+                            tmpTCCSADCollect As dsCha,
+                            If(
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" && KIEU="1")) ||
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" &&
+                                KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
+                                Collect(
+                                    tmpChonCSADCollect,
+                                    {
+                                        ma_dieu_kien:dsCha.cr282_ma_dieu_kien
+                                    }
+                                )
+                            );
+                            If(
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
+                                KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
+                                RemoveIf(
+                                    tmpChonCSADCollect,
+                                    ma_dieu_kien=dsCha.cr282_ma_dieu_kien
+                                )
+                            )
+                        ),
+                        ForAll(
+                            tmpTCCSADCollect As dsCha,
+                            If(
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
+                                KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
+                                Collect(
+                                    tmpChonCSADCollect,
+                                    {
+                                        ma_dieu_kien:dsCha.cr282_ma_dieu_kien
+                                    }
+                                )
+                            )
+                        )
+                    )
+                );
+                ClearCollect(
+                    tmpTCCSCollect,
+                    ShowColumns(
+                        AddColumns(
+                            SortByColumns(
+                                Filter(
+                                    DL_DIEUKIEN_APDUNG,
+                                    CountIf(tmpChonCSADCollect,ma_dieu_kien=MA_DIEU_KIEN)>0
+                                ),
+                                "cr282_ma_dieu_kien",
+                                SortOrder.Ascending
+                            ),
+                            "san_pham",
+                            "",
+                            "kenh_ban",
+                            "",
+                            "khach_hang",
+                            "",
+                            "pham_vi",
+                            ""
+                        ),
+                        "cr282_ma_dieu_kien",
+                        "cr282_so_vb",
+                        "cr282_ngay_vb",
+                        "cr282_hieu_luc_tu",
+                        "cr282_hieu_luc_den",
+                        "cr282_file",
+                        "cr282_trang_thai",
+                        "san_pham",
+                        "kenh_ban",
+                        "khach_hang",
+                        "pham_vi"
                     )
                 );
                 ClearCollect(
@@ -1235,16 +1515,16 @@ TraCuuCSAD As screen:
                         }
                     );
                 )
-            Size: =10
+            Size: =9
             Text: ="Tra cứu"
             Width: =80
-            X: =1102
-            Y: =36
+            X: =1107
+            Y: =43
             ZIndex: =8
 
         ComGiaTriCSAD As combobox:
             DisplayFields: =["value","key"]
-            Height: =30
+            Height: =28
             InputTextPlaceholder: ="Chọn tiêu chí"
             IsSearchable: =false
             Items: =SortByColumns(tmpdsGiaTriTCCSCollect1,"key",SortOrder.Ascending)
@@ -1253,9 +1533,9 @@ TraCuuCSAD As screen:
             SelectMultiple: =false
             Size: =10
             Template: =ListItemTemplate.Double
-            Width: =160
-            X: =914
-            Y: =33
+            Width: =200
+            X: =862
+            Y: =43
             ZIndex: =9
 
         Button6_6 As button:
@@ -1631,24 +1911,24 @@ TraCuuCSAD As screen:
                         }
                     );
                 )
-            Size: =10
+            Size: =9
             Text: ="Tải lại"
             Width: =80
-            X: =1206
-            Y: =36
+            X: =1202
+            Y: =43
             ZIndex: =10
 
         GalleryDKCTCT_4 As gallery.galleryVertical:
             DelayItemLoading: =true
-            Height: =654
+            Height: =644
             Items: =SortByColumns(tmpTCCSCollect,"cr282_ma_dieu_kien",SortOrder.Ascending)
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
             NavigationStep: =0
-            TemplatePadding: =1
+            TemplatePadding: =0
             TemplateSize: =40
             Width: =1298
-            Y: =114
+            Y: =124
             ZIndex: =11
 
             TiSttQLCTCT_2 As text:
@@ -1721,7 +2001,7 @@ TraCuuCSAD As screen:
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
-                Width: =88
+                Width: =89
                 X: =931
                 ZIndex: =36
 
@@ -1737,7 +2017,7 @@ TraCuuCSAD As screen:
                 OnSelect: =Select(Parent)
                 Size: =10
                 Underline: =true
-                Width: =90
+                Width: =92
                 X: =839
                 ZIndex: =37
 
@@ -1794,7 +2074,7 @@ TraCuuCSAD As screen:
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
-                Width: =165
+                Width: =168
                 X: =401
                 ZIndex: =43
 
@@ -1860,7 +2140,7 @@ TraCuuCSAD As screen:
             Height: =40
             Width: =1298
             X: =0
-            Y: =75
+            Y: =82
             ZIndex: =12
 
         TextCanvas2_185 As Text:
@@ -1873,7 +2153,7 @@ TraCuuCSAD As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =27
             X: =25
-            Y: =75
+            Y: =82
             ZIndex: =13
 
         TextCanvas2_202 As Text:
@@ -1885,7 +2165,7 @@ TraCuuCSAD As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =53
             X: =1198
-            Y: =75
+            Y: =82
             ZIndex: =14
 
         TextCanvas2_186 As Text:
@@ -1898,7 +2178,7 @@ TraCuuCSAD As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =55
             X: =120
-            Y: =75
+            Y: =82
             ZIndex: =15
 
         TextCanvas2_187 As Text:
@@ -1911,7 +2191,7 @@ TraCuuCSAD As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =59
             X: =289
-            Y: =75
+            Y: =82
             ZIndex: =16
 
         TextCanvas2_188 As Text:
@@ -1924,7 +2204,7 @@ TraCuuCSAD As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =71
             X: =445
-            Y: =75
+            Y: =82
             ZIndex: =17
 
         TextCanvas2_189 As Text:
@@ -1937,7 +2217,7 @@ TraCuuCSAD As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =84
             X: =608
-            Y: =75
+            Y: =82
             ZIndex: =18
 
         TextCanvas2_190 As Text:
@@ -1950,7 +2230,7 @@ TraCuuCSAD As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =66
             X: =750
-            Y: =75
+            Y: =82
             ZIndex: =19
 
         TextCanvas2_191 As Text:
@@ -1963,7 +2243,7 @@ TraCuuCSAD As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =81
             X: =845
-            Y: =75
+            Y: =82
             ZIndex: =20
 
         TextCanvas2_199 As Text:
@@ -1976,7 +2256,7 @@ TraCuuCSAD As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =73
             X: =940
-            Y: =75
+            Y: =82
             ZIndex: =21
 
         TextCanvas2_200 As Text:
@@ -1989,7 +2269,7 @@ TraCuuCSAD As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =66
             X: =1032
-            Y: =75
+            Y: =82
             ZIndex: =22
 
         TextCanvas2_201 As Text:
@@ -2002,7 +2282,7 @@ TraCuuCSAD As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =63
             X: =1107
-            Y: =75
+            Y: =82
             ZIndex: =23
 
         Button6_3 As button:
@@ -2025,11 +2305,11 @@ TraCuuCSAD As screen:
                 Clear(tmpApdungPV);
                 Clear(tmpLoaitruPV);
                 Navigate(Nhapdieukien)
-            Size: =10
+            Size: =9
             Text: ="Thêm mới"
             Width: =90
             X: =5
-            Y: =36
+            Y: =43
             ZIndex: =24
 
     LeftNavigation_26 As LeftNavigation_9:
