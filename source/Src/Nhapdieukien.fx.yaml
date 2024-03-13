@@ -2531,7 +2531,7 @@ Nhapdieukien As screen:
                         ) + 1
                     );
                    If(
-                    Radio2.Selected.Text <> "", 
+                    Radio2.Selected.Text = "" Or Radio2.Selected.Text = "Tất cả" , 
                     Patch(
                         DL_DIEUKIEN_APDUNG_LOAI,
                         Defaults(DL_DIEUKIEN_APDUNG_LOAI),
@@ -2540,8 +2540,9 @@ Nhapdieukien As screen:
                             MA_DIEU_KIEN: varMaDKien,
                             THANH_PHAN: "SP",
                             AP_DUNG: "1",
-                            KIEU: 2,
-                            TEN_KIEU: "Một phần"
+                             KIEU: 1,
+                            TEN_KIEU: "Tất cả"
+                        
                         }
                     ),
                     Patch(
@@ -2552,8 +2553,8 @@ Nhapdieukien As screen:
                             MA_DIEU_KIEN: varMaDKien,
                             THANH_PHAN: "SP",
                             AP_DUNG: "1",
-                            KIEU: 1,
-                            TEN_KIEU: "Tất cả"
+                            KIEU: 2,
+                            TEN_KIEU: "Một phần"
                         }
                     )
             
