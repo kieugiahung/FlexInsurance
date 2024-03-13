@@ -325,7 +325,7 @@ Nhapdieukien As screen:
                         DataCardValueMaDK As text:
                             BorderColor: =RGBA(45, 128, 40, 1)
                             Color: =RGBA(50, 49, 48, 1)
-                            Default: =If(VarEditCS, varMaDKien, newMaDK)
+                            Default: =
                             DelayOutput: =true
                             DisabledBorderColor: =RGBA(180, 214, 250, 1)
                             DisabledColor: =RGBA(161, 159, 157, 1)
@@ -2498,10 +2498,10 @@ Nhapdieukien As screen:
                     NotificationType.Error,
                     800
                 ),
-                DataCardValueMaDK.Text= newMaDK;
                 SubmitForm(FormDKChung);
                 UpdateContext({rcd: newMaDK});
                 EditForm(FormDKChung);
+                Refresh(DL_DIEUKIEN_APDUNG);
                 RemoveIf(
                     DL_DIEUKIEN_APDUNG_LOAI,
                     MA_DIEU_KIEN = newMaDK
