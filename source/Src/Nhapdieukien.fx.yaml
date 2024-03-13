@@ -2638,52 +2638,46 @@ Nhapdieukien As screen:
                     varIdLtKB,
                     0
                 );
-                If(
-                    CountRows(tmpApdungKB) > 0,
+                Set(
+                    varIdAdKB,
+                    Max(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        ID
+                    ) + 1
+                );
+                Patch(
+                    DL_DIEUKIEN_APDUNG_LOAI,
+                    Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                    {
+                        ID: varIdAdKB,
+                        MA_DIEU_KIEN: newMaDK,
+                        THANH_PHAN: "KB",
+                        AP_DUNG: "1",
+                        KIEU: RadioKB.Selected.ID,
+                        TEN_KIEU: RadioKB.Selected.Text
+                    }
+                );
+                Patch(
+                    DL_DIEUKIEN_APDUNG_LOAI,
                     Set(
-                        varIdAdKB,
+                        varIdLtKB,
                         Max(
                             DL_DIEUKIEN_APDUNG_LOAI,
                             ID
                         ) + 1
                     );
-                    Patch(
-                        DL_DIEUKIEN_APDUNG_LOAI,
-                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
-                        {
-                            ID: varIdAdKB,
-                            MA_DIEU_KIEN: newMaDK,
-                            THANH_PHAN: "KB",
-                            AP_DUNG: "1",
-                            KIEU: RadioKB.Selected.ID,
-                            TEN_KIEU: RadioKB.Selected.Text
-                        }
-                    )
-                );
-                If(
-                    CountRows(tmpLoaitruKB) > 0,
-                    Patch(
-                        DL_DIEUKIEN_APDUNG_LOAI,
-                        Set(
-                            varIdLtKB,
-                            Max(
-                                DL_DIEUKIEN_APDUNG_LOAI,
-                                ID
-                            ) + 1
-                        );
-                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
-                        {
-                            ID: Max(
-                                DL_DIEUKIEN_APDUNG_LOAI,
-                                ID
-                            ) + 1,
-                            MA_DIEU_KIEN: newMaDK,
-                            THANH_PHAN: "KB",
-                            AP_DUNG: "2",
-                            KIEU: RadioKB_LoaiTru.Selected.ID,
-                            TEN_KIEU: RadioKB_LoaiTru.Selected.Text
-                        }
-                    )
+                    Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                    {
+                        ID: Max(
+                            DL_DIEUKIEN_APDUNG_LOAI,
+                            ID
+                        ) + 1,
+                        MA_DIEU_KIEN: newMaDK,
+                        THANH_PHAN: "KB",
+                        AP_DUNG: "2",
+                        KIEU: RadioKB_LoaiTru.Selected.ID,
+                        TEN_KIEU: RadioKB_LoaiTru.Selected.Text
+                    }
                 );
                 
             // lưu dữ liệu ở bảng chi tiết
@@ -2762,52 +2756,46 @@ Nhapdieukien As screen:
                     varIdLtKH,
                     0
                 );
-                If(
-                    CountRows(tmpApdungKH) > 0,
+                Set(
+                    varIdAdKH,
+                    Max(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        ID
+                    ) + 1
+                );
+                Patch(
+                    DL_DIEUKIEN_APDUNG_LOAI,
+                    Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                    {
+                        ID: varIdAdKH,
+                        MA_DIEU_KIEN: newMaDK,
+                        THANH_PHAN: "KH",
+                        AP_DUNG: "1",
+                        KIEU: RadioKH.Selected.ID,
+                        TEN_KIEU: RadioKH.Selected.Text
+                    }
+                );
+                Patch(
+                    DL_DIEUKIEN_APDUNG_LOAI,
                     Set(
-                        varIdAdKH,
+                        varIdLtKH,
                         Max(
                             DL_DIEUKIEN_APDUNG_LOAI,
                             ID
                         ) + 1
                     );
-                    Patch(
-                        DL_DIEUKIEN_APDUNG_LOAI,
-                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
-                        {
-                            ID: varIdAdKH,
-                            MA_DIEU_KIEN: newMaDK,
-                            THANH_PHAN: "KH",
-                            AP_DUNG: "1",
-                            KIEU: RadioKH.Selected.ID,
-                            TEN_KIEU: RadioKH.Selected.Text
-                        }
-                    )
-                );
-                If(
-                    CountRows(tmpLoaitruKH) > 0,
-                    Patch(
-                        DL_DIEUKIEN_APDUNG_LOAI,
-                        Set(
-                            varIdLtKH,
-                            Max(
-                                DL_DIEUKIEN_APDUNG_LOAI,
-                                ID
-                            ) + 1
-                        );
-                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
-                        {
-                            ID: Max(
-                                DL_DIEUKIEN_APDUNG_LOAI,
-                                ID
-                            ) + 1,
-                            MA_DIEU_KIEN: newMaDK,
-                            THANH_PHAN: "KH",
-                            AP_DUNG: "2",
-                            KIEU: RadioKH_LoaiTru.Selected.ID,
-                            TEN_KIEU: RadioKB_LoaiTru.Selected.Text
-                        }
-                    )
+                    Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                    {
+                        ID: Max(
+                            DL_DIEUKIEN_APDUNG_LOAI,
+                            ID
+                        ) + 1,
+                        MA_DIEU_KIEN: newMaDK,
+                        THANH_PHAN: "KH",
+                        AP_DUNG: "2",
+                        KIEU: RadioKH_LoaiTru.Selected.ID,
+                        TEN_KIEU: RadioKB_LoaiTru.Selected.Text
+                    }
                 );
                 
             // lưu dữ liệu ở bảng chi tiết
@@ -2885,52 +2873,46 @@ Nhapdieukien As screen:
                     varIdLtPV,
                     0
                 );
-                If(
-                    CountRows(tmpApdungPV) > 0,
+                Set(
+                    varIdAdPV,
+                    Max(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        ID
+                    ) + 1
+                );
+                Patch(
+                    DL_DIEUKIEN_APDUNG_LOAI,
+                    Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                    {
+                        ID: varIdAdPV,
+                        MA_DIEU_KIEN: newMaDK,
+                        THANH_PHAN: "PV",
+                        AP_DUNG: "1",
+                        KIEU: RadioPV.Selected.ID,
+                        TEN_KIEU: RadioPV.Selected.Text
+                    }
+                );
+                Patch(
+                    DL_DIEUKIEN_APDUNG_LOAI,
                     Set(
-                        varIdAdPV,
+                        varIdLtPV,
                         Max(
                             DL_DIEUKIEN_APDUNG_LOAI,
                             ID
                         ) + 1
                     );
-                    Patch(
-                        DL_DIEUKIEN_APDUNG_LOAI,
-                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
-                        {
-                            ID: varIdAdPV,
-                            MA_DIEU_KIEN: newMaDK,
-                            THANH_PHAN: "PV",
-                            AP_DUNG: "1",
-                            KIEU: RadioPV.Selected.ID,
-                            TEN_KIEU: RadioPV.Selected.Text
-                        }
-                    )
-                );
-                If(
-                    CountRows(tmpLoaitruPV) > 0,
-                    Patch(
-                        DL_DIEUKIEN_APDUNG_LOAI,
-                        Set(
-                            varIdLtPV,
-                            Max(
-                                DL_DIEUKIEN_APDUNG_LOAI,
-                                ID
-                            ) + 1
-                        );
-                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
-                        {
-                            ID: Max(
-                                DL_DIEUKIEN_APDUNG_LOAI,
-                                ID
-                            ) + 1,
-                            MA_DIEU_KIEN: newMaDK,
-                            THANH_PHAN: "PV",
-                            AP_DUNG: "2",
-                            KIEU: RadioPV_LoaiTru.Selected.ID,
-                            TEN_KIEU: RadioPV_LoaiTru.Selected.Text
-                        }
-                    )
+                    Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                    {
+                        ID: Max(
+                            DL_DIEUKIEN_APDUNG_LOAI,
+                            ID
+                        ) + 1,
+                        MA_DIEU_KIEN: newMaDK,
+                        THANH_PHAN: "PV",
+                        AP_DUNG: "2",
+                        KIEU: RadioPV_LoaiTru.Selected.ID,
+                        TEN_KIEU: RadioPV_LoaiTru.Selected.Text
+                    }
                 );
                 
             // lưu dữ liệu ở bảng chi tiết
