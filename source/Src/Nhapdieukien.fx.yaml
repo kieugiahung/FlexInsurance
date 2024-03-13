@@ -1733,7 +1733,7 @@ Nhapdieukien As screen:
                         OnSelect: =Select(Parent)
                         SearchFields: =["cr282_ten_gia_tri"]
                         SearchItems: =Search(Filter( tmpDsGiatri, Loai = DropQTich.Selected.MA_CHI_TIEU),ComboBox3.SearchText,"cr282_ten_gia_tri")
-                        Width: =463
+                        Width: =347
                         X: =402
                         Y: =7
                         ZIndex: =5
@@ -1741,13 +1741,21 @@ Nhapdieukien As screen:
                     Button5_13 As button:
                         DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
-                        OnSelect: =RemoveIf(tmpApdungSp, cr282_ma_tieu_chi = ThisItem.cr282_ma_tieu_chi)
+                        OnSelect: =RemoveIf(tmpApdungSp, Rownumber = ThisItem.Rownumber)
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
                         X: =880
                         Y: =7
                         ZIndex: =6
+
+                    Label10 As label:
+                        OnSelect: =Select(Parent)
+                        Text: =ThisItem.Rownumber
+                        Width: =92
+                        X: =707
+                        Y: =6
+                        ZIndex: =7
 
                 Label7_4 As label:
                     FontWeight: =FontWeight.Bold
