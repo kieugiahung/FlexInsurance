@@ -2549,6 +2549,7 @@ Nhapdieukien As screen:
                         ID
                     ) + 1
                 );
+                If(Radio2_1.Selected.Text <> "",
                 Patch(
                     DL_DIEUKIEN_APDUNG_LOAI,
                     Defaults(DL_DIEUKIEN_APDUNG_LOAI),
@@ -2560,7 +2561,7 @@ Nhapdieukien As screen:
                         KIEU: Radio2_1.Selected.ID,
                         TEN_KIEU: Radio2_1.Selected.Text
                     }
-                );
+                ));
                 
             // lưu dữ liệu ở bảng chi tiết
             // lưu áp dụng
@@ -2645,6 +2646,7 @@ Nhapdieukien As screen:
                         ID
                     ) + 1
                 );
+                // ÁP DỤNG
                 Patch(
                     DL_DIEUKIEN_APDUNG_LOAI,
                     Defaults(DL_DIEUKIEN_APDUNG_LOAI),
@@ -2657,6 +2659,8 @@ Nhapdieukien As screen:
                         TEN_KIEU: RadioKB.Selected.Text
                     }
                 );
+                // LOẠI TRỪ
+                If(RadioKB_LoaiTru.Selected.Text <> "",
                 Patch(
                     DL_DIEUKIEN_APDUNG_LOAI,
                     Set(
@@ -2678,7 +2682,7 @@ Nhapdieukien As screen:
                         KIEU: RadioKB_LoaiTru.Selected.ID,
                         TEN_KIEU: RadioKB_LoaiTru.Selected.Text
                     }
-                );
+                ));
                 
             // lưu dữ liệu ở bảng chi tiết
             If(
@@ -2713,7 +2717,7 @@ Nhapdieukien As screen:
                     )
                 );
                 
-            // lưu dữ liệu ở bảng chi tiết loai tru
+            // lưu dữ liệu ở bảng chi tiết loai trừ
             If(
                     RadioKB_LoaiTru.Selected.ID = 2 && CountRows(tmpLoaitruKB) > 0,
                     ForAll(
@@ -2775,6 +2779,7 @@ Nhapdieukien As screen:
                         TEN_KIEU: RadioKH.Selected.Text
                     }
                 );
+                If(RadioKH_LoaiTru.Selected.Text <> "",
                 Patch(
                     DL_DIEUKIEN_APDUNG_LOAI,
                     Set(
@@ -2796,7 +2801,7 @@ Nhapdieukien As screen:
                         KIEU: RadioKH_LoaiTru.Selected.ID,
                         TEN_KIEU: RadioKB_LoaiTru.Selected.Text
                     }
-                );
+                ));
                 
             // lưu dữ liệu ở bảng chi tiết
             If(
@@ -2892,6 +2897,7 @@ Nhapdieukien As screen:
                         TEN_KIEU: RadioPV.Selected.Text
                     }
                 );
+                If(RadioPV_LoaiTru.Selected.Text <> "",
                 Patch(
                     DL_DIEUKIEN_APDUNG_LOAI,
                     Set(
@@ -2913,7 +2919,7 @@ Nhapdieukien As screen:
                         KIEU: RadioPV_LoaiTru.Selected.ID,
                         TEN_KIEU: RadioPV_LoaiTru.Selected.Text
                     }
-                );
+                ));
                 
             // lưu dữ liệu ở bảng chi tiết
             If(
