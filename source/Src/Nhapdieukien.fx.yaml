@@ -324,13 +324,13 @@ Nhapdieukien As screen:
                             ZIndex: =1
 
                         DataCardValueMaDK As text:
-                            BorderColor: =RGBA(9, 33, 98, 1)
+                            BorderColor: =RGBA(45, 128, 40, 1)
                             Color: =RGBA(50, 49, 48, 1)
                             Default: =Parent.Default
                             DelayOutput: =true
-                            DisabledBorderColor: =RGBA(9, 33, 98, 1)
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
                             DisabledColor: =RGBA(161, 159, 157, 1)
-                            DisabledFill: =RGBA(230, 230, 230, 1)
+                            DisabledFill: =RGBA(214, 221, 224, 1)
                             DisplayMode: =DisplayMode.Disabled
                             HintText: ="Hệ thống tự sinh"
                             HoverBorderColor: =RGBA(9, 33, 98, 1)
@@ -464,6 +464,7 @@ Nhapdieukien As screen:
                             Default: =Parent.Default
                             DisabledBorderColor: =RGBA(0, 0, 0, 0)
                             DisabledColor: =RGBA(161, 159, 157, 1)
+                            DisplayMode: =DisplayMode.Disabled
                             Fill: =RGBA(255, 255, 255, 1)
                             FocusedBorderThickness: =4
                             Height: =40
@@ -518,14 +519,14 @@ Nhapdieukien As screen:
                             ZIndex: =1
 
                         DataCardValueSoVB As text:
-                            BorderColor: =RGBA(9, 33, 98, 1)
+                            BorderColor: =RGBA(45, 128, 40, 1)
                             Color: =RGBA(50, 49, 48, 1)
                             Default: =Parent.Default
                             DelayOutput: =true
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
                             DisabledColor: =RGBA(161, 159, 157, 1)
-                            DisabledFill: =RGBA(242, 242, 241, 0)
-                            DisplayMode: =Parent.DisplayMode
+                            DisabledFill: =RGBA(214, 221, 224, 1)
+                            DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                             HoverBorderColor: =RGBA(9, 33, 98, 1)
                             HoverColor: =RGBA(50, 49, 48, 1)
                             HoverFill: =RGBA(255, 255, 255, 1)
@@ -625,14 +626,14 @@ Nhapdieukien As screen:
                             ZIndex: =1
 
                         DateValueVB As datepicker:
-                            BorderColor: =RGBA(9, 33, 98, 1)
+                            BorderColor: =RGBA(45, 128, 40, 1)
                             CalendarHeaderFill: =RGBA(16, 110, 190, 1)
                             Color: =RGBA(50, 49, 48, 1)
                             DefaultDate: =Parent.Default
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
                             DisabledColor: =RGBA(161, 159, 157, 1)
-                            DisabledFill: =RGBA(242, 242, 241, 0)
-                            DisplayMode: =Parent.DisplayMode
+                            DisabledFill: =RGBA(214, 221, 224, 1)
+                            DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                             EndYear: =Year(Today())+100
                             Format: ="dd/mm/yyyy"
                             HoverDateFill: =RGBA(184, 187, 184, 1)
@@ -729,14 +730,14 @@ Nhapdieukien As screen:
                             ZIndex: =1
 
                         DateValueTU As datepicker:
-                            BorderColor: =RGBA(9, 33, 98, 1)
+                            BorderColor: =RGBA(45, 128, 40, 1)
                             CalendarHeaderFill: =RGBA(16, 110, 190, 1)
                             Color: =RGBA(50, 49, 48, 1)
                             DefaultDate: =Parent.Default
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
                             DisabledColor: =RGBA(161, 159, 157, 1)
-                            DisabledFill: =RGBA(242, 242, 241, 0)
-                            DisplayMode: =Parent.DisplayMode
+                            DisabledFill: =RGBA(214, 221, 224, 1)
+                            DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                             EndYear: =Year(Today())+100
                             Format: ="dd/mm/yyyy"
                             HoverDateFill: =RGBA(184, 187, 184, 1)
@@ -833,14 +834,14 @@ Nhapdieukien As screen:
                             ZIndex: =1
 
                         DateValueDen As datepicker:
-                            BorderColor: =RGBA(9, 33, 98, 1)
+                            BorderColor: =RGBA(45, 128, 40, 1)
                             CalendarHeaderFill: =RGBA(16, 110, 190, 1)
                             Color: =RGBA(50, 49, 48, 1)
                             DefaultDate: =If(!IsBlank(varMaDKien),LookUp(DL_DIEUKIEN_APDUNG, MA_DIEU_KIEN=varMaDKien).HIEU_LUC_DEN,Blank())
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
                             DisabledColor: =RGBA(161, 159, 157, 1)
-                            DisabledFill: =RGBA(242, 242, 241, 0)
-                            DisplayMode: =Parent.DisplayMode
+                            DisabledFill: =RGBA(214, 221, 224, 1)
+                            DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                             EndYear: =Year(Today())+100
                             Format: ="dd/mm/yyyy"
                             HoverDateFill: =RGBA(184, 187, 184, 1)
@@ -941,10 +942,10 @@ Nhapdieukien As screen:
                             AddAttachmentText: ="Nhấn chọn file"
                             BorderColor: =RGBA(230, 230, 230, 1)
                             Color: =RGBA(50, 49, 48, 1)
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
                             DisabledColor: =RGBA(161, 159, 157, 1)
-                            DisabledFill: =RGBA(242, 242, 241, 0)
-                            DisplayMode: =Parent.DisplayMode
+                            DisabledFill: =RGBA(214, 221, 224, 1)
+                            DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                             Height: =101
                             HoverColor: =RGBA(50, 49, 48, 1)
                             HoverFill: =RGBA(245, 245, 245, 1)
@@ -1122,8 +1123,9 @@ Nhapdieukien As screen:
                     Default: |-
                         =//If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KH" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
                         If(IsBlank(varMaDKien), "Tất cả",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KH" && AP_DUNG = "1" ).TEN_KIEU)
-                    DisabledBorderColor: =RGBA(204, 228, 246, 1)
-                    DisabledFill: =RGBA(230, 230, 230, 1)
+                    DisabledBorderColor: =RGBA(255, 255, 255, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
                         =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
@@ -1174,6 +1176,7 @@ Nhapdieukien As screen:
                         Default: =ThisItem.cr282_ten_tieu_chi
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =32
                         Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "KH")
                         OnChange: =Reset(ComboBoxGTKH)
@@ -1192,6 +1195,7 @@ Nhapdieukien As screen:
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
                         DisplayFields: =["cr282_ten_gia_tri"]
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =30
                         IsSearchable: =false
                         Items: =Filter( tmpDsGiatri, Loai = DropKH.Selected.MA_CHI_TIEU)
@@ -1205,6 +1209,7 @@ Nhapdieukien As screen:
                         ZIndex: =5
 
                     Button5_9 As button:
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
                         OnSelect: =RemoveIf(tmpApdungKH, ThisItem.cr282_ma_tieu_chi = DropKH.Selected.MA_CHI_TIEU)
                         Size: =11
@@ -1225,6 +1230,7 @@ Nhapdieukien As screen:
                 RadioKH_LoaiTru As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
                     Default: =LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KH" && AP_DUNG = "2" ).TEN_KIEU
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
                         =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
@@ -1275,6 +1281,7 @@ Nhapdieukien As screen:
                         Default: =ThisItem.cr282_ten_tieu_chi
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =30
                         Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "KH")
                         OnChange: =Reset(ComboBoxGTKH_LT)
@@ -1293,6 +1300,7 @@ Nhapdieukien As screen:
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
                         DisplayFields: =["cr282_ten_gia_tri"]
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =30
                         IsSearchable: =false
                         Items: =Filter( tmpDsGiatri, Loai = DropKH_LoaiTru.Selected.MA_CHI_TIEU)
@@ -1306,6 +1314,7 @@ Nhapdieukien As screen:
                         ZIndex: =5
 
                     Button5_10 As button:
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
                         OnSelect: =RemoveIf(tmpLoaitruKH, ThisItem.cr282_ma_tieu_chi = DropKH_LoaiTru.Selected.MA_CHI_TIEU)
                         Size: =11
@@ -1324,6 +1333,7 @@ Nhapdieukien As screen:
                     ZIndex: =8
 
                 Button3_1 As button:
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     Height: =25
                     OnSelect: |-
                         =Collect(
@@ -1339,6 +1349,7 @@ Nhapdieukien As screen:
                     ZIndex: =9
 
                 Button3_2 As button:
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     Height: =25
                     OnSelect: |-
                         =Collect(
@@ -1373,6 +1384,7 @@ Nhapdieukien As screen:
                     Default: |-
                         =//If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "PV" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
                         If(IsBlank(varMaDKien), "Tất cả",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "PV" && AP_DUNG = "1" ).TEN_KIEU)
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
                         =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
@@ -1417,12 +1429,13 @@ Nhapdieukien As screen:
                         ZIndex: =3
 
                     DropPV As dropdown:
-                        BorderColor: =RGBA(9, 33, 98, 1)
+                        BorderColor: =RGBA(45, 128, 40, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
-                        ChevronFill: =RGBA(9, 33, 98, 1)
+                        ChevronFill: =RGBA(45, 128, 40, 1)
                         Default: =ThisItem.cr282_ten_tieu_chi
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =30
                         Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "PV")
                         OnChange: =Reset(ComboBoxGTPV)
@@ -1434,13 +1447,14 @@ Nhapdieukien As screen:
                         ZIndex: =4
 
                     ComboBoxGTPV As combobox:
-                        BorderColor: =RGBA(9, 33, 98, 1)
+                        BorderColor: =RGBA(45, 128, 40, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
-                        ChevronFill: =RGBA(9, 33, 98, 1)
+                        ChevronFill: =RGBA(45, 128, 40, 1)
                         DefaultSelectedItems: =ThisItem.group_apdung_pv
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
                         DisplayFields: =["cr282_ten_gia_tri"]
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =30
                         IsSearchable: =false
                         Items: =Filter( tmpDsGiatri, Loai = DropPV.Selected.MA_CHI_TIEU)
@@ -1454,6 +1468,7 @@ Nhapdieukien As screen:
                         ZIndex: =5
 
                     Button5_11 As button:
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
                         OnSelect: =RemoveIf(tmpApdungPV, ThisItem.cr282_ma_tieu_chi=DropPV.Selected.MA_CHI_TIEU)
                         Size: =11
@@ -1474,6 +1489,7 @@ Nhapdieukien As screen:
                 RadioPV_LoaiTru As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
                     Default: =LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "PV" && AP_DUNG = "2" ).TEN_KIEU
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
                         =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
@@ -1524,6 +1540,7 @@ Nhapdieukien As screen:
                         Default: =ThisItem.cr282_ten_tieu_chi
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =30
                         Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "PV")
                         OnChange: =Reset(ComboBoxGTPV_LT)
@@ -1542,6 +1559,7 @@ Nhapdieukien As screen:
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
                         DisplayFields: =["cr282_ten_gia_tri"]
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =30
                         IsSearchable: =false
                         Items: =Filter( tmpDsGiatri, Loai = DropPV_LoaiTru.Selected.MA_CHI_TIEU)
@@ -1555,6 +1573,7 @@ Nhapdieukien As screen:
                         ZIndex: =5
 
                     Button5_12 As button:
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
                         OnSelect: =RemoveIf(tmpLoaitruPV, ThisItem.cr282_ma_tieu_chi=DropPV_LoaiTru.Selected.MA_CHI_TIEU)
                         Size: =11
@@ -1573,6 +1592,7 @@ Nhapdieukien As screen:
                     ZIndex: =8
 
                 Button3_3 As button:
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     Height: =25
                     OnSelect: |-
                         =Collect(
@@ -1588,6 +1608,7 @@ Nhapdieukien As screen:
                     ZIndex: =9
 
                 Button3_4 As button:
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     Height: =25
                     OnSelect: |-
                         =Collect(
@@ -1633,11 +1654,12 @@ Nhapdieukien As screen:
                         =//LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU
                         //If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
                         If(IsBlank(varMaDKien), "Tất cả",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU)
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
                         =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
                     OnSelect: =true
-                    RadioBorderColor: =RGBA(26, 26, 26, 1)
+                    RadioBorderColor: =RGBA(15, 84, 140, 1)
                     Size: =11
                     X: =48
                     Y: =116
@@ -1684,6 +1706,7 @@ Nhapdieukien As screen:
                             =LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT, MA_DIEU_KIEN ="AD001" && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = ThisItem.cr282_ma_tieu_chi).TEN_TIEU_CHI
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledFill: =RGBA(214, 221, 224, 1)
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =32
                         Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "SP")
                         OnChange: =Reset(ComboBox3)
@@ -1702,6 +1725,7 @@ Nhapdieukien As screen:
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledFill: =RGBA(214, 221, 224, 1)
                         DisplayFields: =["cr282_ten_gia_tri","Ma"]
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =30
                         IsSearchable: =false
                         Items: =Filter( tmpDsGiatri, Loai = DropQTich.Selected.MA_CHI_TIEU)
@@ -1714,6 +1738,7 @@ Nhapdieukien As screen:
                         ZIndex: =5
 
                     Button5_13 As button:
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
                         OnSelect: =RemoveIf(tmpApdungSp, cr282_ma_tieu_chi = ThisItem.cr282_ma_tieu_chi)
                         Size: =11
@@ -1732,6 +1757,7 @@ Nhapdieukien As screen:
                     ZIndex: =5
 
                 Button3_5 As button:
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     Height: =25
                     OnSelect: |+
                         =Collect(
@@ -1757,11 +1783,12 @@ Nhapdieukien As screen:
                 Radio2_1 As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
                     Default: =LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "2" ).TEN_KIEU
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
                         =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
                     OnSelect: =true
-                    RadioBorderColor: =RGBA(26, 26, 26, 1)
+                    RadioBorderColor: =RGBA(15, 84, 140, 1)
                     Size: =11
                     X: =43
                     Y: =65
@@ -1808,6 +1835,7 @@ Nhapdieukien As screen:
                             =LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT, MA_DIEU_KIEN =varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "2" && KIEU = "2" && MA_TIEU_CHI = ThisItem.cr282_ma_tieu_chi).TEN_TIEU_CHI
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledFill: =RGBA(214, 221, 224, 1)
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =32
                         Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "SP")
                         OnChange: =Reset(ComboBox3_1)
@@ -1826,6 +1854,7 @@ Nhapdieukien As screen:
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledFill: =RGBA(214, 221, 224, 1)
                         DisplayFields: =["cr282_ten_gia_tri"]
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =32
                         IsSearchable: =false
                         Items: =Filter( tmpDsGiatri, Loai = DropQTich_1.Selected.MA_CHI_TIEU)
@@ -1838,6 +1867,7 @@ Nhapdieukien As screen:
                         ZIndex: =5
 
                     Button5_14 As button:
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
                         OnSelect: =RemoveIf(tmpLoaitruSp, cr282_ma_tieu_chi = ThisItem.cr282_ma_tieu_chi)
                         Size: =11
@@ -1863,6 +1893,7 @@ Nhapdieukien As screen:
                     ZIndex: =5
 
                 Button3_6 As button:
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     Height: =25
                     OnSelect: |-
                         =Collect(
@@ -1897,6 +1928,7 @@ Nhapdieukien As screen:
                     Default: |-
                         =//If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
                         If(IsBlank(varMaDKien), "Tất cả",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "1" ).TEN_KIEU)
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
                         =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
@@ -1947,6 +1979,7 @@ Nhapdieukien As screen:
                         Default: =ThisItem.cr282_ten_tieu_chi
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =30
                         Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "KB")
                         OnChange: =Reset(ComboBoxGTKB)
@@ -1965,6 +1998,7 @@ Nhapdieukien As screen:
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
                         DisplayFields: =["cr282_ten_gia_tri"]
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =30
                         IsSearchable: =false
                         Items: =Filter( tmpDsGiatri, Loai = DropKB.Selected.MA_CHI_TIEU)
@@ -1978,6 +2012,7 @@ Nhapdieukien As screen:
                         ZIndex: =5
 
                     Button5_15 As button:
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
                         OnSelect: =RemoveIf(tmpApdungKB, ThisItem.cr282_ma_tieu_chi=DropKB.Selected.MA_CHI_TIEU)
                         Size: =11
@@ -1998,6 +2033,7 @@ Nhapdieukien As screen:
                 RadioKB_LoaiTru As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
                     Default: =LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "2" ).TEN_KIEU
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
                         =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
@@ -2048,6 +2084,7 @@ Nhapdieukien As screen:
                         Default: =ThisItem.cr282_ten_tieu_chi
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =30
                         Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "KB")
                         OnChange: =Reset(ComboBoxGTKB_LT)
@@ -2066,6 +2103,7 @@ Nhapdieukien As screen:
                         DisabledBorderColor: =RGBA(204, 228, 246, 1)
                         DisabledFill: =RGBA(230, 230, 230, 1)
                         DisplayFields: =["cr282_ten_gia_tri"]
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =30
                         IsSearchable: =false
                         Items: =Filter( tmpDsGiatri, Loai = DropKB_LoaiTru.Selected.MA_CHI_TIEU)
@@ -2079,6 +2117,7 @@ Nhapdieukien As screen:
                         ZIndex: =5
 
                     Button5_16 As button:
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
                         OnSelect: =RemoveIf(tmpLoaitruKB, ThisItem.cr282_ma_tieu_chi=DropKB_LoaiTru.Selected.MA_CHI_TIEU)
                         Size: =11
@@ -2097,6 +2136,7 @@ Nhapdieukien As screen:
                     ZIndex: =8
 
                 Button3_7 As button:
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     Height: =25
                     OnSelect: |-
                         =Collect(
@@ -2112,6 +2152,7 @@ Nhapdieukien As screen:
                     ZIndex: =9
 
                 Button3_8 As button:
+                    DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     Height: =25
                     OnSelect: |-
                         =Collect(
@@ -2131,6 +2172,7 @@ Nhapdieukien As screen:
         ZIndex: =2
 
     Button6_11 As button:
+        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
         OnSelect: |-
             =//Xu ly thong tin chung
             UpdateContext({errorMsgDK: ""});
@@ -2971,7 +3013,7 @@ Nhapdieukien As screen:
         Size: =11
         Text: ="Lưu dữ liệu"
         Width: =122
-        X: =1122
+        X: =1093
         Y: =728
         ZIndex: =3
 
@@ -2980,7 +3022,32 @@ Nhapdieukien As screen:
         Size: =11
         Text: ="Quay lại"
         Width: =81
-        X: =1025
+        X: =1005
         Y: =728
         ZIndex: =4
+
+    ButtonGhi As button:
+        OnSelect: |
+            =//Xu ly thong tin chung
+            UpdateContext({errorMsgDK: ""});
+            UpdateIf(
+                DL_DIEUKIEN_APDUNG,
+                MA_DIEU_KIEN = DataCardValueMaDK.Text,
+                {TRANG_THAI: "true"}
+            );
+            UpdateContext({rcd: newMaDK});
+            EditForm(FormDKChung);
+            Notify(
+                "Ghi dữ liệu thành công",
+                NotificationType.Success,
+                800
+            );
+            Set(varDaGhi, true);
+        Size: =11
+        Text: ="Ghi dữ liệu"
+        Visible: =If(!IsBlank(DataCardValueMaDK.Text),true,false)
+        Width: =122
+        X: =1222
+        Y: =728
+        ZIndex: =5
 
