@@ -1218,13 +1218,21 @@ Nhapdieukien As screen:
                     Button5_9 As button:
                         DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
-                        OnSelect: =RemoveIf(tmpApdungKH, ThisItem.cr282_ma_tieu_chi = DropKH.Selected.MA_CHI_TIEU)
+                        OnSelect: =RemoveIf(tmpApdungKH, cr282_id= ThisItem.cr282_id)
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
                         X: =880
                         Y: =5
                         ZIndex: =6
+
+                    TextInput5 As text:
+                        Default: =ThisItem.cr282_id
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        X: =40
+                        Y: =6
+                        ZIndex: =7
 
                 Label7 As label:
                     FontWeight: =FontWeight.Bold
@@ -1323,13 +1331,21 @@ Nhapdieukien As screen:
                     Button5_10 As button:
                         DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
-                        OnSelect: =RemoveIf(tmpLoaitruKH, ThisItem.cr282_ma_tieu_chi = DropKH_LoaiTru.Selected.MA_CHI_TIEU)
+                        OnSelect: =RemoveIf(tmpLoaitruKH, cr282_id = ThisItem.cr282_id)
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
                         X: =880
                         Y: =5
                         ZIndex: =6
+
+                    TextInput6 As text:
+                        Default: =ThisItem.cr282_id
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        X: =40
+                        Y: =6
+                        ZIndex: =7
 
                 Label7_1 As label:
                     FontWeight: =FontWeight.Bold
@@ -2867,10 +2883,7 @@ Nhapdieukien As screen:
                                 DL_DIEUKIEN_APDUNG_LOAI_CT,
                                 Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
                                 {
-                                    ID: Max(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                        ID
-                                    ) + 1,
+                                    ID: Value(kh.TextInput5.Text),
                                     ID_LOAI: varIdAdKH,
                                     MA_DIEU_KIEN: newMaDK,
                                     THANH_PHAN: "KH",
@@ -2900,10 +2913,7 @@ Nhapdieukien As screen:
                                 DL_DIEUKIEN_APDUNG_LOAI_CT,
                                 Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
                                 {
-                                    ID: Max(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                        ID
-                                    ) + 1,
+                                    ID: Value(kh.TextInput6.Text) ,
                                     ID_LOAI: varIdLtKH,
                                     MA_DIEU_KIEN: newMaDK,
                                     THANH_PHAN: "KH",
