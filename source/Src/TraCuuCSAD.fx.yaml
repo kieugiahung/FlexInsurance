@@ -1,6 +1,7 @@
 TraCuuCSAD As screen:
     OnVisible: |-
         =Reset(DropTPhanCSAD);Reset(DropApDungCSAD);Reset(ComTieuChiCSAD);Reset(ComGiaTriCSAD);
+        Clear(tmpdsGiaTriTCCSCollect1);
         ClearCollect(
             tmpTCCSCollect,
             ShowColumns(
@@ -43,8 +44,8 @@ TraCuuCSAD As screen:
         ClearCollect(
             tmpstrDLTCCSCollect,
             {
-                strAD:"-Áp dụng:",
-                strLT:"-Loại trừ:"
+                strAD:"- Áp dụng: ",
+                strLT:"- Loại trừ: "
             }
         );
         ForAll(
@@ -72,7 +73,7 @@ TraCuuCSAD As screen:
                                     DL_DIEUKIEN_APDUNG_LOAI_CT,
                                     MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2"
                                 ) As dsCT,
-                                Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                 Char(10)
                             )
                         )
@@ -108,7 +109,7 @@ TraCuuCSAD As screen:
                                     DL_DIEUKIEN_APDUNG_LOAI_CT,
                                     MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2"
                                 ) As dsCT,
-                                Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                 Char(10)
                             )
                         )
@@ -126,8 +127,8 @@ TraCuuCSAD As screen:
                 tmpstrDLTCCSCollect,
                 true,
                 {
-                    strAD:"-Áp dụng:",
-                    strLT:"-Loại trừ:"
+                    strAD:"- Áp dụng: ",
+                    strLT:"- Loại trừ: "
                 }
             );
         
@@ -154,7 +155,7 @@ TraCuuCSAD As screen:
                                     DL_DIEUKIEN_APDUNG_LOAI_CT,
                                     MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2"
                                 ) As dsCT,
-                                Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                 Char(10)
                             )
                         )
@@ -190,7 +191,7 @@ TraCuuCSAD As screen:
                                     DL_DIEUKIEN_APDUNG_LOAI_CT,
                                     MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2"
                                 ) As dsCT,
-                                Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                 Char(10)
                             )
                         )
@@ -208,8 +209,8 @@ TraCuuCSAD As screen:
                 tmpstrDLTCCSCollect,
                 true,
                 {
-                    strAD:"-Áp dụng:",
-                    strLT:"-Loại trừ:"
+                    strAD:"- Áp dụng: ",
+                    strLT:"- Loại trừ: "
                 }
             );
         
@@ -236,7 +237,7 @@ TraCuuCSAD As screen:
                                     DL_DIEUKIEN_APDUNG_LOAI_CT,
                                     MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2"
                                 ) As dsCT,
-                                Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                 Char(10)
                             )
                         )
@@ -272,7 +273,7 @@ TraCuuCSAD As screen:
                                     DL_DIEUKIEN_APDUNG_LOAI_CT,
                                     MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2"
                                 ) As dsCT,
-                                Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                 Char(10)
                             )
                         )
@@ -290,8 +291,8 @@ TraCuuCSAD As screen:
                 tmpstrDLTCCSCollect,
                 true,
                 {
-                    strAD:"-Áp dụng:",
-                    strLT:"-Loại trừ:"
+                    strAD:"- Áp dụng: ",
+                    strLT:"- Loại trừ: "
                 }
             );
         
@@ -318,7 +319,7 @@ TraCuuCSAD As screen:
                                     DL_DIEUKIEN_APDUNG_LOAI_CT,
                                     MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2"
                                 ) As dsCT,
-                                Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                 Char(10)
                             )
                         )
@@ -354,7 +355,7 @@ TraCuuCSAD As screen:
                                     DL_DIEUKIEN_APDUNG_LOAI_CT,
                                     MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2"
                                 ) As dsCT,
-                                Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                 Char(10)
                             )
                         )
@@ -396,6 +397,8 @@ TraCuuCSAD As screen:
             OnChange: |
                 =Reset(ComGiaTriCSAD);
                 If(
+                    IsBlank(ComTieuChiCSAD.Selected.MA_CHI_TIEU),
+                    Clear(tmpdsGiaTriTCCSCollect1),
                     ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_CT",
                     ClearCollect(
                         tmpdsGiaTriTCCSCollect,
@@ -787,12 +790,12 @@ TraCuuCSAD As screen:
                 ClearCollect(
                     tmpChonCSADCollect,
                     {
-                        ma_dieu_kien:""
+                        cr282_ma_dieu_kien:""
                     }
                 );
                 Clear(tmpChonCSADCollect);
                 If(
-                    DropTPhanCSAD.Selected.value="PV",
+                    DropTPhanCSAD.Selected.value="PV" && !IsBlank(ComTieuChiCSAD.Selected.MA_CHI_TIEU) && !IsBlank(ComGiaTriCSAD.Selected.value),
                     ClearCollect(
                         dsPVDLTCCSCollect,
                         {
@@ -1004,145 +1007,152 @@ TraCuuCSAD As screen:
                     )
                 );
                 If(
-                    DropTPhanCSAD.Selected.value="PV",
+                    !IsBlank(ComTieuChiCSAD.Selected.MA_CHI_TIEU) && !IsBlank(ComGiaTriCSAD.Selected.value),
                     If(
-                        DropApDungCSAD.Selected.value="1",
-                        ForAll(
-                            tmpTCCSADCollect As dsCha,
-                            If(
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" && KIEU="1")) ||
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" &&
-                                KIEU="2" && (MA_GIA_TRI="000" || CountIf(dsPVDLTCCSCollect1,ma_pvdl=MA_GIA_TRI)>0))),
-                                Collect(
-                                    tmpChonCSADCollect,
-                                    {
-                                        ma_dieu_kien:dsCha.cr282_ma_dieu_kien
-                                    }
+                        DropTPhanCSAD.Selected.value="PV",
+                        If(
+                            DropApDungCSAD.Selected.value="1",
+                            ForAll(
+                                tmpTCCSADCollect As dsCha,
+                                If(
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" && KIEU="1")) ||
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" &&
+                                    KIEU="2" && (MA_GIA_TRI="000" || CountIf(dsPVDLTCCSCollect1,ma_pvdl=MA_GIA_TRI)>0))),
+                                    Collect(
+                                        tmpChonCSADCollect,
+                                        {
+                                            cr282_ma_dieu_kien:dsCha.cr282_ma_dieu_kien
+                                        }
+                                    )
+                                );
+                                If(
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
+                                    KIEU="2" && (MA_GIA_TRI="000" || CountIf(dsPVDLTCCSCollect1,ma_pvdl=MA_GIA_TRI)>0))),
+                                    RemoveIf(
+                                        tmpChonCSADCollect,
+                                        cr282_ma_dieu_kien=dsCha.cr282_ma_dieu_kien
+                                    )
                                 )
-                            );
-                            If(
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
-                                KIEU="2" && (MA_GIA_TRI="000" || CountIf(dsPVDLTCCSCollect1,ma_pvdl=MA_GIA_TRI)>0))),
-                                RemoveIf(
-                                    tmpChonCSADCollect,
-                                    ma_dieu_kien=dsCha.cr282_ma_dieu_kien
+                            ),
+                            ForAll(
+                                tmpTCCSADCollect As dsCha,
+                                If(
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
+                                    KIEU="2" && (MA_GIA_TRI="000" || CountIf(dsPVDLTCCSCollect1,ma_pvdl=MA_GIA_TRI)>0))),
+                                    Collect(
+                                        tmpChonCSADCollect,
+                                        {
+                                            cr282_ma_dieu_kien:dsCha.cr282_ma_dieu_kien
+                                        }
+                                    )
                                 )
                             )
                         ),
-                        ForAll(
-                            tmpTCCSADCollect As dsCha,
-                            If(
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
-                                KIEU="2" && (MA_GIA_TRI="000" || CountIf(dsPVDLTCCSCollect1,ma_pvdl=MA_GIA_TRI)>0))),
-                                Collect(
-                                    tmpChonCSADCollect,
-                                    {
-                                        ma_dieu_kien:dsCha.cr282_ma_dieu_kien
-                                    }
+                        DropTPhanCSAD.Selected.value="SP",
+                        If(
+                            DropApDungCSAD.Selected.value="1",
+                            ForAll(
+                                tmpTCCSADCollect As dsCha,
+                                If(
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" && KIEU="1")) ||
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" &&
+                                    KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.key,MA_GIA_TRI))),
+                                    Collect(
+                                        tmpChonCSADCollect,
+                                        {
+                                            cr282_ma_dieu_kien:dsCha.cr282_ma_dieu_kien
+                                        }
+                                    )
+                                );
+                                If(
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
+                                    KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.key,MA_GIA_TRI))),
+                                    RemoveIf(
+                                        tmpChonCSADCollect,
+                                        cr282_ma_dieu_kien=dsCha.cr282_ma_dieu_kien
+                                    )
+                                )
+                            ),
+                            ForAll(
+                                tmpTCCSADCollect As dsCha,
+                                If(
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
+                                    KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.key,MA_GIA_TRI))),
+                                    Collect(
+                                        tmpChonCSADCollect,
+                                        {
+                                            cr282_ma_dieu_kien:dsCha.cr282_ma_dieu_kien
+                                        }
+                                    )
+                                )
+                            )
+                        ),
+                        If(
+                            DropApDungCSAD.Selected.value="1",
+                            ForAll(
+                                tmpTCCSADCollect As dsCha,
+                                If(
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" && KIEU="1")) ||
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" &&
+                                    KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
+                                    Collect(
+                                        tmpChonCSADCollect,
+                                        {
+                                            cr282_ma_dieu_kien:dsCha.cr282_ma_dieu_kien
+                                        }
+                                    )
+                                );
+                                If(
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
+                                    KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
+                                    RemoveIf(
+                                        tmpChonCSADCollect,
+                                        cr282_ma_dieu_kien=dsCha.cr282_ma_dieu_kien
+                                    )
+                                )
+                            ),
+                            ForAll(
+                                tmpTCCSADCollect As dsCha,
+                                If(
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
+                                    KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
+                                    Collect(
+                                        tmpChonCSADCollect,
+                                        {
+                                            cr282_ma_dieu_kien:dsCha.cr282_ma_dieu_kien
+                                        }
+                                    )
                                 )
                             )
                         )
                     ),
-                    DropTPhanCSAD.Selected.value="SP",
-                    If(
-                        DropApDungCSAD.Selected.value="1",
-                        ForAll(
-                            tmpTCCSADCollect As dsCha,
-                            If(
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" && KIEU="1")) ||
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" &&
-                                KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.key,MA_GIA_TRI))),
-                                Collect(
-                                    tmpChonCSADCollect,
-                                    {
-                                        ma_dieu_kien:dsCha.cr282_ma_dieu_kien
-                                    }
-                                )
-                            );
-                            If(
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
-                                KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.key,MA_GIA_TRI))),
-                                RemoveIf(
-                                    tmpChonCSADCollect,
-                                    ma_dieu_kien=dsCha.cr282_ma_dieu_kien
-                                )
-                            )
-                        ),
-                        ForAll(
-                            tmpTCCSADCollect As dsCha,
-                            If(
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
-                                KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.key,MA_GIA_TRI))),
-                                Collect(
-                                    tmpChonCSADCollect,
-                                    {
-                                        ma_dieu_kien:dsCha.cr282_ma_dieu_kien
-                                    }
-                                )
-                            )
-                        )
-                    ),
-                    If(
-                        DropApDungCSAD.Selected.value="1",
-                        ForAll(
-                            tmpTCCSADCollect As dsCha,
-                            If(
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" && KIEU="1")) ||
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="1" &&
-                                KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
-                                Collect(
-                                    tmpChonCSADCollect,
-                                    {
-                                        ma_dieu_kien:dsCha.cr282_ma_dieu_kien
-                                    }
-                                )
-                            );
-                            If(
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
-                                KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
-                                RemoveIf(
-                                    tmpChonCSADCollect,
-                                    ma_dieu_kien=dsCha.cr282_ma_dieu_kien
-                                )
-                            )
-                        ),
-                        ForAll(
-                            tmpTCCSADCollect As dsCha,
-                            If(
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
-                                !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                                THANH_PHAN=DropTPhanCSAD.Selected.value && AP_DUNG="2" &&
-                                KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
-                                Collect(
-                                    tmpChonCSADCollect,
-                                    {
-                                        ma_dieu_kien:dsCha.cr282_ma_dieu_kien
-                                    }
-                                )
-                            )
-                        )
+                    ClearCollect(
+                        tmpChonCSADCollect,
+                        tmpTCCSADCollect
                     )
                 );
                 ClearCollect(
@@ -1152,7 +1162,7 @@ TraCuuCSAD As screen:
                             SortByColumns(
                                 Filter(
                                     DL_DIEUKIEN_APDUNG,
-                                    CountIf(tmpChonCSADCollect,ma_dieu_kien=MA_DIEU_KIEN)>0
+                                    CountIf(tmpChonCSADCollect,cr282_ma_dieu_kien=MA_DIEU_KIEN)>0
                                 ),
                                 "cr282_ma_dieu_kien",
                                 SortOrder.Ascending
@@ -1189,8 +1199,8 @@ TraCuuCSAD As screen:
                 ClearCollect(
                     tmpstrDLTCCSCollect,
                     {
-                        strAD:"-Áp dụng:",
-                        strLT:"-Loại trừ:"
+                        strAD:"- Áp dụng: ",
+                        strLT:"- Loại trừ: "
                     }
                 );
                 ForAll(
@@ -1218,7 +1228,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1254,7 +1264,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1272,8 +1282,8 @@ TraCuuCSAD As screen:
                         tmpstrDLTCCSCollect,
                         true,
                         {
-                            strAD:"-Áp dụng:",
-                            strLT:"-Loại trừ:"
+                            strAD:"- Áp dụng: ",
+                            strLT:"- Loại trừ: "
                         }
                     );
                 
@@ -1300,7 +1310,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1336,7 +1346,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1354,8 +1364,8 @@ TraCuuCSAD As screen:
                         tmpstrDLTCCSCollect,
                         true,
                         {
-                            strAD:"-Áp dụng:",
-                            strLT:"-Loại trừ:"
+                            strAD:"- Áp dụng: ",
+                            strLT:"- Loại trừ: "
                         }
                     );
                 
@@ -1382,7 +1392,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1418,7 +1428,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1436,8 +1446,8 @@ TraCuuCSAD As screen:
                         tmpstrDLTCCSCollect,
                         true,
                         {
-                            strAD:"-Áp dụng:",
-                            strLT:"-Loại trừ:"
+                            strAD:"- Áp dụng: ",
+                            strLT:"- Loại trừ: "
                         }
                     );
                 
@@ -1464,7 +1474,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1500,7 +1510,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1543,6 +1553,7 @@ TraCuuCSAD As screen:
             Height: =28
             OnSelect: |-
                 =Reset(DropTPhanCSAD);Reset(DropApDungCSAD);Reset(ComTieuChiCSAD);Reset(ComGiaTriCSAD);
+                Clear(tmpdsGiaTriTCCSCollect1);
                 ClearCollect(
                     tmpTCCSCollect,
                     ShowColumns(
@@ -1585,8 +1596,8 @@ TraCuuCSAD As screen:
                 ClearCollect(
                     tmpstrDLTCCSCollect,
                     {
-                        strAD:"-Áp dụng:",
-                        strLT:"-Loại trừ:"
+                        strAD:"- Áp dụng: ",
+                        strLT:"- Loại trừ: "
                     }
                 );
                 ForAll(
@@ -1614,7 +1625,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1650,7 +1661,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1668,8 +1679,8 @@ TraCuuCSAD As screen:
                         tmpstrDLTCCSCollect,
                         true,
                         {
-                            strAD:"-Áp dụng:",
-                            strLT:"-Loại trừ:"
+                            strAD:"- Áp dụng: ",
+                            strLT:"- Loại trừ: "
                         }
                     );
                 
@@ -1696,7 +1707,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1732,7 +1743,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1750,8 +1761,8 @@ TraCuuCSAD As screen:
                         tmpstrDLTCCSCollect,
                         true,
                         {
-                            strAD:"-Áp dụng:",
-                            strLT:"-Loại trừ:"
+                            strAD:"- Áp dụng: ",
+                            strLT:"- Loại trừ: "
                         }
                     );
                 
@@ -1778,7 +1789,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1814,7 +1825,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1832,8 +1843,8 @@ TraCuuCSAD As screen:
                         tmpstrDLTCCSCollect,
                         true,
                         {
-                            strAD:"-Áp dụng:",
-                            strLT:"-Loại trừ:"
+                            strAD:"- Áp dụng: ",
+                            strLT:"- Loại trừ: "
                         }
                     );
                 
@@ -1860,7 +1871,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1896,7 +1907,7 @@ TraCuuCSAD As screen:
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
-                                        Concatenate("+",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
+                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
                                         Char(10)
                                     )
                                 )
@@ -1926,7 +1937,7 @@ TraCuuCSAD As screen:
             LoadingSpinner: =LoadingSpinner.Data
             NavigationStep: =0
             TemplatePadding: =0
-            TemplateSize: =40
+            TemplateSize: =55
             Width: =1298
             Y: =124
             ZIndex: =11
@@ -1938,6 +1949,8 @@ TraCuuCSAD As screen:
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
                 DisplayMode: =DisplayMode.Disabled
+                Height: =54
+                Mode: =TextMode.MultiLine
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
@@ -1952,10 +1965,12 @@ TraCuuCSAD As screen:
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
                 DisplayMode: =DisplayMode.Disabled
+                Height: =54
                 Mode: =TextMode.MultiLine
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
+                Tooltip: =ThisItem.san_pham
                 Width: =165
                 X: =71
                 ZIndex: =27
@@ -1967,10 +1982,12 @@ TraCuuCSAD As screen:
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
                 DisplayMode: =DisplayMode.Disabled
+                Height: =54
                 Mode: =TextMode.MultiLine
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
+                Tooltip: =ThisItem.pham_vi
                 Width: =168
                 X: =569
                 ZIndex: =30
@@ -1983,6 +2000,8 @@ TraCuuCSAD As screen:
                 DisabledFill: =RGBA(255, 255, 255, 1)
                 DisplayMode: =DisplayMode.Disabled
                 Format: =TextFormat.Number
+                Height: =54
+                Mode: =TextMode.MultiLine
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
@@ -1998,6 +2017,8 @@ TraCuuCSAD As screen:
                 DisabledFill: =RGBA(255, 255, 255, 1)
                 DisplayMode: =DisplayMode.Disabled
                 Format: =TextFormat.Number
+                Height: =54
+                Mode: =TextMode.MultiLine
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
@@ -2013,6 +2034,8 @@ TraCuuCSAD As screen:
                 DisabledFill: =RGBA(255, 255, 255, 1)
                 DisplayMode: =DisplayMode.Disabled
                 Format: =TextFormat.Number
+                Height: =54
+                Mode: =TextMode.MultiLine
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
@@ -2029,6 +2052,8 @@ TraCuuCSAD As screen:
                 DisabledFill: =RGBA(255, 255, 255, 1)
                 DisplayMode: =DisplayMode.Disabled
                 Format: =TextFormat.Number
+                Height: =54
+                Mode: =TextMode.MultiLine
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
@@ -2040,12 +2065,12 @@ TraCuuCSAD As screen:
                 CheckboxSize: =35
                 Default: =ThisItem.cr282_trang_thai
                 DisplayMode: =DisplayMode.Disabled
-                Height: =30
+                Height: =35
                 Size: =11
                 Text: ="Option"
-                Width: =30
+                Width: =35
                 X: =1119
-                Y: =4
+                Y: =8
                 ZIndex: =41
 
             TiTenQLHTQLCTCT_3 As text:
@@ -2055,10 +2080,12 @@ TraCuuCSAD As screen:
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
                 DisplayMode: =DisplayMode.Disabled
+                Height: =54
                 Mode: =TextMode.MultiLine
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
+                Tooltip: =ThisItem.kenh_ban
                 Width: =165
                 X: =236
                 ZIndex: =42
@@ -2070,10 +2097,12 @@ TraCuuCSAD As screen:
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
                 DisplayMode: =DisplayMode.Disabled
+                Height: =54
                 Mode: =TextMode.MultiLine
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
+                Tooltip: =ThisItem.khach_hang
                 Width: =168
                 X: =401
                 ZIndex: =43
@@ -2091,9 +2120,9 @@ TraCuuCSAD As screen:
                     Notify("Xóa dữ liệu thành công",NotificationType,2000)
                 Size: =9
                 Text: ="Xóa"
-                Width: =50
+                Width: =55
                 X: =1232
-                Y: =5
+                Y: =12
                 ZIndex: =44
 
             Button6_7 As button:
@@ -2371,7 +2400,7 @@ TraCuuCSAD As screen:
                 Text: ="Chi tiết"
                 Width: =65
                 X: =1160
-                Y: =5
+                Y: =12
                 ZIndex: =45
 
         BadgeCanvas1_35 As Badge:
@@ -2522,8 +2551,8 @@ TraCuuCSAD As screen:
             Size: =10
             Text: ="Hoạt động"
             Weight: ='TextCanvas.Weight'.Bold
-            Width: =63
-            X: =1107
+            Width: =50
+            X: =1110
             Y: =82
             ZIndex: =23
 
