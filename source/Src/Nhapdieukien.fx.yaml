@@ -128,12 +128,12 @@ Nhapdieukien As screen:
         If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" )) > 0,
             ClearCollect(
                 tmpApdungSp,
-                GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" ), "cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
+                GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" ), "cr282_id", "cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
                 )
             );
         );
-        ForAll( Sequence(CountRows( tmpApdungSp)) , 
-         Patch(Last(FirstN(tmpApdungSp,  Value)), {Rownumber: Value}) );
+        //ForAll( Sequence(CountRows( tmpApdungSp)) , 
+        // Patch(Last(FirstN(tmpApdungSp,  Value)), {Rownumber: Value}) );
         If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "2" && KIEU = "2" )) > 0,
             ClearCollect(
                 tmpLoaitruSp,
@@ -1742,7 +1742,7 @@ Nhapdieukien As screen:
                     Button5_13 As button:
                         DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
-                        OnSelect: =RemoveIf(tmpApdungSp = ThisItem.Rownumber)
+                        OnSelect: =RemoveIf(tmpApdungSp, ID = ThisItem.ID)
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
@@ -1750,12 +1750,12 @@ Nhapdieukien As screen:
                         Y: =7
                         ZIndex: =6
 
-                    Label10 As label:
+                    TextInput1 As text:
+                        Default: =ThisItem.ID
                         OnSelect: =Select(Parent)
-                        Text: =ThisItem.
-                        Width: =92
-                        X: =707
-                        Y: =6
+                        Width: =172
+                        X: =161
+                        Y: =3
                         ZIndex: =7
 
                 Label7_4 As label:
@@ -2588,10 +2588,7 @@ Nhapdieukien As screen:
                                 DL_DIEUKIEN_APDUNG_LOAI_CT,
                                 Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
                                 {
-                                    ID: Max(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                        ID
-                                    ) + 1,
+                                    ID: Value(TextInput1.Text),
                                     ID_LOAI: varIdAdSP,
                                     MA_DIEU_KIEN: varMaDKien,
                                     THANH_PHAN: "SP",
