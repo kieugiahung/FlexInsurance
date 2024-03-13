@@ -2045,13 +2045,22 @@ Nhapdieukien As screen:
                     Button5_15 As button:
                         DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
-                        OnSelect: =RemoveIf(tmpApdungKB, ThisItem.cr282_ma_tieu_chi=DropKB.Selected.MA_CHI_TIEU)
+                        OnSelect: =RemoveIf(tmpApdungKB, cr282_id=ThisItem.cr282_id)
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
                         X: =880
                         Y: =9
                         ZIndex: =6
+
+                    TextInput3 As text:
+                        Default: =ThisItem.cr282_id
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        Width: =269
+                        X: =91
+                        Y: =6
+                        ZIndex: =7
 
                 Label7_6 As label:
                     FontWeight: =FontWeight.Bold
@@ -2170,9 +2179,10 @@ Nhapdieukien As screen:
                     DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     Height: =25
                     OnSelect: |-
-                        =Collect(
+                        =
+                        Collect(
                             tmpApdungKB,
-                            [{ID: ""}]
+                            [{cr282_id:Value( Max (tmpApdungKB, cr282_id) + 1)}]
                         );
                     Size: =11
                     Text: ="Thêm mới"
@@ -2186,9 +2196,12 @@ Nhapdieukien As screen:
                     DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     Height: =25
                     OnSelect: |-
-                        =Collect(
+                        =
+                        
+                        
+                        Collect(
                             tmpLoaitruKB,
-                            [{ID: ""}]
+                            [{cr282_id:Value( Max (tmpLoaitruKB, cr282_id) + 1)}]
                         );
                     Size: =11
                     Text: ="Thêm mới"
@@ -2725,10 +2738,7 @@ Nhapdieukien As screen:
                                 DL_DIEUKIEN_APDUNG_LOAI_CT,
                                 Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
                                 {
-                                    ID: Max(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                        ID
-                                    ) + 1,
+                                    ID: Value( TextInput3.Text),
                                     ID_LOAI: varIdAdKB,
                                     MA_DIEU_KIEN: newMaDK,
                                     THANH_PHAN: "KB",
