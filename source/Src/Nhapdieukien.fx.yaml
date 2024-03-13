@@ -289,7 +289,7 @@ Nhapdieukien As screen:
                         BorderColor: =RGBA(245, 245, 245, 1)
                         BorderStyle: =BorderStyle.Solid
                         DataField: ="cr282_ma_dieu_kien"
-                        Default: =varMaDKien
+                        Default: =If (VarEditCS, varMaDKien, varMaDKien)
                         DisplayMode: =Parent.DisplayMode
                         DisplayName: =DataSourceInfo([@DL_DIEUKIEN_APDUNG],DataSourceInfo.DisplayName,"cr282_ma_dieu_kien")
                         Fill: =RGBA(0, 0, 0, 0)
@@ -2498,10 +2498,10 @@ Nhapdieukien As screen:
                     NotificationType.Error,
                     800
                 ),
+                
                 SubmitForm(FormDKChung);
                 UpdateContext({rcd: newMaDK});
                 EditForm(FormDKChung);
-                Refresh(DL_DIEUKIEN_APDUNG);
                 RemoveIf(
                     DL_DIEUKIEN_APDUNG_LOAI,
                     MA_DIEU_KIEN = newMaDK
