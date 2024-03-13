@@ -1507,6 +1507,14 @@ Nhapdieukien As screen:
                         Y: =9
                         ZIndex: =6
 
+                    TextInput7 As text:
+                        Default: =ThisItem.cr282_id
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        X: =40
+                        Y: =6
+                        ZIndex: =7
+
                 Label7_2 As label:
                     FontWeight: =FontWeight.Bold
                     Size: =11
@@ -1604,13 +1612,21 @@ Nhapdieukien As screen:
                     Button5_12 As button:
                         DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
-                        OnSelect: =RemoveIf(tmpLoaitruPV, ThisItem.cr282_ma_tieu_chi=DropPV_LoaiTru.Selected.MA_CHI_TIEU)
+                        OnSelect: =RemoveIf(tmpLoaitruPV, ThisItem.cr282_id=cr282_id)
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
                         X: =880
                         Y: =9
                         ZIndex: =6
+
+                    TextInput8 As text:
+                        Default: =ThisItem.cr282_id
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        X: =40
+                        Y: =6
+                        ZIndex: =7
 
                 Label7_3 As label:
                     FontWeight: =FontWeight.Bold
@@ -3005,10 +3021,7 @@ Nhapdieukien As screen:
                                 DL_DIEUKIEN_APDUNG_LOAI_CT,
                                 Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
                                 {
-                                    ID: Max(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                        ID
-                                    ) + 1,
+                                    ID: Value(pv.TextInput7.Text),
                                     ID_LOAI: varIdAdPV,
                                     MA_DIEU_KIEN: newMaDK,
                                     THANH_PHAN: "PV",
@@ -3038,10 +3051,7 @@ Nhapdieukien As screen:
                                 DL_DIEUKIEN_APDUNG_LOAI_CT,
                                 Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
                                 {
-                                    ID: Max(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                        ID
-                                    ) + 1,
+                                    ID: Value(kh.TextInput8.Text),
                                     ID_LOAI: varIdLtPV,
                                     MA_DIEU_KIEN: newMaDK,
                                     THANH_PHAN: "PV",
