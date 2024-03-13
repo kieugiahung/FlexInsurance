@@ -1120,10 +1120,8 @@ Nhapdieukien As screen:
                 RadioKH As radio:
                     BorderColor: =RGBA(54, 176, 75, 1)
                     Default: |-
-                        =
-                        
-                        
-                        If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KH" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
+                        =//If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KH" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
+                        If(IsBlank(varMaDKien), "Tất cả",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KH" && AP_DUNG = "1" ).TEN_KIEU)
                     DisabledBorderColor: =RGBA(204, 228, 246, 1)
                     DisabledFill: =RGBA(230, 230, 230, 1)
                     HoverColor: =RGBA(0, 0, 0, 1)
@@ -1372,7 +1370,9 @@ Nhapdieukien As screen:
 
                 RadioPV As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
-                    Default: =If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "PV" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
+                    Default: |-
+                        =//If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "PV" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
+                        If(IsBlank(varMaDKien), "Tất cả",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "PV" && AP_DUNG = "1" ).TEN_KIEU)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
                         =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
@@ -1631,8 +1631,8 @@ Nhapdieukien As screen:
                     BorderColor: =RGBA(0, 0, 0, 0)
                     Default: |-
                         =//LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU
-                        
-                        If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
+                        //If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
+                        If(IsBlank(varMaDKien), "Tất cả",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
                         =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
@@ -1677,8 +1677,13 @@ Nhapdieukien As screen:
                         ZIndex: =3
 
                     DropQTich As dropdown:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
                         Default: |
                             =LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT, MA_DIEU_KIEN ="AD001" && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = ThisItem.cr282_ma_tieu_chi).TEN_TIEU_CHI
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledFill: =RGBA(214, 221, 224, 1)
                         Height: =32
                         Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "SP")
                         OnChange: =Reset(ComboBox3)
@@ -1690,7 +1695,12 @@ Nhapdieukien As screen:
                         ZIndex: =4
 
                     ComboBox3 As combobox:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
                         DefaultSelectedItems: =ThisItem.group
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledFill: =RGBA(214, 221, 224, 1)
                         DisplayFields: =["cr282_ten_gia_tri","Ma"]
                         Height: =30
                         IsSearchable: =false
@@ -1791,8 +1801,13 @@ Nhapdieukien As screen:
                         ZIndex: =3
 
                     DropQTich_1 As dropdown:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
                         Default: |
                             =LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT, MA_DIEU_KIEN =varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "2" && KIEU = "2" && MA_TIEU_CHI = ThisItem.cr282_ma_tieu_chi).TEN_TIEU_CHI
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledFill: =RGBA(214, 221, 224, 1)
                         Height: =32
                         Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "SP")
                         OnChange: =Reset(ComboBox3_1)
@@ -1804,7 +1819,12 @@ Nhapdieukien As screen:
                         ZIndex: =4
 
                     ComboBox3_1 As combobox:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
                         DefaultSelectedItems: =ThisItem.group
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledFill: =RGBA(214, 221, 224, 1)
                         DisplayFields: =["cr282_ten_gia_tri"]
                         Height: =32
                         IsSearchable: =false
@@ -1831,7 +1851,7 @@ Nhapdieukien As screen:
                         Default: =ThisItem.ID
                         OnSelect: =Select(Parent)
                         Visible: =false
-                        X: =40
+                        X: =53
                         Y: =6
                         ZIndex: =7
 
@@ -1874,7 +1894,9 @@ Nhapdieukien As screen:
 
                 RadioKB As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
-                    Default: =LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "1" ).TEN_KIEU
+                    Default: |-
+                        =//If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
+                        If(IsBlank(varMaDKien), "Tất cả",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "1" ).TEN_KIEU)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
                         =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
@@ -1919,7 +1941,7 @@ Nhapdieukien As screen:
                         ZIndex: =3
 
                     DropKB As dropdown:
-                        BorderColor: =RGBA(54, 176, 75, 1)
+                        BorderColor: =RGBA(72, 163, 62, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
                         ChevronFill: =RGBA(54, 176, 75, 1)
                         Default: =ThisItem.cr282_ten_tieu_chi
@@ -1936,7 +1958,7 @@ Nhapdieukien As screen:
                         ZIndex: =4
 
                     ComboBoxGTKB As combobox:
-                        BorderColor: =RGBA(54, 176, 75, 1)
+                        BorderColor: =RGBA(72, 163, 62, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
                         ChevronFill: =RGBA(54, 176, 75, 1)
                         DefaultSelectedItems: =ThisItem.group_apdung_kb
@@ -2109,7 +2131,7 @@ Nhapdieukien As screen:
         ZIndex: =2
 
     Button6_11 As button:
-        OnSelect: |
+        OnSelect: |-
             =//Xu ly thong tin chung
             UpdateContext({errorMsgDK: ""});
             //Clear(tmpCheckDup);
@@ -2597,7 +2619,8 @@ Nhapdieukien As screen:
                             MA_DIEU_KIEN: newMaDK,
                             THANH_PHAN: "KB",
                             AP_DUNG: "1",
-                            KIEU: RadioKB.Selected.ID
+                            KIEU: RadioKB.Selected.ID,
+                            TEN_KIEU: RadioKB.Selected.Text
                         }
                     )
                 );
@@ -2621,7 +2644,8 @@ Nhapdieukien As screen:
                             MA_DIEU_KIEN: newMaDK,
                             THANH_PHAN: "KB",
                             AP_DUNG: "2",
-                            KIEU: RadioKB_LoaiTru.Selected.ID
+                            KIEU: RadioKB_LoaiTru.Selected.ID,
+                            TEN_KIEU: RadioKB_LoaiTru.Selected.Text
                         }
                     )
                 );
@@ -2719,7 +2743,8 @@ Nhapdieukien As screen:
                             MA_DIEU_KIEN: newMaDK,
                             THANH_PHAN: "KH",
                             AP_DUNG: "1",
-                            KIEU: RadioKH.Selected.ID
+                            KIEU: RadioKH.Selected.ID,
+                            TEN_KIEU: RadioKH.Selected.Text
                         }
                     )
                 );
@@ -2743,7 +2768,8 @@ Nhapdieukien As screen:
                             MA_DIEU_KIEN: newMaDK,
                             THANH_PHAN: "KH",
                             AP_DUNG: "2",
-                            KIEU: RadioKH_LoaiTru.Selected.ID
+                            KIEU: RadioKH_LoaiTru.Selected.ID,
+                            TEN_KIEU: RadioKB_LoaiTru.Selected.Text
                         }
                     )
                 );
@@ -2840,7 +2866,8 @@ Nhapdieukien As screen:
                             MA_DIEU_KIEN: newMaDK,
                             THANH_PHAN: "PV",
                             AP_DUNG: "1",
-                            KIEU: RadioPV.Selected.ID
+                            KIEU: RadioPV.Selected.ID,
+                            TEN_KIEU: RadioPV.Selected.Text
                         }
                     )
                 );
@@ -2864,7 +2891,8 @@ Nhapdieukien As screen:
                             MA_DIEU_KIEN: newMaDK,
                             THANH_PHAN: "PV",
                             AP_DUNG: "2",
-                            KIEU: RadioPV_LoaiTru.Selected.ID
+                            KIEU: RadioPV_LoaiTru.Selected.ID,
+                            TEN_KIEU: RadioPV_LoaiTru.Selected.Text
                         }
                     )
                 );
@@ -2939,7 +2967,6 @@ Nhapdieukien As screen:
                     NotificationType.Success,
                     800
                 );
-                
             );
         Size: =11
         Text: ="Lưu dữ liệu"
