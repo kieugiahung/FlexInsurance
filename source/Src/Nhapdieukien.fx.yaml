@@ -2165,7 +2165,7 @@ Nhapdieukien As screen:
 
     Button6_11 As button:
         DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
-        OnSelect: |-
+        OnSelect: |
             =//Xu ly thong tin chung
             UpdateContext({errorMsgDK: ""});
             //Clear(tmpCheckDup);
@@ -2513,52 +2513,53 @@ Nhapdieukien As screen:
                 // T.ANH LƯU SAN PHAM
             // lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI
             // THÊM DỮ LIỆU ÁP DỤNG
-            Set (x, Radio2.Selected.Text);
-            Set (y, Radio2.Selected.ID);
-                    Set(
-                        varIdAdSP,
-                        Max(
-                            DL_DIEUKIEN_APDUNG_LOAI,
-                            ID
-                        ) + 1
-                    );
-            
-            
-                    Patch(
+            Set (
+                    x,
+                    Radio2.Selected.Text
+                );
+                Set (
+                    y,
+                    Radio2.Selected.ID
+                );
+                Set(
+                    varIdAdSP,
+                    Max(
                         DL_DIEUKIEN_APDUNG_LOAI,
-                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
-                        {
-                            ID: varIdAdSP,
-                            MA_DIEU_KIEN: newMaDK,
-                            THANH_PHAN: "SP",
-                            AP_DUNG: "1",
-                            KIEU: Radio2.Selected.ID,
-                            TEN_KIEU: Radio2.Selected.Text
-                        }
-                    );
+                        ID
+                    ) + 1
+                );
+                Patch(
+                    DL_DIEUKIEN_APDUNG_LOAI,
+                    Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                    {
+                        ID: varIdAdSP,
+                        MA_DIEU_KIEN: newMaDK,
+                        THANH_PHAN: "SP",
+                        AP_DUNG: "1",
+                        KIEU: Radio2.Selected.ID,
+                        TEN_KIEU: Radio2.Selected.Text
+                    }
+                );
                 
             // THÊM DỮ LIỆU LOẠI TRỪ
-            If(
-                    Radio2_1.Selected.Text <> "",
-                    Set(
-                        varIdLtSp,
-                        Max(
-                            DL_DIEUKIEN_APDUNG_LOAI,
-                            ID
-                        ) + 1
-                    );
-                    Patch(
+            Set(
+                    varIdLtSp,
+                    Max(
                         DL_DIEUKIEN_APDUNG_LOAI,
-                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
-                        {
-                            ID: varIdLtSp,
-                            MA_DIEU_KIEN: newMaDK,
-                            THANH_PHAN: "SP",
-                            AP_DUNG: "2",
-                            KIEU: Radio2_1.Selected.ID,
-                            TEN_KIEU: Radio2_1.Selected.Text
-                        }
-                    )
+                        ID
+                    ) + 1
+                );
+                Patch(
+                    DL_DIEUKIEN_APDUNG_LOAI,
+                    Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                    {
+                        ID: varIdLtSp,
+                        MA_DIEU_KIEN: newMaDK,
+                        THANH_PHAN: "SP",
+                        AP_DUNG: "2",
+                        KIEU: Radio2_1.Selected.ID,
+                        TEN_KIEU: Radio2_1.Selected.Text
+                    }
                 );
                 
             // lưu dữ liệu ở bảng chi tiết
@@ -3002,6 +3003,7 @@ Nhapdieukien As screen:
                     NotificationType.Success,
                     800
                 );
+                
             );
         Size: =11
         Text: ="Lưu dữ liệu"
