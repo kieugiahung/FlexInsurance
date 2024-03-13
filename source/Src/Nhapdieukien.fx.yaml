@@ -2513,14 +2513,7 @@ Nhapdieukien As screen:
                 // T.ANH LƯU SAN PHAM
             // lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI
             // THÊM DỮ LIỆU ÁP DỤNG
-            Set (
-                    x,
-                    Radio2.Selected.Text
-                );
-                Set (
-                    y,
-                    Radio2.Selected.ID
-                );
+            
                 Set(
                     varIdAdSP,
                     Max(
@@ -2549,7 +2542,8 @@ Nhapdieukien As screen:
                         ID
                     ) + 1
                 );
-                If(Radio2_1.Selected.Text <> "",
+                
+                If( !IsBlank(Radio2_1.Selected.Text ) ,
                 Patch(
                     DL_DIEUKIEN_APDUNG_LOAI,
                     Defaults(DL_DIEUKIEN_APDUNG_LOAI),
