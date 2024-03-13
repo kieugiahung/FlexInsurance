@@ -128,7 +128,7 @@ Nhapdieukien As screen:
         If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" )) > 0,
             ClearCollect(
                 tmpApdungSp,
-                GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" ), "cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
+                GroupBy(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" ),"cr282_id", "cr282_ma_dieu_kien", "cr282_ap_dung", "cr282_ma_tieu_chi", "cr282_kieu", "cr282_thanh_phan", "group"
                 )
             );
         );
@@ -1681,7 +1681,7 @@ Nhapdieukien As screen:
                                         Value
                                     )
                                 ),
-                                {Rownumber: Value}
+                                {cr282_id: Value}
                             )
                         )
                     Layout: =Layout.Vertical
@@ -1753,7 +1753,7 @@ Nhapdieukien As screen:
                     Button5_13 As button:
                         DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
-                        OnSelect: =RemoveIf(tmpApdungSp, = ThisItem.Rownumber)
+                        OnSelect: =RemoveIf(tmpApdungSp, ID = ThisItem.ID)
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
@@ -1762,7 +1762,7 @@ Nhapdieukien As screen:
                         ZIndex: =6
 
                     TextInput1 As text:
-                        Default: =ThisItem.Rownumber
+                        Default: =ThisItem.cr282_id
                         OnSelect: =Select(Parent)
                         Width: =172
                         X: =161
@@ -1783,7 +1783,7 @@ Nhapdieukien As screen:
                     OnSelect: |+
                         =Collect(
                             tmpApdungSp,
-                            [{ID:Value( Max (tmpApdungSp, ID) + 1)}]
+                            [{ID:Value( Max (tmpApdungSp, cr282_id) + 1)}]
                         );
                         
                     Size: =11
