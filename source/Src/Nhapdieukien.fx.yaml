@@ -1,5 +1,5 @@
 Nhapdieukien As screen:
-    OnVisible: |
+    OnVisible: |+
         =ClearCollect(
             tmpApdungKH,
             GroupBy(
@@ -210,17 +210,9 @@ Nhapdieukien As screen:
         );
         //End Kenh ban
         
-        Reset(Radio2);
-        Reset(Radio2_1);
         
-        Reset(RadioKB);
-        Reset(RadioKB_LoaiTru);
         
-        Reset(RadioKH);
-        Reset(RadioKH_LoaiTru);
         
-        Reset(RadioPV);
-        Reset(RadioPV_LoaiTru);
 
     CanvasDK As fluidGrid.fluidGridWithBlankCard:
         BorderThickness: =0
@@ -2521,7 +2513,8 @@ Nhapdieukien As screen:
                 // T.ANH LƯU SAN PHAM
             // lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI
             // THÊM DỮ LIỆU ÁP DỤNG
-            
+            Set (x, Radio2.Selected.Text);
+            Set (y, Radio2.Selected.ID);
                     Set(
                         varIdAdSP,
                         Max(
@@ -2529,35 +2522,20 @@ Nhapdieukien As screen:
                             ID
                         ) + 1
                     );
-                   If(
-                    Radio2.Selected.Text = "" Or Radio2.Selected.Text = "Tất cả" , 
-                    Patch(
-                        DL_DIEUKIEN_APDUNG_LOAI,
-                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
-                        {
-                            ID: varIdAdSP,
-                            MA_DIEU_KIEN: varMaDKien,
-                            THANH_PHAN: "SP",
-                            AP_DUNG: "1",
-                             KIEU: 1,
-                            TEN_KIEU: "Tất cả"
-                        
-                        }
-                    ),
-                    Patch(
-                        DL_DIEUKIEN_APDUNG_LOAI,
-                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
-                        {
-                            ID: varIdAdSP,
-                            MA_DIEU_KIEN: varMaDKien,
-                            THANH_PHAN: "SP",
-                            AP_DUNG: "1",
-                            KIEU: 2,
-                            TEN_KIEU: "Một phần"
-                        }
-                    )
             
-                );
+            
+                    Patch(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                        {
+                            ID: varIdAdSP,
+                            MA_DIEU_KIEN: varMaDKien,
+                            THANH_PHAN: "SP",
+                            AP_DUNG: "1",
+                            KIEU: Radio2.Selected.ID,
+                            TEN_KIEU: Radio2.Selected.Text
+                        }
+                    );
                 
             // THÊM DỮ LIỆU LOẠI TRỪ
             If(
