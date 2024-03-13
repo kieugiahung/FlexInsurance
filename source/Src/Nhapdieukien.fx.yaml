@@ -1404,7 +1404,7 @@ Nhapdieukien As screen:
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     TemplateSize: =46
-                    Visible: =If(RadioPV.Selected.ID = 1 , false, true)
+                    Visible: =If(RadioPV.Selected.ID = 2 , true)
                     Width: =971
                     X: =253.2
                     Y: =76
@@ -2502,6 +2502,7 @@ Nhapdieukien As screen:
                 SubmitForm(FormDKChung);
                 UpdateContext({rcd: newMaDK});
                 EditForm(FormDKChung);
+                ResetForm(FormDKChung);
                 RemoveIf(
                     DL_DIEUKIEN_APDUNG_LOAI,
                     MA_DIEU_KIEN = newMaDK
