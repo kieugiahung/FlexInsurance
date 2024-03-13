@@ -2124,6 +2124,236 @@ TraCuuCSAD As screen:
                             "group"
                         )
                     );
+                    // T.ANH xử lý sản phẩm
+                    ClearCollect(
+                        tmpLoaitruSp,
+                        GroupBy(
+                            Filter(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                MA_DIEU_KIEN = varMaDKien && THANH_PHAN = "SP" && AP_DUNG = "2" && KIEU = "2"
+                            ),
+                            "cr282_ma_dieu_kien",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_kieu",
+                            "cr282_thanh_phan",
+                            "group"
+                        )
+                    );
+                    ClearCollect(
+                        tmpApdungKH,
+                        GroupBy(
+                            Filter(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                MA_DIEU_KIEN = varMaDKien && THANH_PHAN = "KH" && AP_DUNG = "1"
+                            ),
+                            "cr282_ma_dieu_kien",
+                            "cr282_thanh_phan",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "group_apdung_kh"
+                        )
+                    );
+                    ClearCollect(
+                        tmpLoaitruKH,
+                        GroupBy(
+                            Filter(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                MA_DIEU_KIEN = varMaDKien && THANH_PHAN = "KH" && AP_DUNG = "2"
+                            ),
+                            "cr282_ma_dieu_kien",
+                            "cr282_thanh_phan",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "group_loaitru_kh"
+                        )
+                    );
+                    ClearCollect(
+                        tmpApdungPV,
+                        GroupBy(
+                            Filter(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                MA_DIEU_KIEN = varMaDKien && THANH_PHAN = "PV" && AP_DUNG = "1"
+                            ),
+                            "cr282_ma_dieu_kien",
+                            "cr282_thanh_phan",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "group_apdung_pv"
+                        )
+                    );
+                    ClearCollect(
+                        tmpLoaitruPV,
+                        GroupBy(
+                            Filter(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                MA_DIEU_KIEN = varMaDKien && THANH_PHAN = "PV" && AP_DUNG = "2"
+                            ),
+                            "cr282_ma_dieu_kien",
+                            "cr282_thanh_phan",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "group_loaitru_pv"
+                        )
+                    );
+                    ClearCollect(
+                        tmpDsGiatri,
+                        [
+                            {
+                                Ma: "",
+                                Ten: "",
+                                Loai: "",
+                                cr282_ten_gia_tri: ""
+                            }
+                        ]
+                    );
+                    // them chi tieu Nhom khach hang
+                    ForAll(
+                        DM_NHOM_KH As kh,
+                        Patch(
+                            tmpDsGiatri,
+                            Defaults(tmpDsGiatri),
+                            {
+                                Ma: kh.MA_NHOM_KH,
+                                Ten: kh.TEN_NHOM_KH,
+                                Loai: "MA_KH_NHOM",
+                                cr282_ten_gia_tri: kh.TEN_NHOM_KH
+                            }
+                        )
+                    );
+                    // them chi tieu LOAI khach hang
+                    Collect(
+                        tmpDsGiatri,
+                        {
+                            Ma: "0",
+                            Ten: "Cá nhân",
+                            Loai: "MA_KH_LOAI",
+                            cr282_ten_gia_tri: "Cá nhân"
+                        },
+                        {
+                            Ma: "1",
+                            Ten: "Tổ chức",
+                            Loai: "MA_KH_LOAI",
+                            cr282_ten_gia_tri: "Tổ chức"
+                        }
+                    );
+                    // them chi tieu Pham vi
+                    ForAll(
+                        DM_PHAMVI_DIALYS As pv,
+                        Patch(
+                            tmpDsGiatri,
+                            Defaults(tmpDsGiatri),
+                            {
+                                Ma: pv.MA_PHAMVI,
+                                Ten: pv.TEN_PHAMVI,
+                                Loai: If(
+                                    pv.LOAI = "KHU_VUC",
+                                    "MA_KHU_VUC",
+                                    If(
+                                        pv.LOAI = "QUOC_GIA",
+                                        "MA_QG",
+                                        If(
+                                            pv.LOAI = "VUNG_MIEN",
+                                            "MA_VUNG_MIEN",
+                                            If(
+                                                pv.LOAI = "TINH_TP",
+                                                "MA_TINH_TP",
+                                                "MA_QUAN_HUYEN"
+                                            )
+                                        )
+                                    )
+                                ),
+                                cr282_ten_gia_tri: pv.TEN_PHAMVI
+                            }
+                        )
+                    );
+                    // them san pham
+                    ForAll(
+                        DL_SAN_PHAM As sp,
+                        Patch(
+                            tmpDsGiatri,
+                            Defaults(tmpDsGiatri),
+                            {
+                                Ma: sp.MA_SAN_PHAM,
+                                Loai: "MA_SP",
+                                cr282_ten_gia_tri: sp.TEN_SAN_PHAM
+                            }
+                        )
+                    );
+                    // them chuong trinh
+                    ForAll(
+                        ' DL_SAN_PHAM_CT' As sp,
+                        Patch(
+                            tmpDsGiatri,
+                            Defaults(tmpDsGiatri),
+                            {
+                                Ma: sp.MA_CHUONG_TRINH,
+                                Loai: "MA_CT",
+                                cr282_ten_gia_tri: sp.TEN_CHUONG_TRINH
+                            }
+                        )
+                    );
+                    //Kenh ban
+                    ClearCollect(
+                        tmpApdungKB,
+                        GroupBy(
+                            Filter(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                MA_DIEU_KIEN = varMaDKien && THANH_PHAN = "KB" && AP_DUNG = "1"
+                            ),
+                            "cr282_ma_dieu_kien",
+                            "cr282_thanh_phan",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "group_apdung_kb"
+                        )
+                    );
+                    ClearCollect(
+                        tmpLoaitruKB,
+                        GroupBy(
+                            Filter(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                MA_DIEU_KIEN = varMaDKien && THANH_PHAN = "KB" && AP_DUNG = "2"
+                            ),
+                            "cr282_ma_dieu_kien",
+                            "cr282_thanh_phan",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "group_loaitru_kb"
+                        )
+                    );
+                    // them kenh ban
+                    ForAll(
+                        DM_KENH_BANS As kb,
+                        Patch(
+                            tmpDsGiatri,
+                            Defaults(tmpDsGiatri),
+                            {
+                                Ma: kb.MA_KENH_BAN,
+                                Ten: kb.TEN_KENH_BAN,
+                                Loai: If(
+                                    kb.LOAI = "1",
+                                    "MA_NHAN_VIEN",
+                                    If(
+                                        kb.LOAI = "2",
+                                        "MA_DL",
+                                        If(
+                                            kb.LOAI = "3",
+                                            "MA_MG",
+                                            "MA_NH"
+                                        )
+                                    )
+                                ),
+                                cr282_ten_gia_tri: kb.TEN_KENH_BAN
+                            }
+                        )
+                    );
                     Navigate(Nhapdieukien);
                 Size: =9
                 Text: ="Chi tiết"
