@@ -269,9 +269,16 @@ Nhapdieukien As screen:
                     DefaultMode: =FormMode.New
                     Height: =315
                     Item: |-
-                        =LookUp(
-                            DL_DIEUKIEN_APDUNG,
-                            MA_DIEU_KIEN = newMaDK
+                        =If(
+                            !VarEditCS,
+                            LookUp(
+                                DL_DIEUKIEN_APDUNG,
+                                MA_DIEU_KIEN = newMaDK
+                            ),
+                            LookUp(
+                                DL_DIEUKIEN_APDUNG,
+                                MA_DIEU_KIEN = varMaDKien
+                            )
                         )
                     NumberOfColumns: =2
                     Width: =Parent.Width
