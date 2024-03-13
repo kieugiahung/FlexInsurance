@@ -2493,7 +2493,7 @@ Nhapdieukien As screen:
                 ),
                 SubmitForm(FormDKChung);
                 UpdateContext({rcd: newMaDK});
-                EditForm(FormDKChung);
+                 EditForm(FormDKChung);
                 RemoveIf(
                     DL_DIEUKIEN_APDUNG_LOAI,
                     MA_DIEU_KIEN = newMaDK
@@ -2654,7 +2654,7 @@ Nhapdieukien As screen:
                     }
                 );
                 // LOẠI TRỪ
-                If(RadioKB_LoaiTru.Selected.Text <> "",
+                If(!IsBlank(RadioKB_LoaiTru.Selected.Text) ,
                 Patch(
                     DL_DIEUKIEN_APDUNG_LOAI,
                     Set(
@@ -2773,7 +2773,7 @@ Nhapdieukien As screen:
                         TEN_KIEU: RadioKH.Selected.Text
                     }
                 );
-                If(RadioKH_LoaiTru.Selected.Text <> "",
+                If(!IsBlank(RadioKH_LoaiTru.Selected.Text ),
                 Patch(
                     DL_DIEUKIEN_APDUNG_LOAI,
                     Set(
@@ -2891,7 +2891,7 @@ Nhapdieukien As screen:
                         TEN_KIEU: RadioPV.Selected.Text
                     }
                 );
-                If(RadioPV_LoaiTru.Selected.Text <> "",
+                If(!IsBlank(RadioPV_LoaiTru.Selected.Text),
                 Patch(
                     DL_DIEUKIEN_APDUNG_LOAI,
                     Set(
