@@ -1671,8 +1671,8 @@ Nhapdieukien As screen:
                     BorderThickness: =1
                     DelayItemLoading: =true
                     Height: =156
-                    Items: |
-                        =ForAll(
+                    Items: |-
+                        =/*ForAll(
                             Sequence(CountRows(tmpApdungSp)),
                             Patch(
                                 Last(
@@ -1684,6 +1684,8 @@ Nhapdieukien As screen:
                                 {cr282_id: Value}
                             )
                         )
+                        */
+                        tmpApdungSp
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     TemplateSize: =46
@@ -1753,7 +1755,7 @@ Nhapdieukien As screen:
                     Button5_13 As button:
                         DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
-                        OnSelect: =RemoveIf(tmpApdungSp, ID = ThisItem.ID)
+                        OnSelect: =RemoveIf(tmpApdungSp, cr282_id = ThisItem.cr282_id)
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
