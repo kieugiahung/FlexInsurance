@@ -289,7 +289,7 @@ Nhapdieukien As screen:
                         BorderColor: =RGBA(245, 245, 245, 1)
                         BorderStyle: =BorderStyle.Solid
                         DataField: ="cr282_ma_dieu_kien"
-                        Default: =
+                        Default: =ThisItem.MA_DIEU_KIEN
                         DisplayMode: =Parent.DisplayMode
                         DisplayName: =DataSourceInfo([@DL_DIEUKIEN_APDUNG],DataSourceInfo.DisplayName,"cr282_ma_dieu_kien")
                         Fill: =RGBA(0, 0, 0, 0)
@@ -325,7 +325,7 @@ Nhapdieukien As screen:
                         DataCardValueMaDK As text:
                             BorderColor: =RGBA(45, 128, 40, 1)
                             Color: =RGBA(50, 49, 48, 1)
-                            Default: =
+                            Default: =Parent.Default
                             DelayOutput: =true
                             DisabledBorderColor: =RGBA(180, 214, 250, 1)
                             DisabledColor: =RGBA(161, 159, 157, 1)
@@ -1669,13 +1669,15 @@ Nhapdieukien As screen:
                     BorderThickness: =1
                     DelayItemLoading: =true
                     Height: =156
-                    Items: =tmpApdungSp
+                    Items: |-
+                        = ForAll( Sequence(CountRows( tmpApdungSp)) , 
+                         Patch(Last(FirstN(tmpApdungSp,  Value)), {Rownumber: Value}) )
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     TemplateSize: =46
                     Visible: =If(Radio2.Selected.ID = 2 , true)
                     Width: =968
-                    X: =253.2
+                    X: =254
                     Y: =116
                     ZIndex: =4
 
