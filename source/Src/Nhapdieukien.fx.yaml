@@ -1499,7 +1499,7 @@ Nhapdieukien As screen:
                     Button5_11 As button:
                         DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =28
-                        OnSelect: =RemoveIf(tmpApdungPV, ThisItem.cr282_ma_tieu_chi=DropPV.Selected.MA_CHI_TIEU)
+                        OnSelect: =RemoveIf(tmpApdungPV, ThisItem.cr282_id=cr282_id)
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
@@ -1624,9 +1624,12 @@ Nhapdieukien As screen:
                     DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     Height: =25
                     OnSelect: |-
-                        =Collect(
+                        =
+                        
+                        
+                        Collect(
                             tmpApdungPV,
-                            [{ID: ""}]
+                            [{cr282_id:Value( Max (tmpApdungPV, cr282_id) + 1)}]
                         );
                     Size: =11
                     Text: ="Thêm mới"
@@ -1640,9 +1643,14 @@ Nhapdieukien As screen:
                     DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     Height: =25
                     OnSelect: |-
-                        =Collect(
+                        =
+                        
+                        
+                        
+                        
+                        Collect(
                             tmpLoaitruPV,
-                            [{ID: ""}]
+                            [{cr282_id:Value( Max (tmpLoaitruPV, cr282_id) + 1)}]
                         );
                     Size: =11
                     Text: ="Thêm mới"
