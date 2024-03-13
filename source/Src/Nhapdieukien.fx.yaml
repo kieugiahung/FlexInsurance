@@ -1028,7 +1028,7 @@ Nhapdieukien As screen:
                         Update: =newIDMaDD
                         Visible: =false
                         Width: =618
-                        X: =608
+                        X: =605
                         Y: =3
                         ZIndex: =3
 
@@ -2522,8 +2522,7 @@ Nhapdieukien As screen:
                 // T.ANH LƯU SAN PHAM
             // lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI
             // THÊM DỮ LIỆU ÁP DỤNG
-            If(
-                    CountRows(tmpApdungSp) > 0,
+            
                     Set(
                         varIdAdSP,
                         Max(
@@ -2531,6 +2530,8 @@ Nhapdieukien As screen:
                             ID
                         ) + 1
                     );
+                   If(
+                    CountRows(tmpApdungSp) > 0, 
                     Patch(
                         DL_DIEUKIEN_APDUNG_LOAI,
                         Defaults(DL_DIEUKIEN_APDUNG_LOAI),
@@ -2539,15 +2540,28 @@ Nhapdieukien As screen:
                             MA_DIEU_KIEN: varMaDKien,
                             THANH_PHAN: "SP",
                             AP_DUNG: "1",
-                            KIEU: Radio2.Selected.ID,
-                            TEN_KIEU: Radio2.Selected.Text
+                            KIEU: 2,
+                            TEN_KIEU: "Một phần"
+                        }
+                    ),
+                    Patch(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                        {
+                            ID: varIdAdSP,
+                            MA_DIEU_KIEN: varMaDKien,
+                            THANH_PHAN: "SP",
+                            AP_DUNG: "1",
+                            KIEU: 1,
+                            TEN_KIEU: "Tất cả"
                         }
                     )
+            
                 );
                 
             // THÊM DỮ LIỆU LOẠI TRỪ
             If(
-                    CountRows(tmpLoaitruSp) > 0,
+                    Radio2_1.Selected.Text <> "",
                     Set(
                         varIdLtSp,
                         Max(
