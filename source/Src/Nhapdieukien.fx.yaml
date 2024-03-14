@@ -1115,7 +1115,11 @@ Nhapdieukien As screen:
 
                 RadioKH_LoaiTru As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
-                    Default: =LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KH" && AP_DUNG = "2" ).TEN_KIEU
+                    Default: |-
+                        =
+                        
+                        If(IsBlank(varMaDKien), "Tất cả",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KH" && AP_DUNG = "2" ).TEN_KIEU
+                        )
                     DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     Height: =91
                     HoverColor: =RGBA(0, 0, 0, 1)
@@ -2162,7 +2166,7 @@ Nhapdieukien As screen:
                     BorderColor: =RGBA(0, 0, 0, 0)
                     Default: |-
                         =
-                        If(IsBlank(varMaDKien), "",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "2" ).TEN_KIEU ).TEN_KIEU)
+                        If(IsBlank(varMaDKien), "",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "2" ).TEN_KIEU )
                     DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
