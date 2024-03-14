@@ -204,7 +204,7 @@ NhapChinhSach As screen:
             BorderThickness: =0
             DisplayMode: =DisplayMode.Edit
             Fill: =RGBA(0, 0, 0, 0)
-            Height: =2178
+            Height: =1952
             Width: =Parent.Width
             X: =0
             Y: =0
@@ -214,7 +214,7 @@ NhapChinhSach As screen:
                 BorderColor: =RGBA(255, 255, 255, 1)
                 BorderStyle: =BorderStyle.None
                 DropShadow: =DropShadow.None
-                Height: =568
+                Height: =492
                 Width: =Parent.Width-Self.X
                 X: =130
                 ZIndex: =1
@@ -510,6 +510,7 @@ NhapChinhSach As screen:
                             DisabledColor: =RGBA(0, 0, 0, 1)
                             DisabledFill: =RGBA(230, 230, 230, 1)
                             DisplayMode: =DisplayMode.Disabled
+                            HintText: ="Hệ thống tự sinh"
                             HoverBorderColor: =RGBA(16, 110, 190, 1)
                             HoverColor: =RGBA(50, 49, 48, 1)
                             HoverFill: =RGBA(255, 255, 255, 1)
@@ -894,6 +895,111 @@ NhapChinhSach As screen:
                             Y: =DataCardKey29.Y
                             ZIndex: =7
 
+                    HIEU_LUC_DEN_DataCard2 As typedDataCard.dateTimeEditCard:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_hieu_luc_den"
+                        Default: =ThisItem.HIEU_LUC_DEN
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DL_CHINHSACH_CHUNG],DataSourceInfo.DisplayName,"cr282_hieu_luc_den")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        Required: =false
+                        Update: =If(Not IsBlank(DateValueDenCS.SelectedDate), DateValueDenCS.SelectedDate)
+                        Width: =618
+                        X: =1
+                        Y: =2
+                        ZIndex: =5
+
+                        DataCardKey30 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            FontWeight: =FontWeight.Semibold
+                            Height: =34
+                            PaddingLeft: =0
+                            Size: =11
+                            Text: ="Hiệu lực đến"
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        DateValueDenCS As datepicker:
+                            BorderColor: =RGBA(54, 176, 75, 1)
+                            CalendarHeaderFill: =RGBA(16, 110, 190, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            DefaultDate: =Parent.Default
+                            DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(230, 230, 230, 1)
+                            DisplayMode: =If(varGhiCS,DisplayMode.Disabled, DisplayMode.Edit)
+                            EndYear: =Year(Today())+100
+                            Format: ="dd/mm/yyyy"
+                            HoverDateFill: =RGBA(184, 187, 184, 1)
+                            IconBackground: =RGBA(0, 120, 212, 1)
+                            InputTextPlaceholder: =
+                            IsEditable: =true
+                            PaddingBottom: =0
+                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                            SelectedDateFill: =RGBA(0, 120, 212, 1)
+                            Size: =11
+                            StartYear: =1899
+                            Tooltip: =Parent.DisplayName
+                            Width: =(Parent.Width - 60) * 0.6
+                            X: =DataCardKey30.X + DataCardKey30.Width
+                            Y: =10
+                            ZIndex: =2
+
+                        ErrorMessage30 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(168, 0, 0, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =13
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =
+                            ZIndex: =6
+
+                        StarVisible27 As label:
+                            Align: =Align.Center
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            FontWeight: =FontWeight.Semibold
+                            Height: =DataCardKey30.Height
+                            PaddingLeft: =0
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey30.Y
+                            ZIndex: =7
+
                     FILE_DataCard2 As typedDataCard.fileEditCard:
                         BorderColor: =RGBA(245, 245, 245, 1)
                         BorderStyle: =BorderStyle.Solid
@@ -1009,111 +1115,6 @@ NhapChinhSach As screen:
                             Y: =DataCardKey21_1.Y
                             ZIndex: =4
 
-                    HIEU_LUC_DEN_DataCard2 As typedDataCard.dateTimeEditCard:
-                        BorderColor: =RGBA(245, 245, 245, 1)
-                        BorderStyle: =BorderStyle.Solid
-                        DataField: ="cr282_hieu_luc_den"
-                        Default: =ThisItem.HIEU_LUC_DEN
-                        DisplayMode: =Parent.DisplayMode
-                        DisplayName: =DataSourceInfo([@DL_CHINHSACH_CHUNG],DataSourceInfo.DisplayName,"cr282_hieu_luc_den")
-                        Fill: =RGBA(0, 0, 0, 0)
-                        Height: =50
-                        Required: =false
-                        Update: =If(Not IsBlank(DateValueDenCS.SelectedDate), DateValueDenCS.SelectedDate)
-                        Width: =618
-                        X: =1
-                        Y: =2
-                        ZIndex: =5
-
-                        DataCardKey30 As label:
-                            AutoHeight: =true
-                            BorderColor: =RGBA(0, 0, 0, 0)
-                            BorderStyle: =BorderStyle.None
-                            BorderThickness: =2
-                            Color: =RGBA(50, 49, 48, 1)
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisabledColor: =RGBA(161, 159, 157, 1)
-                            FocusedBorderThickness: =4
-                            FontWeight: =FontWeight.Semibold
-                            Height: =34
-                            PaddingLeft: =0
-                            Size: =11
-                            Text: ="Hiệu lực đến"
-                            Width: =(Parent.Width - 60) * 0.4
-                            Wrap: =false
-                            X: =30
-                            Y: =10
-                            ZIndex: =1
-
-                        DateValueDenCS As datepicker:
-                            BorderColor: =RGBA(54, 176, 75, 1)
-                            CalendarHeaderFill: =RGBA(16, 110, 190, 1)
-                            Color: =RGBA(50, 49, 48, 1)
-                            DefaultDate: =Parent.Default
-                            DisabledBorderColor: =RGBA(204, 228, 246, 1)
-                            DisabledColor: =RGBA(0, 0, 0, 1)
-                            DisabledFill: =RGBA(230, 230, 230, 1)
-                            DisplayMode: =If(varGhiCS,DisplayMode.Disabled, DisplayMode.Edit)
-                            EndYear: =Year(Today())+100
-                            Format: ="dd/mm/yyyy"
-                            HoverDateFill: =RGBA(184, 187, 184, 1)
-                            IconBackground: =RGBA(0, 120, 212, 1)
-                            InputTextPlaceholder: =
-                            IsEditable: =true
-                            PaddingBottom: =0
-                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
-                            SelectedDateFill: =RGBA(0, 120, 212, 1)
-                            Size: =11
-                            StartYear: =1899
-                            Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey30.X + DataCardKey30.Width
-                            Y: =10
-                            ZIndex: =2
-
-                        ErrorMessage30 As label:
-                            AutoHeight: =true
-                            BorderColor: =RGBA(0, 0, 0, 0)
-                            BorderStyle: =BorderStyle.None
-                            BorderThickness: =2
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisabledColor: =RGBA(168, 0, 0, 1)
-                            FocusedBorderThickness: =4
-                            Font: =Font.'Segoe UI'
-                            Height: =10
-                            Live: =Live.Assertive
-                            PaddingBottom: =0
-                            PaddingLeft: =0
-                            PaddingRight: =0
-                            PaddingTop: =0
-                            Size: =13
-                            Text: =Parent.Error
-                            Visible: =Parent.DisplayMode=DisplayMode.Edit
-                            Width: =Parent.Width - 60
-                            X: =30
-                            Y: =
-                            ZIndex: =6
-
-                        StarVisible27 As label:
-                            Align: =Align.Center
-                            BorderColor: =RGBA(0, 0, 0, 0)
-                            BorderStyle: =BorderStyle.None
-                            BorderThickness: =2
-                            Color: =RGBA(50, 49, 48, 1)
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisabledColor: =RGBA(161, 159, 157, 1)
-                            FocusedBorderThickness: =4
-                            Font: =Font.'Segoe UI'
-                            FontWeight: =FontWeight.Semibold
-                            Height: =DataCardKey30.Height
-                            PaddingLeft: =0
-                            Text: ="*"
-                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                            Width: =30
-                            Wrap: =false
-                            Y: =DataCardKey30.Y
-                            ZIndex: =7
-
                 Label1_24 As label:
                     Align: =Align.Justify
                     BorderColor: =RGBA(0, 0, 0, 0)
@@ -1138,7 +1139,7 @@ NhapChinhSach As screen:
                     DataSource: =DL_CHINHSACH_APDUNG
                     DefaultMode: =FormMode.New
                     Fill: =RGBA(255, 255, 255, 1)
-                    Height: =204
+                    Height: =130
                     Item: =LookUp(DL_CHINHSACH_APDUNG, MA_CHINH_SACH=varMaCS)
                     NumberOfColumns: =2
                     Width: =Parent.Width
@@ -1897,10 +1898,10 @@ NhapChinhSach As screen:
 
             "'Container3.2' As groupContainer.manualLayoutContainer":
                 Fill: =RGBA(255, 255, 255, 1)
-                Height: =502
+                Height: =446
                 Width: =Parent.Width-Self.X
                 X: =130
-                Y: =579
+                Y: =515
                 ZIndex: =2
 
                 Label6_7 As label:
@@ -2054,7 +2055,7 @@ NhapChinhSach As screen:
                     RadioBorderColor: =RGBA(0, 84, 148, 1)
                     Size: =11
                     X: =41
-                    Y: =330
+                    Y: =285
                     ZIndex: =6
 
                 GalleryKBCS_LoaiTru As gallery.galleryVertical:
@@ -2068,8 +2069,8 @@ NhapChinhSach As screen:
                     TemplateSize: =46
                     Visible: =If(RadioCSKB_LoaiTru.Selected.ID = 2 , true)
                     Width: =970
-                    X: =253.2
-                    Y: =330
+                    X: =253
+                    Y: =285
                     ZIndex: =7
 
                     Label9_18 As label:
@@ -2169,7 +2170,7 @@ NhapChinhSach As screen:
                     Size: =11
                     Text: ="Loại trừ"
                     X: =25
-                    Y: =290
+                    Y: =245
                     ZIndex: =8
 
                 BtnADCS_KB As button:
@@ -2200,8 +2201,8 @@ NhapChinhSach As screen:
                     Text: ="Thêm mới"
                     Visible: =If(RadioCSKB_LoaiTru.Selected.ID = 2 , true)
                     Width: =91
-                    X: =253.2
-                    Y: =297
+                    X: =253
+                    Y: =252
                     ZIndex: =10
 
                 ResetDSKBCS As icon.Reset:
@@ -2265,14 +2266,14 @@ NhapChinhSach As screen:
                     Visible: =false
                     Width: =30
                     X: =170
-                    Y: =292
+                    Y: =247
                     ZIndex: =12
 
             "'Container3.3' As groupContainer.manualLayoutContainer":
                 Height: =453
                 Width: =Parent.Width-Self.X
                 X: =130
-                Y: =1081
+                Y: =1025
                 ZIndex: =3
 
                 Label6_8 As label:
@@ -2626,10 +2627,10 @@ NhapChinhSach As screen:
                     ZIndex: =12
 
             "'Container3.4' As groupContainer.manualLayoutContainer":
-                Height: =536
+                Height: =460
                 Width: =Parent.Width-Self.X
                 X: =130
-                Y: =1583
+                Y: =1478
                 ZIndex: =4
 
                 Label6_9 As label:
@@ -2766,7 +2767,7 @@ NhapChinhSach As screen:
                     RadioBorderColor: =RGBA(0, 84, 148, 1)
                     Size: =11
                     X: =41
-                    Y: =330
+                    Y: =280
                     ZIndex: =6
 
                 GalleryPVCS_LoaiTru As gallery.galleryVertical:
@@ -2781,7 +2782,7 @@ NhapChinhSach As screen:
                     Visible: =If(RadioCSPV_LoaiTru.Selected.ID = 2 ,true)
                     Width: =971
                     X: =253.2
-                    Y: =330
+                    Y: =280
                     ZIndex: =7
 
                     Label9_26 As label:
@@ -2865,7 +2866,7 @@ NhapChinhSach As screen:
                     Size: =11
                     Text: ="Loại trừ"
                     X: =25
-                    Y: =290
+                    Y: =240
                     ZIndex: =8
 
                 Button3_11 As button:
@@ -2897,7 +2898,7 @@ NhapChinhSach As screen:
                     Visible: =If(RadioCSPV_LoaiTru.Selected.ID = 2 ,true)
                     Width: =91
                     X: =253.2
-                    Y: =297
+                    Y: =247
                     ZIndex: =10
 
                 ResetDSPVCS As icon.Reset:
@@ -2961,7 +2962,7 @@ NhapChinhSach As screen:
                     Visible: =false
                     Width: =30
                     X: =199
-                    Y: =254
+                    Y: =204
                     ZIndex: =12
 
     BtnLuuCS As button:
@@ -3942,9 +3943,11 @@ NhapChinhSach As screen:
                     800
                 )
             );
+        Size: =11
         Text: ="Lưu dữ liệu"
-        X: =1002
-        Y: =688
+        Width: =112
+        X: =1122
+        Y: =728
         ZIndex: =2
 
     BtnGhiCS As button:
@@ -4936,16 +4939,20 @@ NhapChinhSach As screen:
                     800
                 );
             );
+        Size: =11
         Text: ="Ghi dữ liệu"
         Visible: =If(!IsBlank(DataCardValueMaCS.Text),true, false)
-        X: =1177
-        Y: =688
+        Width: =109
+        X: =1246
+        Y: =728
         ZIndex: =3
 
     BtnBack As button:
         OnSelect: =Back();
+        Size: =11
         Text: ="Quay lại"
-        X: =814
-        Y: =688
+        Width: =116
+        X: =993
+        Y: =728
         ZIndex: =4
 
