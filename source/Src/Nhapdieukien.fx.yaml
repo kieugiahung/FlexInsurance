@@ -1,6 +1,7 @@
 Nhapdieukien As screen:
     OnVisible: |+
-        =ClearCollect(
+        =Select(Icon2_1);
+        ClearCollect(
             tmpApdungKH,
             GroupBy(
                 Filter(
@@ -1862,7 +1863,9 @@ Nhapdieukien As screen:
 
                 Radio2_1 As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
-                    Default: =LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "2" ).TEN_KIEU
+                    Default: |-
+                        =
+                        If(IsBlank(varMaDKien), "",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "2" ).TEN_KIEU)
                     DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
@@ -2157,7 +2160,9 @@ Nhapdieukien As screen:
 
                 RadioKB_LoaiTru As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
-                    Default: =LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "2" ).TEN_KIEU
+                    Default: |-
+                        =
+                        If(IsBlank(varMaDKien), "",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "2" ).TEN_KIEU ).TEN_KIEU)
                     DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
