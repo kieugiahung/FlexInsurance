@@ -128,6 +128,19 @@ Nhapdieukien As screen:
                 }
             )
         );
+        ForAll(
+            DM_DON_VI As pv,
+            Patch(
+                tmpDsGiatri,
+                Defaults(tmpDsGiatri),
+                {
+                    Ma: pv.MA_DON_VI,
+                    Ten: pv.TEN_DON_VI,
+                    Loai: "MA_DON_VI",
+                    cr282_ten_gia_tri:pv.TEN_DON_VI
+                }
+            )
+        );
         // T.ANH xử lý sản phẩm
         If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI_CT , MA_DIEU_KIEN = varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" )) > 0,
             ClearCollect(
@@ -387,29 +400,6 @@ Nhapdieukien As screen:
                             Y: =5
                             ZIndex: =2
 
-                        ErrorMessage2_1 As label:
-                            AutoHeight: =true
-                            BorderColor: =RGBA(0, 0, 0, 0)
-                            BorderStyle: =BorderStyle.None
-                            BorderThickness: =2
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisabledColor: =RGBA(168, 0, 0, 1)
-                            FocusedBorderThickness: =4
-                            Font: =Font.'Segoe UI'
-                            Height: =10
-                            Live: =Live.Assertive
-                            PaddingBottom: =0
-                            PaddingLeft: =0
-                            PaddingRight: =0
-                            PaddingTop: =0
-                            Size: =13
-                            Text: =Parent.Error
-                            Visible: =Parent.DisplayMode=DisplayMode.Edit
-                            Width: =Parent.Width - 60
-                            X: =30
-                            Y: =DataCardValueMaDK.Y + DataCardValueMaDK.Height
-                            ZIndex: =3
-
                     TRANG_THAI_DataCard1_1 As typedDataCard.textualEditCard:
                         BorderColor: =RGBA(245, 245, 245, 1)
                         BorderStyle: =BorderStyle.Solid
@@ -446,29 +436,6 @@ Nhapdieukien As screen:
                             X: =30
                             Y: =10 + (DataCardValueHoatDong.Height / 2) - (Self.Height / 2)
                             ZIndex: =1
-
-                        ErrorMessage11 As label:
-                            AutoHeight: =true
-                            BorderColor: =RGBA(0, 0, 0, 0)
-                            BorderStyle: =BorderStyle.None
-                            BorderThickness: =2
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisabledColor: =RGBA(168, 0, 0, 1)
-                            FocusedBorderThickness: =4
-                            Font: =Font.'Segoe UI'
-                            Height: =10
-                            Live: =Live.Assertive
-                            PaddingBottom: =0
-                            PaddingLeft: =0
-                            PaddingRight: =0
-                            PaddingTop: =0
-                            Size: =13
-                            Text: =Parent.Error
-                            Visible: =Parent.DisplayMode=DisplayMode.Edit
-                            Width: =Parent.Width - 60
-                            X: =30
-                            Y: =DataCardValueHoatDong.Y + DataCardValueHoatDong.Height
-                            ZIndex: =3
 
                         StarVisible11 As label:
                             Align: =Align.Center
@@ -581,29 +548,6 @@ Nhapdieukien As screen:
                             Y: =10
                             ZIndex: =2
 
-                        ErrorMessage9_2 As label:
-                            AutoHeight: =true
-                            BorderColor: =RGBA(0, 0, 0, 0)
-                            BorderStyle: =BorderStyle.None
-                            BorderThickness: =2
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisabledColor: =RGBA(168, 0, 0, 1)
-                            FocusedBorderThickness: =4
-                            Font: =Font.'Segoe UI'
-                            Height: =10
-                            Live: =Live.Assertive
-                            PaddingBottom: =0
-                            PaddingLeft: =0
-                            PaddingRight: =0
-                            PaddingTop: =0
-                            Size: =13
-                            Text: =Parent.Error
-                            Visible: =Parent.DisplayMode=DisplayMode.Edit
-                            Width: =Parent.Width - 60
-                            X: =30
-                            Y: =DataCardValueSoVB.Y + DataCardValueSoVB.Height
-                            ZIndex: =3
-
                         StarVisible9_2 As label:
                             Align: =Align.Center
                             BorderColor: =RGBA(0, 0, 0, 0)
@@ -684,29 +628,6 @@ Nhapdieukien As screen:
                             X: =253
                             Y: =10
                             ZIndex: =2
-
-                        ErrorMessage10_1 As label:
-                            AutoHeight: =true
-                            BorderColor: =RGBA(0, 0, 0, 0)
-                            BorderStyle: =BorderStyle.None
-                            BorderThickness: =2
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisabledColor: =RGBA(168, 0, 0, 1)
-                            FocusedBorderThickness: =4
-                            Font: =Font.'Segoe UI'
-                            Height: =10
-                            Live: =Live.Assertive
-                            PaddingBottom: =0
-                            PaddingLeft: =0
-                            PaddingRight: =0
-                            PaddingTop: =0
-                            Size: =13
-                            Text: =Parent.Error
-                            Visible: =Parent.DisplayMode=DisplayMode.Edit
-                            Width: =Parent.Width - 60
-                            X: =30
-                            Y: =
-                            ZIndex: =6
 
                         StarVisible10_1 As label:
                             Align: =Align.Center
@@ -789,29 +710,6 @@ Nhapdieukien As screen:
                             Y: =10
                             ZIndex: =2
 
-                        ErrorMessage14 As label:
-                            AutoHeight: =true
-                            BorderColor: =RGBA(0, 0, 0, 0)
-                            BorderStyle: =BorderStyle.None
-                            BorderThickness: =2
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisabledColor: =RGBA(168, 0, 0, 1)
-                            FocusedBorderThickness: =4
-                            Font: =Font.'Segoe UI'
-                            Height: =10
-                            Live: =Live.Assertive
-                            PaddingBottom: =0
-                            PaddingLeft: =0
-                            PaddingRight: =0
-                            PaddingTop: =0
-                            Size: =13
-                            Text: =Parent.Error
-                            Visible: =Parent.DisplayMode=DisplayMode.Edit
-                            Width: =Parent.Width - 60
-                            X: =30
-                            Y: =
-                            ZIndex: =6
-
                         StarVisible14 As label:
                             Align: =Align.Center
                             BorderColor: =RGBA(0, 0, 0, 0)
@@ -892,29 +790,6 @@ Nhapdieukien As screen:
                             X: =DataCardKey17.X + DataCardKey17.Width
                             Y: =10
                             ZIndex: =2
-
-                        ErrorMessage17 As label:
-                            AutoHeight: =true
-                            BorderColor: =RGBA(0, 0, 0, 0)
-                            BorderStyle: =BorderStyle.None
-                            BorderThickness: =2
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisabledColor: =RGBA(168, 0, 0, 1)
-                            FocusedBorderThickness: =4
-                            Font: =Font.'Segoe UI'
-                            Height: =10
-                            Live: =Live.Assertive
-                            PaddingBottom: =0
-                            PaddingLeft: =0
-                            PaddingRight: =0
-                            PaddingTop: =0
-                            Size: =13
-                            Text: =Parent.Error
-                            Visible: =Parent.DisplayMode=DisplayMode.Edit
-                            Width: =Parent.Width - 60
-                            X: =30
-                            Y: =
-                            ZIndex: =6
 
                         StarVisible17 As label:
                             Align: =Align.Center
@@ -1006,29 +881,6 @@ Nhapdieukien As screen:
                             X: =DataCardKey6_2.X + DataCardKey6_2.Width
                             Y: =10
                             ZIndex: =2
-
-                        ErrorMessage6_2 As label:
-                            AutoHeight: =true
-                            BorderColor: =RGBA(0, 0, 0, 0)
-                            BorderStyle: =BorderStyle.None
-                            BorderThickness: =2
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisabledColor: =RGBA(168, 0, 0, 1)
-                            FocusedBorderThickness: =4
-                            Font: =Font.'Segoe UI'
-                            Height: =10
-                            Live: =Live.Assertive
-                            PaddingBottom: =0
-                            PaddingLeft: =0
-                            PaddingRight: =0
-                            PaddingTop: =0
-                            Size: =13
-                            Text: =Parent.Error
-                            Visible: =Parent.DisplayMode=DisplayMode.Edit
-                            Width: =Parent.Width - 60
-                            X: =30
-                            Y: =DataCardValueFile.Y + DataCardValueFile.Height
-                            ZIndex: =3
 
                         StarVisible6_2 As label:
                             Align: =Align.Center
@@ -1140,7 +992,7 @@ Nhapdieukien As screen:
 
             Container2_3 As groupContainer.manualLayoutContainer:
                 Height: =453
-                Width: =Parent.Width-Self.X
+                Width: =Parent.Width-Self.X-14
                 X: =130
                 Y: =1294
                 ZIndex: =2
@@ -1423,7 +1275,7 @@ Nhapdieukien As screen:
 
             Container2_4 As groupContainer.manualLayoutContainer:
                 Height: =536
-                Width: =Parent.Width-Self.X
+                Width: =Parent.Width-Self.X-14
                 X: =130
                 Y: =1747
                 ZIndex: =3
@@ -1867,7 +1719,7 @@ Nhapdieukien As screen:
 
             SPLoaiTru As groupContainer.manualLayoutContainer:
                 Height: =221
-                Width: =1221
+                Width: =1222
                 X: =131
                 Y: =615
                 ZIndex: =6
@@ -2003,7 +1855,7 @@ Nhapdieukien As screen:
 
             "'Container2.2' As groupContainer.manualLayoutContainer":
                 Height: =458
-                Width: =Parent.Width-Self.X
+                Width: =Parent.Width-Self.X-14
                 X: =130
                 Y: =836
                 ZIndex: =7

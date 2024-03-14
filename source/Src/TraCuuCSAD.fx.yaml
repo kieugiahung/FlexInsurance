@@ -2312,6 +2312,19 @@ TraCuuCSAD As screen:
                             }
                         )
                     );
+                    ForAll(
+                        DM_DON_VI As pv,
+                        Patch(
+                            tmpDsGiatri,
+                            Defaults(tmpDsGiatri),
+                            {
+                                Ma: pv.MA_DON_VI,
+                                Ten: pv.TEN_DON_VI,
+                                Loai: "MA_DON_VI",
+                                cr282_ten_gia_tri:pv.TEN_DON_VI
+                            }
+                        )
+                    );
                     // them san pham
                     ForAll(
                         DL_SAN_PHAM As sp,

@@ -2012,6 +2012,19 @@ TraCuuCSADDT As screen:
                             }
                         )
                     );
+                    ForAll(
+                        DM_DON_VI As pv,
+                        Patch(
+                            tmpDsGiatriCS,
+                            Defaults(tmpDsGiatriCS),
+                            {
+                                Ma: pv.MA_DON_VI,
+                                Ten: pv.TEN_DON_VI,
+                                Loai: "MA_DON_VI",
+                                cr282_ten_gia_tri:pv.TEN_DON_VI
+                            }
+                        )
+                    );
                     //END PHAM VI
                     EditForm(TTChungCS);
                     EditForm(TTCSApDung);
