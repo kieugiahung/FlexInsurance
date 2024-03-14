@@ -152,7 +152,7 @@ ThemKhachHang As screen:
                         Height: =50
                         MaxLength: =DataSourceInfo([@DM_KHACH_HANG], DataSourceInfo.MaxLength, "cr282_ma_tinh")
                         Required: =false
-                        Update: =DataCardValue5_2.Selected.MA_TINH
+                        Update: =DataCardValue5_2.Selected.MA_PHAMVI
                         Width: =618
                         X: =0
                         Y: =3
@@ -235,7 +235,7 @@ ThemKhachHang As screen:
                             HoverBorderColor: =RGBA(153, 207, 236, 1)
                             HoverColor: =RGBA(51, 51, 51, 1)
                             HoverFill: =RGBA(212, 212, 212, 1)
-                            Items: =DM_TINH
+                            Items: =Filter(DM_PHAMVI_DIALYS, LOAI="TINH_TP")
                             PaddingBottom: =5
                             PaddingLeft: =12
                             PaddingRight: =5
@@ -260,7 +260,7 @@ ThemKhachHang As screen:
                         Height: =50
                         MaxLength: =DataSourceInfo([@DM_KHACH_HANG], DataSourceInfo.MaxLength, "cr282_ma_huyen")
                         Required: =false
-                        Update: =DataCardValue4_2.Selected.MA_HUYEN
+                        Update: =DataCardValue4_2.Selected.MA_PHAMVI
                         Width: =618
                         X: =1
                         Y: =3
@@ -344,7 +344,7 @@ ThemKhachHang As screen:
                             HoverBorderColor: =RGBA(153, 207, 236, 1)
                             HoverColor: =RGBA(51, 51, 51, 1)
                             HoverFill: =RGBA(212, 212, 212, 1)
-                            Items: =Filter(DM_HUYEN,MA_TINH=DataCardValue5_2.Selected.MA_TINH)
+                            Items: =Filter(DM_PHAMVI_DIALYS, LOAI="QUAN_HUYEN" && MA_CHA = DataCardValue5_2.Selected.MA_PHAMVI)
                             PaddingBottom: =5
                             PaddingLeft: =12
                             PaddingRight: =5
@@ -1674,37 +1674,6 @@ ThemKhachHang As screen:
                             Y: =
                             ZIndex: =4
 
-                        MinuteValue1 As dropdown:
-                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                            ChevronBackground: =RGBA(255, 255, 255, 1)
-                            ChevronDisabledBackground: =RGBA(244, 244, 244, 1)
-                            ChevronDisabledFill: =RGBA(166, 166, 166, 1)
-                            ChevronFill: =RGBA(33, 33, 33, 1)
-                            ChevronHoverBackground: =RGBA(212, 212, 212, 1)
-                            ChevronHoverFill: =RGBA(33, 33, 33, 1)
-                            Color: =RGBA(51, 51, 51, 1)
-                            Default: =Text(Minute(Parent.Default),"00")
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisplayMode: =Parent.DisplayMode
-                            Font: =Font.'Segoe UI'
-                            Height: =
-                            HoverBorderColor: =ColorFade(RGBA(202, 80, 16, 1), -30%)
-                            HoverColor: =RGBA(51, 51, 51, 1)
-                            HoverFill: =RGBA(212, 212, 212, 1)
-                            Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
-                            PaddingBottom: =5
-                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
-                            PaddingRight: =5
-                            PaddingTop: =5
-                            PressedBorderColor: =ColorFade(RGBA(202, 80, 16, 1), -30%)
-                            PressedFill: =RGBA(202, 80, 16, 1)
-                            SelectionFill: =RGBA(202, 80, 16, 1)
-                            Tooltip: =Parent.DisplayName
-                            Width: =
-                            X: =
-                            Y: =
-                            ZIndex: =5
-
                         ErrorMessage19 As label:
                             AutoHeight: =true
                             BorderColor: =RGBA(0, 0, 0, 0)
@@ -2069,7 +2038,7 @@ ThemKhachHang As screen:
                         Height: =50
                         MaxLength: =DataSourceInfo([@DM_KHACH_HANG], DataSourceInfo.MaxLength, "cr282_quoc_tich")
                         Required: =false
-                        Update: =DataCardValue22.Selected.MA_QUOC_TICH
+                        Update: =DataCardValue22.Selected.MA_PHAMVI
                         Visible: =true
                         Width: =618
                         X: =1
@@ -2146,7 +2115,7 @@ ThemKhachHang As screen:
                             Default: =LookUp(DM_QUOC_TICHES, MA_QUOC_TICH=Parent.Default).TEN_QUOC_TICH
                             DisabledBorderColor: =RGBA(180, 214, 250, 1)
                             DisabledFill: =RGBA(214, 221, 224, 1)
-                            Items: =DM_QUOC_TICHES
+                            Items: =Filter(DM_PHAMVI_DIALYS, LOAI="QUOC_GIA")
                             Size: =11
                             Width: =334.8
                             X: =253.2
@@ -2461,15 +2430,14 @@ ThemKhachHang As screen:
             BorderStyle: =BorderStyle.Solid
             DisplayMode: =DisplayMode.Edit
             Fill: =RGBA(0, 0, 0, 0)
-            Height: =400
+            Height: =424
             Width: =1366
             X: =0
             Y: =1
             ZIndex: =2
 
             Container1_2 As groupContainer.manualLayoutContainer:
-                Height: |
-                    =Parent.Height-50
+                Height: =344
                 Width: =Parent.Width-130
                 X: =130
                 ZIndex: =1
@@ -2893,7 +2861,7 @@ ThemKhachHang As screen:
                                         "^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$"
                                     ),
                                     UpdateContext({errorMsgGal: ""}),
-                                    UpdateContext({errorMsgGal: "Email người đại diện sai format"})
+                                    UpdateContext({errorMsgGal: "Email người đại diện sai định dạng"})
                                 )
                             );
                             If(
@@ -2973,242 +2941,235 @@ ThemKhachHang As screen:
                     Y: =95
                     ZIndex: =12
 
-            Container2_2 As groupContainer.manualLayoutContainer:
-                Height: =Parent.Height-350
-                Width: =Parent.Width-130
-                X: =130
-                Y: =350
-                ZIndex: =2
-
-                Btn_LuuKH As button:
-                    FontWeight: =FontWeight.Bold
-                    OnSelect: |
-                        =UpdateContext({errorMsg: ""});
+    Btn_LuuKH As button:
+        FontWeight: =FontWeight.Bold
+        OnSelect: |
+            =UpdateContext({errorMsg: ""});
+            If(
+                IsBlank(DataCardValue25.Text),
+                UpdateContext(
+                    {
+                        newIDKH: If(
+                            CountIf(
+                                DM_KHACH_HANG,
+                                true
+                            ) = 0,
+                            1,
+                            Max(
+                                DM_KHACH_HANG,
+                                ID
+                            ) + 1
+                        )
+                    }
+                ),
+                UpdateContext({newIDKH: Value(DataCardValue25.Text)})
+            );
+            If(
+                IsBlank(DataCardValue7_2.Text),
+                UpdateContext(
+                    {
+                        newCntLoaiKH: If(
+                            CountIf(
+                                DM_KHACH_HANG,
+                                LOAI_KHACH_HANG = DataCardValue12.Selected.ID
+                            ) = 0,
+                            1,
+                            Max(
+                                Filter(
+                                    DM_KHACH_HANG,
+                                    LOAI_KHACH_HANG = DataCardValue12.Selected.ID
+                                ),
+                                CNT_LOAI_KH
+                            ) + 1
+                        )
+                    }
+                ),
+                UpdateContext({newCntLoaiKH: Value(DataCardValue7_2.Text)})
+            );
+            If(
+                IsBlank(DataCardValue1_1.Text),
+                UpdateContext(
+                    {
+                        newMaKH: Concatenate(
+                            If(
+                                DataCardValue12.Selected.ID = "0",
+                                "CN",
+                                "TC"
+                            ),
+                            If(
+                                newCntLoaiKH < 10,
+                                "000",
+                                If(
+                                    newCntLoaiKH < 100 && newCntLoaiKH >= 10,
+                                    "00",
+                                    If(
+                                        newCntLoaiKH < 1000 && newCntLoaiKH >= 100,
+                                        "0",
+                                        ""
+                                    )
+                                )
+                            ),
+                            Text(newCntLoaiKH)
+                        )
+                    }
+                ),
+                UpdateContext({newMaKH: DataCardValue1_1.Text})
+            );
+            If(
+                IsBlank(errorMsg),
+                If(
+                    IsBlank(DataCardValue3_1.Text),
+                    UpdateContext({errorMsg: "Tên khách hàng là bắt buộc"})
+                )
+            );
+            If(
+                IsBlank(errorMsg),
+                If(
+                    IsBlank(DataCardValue6_1.Text),
+                    UpdateContext({errorMsg: "Địa chỉ là bắt buộc"})
+                )
+            );
+            If(
+                IsBlank(errorMsg),
+                If(
+                    IsBlank(DataCardValue7_1.Text),
+                    UpdateContext({errorMsg: "Số điện thoại là bắt buộc"})
+                )
+            );
+            If(
+                IsBlank(errorMsg),
+                If(
+                    IsBlank(DataCardValue1_2.Text),
+                    UpdateContext({errorMsg: "MST là bắt buộc"})
+                )
+            );
+            /*If(
+                IsBlank(errorMsg),
+                If(
+                    IsMatch(
+                        DataCardValue7.Text,
+                        "\d{10}"
+                    ),
+                    UpdateContext({errorMsg: "Số điện thoại phải có 10 số"})
+                )
+            );*/
+            If(
+                IsBlank(errorMsg),
+                If(
+                    IsBlank(DataCardValue8_1.Selected.TEN_LOAI_GT),
+                    UpdateContext({errorMsg: "Loại giấy tờ là bắt buộc"})
+                )
+            );
+            If(
+                IsBlank(errorMsg),
+                If(
+                    IsBlank(DataCardValue9.Text),
+                    UpdateContext({errorMsg: "Số giấy tờ là bắt buộc"})
+                )
+            );
+            If(
+                IsBlank(errorMsg),
+                If(
+                    !IsBlank(DataCardValue18.Text),
+                    If(
+                        IsMatch(
+                            DataCardValue18.Text,
+                            "^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$"
+                        ),
+                        UpdateContext({errorMsg: ""}),
+                        UpdateContext({errorMsg: "Email khách hàng sai định dạng"})
+                    )
+                )
+            );
+            If(
+                !IsBlank(errorMsg),
+                Notify(
+                    errorMsg,
+                    NotificationType.Error,
+                    800
+                ),
+                //Xu ly thong tin khach hang
+                SubmitForm(ThemMoiKH);
+                //Xu ly DS dai dien
+            RemoveIf(
+                    DM_DAIDIEN_KH,
+                    MA_KHACH_HANG = newMaKH
+                );
+                If(
+                    !IsEmpty(tmpDaiDienKH),
+                    ForAll (
+                        tmpDaiDienKH As dd,
                         If(
-                            IsBlank(DataCardValue25.Text),
-                            UpdateContext(
+                            IsBlank(
+                                LookUp(
+                                    DM_DAIDIEN_KH,
+                                    ID = dd.cr282_id
+                                )
+                            ),
+                            Patch(
+                                DM_DAIDIEN_KH,
                                 {
-                                    newIDKH: If(
+                                    ID: If(
                                         CountIf(
-                                            DM_KHACH_HANG,
-                                            true
+                                            DM_DAIDIEN_KH,
+                                            ID
                                         ) = 0,
                                         1,
                                         Max(
-                                            DM_KHACH_HANG,
+                                            DM_DAIDIEN_KH,
                                             ID
                                         ) + 1
-                                    )
-                                }
-                            ),
-                            UpdateContext({newIDKH: Value(DataCardValue25.Text)})
-                        );
-                        If(
-                            IsBlank(DataCardValue7_2.Text),
-                            UpdateContext(
-                                {
-                                    newCntLoaiKH: If(
-                                        CountIf(
-                                            DM_KHACH_HANG,
-                                            LOAI_KHACH_HANG = DataCardValue12.Selected.ID
-                                        ) = 0,
-                                        1,
-                                        Max(
-                                            Filter(
-                                                DM_KHACH_HANG,
-                                                LOAI_KHACH_HANG = DataCardValue12.Selected.ID
-                                            ),
-                                            CNT_LOAI_KH
-                                        ) + 1
-                                    )
-                                }
-                            ),
-                            UpdateContext({newCntLoaiKH: Value(DataCardValue7_2.Text)})
-                        );
-                        If(
-                            IsBlank(DataCardValue1_1.Text),
-                            UpdateContext(
-                                {
-                                    newMaKH: Concatenate(
-                                        If(
-                                            DataCardValue12.Selected.ID = "0",
-                                            "CN",
-                                            "TC"
-                                        ),
-                                        If(
-                                            newCntLoaiKH < 10,
-                                            "000",
-                                            If(
-                                                newCntLoaiKH < 100 && newCntLoaiKH >= 10,
-                                                "00",
-                                                If(
-                                                    newCntLoaiKH < 1000 && newCntLoaiKH >= 100,
-                                                    "0",
-                                                    ""
-                                                )
-                                            )
-                                        ),
-                                        Text(newCntLoaiKH)
-                                    )
-                                }
-                            ),
-                            UpdateContext({newMaKH: DataCardValue1_1.Text})
-                        );
-                        If(
-                            IsBlank(errorMsg),
-                            If(
-                                IsBlank(DataCardValue3_1.Text),
-                                UpdateContext({errorMsg: "Tên khách hàng là bắt buộc"})
-                            )
-                        );
-                        If(
-                            IsBlank(errorMsg),
-                            If(
-                                IsBlank(DataCardValue6_1.Text),
-                                UpdateContext({errorMsg: "Địa chỉ là bắt buộc"})
-                            )
-                        );
-                        If(
-                            IsBlank(errorMsg),
-                            If(
-                                IsBlank(DataCardValue7_1.Text),
-                                UpdateContext({errorMsg: "Số điện thoại là bắt buộc"})
-                            )
-                        );
-                        If(
-                            IsBlank(errorMsg),
-                            If(
-                                IsBlank(DataCardValue7_1.Text),
-                                UpdateContext({errorMsg: "Số điện thoại là bắt buộc"})
-                            )
-                        );
-                        /*If(
-                            IsBlank(errorMsg),
-                            If(
-                                IsMatch(
-                                    DataCardValue7.Text,
-                                    "\d{10}"
-                                ),
-                                UpdateContext({errorMsg: "Số điện thoại phải có 10 số"})
-                            )
-                        );*/
-                        If(
-                            IsBlank(errorMsg),
-                            If(
-                                IsBlank(DataCardValue8_1.Selected.TEN_LOAI_GT),
-                                UpdateContext({errorMsg: "Loại giấy tờ là bắt buộc"})
-                            )
-                        );
-                        If(
-                            IsBlank(errorMsg),
-                            If(
-                                IsBlank(DataCardValue9.Text),
-                                UpdateContext({errorMsg: "Số giấy tờ là bắt buộc"})
-                            )
-                        );
-                        If(
-                            IsBlank(errorMsg),
-                            If(
-                                !IsBlank(DataCardValue18.Text),
-                                If(
-                                    IsMatch(
-                                        DataCardValue18.Text,
-                                        "^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$"
                                     ),
-                                    UpdateContext({errorMsg: ""}),
-                                    UpdateContext({errorMsg: "Email khách hàng sai format"})
-                                )
+                                    MA_KHACH_HANG: newMaKH,
+                                    TEN_NGUOI_DAI_DIEN: dd.cr282_ten_nguoi_dai_dien,
+                                    MST: dd.cr282_mst,
+                                    DIA_CHI: dd.cr282_dia_chi,
+                                    SO_DIEN_THOAI: dd.cr282_so_dien_thoai,
+                                    EMAIL: dd.cr282_email,
+                                    CHUC_VU: dd.cr282_chuc_vu
+                                }
+                            ),
+                            UpdateIf(
+                                DM_DAIDIEN_KH,
+                                ID = dd.cr282_id,
+                                {
+                                    TEN_NGUOI_DAI_DIEN: dd.cr282_ten_nguoi_dai_dien,
+                                    MST: dd.cr282_mst,
+                                    DIA_CHI: dd.cr282_dia_chi,
+                                    SO_DIEN_THOAI: dd.cr282_so_dien_thoai,
+                                    EMAIL: dd.cr282_email,
+                                    CHUC_VU: dd.cr282_chuc_vu
+                                }
                             )
                         );
-                        If(
-                            !IsBlank(errorMsg),
-                            Notify(
-                                errorMsg,
-                                NotificationType.Error,
-                                800
-                            ),
-                            //Xu ly thong tin khach hang
-                            SubmitForm(ThemMoiKH);
-                            //Xu ly DS dai dien
-                        RemoveIf(
-                                DM_DAIDIEN_KH,
-                                MA_KHACH_HANG = newMaKH
-                            );
-                            If(
-                                !IsEmpty(tmpDaiDienKH),
-                                ForAll (
-                                    tmpDaiDienKH As dd,
-                                    If(
-                                        IsBlank(
-                                            LookUp(
-                                                DM_DAIDIEN_KH,
-                                                ID = dd.cr282_id
-                                            )
-                                        ),
-                                        Patch(
-                                            DM_DAIDIEN_KH,
-                                            {
-                                                ID: If(
-                                                    CountIf(
-                                                        DM_DAIDIEN_KH,
-                                                        ID
-                                                    ) = 0,
-                                                    1,
-                                                    Max(
-                                                        DM_DAIDIEN_KH,
-                                                        ID
-                                                    ) + 1
-                                                ),
-                                                MA_KHACH_HANG: newMaKH,
-                                                TEN_NGUOI_DAI_DIEN: dd.cr282_ten_nguoi_dai_dien,
-                                                MST: dd.cr282_mst,
-                                                DIA_CHI: dd.cr282_dia_chi,
-                                                SO_DIEN_THOAI: dd.cr282_so_dien_thoai,
-                                                EMAIL: dd.cr282_email,
-                                                CHUC_VU: dd.cr282_chuc_vu
-                                            }
-                                        ),
-                                        UpdateIf(
-                                            DM_DAIDIEN_KH,
-                                            ID = dd.cr282_id,
-                                            {
-                                                TEN_NGUOI_DAI_DIEN: dd.cr282_ten_nguoi_dai_dien,
-                                                MST: dd.cr282_mst,
-                                                DIA_CHI: dd.cr282_dia_chi,
-                                                SO_DIEN_THOAI: dd.cr282_so_dien_thoai,
-                                                EMAIL: dd.cr282_email,
-                                                CHUC_VU: dd.cr282_chuc_vu
-                                            }
-                                        )
-                                    );
-                                )
-                            );
-                            ResetForm(ThemMoiKH);
-                            Select(IconTaiLaiDD);
-                            Notify(
-                                "Lưu dữ liệu thành công",
-                                NotificationType.Success,
-                                800
-                            );
-                            Navigate(Quanlykhachhang);
-                            
-                        );
-                    Size: =11
-                    Text: ="Lưu"
-                    Width: =150
-                    X: =1046
-                    Y: =5
-                    ZIndex: =1
+                    )
+                );
+                ResetForm(ThemMoiKH);
+                Select(IconTaiLaiDD);
+                Notify(
+                    "Lưu dữ liệu thành công",
+                    NotificationType.Success,
+                    800
+                );
+                Navigate(Quanlykhachhang);
+                
+            );
+        Size: =11
+        Text: ="Lưu"
+        Width: =150
+        X: =1188
+        Y: =708
+        ZIndex: =2
 
-                Btn_HuyKH As button:
-                    FontWeight: =FontWeight.Bold
-                    OnSelect: |-
-                        =ResetForm(ThemMoiKH);
-                        Navigate(Quanlykhachhang);
-                    Size: =11
-                    Text: ="Hủy bỏ"
-                    Width: =150
-                    X: =798
-                    Y: =5
-                    ZIndex: =2
+    Btn_HuyKH As button:
+        FontWeight: =FontWeight.Bold
+        OnSelect: |-
+            =ResetForm(ThemMoiKH);
+            Navigate(Quanlykhachhang);
+        Size: =11
+        Text: ="Hủy bỏ"
+        Width: =150
+        X: =940
+        Y: =708
+        ZIndex: =3
 
