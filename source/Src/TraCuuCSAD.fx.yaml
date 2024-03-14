@@ -614,7 +614,8 @@ TraCuuCSAD As screen:
                     )
                 );
                 If(
-                    
+                
+                    !IsBlank(cbxTPhanCSAD.Selected.value) && !IsBlank(cbxApDungCSAD.Selected.value) && 
                     !IsBlank(ComTieuChiCSAD.Selected.MA_CHI_TIEU) && !IsBlank(ComGiaTriCSAD.Selected.value),
                     If(
                         cbxTPhanCSAD.Selected.value="PV",
@@ -755,6 +756,21 @@ TraCuuCSAD As screen:
                                         }
                                     )
                                 )
+                            )
+                        )
+                    ),
+                    !IsBlank(cbxTPhanCSAD.Selected.value) && !IsBlank(cbxApDungCSAD.Selected.value) && 
+                    IsBlank(ComGiaTriCSAD.Selected.value),
+                    ForAll(
+                        tmpTCCSADCollect As dsCha,
+                        If(
+                            !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                            THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG=cbxApDungCSAD.Selected.value && KIEU="1")),
+                            Collect(
+                                tmpChonCSADCollect,
+                                {
+                                    cr282_ma_dieu_kien:dsCha.cr282_ma_dieu_kien
+                                }
                             )
                         )
                     ),
