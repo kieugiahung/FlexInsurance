@@ -2191,6 +2191,10 @@ Nhapdieukien As screen:
                 IsBlank(DateValueTU.SelectedDate),
                 UpdateContext({errorMsgDK: "Hiệu lực từ là bắt buộc"})
             );
+            If(
+                IsBlank(errorMsgDK) && !IsBlank(DateValueDen.SelectedDate) && DateValueTU.SelectedDate > DateValueDen.SelectedDate,
+                UpdateContext({errorMsgDK: "Hiệu lực đến phải sau hiệu lực từ"})
+            );
             //Kiem tra tieu chi la duy nhat
             //San pham - ap dung
             If(
@@ -2941,8 +2945,7 @@ Nhapdieukien As screen:
                     "Lưu dữ liệu thành công",
                     NotificationType.Success,
                     800
-                );
-                
+                ); 
             );
         Size: =11
         Text: ="Lưu dữ liệu"
@@ -2964,20 +2967,823 @@ Nhapdieukien As screen:
         DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
         OnSelect: |
             =//Xu ly thong tin chung
+            //Xu ly thong tin chung
             UpdateContext({errorMsgDK: ""});
-            UpdateIf(
-                DL_DIEUKIEN_APDUNG,
-                MA_DIEU_KIEN = DataCardValueMaDK.Text,
-                {TRANG_THAI: "true"}
+            //Clear(tmpCheckDup);
+            If(
+                IsBlank(DataCardID.Text),
+                UpdateContext(
+                    {
+                        newIDMaDD: If(
+                            CountIf(
+                                DL_DIEUKIEN_APDUNG,
+                                true
+                            ) = 0,
+                            1,
+                            Max(
+                                DL_DIEUKIEN_APDUNG,
+                                ID
+                            ) + 1
+                        )
+                    }
+                ),
+                UpdateContext({newIDMaDD: Value(DataCardID.Text)})
             );
-            UpdateContext({rcd: newMaDK});
-            EditForm(FormDKChung);
-            Notify(
-                "Ghi dữ liệu thành công",
-                NotificationType.Success,
-                800
+            If(
+                IsBlank(DataCardValueMaDK.Text),
+                UpdateContext(
+                    {
+                        newMaDK: Concatenate(
+                            "AD",
+                            If(
+                                newIDMaDD < 10,
+                                "000",
+                                If(
+                                    newIDMaDD < 100 && newIDMaDD >= 10,
+                                    "00",
+                                    If(
+                                        newIDMaDD < 1000 && newIDMaDD >= 100,
+                                        "0",
+                                        ""
+                                    )
+                                )
+                            ),
+                            Text(newIDMaDD)
+                        )
+                    }
+                ),
+                UpdateContext({newMaDK: DataCardValueMaDK.Text})
             );
-            Set(varDaGhi, true);
+            If(
+                IsBlank(DateValueTU.SelectedDate),
+                UpdateContext({errorMsgDK: "Hiệu lực từ là bắt buộc"})
+            );
+            If(
+                IsBlank(errorMsgDK) && !IsBlank(DateValueDen.SelectedDate) && DateValueTU.SelectedDate > DateValueDen.SelectedDate,
+                UpdateContext({errorMsgDK: "Hiệu lực đến phải sau hiệu lực từ"})
+            );
+            //Kiem tra tieu chi la duy nhat
+            //San pham - ap dung
+            If(
+                IsBlank(errorMsgDK) && CountRows(tmpApdungSp) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    Gallery5.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "SP",
+                            Value: kh.DropQTich.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    Gallery5.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "SP" && Value = kh.DropQTich.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí áp dụng sản phẩm"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgDK: First(errorCol).Message})
+                )
+            );
+            //san pham - loai tru
+            If(
+                IsBlank(errorMsgDK) && CountRows(tmpLoaitruSp) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    Gallery5_1.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "KH",
+                            Value: kh.DropQTich_1.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    Gallery5_1.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "KH" && Value = kh.DropQTich_1.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí loại trừ sản phẩm"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgDK: First(errorCol).Message})
+                )
+            );
+            //Kenh ban
+            //Kenh ban - ap dung
+            If(
+                IsBlank(errorMsgDK) && CountRows(tmpApdungKB) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryKB.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "KB",
+                            Value: kh.DropKB.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryKB.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "KB" && Value = kh.DropKB.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí áp dụng kênh bán"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgDK: First(errorCol).Message})
+                )
+            );
+            //Kenh ban - loai tru
+            If(
+                IsBlank(errorMsgDK) && CountRows(tmpLoaitruKB) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryKB_LoaiTru.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "KB",
+                            Value: kh.DropKB_LoaiTru.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryKB_LoaiTru.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "KB" && Value = kh.DropKB_LoaiTru.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí loại trừ kênh bán"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgDK: First(errorCol).Message})
+                )
+            );
+            //End kenh ban
+            //Khach hang - ap dung
+            If(
+                IsBlank(errorMsgDK) && CountRows(tmpApdungKH) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryKH_1.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "KH",
+                            Value: kh.DropKH.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryKH_1.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "KH" && Value = kh.DropKH.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí áp dụng khách hàng"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgDK: First(errorCol).Message})
+                )
+            );
+            //Khach hang - loai tru
+            If(
+                IsBlank(errorMsgDK) && CountRows(tmpLoaitruKH) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryKH_LoaiTru.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "KH",
+                            Value: kh.DropKH_LoaiTru.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryKH_LoaiTru.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "KH" && Value = kh.DropKH_LoaiTru.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí loại trừ khách hàng"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgDK: First(errorCol).Message})
+                )
+            );
+            //pham vi - ap dung
+            If(
+                IsBlank(errorMsgDK) && CountRows(tmpApdungPV) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryPV_1.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "PV",
+                            Value: kh.DropPV.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryPV_1.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "PV" && Value = kh.DropPV.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí áp dụng phạm vi"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgDK: First(errorCol).Message})
+                )
+            );
+            //Pham vi - loai tru
+            If(
+                IsBlank(errorMsgDK) && CountRows(tmpLoaitruPV) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryPV_LoaiTru.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "PV",
+                            Value: kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryPV_LoaiTru.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "PV" && Value = kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí loại trừ phạm vi"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgDK: First(errorCol).Message})
+                )
+            );
+            If(
+                !IsBlank(errorMsgDK),
+                Notify(
+                    errorMsgDK,
+                    NotificationType.Error,
+                    800
+                ),
+                SubmitForm(FormDKChung);
+                UpdateContext({rcd: newMaDK});
+                EditForm(FormDKChung);
+                RemoveIf(
+                    DL_DIEUKIEN_APDUNG_LOAI,
+                    MA_DIEU_KIEN = newMaDK
+                );
+                RemoveIf(
+                    DL_DIEUKIEN_APDUNG_LOAI_CT,
+                    MA_DIEU_KIEN = newMaDK
+                );
+                Set(
+                    varIdAdSP,
+                    0
+                );
+                Set(
+                    varIdLtSp,
+                    0
+                );
+                // T.ANH LƯU SAN PHAM
+            // lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI
+            // THÊM DỮ LIỆU ÁP DỤNG
+            Set(
+                    varIdAdSP,
+                    Max(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        ID
+                    ) + 1
+                );
+                Patch(
+                    DL_DIEUKIEN_APDUNG_LOAI,
+                    Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                    {
+                        ID: varIdAdSP,
+                        MA_DIEU_KIEN: newMaDK,
+                        THANH_PHAN: "SP",
+                        AP_DUNG: "1",
+                        KIEU: Radio2.Selected.ID,
+                        TEN_KIEU: Radio2.Selected.Text
+                    }
+                );
+                
+            // THÊM DỮ LIỆU LOẠI TRỪ
+            Set(
+                    varIdLtSp,
+                    Max(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        ID
+                    ) + 1
+                );
+                If(
+                    !IsBlank(Radio2_1.Selected.Text),
+                    Patch(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                        {
+                            ID: varIdLtSp,
+                            MA_DIEU_KIEN: newMaDK,
+                            THANH_PHAN: "SP",
+                            AP_DUNG: "2",
+                            KIEU: Radio2_1.Selected.ID,
+                            TEN_KIEU: Radio2_1.Selected.Text
+                        }
+                    )
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết
+            // lưu áp dụng
+            If(
+                    Radio2.Selected.ID = 2,
+                    ForAll(
+                        Gallery5.AllItems As ad,
+                        ForAll(
+                            ad.ComboBox3.SelectedItems As gt,
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                {
+                                    ID: Value(ad.TextInput1.Text),
+                                    ID_LOAI: varIdAdSP,
+                                    MA_DIEU_KIEN: varMaDKien,
+                                    THANH_PHAN: "SP",
+                                    AP_DUNG: "1",
+                                    KIEU: Radio2.Selected.ID,
+                                    MA_TIEU_CHI: ad.DropQTich.Selected.MA_CHI_TIEU,
+                                    TEN_TIEU_CHI: ad.DropQTich.Selected.TEN_CHI_TIEU,
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = ad.DropQTich.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri
+                                }
+                            )
+                        )
+                    )
+                );
+                
+            // lưu loại trừ
+            If(
+                    Radio2_1.Selected.ID = 2,
+                    ForAll(
+                        Gallery5_1.AllItems As ad,
+                        ForAll(
+                            ad.ComboBox3_1.SelectedItems As gt,
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                {
+                                    ID: Value(TextInput2.Text),
+                                    ID_LOAI: varIdAdSP,
+                                    MA_DIEU_KIEN: varMaDKien,
+                                    THANH_PHAN: "SP",
+                                    AP_DUNG: "2",
+                                    KIEU: Radio2_1.Selected.ID,
+                                    MA_TIEU_CHI: ad.DropQTich_1.Selected.MA_CHI_TIEU,
+                                    TEN_TIEU_CHI: ad.DropQTich_1.Selected.TEN_CHI_TIEU,
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = ad.DropQTich_1.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri
+                                }
+                            )
+                        )
+                    )
+                );
+                
+            // lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI KENH BAN
+            Set(
+                    varIdAdKB,
+                    0
+                );
+                Set(
+                    varIdLtKB,
+                    0
+                );
+                Set(
+                    varIdAdKB,
+                    Max(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        ID
+                    ) + 1
+                );
+                // ÁP DỤNG
+            Patch(
+                    DL_DIEUKIEN_APDUNG_LOAI,
+                    Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                    {
+                        ID: varIdAdKB,
+                        MA_DIEU_KIEN: newMaDK,
+                        THANH_PHAN: "KB",
+                        AP_DUNG: "1",
+                        KIEU: RadioKB.Selected.ID,
+                        TEN_KIEU: RadioKB.Selected.Text
+                    }
+                );
+                // LOẠI TRỪ
+            If(
+                    !IsBlank(RadioKB_LoaiTru.Selected.Text),
+                    Patch(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        Set(
+                            varIdLtKB,
+                            Max(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                ID
+                            ) + 1
+                        );
+                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                        {
+                            ID: Max(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                ID
+                            ) + 1,
+                            MA_DIEU_KIEN: newMaDK,
+                            THANH_PHAN: "KB",
+                            AP_DUNG: "2",
+                            KIEU: RadioKB_LoaiTru.Selected.ID,
+                            TEN_KIEU: RadioKB_LoaiTru.Selected.Text
+                        }
+                    )
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết
+            If(
+                    RadioKB.Selected.ID = 2 && CountRows(tmpApdungKB) > 0,
+                    ForAll(
+                        GalleryKB.AllItems As kh,
+                        ForAll(
+                            kh.ComboBoxGTKB.SelectedItems As gt,
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                {
+                                    ID: Value(kh.TextInput3.Text),
+                                    ID_LOAI: varIdAdKB,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "KB",
+                                    AP_DUNG: "1",
+                                    KIEU: RadioKB.Selected.ID,
+                                    MA_TIEU_CHI: kh.DropKB.Selected.MA_CHI_TIEU,
+                                    TEN_TIEU_CHI: kh.DropKB.Selected.TEN_CHI_TIEU,
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKB.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri
+                                }
+                            )
+                        )
+                    )
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết loai trừ
+            If(
+                    RadioKB_LoaiTru.Selected.ID = 2 && CountRows(tmpLoaitruKB) > 0,
+                    ForAll(
+                        GalleryKB_LoaiTru.AllItems As kh,
+                        ForAll(
+                            kh.ComboBoxGTKB_LT.SelectedItems As gt,
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                {
+                                    ID: Value(kh.TextInput4.Text),
+                                    ID_LOAI: varIdLtKB,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "KB",
+                                    AP_DUNG: "2",
+                                    KIEU: RadioKB_LoaiTru.Selected.ID,
+                                    MA_TIEU_CHI: kh.DropKB_LoaiTru.Selected.MA_CHI_TIEU,
+                                    TEN_TIEU_CHI: kh.DropKB_LoaiTru.Selected.TEN_CHI_TIEU,
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKB_LoaiTru.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri
+                                }
+                            )
+                        )
+                    )
+                );
+                
+            //End kenh ban
+            // lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI KHANH HANG
+            Set(
+                    varIdAdKH,
+                    0
+                );
+                Set(
+                    varIdLtKH,
+                    0
+                );
+                Set(
+                    varIdAdKH,
+                    Max(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        ID
+                    ) + 1
+                );
+                Patch(
+                    DL_DIEUKIEN_APDUNG_LOAI,
+                    Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                    {
+                        ID: varIdAdKH,
+                        MA_DIEU_KIEN: newMaDK,
+                        THANH_PHAN: "KH",
+                        AP_DUNG: "1",
+                        KIEU: RadioKH.Selected.ID,
+                        TEN_KIEU: RadioKH.Selected.Text
+                    }
+                );
+                If(
+                    !IsBlank(RadioKH_LoaiTru.Selected.Text),
+                    Patch(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        Set(
+                            varIdLtKH,
+                            Max(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                ID
+                            ) + 1
+                        );
+                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                        {
+                            ID: Max(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                ID
+                            ) + 1,
+                            MA_DIEU_KIEN: newMaDK,
+                            THANH_PHAN: "KH",
+                            AP_DUNG: "2",
+                            KIEU: RadioKH_LoaiTru.Selected.ID,
+                            TEN_KIEU: RadioKB_LoaiTru.Selected.Text
+                        }
+                    )
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết
+            If(
+                    RadioKH.Selected.ID = 2 && CountRows(tmpApdungKH) > 0,
+                    ForAll(
+                        GalleryKH_1.AllItems As kh,
+                        ForAll(
+                            kh.ComboBoxGTKH.SelectedItems As gt,
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                {
+                                    ID: Value(kh.TextInput5.Text),
+                                    ID_LOAI: varIdAdKH,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "KH",
+                                    AP_DUNG: "1",
+                                    KIEU: RadioKH.Selected.ID,
+                                    MA_TIEU_CHI: kh.DropKH.Selected.MA_CHI_TIEU,
+                                    TEN_TIEU_CHI: kh.DropKH.Selected.TEN_CHI_TIEU,
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKH.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri
+                                }
+                            )
+                        )
+                    )
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết loai tru
+            If(
+                    RadioKH_LoaiTru.Selected.ID = 2 && CountRows(tmpLoaitruKH) > 0,
+                    ForAll(
+                        GalleryKH_LoaiTru.AllItems As kh,
+                        ForAll(
+                            kh.ComboBoxGTKH_LT.SelectedItems As gt,
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                {
+                                    ID: Value(kh.TextInput6.Text),
+                                    ID_LOAI: varIdLtKH,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "KH",
+                                    AP_DUNG: "2",
+                                    KIEU: RadioKH_LoaiTru.Selected.ID,
+                                    MA_TIEU_CHI: kh.DropKH_LoaiTru.Selected.MA_CHI_TIEU,
+                                    TEN_TIEU_CHI: kh.DropKH_LoaiTru.Selected.TEN_CHI_TIEU,
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKH_LoaiTru.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri
+                                }
+                            )
+                        )
+                    )
+                );
+                
+            // lưu dữ liệu ở bảng  DL_DIEUKIEN_APDUNG_LOAI PHAM_VI
+            Set(
+                    varIdAdPV,
+                    0
+                );
+                Set(
+                    varIdLtPV,
+                    0
+                );
+                Set(
+                    varIdAdPV,
+                    Max(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        ID
+                    ) + 1
+                );
+                Patch(
+                    DL_DIEUKIEN_APDUNG_LOAI,
+                    Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                    {
+                        ID: varIdAdPV,
+                        MA_DIEU_KIEN: newMaDK,
+                        THANH_PHAN: "PV",
+                        AP_DUNG: "1",
+                        KIEU: RadioPV.Selected.ID,
+                        TEN_KIEU: RadioPV.Selected.Text
+                    }
+                );
+                If(
+                    !IsBlank(RadioPV_LoaiTru.Selected.Text),
+                    Patch(
+                        DL_DIEUKIEN_APDUNG_LOAI,
+                        Set(
+                            varIdLtPV,
+                            Max(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                ID
+                            ) + 1
+                        );
+                        Defaults(DL_DIEUKIEN_APDUNG_LOAI),
+                        {
+                            ID: Max(
+                                DL_DIEUKIEN_APDUNG_LOAI,
+                                ID
+                            ) + 1,
+                            MA_DIEU_KIEN: newMaDK,
+                            THANH_PHAN: "PV",
+                            AP_DUNG: "2",
+                            KIEU: RadioPV_LoaiTru.Selected.ID,
+                            TEN_KIEU: RadioPV_LoaiTru.Selected.Text
+                        }
+                    )
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết
+            If(
+                    RadioPV.Selected.ID = 2 && CountRows(tmpApdungPV) > 0,
+                    ForAll(
+                        GalleryPV_1.AllItems As pv,
+                        ForAll(
+                            pv.ComboBoxGTPV.SelectedItems As gt,
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                {
+                                    ID: Value(pv.TextInput7.Text),
+                                    ID_LOAI: varIdAdPV,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "PV",
+                                    AP_DUNG: "1",
+                                    KIEU: RadioPV.Selected.ID,
+                                    MA_TIEU_CHI: pv.DropPV.Selected.MA_CHI_TIEU,
+                                    TEN_TIEU_CHI: pv.DropPV.Selected.TEN_CHI_TIEU,
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = pv.DropPV.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri
+                                }
+                            )
+                        )
+                    )
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết loai trừ
+            If(
+                    RadioPV_LoaiTru.Selected.ID = 2 && CountRows(tmpLoaitruPV) > 0,
+                    ForAll(
+                        GalleryPV_LoaiTru.AllItems As kh,
+                        ForAll(
+                            kh.ComboBoxGTPV_LT.SelectedItems As gt,
+                            Patch(
+                                DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                Defaults(DL_DIEUKIEN_APDUNG_LOAI_CT),
+                                {
+                                    ID: Value(kh.TextInput8.Text),
+                                    ID_LOAI: varIdLtPV,
+                                    MA_DIEU_KIEN: newMaDK,
+                                    THANH_PHAN: "PV",
+                                    AP_DUNG: "2",
+                                    KIEU: RadioPV_LoaiTru.Selected.ID,
+                                    MA_TIEU_CHI: kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU,
+                                    TEN_TIEU_CHI: kh.DropPV_LoaiTru.Selected.TEN_CHI_TIEU,
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatri,
+                                        cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri
+                                }
+                            )
+                        )
+                    )
+                );
+                UpdateIf(
+                    DL_DIEUKIEN_APDUNG,
+                    MA_DIEU_KIEN = DataCardValueMaDK.Text,
+                    {TRANG_THAI: "true"}
+                );
+                UpdateContext({rcd: newMaDK});
+                EditForm(FormDKChung);
+                Notify(
+                    "Ghi dữ liệu thành công",
+                    NotificationType.Success,
+                    800
+                );
+                Set(
+                    varDaGhi,
+                    true
+                );
+            );
         Size: =11
         Text: ="Ghi dữ liệu"
         Visible: =If(!IsBlank(DataCardValueMaDK.Text),true,false)
