@@ -1810,7 +1810,212 @@ TraCuuCSADDT As screen:
             Button6_14 As button:
                 FontWeight: =FontWeight.Bold
                 Height: =30
-                OnSelect: =
+                OnSelect: |-
+                    =Select(Parent);
+                    Set(varMaCS, ThisItem.cr282_ma_chinh_sach);
+                    Set(varGhiCS, If(LookUp(DL_CHINHSACH_CHUNG, MA_CHINH_SACH=varMaCS).TRANG_THAI_FIX="1",true,false));
+                    
+                    Reset(RadioCSKB);
+                    Reset(RadioCSKB_LoaiTru);
+                    Reset(RadioCSKH);
+                    Reset(RadioCSKH_LoaiTru);
+                    Reset(RadioCSPV);
+                    Reset(RadioCSPV_LoaiTru);
+                    
+                    
+                    ClearCollect(
+                        tmpDsGiatriCS,
+                        [
+                            {
+                                Ma: "",
+                                Ten: "",
+                                Loai: "",
+                                cr282_ten_gia_tri: ""
+                            }
+                        ]
+                    );
+                    //Kenh ban
+                    ClearCollect(
+                        tmpCSApdungKB,
+                        GroupBy(
+                            Filter(
+                                DL_CHINHSACH_DOITUONG_CT,
+                                MA_CHINH_SACH = varMaCS && THANH_PHAN = "KB" && AP_DUNG = "1"
+                            ),
+                            "cr282_id",
+                            "cr282_ma_chinh_sach",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "GROUP_CS"
+                        )
+                    );
+                    ClearCollect(
+                        tmpCSLoaitruKB,
+                        GroupBy(
+                            Filter(
+                                DL_CHINHSACH_DOITUONG_CT,
+                                MA_CHINH_SACH = varMaCS && THANH_PHAN = "KB" && AP_DUNG = "2"
+                            ),
+                            "cr282_id",
+                            "cr282_ma_chinh_sach",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "GROUP_CS"
+                        )
+                    );
+                    // them kenh ban
+                    ForAll(
+                        DM_KENH_BANS As kb,
+                        Patch(
+                            tmpDsGiatriCS,
+                            Defaults(tmpDsGiatriCS),
+                            {
+                                Ma: kb.MA_KENH_BAN,
+                                Ten: kb.TEN_KENH_BAN,
+                                Loai: If(
+                                    kb.LOAI = "1",
+                                    "MA_NHAN_VIEN",
+                                    If(
+                                        kb.LOAI = "2",
+                                        "MA_DL",
+                                        If(
+                                            kb.LOAI = "3",
+                                            "MA_MG",
+                                            "MA_NH"
+                                        )
+                                    )
+                                ),
+                                cr282_ten_gia_tri: kb.TEN_KENH_BAN
+                            }
+                        )
+                    );
+                    //End Kenh ban
+                    //KHACH HANG
+                    ClearCollect(
+                        tmpCSApdungKH,
+                        GroupBy(
+                            Filter(
+                                DL_CHINHSACH_DOITUONG_CT,
+                                MA_CHINH_SACH = varMaCS && THANH_PHAN = "KH" && AP_DUNG = "1"
+                            ),
+                            "cr282_id",
+                            "cr282_ma_chinh_sach",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "GROUP_CS"
+                        )
+                    );
+                    ClearCollect(
+                        tmpCSLoaitruKH,
+                        GroupBy(
+                            Filter(
+                                DL_CHINHSACH_DOITUONG_CT,
+                                MA_CHINH_SACH = varMaCS && THANH_PHAN = "KH" && AP_DUNG = "2"
+                            ),
+                            "cr282_id",
+                            "cr282_ma_chinh_sach",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "GROUP_CS"
+                        )
+                    );
+                    ForAll(
+                        DM_NHOM_KH As kh,
+                        Patch(
+                            tmpDsGiatriCS,
+                            Defaults(tmpDsGiatriCS),
+                            {
+                                Ma: kh.MA_NHOM_KH,
+                                Ten: kh.TEN_NHOM_KH,
+                                Loai: "MA_KH_NHOM",
+                                cr282_ten_gia_tri: kh.TEN_NHOM_KH
+                            }
+                        )
+                    );
+                    Collect(
+                        tmpDsGiatriCS,
+                        {
+                            Ma: "0",
+                            Ten: "Cá nhân",
+                            Loai: "MA_KH_LOAI",
+                            cr282_ten_gia_tri: "Cá nhân"
+                        },
+                        {
+                            Ma: "1",
+                            Ten: "Tổ chức",
+                            Loai: "MA_KH_LOAI",
+                            cr282_ten_gia_tri: "Tổ chức"
+                        }
+                    );
+                    //END KHACH HANG
+                    //PHAM VI
+                    ClearCollect(
+                        tmpCSApdungPV,
+                        GroupBy(
+                            Filter(
+                                DL_CHINHSACH_DOITUONG_CT,
+                                MA_CHINH_SACH = varMaCS && THANH_PHAN = "PV" && AP_DUNG = "1"
+                            ),
+                            "cr282_id",
+                            "cr282_ma_chinh_sach",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "GROUP_CS"
+                        )
+                    );
+                    ClearCollect(
+                        tmpCSLoaitruPV,
+                        GroupBy(
+                            Filter(
+                                DL_CHINHSACH_DOITUONG_CT,
+                                MA_CHINH_SACH = varMaCS && THANH_PHAN = "PV" && AP_DUNG = "2"
+                            ),
+                            "cr282_id",
+                            "cr282_ma_chinh_sach",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "GROUP_CS"
+                        )
+                    );
+                    ForAll(
+                        DM_PHAMVI_DIALYS As pv,
+                        Patch(
+                            tmpDsGiatriCS,
+                            Defaults(tmpDsGiatriCS),
+                            {
+                                Ma: pv.MA_PHAMVI,
+                                Ten: pv.TEN_PHAMVI,
+                                Loai: If(
+                                    pv.LOAI = "KHU_VUC",
+                                    "MA_KHU_VUC",
+                                    If(
+                                        pv.LOAI = "QUOC_GIA",
+                                        "MA_QG",
+                                        If(
+                                            pv.LOAI = "VUNG_MIEN",
+                                            "MA_VUNG_MIEN",
+                                            If(
+                                                pv.LOAI = "TINH_TP",
+                                                "MA_TINH_TP",
+                                                "MA_QUAN_HUYEN"
+                                            )
+                                        )
+                                    )
+                                ),
+                                cr282_ten_gia_tri: pv.TEN_PHAMVI
+                            }
+                        )
+                    );
+                    //END PHAM VI
+                    EditForm(TTChungCS);
+                    EditForm(TTCSApDung);
+                    Navigate(NhapChinhSach);
                 Size: =9
                 Text: ="Chi tiết"
                 Width: =60
@@ -1992,7 +2197,24 @@ TraCuuCSADDT As screen:
         Button6_10 As button:
             FontWeight: =FontWeight.Bold
             Height: =28
-            OnSelect: =
+            OnSelect: |-
+                =Set(varMaCS, "");
+                Set(varGhiCS, false);
+                ResetForm(TTChungCS);
+                ResetForm(TTCSApDung);
+                Reset(RadioCSKB);
+                Reset(RadioCSKB_LoaiTru);
+                Reset(RadioCSKH);
+                Reset(RadioCSKH_LoaiTru);
+                Reset(RadioCSPV);
+                Reset(RadioCSPV_LoaiTru);
+                Clear(tmpCSApdungKB);
+                Clear(tmpCSLoaitruKB);
+                Clear(tmpCSApdungKH);
+                Clear(tmpCSLoaitruKH);
+                Clear(tmpCSApdungPV);
+                Clear(tmpCSLoaitruPV);
+                Navigate(NhapChinhSach);
             Size: =9
             Text: ="Thêm mới"
             Width: =80
