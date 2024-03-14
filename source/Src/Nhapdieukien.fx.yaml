@@ -1621,7 +1621,7 @@ Nhapdieukien As screen:
                         Size: =11
                         Text: ="Tiêu chí"
                         Width: =72
-                        X: =20
+                        X: =5
                         ZIndex: =2
 
                     Label9_9 As label:
@@ -1630,7 +1630,7 @@ Nhapdieukien As screen:
                         Size: =11
                         Text: ="Giá trị"
                         Width: =73
-                        X: =329
+                        X: =277
                         ZIndex: =3
 
                     DropQTich As dropdown:
@@ -1648,8 +1648,8 @@ Nhapdieukien As screen:
                         OnSelect: =
                         Size: =11
                         Width: =200
-                        X: =110
-                        Y: =7
+                        X: =77
+                        Y: =5
                         ZIndex: =4
 
                     ComboBox3 As combobox:
@@ -1668,8 +1668,8 @@ Nhapdieukien As screen:
                         SearchFields: =["cr282_ten_gia_tri"]
                         SearchItems: =[]
                         Width: =347
-                        X: =402
-                        Y: =7
+                        X: =333
+                        Y: =5
                         ZIndex: =5
 
                     Button5_13 As button:
@@ -1688,9 +1688,33 @@ Nhapdieukien As screen:
                         OnSelect: =Select(Parent)
                         Visible: =false
                         Width: =172
-                        X: =260
-                        Y: =6
+                        X: =178
+                        Y: =3
                         ZIndex: =7
+
+                    PV_AD As combobox:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
+                        DefaultSelectedItems: =ThisItem.group
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledFill: =RGBA(214, 221, 224, 1)
+                        DisplayFields: =["Text"]
+                        DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
+                        Height: =34
+                        IsSearchable: =false
+                        Items: |-
+                            =[{Text:"Hợp đồng hiện tại", ID: 1 },{Text:"Liên kết hợp đồng", ID: 2}]
+                        OnSelect: =Select(Parent)
+                        SearchFields: =["Text"]
+                        SearchItems: |-
+                            =Search([{Text:"Hợp đồng hiện tại", ID: 1 },{Text:"Liên kết hợp đồng", ID: 2}],PV_AD.SearchText,"Text")
+                        SelectMultiple: =false
+                        Visible: =If(DropQTich.Selected.MA_CHI_TIEU ="MA_COMBO_SP", true, false)
+                        Width: =175
+                        X: =692
+                        Y: =3
+                        ZIndex: =8
 
                 Label7_4 As label:
                     FontWeight: =FontWeight.Bold
@@ -2560,7 +2584,9 @@ Nhapdieukien As screen:
                                         tmpDsGiatri,
                                         cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = ad.DropQTich.Selected.MA_CHI_TIEU
                                     ).Ma,
-                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri
+                                    TEN_GIA_TRI: gt.cr282_ten_gia_tri,
+                                    MA_PV_AD:PV_AD.Selected.ID,
+                                    TEN_PV_AD:PV_AD.Selected.Text
                                 }
                             )
                         )
