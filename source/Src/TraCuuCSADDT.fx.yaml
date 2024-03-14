@@ -2027,6 +2027,154 @@ TraCuuCSADDT As screen:
                         )
                     );
                     //END PHAM VI
+                    
+                    //SAN PHAM
+                    ClearCollect(
+                        tmpCSApdungSP,
+                        GroupBy(
+                            Filter(
+                                DL_CHINHSACH_DOITUONG_CT,
+                                MA_CHINH_SACH = varMaCS && THANH_PHAN = "SP" && AP_DUNG = "1"
+                            ),
+                            "cr282_id",
+                            "cr282_ma_chinh_sach",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "cr282_ma_pv_ad",
+                            "cr282_ten_pv_ad",
+                            "cr282_giatri_tu",
+                            "cr282_giatri_den",
+                            "GROUP_CS"
+                        )
+                    );
+                    ClearCollect(
+                        tmpCSLoaitruSP,
+                        GroupBy(
+                            Filter(
+                                DL_CHINHSACH_DOITUONG_CT,
+                                MA_CHINH_SACH = varMaCS && THANH_PHAN = "SP" && AP_DUNG = "2"
+                            ),
+                            "cr282_id",
+                            "cr282_ma_chinh_sach",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "cr282_ma_pv_ad",
+                            "cr282_ten_pv_ad",
+                            "cr282_giatri_tu",
+                            "cr282_giatri_den",
+                            "GROUP_CS"
+                        )
+                    );
+                    ForAll(
+                        DL_SAN_PHAM As kh,
+                        Patch(
+                            tmpDsGiatriCS,
+                            Defaults(tmpDsGiatriCS),
+                            {
+                                Ma: kh.MA_SAN_PHAM,
+                                Ten: kh.TEN_SAN_PHAM,
+                                Loai: "MA_SP",
+                                cr282_ten_gia_tri: kh.TEN_SAN_PHAM
+                            }
+                        )
+                    );
+                    ForAll(
+                        ' DL_SAN_PHAM_CT' As kh,
+                        Patch(
+                            tmpDsGiatriCS,
+                            Defaults(tmpDsGiatriCS),
+                            {
+                                Ma: kh.MA_CHUONG_TRINH,
+                                Ten: kh.TEN_CHUONG_TRINH,
+                                Loai: "MA_CT",
+                                cr282_ten_gia_tri: kh.TEN_CHUONG_TRINH
+                            }
+                        )
+                    );
+                    Patch(
+                            tmpDsGiatriCS,
+                            Defaults(tmpDsGiatriCS),
+                            {
+                                Ma: "SK",
+                                Loai: "LHNV",
+                                cr282_ten_gia_tri :"Sức khoẻ"
+                            }
+                        );
+                           Patch(
+                            tmpDsGiatriCS,
+                            Defaults(tmpDsGiatriCS),
+                            {
+                                Ma: "TAI_NAM",
+                                Loai: "LHNV",
+                                cr282_ten_gia_tri :"Tai nạn"
+                            }
+                        );
+                        Patch(
+                            tmpDsGiatriCS,
+                            Defaults(tmpDsGiatriCS),
+                            {
+                                Ma: "TN_DS",
+                                Loai: "LHNV",
+                                cr282_ten_gia_tri :"Trách nhiệm dân sự"
+                            }
+                        );
+                    //END SAN PHAM
+                    //SO TIEN
+                    ClearCollect(
+                        tmpCSApdungST,
+                        GroupBy(
+                            Filter(
+                                DL_CHINHSACH_DOITUONG_CT,
+                                MA_CHINH_SACH = varMaCS && THANH_PHAN = "ST" && AP_DUNG = "1"
+                            ),
+                            "cr282_id",
+                            "cr282_ma_chinh_sach",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "cr282_ma_pv_ad",
+                            "cr282_ten_pv_ad",
+                            "cr282_giatri_tu",
+                            "cr282_giatri_den",
+                            "GROUP_CS"
+                        )
+                    );
+                    ClearCollect(
+                        tmpCSLoaitruST,
+                        GroupBy(
+                            Filter(
+                                DL_CHINHSACH_DOITUONG_CT,
+                                MA_CHINH_SACH = varMaCS && THANH_PHAN = "ST" && AP_DUNG = "2"
+                            ),
+                            "cr282_id",
+                            "cr282_ma_chinh_sach",
+                            "cr282_ap_dung",
+                            "cr282_ma_tieu_chi",
+                            "cr282_ten_tieu_chi",
+                            "cr282_ma_pv_ad",
+                            "cr282_ten_pv_ad",
+                            "cr282_giatri_tu",
+                            "cr282_giatri_den",
+                            "GROUP_CS"
+                        )
+                    );
+                    ForAll(
+                        DM_THOIHAN_AD As kh,
+                        Patch(
+                            tmpDsGiatriCS,
+                            Defaults(tmpDsGiatriCS),
+                            {
+                                Ma: kh.MA_THOIHAN_AD,
+                                Ten: kh.TEN_THOIHAN_AD,
+                                Loai: "MA_ST_LK",
+                                cr282_ten_gia_tri: kh.TEN_THOIHAN_AD
+                            }
+                        )
+                    );
+                    //END SO TIEN
+                    
                     EditForm(TTChungCS);
                     EditForm(TTCSApDung);
                     Navigate(NhapChinhSach);
