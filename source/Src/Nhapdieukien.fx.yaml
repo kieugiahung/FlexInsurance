@@ -1612,7 +1612,7 @@ Nhapdieukien As screen:
                     ZIndex: =3
 
                 Gallery5 As gallery.galleryVertical:
-                    BorderColor: =RGBA(0, 0, 0, 1)
+                    BorderColor: =RGBA(180, 214, 250, 1)
                     BorderThickness: =1
                     DelayItemLoading: =true
                     Height: =156
@@ -1628,60 +1628,38 @@ Nhapdieukien As screen:
                     Y: =116
                     ZIndex: =4
 
-                    Label9_8 As label:
-                        Height: =46
-                        OnSelect: =Select(Parent)
-                        Size: =11
-                        Text: ="Tiêu chí"
-                        Width: =72
-                        X: =5
-                        ZIndex: =2
-
-                    Label9_9 As label:
-                        Height: =46
-                        OnSelect: =Select(Parent)
-                        Size: =11
-                        Text: ="Giá trị"
-                        Width: =73
-                        X: =277
-                        ZIndex: =3
-
                     DropQTich As dropdown:
-                        BorderColor: =RGBA(72, 163, 62, 1)
+                        BorderColor: =RGBA(180, 214, 250, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
-                        ChevronFill: =RGBA(72, 163, 62, 1)
+                        ChevronFill: =RGBA(180, 214, 250, 1)
                         Default: |
                             =LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT, MA_DIEU_KIEN =varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = ThisItem.cr282_ma_tieu_chi).TEN_TIEU_CHI
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledFill: =RGBA(214, 221, 224, 1)
                         DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
-                        Height: =32
                         Items: =Filter(DM_TIEU_CHI_APDUNGS, LOAI = "SP")
                         OnChange: =Reset(ComboBox3)
                         OnSelect: =
                         Size: =11
                         Width: =200
-                        X: =77
-                        Y: =5
                         ZIndex: =4
 
                     ComboBox3 As combobox:
-                        BorderColor: =RGBA(72, 163, 62, 1)
+                        BorderColor: =RGBA(180, 214, 250, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
-                        ChevronFill: =RGBA(72, 163, 62, 1)
+                        ChevronFill: =RGBA(180, 214, 250, 1)
                         DefaultSelectedItems: =ThisItem.group
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledFill: =RGBA(214, 221, 224, 1)
                         DisplayFields: =["cr282_ten_gia_tri","Ma"]
                         DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
-                        Height: =35
                         IsSearchable: =false
                         Items: =Filter( tmpDsGiatri, Loai = DropQTich.Selected.MA_CHI_TIEU)
                         OnSelect: =Select(Parent)
                         SearchFields: =["cr282_ten_gia_tri"]
                         SearchItems: =[]
-                        Width: =308
-                        X: =333
+                        Width: =423
+                        X: =214
                         ZIndex: =5
 
                     Button5_13 As button:
@@ -1691,8 +1669,8 @@ Nhapdieukien As screen:
                         Size: =11
                         Text: ="Xoá"
                         Width: =73
-                        X: =880
-                        Y: =7
+                        X: =876
+                        Y: =6
                         ZIndex: =6
 
                     TextInput1 As text:
@@ -1700,20 +1678,19 @@ Nhapdieukien As screen:
                         OnSelect: =Select(Parent)
                         Visible: =false
                         Width: =172
-                        X: =178
-                        Y: =3
+                        X: =214
+                        Y: =5
                         ZIndex: =7
 
                     PV_AD As dropdown:
-                        BorderColor: =RGBA(72, 163, 62, 1)
+                        BorderColor: =RGBA(180, 214, 250, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
-                        ChevronFill: =RGBA(72, 163, 62, 1)
+                        ChevronFill: =RGBA(180, 214, 250, 1)
                         Default: |
                             =LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT, MA_DIEU_KIEN =varMaDKien && THANH_PHAN ="SP" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = ThisItem.cr282_ma_tieu_chi && MA_PV_AD = ThisItem.cr282_ma_pv_ad).TEN_PV_AD
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledFill: =RGBA(214, 221, 224, 1)
                         DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
-                        Height: =35
                         Items: |
                             =If(DropQTich.Selected.MA_CHI_TIEU ="MA_COMBO_SP", [{Text:"Hợp đồng hiện tại", ID: "1" },{Text:"Liên kết hợp đồng", ID: "2"}], [{Text:"", ID: "" }])
                         OnChange: =Reset(ComboBox3)
@@ -1721,8 +1698,8 @@ Nhapdieukien As screen:
                         Size: =11
                         Visible: |
                             =If(DropQTich.Selected.MA_CHI_TIEU ="MA_COMBO_SP", true, false)
-                        Width: =162
-                        X: =655
+                        Width: =188
+                        X: =648
                         ZIndex: =9
 
                 Label7_4 As label:
@@ -1746,9 +1723,20 @@ Nhapdieukien As screen:
                     Text: ="Thêm mới"
                     Visible: =If(Radio2.Selected.ID = 2 , true)
                     Width: =91
-                    X: =253.2
-                    Y: =76
+                    X: =254
+                    Y: =61
                     ZIndex: =6
+
+                BadgeCanvas1_38 As Badge:
+                    BasePaletteColor: =
+                    Content: =""
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =27
+                    Width: =968
+                    X: =254
+                    Y: =90
+                    ZIndex: =7
 
             SPLoaiTru As groupContainer.manualLayoutContainer:
                 Height: =221
@@ -1792,7 +1780,7 @@ Nhapdieukien As screen:
                         Size: =11
                         Text: ="Tiêu chí"
                         Width: =87
-                        X: =18
+                        X: =4
                         ZIndex: =2
 
                     Label9_11 As label:
@@ -1859,7 +1847,7 @@ Nhapdieukien As screen:
                         OnSelect: =Select(Parent)
                         Visible: =false
                         Width: =268
-                        X: =105
+                        X: =76
                         Y: =6
                         ZIndex: =7
 
