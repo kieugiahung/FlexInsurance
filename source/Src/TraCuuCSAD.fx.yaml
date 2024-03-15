@@ -1939,25 +1939,20 @@ TraCuuCSAD As screen:
                                             If(
                                                 pv.LOAI = "TINH_TP",
                                                 "MA_TINH_TP",
-                                                "MA_QUAN_HUYEN"
+                                                If(
+                                                    pv.LOAI = "QUAN_HUYEN",
+                                                    "MA_QUAN_HUYEN",
+                                                    If(
+                                                        pv.LOAI = "DON_VI",
+                                                        "MA_DON_VI",
+                                                        "KHAC"
+                                                    )
+                                                )
                                             )
                                         )
                                     )
                                 ),
                                 cr282_ten_gia_tri: pv.TEN_PHAMVI
-                            }
-                        )
-                    );
-                    ForAll(
-                        DM_DON_VI As pv,
-                        Patch(
-                            tmpDsGiatri,
-                            Defaults(tmpDsGiatri),
-                            {
-                                Ma: pv.MA_DON_VI,
-                                Ten: pv.TEN_DON_VI,
-                                Loai: "MA_DON_VI",
-                                cr282_ten_gia_tri:pv.TEN_DON_VI
                             }
                         )
                     );

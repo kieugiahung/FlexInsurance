@@ -180,7 +180,15 @@ NhapChinhSach As screen:
                                 If(
                                     pv.LOAI = "TINH_TP",
                                     "MA_TINH_TP",
-                                    "MA_QUAN_HUYEN"
+                                    If(
+                                        pv.LOAI = "QUAN_HUYEN",
+                                        "MA_QUAN_HUYEN",
+                                        If(
+                                            pv.LOAI = "DON_VI",
+                                            "MA_DON_VI",
+                                            "KHAC"
+                                        )
+                                    )
                                 )
                             )
                         )
@@ -189,22 +197,7 @@ NhapChinhSach As screen:
                 }
             )
         );
-        ForAll(
-            DM_DON_VI As pv,
-            Patch(
-                tmpDsGiatriCS,
-                Defaults(tmpDsGiatriCS),
-                {
-                    Ma: pv.MA_DON_VI,
-                    Ten: pv.TEN_DON_VI,
-                    Loai: "MA_DON_VI",
-                    cr282_ten_gia_tri:pv.TEN_DON_VI
-                }
-            )
-        );
         //END PHAM VI
-        
-        
         //SAN PHAM
         ClearCollect(
             tmpCSApdungSP,
@@ -271,32 +264,32 @@ NhapChinhSach As screen:
             )
         );
         Patch(
-                tmpDsGiatriCS,
-                Defaults(tmpDsGiatriCS),
-                {
-                    Ma: "SK",
-                    Loai: "LHNV",
-                    cr282_ten_gia_tri :"Sức khoẻ"
-                }
-            );
-               Patch(
-                tmpDsGiatriCS,
-                Defaults(tmpDsGiatriCS),
-                {
-                    Ma: "TAI_NAM",
-                    Loai: "LHNV",
-                    cr282_ten_gia_tri :"Tai nạn"
-                }
-            );
-            Patch(
-                tmpDsGiatriCS,
-                Defaults(tmpDsGiatriCS),
-                {
-                    Ma: "TN_DS",
-                    Loai: "LHNV",
-                    cr282_ten_gia_tri :"Trách nhiệm dân sự"
-                }
-            );
+            tmpDsGiatriCS,
+            Defaults(tmpDsGiatriCS),
+            {
+                Ma: "SK",
+                Loai: "LHNV",
+                cr282_ten_gia_tri: "Sức khoẻ"
+            }
+        );
+        Patch(
+            tmpDsGiatriCS,
+            Defaults(tmpDsGiatriCS),
+            {
+                Ma: "TAI_NAM",
+                Loai: "LHNV",
+                cr282_ten_gia_tri: "Tai nạn"
+            }
+        );
+        Patch(
+            tmpDsGiatriCS,
+            Defaults(tmpDsGiatriCS),
+            {
+                Ma: "TN_DS",
+                Loai: "LHNV",
+                cr282_ten_gia_tri: "Trách nhiệm dân sự"
+            }
+        );
         //END SAN PHAM
         //SO TIEN
         ClearCollect(
