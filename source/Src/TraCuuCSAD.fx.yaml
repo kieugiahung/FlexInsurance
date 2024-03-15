@@ -16,8 +16,6 @@ TraCuuCSAD As screen:
             OnChange: |
                 =Reset(ComGiaTriCSAD);
                 If(
-                    IsBlank(ComTieuChiCSAD.Selected.MA_CHI_TIEU),
-                    Clear(tmpdsGiaTriTCCSCollect1),
                     ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_CT",
                     ClearCollect(
                         tmpdsGiaTriTCCSCollect,
@@ -332,7 +330,31 @@ TraCuuCSAD As screen:
                             "cr282_ten_nhom_kh",
                             "value"
                         )
-                    )
+                    ),
+                    ComTieuChiCSAD.Selected.MA_CHI_TIEU="LHNV",
+                    ClearCollect(
+                        tmpdsGiaTriTCCSCollect,
+                        ShowColumns(
+                            SortByColumns(
+                                DM_LHNV,
+                                "cr282_ma_lhnv",
+                                SortOrder.Ascending
+                            ),
+                            "cr282_ma_lhnv",
+                            "cr282_ten_lhnv"
+                        )
+                    );
+                    ClearCollect(
+                        tmpdsGiaTriTCCSCollect1,
+                        RenameColumns(
+                            tmpdsGiaTriTCCSCollect,
+                            "cr282_ma_lhnv",
+                            "key",
+                            "cr282_ten_lhnv",
+                            "value"
+                        )
+                    ),
+                    Clear(tmpdsGiaTriTCCSCollect1)
                 )
             SearchFields: =["cr282_ten_chi_tieu"]
             SearchItems: =Search(Filter(DM_TIEU_CHI_APDUNGS,LOAI=cbxTPhanCSAD.Selected.value),ComTieuChiCSAD.SearchText,"cr282_ten_chi_tieu")
@@ -765,7 +787,9 @@ TraCuuCSAD As screen:
                         tmpTCCSADCollect As dsCha,
                         If(
                             !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
-                            THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG=cbxApDungCSAD.Selected.value && KIEU="1")),
+                            THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG=cbxApDungCSAD.Selected.value && KIEU="1")) &&
+                            IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                            THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG<>cbxApDungCSAD.Selected.value)),
                             Collect(
                                 tmpChonCSADCollect,
                                 {
@@ -1563,7 +1587,7 @@ TraCuuCSAD As screen:
                     )
                 )
             Size: =9
-            Text: ="Tải lại"
+            Text: ="Tải lại1"
             Width: =80
             X: =1202
             Y: =43
