@@ -1637,31 +1637,6 @@ ThemKhachHang As screen:
                             Y: =11
                             ZIndex: =1
 
-                        DateValue1_1 As datepicker:
-                            BorderColor: =RGBA(72, 163, 62, 1)
-                            CalendarHeaderFill: =ColorFade(RGBA(202, 80, 16, 1), -30%)
-                            Color: |
-                                =
-                            DefaultDate: =Parent.Default
-                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                            DisabledFill: =RGBA(214, 221, 224, 1)
-                            DisplayMode: =Parent.DisplayMode
-                            EndYear: =Year(Today())+100
-                            Format: ="dd/mm/yyyy"
-                            HoverDateFill: =RGBA(200, 200, 200, 1)
-                            InputTextPlaceholder: =
-                            IsEditable: =true
-                            PaddingBottom: =0
-                            PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
-                            SelectedDateFill: =RGBA(202, 80, 16, 1)
-                            Size: =11
-                            StartYear: =1899
-                            Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey19.X + DataCardKey19.Width
-                            Y: =10
-                            ZIndex: =2
-
                         Separator1_1 As label:
                             Align: =Align.Center
                             BorderColor: =RGBA(0, 0, 0, 0)
@@ -1726,6 +1701,17 @@ ThemKhachHang As screen:
                             Wrap: =false
                             Y: =DataCardKey19.Y
                             ZIndex: =7
+
+                        DateValue1_1 As datepicker:
+                            BorderColor: =RGBA(54, 176, 75, 1)
+                            DefaultDate: =Parent.Default
+                            Format: ="dd/mm/yyyy"
+                            InputTextPlaceholder: =
+                            Size: =11
+                            Width: =334.8
+                            X: =253.2
+                            Y: =10
+                            ZIndex: =8
 
                     LOAI_GIAY_TO_DataCard1 As typedDataCard.textualEditCard:
                         BorderColor: =RGBA(166, 166, 166, 1)
@@ -1813,7 +1799,7 @@ ThemKhachHang As screen:
                             Default: =Parent.Default
                             DisabledBorderColor: =RGBA(180, 214, 250, 1)
                             DisabledFill: =RGBA(214, 221, 224, 1)
-                            Items: =DM_LOAI_GIAYTO
+                            Items: =Filter(DM_LOAI_GIAYTO, LOAI_KHACH_HANG=DataCardValue12.Selected.ID)
                             Size: =11
                             Width: =334.8
                             X: =253.2
