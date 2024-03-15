@@ -1170,7 +1170,7 @@ Nhapdieukien As screen:
                     Height: =101
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
-                        =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
+                        =[{Text:"Một phần", ID: 2}]
                     OnSelect: =true
                     RadioBorderColor: =RGBA(0, 84, 148, 1)
                     Size: =11
@@ -1491,7 +1491,7 @@ Nhapdieukien As screen:
                     DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
-                        =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
+                        =[{Text:"Một phần", ID: 2}]
                     OnSelect: =true
                     RadioBorderColor: =RGBA(0, 84, 148, 1)
                     Size: =11
@@ -1694,7 +1694,7 @@ Nhapdieukien As screen:
                     Color: =RGBA(0, 0, 0, 1)
                     Height: =20
                     Icon: =Icon.Cancel
-                    OnSelect: =Reset(RadioPV_LoaiTru)
+                    OnSelect: =Reset(RadioPV_LoaiTru);
                     Width: =20
                     X: =99
                     Y: =274
@@ -1921,7 +1921,7 @@ Nhapdieukien As screen:
                     DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
-                        =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
+                        =[{Text:"Một phần", ID: 2}]
                     OnSelect: =true
                     RadioBorderColor: =RGBA(15, 84, 140, 1)
                     Size: =11
@@ -2214,11 +2214,11 @@ Nhapdieukien As screen:
                     BorderColor: =RGBA(0, 0, 0, 0)
                     Default: |-
                         =
-                        If(IsBlank(varMaDKien), "",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "2" ).TEN_KIEU )
+                        If(IsBlank(varMaDKien) Or varXoaKB, "",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "2" ).TEN_KIEU )
                     DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
-                        =[{Text:"Tất cả", ID: 1 },{Text:"Một phần", ID: 2}]
+                        =[{Text:"Một phần", ID: 2}]
                     OnSelect: =true
                     RadioBorderColor: =RGBA(0, 84, 148, 1)
                     Size: =11
@@ -2417,7 +2417,9 @@ Nhapdieukien As screen:
                     Color: =RGBA(0, 0, 0, 1)
                     Height: =20
                     Icon: =Icon.Cancel
-                    OnSelect: =Reset(RadioKB_LoaiTru)
+                    OnSelect: |-
+                        =Reset(RadioKB_LoaiTru);
+                        Set(varXoaKB, true);
                     Width: =20
                     X: =99
                     Y: =265
