@@ -2022,22 +2022,38 @@ TraCuuCSAD As screen:
                             {
                                 Ma: kb.MA_KENH_BAN,
                                 Ten: kb.TEN_KENH_BAN,
-                                Loai: If(
-                                    kb.LOAI = "1",
-                                    "MA_NHAN_VIEN",
-                                    If(
-                                        kb.LOAI = "2",
-                                        "MA_DL",
-                                        If(
-                                            kb.LOAI = "3",
-                                            "MA_MG",
-                                            "MA_NH"
-                                        )
-                                    )
-                                ),
+                                Loai: "MA_KB_DM",
                                 cr282_ten_gia_tri: kb.TEN_KENH_BAN
                             }
                         )
+                    );
+                    ForAll(
+                        DM_LOAI_KENH_BANS As kb,
+                        Patch(
+                            tmpDsGiatri,
+                            Defaults(tmpDsGiatri),
+                            {
+                                Ma: kb.MA_LOAI_KB,
+                                Ten: kb.TEN_LOAI_KB,
+                                Loai: "MA_KB_LOAI",
+                                cr282_ten_gia_tri: kb.TEN_LOAI_KB
+                            }
+                        )
+                    );
+                    Collect(
+                        tmpDsGiatri,
+                        {
+                            Ma: "0",
+                            Ten: "Cá nhân",
+                            Loai: "MA_KB_NHOM",
+                            cr282_ten_gia_tri: "Cá nhân"
+                        },
+                        {
+                            Ma: "1",
+                            Ten: "Tổ chức",
+                            Loai: "MA_KB_NHOM",
+                            cr282_ten_gia_tri: "Tổ chức"
+                        }
                     );
                     Set(varDaGhi,If(ThisItem.cr282_trang_thai="true",true,false));
                     Navigate(Nhapdieukien);
