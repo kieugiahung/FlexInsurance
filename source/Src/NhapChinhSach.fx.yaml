@@ -4627,21 +4627,21 @@ NhapChinhSach As screen:
                 Clear(errorCol);
                 Clear(tmpCheckDup);
                 ForAll(
-                    GalleryPV.AllItems As kh,
+                    GalleryPVCS.AllItems As kh,
                     Collect(
                         tmpCheckDup,
                         {
                             Type: "PV",
-                            Value: kh.DropPV.Selected.MA_CHI_TIEU
+                            Value: kh.DropPVCS.Selected.MA_CHI_TIEU
                         }
                     );
                 );
                 ForAll(
-                    GalleryPV.AllItems As kh,
+                    GalleryPVCS.AllItems As kh,
                     If(
                         CountIf(
                             tmpCheckDup,
-                            Type = "PV" && Value = kh.DropPV.Selected.MA_CHI_TIEU
+                            Type = "PV" && Value = kh.DropPVCS.Selected.MA_CHI_TIEU
                         ) > 1,
                         Collect(
                             errorCol,
@@ -5436,7 +5436,7 @@ NhapChinhSach As screen:
             
             If(
                 IsBlank(errorMsgCS),
-                UpdateIf(
+                /*UpdateIf(
                     DL_CHINHSACH_CHUNG,
                     MA_CHINH_SACH = varMaCS,
                     {TRANG_THAI_FIX: "1"}
@@ -5444,7 +5444,7 @@ NhapChinhSach As screen:
                 Set(
                     varGhiCS,
                     true
-                );
+                );*/
                 Notify(
                     "Ghi dữ liệu thành công",
                     NotificationType.Success,
@@ -5750,21 +5750,21 @@ NhapChinhSach As screen:
                 Clear(errorCol);
                 Clear(tmpCheckDup);
                 ForAll(
-                    GalleryPV.AllItems As kh,
+                    GalleryPVCS.AllItems As kh,
                     Collect(
                         tmpCheckDup,
                         {
                             Type: "PV",
-                            Value: kh.DropPV.Selected.MA_CHI_TIEU
+                            Value: kh.DropPVCS.Selected.MA_CHI_TIEU
                         }
                     );
                 );
                 ForAll(
-                    GalleryPV.AllItems As kh,
+                    GalleryPVCS.AllItems As kh,
                     If(
                         CountIf(
                             tmpCheckDup,
-                            Type = "PV" && Value = kh.DropPV.Selected.MA_CHI_TIEU
+                            Type = "PV" && Value = kh.DropPVCS.Selected.MA_CHI_TIEU
                         ) > 1,
                         Collect(
                             errorCol,

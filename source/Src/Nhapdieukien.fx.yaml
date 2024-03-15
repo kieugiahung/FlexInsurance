@@ -542,7 +542,6 @@ Nhapdieukien As screen:
                             Default: =Parent.Default
                             DisabledBorderColor: =RGBA(0, 0, 0, 0)
                             DisabledColor: =RGBA(161, 159, 157, 1)
-                            DisplayMode: =DisplayMode.Disabled
                             Fill: =RGBA(255, 255, 255, 1)
                             FocusedBorderThickness: =4
                             Height: =40
@@ -4085,11 +4084,11 @@ Nhapdieukien As screen:
                         )
                     )
                 );
-                UpdateIf(
+                /*UpdateIf(
                     DL_DIEUKIEN_APDUNG,
                     MA_DIEU_KIEN = DataCardValueMaDK.Text,
                     {TRANG_THAI: "true"}
-                );
+                );*/
                 UpdateContext({rcd: newMaDK});
                 EditForm(FormDKChung);
                 Notify(
@@ -4097,10 +4096,10 @@ Nhapdieukien As screen:
                     NotificationType.Success,
                     800
                 );
-                Set(
+                /*Set(
                     varDaGhi,
                     true
-                );
+                );*/
             );
         Size: =11
         Text: ="Ghi dữ liệu"
