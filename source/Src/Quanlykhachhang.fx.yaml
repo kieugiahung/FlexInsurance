@@ -39,7 +39,7 @@ Quanlykhachhang As screen:
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =11
-                Width: =174
+                Width: =100
                 X: =19
                 ZIndex: =8
 
@@ -59,7 +59,7 @@ Quanlykhachhang As screen:
                 RadiusTopRight: =0
                 Size: =11
                 Width: =188
-                X: =193
+                X: =119
                 ZIndex: =9
 
             TxtID_4 As text:
@@ -82,25 +82,6 @@ Quanlykhachhang As screen:
 
             TxtMoTa_3 As text:
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.DIA_CHI_KH
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.Disabled
-                Height: =30
-                OnChange: =
-                OnSelect: =Select(Parent)
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Size: =11
-                Width: =165
-                X: =573
-                ZIndex: =23
-
-            TxtMoTa_4 As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
                 Default: =ThisItem.SO_GIAY_TO
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
@@ -114,13 +95,32 @@ Quanlykhachhang As screen:
                 RadiusTopLeft: =0
                 RadiusTopRight: =0
                 Size: =11
-                Width: =153
-                X: =946
+                Width: =125
+                X: =457
+                ZIndex: =23
+
+            TxtMoTa_4 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =LookUp(DM_PHAMVI_DIALYS, MA_PHAMVI=ThisItem.MA_TINH && LOAI="TINH_TP").TEN_PHAMVI
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =30
+                OnChange: =
+                OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =182
+                X: =914
                 ZIndex: =24
 
             TxtMoTa_9 As text:
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.LOAI_GIAY_TO
+                Default: =ThisItem.DIA_CHI_KH
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -134,7 +134,7 @@ Quanlykhachhang As screen:
                 RadiusTopRight: =0
                 Size: =11
                 Width: =207
-                X: =739
+                X: =707
                 ZIndex: =25
 
             Btn_editKH As button:
@@ -197,7 +197,7 @@ Quanlykhachhang As screen:
 
             TxtTenCT_3 As text:
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =If( ThisItem.LOAI_KHACH_HANG ="0", "Cá nhân", "Tổ chức")
+                Default: =ThisItem.MST
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -210,9 +210,28 @@ Quanlykhachhang As screen:
                 RadiusTopLeft: =0
                 RadiusTopRight: =0
                 Size: =11
-                Width: =192
-                X: =381
+                Width: =150
+                X: =307
                 ZIndex: =28
+
+            TxtMoTa_5 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.SDT_KHACH_HANG
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =30
+                OnChange: =
+                OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =125
+                X: =582
+                ZIndex: =29
 
         BadgeCanvas1_33 As Badge:
             BasePaletteColor: =
@@ -232,38 +251,38 @@ Quanlykhachhang As screen:
             Align: ='TextCanvas.Align'.Center
             DisplayMode: =DisplayMode.Edit
             FontColor: =
-            Height: =38
+            Height: =34
             Size: =14
             Text: ="Tên khách hàng"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =187
-            X: =193
-            Y: =89
+            X: =121
+            Y: =88
             ZIndex: =3
 
         TextCanvas2_173 As Text:
             Align: ='TextCanvas.Align'.Center
             DisplayMode: =DisplayMode.Edit
             FontColor: =
-            Height: =33
+            Height: =34
             Size: =14
             Text: ="Thao tác"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =203
             X: =1102
-            Y: =92
+            Y: =88
             ZIndex: =5
 
         TextCanvas2_114 As Text:
             Align: ='TextCanvas.Align'.Center
             DisplayMode: =DisplayMode.Edit
             FontColor: =
-            Height: =39
+            Height: =34
             Size: =14
-            Text: ="Mã khách hàng"
+            Text: ="Mã"
             Weight: ='TextCanvas.Weight'.Bold
-            Width: =193
-            X: =0
+            Width: =100
+            X: =21
             Y: =88
             ZIndex: =10
 
@@ -337,8 +356,8 @@ Quanlykhachhang As screen:
             Text: ="Địa chỉ"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =164
-            X: =573
-            Y: =90
+            X: =728
+            Y: =88
             ZIndex: =16
 
         TextCanvas2_176 As Text:
@@ -347,23 +366,23 @@ Quanlykhachhang As screen:
             FontColor: =
             Height: =34
             Size: =14
-            Text: ="Loại giấy tờ"
+            Text: ="Số giấy tờ"
             Weight: ='TextCanvas.Weight'.Bold
-            Width: =201
-            X: =738
-            Y: =90
+            Width: =125
+            X: =454
+            Y: =88
             ZIndex: =17
 
         TextCanvas2_177 As Text:
             Align: ='TextCanvas.Align'.Center
             DisplayMode: =DisplayMode.Edit
             FontColor: =
-            Height: =36
+            Height: =34
             Size: =14
-            Text: ="Số giấy tờ"
+            Text: ="Tỉnh/TP"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =154
-            X: =948
+            X: =927
             Y: =88
             ZIndex: =18
 
@@ -371,13 +390,13 @@ Quanlykhachhang As screen:
             Align: ='TextCanvas.Align'.Center
             DisplayMode: =DisplayMode.Edit
             FontColor: =
-            Height: =32
+            Height: =34
             Size: =14
-            Text: ="Loại khách hàng"
+            Text: ="MST"
             Weight: ='TextCanvas.Weight'.Bold
-            Width: =190
-            X: =383
-            Y: =92
+            Width: =146
+            X: =308
+            Y: =88
             ZIndex: =19
 
         "TextFilterPV_2 As 'Text input'":
@@ -452,6 +471,19 @@ Quanlykhachhang As screen:
             X: =811
             Y: =37
             ZIndex: =22
+
+        TextCanvas2_221 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =34
+            Size: =14
+            Text: ="SĐT"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =125
+            X: =581
+            Y: =88
+            ZIndex: =23
 
     LeftNavigation_20 As LeftNavigation_9:
         Width: =LeftNavigation_20.MenuWidth - 10
