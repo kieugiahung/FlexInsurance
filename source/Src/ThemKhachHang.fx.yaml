@@ -1,4 +1,8 @@
 ThemKhachHang As screen:
+    OnHidden: |-
+        =UpdateContext({resetCan:true})
+    OnVisible: |-
+        =UpdateContext({resetCan:false})
 
     CanvasKH As fluidGrid.fluidGridWithBlankCard:
         BorderThickness: =0
@@ -13,14 +17,17 @@ ThemKhachHang As screen:
             BorderThickness: =0
             DisplayMode: =DisplayMode.Edit
             Fill: =RGBA(0, 0, 0, 0)
-            Height: =677
+            Height: =717
+            Visible: |-
+                =
+                resetCan=false
             Width: =Parent.Width
             X: =0
             Y: =0
             ZIndex: =1
 
             KhachHang As groupContainer.manualLayoutContainer:
-                Height: =674
+                Height: =716
                 Width: =Parent.Width - 130
                 X: =130
                 ZIndex: =1
@@ -29,12 +36,12 @@ ThemKhachHang As screen:
                     BorderColor: =RGBA(166, 166, 166, 1)
                     DataSource: =DM_KHACH_HANG
                     DefaultMode: =FormMode.New
-                    Height: =683
+                    Height: =686
                     Item: =GalleryKH.Selected
                     NumberOfColumns: =2
                     OnSuccess: =
                     Width: =Parent.Width
-                    Y: =7
+                    Y: =30
                     ZIndex: =1
 
                     MST_DataCard1 As typedDataCard.textualEditCard:
@@ -67,7 +74,7 @@ ThemKhachHang As screen:
                             Height: =34
                             PaddingLeft: =0
                             Size: =11
-                            Text: ="MST (*)"
+                            Text: ="MST"
                             Width: =(Parent.Width - 60) * 0.4
                             Wrap: =false
                             X: =30
@@ -377,6 +384,8 @@ ThemKhachHang As screen:
 
                         DataCardKey20 As label:
                             AutoHeight: =true
+                            Color: =RGBA(0, 0, 0, 1)
+                            Font: =Font.'Segoe UI'
                             Height: =34
                             Size: =11
                             Text: ="Giới tính"
@@ -445,6 +454,8 @@ ThemKhachHang As screen:
 
                         DataCardKey21 As label:
                             AutoHeight: =true
+                            Color: =RGBA(0, 0, 0, 1)
+                            Font: =Font.'Segoe UI'
                             Height: =34
                             Size: =11
                             Text: ="Nhóm khách hàng"
@@ -2431,6 +2442,9 @@ ThemKhachHang As screen:
             DisplayMode: =DisplayMode.Edit
             Fill: =RGBA(0, 0, 0, 0)
             Height: =424
+            Visible: |-
+                =
+                resetCan=false
             Width: =1366
             X: =0
             Y: =1
@@ -2467,39 +2481,39 @@ ThemKhachHang As screen:
                     Align: ='TextCanvas.Align'.Center
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =38
+                    Height: =37
                     Size: =14
                     Text: ="MST"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =187
-                    X: =188
-                    Y: =91
+                    Width: =172
+                    X: =0
+                    Y: =95
                     ZIndex: =3
 
                 TextCanvas2_182 As Text:
                     Align: ='TextCanvas.Align'.Center
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =35
+                    Height: =37
                     Size: =14
                     Text: ="Thao tác"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =160
                     X: =1064
-                    Y: =94
+                    Y: =95
                     ZIndex: =4
 
                 TextCanvas2_174 As Text:
                     Align: ='TextCanvas.Align'.Center
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =39
+                    Height: =37
                     Size: =14
                     Text: ="Tên người đại diện"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =188
-                    X: =5
-                    Y: =90
+                    Width: =158
+                    X: =160
+                    Y: =95
                     ZIndex: =5
 
                 ThemMoiCT_14 As button:
@@ -2593,7 +2607,7 @@ ThemKhachHang As screen:
                                 "cr282_email",
                                 "cr282_chuc_vu",
                                 "cr282_ma_khach_hang",
-                                "edited"
+                                "cr282_so_giay_to","edited"
                             )
                         );
                         UpdateContext(
@@ -2617,9 +2631,9 @@ ThemKhachHang As screen:
                     Size: =14
                     Text: ="Địa chỉ"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =238
-                    X: =375
-                    Y: =92
+                    Width: =185
+                    X: =466
+                    Y: =95
                     ZIndex: =8
 
                 TextCanvas2_181 As Text:
@@ -2631,20 +2645,20 @@ ThemKhachHang As screen:
                     Text: ="Số điện thoại"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =118
-                    X: =638
-                    Y: =94
+                    X: =651
+                    Y: =95
                     ZIndex: =9
 
                 TextCanvas2_183 As Text:
                     Align: ='TextCanvas.Align'.Center
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =36
+                    Height: =37
                     Size: =14
                     Text: ="Email"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =154
-                    X: =756
+                    Width: =142
+                    X: =769
                     Y: =95
                     ZIndex: =10
 
@@ -2676,7 +2690,8 @@ ThemKhachHang As screen:
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =192
+                        Width: =160
+                        X: =160
                         ZIndex: =8
 
                     TxtMST_DD As text:
@@ -2694,8 +2709,7 @@ ThemKhachHang As screen:
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =168
-                        X: =193
+                        Width: =160
                         ZIndex: =9
 
                     TxtID_DD As text:
@@ -2731,8 +2745,8 @@ ThemKhachHang As screen:
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =274
-                        X: =361
+                        Width: =180
+                        X: =467
                         ZIndex: =23
 
                     TxtEmailDD As text:
@@ -2750,8 +2764,8 @@ ThemKhachHang As screen:
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =153
-                        X: =757
+                        Width: =150
+                        X: =769
                         ZIndex: =24
 
                     TxtSDT_DD As text:
@@ -2770,7 +2784,7 @@ ThemKhachHang As screen:
                         RadiusTopRight: =0
                         Size: =11
                         Width: =122
-                        X: =635
+                        X: =647
                         ZIndex: =25
 
                     TxtChucVu_DD As text:
@@ -2788,8 +2802,8 @@ ThemKhachHang As screen:
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =153
-                        X: =910
+                        Width: =150
+                        X: =919
                         ZIndex: =28
 
                     Btn_SuaDD As button:
@@ -2827,7 +2841,7 @@ ThemKhachHang As screen:
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                                 Refresh(DM_DAIDIEN_KH);
                                 Remove(tmpDaiDienKH,ThisItem);
-                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
+                                //Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
                             )
                         Size: =11
                         Text: ="Xóa"
@@ -2854,9 +2868,9 @@ ThemKhachHang As screen:
                                 )
                             );
                             If(
-                                IsBlank(errorMsgGal),
+                                IsBlank(errorMsgGal) && !IsBlank(TxtEmailDD.Text),
                                 If(
-                                    !IsBlank(TxtEmailDD.Text) && IsMatch(
+                                    IsMatch(
                                         TxtEmailDD.Text,
                                         "^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$"
                                     ),
@@ -2882,6 +2896,7 @@ ThemKhachHang As screen:
                                         cr282_so_dien_thoai: TxtSDT_DD.Text,
                                         cr282_email: TxtEmailDD.Text,
                                         cr282_chuc_vu: TxtChucVu_DD.Text,
+                                        cr282_so_giay_to: TxtSoGT_DD.Text,
                                         edited: 0
                                     }
                                 );
@@ -2928,18 +2943,50 @@ ThemKhachHang As screen:
                         Y: =5
                         ZIndex: =32
 
+                    TxtSoGT_DD As text:
+                        BorderColor: =RGBA(54, 176, 75, 1)
+                        Default: =ThisItem.cr282_ten_nguoi_dai_dien
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =147
+                        X: =320
+                        ZIndex: =33
+
                 TextCanvas_DD As Text:
                     Align: ='TextCanvas.Align'.Center
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =36
+                    Height: =37
                     Size: =14
                     Text: ="Chức vụ"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =154
-                    X: =910
+                    Width: =140
+                    X: =923
                     Y: =95
                     ZIndex: =12
+
+                TextCanvas2_214 As Text:
+                    Align: ='TextCanvas.Align'.Center
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =37
+                    Size: =14
+                    Text: ="Số giấy tờ"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =148
+                    X: =318
+                    Y: =92
+                    ZIndex: =13
 
     Btn_LuuKH As button:
         FontWeight: =FontWeight.Bold
@@ -3036,13 +3083,13 @@ ThemKhachHang As screen:
                     UpdateContext({errorMsg: "Số điện thoại là bắt buộc"})
                 )
             );
-            If(
+            /*If(
                 IsBlank(errorMsg),
                 If(
                     IsBlank(DataCardValue1_2.Text),
                     UpdateContext({errorMsg: "MST là bắt buộc"})
                 )
-            );
+            );*/
             /*If(
                 IsBlank(errorMsg),
                 If(
