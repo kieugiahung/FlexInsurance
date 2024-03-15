@@ -1917,7 +1917,7 @@ Nhapdieukien As screen:
                     BorderColor: =RGBA(0, 0, 0, 0)
                     Default: |-
                         =
-                        If(IsBlank(varMaDKien), "",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "2" ).TEN_KIEU)
+                        If(IsBlank(varMaDKien) Or varXoaSP, "",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "2" ).TEN_KIEU)
                     DisplayMode: =If(varDaGhi,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
@@ -2096,7 +2096,9 @@ Nhapdieukien As screen:
                     Color: =RGBA(0, 0, 0, 1)
                     Height: =20
                     Icon: =Icon.Cancel
-                    OnSelect: =Reset(Radio2_1)
+                    OnSelect: |-
+                        =Reset(Radio2_1);
+                        Set(varXoaSP, true);
                     Width: =20
                     X: =99
                     Y: =15
