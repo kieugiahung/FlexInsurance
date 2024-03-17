@@ -15,8 +15,6 @@ TraCuuCSADDT As screen:
             OnChange: |
                 =Reset(ComGiaTriCS);
                 If(
-                    IsBlank(ComTieuChiCS.Selected.MA_CHI_TIEU),
-                    Clear(tmpdsGiaTriTCCSDTCollect1),
                     ComTieuChiCS.Selected.MA_CHI_TIEU="MA_CT",
                     ClearCollect(
                         tmpdsGiaTriTCCSDTCollect,
@@ -331,7 +329,112 @@ TraCuuCSADDT As screen:
                             "cr282_ten_nhom_kh",
                             "value"
                         )
-                    )
+                    ),
+                    ComTieuChiCS.Selected.MA_CHI_TIEU="LHNV",
+                    ClearCollect(
+                        tmpdsGiaTriTCCSDTCollect,
+                        ShowColumns(
+                            SortByColumns(
+                                DM_LHNV,
+                                "cr282_ma_lhnv",
+                                SortOrder.Ascending
+                            ),
+                            "cr282_ma_lhnv",
+                            "cr282_ten_lhnv"
+                        )
+                    );
+                    ClearCollect(
+                        tmpdsGiaTriTCCSDTCollect1,
+                        RenameColumns(
+                            tmpdsGiaTriTCCSDTCollect,
+                            "cr282_ma_lhnv",
+                            "key",
+                            "cr282_ten_lhnv",
+                            "value"
+                        )
+                    ),
+                    ComTieuChiCS.Selected.MA_CHI_TIEU="MA_DON_VI",
+                    ClearCollect(
+                        tmpdsGiaTriTCCSDTCollect,
+                        ShowColumns(
+                            SortByColumns(
+                                DM_DON_VI,
+                                "cr282_ma_don_vi",
+                                SortOrder.Ascending
+                            ),
+                            "cr282_ma_don_vi",
+                            "cr282_ten_don_vi"
+                        )
+                    );
+                    ClearCollect(
+                        tmpdsGiaTriTCCSDTCollect1,
+                        RenameColumns(
+                            tmpdsGiaTriTCCSDTCollect,
+                            "cr282_ma_don_vi",
+                            "key",
+                            "cr282_ten_don_vi",
+                            "value"
+                        )
+                    ),
+                    ComTieuChiCS.Selected.MA_CHI_TIEU="MA_KB_DM",
+                    ClearCollect(
+                        tmpdsGiaTriTCCSDTCollect,
+                        ShowColumns(
+                            SortByColumns(
+                                DM_KENH_BANS,
+                                "cr282_ma_kenh_ban",
+                                SortOrder.Ascending
+                            ),
+                            "cr282_ma_kenh_ban",
+                            "cr282_ten_kenh_ban"
+                        )
+                    );
+                    ClearCollect(
+                        tmpdsGiaTriTCCSDTCollect1,
+                        RenameColumns(
+                            tmpdsGiaTriTCCSDTCollect,
+                            "cr282_ma_kenh_ban",
+                            "key",
+                            "cr282_ten_kenh_ban",
+                            "value"
+                        )
+                    ),
+                    ComTieuChiCS.Selected.MA_CHI_TIEU="MA_KB_LOAI",
+                    ClearCollect(
+                        tmpdsGiaTriTCCSDTCollect,
+                        ShowColumns(
+                            SortByColumns(
+                                DM_LOAI_KENH_BANS,
+                                "cr282_ma_loai_kb",
+                                SortOrder.Ascending
+                            ),
+                            "cr282_ma_loai_kb",
+                            "cr282_ten_loai_kb"
+                        )
+                    );
+                    ClearCollect(
+                        tmpdsGiaTriTCCSDTCollect1,
+                        RenameColumns(
+                            tmpdsGiaTriTCCSDTCollect,
+                            "cr282_ma_loai_kb",
+                            "key",
+                            "cr282_ten_loai_kb",
+                            "value"
+                        )
+                    ),
+                    ComTieuChiCS.Selected.MA_CHI_TIEU="MA_KB_NHOM",
+                    ClearCollect(
+                        tmpdsGiaTriTCCSDTCollect1,
+                        {
+                            key:"0",
+                            value:"Cá nhân"
+                        },
+                        {
+                            key:"1",
+                            value:"Tổ chức"
+                        }
+                    ),
+                    Clear(tmpdsGiaTriTCCSDTCollect1)
                 )
             SearchFields: =["cr282_ten_chi_tieu"]
             SearchItems: =Search(Filter(DM_TIEU_CHI_APDUNGS,LOAI=cbxTPhanCS.Selected.value),ComTieuChiCS.SearchText,"cr282_ten_chi_tieu")
@@ -631,6 +734,7 @@ TraCuuCSADDT As screen:
                     )
                 );
                 If(
+                    !IsBlank(cbxTPhanCS.Selected.value) && !IsBlank(cbxApDungCS.Selected.value) && 
                     !IsBlank(ComTieuChiCS.Selected.MA_CHI_TIEU) && !IsBlank(ComGiaTriCS.Selected.value) && CountIf(tmpDSCSADLoc1Collect,true)>0,
                     If(
                         cbxTPhanCS.Selected.value="PV",
@@ -771,6 +875,23 @@ TraCuuCSADDT As screen:
                                         }
                                     )
                                 )
+                            )
+                        )
+                    ),
+                    !IsBlank(cbxTPhanCS.Selected.value) && !IsBlank(cbxApDungCS.Selected.value) && 
+                    IsBlank(ComGiaTriCS.Selected.value) && CountIf(tmpDSCSADLoc1Collect,true)>0,
+                    ForAll(
+                        tmpTCCSDTADCollect As dsCha,
+                        If(
+                            !IsBlank(LookUp(DL_CHINHSACH_DOITUONG,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                            THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG=cbxApDungCS.Selected.value && KIEU="1")) &&
+                            IsBlank(LookUp(DL_CHINHSACH_DOITUONG,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                            THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG<>cbxApDungCS.Selected.value)),
+                            Collect(
+                                tmpChonCSDTCollect,
+                                {
+                                    cr282_ma_chinh_sach:dsCha.cr282_ma_chinh_sach
+                                }
                             )
                         )
                     ),
@@ -2505,11 +2626,11 @@ TraCuuCSADDT As screen:
             InputTextPlaceholder: ="Chọn tiêu chí"
             IsSearchable: =false
             Items: |-
-                =[{title:"Sản phẩm",value:"SP"},{title:"Kênh bán",value:"KB"},{title:"Khách hàng",value:"KH"},{title:"Phạm vi",value:"PV"},{title:"Giá trị",value:"GT"}]
+                =[{title:"Sản phẩm",value:"SP"},{title:"Kênh bán",value:"KB"},{title:"Khách hàng",value:"KH"},{title:"Phạm vi",value:"PV"},{title:"Giá trị",value:"ST"}]
             OnChange: =Reset(ComTieuChiCS);Reset(ComTieuChiCS)
             SearchFields: =["title"]
             SearchItems: |-
-                =Search([{title:"Sản phẩm",value:"SP"},{title:"Kênh bán",value:"KB"},{title:"Khách hàng",value:"KH"},{title:"Phạm vi",value:"PV"},{title:"Giá trị",value:"GT"}],cbxTPhanCS.SearchText,"title")
+                =Search([{title:"Sản phẩm",value:"SP"},{title:"Kênh bán",value:"KB"},{title:"Khách hàng",value:"KH"},{title:"Phạm vi",value:"PV"},{title:"Giá trị",value:"ST"}],cbxTPhanCS.SearchText,"title")
             SelectMultiple: =false
             Size: =10
             Width: =170
