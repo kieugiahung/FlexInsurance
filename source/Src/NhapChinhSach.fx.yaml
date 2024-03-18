@@ -2524,7 +2524,7 @@ NhapChinhSach As screen:
                     TemplatePadding: =0
                     TemplateSize: =35
                     Visible: =If(RadioCSKB.Selected.ID = 2 , true)
-                    Width: =970
+                    Width: =965
                     X: =253.2
                     Y: =76
                     ZIndex: =4
@@ -2614,7 +2614,7 @@ NhapChinhSach As screen:
 
                 RadioCSKB_LoaiTru As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
-                    Default: =LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaCS  && THANH_PHAN = "KB" && AP_DUNG = "2" ).TEN_KIEU
+                    Default: =If(IsBlank(varMaCS) Or varXoaKB_CS, "",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaCS  && THANH_PHAN = "KB" && AP_DUNG = "2" ).TEN_KIEU)
                     DisplayMode: =If(varGhiCS,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
@@ -2637,7 +2637,7 @@ NhapChinhSach As screen:
                     TemplatePadding: =0
                     TemplateSize: =35
                     Visible: =If(RadioCSKB_LoaiTru.Selected.ID = 2 , true)
-                    Width: =970
+                    Width: =965
                     X: =253.2
                     Y: =330
                     ZIndex: =7
@@ -2843,7 +2843,7 @@ NhapChinhSach As screen:
                     FontColor: =
                     Height: =27
                     Visible: =If(RadioCSKB.Selected.ID = 2 , true)
-                    Width: =968
+                    Width: =965
                     X: =253
                     Y: =47
                     ZIndex: =13
@@ -2879,7 +2879,7 @@ NhapChinhSach As screen:
                     FontColor: =
                     Height: =27
                     Visible: =If(RadioCSKB_LoaiTru.Selected.ID = 2 , true)
-                    Width: =968
+                    Width: =965
                     X: =255
                     Y: =301
                     ZIndex: =16
@@ -2907,6 +2907,19 @@ NhapChinhSach As screen:
                     X: =729
                     Y: =300
                     ZIndex: =18
+
+                Icon2_6 As icon.Reload:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    Color: =RGBA(0, 0, 0, 1)
+                    Height: =20
+                    Icon: =Icon.Cancel
+                    OnSelect: |-
+                        =Reset(RadioCSKB_LoaiTru);
+                        Set(varXoaKB_CS, true);
+                    Width: =20
+                    X: =123
+                    Y: =273
+                    ZIndex: =19
 
             "'Container3.3' As groupContainer.manualLayoutContainer":
                 Height: =531
@@ -2952,7 +2965,7 @@ NhapChinhSach As screen:
                     TemplatePadding: =0
                     TemplateSize: =35
                     Visible: =If(RadioCSKH.Selected.ID = 2 , true)
-                    Width: =970
+                    Width: =965
                     X: =253.2
                     Y: =77
                     ZIndex: =4
@@ -3041,7 +3054,9 @@ NhapChinhSach As screen:
 
                 RadioCSKH_LoaiTru As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
-                    Default: =LookUp(DL_CHINHSACH_DOITUONG, MA_CHINH_SACH =varMaCS  && THANH_PHAN = "KH" && AP_DUNG = "2" ).TEN_KIEU
+                    Default: |-
+                        =If(IsBlank(varMaCS) Or varXoaKH_CS, "",LookUp(DL_CHINHSACH_DOITUONG, MA_CHINH_SACH =varMaCS  && THANH_PHAN = "KH" && AP_DUNG = "2" ).TEN_KIEU
+                        )
                     DisplayMode: =If(varGhiCS,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
@@ -3064,7 +3079,7 @@ NhapChinhSach As screen:
                     TemplatePadding: =0
                     TemplateSize: =35
                     Visible: =If(RadioCSKH_LoaiTru.Selected.ID = 2 , true)
-                    Width: =970
+                    Width: =965
                     X: =253
                     Y: =330
                     ZIndex: =7
@@ -3254,7 +3269,7 @@ NhapChinhSach As screen:
                     FontColor: =
                     Height: =27
                     Visible: =If(RadioCSKH.Selected.ID = 2 , true)
-                    Width: =968
+                    Width: =965
                     X: =253
                     Y: =48
                     ZIndex: =13
@@ -3290,7 +3305,7 @@ NhapChinhSach As screen:
                     FontColor: =
                     Height: =27
                     Visible: =If(RadioCSKH_LoaiTru.Selected.ID = 2 , true)
-                    Width: =968
+                    Width: =965
                     X: =253
                     Y: =301
                     ZIndex: =16
@@ -3318,6 +3333,19 @@ NhapChinhSach As screen:
                     X: =729
                     Y: =300
                     ZIndex: =18
+
+                Icon2_7 As icon.Reload:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    Color: =RGBA(0, 0, 0, 1)
+                    Height: =20
+                    Icon: =Icon.Cancel
+                    OnSelect: |-
+                        =Reset(RadioCSKH_LoaiTru);
+                        Set(varXoaKH_CS, true);
+                    Width: =20
+                    X: =123
+                    Y: =263
+                    ZIndex: =19
 
             "'Container3.4' As groupContainer.manualLayoutContainer":
                 Height: =531
@@ -3360,7 +3388,7 @@ NhapChinhSach As screen:
                     LoadingSpinner: =LoadingSpinner.Data
                     TemplateSize: =35
                     Visible: =If(RadioCSPV.Selected.ID = 2 , true)
-                    Width: =970
+                    Width: =965
                     X: =253.2
                     Y: =76
                     ZIndex: =4
@@ -3433,7 +3461,9 @@ NhapChinhSach As screen:
 
                 RadioCSPV_LoaiTru As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
-                    Default: =LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaCS  && THANH_PHAN = "PV" && AP_DUNG = "2" ).TEN_KIEU
+                    Default: |-
+                        =If(IsBlank(varMaCS) Or varXoaPV_CS, "",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaCS  && THANH_PHAN = "PV" && AP_DUNG = "2" ).TEN_KIEU
+                        )
                     DisplayMode: =If(varGhiCS,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
@@ -3456,7 +3486,7 @@ NhapChinhSach As screen:
                     TemplatePadding: =0
                     TemplateSize: =35
                     Visible: =If(RadioCSPV_LoaiTru.Selected.ID = 2 ,true)
-                    Width: =970
+                    Width: =965
                     X: =253.2
                     Y: =330
                     ZIndex: =7
@@ -3646,7 +3676,7 @@ NhapChinhSach As screen:
                     FontColor: =
                     Height: =27
                     Visible: =If(RadioCSPV.Selected.ID = 2 , true)
-                    Width: =968
+                    Width: =965
                     X: =254
                     Y: =46
                     ZIndex: =13
@@ -3682,7 +3712,7 @@ NhapChinhSach As screen:
                     FontColor: =
                     Height: =27
                     Visible: =If(RadioCSPV_LoaiTru.Selected.ID = 2 , true)
-                    Width: =968
+                    Width: =965
                     X: =253
                     Y: =301
                     ZIndex: =16
@@ -3710,6 +3740,19 @@ NhapChinhSach As screen:
                     X: =729
                     Y: =300
                     ZIndex: =18
+
+                Icon2_8 As icon.Reload:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    Color: =RGBA(0, 0, 0, 1)
+                    Height: =20
+                    Icon: =Icon.Cancel
+                    OnSelect: |-
+                        =Reset(RadioCSPV_LoaiTru);
+                        Set(varXoaPV_CS, true);
+                    Width: =20
+                    X: =123
+                    Y: =264
+                    ZIndex: =19
 
             "'Container3.1' As groupContainer.manualLayoutContainer":
                 Fill: =RGBA(255, 255, 255, 1)
@@ -3756,7 +3799,7 @@ NhapChinhSach As screen:
                     TemplatePadding: =0
                     TemplateSize: =35
                     Visible: =If(RadioCSSP.Selected.ID = 2 , true)
-                    Width: =970
+                    Width: =965
                     X: =253.2
                     Y: =121
                     ZIndex: =4
@@ -3865,7 +3908,7 @@ NhapChinhSach As screen:
 
                 RadioCSSP_LoaiTru As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
-                    Default: =LookUp(DL_CHINHSACH_DOITUONG, MA_CHINH_SACH =varMaCS  && THANH_PHAN = "SP" && AP_DUNG = "2" ).TEN_KIEU
+                    Default: =If(IsBlank(varMaCS) Or varXoaSP_CS, "",LookUp(DL_CHINHSACH_DOITUONG, MA_CHINH_SACH =varMaCS  && THANH_PHAN = "SP" && AP_DUNG = "2" ).TEN_KIEU)
                     DisplayMode: =If(varGhiCS,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
@@ -3888,7 +3931,7 @@ NhapChinhSach As screen:
                     TemplatePadding: =0
                     TemplateSize: =35
                     Visible: =If(RadioCSSP_LoaiTru.Selected.ID = 2 , true)
-                    Width: =970
+                    Width: =965
                     X: =253.2
                     Y: =375
                     ZIndex: =7
@@ -4121,7 +4164,7 @@ NhapChinhSach As screen:
                     FontColor: =
                     Height: =27
                     Visible: =If(RadioCSSP.Selected.ID = 2 , true)
-                    Width: =968
+                    Width: =965
                     X: =253
                     Y: =92
                     ZIndex: =14
@@ -4169,7 +4212,7 @@ NhapChinhSach As screen:
                     FontColor: =
                     Height: =27
                     Visible: =If(RadioCSSP_LoaiTru.Selected.ID = 2 , true)
-                    Width: =968
+                    Width: =965
                     X: =253
                     Y: =346
                     ZIndex: =18
@@ -4209,6 +4252,19 @@ NhapChinhSach As screen:
                     X: =964
                     Y: =345
                     ZIndex: =21
+
+                Icon2_5 As icon.Reload:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    Color: =RGBA(0, 0, 0, 1)
+                    Height: =20
+                    Icon: =Icon.Cancel
+                    OnSelect: |-
+                        =Reset(RadioCSSP_LoaiTru);
+                        Set(varXoaSP_CS, true);
+                    Width: =20
+                    X: =123
+                    Y: =317
+                    ZIndex: =22
 
             "'Container3.5' As groupContainer.manualLayoutContainer":
                 Height: =531
@@ -4252,7 +4308,7 @@ NhapChinhSach As screen:
                     TemplatePadding: =0
                     TemplateSize: =35
                     Visible: =If(RadioST.Selected.ID = 2 , true)
-                    Width: =970
+                    Width: =965
                     X: =253.2
                     Y: =76
                     ZIndex: =4
@@ -4383,7 +4439,9 @@ NhapChinhSach As screen:
 
                 RadioST_LoaiTru As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
-                    Default: =LookUp(DL_CHINHSACH_DOITUONG, MA_CHINH_SACH =varMaCS  && THANH_PHAN = "ST" && AP_DUNG = "2" ).TEN_KIEU
+                    Default: |-
+                        =If(IsBlank(varMaCS) Or varXoaST_CS, "",LookUp(DL_CHINHSACH_DOITUONG, MA_CHINH_SACH =varMaCS  && THANH_PHAN = "ST" && AP_DUNG = "2" ).TEN_KIEU
+                        )
                     DisplayMode: =If(varGhiCS,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
@@ -4406,7 +4464,7 @@ NhapChinhSach As screen:
                     TemplatePadding: =0
                     TemplateSize: =35
                     Visible: =If(RadioST_LoaiTru.Selected.ID = 2 ,true)
-                    Width: =970
+                    Width: =965
                     X: =253.2
                     Y: =330
                     ZIndex: =7
@@ -4653,7 +4711,7 @@ NhapChinhSach As screen:
                     FontColor: =
                     Height: =27
                     Visible: =If(RadioST_LoaiTru.Selected.ID = 2 , true)
-                    Width: =968
+                    Width: =965
                     X: =253
                     Y: =301
                     ZIndex: =13
@@ -4677,7 +4735,7 @@ NhapChinhSach As screen:
                     FontColor: =
                     Height: =27
                     Visible: =If(RadioST.Selected.ID = 2 , true)
-                    Width: =968
+                    Width: =965
                     X: =253
                     Y: =47
                     ZIndex: =16
@@ -4765,6 +4823,19 @@ NhapChinhSach As screen:
                     X: =923
                     Y: =301
                     ZIndex: =23
+
+                Icon2_9 As icon.Reload:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    Color: =RGBA(0, 0, 0, 1)
+                    Height: =20
+                    Icon: =Icon.Cancel
+                    OnSelect: |-
+                        =Reset(RadioST_LoaiTru);
+                        Set(varXoaST_CS, true);
+                    Width: =20
+                    X: =123
+                    Y: =271
+                    ZIndex: =24
 
     BtnBack As button:
         OnSelect: =Back();
