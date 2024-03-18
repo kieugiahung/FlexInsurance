@@ -3113,10 +3113,10 @@ NhapChinhSach As screen:
                         DisplayMode: =If(varGhiCS,DisplayMode.Disabled,DisplayMode.Edit)
                         Height: =30
                         IsSearchable: =false
-                        Items: =Filter( tmpDsGiatri, Loai = DropKHCS_LoaiTru.Selected.MA_CHI_TIEU)
+                        Items: =Filter(tmpDsGiatriCS, Loai = DropKHCS_LoaiTru.Selected.MA_CHI_TIEU)
                         OnSelect: =Select(Parent)
                         SearchFields: =["cr282_ten_gia_tri"]
-                        SearchItems: =[]
+                        SearchItems: =Search(Filter(tmpDsGiatriCS, Loai = DropKHCS_LoaiTru.Selected.MA_CHI_TIEU),ComboKHCS_LT.SearchText,"cr282_ten_gia_tri")
                         Size: =11
                         Width: =658
                         X: =210
