@@ -412,10 +412,144 @@ NhapChinhSach As screen:
                     DefaultMode: =FormMode.New
                     Height: =304
                     Item: =LookUp(DL_CHINHSACH_CHUNG, MA_CHINH_SACH=varMaCS)
-                    NumberOfColumns: =2
+                    NumberOfColumns: =4
                     Width: =Parent.Width
                     Y: =30
                     ZIndex: =4
+
+                    MO_TA_DataCard2 As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_mo_ta"
+                        Default: =ThisItem.MO_TA
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DL_CHINHSACH_CHUNG],DataSourceInfo.DisplayName,"cr282_mo_ta")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        MaxLength: =DataSourceInfo([@DL_CHINHSACH_CHUNG], DataSourceInfo.MaxLength, "cr282_mo_ta")
+                        Required: =false
+                        Update: =DataCardMoTa.Text
+                        Width: =309
+                        X: =2
+                        Y: =1
+                        ZIndex: =1
+
+                        DataCardKey23 As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Size: =11
+                            Text: ="Mô tả"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        DataCardMoTa As text:
+                            BorderColor: =RGBA(54, 176, 75, 1)
+                            Default: =Parent.Default
+                            DelayOutput: =true
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(214, 221, 224, 1)
+                            DisplayMode: =DisplayMode.Disabled
+                            HintText: ="Hệ thống tự sinh"
+                            MaxLength: =Parent.MaxLength
+                            PaddingLeft: =5
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Size: =11
+                            Tooltip: =Parent.DisplayName
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardKey23.Y + DataCardKey23.Height + 5
+                            ZIndex: =2
+
+                        ErrorMessage11 As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardMoTa.Y + DataCardMoTa.Height
+                            ZIndex: =3
+
+                        StarVisible23 As label:
+                            Align: =Align.Center
+                            Height: =DataCardKey23.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey23.Y
+                            ZIndex: =4
+
+                    HOAT_DONG_DataCard1 As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_hoat_dong"
+                        Default: =ThisItem.HOAT_DONG
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DL_CHINHSACH_CHUNG],DataSourceInfo.DisplayName,"cr282_hoat_dong")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        MaxLength: =DataSourceInfo([@DL_CHINHSACH_CHUNG], DataSourceInfo.MaxLength, "cr282_hoat_dong")
+                        Required: =false
+                        Update: =DataCardHoatDong.Text
+                        Width: =309
+                        X: =3
+                        Y: =0
+                        ZIndex: =1
+
+                        DataCardKey26 As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Size: =11
+                            Text: ="Hoạt động"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        ErrorMessage14 As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardHoatDong.Y + DataCardHoatDong.Height
+                            ZIndex: =3
+
+                        StarVisible29 As label:
+                            Align: =Align.Center
+                            Height: =DataCardKey26.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey26.Y
+                            ZIndex: =4
+
+                        DataCardHoatDong As checkbox:
+                            BorderColor: =RGBA(71, 158, 245, 1)
+                            Default: =Parent.Default
+                            Text: =""
+                            X: =30
+                            Y: =40
+                            ZIndex: =5
 
                     SO_VB_DataCard3 As typedDataCard.textualEditCard:
                         BorderColor: =RGBA(245, 245, 245, 1)
@@ -429,9 +563,9 @@ NhapChinhSach As screen:
                         MaxLength: =DataSourceInfo([@DL_CHINHSACH_CHUNG], DataSourceInfo.MaxLength, "cr282_so_vb")
                         Required: =false
                         Update: =DataCardValueSoCS.Text
-                        Width: =618
-                        X: =0
-                        Y: =1
+                        Width: =309
+                        X: =1
+                        Y: =0
                         ZIndex: =1
 
                         DataCardKey31 As label:
@@ -448,7 +582,7 @@ NhapChinhSach As screen:
                             PaddingLeft: =0
                             Size: =11
                             Text: ="Số văn bản"
-                            Width: =(Parent.Width - 60) * 0.4
+                            Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
                             Y: =10
@@ -477,9 +611,9 @@ NhapChinhSach As screen:
                             RadiusTopRight: =0
                             Size: =11
                             Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey31.X + DataCardKey31.Width
-                            Y: =10
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardKey31.Y + DataCardKey31.Height + 5
                             ZIndex: =2
 
                         ErrorMessage31 As label:
@@ -538,9 +672,9 @@ NhapChinhSach As screen:
                         Required: =false
                         Update: ="0"
                         Visible: =false
-                        Width: =618
+                        Width: =309
                         X: =1
-                        Y: =3
+                        Y: =2
                         ZIndex: =1
 
                         DataCardKey52 As label:
@@ -557,10 +691,10 @@ NhapChinhSach As screen:
                             Height: =34
                             PaddingLeft: =0
                             Text: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.4
+                            Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
-                            Y: =10 + (DataCardValue41.Height / 2) - (Self.Height / 2)
+                            Y: =10
                             ZIndex: =1
 
                         DataCardValue41 As text:
@@ -586,9 +720,9 @@ NhapChinhSach As screen:
                             RadiusTopLeft: =0
                             RadiusTopRight: =0
                             Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey52.X + DataCardKey52.Width
-                            Y: =10
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardKey52.Y + DataCardKey52.Height + 5
                             ZIndex: =2
 
                         ErrorMessage52 As label:
@@ -646,7 +780,7 @@ NhapChinhSach As screen:
                         MaxLength: =DataSourceInfo([@DL_CHINHSACH_CHUNG], DataSourceInfo.MaxLength, "cr282_ma_chinh_sach")
                         Required: =true
                         Update: =newMaCS
-                        Width: =618
+                        Width: =309
                         X: =0
                         Y: =0
                         ZIndex: =5
@@ -665,7 +799,7 @@ NhapChinhSach As screen:
                             PaddingLeft: =0
                             Size: =11
                             Text: ="Mã (*)"
-                            Width: =(Parent.Width - 60) * 0.4
+                            Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
                             Y: =10
@@ -695,9 +829,9 @@ NhapChinhSach As screen:
                             RadiusTopRight: =0
                             Size: =11
                             Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey20_1.X + DataCardKey20_1.Width
-                            Y: =10
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardKey20_1.Y + DataCardKey20_1.Height + 5
                             ZIndex: =2
 
                         ErrorMessage20_1 As label:
@@ -735,9 +869,9 @@ NhapChinhSach As screen:
                         Required: =false
                         Update: =newIDCS
                         Visible: =false
-                        Width: =618
-                        X: =1
-                        Y: =0
+                        Width: =309
+                        X: =0
+                        Y: =2
                         ZIndex: =5
 
                         DataCardKey25 As label:
@@ -754,10 +888,10 @@ NhapChinhSach As screen:
                             Height: =34
                             PaddingLeft: =0
                             Text: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.4
+                            Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
-                            Y: =10 + (DataCardIDCS.Height / 2) - (Self.Height / 2)
+                            Y: =10
                             ZIndex: =1
 
                         DataCardIDCS As text:
@@ -783,9 +917,9 @@ NhapChinhSach As screen:
                             RadiusTopLeft: =0
                             RadiusTopRight: =0
                             Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey25.X + DataCardKey25.Width
-                            Y: =10
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardKey25.Y + DataCardKey25.Height + 5
                             ZIndex: =2
 
                         ErrorMessage25 As label:
@@ -842,9 +976,9 @@ NhapChinhSach As screen:
                         Height: =50
                         Required: =false
                         Update: =If(Not IsBlank(DateValueNgayCS.SelectedDate), DateValueNgayCS.SelectedDate)
-                        Width: =618
-                        X: =1
-                        Y: =1
+                        Width: =309
+                        X: =2
+                        Y: =0
                         ZIndex: =5
 
                         DataCardKey28 As label:
@@ -861,7 +995,7 @@ NhapChinhSach As screen:
                             PaddingLeft: =0
                             Size: =11
                             Text: ="Ngày văn bản"
-                            Width: =(Parent.Width - 60) * 0.4
+                            Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
                             Y: =10
@@ -888,9 +1022,9 @@ NhapChinhSach As screen:
                             Size: =11
                             StartYear: =1899
                             Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey28.X + DataCardKey28.Width
-                            Y: =10
+                            Width: =(Parent.Width - 60)
+                            X: =30
+                            Y: =DataCardKey28.Y + DataCardKey28.Height + 5
                             ZIndex: =2
 
                         Separator1_2 As label:
@@ -971,9 +1105,9 @@ NhapChinhSach As screen:
                         Height: =55
                         Required: =false
                         Update: =If(Not IsBlank(DateValueTuCS.SelectedDate), DateValueTuCS.SelectedDate)
-                        Width: =618
+                        Width: =309
                         X: =0
-                        Y: =2
+                        Y: =1
                         ZIndex: =5
 
                         DataCardKey29 As label:
@@ -990,7 +1124,7 @@ NhapChinhSach As screen:
                             PaddingLeft: =0
                             Size: =11
                             Text: ="Hiệu lực từ (*)"
-                            Width: =(Parent.Width - 60) * 0.4
+                            Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
                             Y: =10
@@ -1017,9 +1151,9 @@ NhapChinhSach As screen:
                             Size: =11
                             StartYear: =1899
                             Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey29.X + DataCardKey29.Width
-                            Y: =10
+                            Width: =(Parent.Width - 60)
+                            X: =30
+                            Y: =DataCardKey29.Y + DataCardKey29.Height + 5
                             ZIndex: =2
 
                         ErrorMessage29 As label:
@@ -1076,9 +1210,9 @@ NhapChinhSach As screen:
                         Height: =50
                         Required: =false
                         Update: =If(Not IsBlank(DateValueDenCS.SelectedDate), DateValueDenCS.SelectedDate)
-                        Width: =618
+                        Width: =309
                         X: =1
-                        Y: =2
+                        Y: =1
                         ZIndex: =5
 
                         DataCardKey30 As label:
@@ -1095,7 +1229,7 @@ NhapChinhSach As screen:
                             PaddingLeft: =0
                             Size: =11
                             Text: ="Hiệu lực đến"
-                            Width: =(Parent.Width - 60) * 0.4
+                            Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
                             Y: =10
@@ -1122,9 +1256,9 @@ NhapChinhSach As screen:
                             Size: =11
                             StartYear: =1899
                             Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey30.X + DataCardKey30.Width
-                            Y: =10
+                            Width: =(Parent.Width - 60)
+                            X: =30
+                            Y: =DataCardKey30.Y + DataCardKey30.Height + 5
                             ZIndex: =2
 
                         ErrorMessage30 As label:
@@ -1182,9 +1316,9 @@ NhapChinhSach As screen:
                         Height: =50
                         Required: =false
                         Update: =DataCardValueFileCS.Attachments
-                        Width: =618
-                        X: =0
-                        Y: =3
+                        Width: =309
+                        X: =3
+                        Y: =1
                         ZIndex: =5
 
                         DataCardKey21_1 As label:
@@ -1201,7 +1335,7 @@ NhapChinhSach As screen:
                             PaddingLeft: =0
                             Size: =11
                             Text: ="File"
-                            Width: =(Parent.Width - 60) * 0.4
+                            Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
                             Y: =10
@@ -1237,9 +1371,9 @@ NhapChinhSach As screen:
                             PaddingTop: =5
                             PressedFill: =RGBA(0, 120, 212, 1)
                             Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey21_1.X + DataCardKey21_1.Width
-                            Y: =10
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardKey21_1.Y + DataCardKey21_1.Height + 5
                             ZIndex: =2
 
                         ErrorMessage21_1 As label:
@@ -1311,10 +1445,181 @@ NhapChinhSach As screen:
                     Fill: =RGBA(255, 255, 255, 1)
                     Height: =204
                     Item: =LookUp(DL_CHINHSACH_APDUNG, MA_CHINH_SACH=varMaCS)
-                    NumberOfColumns: =2
+                    NumberOfColumns: =4
                     Width: =Parent.Width
                     Y: =364
                     ZIndex: =6
+
+                    KIEU_DU_LIEU_DataCard1 As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_kieu_du_lieu"
+                        Default: =ThisItem.KIEU_DU_LIEU
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DL_CHINHSACH_APDUNG],DataSourceInfo.DisplayName,"cr282_kieu_du_lieu")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        MaxLength: =DataSourceInfo([@DL_CHINHSACH_APDUNG], DataSourceInfo.MaxLength, "cr282_kieu_du_lieu")
+                        Required: =false
+                        Update: =DataCardKieuDL.Selected.MA
+                        Width: =309
+                        X: =0
+                        Y: =1
+                        ZIndex: =1
+
+                        DataCardKey32 As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Size: =11
+                            Text: ="Kiểu dữ liệu"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        ErrorMessage17 As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =
+                            ZIndex: =3
+
+                        StarVisible30 As label:
+                            Align: =Align.Center
+                            Height: =DataCardKey32.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey32.Y
+                            ZIndex: =4
+
+                        DataCardKieuDL As dropdown:
+                            BorderColor: =RGBA(54, 176, 75, 1)
+                            ChevronBackground: =RGBA(255, 255, 255, 1)
+                            ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
+                            ChevronDisabledFill: =RGBA(161, 159, 157, 1)
+                            ChevronFill: =RGBA(54, 176, 75, 1)
+                            ChevronHoverBackground: =RGBA(245, 245, 245, 1)
+                            ChevronHoverFill: =RGBA(50, 49, 48, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =If(Parent.Default="002", "Số tiền", "Tỷ lệ (%)")
+                            DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(230, 230, 230, 1)
+                            DisplayMode: =If(varGhiCS,DisplayMode.Disabled, DisplayMode.Edit)
+                            Font: =Font.'Segoe UI'
+                            HoverBorderColor: =RGBA(16, 110, 190, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(245, 245, 245, 1)
+                            Items: |-
+                                =[{MA:"001",TEN:"Tỷ lệ (%)"},{MA:"002",TEN:"Số tiền"}]
+                            PaddingBottom: =5
+                            PaddingLeft: =12
+                            PaddingRight: =5
+                            PaddingTop: =5
+                            PressedBorderColor: =RGBA(16, 110, 190, 1)
+                            PressedFill: =RGBA(0, 120, 212, 1)
+                            SelectionColor: =RGBA(50, 49, 48, 1)
+                            SelectionFill: =RGBA(0, 120, 212, 1)
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardKey43.Y + DataCardKey43.Height + 5
+                            ZIndex: =5
+
+                    HINH_THUC_DataCard1 As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_hinh_thuc"
+                        Default: =ThisItem.HINH_THUC
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DL_CHINHSACH_APDUNG],DataSourceInfo.DisplayName,"cr282_hinh_thuc")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        MaxLength: =DataSourceInfo([@DL_CHINHSACH_APDUNG], DataSourceInfo.MaxLength, "cr282_hinh_thuc")
+                        Required: =false
+                        Update: =DataCardHinhThuc.Selected.MA
+                        Width: =309
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                        DataCardKey33 As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Size: =11
+                            Text: ="Hình thức"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        ErrorMessage23 As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardHinhThuc.Y + DataCardHinhThuc.Height
+                            ZIndex: =3
+
+                        StarVisible31 As label:
+                            Align: =Align.Center
+                            Height: =DataCardKey33.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey33.Y
+                            ZIndex: =4
+
+                        DataCardHinhThuc As dropdown:
+                            BorderColor: =RGBA(54, 176, 75, 1)
+                            ChevronBackground: =RGBA(255, 255, 255, 1)
+                            ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
+                            ChevronDisabledFill: =RGBA(161, 159, 157, 1)
+                            ChevronFill: =RGBA(54, 176, 75, 1)
+                            ChevronHoverBackground: =RGBA(245, 245, 245, 1)
+                            ChevronHoverFill: =RGBA(50, 49, 48, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =If(Parent.Default="001", "Ưu tiên", If(Parent.Default="002", "Lựa chọn", "Gộp"))
+                            DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(230, 230, 230, 1)
+                            DisplayMode: =If(varGhiCS,DisplayMode.Disabled, DisplayMode.Edit)
+                            Font: =Font.'Segoe UI'
+                            HoverBorderColor: =RGBA(16, 110, 190, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(245, 245, 245, 1)
+                            Items: |-
+                                =[{MA:"001",TEN:"Ưu tiên"},{MA:"002",TEN:"Lựa chọn"},{MA:"003",TEN:"Gộp"}]
+                            PaddingBottom: =5
+                            PaddingLeft: =12
+                            PaddingRight: =5
+                            PaddingTop: =5
+                            PressedBorderColor: =RGBA(16, 110, 190, 1)
+                            PressedFill: =RGBA(0, 120, 212, 1)
+                            SelectionColor: =RGBA(50, 49, 48, 1)
+                            SelectionFill: =RGBA(0, 120, 212, 1)
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: |
+                                =DataCardKey44.Y + DataCardKey44.Height + 5
+                            ZIndex: =5
 
                     MA_CHINH_SACH_DataCard3 As typedDataCard.textualEditCard:
                         BorderColor: =RGBA(245, 245, 245, 1)
@@ -1329,8 +1634,8 @@ NhapChinhSach As screen:
                         Required: =true
                         Update: =newMaCS
                         Visible: =false
-                        Width: =618
-                        X: =0
+                        Width: =309
+                        X: =3
                         Y: =0
                         ZIndex: =7
 
@@ -1348,10 +1653,10 @@ NhapChinhSach As screen:
                             PaddingLeft: =0
                             Size: =11
                             Text: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.4
+                            Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
-                            Y: =10 + (DataCardMaCSApDung.Height / 2) - (Self.Height / 2)
+                            Y: =10
                             ZIndex: =1
 
                         DataCardMaCSApDung As text:
@@ -1377,9 +1682,9 @@ NhapChinhSach As screen:
                             RadiusTopLeft: =0
                             RadiusTopRight: =0
                             Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey39.X + DataCardKey39.Width
-                            Y: =10
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardKey39.Y + DataCardKey39.Height + 5
                             ZIndex: =2
 
                         ErrorMessage39 As label:
@@ -1417,9 +1722,9 @@ NhapChinhSach As screen:
                         Required: =false
                         Update: =newIDCSApdung
                         Visible: =false
-                        Width: =618
-                        X: =1
-                        Y: =0
+                        Width: =309
+                        X: =0
+                        Y: =2
                         ZIndex: =7
 
                         DataCardKey40 As label:
@@ -1436,10 +1741,10 @@ NhapChinhSach As screen:
                             Height: =34
                             PaddingLeft: =0
                             Text: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.4
+                            Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
-                            Y: =10 + (DataCardIDCSApDung.Height / 2) - (Self.Height / 2)
+                            Y: =10
                             ZIndex: =1
 
                         DataCardIDCSApDung As text:
@@ -1465,9 +1770,9 @@ NhapChinhSach As screen:
                             RadiusTopLeft: =0
                             RadiusTopRight: =0
                             Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey40.X + DataCardKey40.Width
-                            Y: =10
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardKey40.Y + DataCardKey40.Height + 5
                             ZIndex: =2
 
                         ErrorMessage40 As label:
@@ -1525,9 +1830,9 @@ NhapChinhSach As screen:
                         MaxLength: =DataSourceInfo([@DL_CHINHSACH_APDUNG], DataSourceInfo.MaxLength, "cr282_loai_dk")
                         Required: =false
                         Update: =DataCardLoaiDK.Selected.MA
-                        Width: =618
-                        X: =0
-                        Y: =1
+                        Width: =309
+                        X: =1
+                        Y: =0
                         ZIndex: =7
 
                         DataCardKey41 As label:
@@ -1544,10 +1849,10 @@ NhapChinhSach As screen:
                             PaddingLeft: =0
                             Size: =11
                             Text: ="Loại điều khoản"
-                            Width: =(Parent.Width - 60) * 0.4
+                            Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
-                            Y: =15
+                            Y: =10
                             ZIndex: =1
 
                         ErrorMessage41 As label:
@@ -1612,7 +1917,7 @@ NhapChinhSach As screen:
                             HoverColor: =RGBA(50, 49, 48, 1)
                             HoverFill: =RGBA(245, 245, 245, 1)
                             Items: |-
-                                =[{MA:"1",TEN:"Đơn"},{MA:"2",TEN:"Kết hợp"}]
+                                =[{MA:"2",TEN:"Kết hợp"},{MA:"1",TEN:"Đơn"}]
                             PaddingBottom: =5
                             PaddingLeft: =12
                             PaddingRight: =5
@@ -1621,10 +1926,9 @@ NhapChinhSach As screen:
                             PressedFill: =RGBA(0, 120, 212, 1)
                             SelectionColor: =RGBA(50, 49, 48, 1)
                             SelectionFill: =RGBA(0, 120, 212, 1)
-                            Width: =334.8
-                            X: |
-                                =DataCardKey41.X + DataCardKey41.Width
-                            Y: =10
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardKey44.Y + DataCardKey44.Height + 5
                             ZIndex: =5
 
                     ANH_HUONG_DataCard2 As typedDataCard.textualEditCard:
@@ -1635,13 +1939,13 @@ NhapChinhSach As screen:
                         DisplayMode: =Parent.DisplayMode
                         DisplayName: =DataSourceInfo([@DL_CHINHSACH_APDUNG],DataSourceInfo.DisplayName,"cr282_anh_huong")
                         Fill: =RGBA(0, 0, 0, 0)
-                        Height: =50
+                        Height: =95
                         MaxLength: =DataSourceInfo([@DL_CHINHSACH_APDUNG], DataSourceInfo.MaxLength, "cr282_anh_huong")
                         Required: =false
                         Update: =DataCardAnhHuong.SelectedText.'data-ADB4D7A662F548B49FAC2B986E348A1BMA'
-                        Width: =618
-                        X: =1
-                        Y: =1
+                        Width: =309
+                        X: =2
+                        Y: =0
                         ZIndex: =7
 
                         DataCardKey42 As label:
@@ -1658,10 +1962,10 @@ NhapChinhSach As screen:
                             PaddingLeft: =0
                             Size: =11
                             Text: ="Ảnh hưởng"
-                            Width: =(Parent.Width - 60) * 0.4
+                            Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
-                            Y: =10 + (DataCardAnhHuong.Height / 2) - (Self.Height / 2)
+                            Y: =10
                             ZIndex: =1
 
                         ErrorMessage42 As label:
@@ -1735,10 +2039,10 @@ NhapChinhSach As screen:
                             PressedFill: =RGBA(0, 120, 212, 1)
                             SelectionColor: =RGBA(50, 49, 48, 1)
                             SelectionFill: =RGBA(0, 120, 212, 1)
-                            Width: =334.8
+                            Width: =Parent.Width - 60
                             X: |
-                                =DataCardKey41.X + DataCardKey41.Width
-                            Y: =10
+                                =30
+                            Y: =DataCardKey43.Y + DataCardKey43.Height + 5
                             ZIndex: =5
 
                     SO_TIEN_DataCard2 As typedDataCard.numberEditCard:
@@ -1752,9 +2056,10 @@ NhapChinhSach As screen:
                         Height: =50
                         Required: =false
                         Update: =Value(DataCardVSoTienAD.Text)
-                        Width: =618
-                        X: =0
-                        Y: =2
+                        Visible: =If(DataCardKieuDL.Selected.MA="002",true,false)
+                        Width: =309
+                        X: =1
+                        Y: =1
                         ZIndex: =7
 
                         DataCardKey44 As label:
@@ -1770,11 +2075,11 @@ NhapChinhSach As screen:
                             Height: =34
                             PaddingLeft: =0
                             Size: =11
-                            Text: ="Số tiền"
-                            Width: =(Parent.Width - 60) * 0.4
+                            Text: ="Giá trị"
+                            Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
-                            Y: =10 + (DataCardVSoTienAD.Height / 2) - (Self.Height / 2)
+                            Y: =10
                             ZIndex: =1
 
                         DataCardVSoTienAD As text:
@@ -1801,9 +2106,9 @@ NhapChinhSach As screen:
                             RadiusTopRight: =0
                             Size: =11
                             Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey44.X + DataCardKey44.Width
-                            Y: =10
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardKey44.Y + DataCardKey44.Height + 5
                             ZIndex: =2
 
                         ErrorMessage44 As label:
@@ -1860,9 +2165,10 @@ NhapChinhSach As screen:
                         Height: =50
                         Required: =false
                         Update: =Value(DataCardTyLeApDung.Text)
-                        Width: =618
-                        X: =1
-                        Y: =2
+                        Visible: =If(DataCardKieuDL.Selected.MA="002",false,true)
+                        Width: =309
+                        X: =2
+                        Y: =1
                         ZIndex: =7
 
                         DataCardKey43 As label:
@@ -1878,11 +2184,11 @@ NhapChinhSach As screen:
                             Height: =34
                             PaddingLeft: =0
                             Size: =11
-                            Text: ="Tỷ lệ"
-                            Width: =(Parent.Width - 60) * 0.4
+                            Text: ="Giá trị"
+                            Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
-                            Y: =10 + (DataCardTyLeApDung.Height / 2) - (Self.Height / 2)
+                            Y: =10
                             ZIndex: =1
 
                         DataCardTyLeApDung As text:
@@ -1909,9 +2215,9 @@ NhapChinhSach As screen:
                             RadiusTopRight: =0
                             Size: =11
                             Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey43.X + DataCardKey43.Width
-                            Y: =10
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardKey43.Y + DataCardKey43.Height + 5
                             ZIndex: =2
 
                         ErrorMessage43 As label:
@@ -1968,10 +2274,10 @@ NhapChinhSach As screen:
                         Height: =50
                         Required: =false
                         Update: =Value(DataCardSoTienToiDa.Text)
-                        Visible: =If(!IsBlank(DataCardTyLeApDung.Text), true,false)
-                        Width: =618
-                        X: =0
-                        Y: =3
+                        Visible: =true
+                        Width: =309
+                        X: =3
+                        Y: =1
                         ZIndex: =7
 
                         DataCardKey45 As label:
@@ -1988,10 +2294,10 @@ NhapChinhSach As screen:
                             PaddingLeft: =0
                             Size: =11
                             Text: ="Số tiền tối đa"
-                            Width: =(Parent.Width - 60) * 0.4
+                            Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
-                            Y: =10 + (DataCardSoTienToiDa.Height / 2) - (Self.Height / 2)
+                            Y: =10
                             ZIndex: =1
 
                         DataCardSoTienToiDa As text:
@@ -2018,9 +2324,9 @@ NhapChinhSach As screen:
                             RadiusTopRight: =0
                             Size: =11
                             Tooltip: =Parent.DisplayName
-                            Width: =(Parent.Width - 60) * 0.6
-                            X: =DataCardKey45.X + DataCardKey45.Width
-                            Y: =10
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardKey45.Y + DataCardKey45.Height + 5
                             ZIndex: =2
 
                         ErrorMessage45 As label:
@@ -3861,7 +4167,7 @@ NhapChinhSach As screen:
                         SelectionFill: =RGBA(204, 228, 246, 1)
                         SelectMultiple: =false
                         Size: =11
-                        Visible: =DropST.Selected.MA_CHI_TIEU="MA_ST_LK"
+                        Visible: =If(DropST.Selected.MA_CHI_TIEU="MA_ST_TP",false,true)
                         Width: =258
                         X: =610
                         Y: =5
@@ -4013,7 +4319,7 @@ NhapChinhSach As screen:
                         SearchItems: =[]
                         SelectMultiple: =false
                         Size: =11
-                        Visible: =If(DropST_LoaiTru.Selected.MA_CHI_TIEU="MA_ST_LK",true,false)
+                        Visible: =If(DropST_LoaiTru.Selected.MA_CHI_TIEU="MA_ST_TP",false,true)
                         Width: =258
                         X: =610
                         Y: =5
@@ -4288,7 +4594,7 @@ NhapChinhSach As screen:
                     Text: ="Thời hạn áp dụng"
                     Visible: =If(RadioST.Selected.ID = 2 , true)
                     Width: =133
-                    X: =943
+                    X: =923
                     Y: =47
                     ZIndex: =20
 
@@ -4321,8 +4627,8 @@ NhapChinhSach As screen:
                     Text: ="Thời hạn áp dụng"
                     Visible: =If(RadioST_LoaiTru.Selected.ID = 2 , true)
                     Width: =133
-                    X: =943
-                    Y: =300
+                    X: =923
+                    Y: =301
                     ZIndex: =23
 
     BtnBack As button:
