@@ -360,6 +360,25 @@ NhapChinhSach As screen:
             )
         );
         //END SO TIEN
+        
+        ClearCollect(
+            colAD,
+            [
+                {
+                    Ten: "",
+                    Loai:""
+                }
+            ]
+        );
+        ClearCollect(
+            colLT,
+            [
+                {
+                    Ten: "",
+                    Loai:""
+                }
+            ]
+        );
 
     Canvas1_1 As fluidGrid.fluidGridWithBlankCard:
         BorderThickness: =0
@@ -1536,6 +1555,91 @@ NhapChinhSach As screen:
                                 =DataCardKey44.Y + DataCardKey44.Height + 5
                             ZIndex: =5
 
+                    DONVI_TIEN_TE_DataCard1 As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_donvi_tien_te"
+                        Default: =ThisItem.DONVI_TIEN_TE
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DL_CHINHSACH_APDUNG],DataSourceInfo.DisplayName,"cr282_donvi_tien_te")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        MaxLength: =DataSourceInfo([@DL_CHINHSACH_APDUNG], DataSourceInfo.MaxLength, "cr282_donvi_tien_te")
+                        Required: =false
+                        Update: =DataCardTienTe.Selected.TIEN_TE
+                        Width: =309
+                        X: =3
+                        Y: =0
+                        ZIndex: =1
+
+                        DataCardKey34 As label:
+                            AutoHeight: =true
+                            Height: =34
+                            Size: =11
+                            Text: ="Đơn vị tiền"
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        ErrorMessage26 As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardTienTe.Y + DataCardTienTe.Height
+                            ZIndex: =3
+
+                        StarVisible32 As label:
+                            Align: =Align.Center
+                            Height: =DataCardKey34.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey34.Y
+                            ZIndex: =4
+
+                        DataCardTienTe As dropdown:
+                            BorderColor: =RGBA(54, 176, 75, 1)
+                            ChevronBackground: =RGBA(255, 255, 255, 1)
+                            ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
+                            ChevronDisabledFill: =RGBA(161, 159, 157, 1)
+                            ChevronFill: =RGBA(54, 176, 75, 1)
+                            ChevronHoverBackground: =RGBA(245, 245, 245, 1)
+                            ChevronHoverFill: =RGBA(50, 49, 48, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =Parent.Default
+                            DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(230, 230, 230, 1)
+                            DisplayMode: =If(varGhiCS,DisplayMode.Disabled, DisplayMode.Edit)
+                            Font: =Font.'Segoe UI'
+                            HoverBorderColor: =RGBA(16, 110, 190, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(245, 245, 245, 1)
+                            Items: =BH_DM_TIENTES
+                            PaddingBottom: =5
+                            PaddingLeft: =12
+                            PaddingRight: =5
+                            PaddingTop: =5
+                            PressedBorderColor: =RGBA(16, 110, 190, 1)
+                            PressedFill: =RGBA(0, 120, 212, 1)
+                            SelectionColor: =RGBA(50, 49, 48, 1)
+                            SelectionFill: =RGBA(0, 120, 212, 1)
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: |
+                                =DataCardKey43.Y + DataCardKey43.Height + 5
+                            ZIndex: =5
+
                     KIEU_DU_LIEU_DataCard1 As typedDataCard.textualEditCard:
                         BorderStyle: =BorderStyle.Solid
                         DataField: ="cr282_kieu_du_lieu"
@@ -1764,7 +1868,7 @@ NhapChinhSach As screen:
                             Height: =34
                             PaddingLeft: =0
                             Size: =11
-                            Text: ="Ảnh hưởng"
+                            Text: ="Loại tác động"
                             Width: =Parent.Width - 60
                             Wrap: =false
                             X: =30
@@ -1847,95 +1951,6 @@ NhapChinhSach As screen:
                                 =30
                             Y: =DataCardKey43.Y + DataCardKey43.Height + 5
                             ZIndex: =5
-
-                    MA_CHINH_SACH_DataCard3 As typedDataCard.textualEditCard:
-                        BorderColor: =RGBA(245, 245, 245, 1)
-                        BorderStyle: =BorderStyle.Solid
-                        DataField: ="cr282_ma_chinh_sach"
-                        Default: =ThisItem.MA_CHINH_SACH
-                        DisplayMode: =Parent.DisplayMode
-                        DisplayName: =DataSourceInfo([@DL_CHINHSACH_APDUNG],DataSourceInfo.DisplayName,"cr282_ma_chinh_sach")
-                        Fill: =RGBA(0, 0, 0, 0)
-                        Height: =50
-                        MaxLength: =DataSourceInfo([@DL_CHINHSACH_APDUNG], DataSourceInfo.MaxLength, "cr282_ma_chinh_sach")
-                        Required: =true
-                        Update: =newMaCS
-                        Visible: =false
-                        Width: =309
-                        X: =3
-                        Y: =0
-                        ZIndex: =7
-
-                        DataCardKey39 As label:
-                            AutoHeight: =true
-                            BorderColor: =RGBA(0, 0, 0, 0)
-                            BorderStyle: =BorderStyle.None
-                            BorderThickness: =2
-                            Color: =RGBA(50, 49, 48, 1)
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisabledColor: =RGBA(161, 159, 157, 1)
-                            FocusedBorderThickness: =4
-                            FontWeight: =FontWeight.Semibold
-                            Height: =34
-                            PaddingLeft: =0
-                            Size: =11
-                            Text: =Parent.DisplayName
-                            Width: =Parent.Width - 60
-                            Wrap: =false
-                            X: =30
-                            Y: =10
-                            ZIndex: =1
-
-                        DataCardMaCSApDung As text:
-                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                            Color: =RGBA(50, 49, 48, 1)
-                            Default: =Parent.Default
-                            DelayOutput: =true
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisabledColor: =RGBA(161, 159, 157, 1)
-                            DisabledFill: =RGBA(242, 242, 241, 0)
-                            DisplayMode: =Parent.DisplayMode
-                            Font: =Font.'Segoe UI'
-                            HoverBorderColor: =RGBA(16, 110, 190, 1)
-                            HoverColor: =RGBA(50, 49, 48, 1)
-                            HoverFill: =RGBA(255, 255, 255, 1)
-                            MaxLength: =Parent.MaxLength
-                            PaddingLeft: =5
-                            PressedBorderColor: =RGBA(0, 120, 212, 1)
-                            PressedColor: =RGBA(50, 49, 48, 1)
-                            PressedFill: =RGBA(255, 255, 255, 1)
-                            RadiusBottomLeft: =0
-                            RadiusBottomRight: =0
-                            RadiusTopLeft: =0
-                            RadiusTopRight: =0
-                            Tooltip: =Parent.DisplayName
-                            Width: =Parent.Width - 60
-                            X: =30
-                            Y: =DataCardKey39.Y + DataCardKey39.Height + 5
-                            ZIndex: =2
-
-                        ErrorMessage39 As label:
-                            AutoHeight: =true
-                            BorderColor: =RGBA(0, 0, 0, 0)
-                            BorderStyle: =BorderStyle.None
-                            BorderThickness: =2
-                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                            DisabledColor: =RGBA(168, 0, 0, 1)
-                            FocusedBorderThickness: =4
-                            Font: =Font.'Segoe UI'
-                            Height: =10
-                            Live: =Live.Assertive
-                            PaddingBottom: =0
-                            PaddingLeft: =0
-                            PaddingRight: =0
-                            PaddingTop: =0
-                            Size: =13
-                            Text: =Parent.Error
-                            Visible: =Parent.DisplayMode=DisplayMode.Edit
-                            Width: =Parent.Width - 60
-                            X: =30
-                            Y: =DataCardMaCSApDung.Y + DataCardMaCSApDung.Height
-                            ZIndex: =3
 
                     SO_TIEN_DataCard2 As typedDataCard.numberEditCard:
                         BorderColor: =RGBA(245, 245, 245, 1)
@@ -2264,6 +2279,95 @@ NhapChinhSach As screen:
                             Y: =DataCardKey45.Y
                             ZIndex: =4
 
+                    MA_CHINH_SACH_DataCard3 As typedDataCard.textualEditCard:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_ma_chinh_sach"
+                        Default: =ThisItem.MA_CHINH_SACH
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DL_CHINHSACH_APDUNG],DataSourceInfo.DisplayName,"cr282_ma_chinh_sach")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        MaxLength: =DataSourceInfo([@DL_CHINHSACH_APDUNG], DataSourceInfo.MaxLength, "cr282_ma_chinh_sach")
+                        Required: =true
+                        Update: =newMaCS
+                        Visible: =false
+                        Width: =309
+                        X: =0
+                        Y: =2
+                        ZIndex: =7
+
+                        DataCardKey39 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            Color: =RGBA(50, 49, 48, 1)
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            FocusedBorderThickness: =4
+                            FontWeight: =FontWeight.Semibold
+                            Height: =34
+                            PaddingLeft: =0
+                            Size: =11
+                            Text: =Parent.DisplayName
+                            Width: =Parent.Width - 60
+                            Wrap: =false
+                            X: =30
+                            Y: =10
+                            ZIndex: =1
+
+                        DataCardMaCSApDung As text:
+                            BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =Parent.Default
+                            DelayOutput: =true
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            DisabledFill: =RGBA(242, 242, 241, 0)
+                            DisplayMode: =Parent.DisplayMode
+                            Font: =Font.'Segoe UI'
+                            HoverBorderColor: =RGBA(16, 110, 190, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            MaxLength: =Parent.MaxLength
+                            PaddingLeft: =5
+                            PressedBorderColor: =RGBA(0, 120, 212, 1)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Tooltip: =Parent.DisplayName
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardKey39.Y + DataCardKey39.Height + 5
+                            ZIndex: =2
+
+                        ErrorMessage39 As label:
+                            AutoHeight: =true
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(168, 0, 0, 1)
+                            FocusedBorderThickness: =4
+                            Font: =Font.'Segoe UI'
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =13
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardMaCSApDung.Y + DataCardMaCSApDung.Height
+                            ZIndex: =3
+
                     ID_DataCard5 As typedDataCard.numberEditCard:
                         BorderColor: =RGBA(245, 245, 245, 1)
                         BorderStyle: =BorderStyle.Solid
@@ -2277,7 +2381,7 @@ NhapChinhSach As screen:
                         Update: =newIDCSApdung
                         Visible: =false
                         Width: =309
-                        X: =0
+                        X: =1
                         Y: =2
                         ZIndex: =7
 
@@ -6208,7 +6312,9 @@ NhapChinhSach As screen:
                     MA_CHINH_SACH = newMaCS
                 );
              // lưu dữ liệu ở bảng  DL_CHINHSACH_DOITUONG San pham
-            Set(
+            Clear(colAD);
+                Clear(colLT);
+                Set(
                     varIdAdCSSP,
                     0
                 );
@@ -6260,7 +6366,8 @@ NhapChinhSach As screen:
                 );
                 
             // lưu dữ liệu ở bảng chi tiết
-            If(
+            UpdateContext({varMTSP: ""});
+                If(
                     RadioCSSP.Selected.ID = 2,
                     If(
                         CountRows(tmpCSApdungSP) > 0,
@@ -6268,6 +6375,18 @@ NhapChinhSach As screen:
                             GalleryCSSP.AllItems As kh,
                             ForAll(
                                 kh.ComboBoxCSSP.SelectedItems As gt,
+                                Patch(
+                                    colAD,
+                                    Defaults(colAD),
+                                    {
+                                        Ten: Concatenate(
+                                            kh.DropCSSP.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "SP"
+                                    }
+                                );
                                 Patch(
                                     DL_CHINHSACH_DOITUONG_CT,
                                     Defaults(DL_CHINHSACH_DOITUONG_CT),
@@ -6305,14 +6424,31 @@ NhapChinhSach As screen:
                                             ""
                                         )
                                     }
-                                )
+                                );
                             )
-                        )
+                        );
                     )
+                );
+                If(
+                    RadioCSSP.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTSP: Concat(
+                                Filter(
+                                    colAD,
+                                    Loai = "SP"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
+                    ),
+                    UpdateContext({varMTSP: "Tất cả sản phẩm"})
                 );
                 
             // lưu dữ liệu ở bảng chi tiết loai tru
-            If(
+            UpdateContext({varMTSP_LT: ""});
+                If(
                     RadioCSSP_LoaiTru.Selected.ID = 2,
                     If(
                         CountRows(tmpCSLoaitruSP) > 0,
@@ -6320,6 +6456,18 @@ NhapChinhSach As screen:
                             GalleryCSSP_LoaiTru.AllItems As kh,
                             ForAll(
                                 kh.ComboBoxCSSP_LT.SelectedItems As gt,
+                                Patch(
+                                    colLT,
+                                    Defaults(colLT),
+                                    {
+                                        Ten: Concatenate(
+                                            kh.DropSPCS_LoaiTru.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "SP"
+                                    }
+                                );
                                 Patch(
                                     DL_CHINHSACH_DOITUONG_CT,
                                     Defaults(DL_CHINHSACH_DOITUONG_CT),
@@ -6360,6 +6508,21 @@ NhapChinhSach As screen:
                                 )
                             )
                         )
+                    )
+                );
+                If(
+                    RadioCSSP_LoaiTru.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTSP_LT: Concat(
+                                Filter(
+                                    colAD,
+                                    Loai = "SP"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
                     )
                 );
                 
@@ -6417,7 +6580,8 @@ NhapChinhSach As screen:
                 );
                 
             // lưu dữ liệu ở bảng chi tiết
-            If(
+            UpdateContext({varMTKB: ""});
+                If(
                     RadioCSKB.Selected.ID = 2,
                     If(
                         CountRows(tmpCSApdungKB) > 0,
@@ -6425,6 +6589,18 @@ NhapChinhSach As screen:
                             GalleryKBCS.AllItems As kh,
                             ForAll(
                                 kh.ComboBoxCSKB.SelectedItems As gt,
+                                Patch(
+                                    colAD,
+                                    Defaults(colAD),
+                                    {
+                                        Ten: Concatenate(
+                                            kh.DropKBCS.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "KB"
+                                    }
+                                );
                                 Patch(
                                     DL_CHINHSACH_DOITUONG_CT,
                                     Defaults(DL_CHINHSACH_DOITUONG_CT),
@@ -6450,9 +6626,26 @@ NhapChinhSach As screen:
                         )
                     )
                 );
+                If(
+                    RadioCSKB.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTKB: Concat(
+                                Filter(
+                                    colAD,
+                                    Loai = "KB"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
+                    ),
+                    UpdateContext({varMTKB: "Tất cả kênh bán"})
+                );
                 
             // lưu dữ liệu ở bảng chi tiết loai tru
-            If(
+            UpdateContext({varMTKB_LT: ""});
+                If(
                     RadioCSKB_LoaiTru.Selected.ID = 2,
                     If(
                         CountRows(tmpCSLoaitruKB) > 0,
@@ -6460,6 +6653,18 @@ NhapChinhSach As screen:
                             GalleryKBCS_LoaiTru.AllItems As kh,
                             ForAll(
                                 kh.ComboBoxCSKB_LT.SelectedItems As gt,
+                                Patch(
+                                    colLT,
+                                    Defaults(colLT),
+                                    {
+                                        Ten: Concatenate(
+                                            kh.DropKBCS_LoaiTru.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "KB"
+                                    }
+                                );
                                 Patch(
                                     DL_CHINHSACH_DOITUONG_CT,
                                     Defaults(DL_CHINHSACH_DOITUONG_CT),
@@ -6483,6 +6688,21 @@ NhapChinhSach As screen:
                                 )
                             )
                         )
+                    )
+                );
+                If(
+                    RadioCSKB_LoaiTru.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTKB_LT: Concat(
+                                Filter(
+                                    colLT,
+                                    Loai = "KB"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
                     )
                 );
                 
@@ -6543,7 +6763,8 @@ NhapChinhSach As screen:
                 );
                 
             // lưu dữ liệu ở bảng chi tiết
-            If(
+            UpdateContext({varMTKH: ""});
+                If(
                     RadioCSKH.Selected.ID = 2,
                     If(
                         CountRows(tmpCSApdungKH) > 0,
@@ -6551,6 +6772,18 @@ NhapChinhSach As screen:
                             GalleryKHCS.AllItems As kh,
                             ForAll(
                                 kh.ComboKHCS.SelectedItems As gt,
+                                Patch(
+                                    colAD,
+                                    Defaults(colAD),
+                                    {
+                                        Ten: Concatenate(
+                                            kh.DropKHCS.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "KH"
+                                    }
+                                );
                                 Patch(
                                     DL_CHINHSACH_DOITUONG_CT,
                                     Defaults(DL_CHINHSACH_DOITUONG_CT),
@@ -6576,9 +6809,26 @@ NhapChinhSach As screen:
                         )
                     )
                 );
+                If(
+                    RadioCSKH.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTKH: Concat(
+                                Filter(
+                                    colAD,
+                                    Loai = "KH"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
+                    ),
+                    UpdateContext({varMTKH: "Tất cả khách hàng"})
+                );
                 
             // lưu dữ liệu ở bảng chi tiết loai tru
-            If(
+            UpdateContext({varMTKH_LT: ""});
+                If(
                     RadioCSKH_LoaiTru.Selected.ID = 2,
                     If(
                         CountRows(tmpCSLoaitruKH) > 0,
@@ -6586,6 +6836,18 @@ NhapChinhSach As screen:
                             GalleryKHCS_LoaiTru.AllItems As kh,
                             ForAll(
                                 kh.ComboKHCS_LT.SelectedItems As gt,
+                                Patch(
+                                    colLT,
+                                    Defaults(colLT),
+                                    {
+                                        Ten: Concatenate(
+                                            kh.DropKHCS_LoaiTru.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "KH"
+                                    }
+                                );
                                 Patch(
                                     DL_CHINHSACH_DOITUONG_CT,
                                     Defaults(DL_CHINHSACH_DOITUONG_CT),
@@ -6609,6 +6871,21 @@ NhapChinhSach As screen:
                                 )
                             )
                         )
+                    )
+                );
+                If(
+                    RadioCSKH_LoaiTru.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTKH_LT: Concat(
+                                Filter(
+                                    colLT,
+                                    Loai = "KH"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
                     )
                 );
                 
@@ -6668,7 +6945,8 @@ NhapChinhSach As screen:
                 );
                 
             // lưu dữ liệu ở bảng chi tiết
-            If(
+            UpdateContext({varMTPV: ""});
+                If(
                     RadioCSPV.Selected.ID = 2,
                     If(
                         CountRows(tmpCSApdungPV) > 0,
@@ -6676,6 +6954,18 @@ NhapChinhSach As screen:
                             GalleryPVCS.AllItems As pv,
                             ForAll(
                                 pv.ComboPVCS.SelectedItems As gt,
+                                Patch(
+                                    colAD,
+                                    Defaults(colAD),
+                                    {
+                                        Ten: Concatenate(
+                                            pv.DropPVCS.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "PV"
+                                    }
+                                );
                                 Patch(
                                     DL_CHINHSACH_DOITUONG_CT,
                                     Defaults(DL_CHINHSACH_DOITUONG_CT),
@@ -6701,9 +6991,26 @@ NhapChinhSach As screen:
                         )
                     )
                 );
+                If(
+                    RadioCSPV.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTPV: Concat(
+                                Filter(
+                                    colAD,
+                                    Loai = "PV"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
+                    ),
+                    UpdateContext({varMTPV: "Tất cả phạm vi"})
+                );
                 
             // lưu dữ liệu ở bảng chi tiết loai tru
-            If(
+            UpdateContext({varMTPV_LT: ""});
+                If(
                     RadioCSPV_LoaiTru.Selected.ID = 2,
                     If(
                         CountRows(tmpCSLoaitruPV) > 0,
@@ -6711,6 +7018,18 @@ NhapChinhSach As screen:
                             GalleryPVCS_LoaiTru.AllItems As kh,
                             ForAll(
                                 kh.ComboPVCS_LT.SelectedItems As gt,
+                                Patch(
+                                    colLT,
+                                    Defaults(colLT),
+                                    {
+                                        Ten: Concatenate(
+                                            kh.DropPVCS_LoaiTru.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "PV"
+                                    }
+                                );
                                 Patch(
                                     DL_CHINHSACH_DOITUONG_CT,
                                     Defaults(DL_CHINHSACH_DOITUONG_CT),
@@ -6734,6 +7053,21 @@ NhapChinhSach As screen:
                                 )
                             )
                         )
+                    )
+                );
+                If(
+                    RadioCSPV_LoaiTru.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTPV_LT: Concat(
+                                Filter(
+                                    colLT,
+                                    Loai = "PV"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
                     )
                 );
                 // lưu dữ liệu ở bảng  DL_CHINHSACH_DOITUONG SO TIEN
@@ -6857,6 +7191,96 @@ NhapChinhSach As screen:
                             )
                         )
                     )
+                );
+                //Sinh mo ta
+            UpdateContext(
+                    {
+                        varMoTa: Concatenate(
+                            "Chương trình ",
+                            DataCardHinhThuc.Selected.TEN,
+                            " áp dụng ",
+                            DataCardAnhHuong.Selected.TEN,
+                            " ",
+                            If(
+                                DataCardKieuDL.Selected.MA = "002",
+                                DataCardVSoTienAD.Text,
+                                Concatenate(
+                                    DataCardTyLeApDung.Text,
+                                    "(%) tối đa ",
+                                    DataCardSoTienToiDa.Text
+                                )
+                            ),
+                            " ",
+                            DataCardTienTe.Selected.TIEN_TE,
+                            " có hiệu lực từ ",
+                            DateValueTuCS.SelectedDate,
+                            " đến ",
+                            If(
+                                !IsBlank(DateValueDenCS.SelectedDate),
+                                DateValueDenCS.SelectedDate,
+                                "khi có thông báo mới"
+                            ),
+                            " nếu thỏa mãn ",
+                            If(
+                                DataCardLoaiDK.Selected.MA = "1",
+                                "một trong số",
+                                "tất cả"
+                            ),
+                            " các điều kiện sau: ",
+                            //San pham
+                            varMTSP,
+                            If(
+                                !IsBlank(varMTSP_LT),
+                                Concatenate(
+                                    " (Trừ ",
+                                    varMTSP_LT,
+                                    ")"
+                                ),
+                                ""
+                            ),
+                            "; ",
+                            //Kenh ban
+                            varMTKB,
+                            If(
+                                !IsBlank(varMTKB_LT),
+                                Concatenate(
+                                    " (Trừ ",
+                                    varMTKB_LT,
+                                    ")"
+                                ),
+                                ""
+                            ),
+                            "; ",
+                            //kHACH HANG
+                            varMTKH,
+                            If(
+                                !IsBlank(varMTKH_LT),
+                                Concatenate(
+                                    " (Trừ ",
+                                    varMTKH_LT,
+                                    ")"
+                                ),
+                                ""
+                            ),
+                            "; ",
+                            //pHAM VI
+                            varMTPV,
+                            If(
+                                !IsBlank(varMTPV_LT),
+                                Concatenate(
+                                    " (Trừ ",
+                                    varMTPV_LT,
+                                    ")"
+                                ),
+                                ""
+                            )
+                        )
+                    }
+                );
+                UpdateIf(
+                    DL_CHINHSACH_CHUNG,
+                    MA_CHINH_SACH = newMaCS,
+                    {MO_TA: varMoTa}
                 );
                 IsBlank(errorMsgCS),
                 Notify(
