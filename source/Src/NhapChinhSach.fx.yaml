@@ -554,7 +554,7 @@ NhapChinhSach As screen:
                         Height: =50
                         MaxLength: =DataSourceInfo([@DL_CHINHSACH_CHUNG], DataSourceInfo.MaxLength, "cr282_hoat_dong")
                         Required: =false
-                        Update: =DataCardHoatDong.Text
+                        Update: =DataCardHoatDong.Value
                         Width: =309
                         X: =3
                         Y: =0
@@ -562,6 +562,7 @@ NhapChinhSach As screen:
 
                         DataCardKey26 As label:
                             AutoHeight: =true
+                            FontWeight: =FontWeight.Semibold
                             Height: =34
                             Size: =11
                             Text: ="Hoạt động"
@@ -622,6 +623,7 @@ NhapChinhSach As screen:
 
                         DataCardKey23 As label:
                             AutoHeight: =true
+                            FontWeight: =FontWeight.Semibold
                             Height: =34
                             Size: =11
                             Text: ="Mô tả"
@@ -1487,6 +1489,7 @@ NhapChinhSach As screen:
 
                         DataCardKey33 As label:
                             AutoHeight: =true
+                            FontWeight: =FontWeight.Semibold
                             Height: =34
                             Size: =11
                             Text: ="Hình thức"
@@ -1530,7 +1533,7 @@ NhapChinhSach As screen:
                             ChevronHoverBackground: =RGBA(245, 245, 245, 1)
                             ChevronHoverFill: =RGBA(50, 49, 48, 1)
                             Color: =RGBA(50, 49, 48, 1)
-                            Default: =If(Parent.Default="001", "Ưu tiên", If(Parent.Default="002", "Lựa chọn", "Gộp"))
+                            Default: =If(Parent.Default="003", "Gộp", If(Parent.Default="002", "Lựa chọn", "Ưu tiên"))
                             DisabledBorderColor: =RGBA(204, 228, 246, 1)
                             DisabledColor: =RGBA(0, 0, 0, 1)
                             DisabledFill: =RGBA(230, 230, 230, 1)
@@ -1573,6 +1576,7 @@ NhapChinhSach As screen:
 
                         DataCardKey34 As label:
                             AutoHeight: =true
+                            FontWeight: =FontWeight.Semibold
                             Height: =34
                             Size: =11
                             Text: ="Đơn vị tiền"
@@ -1658,6 +1662,7 @@ NhapChinhSach As screen:
 
                         DataCardKey32 As label:
                             AutoHeight: =true
+                            FontWeight: =FontWeight.Semibold
                             Height: =34
                             Size: =11
                             Text: ="Kiểu dữ liệu"
@@ -4749,1129 +4754,7 @@ NhapChinhSach As screen:
         OnSelect: |
             =//Xu ly thong tin chung
             UpdateContext({errorMsgCS: ""});
-            Clear(tmpCheckDup);
-            //ID chinh sach chung
-            If(
-                IsBlank(DataCardIDCS.Text),
-                UpdateContext(
-                    {
-                        newIDCS: If(
-                            CountIf(
-                                DL_CHINHSACH_CHUNG,
-                                true
-                            ) = 0,
-                            1,
-                            Max(
-                                DL_CHINHSACH_CHUNG,
-                                ID
-                            ) + 1
-                        )
-                    }
-                ),
-                UpdateContext({newIDCS: Value(DataCardIDCS.Text)})
-            );
-            //ID chinh sach ap dung
-            If(
-                IsBlank(DataCardIDCSApDung.Text),
-                UpdateContext(
-                    {
-                        newIDCSApdung: If(
-                            CountIf(
-                                DL_CHINHSACH_APDUNG,
-                                true
-                            ) = 0,
-                            1,
-                            Max(
-                                DL_CHINHSACH_APDUNG,
-                                ID
-                            ) + 1
-                        )
-                    }
-                ),
-                UpdateContext({newIDCSApdung: Value(DataCardIDCSApDung.Text)})
-            );
-            //Ma chinh sach
-            If(
-                IsBlank(DataCardValueMaCS.Text),
-                UpdateContext(
-                    {
-                        newMaCS: Concatenate(
-                            "CS",
-                            If(
-                                newIDCS < 10,
-                                "000",
-                                If(
-                                    newIDCS < 100 && newIDCS >= 10,
-                                    "00",
-                                    If(
-                                        newIDCS < 1000 && newIDCS >= 100,
-                                        "0",
-                                        ""
-                                    )
-                                )
-                            ),
-                            Text(newIDCS)
-                        )
-                    }
-                ),
-                UpdateContext({newMaCS: DataCardValueMaCS.Text})
-            );
-            If(
-                IsBlank(DateValueTuCS.SelectedDate),
-                UpdateContext({errorMsgCS: "Hiệu lực từ là bắt buộc"})
-            );
-            If(
-                IsBlank(errorMsgCS) && !IsBlank(DateValueDenCS.SelectedDate) && DateValueTuCS.SelectedDate > DateValueDenCS.SelectedDate,
-                UpdateContext({errorMsgCS: "Hiệu lực đến phải sau hiệu lực từ"})
-            );
-            //Kiem tra tieu chi la duy nhat
-            //sản phâm
-            //sản phâm - ap dung
-            If(
-                IsBlank(errorMsgCS) && CountRows(tmpCSApdungSP) > 0,
-                Clear(errorCol);
-                Clear(tmpCheckDup);
-                ForAll(
-                    GalleryCSSP.AllItems As kh,
-                    Collect(
-                        tmpCheckDup,
-                        {
-                            Type: "SP",
-                            Value: kh.DropCSSP.Selected.MA_CHI_TIEU
-                        }
-                    );
-                );
-                ForAll(
-                    GalleryCSSP.AllItems As kh,
-                    If(
-                        CountIf(
-                            tmpCheckDup,
-                            Type = "SP" && Value = kh.DropCSSP.Selected.MA_CHI_TIEU
-                        ) > 1,
-                        Collect(
-                            errorCol,
-                            {Message: "Trùng tiêu chí áp dụng sản phẩm"}
-                        )
-                    )
-                );
-                If(
-                    !IsEmpty(errorCol),
-                    UpdateContext({errorMsgCS: First(errorCol).Message})
-                )
-            );
-            //sản phâm - loai tru
-            If(
-                IsBlank(errorMsgCS) && CountRows(tmpCSLoaitruSP) > 0,
-                Clear(errorCol);
-                Clear(tmpCheckDup);
-                ForAll(
-                    GalleryCSSP_LoaiTru.AllItems As kh,
-                    Collect(
-                        tmpCheckDup,
-                        {
-                            Type: "SP",
-                            Value: kh.DropSPCS_LoaiTru.Selected.MA_CHI_TIEU
-                        }
-                    );
-                );
-                ForAll(
-                    GalleryCSSP_LoaiTru.AllItems As kh,
-                    If(
-                        CountIf(
-                            tmpCheckDup,
-                            Type = "SP" && Value = kh.DropSPCS_LoaiTru.Selected.MA_CHI_TIEU
-                        ) > 1,
-                        Collect(
-                            errorCol,
-                            {Message: "Trùng tiêu chí loại trừ sản phẩm"}
-                        )
-                    )
-                );
-                If(
-                    !IsEmpty(errorCol),
-                    UpdateContext({errorMsgCS: First(errorCol).Message})
-                )
-            );
-            //End sản phâm
-            //Kenh ban
-            //Kenh ban - ap dung
-            If(
-                IsBlank(errorMsgCS) && CountRows(tmpCSApdungKB) > 0,
-                Clear(errorCol);
-                Clear(tmpCheckDup);
-                ForAll(
-                    GalleryKBCS.AllItems As kh,
-                    Collect(
-                        tmpCheckDup,
-                        {
-                            Type: "KB",
-                            Value: kh.DropKBCS.Selected.MA_CHI_TIEU
-                        }
-                    );
-                );
-                ForAll(
-                    GalleryKBCS.AllItems As kh,
-                    If(
-                        CountIf(
-                            tmpCheckDup,
-                            Type = "KB" && Value = kh.DropKBCS.Selected.MA_CHI_TIEU
-                        ) > 1,
-                        Collect(
-                            errorCol,
-                            {Message: "Trùng tiêu chí áp dụng kênh bán"}
-                        )
-                    )
-                );
-                If(
-                    !IsEmpty(errorCol),
-                    UpdateContext({errorMsgCS: First(errorCol).Message})
-                )
-            );
-            //Kenh ban - loai tru
-            If(
-                IsBlank(errorMsgCS) && CountRows(tmpCSApdungKB) > 0,
-                Clear(errorCol);
-                Clear(tmpCheckDup);
-                ForAll(
-                    GalleryKBCS_LoaiTru.AllItems As kh,
-                    Collect(
-                        tmpCheckDup,
-                        {
-                            Type: "KB",
-                            Value: kh.DropKBCS_LoaiTru.Selected.MA_CHI_TIEU
-                        }
-                    );
-                );
-                ForAll(
-                    GalleryKBCS_LoaiTru.AllItems As kh,
-                    If(
-                        CountIf(
-                            tmpCheckDup,
-                            Type = "KB" && Value = kh.DropKBCS_LoaiTru.Selected.MA_CHI_TIEU
-                        ) > 1,
-                        Collect(
-                            errorCol,
-                            {Message: "Trùng tiêu chí loại trừ kênh bán"}
-                        )
-                    )
-                );
-                If(
-                    !IsEmpty(errorCol),
-                    UpdateContext({errorMsgCS: First(errorCol).Message})
-                )
-            );
-            //End kenh ban
-            //Khach hang
-            //Khach hang - ap dung
-            If(
-                IsBlank(errorMsgCS) && CountRows(tmpCSApdungKH) > 0,
-                Clear(errorCol);
-                ForAll(
-                    GalleryKHCS.AllItems As kh,
-                    Collect(
-                        tmpCheckDup,
-                        {
-                            Type: "KH",
-                            Value: kh.DropKHCS.Selected.MA_CHI_TIEU
-                        }
-                    );
-                );
-                ForAll(
-                    GalleryKHCS.AllItems As kh,
-                    If(
-                        CountIf(
-                            tmpCheckDup,
-                            Type = "KH" && Value = kh.DropKHCS.Selected.MA_CHI_TIEU
-                        ) > 1,
-                        Collect(
-                            errorCol,
-                            {Message: "Trùng tiêu chí áp dụng khách hàng"}
-                        )
-                    )
-                );
-                If(
-                    !IsEmpty(errorCol),
-                    UpdateContext({errorMsgCS: First(errorCol).Message})
-                )
-            );
-            //Khach hang - loai tru
-            If(
-                IsBlank(errorMsgCS) && CountRows(tmpLoaitruKH) > 0,
-                Clear(errorCol);
-                Clear(tmpCheckDup);
-                ForAll(
-                    GalleryKHCS_LoaiTru.AllItems As kh,
-                    Collect(
-                        tmpCheckDup,
-                        {
-                            Type: "KH",
-                            Value: kh.DropKHCS_LoaiTru.Selected.MA_CHI_TIEU
-                        }
-                    );
-                );
-                ForAll(
-                    GalleryKHCS_LoaiTru.AllItems As kh,
-                    If(
-                        CountIf(
-                            tmpCheckDup,
-                            Type = "KH" && Value = kh.DropKHCS_LoaiTru.Selected.MA_CHI_TIEU
-                        ) > 1,
-                        Collect(
-                            errorCol,
-                            {Message: "Trùng tiêu chí loại trừ khách hàng"}
-                        )
-                    )
-                );
-                If(
-                    !IsEmpty(errorCol),
-                    UpdateContext({errorMsgCS: First(errorCol).Message})
-                )
-            );
-            //End khách hàng
-            //Phạm vi
-            //pham vi - ap dung
-            If(
-                IsBlank(errorMsgCS) && CountRows(tmpApdungPV) > 0,
-                Clear(errorCol);
-                Clear(tmpCheckDup);
-                ForAll(
-                    GalleryPVCS.AllItems As kh,
-                    Collect(
-                        tmpCheckDup,
-                        {
-                            Type: "PV",
-                            Value: kh.DropPVCS.Selected.MA_CHI_TIEU
-                        }
-                    );
-                );
-                ForAll(
-                    GalleryPVCS.AllItems As kh,
-                    If(
-                        CountIf(
-                            tmpCheckDup,
-                            Type = "PV" && Value = kh.DropPVCS.Selected.MA_CHI_TIEU
-                        ) > 1,
-                        Collect(
-                            errorCol,
-                            {Message: "Trùng tiêu chí áp dụng phạm vi"}
-                        )
-                    )
-                );
-                If(
-                    !IsEmpty(errorCol),
-                    UpdateContext({errorMsgCS: First(errorCol).Message})
-                )
-            );
-            //Pham vi - loai tru
-            If(
-                IsBlank(errorMsgCS) && CountRows(tmpLoaitruPV) > 0,
-                Clear(errorCol);
-                Clear(tmpCheckDup);
-                ForAll(
-                    GalleryPV_LoaiTru.AllItems As kh,
-                    Collect(
-                        tmpCheckDup,
-                        {
-                            Type: "PV",
-                            Value: kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU
-                        }
-                    );
-                );
-                ForAll(
-                    GalleryPV_LoaiTru.AllItems As kh,
-                    If(
-                        CountIf(
-                            tmpCheckDup,
-                            Type = "PV" && Value = kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU
-                        ) > 1,
-                        Collect(
-                            errorCol,
-                            {Message: "Trùng tiêu chí loại trừ phạm vi"}
-                        )
-                    )
-                );
-                If(
-                    !IsEmpty(errorCol),
-                    UpdateContext({errorMsgCS: First(errorCol).Message})
-                )
-            );
-            //End phạm vi
-            //So tien
-            //So tien - ap dung
-            If(
-                IsBlank(errorMsgCS) && CountRows(tmpCSApdungST) > 0,
-                Clear(errorCol);
-                Clear(tmpCheckDup);
-                ForAll(
-                    GalleryST.AllItems As kh,
-                    Collect(
-                        tmpCheckDup,
-                        {
-                            Type: "ST",
-                            Value: kh.DropST.Selected.MA_CHI_TIEU
-                        }
-                    );
-                );
-                ForAll(
-                    GalleryST.AllItems As kh,
-                    If(
-                        CountIf(
-                            tmpCheckDup,
-                            Type = "ST" && Value = kh.DropST.Selected.MA_CHI_TIEU
-                        ) > 1,
-                        Collect(
-                            errorCol,
-                            {Message: "Trùng tiêu chí áp dụng số tiền"}
-                        )
-                    )
-                );
-                If(
-                    !IsEmpty(errorCol),
-                    UpdateContext({errorMsgCS: First(errorCol).Message})
-                )
-            );
-            //So tien - loai tru
-            If(
-                IsBlank(errorMsgCS) && CountRows(tmpCSLoaitruST) > 0,
-                Clear(errorCol);
-                Clear(tmpCheckDup);
-                ForAll(
-                    GalleryST_LoaiTru.AllItems As kh,
-                    Collect(
-                        tmpCheckDup,
-                        {
-                            Type: "ST",
-                            Value: kh.DropST_LoaiTru.Selected.MA_CHI_TIEU
-                        }
-                    );
-                );
-                ForAll(
-                    GalleryST_LoaiTru.AllItems As kh,
-                    If(
-                        CountIf(
-                            tmpCheckDup,
-                            Type = "ST" && Value = kh.DropST_LoaiTru.Selected.MA_CHI_TIEU
-                        ) > 1,
-                        Collect(
-                            errorCol,
-                            {Message: "Trùng tiêu chí loại trừ số tiền"}
-                        )
-                    )
-                );
-                If(
-                    !IsEmpty(errorCol),
-                    UpdateContext({errorMsgCS: First(errorCol).Message})
-                )
-            );
-            //End so tien
-            //End kiem tra duy nhat
-            If(
-                !IsBlank(errorMsgCS),
-                Notify(
-                    errorMsgCS,
-                    NotificationType.Error,
-                    800
-                ),
-                SubmitForm(TTChungCS);
-                SubmitForm(TTCSApDung);
-                Set(
-                    varMaCS,
-                    newMaCS
-                );
-                EditForm(TTChungCS);
-                EditForm(TTCSApDung);
-                RemoveIf(
-                    DL_CHINHSACH_DOITUONG,
-                    MA_CHINH_SACH = newMaCS
-                );
-                RemoveIf(
-                    DL_CHINHSACH_DOITUONG_CT,
-                    MA_CHINH_SACH = newMaCS
-                );
-             // lưu dữ liệu ở bảng  DL_CHINHSACH_DOITUONG San pham
-            Set(
-                    varIdAdCSSP,
-                    0
-                );
-                Set(
-                    varIdLtCSSP,
-                    0
-                );
-                Set(
-                    varIdAdCSSP,
-                    Max(
-                        DL_CHINHSACH_DOITUONG,
-                        ID
-                    ) + 1
-                );
-                Patch(
-                    DL_CHINHSACH_DOITUONG,
-                    Defaults(DL_CHINHSACH_DOITUONG),
-                    {
-                        ID: varIdAdCSSP,
-                        MA_CHINH_SACH: newMaCS,
-                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                        THANH_PHAN: "SP",
-                        AP_DUNG: "1",
-                        KIEU: RadioCSSP.Selected.ID,
-                        TEN_KIEU: RadioCSSP.Selected.Text
-                    }
-                );
-                Patch(
-                    DL_CHINHSACH_DOITUONG,
-                    Set(
-                        varIdLtCSSP,
-                        Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1
-                    );
-                    Defaults(DL_CHINHSACH_DOITUONG),
-                    {
-                        ID: varIdLtCSSP,
-                        MA_CHINH_SACH: newMaCS,
-                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                        THANH_PHAN: "SP",
-                        AP_DUNG: "2",
-                        KIEU: RadioCSSP_LoaiTru.Selected.ID,
-                        TEN_KIEU: RadioCSSP_LoaiTru.Selected.Text
-                    }
-                );
-                
-            // lưu dữ liệu ở bảng chi tiết
-            If(
-                    RadioCSSP.Selected.ID = 2,
-                    If(
-                        CountRows(tmpCSApdungSP) > 0,
-                        ForAll(
-                            GalleryCSSP.AllItems As kh,
-                            ForAll(
-                                kh.ComboBoxCSSP.SelectedItems As gt,
-                                Patch(
-                                    DL_CHINHSACH_DOITUONG_CT,
-                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
-                                    {
-                                        ID: Value(kh.SP_ID.Text),
-                                        ID_DOITUONG: varIdAdCSSP,
-                                        MA_CHINH_SACH: newMaCS,
-                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                                        THANH_PHAN: "SP",
-                                        AP_DUNG: "1",
-                                        KIEU: RadioCSSP.Selected.ID,
-                                        MA_TIEU_CHI: kh.DropCSSP.Selected.MA_CHI_TIEU,
-                                        TEN_TIEU_CHI: kh.DropCSSP.Selected.TEN_CHI_TIEU,
-                                        MA_GIA_TRI: LookUp(
-                                            tmpDsGiatriCS,
-                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = If(
-                                                kh.DropCSSP.Selected.MA_CHI_TIEU = "MA_COMBO_SP",
-                                                "MA_SP",
-                                                kh.DropCSSP.Selected.MA_CHI_TIEU
-                                            )
-                                        ).Ma,
-                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri,
-                                        MA_PV_AD: If(
-                                            kh.DropCSSP.Selected.MA_CHI_TIEU = "MA_COMBO_SP",
-                                            LookUp(
-                                                DM_PHAMVI_AD,
-                                                TEN_PHAMVI_AD = kh.DropPVSP.Selected.TEN_PHAMVI_AD
-                                            ).ID,
-                                            ""
-                                        ),
-                                        TEN_PV_AD: If(
-                                            kh.DropCSSP.Selected.MA_CHI_TIEU = "MA_COMBO_SP",
-                                            kh.DropPVSP.Selected.TEN_PHAMVI_AD,
-                                            ""
-                                        )
-                                    }
-                                )
-                            )
-                        )
-                    )
-                );
-                
-            // lưu dữ liệu ở bảng chi tiết loai tru
-            If(
-                    RadioCSSP_LoaiTru.Selected.ID = 2,
-                    If(
-                        CountRows(tmpCSLoaitruSP) > 0,
-                        ForAll(
-                            GalleryCSSP_LoaiTru.AllItems As kh,
-                            ForAll(
-                                kh.ComboBoxCSSP_LT.SelectedItems As gt,
-                                Patch(
-                                    DL_CHINHSACH_DOITUONG_CT,
-                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
-                                    {
-                                        ID: Value(kh.SP_ID_LoaiTru.Text),
-                                        ID_DOITUONG: varIdLtCSSP,
-                                        MA_CHINH_SACH: newMaCS,
-                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                                        THANH_PHAN: "SP",
-                                        AP_DUNG: "2",
-                                        KIEU: RadioCSSP_LoaiTru.Selected.ID,
-                                        MA_TIEU_CHI: kh.DropSPCS_LoaiTru.Selected.MA_CHI_TIEU,
-                                        TEN_TIEU_CHI: kh.DropSPCS_LoaiTru.Selected.TEN_CHI_TIEU,
-                                        MA_GIA_TRI: LookUp(
-                                            tmpDsGiatriCS,
-                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = If(
-                                                kh.DropSPCS_LoaiTru.Selected.MA_CHI_TIEU = "MA_COMBO_SP",
-                                                "MA_SP",
-                                                kh.DropSPCS_LoaiTru.Selected.MA_CHI_TIEU
-                                            )
-                                        ).Ma,
-                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri,
-                                        MA_PV_AD: If(
-                                            kh.DropSPCS_LoaiTru.Selected.MA_CHI_TIEU = "MA_COMBO_SP",
-                                            LookUp(
-                                                DM_PHAMVI_AD,
-                                                TEN_PHAMVI_AD = kh.DropPVSP_LT.Selected.TEN_PHAMVI_AD
-                                            ).ID,
-                                            ""
-                                        ),
-                                        TEN_PV_AD: If(
-                                            kh.DropSPCS_LoaiTru.Selected.MA_CHI_TIEU = "MA_COMBO_SP",
-                                            kh.DropPVSP_LT.Selected.TEN_PHAMVI_AD,
-                                            ""
-                                        )
-                                    }
-                                )
-                            )
-                        )
-                    )
-                );
-                
-            //End San pham
-            // lưu dữ liệu ở bảng  DL_CHINHSACH_DOITUONG KENH BAN
-            Set(
-                    varIdAdCSKB,
-                    0
-                );
-                Set(
-                    varIdLtCSKB,
-                    0
-                );
-                Set(
-                    varIdAdCSKB,
-                    Max(
-                        DL_CHINHSACH_DOITUONG,
-                        ID
-                    ) + 1
-                );
-                Patch(
-                    DL_CHINHSACH_DOITUONG,
-                    Defaults(DL_CHINHSACH_DOITUONG),
-                    {
-                        ID: varIdAdCSKB,
-                        MA_CHINH_SACH: newMaCS,
-                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                        THANH_PHAN: "KB",
-                        AP_DUNG: "1",
-                        KIEU: RadioCSKB.Selected.ID,
-                        TEN_KIEU: RadioCSKB.Selected.Text
-                    }
-                );
-                Patch(
-                    DL_CHINHSACH_DOITUONG,
-                    Set(
-                        varIdLtCSKB,
-                        Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1
-                    );
-                    Defaults(DL_CHINHSACH_DOITUONG),
-                    {
-                        ID: varIdLtCSKB,
-                        MA_CHINH_SACH: newMaCS,
-                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                        THANH_PHAN: "KB",
-                        AP_DUNG: "2",
-                        KIEU: RadioCSKB_LoaiTru.Selected.ID,
-                        TEN_KIEU: RadioCSKB_LoaiTru.Selected.Text
-                    }
-                );
-                
-            // lưu dữ liệu ở bảng chi tiết
-            If(
-                    RadioCSKB.Selected.ID = 2,
-                    If(
-                        CountRows(tmpCSApdungKB) > 0,
-                        ForAll(
-                            GalleryKBCS.AllItems As kh,
-                            ForAll(
-                                kh.ComboBoxCSKB.SelectedItems As gt,
-                                Patch(
-                                    DL_CHINHSACH_DOITUONG_CT,
-                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
-                                    {
-                                        ID: Value(kh.CSAD_ID.Text),
-                                        ID_DOITUONG: varIdAdCSKB,
-                                        MA_CHINH_SACH: newMaCS,
-                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                                        THANH_PHAN: "KB",
-                                        AP_DUNG: "1",
-                                        KIEU: RadioCSKB.Selected.ID,
-                                        MA_TIEU_CHI: kh.DropKBCS.Selected.MA_CHI_TIEU,
-                                        TEN_TIEU_CHI: kh.DropKBCS.Selected.TEN_CHI_TIEU,
-                                        MA_GIA_TRI: LookUp(
-                                            tmpDsGiatriCS,
-                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKBCS.Selected.MA_CHI_TIEU
-                                        ).Ma,
-                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri
-                                    }
-                                )
-                            )
-                        )
-                    )
-                );
-                
-            // lưu dữ liệu ở bảng chi tiết loai tru
-            If(
-                    RadioCSKB_LoaiTru.Selected.ID = 2,
-                    If(
-                        CountRows(tmpCSLoaitruKB) > 0,
-                        ForAll(
-                            GalleryKBCS_LoaiTru.AllItems As kh,
-                            ForAll(
-                                kh.ComboBoxCSKB_LT.SelectedItems As gt,
-                                Patch(
-                                    DL_CHINHSACH_DOITUONG_CT,
-                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
-                                    {
-                                        ID: Value(kh.CSAD_ID_LoaiTru.Text),
-                                        ID_DOITUONG: varIdLtCSKB,
-                                        MA_CHINH_SACH: newMaCS,
-                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                                        THANH_PHAN: "KB",
-                                        AP_DUNG: "2",
-                                        KIEU: RadioCSKB_LoaiTru.Selected.ID,
-                                        MA_TIEU_CHI: kh.DropKBCS_LoaiTru.Selected.MA_CHI_TIEU,
-                                        TEN_TIEU_CHI: kh.DropKBCS_LoaiTru.Selected.TEN_CHI_TIEU,
-                                        MA_GIA_TRI: LookUp(
-                                            tmpDsGiatriCS,
-                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKBCS_LoaiTru.Selected.MA_CHI_TIEU
-                                        ).Ma,
-                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri
-                                    }
-                                )
-                            )
-                        )
-                    )
-                );
-                
-            //End kenh ban
-            // lưu dữ liệu ở bảng  DL_CHINHSACH_DOITUONG KHANH HANG
-            Set(
-                    varIdAdCSKH,
-                    0
-                );
-                Set(
-                    varIdLtCSKH,
-                    0
-                );
-                Set(
-                    varIdAdCSKH,
-                    Max(
-                        DL_CHINHSACH_DOITUONG,
-                        ID
-                    ) + 1
-                );
-                Patch(
-                    DL_CHINHSACH_DOITUONG,
-                    Defaults(DL_CHINHSACH_DOITUONG),
-                    {
-                        ID: varIdAdCSKH,
-                        MA_CHINH_SACH: newMaCS,
-                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                        THANH_PHAN: "KH",
-                        AP_DUNG: "1",
-                        KIEU: RadioCSKH.Selected.ID,
-                        TEN_KIEU: RadioCSKH.Selected.Text
-                    }
-                );
-                Patch(
-                    DL_CHINHSACH_DOITUONG,
-                    Set(
-                        varIdLtCSKH,
-                        Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1
-                    );
-                    Defaults(DL_CHINHSACH_DOITUONG),
-                    {
-                        ID: Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1,
-                        MA_CHINH_SACH: newMaCS,
-                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                        THANH_PHAN: "KH",
-                        AP_DUNG: "2",
-                        KIEU: RadioCSKH_LoaiTru.Selected.ID,
-                        TEN_KIEU: RadioCSKH_LoaiTru.Selected.Text
-                    }
-                );
-                
-            // lưu dữ liệu ở bảng chi tiết
-            If(
-                    RadioCSKH.Selected.ID = 2,
-                    If(
-                        CountRows(tmpCSApdungKH) > 0,
-                        ForAll(
-                            GalleryKHCS.AllItems As kh,
-                            ForAll(
-                                kh.ComboKHCS.SelectedItems As gt,
-                                Patch(
-                                    DL_CHINHSACH_DOITUONG_CT,
-                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
-                                    {
-                                        ID: Value(kh.KH_ID.Text),
-                                        ID_DOITUONG: varIdAdCSKH,
-                                        MA_CHINH_SACH: newMaCS,
-                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                                        THANH_PHAN: "KH",
-                                        AP_DUNG: "1",
-                                        KIEU: RadioCSKH.Selected.ID,
-                                        MA_TIEU_CHI: kh.DropKHCS.Selected.MA_CHI_TIEU,
-                                        TEN_TIEU_CHI: kh.DropKHCS.Selected.TEN_CHI_TIEU,
-                                        MA_GIA_TRI: LookUp(
-                                            tmpDsGiatriCS,
-                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKHCS.Selected.MA_CHI_TIEU
-                                        ).Ma,
-                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri
-                                    }
-                                )
-                            )
-                        )
-                    )
-                );
-                
-            // lưu dữ liệu ở bảng chi tiết loai tru
-            If(
-                    RadioCSKH_LoaiTru.Selected.ID = 2,
-                    If(
-                        CountRows(tmpCSLoaitruKH) > 0,
-                        ForAll(
-                            GalleryKHCS_LoaiTru.AllItems As kh,
-                            ForAll(
-                                kh.ComboKHCS_LT.SelectedItems As gt,
-                                Patch(
-                                    DL_CHINHSACH_DOITUONG_CT,
-                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
-                                    {
-                                        ID: Value(kh.KHLT_ID.Text),
-                                        ID_DOITUONG: varIdLtCSKH,
-                                        MA_CHINH_SACH: newMaCS,
-                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                                        THANH_PHAN: "KH",
-                                        AP_DUNG: "2",
-                                        KIEU: RadioCSKB_LoaiTru.Selected.ID,
-                                        MA_TIEU_CHI: kh.DropKHCS_LoaiTru.Selected.MA_CHI_TIEU,
-                                        TEN_TIEU_CHI: kh.DropKHCS_LoaiTru.Selected.TEN_CHI_TIEU,
-                                        MA_GIA_TRI: LookUp(
-                                            tmpDsGiatriCS,
-                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKHCS_LoaiTru.Selected.MA_CHI_TIEU
-                                        ).Ma,
-                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri
-                                    }
-                                )
-                            )
-                        )
-                    )
-                );
-                
-            // lưu dữ liệu ở bảng  DL_CHINHSACH_DOITUONG PHAM_VI
-            Set(
-                    varIdAdCSPV,
-                    0
-                );
-                Set(
-                    varIdLtCSPV,
-                    0
-                );
-                Set(
-                    varIdAdCSPV,
-                    Max(
-                        DL_CHINHSACH_DOITUONG,
-                        ID
-                    ) + 1
-                );
-                Patch(
-                    DL_CHINHSACH_DOITUONG,
-                    Defaults(DL_CHINHSACH_DOITUONG),
-                    {
-                        ID: varIdAdCSPV,
-                        MA_CHINH_SACH: newMaCS,
-                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                        THANH_PHAN: "PV",
-                        AP_DUNG: "1",
-                        KIEU: RadioCSPV.Selected.ID,
-                        TEN_KIEU: RadioCSPV.Selected.Text
-                    }
-                );
-                Patch(
-                    DL_CHINHSACH_DOITUONG,
-                    Set(
-                        varIdLtCSPV,
-                        Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1
-                    );
-                    Defaults(DL_CHINHSACH_DOITUONG),
-                    {
-                        ID: Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1,
-                        MA_CHINH_SACH: newMaCS,
-                        THANH_PHAN: "PV",
-                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                        AP_DUNG: "2",
-                        KIEU: RadioCSPV_LoaiTru.Selected.ID,
-                        TEN_KIEU: RadioCSPV_LoaiTru.Selected.Text
-                    }
-                );
-                
-            // lưu dữ liệu ở bảng chi tiết
-            If(
-                    RadioCSPV.Selected.ID = 2,
-                    If(
-                        CountRows(tmpCSApdungPV) > 0,
-                        ForAll(
-                            GalleryPVCS.AllItems As pv,
-                            ForAll(
-                                pv.ComboPVCS.SelectedItems As gt,
-                                Patch(
-                                    DL_CHINHSACH_DOITUONG_CT,
-                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
-                                    {
-                                        ID: Value(pv.PV_ID.Text),
-                                        ID_DOITUONG: varIdAdCSPV,
-                                        MA_CHINH_SACH: newMaCS,
-                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                                        THANH_PHAN: "PV",
-                                        AP_DUNG: "1",
-                                        KIEU: RadioCSPV.Selected.ID,
-                                        MA_TIEU_CHI: pv.DropPVCS.Selected.MA_CHI_TIEU,
-                                        TEN_TIEU_CHI: pv.DropPVCS.Selected.TEN_CHI_TIEU,
-                                        MA_GIA_TRI: LookUp(
-                                            tmpDsGiatriCS,
-                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = pv.DropPVCS.Selected.MA_CHI_TIEU
-                                        ).Ma,
-                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri
-                                    }
-                                )
-                            )
-                        )
-                    )
-                );
-                
-            // lưu dữ liệu ở bảng chi tiết loai tru
-            If(
-                    RadioCSPV_LoaiTru.Selected.ID = 2,
-                    If(
-                        CountRows(tmpCSLoaitruPV) > 0,
-                        ForAll(
-                            GalleryPVCS_LoaiTru.AllItems As kh,
-                            ForAll(
-                                kh.ComboPVCS_LT.SelectedItems As gt,
-                                Patch(
-                                    DL_CHINHSACH_DOITUONG_CT,
-                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
-                                    {
-                                        ID: Value(kh.PVLT_ID.Text),
-                                        ID_DOITUONG: varIdLtCSPV,
-                                        MA_CHINH_SACH: newMaCS,
-                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                                        THANH_PHAN: "PV",
-                                        AP_DUNG: "2",
-                                        KIEU: RadioCSPV_LoaiTru.Selected.ID,
-                                        MA_TIEU_CHI: kh.DropPVCS_LoaiTru.Selected.MA_CHI_TIEU,
-                                        TEN_TIEU_CHI: kh.DropPVCS_LoaiTru.Selected.TEN_CHI_TIEU,
-                                        MA_GIA_TRI: LookUp(
-                                            tmpDsGiatriCS,
-                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropPVCS_LoaiTru.Selected.MA_CHI_TIEU
-                                        ).Ma,
-                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri
-                                    }
-                                )
-                            )
-                        )
-                    )
-                );
-                // lưu dữ liệu ở bảng  DL_CHINHSACH_DOITUONG SO TIEN
-            Set(
-                    varIdAdCSST,
-                    0
-                );
-                Set(
-                    varIdLtCSST,
-                    0
-                );
-                Set(
-                    varIdAdCSST,
-                    Max(
-                        DL_CHINHSACH_DOITUONG,
-                        ID
-                    ) + 1
-                );
-                Patch(
-                    DL_CHINHSACH_DOITUONG,
-                    Defaults(DL_CHINHSACH_DOITUONG),
-                    {
-                        ID: varIdAdCSST,
-                        MA_CHINH_SACH: newMaCS,
-                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                        THANH_PHAN: "ST",
-                        AP_DUNG: "1",
-                        KIEU: RadioST.Selected.ID,
-                        TEN_KIEU: RadioST.Selected.Text
-                    }
-                );
-                Patch(
-                    DL_CHINHSACH_DOITUONG,
-                    Set(
-                        varIdLtCSST,
-                        Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1
-                    );
-                    Defaults(DL_CHINHSACH_DOITUONG),
-                    {
-                        ID: Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1,
-                        MA_CHINH_SACH: newMaCS,
-                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                        THANH_PHAN: "ST",
-                        AP_DUNG: "2",
-                        KIEU: RadioST_LoaiTru.Selected.ID,
-                        TEN_KIEU: RadioST_LoaiTru.Selected.Text
-                    }
-                );
-                
-            // lưu dữ liệu ở bảng chi tiết
-            If(
-                    RadioST.Selected.ID = 2,
-                    If(
-                        CountRows(tmpCSApdungST) > 0,
-                        ForAll(
-                            GalleryST.AllItems As pv,
-                            Patch(
-                                DL_CHINHSACH_DOITUONG_CT,
-                                Defaults(DL_CHINHSACH_DOITUONG_CT),
-                                {
-                                    ID: Value(pv.ST_ID.Text),
-                                    ID_DOITUONG: varIdAdCSST,
-                                    MA_CHINH_SACH: newMaCS,
-                                    LOAI_DK: DataCardLoaiDK.Selected.MA,
-                                    ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                                    THANH_PHAN: "ST",
-                                    AP_DUNG: "1",
-                                    KIEU: RadioST.Selected.ID,
-                                    MA_TIEU_CHI: pv.DropST.Selected.MA_CHI_TIEU,
-                                    TEN_TIEU_CHI: pv.DropST.Selected.TEN_CHI_TIEU,
-                                    MA_GIA_TRI: LookUp(
-                                        tmpDsGiatriCS,
-                                        cr282_ten_gia_tri = pv.ComboST.Selected.cr282_ten_gia_tri && Loai = pv.DropST.Selected.MA_CHI_TIEU
-                                    ).Ma,
-                                    TEN_GIA_TRI: pv.ComboST.Selected.cr282_ten_gia_tri,
-                                    GIATRI_TU: Value(pv.GiaTriTu.Text),
-                                    GIATRI_DEN: Value(pv.GiaTriDen.Text)
-                                }
-                            )
-                        )
-                    )
-                );
-                
-            // lưu dữ liệu ở bảng chi tiết loai tru
-            If(
-                    RadioST_LoaiTru.Selected.ID = 2,
-                    If(
-                        CountRows(tmpCSLoaitruST) > 0,
-                        ForAll(
-                            GalleryST_LoaiTru.AllItems As kh,
-                            Patch(
-                                DL_CHINHSACH_DOITUONG_CT,
-                                Defaults(DL_CHINHSACH_DOITUONG_CT),
-                                {
-                                    ID: Value(kh.STLT_ID.Text),
-                                    ID_DOITUONG: varIdLtCSST,
-                                    MA_CHINH_SACH: newMaCS,
-                                    LOAI_DK: DataCardLoaiDK.Selected.MA,
-                                    ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                                    THANH_PHAN: "ST",
-                                    AP_DUNG: "2",
-                                    KIEU: RadioST_LoaiTru.Selected.ID,
-                                    MA_TIEU_CHI: kh.DropST_LoaiTru.Selected.MA_CHI_TIEU,
-                                    TEN_TIEU_CHI: kh.DropST_LoaiTru.Selected.TEN_CHI_TIEU,
-                                    MA_GIA_TRI: LookUp(
-                                        tmpDsGiatriCS,
-                                        cr282_ten_gia_tri = kh.ComboST_LT.Selected.cr282_ten_gia_tri && Loai = kh.DropST_LoaiTru.Selected.MA_CHI_TIEU
-                                    ).Ma,
-                                    TEN_GIA_TRI: kh.ComboST_LT.Selected.cr282_ten_gia_tri,
-                                    GIATRI_TU: Value(kh.GiaTriTu_LT.Text),
-                                    GIATRI_DEN: Value(kh.GiaTriDen_LT.Text)
-                                }
-                            )
-                        )
-                    )
-                );
-            );
-            
-            
-            If(
-                IsBlank(errorMsgCS),
-                /*UpdateIf(
-                    DL_CHINHSACH_CHUNG,
-                    MA_CHINH_SACH = varMaCS,
-                    {TRANG_THAI_FIX: "1"}
-                );
-                Set(
-                    varGhiCS,
-                    true
-                );*/
-                Notify(
-                    "Ghi dữ liệu thành công",
-                    NotificationType.Success,
-                    800
-                );
-            );
-        Size: =11
-        Text: ="Ghi dữ liệu"
-        Visible: =If(!IsBlank(DataCardValueMaCS.Text),true, false)
-        Width: =109
-        X: =1246
-        Y: =728
-        ZIndex: =4
-
-    BtnLuuCS As button:
-        DisplayMode: =If(varGhiCS,DisplayMode.Disabled, DisplayMode.Edit)
-        OnSelect: |
-            =//Xu ly thong tin chung
-            UpdateContext({errorMsgCS: ""});
+            UpdateContext({varMoTa:""});
             Clear(tmpCheckDup);
             //ID chinh sach chung
             If(
@@ -7213,11 +6096,1453 @@ NhapChinhSach As screen:
                             " ",
                             DataCardTienTe.Selected.TIEN_TE,
                             " có hiệu lực từ ",
-                            DateValueTuCS.SelectedDate,
+                            Text(DateValueTuCS.SelectedDate),
                             " đến ",
                             If(
                                 !IsBlank(DateValueDenCS.SelectedDate),
-                                DateValueDenCS.SelectedDate,
+                                Text(DateValueDenCS.SelectedDate),
+                                "khi có thông báo mới"
+                            ),
+                            " nếu thỏa mãn ",
+                            If(
+                                DataCardLoaiDK.Selected.MA = "1",
+                                "một trong số",
+                                "tất cả"
+                            ),
+                            " các điều kiện sau: ",
+                            //San pham
+                            varMTSP,
+                            If(
+                                !IsBlank(varMTSP_LT),
+                                Concatenate(
+                                    " (Trừ ",
+                                    varMTSP_LT,
+                                    ")"
+                                ),
+                                ""
+                            ),
+                            "; ",
+                            //Kenh ban
+                            varMTKB,
+                            If(
+                                !IsBlank(varMTKB_LT),
+                                Concatenate(
+                                    " (Trừ ",
+                                    varMTKB_LT,
+                                    ")"
+                                ),
+                                ""
+                            ),
+                            "; ",
+                            //kHACH HANG
+                            varMTKH,
+                            If(
+                                !IsBlank(varMTKH_LT),
+                                Concatenate(
+                                    " (Trừ ",
+                                    varMTKH_LT,
+                                    ")"
+                                ),
+                                ""
+                            ),
+                            "; ",
+                            //pHAM VI
+                            varMTPV,
+                            If(
+                                !IsBlank(varMTPV_LT),
+                                Concatenate(
+                                    " (Trừ ",
+                                    varMTPV_LT,
+                                    ")"
+                                ),
+                                ""
+                            )
+                        )
+                    }
+                );
+                UpdateIf(
+                    DL_CHINHSACH_CHUNG,
+                    MA_CHINH_SACH = newMaCS,
+                    {MO_TA: varMoTa}
+                );
+            );
+            If(
+                IsBlank(errorMsgCS),
+                /*UpdateIf(
+                    DL_CHINHSACH_CHUNG,
+                    MA_CHINH_SACH = varMaCS,
+                    {TRANG_THAI_FIX: "1"}
+                );
+                Set(
+                    varGhiCS,
+                    true
+                );*/
+                Notify(
+                    "Ghi dữ liệu thành công",
+                    NotificationType.Success,
+                    800
+                );
+            );
+        Size: =11
+        Text: ="Ghi dữ liệu"
+        Visible: =If(!IsBlank(DataCardValueMaCS.Text),true, false)
+        Width: =109
+        X: =1246
+        Y: =728
+        ZIndex: =4
+
+    BtnLuuCS As button:
+        DisplayMode: =If(varGhiCS,DisplayMode.Disabled, DisplayMode.Edit)
+        OnSelect: |
+            =//Xu ly thong tin chung
+            UpdateContext({errorMsgCS: ""});
+            UpdateContext({varMoTa:""});
+            Clear(tmpCheckDup);
+            //ID chinh sach chung
+            If(
+                IsBlank(DataCardIDCS.Text),
+                UpdateContext(
+                    {
+                        newIDCS: If(
+                            CountIf(
+                                DL_CHINHSACH_CHUNG,
+                                true
+                            ) = 0,
+                            1,
+                            Max(
+                                DL_CHINHSACH_CHUNG,
+                                ID
+                            ) + 1
+                        )
+                    }
+                ),
+                UpdateContext({newIDCS: Value(DataCardIDCS.Text)})
+            );
+            //ID chinh sach ap dung
+            If(
+                IsBlank(DataCardIDCSApDung.Text),
+                UpdateContext(
+                    {
+                        newIDCSApdung: If(
+                            CountIf(
+                                DL_CHINHSACH_APDUNG,
+                                true
+                            ) = 0,
+                            1,
+                            Max(
+                                DL_CHINHSACH_APDUNG,
+                                ID
+                            ) + 1
+                        )
+                    }
+                ),
+                UpdateContext({newIDCSApdung: Value(DataCardIDCSApDung.Text)})
+            );
+            //Ma chinh sach
+            If(
+                IsBlank(DataCardValueMaCS.Text),
+                UpdateContext(
+                    {
+                        newMaCS: Concatenate(
+                            "CS",
+                            If(
+                                newIDCS < 10,
+                                "000",
+                                If(
+                                    newIDCS < 100 && newIDCS >= 10,
+                                    "00",
+                                    If(
+                                        newIDCS < 1000 && newIDCS >= 100,
+                                        "0",
+                                        ""
+                                    )
+                                )
+                            ),
+                            Text(newIDCS)
+                        )
+                    }
+                ),
+                UpdateContext({newMaCS: DataCardValueMaCS.Text})
+            );
+            If(
+                IsBlank(DateValueTuCS.SelectedDate),
+                UpdateContext({errorMsgCS: "Hiệu lực từ là bắt buộc"})
+            );
+            If(
+                IsBlank(errorMsgCS) && !IsBlank(DateValueDenCS.SelectedDate) && DateValueTuCS.SelectedDate > DateValueDenCS.SelectedDate,
+                UpdateContext({errorMsgCS: "Hiệu lực đến phải sau hiệu lực từ"})
+            );
+            //Kiem tra tieu chi la duy nhat
+            //sản phâm
+            //sản phâm - ap dung
+            If(
+                IsBlank(errorMsgCS) && CountRows(tmpCSApdungSP) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryCSSP.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "SP",
+                            Value: kh.DropCSSP.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryCSSP.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "SP" && Value = kh.DropCSSP.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí áp dụng sản phẩm"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgCS: First(errorCol).Message})
+                )
+            );
+            //sản phâm - loai tru
+            If(
+                IsBlank(errorMsgCS) && CountRows(tmpCSLoaitruSP) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryCSSP_LoaiTru.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "SP",
+                            Value: kh.DropSPCS_LoaiTru.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryCSSP_LoaiTru.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "SP" && Value = kh.DropSPCS_LoaiTru.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí loại trừ sản phẩm"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgCS: First(errorCol).Message})
+                )
+            );
+            //End sản phâm
+            //Kenh ban
+            //Kenh ban - ap dung
+            If(
+                IsBlank(errorMsgCS) && CountRows(tmpCSApdungKB) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryKBCS.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "KB",
+                            Value: kh.DropKBCS.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryKBCS.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "KB" && Value = kh.DropKBCS.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí áp dụng kênh bán"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgCS: First(errorCol).Message})
+                )
+            );
+            //Kenh ban - loai tru
+            If(
+                IsBlank(errorMsgCS) && CountRows(tmpCSApdungKB) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryKBCS_LoaiTru.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "KB",
+                            Value: kh.DropKBCS_LoaiTru.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryKBCS_LoaiTru.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "KB" && Value = kh.DropKBCS_LoaiTru.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí loại trừ kênh bán"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgCS: First(errorCol).Message})
+                )
+            );
+            //End kenh ban
+            //Khach hang
+            //Khach hang - ap dung
+            If(
+                IsBlank(errorMsgCS) && CountRows(tmpCSApdungKH) > 0,
+                Clear(errorCol);
+                ForAll(
+                    GalleryKHCS.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "KH",
+                            Value: kh.DropKHCS.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryKHCS.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "KH" && Value = kh.DropKHCS.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí áp dụng khách hàng"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgCS: First(errorCol).Message})
+                )
+            );
+            //Khach hang - loai tru
+            If(
+                IsBlank(errorMsgCS) && CountRows(tmpLoaitruKH) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryKHCS_LoaiTru.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "KH",
+                            Value: kh.DropKHCS_LoaiTru.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryKHCS_LoaiTru.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "KH" && Value = kh.DropKHCS_LoaiTru.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí loại trừ khách hàng"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgCS: First(errorCol).Message})
+                )
+            );
+            //End khách hàng
+            //Phạm vi
+            //pham vi - ap dung
+            If(
+                IsBlank(errorMsgCS) && CountRows(tmpApdungPV) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryPVCS.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "PV",
+                            Value: kh.DropPVCS.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryPVCS.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "PV" && Value = kh.DropPVCS.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí áp dụng phạm vi"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgCS: First(errorCol).Message})
+                )
+            );
+            //Pham vi - loai tru
+            If(
+                IsBlank(errorMsgCS) && CountRows(tmpLoaitruPV) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryPV_LoaiTru.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "PV",
+                            Value: kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryPV_LoaiTru.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "PV" && Value = kh.DropPV_LoaiTru.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí loại trừ phạm vi"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgCS: First(errorCol).Message})
+                )
+            );
+            //End phạm vi
+            //So tien
+            //So tien - ap dung
+            If(
+                IsBlank(errorMsgCS) && CountRows(tmpCSApdungST) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryST.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "ST",
+                            Value: kh.DropST.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryST.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "ST" && Value = kh.DropST.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí áp dụng số tiền"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgCS: First(errorCol).Message})
+                )
+            );
+            //So tien - loai tru
+            If(
+                IsBlank(errorMsgCS) && CountRows(tmpCSLoaitruST) > 0,
+                Clear(errorCol);
+                Clear(tmpCheckDup);
+                ForAll(
+                    GalleryST_LoaiTru.AllItems As kh,
+                    Collect(
+                        tmpCheckDup,
+                        {
+                            Type: "ST",
+                            Value: kh.DropST_LoaiTru.Selected.MA_CHI_TIEU
+                        }
+                    );
+                );
+                ForAll(
+                    GalleryST_LoaiTru.AllItems As kh,
+                    If(
+                        CountIf(
+                            tmpCheckDup,
+                            Type = "ST" && Value = kh.DropST_LoaiTru.Selected.MA_CHI_TIEU
+                        ) > 1,
+                        Collect(
+                            errorCol,
+                            {Message: "Trùng tiêu chí loại trừ số tiền"}
+                        )
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsgCS: First(errorCol).Message})
+                )
+            );
+            //End so tien
+            //End kiem tra duy nhat
+            If(
+                !IsBlank(errorMsgCS),
+                Notify(
+                    errorMsgCS,
+                    NotificationType.Error,
+                    800
+                ),
+                SubmitForm(TTChungCS);
+                SubmitForm(TTCSApDung);
+                Set(
+                    varMaCS,
+                    newMaCS
+                );
+                EditForm(TTChungCS);
+                EditForm(TTCSApDung);
+                RemoveIf(
+                    DL_CHINHSACH_DOITUONG,
+                    MA_CHINH_SACH = newMaCS
+                );
+                RemoveIf(
+                    DL_CHINHSACH_DOITUONG_CT,
+                    MA_CHINH_SACH = newMaCS
+                );
+             // lưu dữ liệu ở bảng  DL_CHINHSACH_DOITUONG San pham
+            Clear(colAD);
+                Clear(colLT);
+                Set(
+                    varIdAdCSSP,
+                    0
+                );
+                Set(
+                    varIdLtCSSP,
+                    0
+                );
+                Set(
+                    varIdAdCSSP,
+                    Max(
+                        DL_CHINHSACH_DOITUONG,
+                        ID
+                    ) + 1
+                );
+                Patch(
+                    DL_CHINHSACH_DOITUONG,
+                    Defaults(DL_CHINHSACH_DOITUONG),
+                    {
+                        ID: varIdAdCSSP,
+                        MA_CHINH_SACH: newMaCS,
+                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                        THANH_PHAN: "SP",
+                        AP_DUNG: "1",
+                        KIEU: RadioCSSP.Selected.ID,
+                        TEN_KIEU: RadioCSSP.Selected.Text
+                    }
+                );
+                Patch(
+                    DL_CHINHSACH_DOITUONG,
+                    Set(
+                        varIdLtCSSP,
+                        Max(
+                            DL_CHINHSACH_DOITUONG,
+                            ID
+                        ) + 1
+                    );
+                    Defaults(DL_CHINHSACH_DOITUONG),
+                    {
+                        ID: varIdLtCSSP,
+                        MA_CHINH_SACH: newMaCS,
+                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                        THANH_PHAN: "SP",
+                        AP_DUNG: "2",
+                        KIEU: RadioCSSP_LoaiTru.Selected.ID,
+                        TEN_KIEU: RadioCSSP_LoaiTru.Selected.Text
+                    }
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết
+            UpdateContext({varMTSP: ""});
+                If(
+                    RadioCSSP.Selected.ID = 2,
+                    If(
+                        CountRows(tmpCSApdungSP) > 0,
+                        ForAll(
+                            GalleryCSSP.AllItems As kh,
+                            ForAll(
+                                kh.ComboBoxCSSP.SelectedItems As gt,
+                                Patch(
+                                    colAD,
+                                    Defaults(colAD),
+                                    {
+                                        Ten: Concatenate(
+                                            kh.DropCSSP.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "SP"
+                                    }
+                                );
+                                Patch(
+                                    DL_CHINHSACH_DOITUONG_CT,
+                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
+                                    {
+                                        ID: Value(kh.SP_ID.Text),
+                                        ID_DOITUONG: varIdAdCSSP,
+                                        MA_CHINH_SACH: newMaCS,
+                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                                        THANH_PHAN: "SP",
+                                        AP_DUNG: "1",
+                                        KIEU: RadioCSSP.Selected.ID,
+                                        MA_TIEU_CHI: kh.DropCSSP.Selected.MA_CHI_TIEU,
+                                        TEN_TIEU_CHI: kh.DropCSSP.Selected.TEN_CHI_TIEU,
+                                        MA_GIA_TRI: LookUp(
+                                            tmpDsGiatriCS,
+                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = If(
+                                                kh.DropCSSP.Selected.MA_CHI_TIEU = "MA_COMBO_SP",
+                                                "MA_SP",
+                                                kh.DropCSSP.Selected.MA_CHI_TIEU
+                                            )
+                                        ).Ma,
+                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri,
+                                        MA_PV_AD: If(
+                                            kh.DropCSSP.Selected.MA_CHI_TIEU = "MA_COMBO_SP",
+                                            LookUp(
+                                                DM_PHAMVI_AD,
+                                                TEN_PHAMVI_AD = kh.DropPVSP.Selected.TEN_PHAMVI_AD
+                                            ).ID,
+                                            ""
+                                        ),
+                                        TEN_PV_AD: If(
+                                            kh.DropCSSP.Selected.MA_CHI_TIEU = "MA_COMBO_SP",
+                                            kh.DropPVSP.Selected.TEN_PHAMVI_AD,
+                                            ""
+                                        )
+                                    }
+                                );
+                            )
+                        );
+                    )
+                );
+                If(
+                    RadioCSSP.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTSP: Concat(
+                                Filter(
+                                    colAD,
+                                    Loai = "SP"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
+                    ),
+                    UpdateContext({varMTSP: "Tất cả sản phẩm"})
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết loai tru
+            UpdateContext({varMTSP_LT: ""});
+                If(
+                    RadioCSSP_LoaiTru.Selected.ID = 2,
+                    If(
+                        CountRows(tmpCSLoaitruSP) > 0,
+                        ForAll(
+                            GalleryCSSP_LoaiTru.AllItems As kh,
+                            ForAll(
+                                kh.ComboBoxCSSP_LT.SelectedItems As gt,
+                                Patch(
+                                    colLT,
+                                    Defaults(colLT),
+                                    {
+                                        Ten: Concatenate(
+                                            kh.DropSPCS_LoaiTru.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "SP"
+                                    }
+                                );
+                                Patch(
+                                    DL_CHINHSACH_DOITUONG_CT,
+                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
+                                    {
+                                        ID: Value(kh.SP_ID_LoaiTru.Text),
+                                        ID_DOITUONG: varIdLtCSSP,
+                                        MA_CHINH_SACH: newMaCS,
+                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                                        THANH_PHAN: "SP",
+                                        AP_DUNG: "2",
+                                        KIEU: RadioCSSP_LoaiTru.Selected.ID,
+                                        MA_TIEU_CHI: kh.DropSPCS_LoaiTru.Selected.MA_CHI_TIEU,
+                                        TEN_TIEU_CHI: kh.DropSPCS_LoaiTru.Selected.TEN_CHI_TIEU,
+                                        MA_GIA_TRI: LookUp(
+                                            tmpDsGiatriCS,
+                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = If(
+                                                kh.DropSPCS_LoaiTru.Selected.MA_CHI_TIEU = "MA_COMBO_SP",
+                                                "MA_SP",
+                                                kh.DropSPCS_LoaiTru.Selected.MA_CHI_TIEU
+                                            )
+                                        ).Ma,
+                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri,
+                                        MA_PV_AD: If(
+                                            kh.DropSPCS_LoaiTru.Selected.MA_CHI_TIEU = "MA_COMBO_SP",
+                                            LookUp(
+                                                DM_PHAMVI_AD,
+                                                TEN_PHAMVI_AD = kh.DropPVSP_LT.Selected.TEN_PHAMVI_AD
+                                            ).ID,
+                                            ""
+                                        ),
+                                        TEN_PV_AD: If(
+                                            kh.DropSPCS_LoaiTru.Selected.MA_CHI_TIEU = "MA_COMBO_SP",
+                                            kh.DropPVSP_LT.Selected.TEN_PHAMVI_AD,
+                                            ""
+                                        )
+                                    }
+                                )
+                            )
+                        )
+                    )
+                );
+                If(
+                    RadioCSSP_LoaiTru.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTSP_LT: Concat(
+                                Filter(
+                                    colAD,
+                                    Loai = "SP"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
+                    )
+                );
+                
+            //End San pham
+            // lưu dữ liệu ở bảng  DL_CHINHSACH_DOITUONG KENH BAN
+            Set(
+                    varIdAdCSKB,
+                    0
+                );
+                Set(
+                    varIdLtCSKB,
+                    0
+                );
+                Set(
+                    varIdAdCSKB,
+                    Max(
+                        DL_CHINHSACH_DOITUONG,
+                        ID
+                    ) + 1
+                );
+                Patch(
+                    DL_CHINHSACH_DOITUONG,
+                    Defaults(DL_CHINHSACH_DOITUONG),
+                    {
+                        ID: varIdAdCSKB,
+                        MA_CHINH_SACH: newMaCS,
+                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                        THANH_PHAN: "KB",
+                        AP_DUNG: "1",
+                        KIEU: RadioCSKB.Selected.ID,
+                        TEN_KIEU: RadioCSKB.Selected.Text
+                    }
+                );
+                Patch(
+                    DL_CHINHSACH_DOITUONG,
+                    Set(
+                        varIdLtCSKB,
+                        Max(
+                            DL_CHINHSACH_DOITUONG,
+                            ID
+                        ) + 1
+                    );
+                    Defaults(DL_CHINHSACH_DOITUONG),
+                    {
+                        ID: varIdLtCSKB,
+                        MA_CHINH_SACH: newMaCS,
+                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                        THANH_PHAN: "KB",
+                        AP_DUNG: "2",
+                        KIEU: RadioCSKB_LoaiTru.Selected.ID,
+                        TEN_KIEU: RadioCSKB_LoaiTru.Selected.Text
+                    }
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết
+            UpdateContext({varMTKB: ""});
+                If(
+                    RadioCSKB.Selected.ID = 2,
+                    If(
+                        CountRows(tmpCSApdungKB) > 0,
+                        ForAll(
+                            GalleryKBCS.AllItems As kh,
+                            ForAll(
+                                kh.ComboBoxCSKB.SelectedItems As gt,
+                                Patch(
+                                    colAD,
+                                    Defaults(colAD),
+                                    {
+                                        Ten: Concatenate(
+                                            kh.DropKBCS.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "KB"
+                                    }
+                                );
+                                Patch(
+                                    DL_CHINHSACH_DOITUONG_CT,
+                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
+                                    {
+                                        ID: Value(kh.CSAD_ID.Text),
+                                        ID_DOITUONG: varIdAdCSKB,
+                                        MA_CHINH_SACH: newMaCS,
+                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                                        THANH_PHAN: "KB",
+                                        AP_DUNG: "1",
+                                        KIEU: RadioCSKB.Selected.ID,
+                                        MA_TIEU_CHI: kh.DropKBCS.Selected.MA_CHI_TIEU,
+                                        TEN_TIEU_CHI: kh.DropKBCS.Selected.TEN_CHI_TIEU,
+                                        MA_GIA_TRI: LookUp(
+                                            tmpDsGiatriCS,
+                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKBCS.Selected.MA_CHI_TIEU
+                                        ).Ma,
+                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri
+                                    }
+                                )
+                            )
+                        )
+                    )
+                );
+                If(
+                    RadioCSKB.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTKB: Concat(
+                                Filter(
+                                    colAD,
+                                    Loai = "KB"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
+                    ),
+                    UpdateContext({varMTKB: "Tất cả kênh bán"})
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết loai tru
+            UpdateContext({varMTKB_LT: ""});
+                If(
+                    RadioCSKB_LoaiTru.Selected.ID = 2,
+                    If(
+                        CountRows(tmpCSLoaitruKB) > 0,
+                        ForAll(
+                            GalleryKBCS_LoaiTru.AllItems As kh,
+                            ForAll(
+                                kh.ComboBoxCSKB_LT.SelectedItems As gt,
+                                Patch(
+                                    colLT,
+                                    Defaults(colLT),
+                                    {
+                                        Ten: Concatenate(
+                                            kh.DropKBCS_LoaiTru.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "KB"
+                                    }
+                                );
+                                Patch(
+                                    DL_CHINHSACH_DOITUONG_CT,
+                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
+                                    {
+                                        ID: Value(kh.CSAD_ID_LoaiTru.Text),
+                                        ID_DOITUONG: varIdLtCSKB,
+                                        MA_CHINH_SACH: newMaCS,
+                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                                        THANH_PHAN: "KB",
+                                        AP_DUNG: "2",
+                                        KIEU: RadioCSKB_LoaiTru.Selected.ID,
+                                        MA_TIEU_CHI: kh.DropKBCS_LoaiTru.Selected.MA_CHI_TIEU,
+                                        TEN_TIEU_CHI: kh.DropKBCS_LoaiTru.Selected.TEN_CHI_TIEU,
+                                        MA_GIA_TRI: LookUp(
+                                            tmpDsGiatriCS,
+                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKBCS_LoaiTru.Selected.MA_CHI_TIEU
+                                        ).Ma,
+                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri
+                                    }
+                                )
+                            )
+                        )
+                    )
+                );
+                If(
+                    RadioCSKB_LoaiTru.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTKB_LT: Concat(
+                                Filter(
+                                    colLT,
+                                    Loai = "KB"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
+                    )
+                );
+                
+            //End kenh ban
+            // lưu dữ liệu ở bảng  DL_CHINHSACH_DOITUONG KHANH HANG
+            Set(
+                    varIdAdCSKH,
+                    0
+                );
+                Set(
+                    varIdLtCSKH,
+                    0
+                );
+                Set(
+                    varIdAdCSKH,
+                    Max(
+                        DL_CHINHSACH_DOITUONG,
+                        ID
+                    ) + 1
+                );
+                Patch(
+                    DL_CHINHSACH_DOITUONG,
+                    Defaults(DL_CHINHSACH_DOITUONG),
+                    {
+                        ID: varIdAdCSKH,
+                        MA_CHINH_SACH: newMaCS,
+                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                        THANH_PHAN: "KH",
+                        AP_DUNG: "1",
+                        KIEU: RadioCSKH.Selected.ID,
+                        TEN_KIEU: RadioCSKH.Selected.Text
+                    }
+                );
+                Patch(
+                    DL_CHINHSACH_DOITUONG,
+                    Set(
+                        varIdLtCSKH,
+                        Max(
+                            DL_CHINHSACH_DOITUONG,
+                            ID
+                        ) + 1
+                    );
+                    Defaults(DL_CHINHSACH_DOITUONG),
+                    {
+                        ID: Max(
+                            DL_CHINHSACH_DOITUONG,
+                            ID
+                        ) + 1,
+                        MA_CHINH_SACH: newMaCS,
+                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                        THANH_PHAN: "KH",
+                        AP_DUNG: "2",
+                        KIEU: RadioCSKH_LoaiTru.Selected.ID,
+                        TEN_KIEU: RadioCSKH_LoaiTru.Selected.Text
+                    }
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết
+            UpdateContext({varMTKH: ""});
+                If(
+                    RadioCSKH.Selected.ID = 2,
+                    If(
+                        CountRows(tmpCSApdungKH) > 0,
+                        ForAll(
+                            GalleryKHCS.AllItems As kh,
+                            ForAll(
+                                kh.ComboKHCS.SelectedItems As gt,
+                                Patch(
+                                    colAD,
+                                    Defaults(colAD),
+                                    {
+                                        Ten: Concatenate(
+                                            kh.DropKHCS.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "KH"
+                                    }
+                                );
+                                Patch(
+                                    DL_CHINHSACH_DOITUONG_CT,
+                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
+                                    {
+                                        ID: Value(kh.KH_ID.Text),
+                                        ID_DOITUONG: varIdAdCSKH,
+                                        MA_CHINH_SACH: newMaCS,
+                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                                        THANH_PHAN: "KH",
+                                        AP_DUNG: "1",
+                                        KIEU: RadioCSKH.Selected.ID,
+                                        MA_TIEU_CHI: kh.DropKHCS.Selected.MA_CHI_TIEU,
+                                        TEN_TIEU_CHI: kh.DropKHCS.Selected.TEN_CHI_TIEU,
+                                        MA_GIA_TRI: LookUp(
+                                            tmpDsGiatriCS,
+                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKHCS.Selected.MA_CHI_TIEU
+                                        ).Ma,
+                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri
+                                    }
+                                )
+                            )
+                        )
+                    )
+                );
+                If(
+                    RadioCSKH.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTKH: Concat(
+                                Filter(
+                                    colAD,
+                                    Loai = "KH"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
+                    ),
+                    UpdateContext({varMTKH: "Tất cả khách hàng"})
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết loai tru
+            UpdateContext({varMTKH_LT: ""});
+                If(
+                    RadioCSKH_LoaiTru.Selected.ID = 2,
+                    If(
+                        CountRows(tmpCSLoaitruKH) > 0,
+                        ForAll(
+                            GalleryKHCS_LoaiTru.AllItems As kh,
+                            ForAll(
+                                kh.ComboKHCS_LT.SelectedItems As gt,
+                                Patch(
+                                    colLT,
+                                    Defaults(colLT),
+                                    {
+                                        Ten: Concatenate(
+                                            kh.DropKHCS_LoaiTru.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "KH"
+                                    }
+                                );
+                                Patch(
+                                    DL_CHINHSACH_DOITUONG_CT,
+                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
+                                    {
+                                        ID: Value(kh.KHLT_ID.Text),
+                                        ID_DOITUONG: varIdLtCSKH,
+                                        MA_CHINH_SACH: newMaCS,
+                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                                        THANH_PHAN: "KH",
+                                        AP_DUNG: "2",
+                                        KIEU: RadioCSKB_LoaiTru.Selected.ID,
+                                        MA_TIEU_CHI: kh.DropKHCS_LoaiTru.Selected.MA_CHI_TIEU,
+                                        TEN_TIEU_CHI: kh.DropKHCS_LoaiTru.Selected.TEN_CHI_TIEU,
+                                        MA_GIA_TRI: LookUp(
+                                            tmpDsGiatriCS,
+                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropKHCS_LoaiTru.Selected.MA_CHI_TIEU
+                                        ).Ma,
+                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri
+                                    }
+                                )
+                            )
+                        )
+                    )
+                );
+                If(
+                    RadioCSKH_LoaiTru.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTKH_LT: Concat(
+                                Filter(
+                                    colLT,
+                                    Loai = "KH"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
+                    )
+                );
+                
+            // lưu dữ liệu ở bảng  DL_CHINHSACH_DOITUONG PHAM_VI
+            Set(
+                    varIdAdCSPV,
+                    0
+                );
+                Set(
+                    varIdLtCSPV,
+                    0
+                );
+                Set(
+                    varIdAdCSPV,
+                    Max(
+                        DL_CHINHSACH_DOITUONG,
+                        ID
+                    ) + 1
+                );
+                Patch(
+                    DL_CHINHSACH_DOITUONG,
+                    Defaults(DL_CHINHSACH_DOITUONG),
+                    {
+                        ID: varIdAdCSPV,
+                        MA_CHINH_SACH: newMaCS,
+                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                        THANH_PHAN: "PV",
+                        AP_DUNG: "1",
+                        KIEU: RadioCSPV.Selected.ID,
+                        TEN_KIEU: RadioCSPV.Selected.Text
+                    }
+                );
+                Patch(
+                    DL_CHINHSACH_DOITUONG,
+                    Set(
+                        varIdLtCSPV,
+                        Max(
+                            DL_CHINHSACH_DOITUONG,
+                            ID
+                        ) + 1
+                    );
+                    Defaults(DL_CHINHSACH_DOITUONG),
+                    {
+                        ID: Max(
+                            DL_CHINHSACH_DOITUONG,
+                            ID
+                        ) + 1,
+                        MA_CHINH_SACH: newMaCS,
+                        THANH_PHAN: "PV",
+                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                        AP_DUNG: "2",
+                        KIEU: RadioCSPV_LoaiTru.Selected.ID,
+                        TEN_KIEU: RadioCSPV_LoaiTru.Selected.Text
+                    }
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết
+            UpdateContext({varMTPV: ""});
+                If(
+                    RadioCSPV.Selected.ID = 2,
+                    If(
+                        CountRows(tmpCSApdungPV) > 0,
+                        ForAll(
+                            GalleryPVCS.AllItems As pv,
+                            ForAll(
+                                pv.ComboPVCS.SelectedItems As gt,
+                                Patch(
+                                    colAD,
+                                    Defaults(colAD),
+                                    {
+                                        Ten: Concatenate(
+                                            pv.DropPVCS.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "PV"
+                                    }
+                                );
+                                Patch(
+                                    DL_CHINHSACH_DOITUONG_CT,
+                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
+                                    {
+                                        ID: Value(pv.PV_ID.Text),
+                                        ID_DOITUONG: varIdAdCSPV,
+                                        MA_CHINH_SACH: newMaCS,
+                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                                        THANH_PHAN: "PV",
+                                        AP_DUNG: "1",
+                                        KIEU: RadioCSPV.Selected.ID,
+                                        MA_TIEU_CHI: pv.DropPVCS.Selected.MA_CHI_TIEU,
+                                        TEN_TIEU_CHI: pv.DropPVCS.Selected.TEN_CHI_TIEU,
+                                        MA_GIA_TRI: LookUp(
+                                            tmpDsGiatriCS,
+                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = pv.DropPVCS.Selected.MA_CHI_TIEU
+                                        ).Ma,
+                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri
+                                    }
+                                )
+                            )
+                        )
+                    )
+                );
+                If(
+                    RadioCSPV.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTPV: Concat(
+                                Filter(
+                                    colAD,
+                                    Loai = "PV"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
+                    ),
+                    UpdateContext({varMTPV: "Tất cả phạm vi"})
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết loai tru
+            UpdateContext({varMTPV_LT: ""});
+                If(
+                    RadioCSPV_LoaiTru.Selected.ID = 2,
+                    If(
+                        CountRows(tmpCSLoaitruPV) > 0,
+                        ForAll(
+                            GalleryPVCS_LoaiTru.AllItems As kh,
+                            ForAll(
+                                kh.ComboPVCS_LT.SelectedItems As gt,
+                                Patch(
+                                    colLT,
+                                    Defaults(colLT),
+                                    {
+                                        Ten: Concatenate(
+                                            kh.DropPVCS_LoaiTru.Selected.TEN_CHI_TIEU,
+                                            " ",
+                                            gt.cr282_ten_gia_tri
+                                        ),
+                                        Loai: "PV"
+                                    }
+                                );
+                                Patch(
+                                    DL_CHINHSACH_DOITUONG_CT,
+                                    Defaults(DL_CHINHSACH_DOITUONG_CT),
+                                    {
+                                        ID: Value(kh.PVLT_ID.Text),
+                                        ID_DOITUONG: varIdLtCSPV,
+                                        MA_CHINH_SACH: newMaCS,
+                                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                                        THANH_PHAN: "PV",
+                                        AP_DUNG: "2",
+                                        KIEU: RadioCSPV_LoaiTru.Selected.ID,
+                                        MA_TIEU_CHI: kh.DropPVCS_LoaiTru.Selected.MA_CHI_TIEU,
+                                        TEN_TIEU_CHI: kh.DropPVCS_LoaiTru.Selected.TEN_CHI_TIEU,
+                                        MA_GIA_TRI: LookUp(
+                                            tmpDsGiatriCS,
+                                            cr282_ten_gia_tri = gt.cr282_ten_gia_tri && Loai = kh.DropPVCS_LoaiTru.Selected.MA_CHI_TIEU
+                                        ).Ma,
+                                        TEN_GIA_TRI: gt.cr282_ten_gia_tri
+                                    }
+                                )
+                            )
+                        )
+                    )
+                );
+                If(
+                    RadioCSPV_LoaiTru.Selected.ID = 2,
+                    UpdateContext(
+                        {
+                            varMTPV_LT: Concat(
+                                Filter(
+                                    colLT,
+                                    Loai = "PV"
+                                ),
+                                Ten,
+                                ", "
+                            )
+                        }
+                    )
+                );
+                // lưu dữ liệu ở bảng  DL_CHINHSACH_DOITUONG SO TIEN
+            Set(
+                    varIdAdCSST,
+                    0
+                );
+                Set(
+                    varIdLtCSST,
+                    0
+                );
+                Set(
+                    varIdAdCSST,
+                    Max(
+                        DL_CHINHSACH_DOITUONG,
+                        ID
+                    ) + 1
+                );
+                Patch(
+                    DL_CHINHSACH_DOITUONG,
+                    Defaults(DL_CHINHSACH_DOITUONG),
+                    {
+                        ID: varIdAdCSST,
+                        MA_CHINH_SACH: newMaCS,
+                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                        THANH_PHAN: "ST",
+                        AP_DUNG: "1",
+                        KIEU: RadioST.Selected.ID,
+                        TEN_KIEU: RadioST.Selected.Text
+                    }
+                );
+                Patch(
+                    DL_CHINHSACH_DOITUONG,
+                    Set(
+                        varIdLtCSST,
+                        Max(
+                            DL_CHINHSACH_DOITUONG,
+                            ID
+                        ) + 1
+                    );
+                    Defaults(DL_CHINHSACH_DOITUONG),
+                    {
+                        ID: Max(
+                            DL_CHINHSACH_DOITUONG,
+                            ID
+                        ) + 1,
+                        MA_CHINH_SACH: newMaCS,
+                        LOAI_DK: DataCardLoaiDK.Selected.MA,
+                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                        THANH_PHAN: "ST",
+                        AP_DUNG: "2",
+                        KIEU: RadioST_LoaiTru.Selected.ID,
+                        TEN_KIEU: RadioST_LoaiTru.Selected.Text
+                    }
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết
+            If(
+                    RadioST.Selected.ID = 2,
+                    If(
+                        CountRows(tmpCSApdungST) > 0,
+                        ForAll(
+                            GalleryST.AllItems As pv,
+                            Patch(
+                                DL_CHINHSACH_DOITUONG_CT,
+                                Defaults(DL_CHINHSACH_DOITUONG_CT),
+                                {
+                                    ID: Value(pv.ST_ID.Text),
+                                    ID_DOITUONG: varIdAdCSST,
+                                    MA_CHINH_SACH: newMaCS,
+                                    LOAI_DK: DataCardLoaiDK.Selected.MA,
+                                    ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                                    THANH_PHAN: "ST",
+                                    AP_DUNG: "1",
+                                    KIEU: RadioST.Selected.ID,
+                                    MA_TIEU_CHI: pv.DropST.Selected.MA_CHI_TIEU,
+                                    TEN_TIEU_CHI: pv.DropST.Selected.TEN_CHI_TIEU,
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatriCS,
+                                        cr282_ten_gia_tri = pv.ComboST.Selected.cr282_ten_gia_tri && Loai = pv.DropST.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: pv.ComboST.Selected.cr282_ten_gia_tri,
+                                    GIATRI_TU: Value(pv.GiaTriTu.Text),
+                                    GIATRI_DEN: Value(pv.GiaTriDen.Text)
+                                }
+                            )
+                        )
+                    )
+                );
+                
+            // lưu dữ liệu ở bảng chi tiết loai tru
+            If(
+                    RadioST_LoaiTru.Selected.ID = 2,
+                    If(
+                        CountRows(tmpCSLoaitruST) > 0,
+                        ForAll(
+                            GalleryST_LoaiTru.AllItems As kh,
+                            Patch(
+                                DL_CHINHSACH_DOITUONG_CT,
+                                Defaults(DL_CHINHSACH_DOITUONG_CT),
+                                {
+                                    ID: Value(kh.STLT_ID.Text),
+                                    ID_DOITUONG: varIdLtCSST,
+                                    MA_CHINH_SACH: newMaCS,
+                                    LOAI_DK: DataCardLoaiDK.Selected.MA,
+                                    ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                                    THANH_PHAN: "ST",
+                                    AP_DUNG: "2",
+                                    KIEU: RadioST_LoaiTru.Selected.ID,
+                                    MA_TIEU_CHI: kh.DropST_LoaiTru.Selected.MA_CHI_TIEU,
+                                    TEN_TIEU_CHI: kh.DropST_LoaiTru.Selected.TEN_CHI_TIEU,
+                                    MA_GIA_TRI: LookUp(
+                                        tmpDsGiatriCS,
+                                        cr282_ten_gia_tri = kh.ComboST_LT.Selected.cr282_ten_gia_tri && Loai = kh.DropST_LoaiTru.Selected.MA_CHI_TIEU
+                                    ).Ma,
+                                    TEN_GIA_TRI: kh.ComboST_LT.Selected.cr282_ten_gia_tri,
+                                    GIATRI_TU: Value(kh.GiaTriTu_LT.Text),
+                                    GIATRI_DEN: Value(kh.GiaTriDen_LT.Text)
+                                }
+                            )
+                        )
+                    )
+                );
+                //Sinh mo ta
+            UpdateContext(
+                    {
+                        varMoTa: Concatenate(
+                            "Chương trình ",
+                            DataCardHinhThuc.Selected.TEN,
+                            " áp dụng ",
+                            DataCardAnhHuong.Selected.TEN,
+                            " ",
+                            If(
+                                DataCardKieuDL.Selected.MA = "002",
+                                DataCardVSoTienAD.Text,
+                                Concatenate(
+                                    DataCardTyLeApDung.Text,
+                                    "(%) tối đa ",
+                                    DataCardSoTienToiDa.Text
+                                )
+                            ),
+                            " ",
+                            DataCardTienTe.Selected.TIEN_TE,
+                            " có hiệu lực từ ",
+                            Text(DateValueTuCS.SelectedDate),
+                            " đến ",
+                            If(
+                                !IsBlank(DateValueDenCS.SelectedDate),
+                                Text(DateValueDenCS.SelectedDate),
                                 "khi có thông báo mới"
                             ),
                             " nếu thỏa mãn ",
