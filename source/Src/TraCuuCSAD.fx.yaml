@@ -382,7 +382,22 @@ TraCuuCSAD As screen:
             FontWeight: =FontWeight.Bold
             Height: =28
             OnSelect: |
-                =ClearCollect(
+                =//load bảng apdungloai lên collect
+                ClearCollect(
+                    tmpDLDKADLoaiCSADCollect,
+                    DL_DIEUKIEN_APDUNG_LOAI
+                );
+                //load bảng apdungloaict lên collect
+                ClearCollect(
+                    tmpDLDKADLoaiCTCSADCollect,
+                    DL_DIEUKIEN_APDUNG_LOAI_CT
+                );
+                //load bảng phamvi lên collect
+                ClearCollect(
+                    tmpDMPVDLCSADCollect,
+                    DM_PHAMVI_DIALYS
+                );
+                ClearCollect(
                     tmpTCCSADCollect,
                     ShowColumns(
                         SortByColumns(
@@ -406,7 +421,7 @@ TraCuuCSAD As screen:
                         dsPVDLTCCSCollect,
                         {
                             ma_pvdl:ComGiaTriCSAD.Selected.key,
-                            ma_cha:LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=ComGiaTriCSAD.Selected.key,MA_CHA),
+                            ma_cha:LookUp(tmpDMPVDLCSADCollect,MA_PHAMVI=ComGiaTriCSAD.Selected.key,MA_CHA),
                             duyet:0
                         }
                     );
@@ -414,7 +429,7 @@ TraCuuCSAD As screen:
                         dsPVDLTCCSCollect1,
                         {
                             ma_pvdl:ComGiaTriCSAD.Selected.key,
-                            ma_cha:LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=ComGiaTriCSAD.Selected.key,MA_CHA),
+                            ma_cha:LookUp(tmpDMPVDLCSADCollect,MA_PHAMVI=ComGiaTriCSAD.Selected.key,MA_CHA),
                             duyet:0
                         }
                     );
@@ -432,7 +447,7 @@ TraCuuCSAD As screen:
                             );
                             ForAll(
                                 Filter(
-                                    DM_PHAMVI_DIALYS,
+                                    tmpDMPVDLCSADCollect,
                                     MA_PHAMVI=dsPV.ma_cha
                                 ) As dsIns,
                                 Collect(
@@ -465,7 +480,7 @@ TraCuuCSAD As screen:
                             );
                             ForAll(
                                 Filter(
-                                    DM_PHAMVI_DIALYS,
+                                    tmpDMPVDLCSADCollect,
                                     MA_PHAMVI=dsPV.ma_cha
                                 ) As dsIns,
                                 Collect(
@@ -498,7 +513,7 @@ TraCuuCSAD As screen:
                             );
                             ForAll(
                                 Filter(
-                                    DM_PHAMVI_DIALYS,
+                                    tmpDMPVDLCSADCollect,
                                     MA_PHAMVI=dsPV.ma_cha
                                 ) As dsIns,
                                 Collect(
@@ -531,7 +546,7 @@ TraCuuCSAD As screen:
                             );
                             ForAll(
                                 Filter(
-                                    DM_PHAMVI_DIALYS,
+                                    tmpDMPVDLCSADCollect,
                                     MA_PHAMVI=dsPV.ma_cha
                                 ) As dsIns,
                                 Collect(
@@ -564,7 +579,7 @@ TraCuuCSAD As screen:
                             );
                             ForAll(
                                 Filter(
-                                    DM_PHAMVI_DIALYS,
+                                    tmpDMPVDLCSADCollect,
                                     MA_PHAMVI=dsPV.ma_cha
                                 ) As dsIns,
                                 Collect(
@@ -597,7 +612,7 @@ TraCuuCSAD As screen:
                             );
                             ForAll(
                                 Filter(
-                                    DM_PHAMVI_DIALYS,
+                                    tmpDMPVDLCSADCollect,
                                     MA_PHAMVI=dsPV.ma_cha
                                 ) As dsIns,
                                 Collect(
@@ -623,9 +638,9 @@ TraCuuCSAD As screen:
                             ForAll(
                                 tmpTCCSADCollect As dsCha,
                                 If(
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="1" && KIEU="1")) ||
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCTCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="1" &&
                                     KIEU="2" && (MA_GIA_TRI="000" || CountIf(dsPVDLTCCSCollect1,ma_pvdl=MA_GIA_TRI)>0))),
                                     Collect(
@@ -636,9 +651,9 @@ TraCuuCSAD As screen:
                                     )
                                 );
                                 If(
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCTCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" &&
                                     KIEU="2" && (MA_GIA_TRI="000" || CountIf(dsPVDLTCCSCollect1,ma_pvdl=MA_GIA_TRI)>0))),
                                     RemoveIf(
@@ -650,9 +665,9 @@ TraCuuCSAD As screen:
                             ForAll(
                                 tmpTCCSADCollect As dsCha,
                                 If(
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCTCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" &&
                                     KIEU="2" && (MA_GIA_TRI="000" || CountIf(dsPVDLTCCSCollect1,ma_pvdl=MA_GIA_TRI)>0))),
                                     Collect(
@@ -670,9 +685,9 @@ TraCuuCSAD As screen:
                             ForAll(
                                 tmpTCCSADCollect As dsCha,
                                 If(
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="1" && KIEU="1")) ||
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCTCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="1" &&
                                     KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.key,MA_GIA_TRI))),
                                     Collect(
@@ -683,9 +698,9 @@ TraCuuCSAD As screen:
                                     )
                                 );
                                 If(
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCTCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" &&
                                     KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.key,MA_GIA_TRI))),
                                     RemoveIf(
@@ -697,9 +712,9 @@ TraCuuCSAD As screen:
                             ForAll(
                                 tmpTCCSADCollect As dsCha,
                                 If(
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCTCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" &&
                                     KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.key,MA_GIA_TRI))),
                                     Collect(
@@ -716,9 +731,9 @@ TraCuuCSAD As screen:
                             ForAll(
                                 tmpTCCSADCollect As dsCha,
                                 If(
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="1" && KIEU="1")) ||
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCTCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="1" &&
                                     KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
                                     Collect(
@@ -729,9 +744,9 @@ TraCuuCSAD As screen:
                                     )
                                 );
                                 If(
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCTCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" &&
                                     KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
                                     RemoveIf(
@@ -743,9 +758,9 @@ TraCuuCSAD As screen:
                             ForAll(
                                 tmpTCCSADCollect As dsCha,
                                 If(
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
-                                    !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI_CT,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                                    !IsBlank(LookUp(tmpDLDKADLoaiCTCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" &&
                                     KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
                                     Collect(
@@ -763,9 +778,9 @@ TraCuuCSAD As screen:
                     ForAll(
                         tmpTCCSADCollect As dsCha,
                         If(
-                            !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                            !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                             THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG=cbxApDungCSAD.Selected.value && KIEU="1")) &&
-                            IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
+                            IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                             THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG<>cbxApDungCSAD.Selected.value)),
                             Collect(
                                 tmpChonCSADCollect,
@@ -832,7 +847,7 @@ TraCuuCSAD As screen:
                     tmpdsMaTCCSCollect As dsMa,
                     //lay thong tin san pham
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -840,7 +855,7 @@ TraCuuCSAD As screen:
                                 strAD:Concatenate(strAD,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -850,7 +865,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
@@ -868,7 +883,7 @@ TraCuuCSAD As screen:
                         }
                     );
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -876,7 +891,7 @@ TraCuuCSAD As screen:
                                 strLT:Concatenate(strLT,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -886,7 +901,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
@@ -914,7 +929,7 @@ TraCuuCSAD As screen:
                 
                     //lay thong tin kenh ban
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -922,7 +937,7 @@ TraCuuCSAD As screen:
                                 strAD:Concatenate(strAD,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -932,7 +947,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
@@ -950,7 +965,7 @@ TraCuuCSAD As screen:
                         }
                     );
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -958,7 +973,7 @@ TraCuuCSAD As screen:
                                 strLT:Concatenate(strLT,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -968,7 +983,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
@@ -996,7 +1011,7 @@ TraCuuCSAD As screen:
                 
                     //lay thong tin khach hang
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1004,7 +1019,7 @@ TraCuuCSAD As screen:
                                 strAD:Concatenate(strAD,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1014,7 +1029,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
@@ -1032,7 +1047,7 @@ TraCuuCSAD As screen:
                         }
                     );
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1040,7 +1055,7 @@ TraCuuCSAD As screen:
                                 strLT:Concatenate(strLT,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1050,7 +1065,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
@@ -1078,7 +1093,7 @@ TraCuuCSAD As screen:
                 
                     //lay thong tin pham vi
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1086,7 +1101,7 @@ TraCuuCSAD As screen:
                                 strAD:Concatenate(strAD,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1096,7 +1111,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
@@ -1114,7 +1129,7 @@ TraCuuCSAD As screen:
                         }
                     );
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1122,7 +1137,7 @@ TraCuuCSAD As screen:
                                 strLT:Concatenate(strLT,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1132,7 +1147,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
@@ -1218,7 +1233,16 @@ TraCuuCSAD As screen:
                         "pham_vi"
                     )
                 );
-                
+                //load bảng apdungloai lên collect
+                ClearCollect(
+                    tmpDLDKADLoaiCSADCollect,
+                    DL_DIEUKIEN_APDUNG_LOAI
+                );
+                //load bảng apdungloaict lên collect
+                ClearCollect(
+                    tmpDLDKADLoaiCTCSADCollect,
+                    DL_DIEUKIEN_APDUNG_LOAI_CT
+                );
                 ClearCollect(
                     tmpdsMaTCCSCollect,
                     ShowColumns(
@@ -1237,7 +1261,7 @@ TraCuuCSAD As screen:
                     tmpdsMaTCCSCollect As dsMa,
                     //lay thong tin san pham
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1245,7 +1269,7 @@ TraCuuCSAD As screen:
                                 strAD:Concatenate(strAD,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1255,7 +1279,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
@@ -1273,7 +1297,7 @@ TraCuuCSAD As screen:
                         }
                     );
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1281,7 +1305,7 @@ TraCuuCSAD As screen:
                                 strLT:Concatenate(strLT,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1291,7 +1315,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
@@ -1319,7 +1343,7 @@ TraCuuCSAD As screen:
                 
                     //lay thong tin kenh ban
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1327,7 +1351,7 @@ TraCuuCSAD As screen:
                                 strAD:Concatenate(strAD,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1337,7 +1361,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
@@ -1355,7 +1379,7 @@ TraCuuCSAD As screen:
                         }
                     );
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1363,7 +1387,7 @@ TraCuuCSAD As screen:
                                 strLT:Concatenate(strLT,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1373,7 +1397,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
@@ -1401,7 +1425,7 @@ TraCuuCSAD As screen:
                 
                     //lay thong tin khach hang
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1409,7 +1433,7 @@ TraCuuCSAD As screen:
                                 strAD:Concatenate(strAD,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1419,7 +1443,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
@@ -1437,7 +1461,7 @@ TraCuuCSAD As screen:
                         }
                     );
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1445,7 +1469,7 @@ TraCuuCSAD As screen:
                                 strLT:Concatenate(strLT,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1455,7 +1479,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
@@ -1483,7 +1507,7 @@ TraCuuCSAD As screen:
                 
                     //lay thong tin pham vi
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1491,7 +1515,7 @@ TraCuuCSAD As screen:
                                 strAD:Concatenate(strAD,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1501,7 +1525,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
@@ -1519,7 +1543,7 @@ TraCuuCSAD As screen:
                         }
                     );
                     If(
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="1")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="1")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1527,7 +1551,7 @@ TraCuuCSAD As screen:
                                 strLT:Concatenate(strLT,"Tất cả")
                             }
                         ),
-                        !IsBlank(LookUp(DL_DIEUKIEN_APDUNG_LOAI,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2")),
+                        !IsBlank(LookUp(tmpDLDKADLoaiCSADCollect,MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2")),
                         UpdateIf(
                             tmpstrDLTCCSCollect,
                             true,
@@ -1537,7 +1561,7 @@ TraCuuCSAD As screen:
                                     Char(10),
                                     Concat(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            tmpDLDKADLoaiCTCSADCollect,
                                             MA_DIEU_KIEN=dsMa.cr282_ma_dieu_kien && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2"
                                         ) As dsCT,
                                         Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
