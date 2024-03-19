@@ -1,0 +1,653 @@
+TraCuuHopDong As screen:
+    OnVisible: |-
+        =ClearCollect(
+            dmDonViTCHDCollect,
+            AddColumns(
+                DM_DON_VI,
+                "title",
+                Concatenate(MA_DON_VI," - ",TEN_DON_VI)
+            )
+        );
+        ClearCollect(
+            dmSanPhamTCHDCollect,
+            AddColumns(
+                DL_SAN_PHAM,
+                "title",
+                Concatenate(MA_SAN_PHAM," - ",TEN_SAN_PHAM)
+            )
+        );
+        ClearCollect(
+            dmKenhBanTCHDCollect,
+            AddColumns(
+                DM_KENH_BANS,
+                "title",
+                Concatenate(MA_KENH_BAN," - ",TEN_KENH_BAN)
+            )
+        );
+        ClearCollect(
+            dmKhachHangTCHDCollect,
+            AddColumns(
+                DM_KHACH_HANG,
+                "title",
+                Concatenate(MA_KHACH_HANG," - ",TEN_KHACH_HANG)
+            )
+        );
+        ClearCollect(
+            tmpDSHDTCHDCollect,
+            DL_HOP_DONGS
+        );
+        ClearCollect(
+            tmpDSHDSPTCHDCollect,
+            DL_HOP_DONG_SPS
+        );
+        UpdateContext({
+            ngayHD:Blank()
+        });
+        Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTCHD);
+
+    Container8_3 As groupContainer.manualLayoutContainer:
+        Height: =768
+        Width: =1306
+        X: =60
+        ZIndex: =1
+
+        Label2_25 As label:
+            Height: =25
+            Size: =11
+            Text: ="Đơn vị"
+            Width: =130
+            X: =29
+            Y: =32
+            ZIndex: =3
+
+        Label2_26 As label:
+            Height: =25
+            Size: =11
+            Text: ="Mã sản phẩm"
+            Width: =130
+            X: =245
+            Y: =32
+            ZIndex: =5
+
+        Label2_27 As label:
+            Height: =25
+            Size: =11
+            Text: ="Mã khách hàng"
+            X: =675
+            Y: =32
+            ZIndex: =6
+
+        Label2_28 As label:
+            Height: =25
+            Size: =11
+            Text: ="Ngày HĐ"
+            Width: =120
+            X: =889
+            Y: =32
+            ZIndex: =7
+
+        Button6_17 As button:
+            FontWeight: =FontWeight.Bold
+            Height: =28
+            OnSelect: |-
+                =ClearCollect(
+                    tmpDSHDSPTCHDCollect,
+                    DL_HOP_DONG_SPS
+                );
+                ClearCollect(
+                    tmpDSHDTCHDCollect,
+                    Filter(
+                        DL_HOP_DONGS,
+                        (IsBlank(cbxMaDVTCHD.Selected.MA_DON_VI) || DONVI_QUANLY_HD=cbxMaDVTCHD.Selected.MA_DON_VI) &&
+                        (IsBlank(cbxMaSPTCHD.Selected.MA_SAN_PHAM) || 
+                        CountIf(tmpDSHDSPTCHDCollect As hdsp,hdsp.MA_HOP_DONG=MA_HOP_DONG && hdsp.MA_SAN_PHAM=cbxMaSPTCHD.Selected.MA_SAN_PHAM)>0) && 
+                        (IsBlank(cbxMaKBTCHD.Selected.MA_KENH_BAN) || MA_KENH_BAN=cbxMaKBTCHD.Selected.MA_KENH_BAN) && 
+                        (IsBlank(cbxMaKHTCHD.Selected.MA_KHACH_HANG) || MA_KHACH_HANG=cbxMaKHTCHD.Selected.MA_KHACH_HANG) && 
+                        (IsBlank(dpNgayHDTCHD.SelectedDate) || NGAY_HOP_DONG=dpNgayHDTCHD.SelectedDate) 
+                    )
+                );
+            Size: =10
+            Text: ="Tra cứu"
+            Width: =80
+            X: =1118
+            Y: =61
+            ZIndex: =8
+
+        Button6_18 As button:
+            FontWeight: =FontWeight.Bold
+            Height: =28
+            OnSelect: |-
+                =ClearCollect(
+                    dmDonViTCHDCollect,
+                    AddColumns(
+                        DM_DON_VI,
+                        "title",
+                        Concatenate(MA_DON_VI," - ",TEN_DON_VI)
+                    )
+                );
+                ClearCollect(
+                    dmSanPhamTCHDCollect,
+                    AddColumns(
+                        DL_SAN_PHAM,
+                        "title",
+                        Concatenate(MA_SAN_PHAM," - ",TEN_SAN_PHAM)
+                    )
+                );
+                ClearCollect(
+                    dmKenhBanTCHDCollect,
+                    AddColumns(
+                        DM_KENH_BANS,
+                        "title",
+                        Concatenate(MA_KENH_BAN," - ",TEN_KENH_BAN)
+                    )
+                );
+                ClearCollect(
+                    dmKhachHangTCHDCollect,
+                    AddColumns(
+                        DM_KHACH_HANG,
+                        "title",
+                        Concatenate(MA_KHACH_HANG," - ",TEN_KHACH_HANG)
+                    )
+                );
+                ClearCollect(
+                    tmpDSHDTCHDCollect,
+                    DL_HOP_DONGS
+                );
+                ClearCollect(
+                    tmpDSHDSPTCHDCollect,
+                    DL_HOP_DONG_SPS
+                );
+                UpdateContext({
+                    ngayHD:Blank()
+                });
+                Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTCHD);
+            Size: =10
+            Text: ="Tải lại"
+            Width: =80
+            X: =1208
+            Y: =61
+            ZIndex: =10
+
+        GalleryDKCTCT_7 As gallery.galleryVertical:
+            DelayItemLoading: =true
+            Height: =604
+            Items: =SortByColumns(tmpDSHDTCHDCollect,"cr282_ma_hop_dong",SortOrder.Ascending)
+            Layout: =Layout.Vertical
+            LoadingSpinner: =LoadingSpinner.Data
+            NavigationStep: =0
+            TemplatePadding: =0
+            TemplateSize: =36
+            Width: =1306
+            Y: =163
+            ZIndex: =11
+
+            TiTthtQLCTCT_6 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.DONVI_QUANLY_HD
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =35
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Size: =10
+                Tooltip: =
+                Width: =74
+                X: =5
+                ZIndex: =27
+
+            TiTenQLHTQLCTCT_13 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.MA_KHACH_HANG
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =35
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Size: =10
+                Tooltip: =
+                Width: =85
+                X: =267
+                ZIndex: =30
+
+            TiGHSLNam_5 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.TRANG_THAI
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =35
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Size: =10
+                Width: =94
+                X: =936
+                ZIndex: =35
+
+            TiGHSTVu_4 As text:
+                Align: =Align.Right
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                Format: =TextFormat.Number
+                Height: =35
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Size: =10
+                Width: =114
+                X: =822
+                ZIndex: =36
+
+            TiGHSTNam_7 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =35
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Size: =10
+                Width: =125
+                X: =697
+                ZIndex: =37
+
+            TiGHSTNgay_6 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.TEN_KENH_BAN
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =35
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Size: =10
+                Width: =118
+                X: =473
+                ZIndex: =38
+
+            TiTenQLHTQLCTCT_11 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =Text(ThisItem.NGAY_HOP_DONG,"dd/mm/yyyy")
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =35
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Size: =10
+                Tooltip: =
+                Width: =95
+                X: =79
+                ZIndex: =42
+
+            TiTenQLHTQLCTCT_12 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.MA_HOP_DONG
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =35
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Size: =10
+                Tooltip: =
+                Width: =93
+                X: =174
+                ZIndex: =43
+
+            TiGHSTNam_6 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: ="Sức khỏe"
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =35
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Size: =10
+                Width: =106
+                X: =591
+                ZIndex: =44
+
+            TiTenQLHTQLCTCT_14 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.TEN_KHACH_HANG
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =35
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Size: =10
+                Tooltip: =
+                Width: =121
+                X: =352
+                ZIndex: =45
+
+            TiGHSLNam_6 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =35
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Size: =10
+                Width: =103
+                X: =1030
+                ZIndex: =46
+
+            Button6_19 As button:
+                FontWeight: =FontWeight.Bold
+                Height: =28
+                OnSelect: |-
+                    =Set(maHopDongFwd,ThisItem.MA_HOP_DONG);
+                    Navigate(NhapHopDong)
+                Size: =10
+                Text: ="Chi tiết"
+                Width: =70
+                X: =1145
+                Y: =4
+                ZIndex: =47
+
+            Button6_20 As button:
+                FontWeight: =FontWeight.Bold
+                Height: =28
+                OnSelect: |-
+                    =If(
+                        false,
+                        Refresh(DL_HOP_DONG_LIENKETS);
+                        RemoveIf(DL_HOP_DONG_LIENKETS,SO_HOP_DONG=ThisItem.MA_HOP_DONG || SO_HOP_DONG_LK=ThisItem.MA_HOP_DONG);
+                        Refresh(DL_HOP_DONG_SPS);
+                        RemoveIf(DL_HOP_DONG_SPS,MA_HOP_DONG=ThisItem.MA_HOP_DONG);
+                        Refresh(DL_HOP_DONGS);
+                        RemoveIf(DL_HOP_DONGS,MA_HOP_DONG=ThisItem.MA_HOP_DONG);
+                        Notify("Xóa dữ liệu thành công",NotificationType.Success,2000)
+                    )
+                Size: =10
+                Text: ="Xóa"
+                Width: =70
+                X: =1220
+                Y: =4
+                ZIndex: =48
+
+        BadgeCanvas1_58 As Badge:
+            BasePaletteColor: =
+            Content: =""
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =49
+            Width: =1298
+            X: =1
+            Y: =114
+            ZIndex: =12
+
+        TextCanvas2_237 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =49
+            Size: =12
+            Text: ="Mã đơn vị"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =68
+            X: =10
+            Y: =114
+            ZIndex: =15
+
+        TextCanvas2_238 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =49
+            Size: =12
+            Text: ="Ngày HĐ"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =59
+            X: =96
+            Y: =114
+            ZIndex: =16
+
+        TextCanvas2_239 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =49
+            Size: =12
+            Text: ="Số HĐ"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =77
+            X: =182
+            Y: =114
+            ZIndex: =17
+
+        TextCanvas2_240 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =49
+            Size: =12
+            Text: ="Mã khách hàng"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =66
+            X: =273
+            Y: =114
+            ZIndex: =18
+
+        TextCanvas2_242 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =49
+            Size: =12
+            Text: ="Kênh bán"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =66
+            X: =497
+            Y: =114
+            ZIndex: =19
+
+        TextCanvas2_243 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =49
+            Size: =12
+            Text: ="LHNV"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =81
+            X: =596
+            Y: =114
+            ZIndex: =20
+
+        TextCanvas2_244 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =49
+            Size: =12
+            Text: ="Sản phẩm"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =100
+            X: =708
+            Y: =114
+            ZIndex: =21
+
+        TextCanvas2_245 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =49
+            Size: =12
+            Text: ="Số tiền phí"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =66
+            X: =846
+            Y: =114
+            ZIndex: =22
+
+        TextCanvas2_248 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =49
+            Size: =12
+            Text: ="Thao tác"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =73
+            X: =1181
+            Y: =114
+            ZIndex: =23
+
+        cbxMaDVTCHD As combobox:
+            DisplayFields: =["title","cr282_ma_don_vi"]
+            Height: =32
+            InputTextPlaceholder: ="Chọn đơn vị"
+            Items: =SortByColumns(dmDonViTCHDCollect,"cr282_ma_don_vi",SortOrder.Ascending)
+            SearchFields: =["cr282_loai_don_vi"]
+            SearchItems: =Search(SortByColumns(dmDonViTCHDCollect,"cr282_ma_don_vi",SortOrder.Ascending),cbxMaDVTCHD.SearchText,"cr282_loai_don_vi")
+            SelectMultiple: =false
+            Size: =11
+            Width: =195
+            X: =29
+            Y: =59
+            ZIndex: =25
+
+        dpNgayHDTCHD As datepicker:
+            DefaultDate: =ngayHD
+            EndYear: =2200
+            Format: ="dd/mm/yyyy"
+            Height: =32
+            InputTextPlaceholder: ="Chọn ngày HĐ"
+            OnChange: |-
+                =ClearCollect(
+                    tmpDSHDTCHDCollect1,
+                    DL_HOP_DONGS
+                );
+                UpdateContext({
+                    ngayHD:dpNgayHDTCHD.SelectedDate
+                })
+            OnSelect: |-
+                =If(
+                    !IsBlank(ngayHD),
+                    UpdateContext({
+                        ngayHD:Blank()
+                    });
+                )
+            Size: =11
+            StartYear: =1900
+            Width: =195
+            X: =889
+            Y: =59
+            ZIndex: =27
+
+        TextCanvas2_241 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =49
+            Size: =12
+            Text: ="Tên khách hàng"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =100
+            X: =361
+            Y: =114
+            ZIndex: =30
+
+        TextCanvas2_246 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =49
+            Size: =12
+            Text: ="Trạng thái"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =65
+            X: =950
+            Y: =114
+            ZIndex: =31
+
+        TextCanvas2_247 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =49
+            Size: =12
+            Text: ="Người nhập"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =86
+            X: =1032
+            Y: =114
+            ZIndex: =32
+
+        Label2_29 As label:
+            Height: =25
+            Size: =11
+            Text: ="Mã kênh bán"
+            Width: =130
+            X: =461
+            Y: =32
+            ZIndex: =33
+
+        cbxMaSPTCHD As combobox:
+            DisplayFields: =["title","cr282_ten_san_pham"]
+            Height: =32
+            InputTextPlaceholder: ="Chọn sản phẩm"
+            Items: =SortByColumns(dmSanPhamTCHDCollect,"cr282_ma_san_pham",SortOrder.Ascending)
+            SearchFields: =["cr282_doanh_nghiep_bh"]
+            SearchItems: =Search(SortByColumns(dmSanPhamTCHDCollect,"cr282_ma_san_pham",SortOrder.Ascending),cbxMaSPTCHD.SearchText,"cr282_doanh_nghiep_bh")
+            SelectMultiple: =false
+            Size: =11
+            Width: =195
+            X: =245
+            Y: =59
+            ZIndex: =35
+
+        cbxMaKBTCHD As combobox:
+            DisplayFields: =["title","cr282_ten_kenh_ban"]
+            Height: =32
+            InputTextPlaceholder: ="Chọn kênh bán"
+            Items: =SortByColumns(dmKenhBanTCHDCollect,"cr282_ma_kenh_ban",SortOrder.Ascending)
+            SearchFields: =["cr282_dia_chi"]
+            SearchItems: =Search(SortByColumns(dmKenhBanTCHDCollect,"cr282_ma_kenh_ban",SortOrder.Ascending),cbxMaKBTCHD.SearchText,"cr282_dia_chi")
+            SelectMultiple: =false
+            Size: =11
+            Width: =195
+            X: =461
+            Y: =59
+            ZIndex: =36
+
+        cbxMaKHTCHD As combobox:
+            DisplayFields: =["title"]
+            Height: =32
+            InputTextPlaceholder: ="Chọn khách hàng"
+            Items: =SortByColumns(dmKhachHangTCHDCollect,"cr282_ma_khach_hang",SortOrder.Ascending)
+            SearchFields: =["title"]
+            SearchItems: =Search(SortByColumns(dmKhachHangTCHDCollect,"cr282_ma_khach_hang",SortOrder.Ascending),cbxMaKHTCHD.SearchText,"title")
+            SelectMultiple: =false
+            Size: =11
+            Width: =195
+            X: =675
+            Y: =59
+            ZIndex: =37
+
+    LeftNavigation_32 As LeftNavigation_9:
+        Width: =LeftNavigation_32.MenuWidth - 10
+        ZIndex: =2
+
