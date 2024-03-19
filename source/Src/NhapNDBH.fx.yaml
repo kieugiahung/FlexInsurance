@@ -969,10 +969,24 @@ NhapNDBH As screen:
                     )
                 );
                 UpdateIf(
+                    DL_HOP_DONG_SPS,
+                    MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT && MA_HOP_DONG = varMaHD && ID = idColSP,
+                    {
+                        TONG_TIEN_PHI: Sum(
+                            tmpNDBH,
+                            cr282_phi_ndbh
+                        ),
+                        SO_NGUOI_TGIA: CountRows(tmpNDBH)
+                    }
+                );
+                UpdateIf(
                     tmpDSHDSPNHDCollect,
                     ID = idColSP,
                     {
-                        TONG_TIEN_PHI: Sum(tmpNDBH, cr282_phi_ndbh),
+                        TONG_TIEN_PHI: Sum(
+                            tmpNDBH,
+                            cr282_phi_ndbh
+                        ),
                         SO_NGUOI_TGIA: CountRows(tmpNDBH)
                     }
                 );
