@@ -40,554 +40,881 @@ NhapNDBH As screen:
             }
         );
 
-    ContainerNDBH As groupContainer.manualLayoutContainer:
-        Height: |
-            =Parent.Height-50
-        Width: =Parent.Width-130
+    Container3_7 As groupContainer.horizontalAutoLayoutContainer:
+        DropShadow: =DropShadow.None
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =330
+        LayoutMode: =LayoutMode.Auto
+        LayoutOverflowX: =LayoutOverflow.Scroll
+        LayoutOverflowY: =LayoutOverflow.Scroll
+        Width: =Parent.Width-Self.X
         X: =130
+        Y: =60
         ZIndex: =1
 
-        Label1_25 As label:
-            Align: =Align.Justify
-            BorderColor: =RGBA(0, 0, 0, 0)
-            BorderStyle: =BorderStyle.None
-            BorderThickness: =2
-            Color: =RGBA(50, 49, 48, 1)
-            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-            DisabledColor: =RGBA(161, 159, 157, 1)
-            FocusedBorderThickness: =4
-            Font: =Font.'Segoe UI'
-            FontWeight: =FontWeight.Bold
-            Height: =30
-            Size: =11
-            Text: |-
-                ="Danh sách NĐBH
-                "
-            Width: =Parent.Width
+        ContainerNDBH As groupContainer.manualLayoutContainer:
+            BorderColor: =RGBA(255, 255, 255, 1)
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(255, 255, 255, 1)
+            FillPortions: =0
+            Height: =Parent.Height
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            Width: =1400
+            X: =130
+            Y: =282
             ZIndex: =1
 
-        BadgeCanvas1_56 As Badge:
-            BasePaletteColor: =
-            Content: =""
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Visible: =true
-            Width: =1224
-            X: =0
-            Y: =92
-            ZIndex: =2
+            BadgeCanvas1_56 As Badge:
+                BasePaletteColor: =
+                Content: =""
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Visible: =true
+                Width: =Parent.Width-15
+                X: =0
+                Y: =42
+                ZIndex: =2
 
-        TextCanvas2_216 As Text:
-            Align: ='TextCanvas.Align'.Center
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="MST"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =100
-            X: =0
-            Y: =90
-            ZIndex: =3
+            TextCanvas2_215 As Text:
+                Align: ='TextCanvas.Align'.Center
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="MST"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =100
+                X: =0
+                Y: =40
+                ZIndex: =3
 
-        TextCanvas2_219 As Text:
-            Align: ='TextCanvas.Align'.Center
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Thao tác"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =160
-            X: =1063
-            Y: =90
-            ZIndex: =4
+            TextCanvas2_236 As Text:
+                Align: ='TextCanvas.Align'.Center
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Thao tác"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =160
+                X: =1208
+                Y: =42
+                ZIndex: =4
 
-        TextCanvas2_215 As Text:
-            Align: ='TextCanvas.Align'.Center
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Tên"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =110
-            X: =91
-            Y: =90
-            ZIndex: =5
+            TextCanvas2_216 As Text:
+                Align: ='TextCanvas.Align'.Center
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Tên"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =110
+                X: =91
+                Y: =40
+                ZIndex: =5
 
-        ThemMoiCT_18 As button:
-            BorderColor: =RGBA(0, 0, 0, 0)
-            BorderStyle: =BorderStyle.None
-            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-            DisabledColor: =RGBA(161, 159, 157, 1)
-            DisabledFill: =RGBA(242, 242, 241, 0)
-            Fill: =RGBA(0, 120, 212, 1)
-            FontWeight: =FontWeight.Bold
-            Height: =30
-            HoverBorderColor: =RGBA(0, 0, 0, 0)
-            HoverFill: =RGBA(16, 110, 190, 1)
-            OnSelect: |-
-                =If(
-                    Or(
-                        maAddedNDBH <> "",
-                        maUpdatedNDBH <> ""
-                    ),
-                    Select(IconTaiLaiNDBH),
-                    UpdateContext(
-                        {
-                            idNDBH: If(
-                                CountIf(
-                                    DL_HOP_DONG_SP_NDBH,
-                                    ID
-                                ) = 0,
-                                1,
-                                Max(
-                                    DL_HOP_DONG_SP_NDBH,
-                                    ID
-                                ) + 1
+            TextCanvas2_220 As Text:
+                Align: ='TextCanvas.Align'.Center
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Địa chỉ"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =130
+                X: =511
+                Y: =40
+                ZIndex: =8
+
+            TextCanvas2_222 As Text:
+                Align: ='TextCanvas.Align'.Center
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Tỉnh/ TP"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =120
+                X: =641
+                Y: =40
+                ZIndex: =9
+
+            TextCanvas2_223 As Text:
+                Align: ='TextCanvas.Align'.Center
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Nhóm"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =120
+                X: =741
+                Y: =40
+                ZIndex: =10
+
+            GalleryNDBH As gallery.galleryVertical:
+                BorderColor: =RGBA(245, 245, 245, 1)
+                DelayItemLoading: =true
+                Height: =221
+                Items: =tmpNDBH
+                Layout: =Layout.Vertical
+                LoadingSpinner: =LoadingSpinner.Data
+                NavigationStep: =0
+                TemplatePadding: =0
+                TemplateSize: =30
+                Width: =Parent.Width-15
+                Y: =79
+                ZIndex: =11
+
+                TxtTen_NDBH As text:
+                    BorderColor: =RGBA(54, 176, 75, 1)
+                    Color: =RGBA(50, 49, 48, 1)
+                    Default: =ThisItem.cr282_ten_ndbh
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                    Height: =30
+                    HoverBorderColor: =RGBA(16, 110, 190, 1)
+                    HoverColor: =RGBA(50, 49, 48, 1)
+                    HoverFill: =RGBA(255, 255, 255, 1)
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    PressedBorderColor: =RGBA(0, 120, 212, 1)
+                    PressedColor: =RGBA(50, 49, 48, 1)
+                    PressedFill: =RGBA(255, 255, 255, 1)
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Size: =11
+                    Width: =110
+                    X: =91
+                    ZIndex: =8
+
+                TxtMST_NDBH As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Color: =RGBA(50, 49, 48, 1)
+                    Default: =ThisItem.cr282_mst
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                    Height: =30
+                    HoverBorderColor: =RGBA(16, 110, 190, 1)
+                    HoverColor: =RGBA(50, 49, 48, 1)
+                    HoverFill: =RGBA(255, 255, 255, 1)
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    PressedBorderColor: =RGBA(0, 120, 212, 1)
+                    PressedColor: =RGBA(50, 49, 48, 1)
+                    PressedFill: =RGBA(255, 255, 255, 1)
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Size: =11
+                    Width: =90
+                    X: =1
+                    ZIndex: =9
+
+                TxtID_DD_1 As text:
+                    BorderColor: =RGBA(15, 108, 189, 1)
+                    Color: =RGBA(50, 49, 48, 1)
+                    Default: =ThisItem.cr282_id
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =DisplayMode.Disabled
+                    Font: =Font.'Segoe UI'
+                    Height: =30
+                    HoverBorderColor: =RGBA(16, 110, 190, 1)
+                    HoverColor: =RGBA(50, 49, 48, 1)
+                    HoverFill: =RGBA(255, 255, 255, 1)
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    PressedBorderColor: =RGBA(0, 120, 212, 1)
+                    PressedColor: =RGBA(50, 49, 48, 1)
+                    PressedFill: =RGBA(255, 255, 255, 1)
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Visible: =false
+                    Width: =119
+                    X: =223
+                    ZIndex: =22
+
+                TxtDiaChi_NDBH As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Color: =RGBA(50, 49, 48, 1)
+                    Default: =ThisItem.cr282_dia_chi
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                    Height: =30
+                    HoverBorderColor: =RGBA(16, 110, 190, 1)
+                    HoverColor: =RGBA(50, 49, 48, 1)
+                    HoverFill: =RGBA(255, 255, 255, 1)
+                    Mode: =TextMode.MultiLine
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    PressedBorderColor: =RGBA(0, 120, 212, 1)
+                    PressedColor: =RGBA(50, 49, 48, 1)
+                    PressedFill: =RGBA(255, 255, 255, 1)
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Size: =11
+                    Width: =130
+                    X: =511
+                    ZIndex: =23
+
+                TxtNhomNDBH As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Color: =RGBA(50, 49, 48, 1)
+                    Default: =ThisItem.cr282_nhom
+                    DisabledBorderColor: =RGBA(153, 201, 238, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                    Height: =30
+                    HoverBorderColor: =RGBA(16, 110, 190, 1)
+                    HoverColor: =RGBA(50, 49, 48, 1)
+                    HoverFill: =RGBA(255, 255, 255, 1)
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    PressedBorderColor: =RGBA(0, 120, 212, 1)
+                    PressedColor: =RGBA(50, 49, 48, 1)
+                    PressedFill: =RGBA(255, 255, 255, 1)
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Size: =11
+                    Width: =100
+                    X: =761
+                    ZIndex: =24
+
+                Btn_SuaDD_1 As button:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                    DisabledColor: =RGBA(161, 159, 157, 1)
+                    DisabledFill: =RGBA(242, 242, 241, 0)
+                    Fill: =RGBA(0, 120, 212, 1)
+                    Font: =Font.'Segoe UI'
+                    FontWeight: =FontWeight.Bold
+                    Height: =25
+                    HoverBorderColor: =RGBA(0, 0, 0, 0)
+                    HoverFill: =RGBA(16, 110, 190, 1)
+                    OnSelect: |-
+                        =If(
+                            Or(maAddedNDBH<>"",maUpdatedNDBH<>""),
+                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                            UpdateIf(
+                                tmpNDBH,
+                                cr282_id=ThisItem.cr282_id,
+                                {
+                                    edited:1
+                                }
+                            );
+                            UpdateContext({
+                                maUpdatedNDBH:Text(ThisItem.cr282_id)
+                            })
+                        )
+                    PressedBorderColor: =RGBA(0, 69, 120, 1)
+                    PressedColor: =RGBA(255, 255, 255, 1)
+                    PressedFill: =RGBA(16, 110, 190, 1)
+                    Size: =11
+                    Text: ="Sửa"
+                    Visible: =ThisItem.edited=0
+                    Width: =60
+                    X: =1222
+                    ZIndex: =29
+
+                Btn_XoaDD_1 As button:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                    DisabledColor: =RGBA(161, 159, 157, 1)
+                    DisabledFill: =RGBA(242, 242, 241, 0)
+                    Fill: =RGBA(0, 120, 212, 1)
+                    Font: =Font.'Segoe UI'
+                    FontWeight: =FontWeight.Bold
+                    Height: =25
+                    HoverBorderColor: =RGBA(0, 0, 0, 0)
+                    HoverFill: =RGBA(16, 110, 190, 1)
+                    OnSelect: |-
+                        =If(
+                            Or(maAddedNDBH<>"",maUpdatedNDBH<>""),
+                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                            Refresh(DL_HOP_DONG_SP_NDBH);
+                            Remove(tmpNDBH,ThisItem);
+                            Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
+                        )
+                    PressedBorderColor: =RGBA(0, 69, 120, 1)
+                    PressedColor: =RGBA(255, 255, 255, 1)
+                    PressedFill: =RGBA(16, 110, 190, 1)
+                    Size: =11
+                    Text: ="Xóa"
+                    Visible: =ThisItem.edited=0
+                    Width: =60
+                    X: =1292
+                    ZIndex: =30
+
+                Btn_LuuDD_1 As button:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                    DisabledColor: =RGBA(161, 159, 157, 1)
+                    DisabledFill: =RGBA(242, 242, 241, 0)
+                    Fill: =RGBA(0, 120, 212, 1)
+                    Font: =Font.'Segoe UI'
+                    FontWeight: =FontWeight.Bold
+                    Height: =25
+                    HoverBorderColor: =RGBA(0, 0, 0, 0)
+                    HoverFill: =RGBA(16, 110, 190, 1)
+                    OnSelect: |-
+                        =UpdateContext({errorMsgGal: ""});
+                        If(
+                            TxtTen_NDBH.Text = "",
+                            UpdateContext({errorMsgGal: "Bắt buộc nhập tên người được bảo hiểm"})
+                        );
+                        If(
+                            IsBlank(errorMsgGal),
+                            If(
+                                TxtMST_NDBH.Text = "",
+                                UpdateContext({errorMsgGal: "Bắt buộc nhập MST người được bảo hiểm"})
                             )
-                        }
-                    );
-                    If(
-                        !IsEmpty(tmpNDBH) && Max(
-                            tmpNDBH,
-                            cr282_id
-                        ) >= idNDBH,
+                        );
+                        If(
+                            IsBlank(errorMsgGal),
+                            If(
+                                CountIf(
+                                    tmpNDBH,
+                                    cr282_mst = ThisItem.cr282_mst
+                                ) > 1,
+                                Collect(
+                                    errorCol,
+                                    {
+                                        Message: Concatenate(
+                                            "MST ",
+                                            ThisItem.cr282_mst,
+                                            " bị lặp trong danh sách"
+                                        )
+                                    }
+                                )
+                            )
+                        );
+                        If(
+                            !IsEmpty(errorCol),
+                            UpdateContext({errorMsg: First(errorCol).Message})
+                        );
+                        If(
+                            !IsBlank(errorMsgGal),
+                            Notify(
+                                errorMsgGal,
+                                NotificationType.Error,
+                                800
+                            ),
+                            UpdateContext({varPhiNDBH: 0});
+                            UpdateContext({varTuoi: 0});
+                            UpdateContext({varDVTuoi: 0});
+                            //Tinh tuoi
+                        If(
+                                !IsBlank(DateNS_NDBH.SelectedDate),
+                                If(
+                                    DateDiff(
+                                        DateNS_NDBH.SelectedDate,
+                                        Today(),
+                                        TimeUnit.Years
+                                    ) > 0,
+                                    UpdateContext(
+                                        {
+                                            varTuoi: DateDiff(
+                                                DateNS_NDBH.SelectedDate,
+                                                Today(),
+                                                TimeUnit.Years
+                                            )
+                                        }
+                                    );
+                                    UpdateContext({varDVTuoi: 100});
+                                    ,
+                                    If(
+                                        DateDiff(
+                                            DateNS_NDBH.SelectedDate,
+                                            Today(),
+                                            TimeUnit.Months
+                                        ) > 0,
+                                        UpdateContext({varTuoi: 1});
+                                        UpdateContext({varDVTuoi: 200});
+                                        ,
+                                        If(
+                                            DateDiff(
+                                                DateNS_NDBH.SelectedDate,
+                                                Today(),
+                                                TimeUnit.Days
+                                            ) >= 60,
+                                            UpdateContext({varTuoi: 1});
+                                            UpdateContext({varDVTuoi: 400}),
+                                            UpdateContext({varTuoi: 0})
+                                        )
+                                    )
+                                )
+                            );
+                            /*UpdateContext(
+                                {
+                                    varDMTuoi: LookUp(
+                                        DM_DO_TUOIS,
+                                        (If(
+                                            DONVI_TUOI_TU > 100,
+                                            1,
+                                            TUOI_TU
+                                        ) <= varTuoi) && (If(
+                                            DONVI_TUOI_DEN > 100,
+                                            1,
+                                            TUOI_DEN
+                                        ) >= varTuoi)
+                                    ).MO_TA
+                                }
+                            );*/
+                        //Kiem tra dap ung chi tieu
                         UpdateContext(
+                                {
+                                    varPhiNDBH: LookUp(
+                                        DL_CHUONG_TRINH_BANG_PHIS,
+                                        MA_SAN_PHAM = varMaSP //MA_SP
+                        && MA_CHUONG_TRINH = varMaCT //MA_CT
+                        && NHOM_TINH_PHI = varNhomTP //TEN_NHOM_TP
+                        && (MA_PHAMVI_DIALY = DropTinh_NDBH.Selected.TEN_PHAMVI || IsBlank(MA_PHAMVI_DIALY)) //TEN_PHAMVI_DL
+                        && (MA_GIOI_TINH = DropGT_NDBH.Selected.TEN_GIOI_TINH || IsBlank(MA_GIOI_TINH)) //TEN_GIOI_TINH
+                        && (MA_DO_TUOI = LookUp(
+                                            DM_DO_TUOIS,
+                                            (If(
+                                                MO_TA = MA_DO_TUOI && DONVI_TUOI_TU > 100,
+                                                1,
+                                                TUOI_TU
+                                            ) <= varTuoi) && (If(
+                                                DONVI_TUOI_DEN > 100,
+                                                1,
+                                                TUOI_DEN
+                                            ) >= varTuoi)
+                                        ).MO_TA || IsBlank(MA_DO_TUOI))
+                                    ).PHI_BH
+                                }
+                            );
+                            //Lay phi chuong trinh
+                        UpdateIf(
+                                tmpNDBH,
+                                cr282_id = ThisItem.cr282_id,
+                                {
+                                    cr282_mst: TxtMST_NDBH.Text,
+                                    cr282_ten_ndbh: TxtTen_NDBH.Text,
+                                    cr282_dia_chi: TxtDiaChi_NDBH.Text,
+                                    cr282_ma_gioi__tinh: DropGT_NDBH.Selected.MA_GIOI_TINH,
+                                    cr282_ma_nhan_vien: TxtMaNV.Text,
+                                    cr282_ma_tinh_tp: DropTinh_NDBH.Selected.MA_PHAMVI,
+                                    cr282_moi_quan_he: TxtMoiQuanHe.Text,
+                                    cr282_ngay_sinh: DateNS_NDBH.SelectedDate,
+                                    cr282_nhom: TxtNhomNDBH.Text,
+                                    cr282_so_giay_to: TxtSoGT_NDBH.Text,
+                                    cr282_phi_ndbh: Value(varPhiNDBH),
+                                    edited: 0
+                                }
+                            );
+                            UpdateContext(
+                                {
+                                    maAddedNDBH: "",
+                                    maUpdatedNDBH: ""
+                                }
+                            );
+                            
+                        )
+                    PressedBorderColor: =RGBA(0, 69, 120, 1)
+                    PressedColor: =RGBA(255, 255, 255, 1)
+                    PressedFill: =RGBA(16, 110, 190, 1)
+                    Size: =11
+                    Text: ="Lưu"
+                    Visible: =ThisItem.edited=1
+                    Width: =60
+                    X: =1222
+                    ZIndex: =31
+
+                Btn_HuyDD_1 As button:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                    DisabledColor: =RGBA(161, 159, 157, 1)
+                    DisabledFill: =RGBA(242, 242, 241, 0)
+                    Fill: =RGBA(0, 120, 212, 1)
+                    Font: =Font.'Segoe UI'
+                    FontWeight: =FontWeight.Bold
+                    Height: =25
+                    HoverBorderColor: =RGBA(0, 0, 0, 0)
+                    HoverFill: =RGBA(16, 110, 190, 1)
+                    OnSelect: |-
+                        =If(
+                            ThisItem.cr282_id=Value(maAddedNDBH),
+                            Remove(tmpNDBH,ThisItem),
+                            UpdateIf(
+                                tmpNDBH,
+                                cr282_id=ThisItem.cr282_id,
+                                {
+                                    edited:0
+                                }
+                            )
+                        );
+                        UpdateContext({
+                            maAddedNDBH:"",
+                            maUpdatedNDBH:""
+                        });
+                    PressedBorderColor: =RGBA(0, 69, 120, 1)
+                    PressedColor: =RGBA(255, 255, 255, 1)
+                    PressedFill: =RGBA(16, 110, 190, 1)
+                    Size: =11
+                    Text: ="Hủy"
+                    Visible: =ThisItem.edited=1
+                    Width: =60
+                    X: =1292
+                    ZIndex: =32
+
+                TxtMaNV As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Color: =RGBA(50, 49, 48, 1)
+                    Default: =ThisItem.cr282_ma_nhan_vien
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                    Height: =30
+                    HoverBorderColor: =RGBA(16, 110, 190, 1)
+                    HoverColor: =RGBA(50, 49, 48, 1)
+                    HoverFill: =RGBA(255, 255, 255, 1)
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    PressedBorderColor: =RGBA(0, 120, 212, 1)
+                    PressedColor: =RGBA(50, 49, 48, 1)
+                    PressedFill: =RGBA(255, 255, 255, 1)
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Size: =11
+                    Width: =120
+                    X: =861
+                    ZIndex: =35
+
+                TxtMoiQuanHe As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Color: =RGBA(50, 49, 48, 1)
+                    Default: =ThisItem.cr282_moi_quan_he
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                    Height: =30
+                    HoverBorderColor: =RGBA(16, 110, 190, 1)
+                    HoverColor: =RGBA(50, 49, 48, 1)
+                    HoverFill: =RGBA(255, 255, 255, 1)
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    PressedBorderColor: =RGBA(0, 120, 212, 1)
+                    PressedColor: =RGBA(50, 49, 48, 1)
+                    PressedFill: =RGBA(255, 255, 255, 1)
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Size: =11
+                    Width: =100
+                    X: =981
+                    ZIndex: =36
+
+                DropTinh_NDBH As dropdown:
+                    BorderColor: =RGBA(54, 176, 75, 1)
+                    ChevronBackground: =RGBA(255, 255, 255, 1)
+                    ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
+                    ChevronDisabledFill: =RGBA(161, 159, 157, 1)
+                    ChevronFill: =RGBA(54, 176, 75, 1)
+                    ChevronHoverBackground: =RGBA(245, 245, 245, 1)
+                    ChevronHoverFill: =RGBA(50, 49, 48, 1)
+                    Default: =LookUp(DM_PHAMVI_DIALYS, MA_PHAMVI=ThisItem.cr282_ma_tinh_tp && LOAI="TINH_TP").TEN_PHAMVI
+                    DisabledBorderColor: =RGBA(153, 201, 238, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit)
+                    Height: =30
+                    HoverBorderColor: =RGBA(16, 110, 190, 1)
+                    HoverColor: =RGBA(50, 49, 48, 1)
+                    HoverFill: =RGBA(245, 245, 245, 1)
+                    Items: =Filter(DM_PHAMVI_DIALYS, LOAI="TINH_TP")
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =5
+                    PaddingLeft: =12
+                    PaddingRight: =5
+                    PaddingTop: =5
+                    PressedBorderColor: =RGBA(16, 110, 190, 1)
+                    PressedFill: =RGBA(0, 120, 212, 1)
+                    SelectionColor: =RGBA(50, 49, 48, 1)
+                    SelectionFill: =RGBA(0, 120, 212, 1)
+                    Size: =11
+                    Width: =120
+                    X: =641
+                    ZIndex: =37
+
+                DateNS_NDBH As datepicker:
+                    BorderColor: =RGBA(54, 176, 75, 1)
+                    CalendarHeaderFill: =RGBA(16, 110, 190, 1)
+                    DefaultDate: =ThisItem.cr282_ngay_sinh
+                    DisabledBorderColor: =RGBA(153, 201, 238, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit)
+                    Format: ="dd/mm/yyyy"
+                    Height: =30
+                    HoverDateFill: =RGBA(184, 187, 184, 1)
+                    IconBackground: =RGBA(0, 120, 212, 1)
+                    InputTextPlaceholder: =
+                    OnSelect: =Select(Parent)
+                    PaddingTop: =5
+                    SelectedDateFill: =RGBA(0, 120, 212, 1)
+                    Size: =11
+                    Width: =140
+                    X: =201
+                    ZIndex: =38
+
+                DropGT_NDBH As dropdown:
+                    BorderColor: =RGBA(54, 176, 75, 1)
+                    ChevronBackground: =RGBA(255, 255, 255, 1)
+                    ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
+                    ChevronDisabledFill: =RGBA(161, 159, 157, 1)
+                    ChevronFill: =RGBA(54, 176, 75, 1)
+                    ChevronHoverBackground: =RGBA(245, 245, 245, 1)
+                    ChevronHoverFill: =RGBA(50, 49, 48, 1)
+                    Color: =RGBA(50, 49, 48, 1)
+                    Default: =LookUp(DM_GIOI_TINHS, MA_GIOI_TINH=ThisItem.cr282_ma_gioi__tinh).TEN_GIOI_TINH
+                    DisabledBorderColor: =RGBA(153, 201, 238, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit)
+                    Height: =30
+                    HoverBorderColor: =RGBA(16, 110, 190, 1)
+                    HoverColor: =RGBA(50, 49, 48, 1)
+                    HoverFill: =RGBA(245, 245, 245, 1)
+                    Items: =DM_GIOI_TINHS
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =5
+                    PaddingLeft: =12
+                    PaddingRight: =5
+                    PaddingTop: =5
+                    PressedBorderColor: =RGBA(16, 110, 190, 1)
+                    PressedFill: =RGBA(0, 120, 212, 1)
+                    SelectionColor: =RGBA(50, 49, 48, 1)
+                    SelectionFill: =RGBA(0, 120, 212, 1)
+                    Size: =11
+                    Width: =80
+                    X: =342
+                    ZIndex: =39
+
+                TxtSoGT_NDBH As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Color: =RGBA(50, 49, 48, 1)
+                    Default: =ThisItem.cr282_so_giay_to
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                    Height: =30
+                    HoverBorderColor: =RGBA(16, 110, 190, 1)
+                    HoverColor: =RGBA(50, 49, 48, 1)
+                    HoverFill: =RGBA(255, 255, 255, 1)
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    PressedBorderColor: =RGBA(0, 120, 212, 1)
+                    PressedColor: =RGBA(50, 49, 48, 1)
+                    PressedFill: =RGBA(255, 255, 255, 1)
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Size: =11
+                    Width: =90
+                    X: =422
+                    ZIndex: =40
+
+                TxtPhiNDBH As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Color: =RGBA(50, 49, 48, 1)
+                    Default: =ThisItem.cr282_phi_ndbh
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =DisplayMode.Disabled//If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                    Format: =TextFormat.Number
+                    Height: =30
+                    HoverBorderColor: =RGBA(16, 110, 190, 1)
+                    HoverColor: =RGBA(50, 49, 48, 1)
+                    HoverFill: =RGBA(255, 255, 255, 1)
+                    OnChange: =
+                    OnSelect: =Select(Parent)
+                    PressedBorderColor: =RGBA(0, 120, 212, 1)
+                    PressedColor: =RGBA(50, 49, 48, 1)
+                    PressedFill: =RGBA(255, 255, 255, 1)
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Size: =11
+                    Width: =115
+                    X: =1081
+                    ZIndex: =41
+
+            TextCanvas2_218 As Text:
+                Align: ='TextCanvas.Align'.Center
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Giới tính"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =80
+                X: =342
+                Y: =40
+                ZIndex: =14
+
+            TextCanvas2_217 As Text:
+                Align: ='TextCanvas.Align'.Center
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Ngày sinh"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =120
+                X: =212
+                Y: =40
+                ZIndex: =15
+
+            TextCanvas2_224 As Text:
+                Align: ='TextCanvas.Align'.Center
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Mã nhân viên"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =120
+                X: =861
+                Y: =40
+                ZIndex: =16
+
+            TextCanvas2_225 As Text:
+                Align: ='TextCanvas.Align'.Center
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Mối quan hệ"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =100
+                X: =981
+                Y: =40
+                ZIndex: =17
+
+            TextCanvas2_219 As Text:
+                Align: ='TextCanvas.Align'.Center
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Số giấy tờ"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =90
+                X: =422
+                Y: =40
+                ZIndex: =18
+
+            TextCanvas2_226 As Text:
+                Align: ='TextCanvas.Align'.Center
+                DisplayMode: =DisplayMode.Edit
+                FontColor: =
+                Height: =37
+                Size: =14
+                Text: ="Phí/ Người"
+                Weight: ='TextCanvas.Weight'.Bold
+                Width: =113
+                X: =1081
+                Y: =40
+                ZIndex: =19
+
+    Btn_LuuKH_1 As button:
+        BorderColor: =RGBA(0, 0, 0, 0)
+        BorderStyle: =BorderStyle.None
+        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+        DisabledColor: =RGBA(161, 159, 157, 1)
+        DisabledFill: =RGBA(242, 242, 241, 0)
+        Fill: =RGBA(0, 120, 212, 1)
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Bold
+        Height: =42
+        HoverBorderColor: =RGBA(0, 0, 0, 0)
+        HoverFill: =RGBA(16, 110, 190, 1)
+        OnSelect: |
+            =UpdateContext({errorMsg: ""});
+            //Kiem tra Khong trung MST
+            If(
+                CountRows(tmpNDBH) > 0,
+                Clear(errorCol);
+                ForAll(
+                    tmpNDBH As kh,
+                    If(
+                        CountIf(
+                            tmpNDBH,
+                            cr282_mst = kh.cr282_mst
+                        ) > 1,
+                        Collect(
+                            errorCol,
                             {
-                                idNDBH: If(
-                                    CountIf(
-                                        tmpNDBH,
-                                        cr282_id
-                                    ) = 0,
-                                    1,
-                                    Max(
-                                        tmpNDBH,
-                                        cr282_id
-                                    ) + 1
+                                Message: Concatenate(
+                                    "MST ",
+                                    kh.cr282_mst,
+                                    " bị lặp trong danh sách"
                                 )
                             }
                         )
-                    );
-                    Collect(
-                        tmpNDBH,
-                        {
-                            cr282_id: idNDBH,
-                            cr282_ma_hop_dong: varMaHD,
-                            cr282_ma_san_pham: varMaSP,
-                            edited: 1
-                        }
-                    );
-                    UpdateContext({maAddedNDBH: Text(idNDBH)})
+                    )
+                );
+                If(
+                    !IsEmpty(errorCol),
+                    UpdateContext({errorMsg: First(errorCol).Message})
                 )
-            PressedBorderColor: =RGBA(12, 59, 94, 1)
-            PressedColor: =RGBA(255, 255, 255, 1)
-            PressedFill: =RGBA(16, 110, 190, 1)
-            Size: =11
-            Text: ="Thêm mới"
-            Width: =96
-            X: =5
-            Y: =46
-            ZIndex: =6
-
-        IconTaiLaiNDBH As icon.Sync:
-            BorderColor: =RGBA(0, 0, 0, 0)
-            Color: =RGBA(83, 144, 164, 1)
-            DisabledBorderColor: =RGBA(245, 245, 245, 1)
-            DisabledColor: =RGBA(225, 223, 221, 1)
-            DisabledFill: =RGBA(0, 0, 0, 0)
-            FocusedBorderThickness: =4
-            Height: =36
-            HoverBorderColor: =RGBA(0, 0, 0, 0)
-            HoverColor: =RGBA(16, 110, 190, 1)
-            HoverFill: =RGBA(0, 0, 0, 0)
-            Icon: =Icon.Sync
-            OnSelect: |
-                =ClearCollect(
-                    tmpNDBH,
-                    ShowColumns(
-                        AddColumns(
-                            SortByColumns(
-                                Filter(
-                                    DL_HOP_DONG_SP_NDBH,
-                                    MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP
-                                ),
-                                "cr282_id",
-                                SortOrder.Descending
-                            ),
-                            "edited",
-                            0
-                        ),
-                        "cr282_id",
-                        "cr282_ma_hop_dong",
-                        "cr282_ma_san_pham",
-                        "cr282_mst",
-                        "cr282_ten_ndbh",
-                        "cr282_dia_chi",
-                        "cr282_sdt",
-                        "cr282_email",
-                        "cr282_ma_gioi__tinh",
-                        "cr282_ma_nhan_vien",
-                        "cr282_ma_tinh_tp",
-                        "cr282_moi_quan_he",
-                        "cr282_ngay_sinh",
-                        "cr282_nhom",
-                        "cr282_so_giay_to",
-                        "edited"
-                    )
+            );
+            If(
+                !IsBlank(errorMsg),
+                Notify(
+                    errorMsg,
+                    NotificationType.Error,
+                    800
+                ),
+                RemoveIf(
+                    DL_HOP_DONG_SP_NDBH,
+                    MA_SAN_PHAM = varMaSP && MA_HOP_DONG = varMaHD
                 );
-                UpdateContext(
-                    {
-                        maAddedNDBH: "",
-                        maUpdatedNDBH: ""
-                    }
-                );
-            PressedBorderColor: =RGBA(0, 0, 0, 0)
-            PressedColor: =RGBA(16, 110, 190, 1)
-            PressedFill: =RGBA(0, 0, 0, 0)
-            Tooltip: ="Tải lại"
-            Visible: =false
-            Width: =32
-            X: =1162
-            Y: =40
-            ZIndex: =7
-
-        TextCanvas2_217 As Text:
-            Align: ='TextCanvas.Align'.Center
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Địa chỉ"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =130
-            X: =511
-            Y: =90
-            ZIndex: =8
-
-        TextCanvas2_218 As Text:
-            Align: ='TextCanvas.Align'.Center
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Tỉnh/ TP"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =120
-            X: =641
-            Y: =90
-            ZIndex: =9
-
-        TextCanvas2_220 As Text:
-            Align: ='TextCanvas.Align'.Center
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Nhóm"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =120
-            X: =741
-            Y: =90
-            ZIndex: =10
-
-        GalleryNDBH As gallery.galleryVertical:
-            BorderColor: =RGBA(245, 245, 245, 1)
-            DelayItemLoading: =true
-            Height: =221
-            Items: =tmpNDBH
-            Layout: =Layout.Vertical
-            LoadingSpinner: =LoadingSpinner.Data
-            NavigationStep: =0
-            TemplatePadding: =0
-            TemplateSize: =30
-            Width: =1224
-            Y: =129
-            ZIndex: =11
-
-            TxtTen_NDBH As text:
-                BorderColor: =RGBA(54, 176, 75, 1)
-                Color: =RGBA(50, 49, 48, 1)
-                Default: =ThisItem.cr282_ten_ndbh
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                Height: =30
-                HoverBorderColor: =RGBA(16, 110, 190, 1)
-                HoverColor: =RGBA(50, 49, 48, 1)
-                HoverFill: =RGBA(255, 255, 255, 1)
-                OnChange: =
-                OnSelect: =Select(Parent)
-                PressedBorderColor: =RGBA(0, 120, 212, 1)
-                PressedColor: =RGBA(50, 49, 48, 1)
-                PressedFill: =RGBA(255, 255, 255, 1)
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Size: =11
-                Width: =110
-                X: =91
-                ZIndex: =8
-
-            TxtMST_NDBH As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Color: =RGBA(50, 49, 48, 1)
-                Default: =ThisItem.cr282_mst
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                Height: =30
-                HoverBorderColor: =RGBA(16, 110, 190, 1)
-                HoverColor: =RGBA(50, 49, 48, 1)
-                HoverFill: =RGBA(255, 255, 255, 1)
-                OnChange: =
-                OnSelect: =Select(Parent)
-                PressedBorderColor: =RGBA(0, 120, 212, 1)
-                PressedColor: =RGBA(50, 49, 48, 1)
-                PressedFill: =RGBA(255, 255, 255, 1)
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Size: =11
-                Width: =90
-                X: =1
-                ZIndex: =9
-
-            TxtID_DD_1 As text:
-                BorderColor: =RGBA(15, 108, 189, 1)
-                Color: =RGBA(50, 49, 48, 1)
-                Default: =ThisItem.cr282_id
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.Disabled
-                Font: =Font.'Segoe UI'
-                Height: =30
-                HoverBorderColor: =RGBA(16, 110, 190, 1)
-                HoverColor: =RGBA(50, 49, 48, 1)
-                HoverFill: =RGBA(255, 255, 255, 1)
-                OnChange: =
-                OnSelect: =Select(Parent)
-                PressedBorderColor: =RGBA(0, 120, 212, 1)
-                PressedColor: =RGBA(50, 49, 48, 1)
-                PressedFill: =RGBA(255, 255, 255, 1)
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Visible: =false
-                Width: =119
-                X: =223
-                ZIndex: =22
-
-            TxtDiaChi_NDBH As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Color: =RGBA(50, 49, 48, 1)
-                Default: =ThisItem.cr282_dia_chi
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                Height: =30
-                HoverBorderColor: =RGBA(16, 110, 190, 1)
-                HoverColor: =RGBA(50, 49, 48, 1)
-                HoverFill: =RGBA(255, 255, 255, 1)
-                Mode: =TextMode.MultiLine
-                OnChange: =
-                OnSelect: =Select(Parent)
-                PressedBorderColor: =RGBA(0, 120, 212, 1)
-                PressedColor: =RGBA(50, 49, 48, 1)
-                PressedFill: =RGBA(255, 255, 255, 1)
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Size: =11
-                Width: =130
-                X: =511
-                ZIndex: =23
-
-            TxtNhomNDBH As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Color: =RGBA(50, 49, 48, 1)
-                Default: =ThisItem.cr282_nhom
-                DisabledBorderColor: =RGBA(153, 201, 238, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                Height: =30
-                HoverBorderColor: =RGBA(16, 110, 190, 1)
-                HoverColor: =RGBA(50, 49, 48, 1)
-                HoverFill: =RGBA(255, 255, 255, 1)
-                OnChange: =
-                OnSelect: =Select(Parent)
-                PressedBorderColor: =RGBA(0, 120, 212, 1)
-                PressedColor: =RGBA(50, 49, 48, 1)
-                PressedFill: =RGBA(255, 255, 255, 1)
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Size: =11
-                Width: =100
-                X: =761
-                ZIndex: =24
-
-            Btn_SuaDD_1 As button:
-                BorderColor: =RGBA(0, 0, 0, 0)
-                BorderStyle: =BorderStyle.None
-                DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                DisabledColor: =RGBA(161, 159, 157, 1)
-                DisabledFill: =RGBA(242, 242, 241, 0)
-                Fill: =RGBA(0, 120, 212, 1)
-                Font: =Font.'Segoe UI'
-                FontWeight: =FontWeight.Bold
-                Height: =25
-                HoverBorderColor: =RGBA(0, 0, 0, 0)
-                HoverFill: =RGBA(16, 110, 190, 1)
-                OnSelect: |-
-                    =If(
-                        Or(maAddedNDBH<>"",maUpdatedNDBH<>""),
-                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                        UpdateIf(
-                            tmpNDBH,
-                            cr282_id=ThisItem.cr282_id,
-                            {
-                                edited:1
-                            }
-                        );
-                        UpdateContext({
-                            maUpdatedNDBH:Text(ThisItem.cr282_id)
-                        })
-                    )
-                PressedBorderColor: =RGBA(0, 69, 120, 1)
-                PressedColor: =RGBA(255, 255, 255, 1)
-                PressedFill: =RGBA(16, 110, 190, 1)
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Size: =11
-                Text: ="Sửa"
-                Visible: =ThisItem.edited=0
-                Width: =60
-                X: =1092
-                Y: =2
-                ZIndex: =29
-
-            Btn_XoaDD_1 As button:
-                BorderColor: =RGBA(0, 0, 0, 0)
-                BorderStyle: =BorderStyle.None
-                DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                DisabledColor: =RGBA(161, 159, 157, 1)
-                DisabledFill: =RGBA(242, 242, 241, 0)
-                Fill: =RGBA(0, 120, 212, 1)
-                Font: =Font.'Segoe UI'
-                FontWeight: =FontWeight.Bold
-                Height: =25
-                HoverBorderColor: =RGBA(0, 0, 0, 0)
-                HoverFill: =RGBA(16, 110, 190, 1)
-                OnSelect: |-
-                    =If(
-                        Or(maAddedNDBH<>"",maUpdatedNDBH<>""),
-                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                        Refresh(DL_HOP_DONG_SP_NDBH);
-                        Remove(tmpNDBH,ThisItem);
-                        //RemoveIf(DL_HOP_DONG_SP_NDBH, ID=ThisItem.cr282_id);
-                        Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
-                    )
-                PressedBorderColor: =RGBA(0, 69, 120, 1)
-                PressedColor: =RGBA(255, 255, 255, 1)
-                PressedFill: =RGBA(16, 110, 190, 1)
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Size: =11
-                Text: ="Xóa"
-                Visible: =ThisItem.edited=0
-                Width: =60
-                X: =1162
-                Y: =2
-                ZIndex: =30
-
-            Btn_LuuDD_1 As button:
-                BorderColor: =RGBA(0, 0, 0, 0)
-                BorderStyle: =BorderStyle.None
-                DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                DisabledColor: =RGBA(161, 159, 157, 1)
-                DisabledFill: =RGBA(242, 242, 241, 0)
-                Fill: =RGBA(0, 120, 212, 1)
-                Font: =Font.'Segoe UI'
-                FontWeight: =FontWeight.Bold
-                Height: =25
-                HoverBorderColor: =RGBA(0, 0, 0, 0)
-                HoverFill: =RGBA(16, 110, 190, 1)
-                OnSelect: |-
-                    =UpdateContext({errorMsgGal: ""});
-                    If(
-                        TxtTen_NDBH.Text = "",
-                        UpdateContext({errorMsgGal: "Bắt buộc nhập tên người được bảo hiểm"})
-                    );
-                    If(
-                        IsBlank(errorMsgGal),
+                If(
+                    !IsEmpty(tmpNDBH),
+                    ForAll (
+                        tmpNDBH As dd,
                         If(
-                            TxtMST_NDBH.Text = "",
-                            UpdateContext({errorMsgGal: "Bắt buộc nhập MST người được bảo hiểm"})
-                        )
-                    );
-                    /*If(
-                        IsBlank(errorMsgGal) && !IsBlank(TxtNhomNDBH.Text),
-                        If(
-                            IsMatch(
-                                TxtNhomNDBH.Text,
-                                "^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$"
-                            ),
-                            UpdateContext({errorMsgGal: ""}),
-                            UpdateContext({errorMsgGal: "Email người được bảo hiểm sai định dạng"})
-                        )
-                    );*/
-                    If(
-                        IsBlank(errorMsgGal),
-                        If(
-                            CountIf(
-                                tmpNDBH,
-                                cr282_mst = ThisItem.cr282_mst
-                            ) > 1,
-                            Collect(
-                                errorCol,
-                                {
-                                    Message: Concatenate(
-                                        "MST ",
-                                        ThisItem.cr282_mst,
-                                        " bị lặp trong danh sách"
-                                    )
-                                }
-                            )
-                        )
-                    );
-                    If(
-                        !IsEmpty(errorCol),
-                        UpdateContext({errorMsg: First(errorCol).Message})
-                    );
-                    If(
-                        !IsBlank(errorMsgGal),
-                        Notify(
-                            errorMsgGal,
-                            NotificationType.Error,
-                            800
-                        ),
-                        /*If(
                             IsBlank(
                                 LookUp(
                                     DL_HOP_DONG_SP_NDBH,
-                                    ID = ThisItem.cr282_id
+                                    ID = dd.cr282_id
                                 )
                             ),
                             Patch(
@@ -606,494 +933,242 @@ NhapNDBH As screen:
                                     ),
                                     MA_HOP_DONG: varMaHD,
                                     MA_SAN_PHAM: varMaSP,
-                                    TEN_NDBH: TxtTen_NDBH.Text,
-                                    MST: TxtMST_NDBH.Text,
-                                    DIA_CHI: TxtDiaChi_NDBH.Text,
-                                    MA_GIOI__TINH: DropGT_NDBH.Selected.MA_GIOI_TINH,
-                                    MA_TINH_TP: DropTinh_NDBH.Selected.MA_PHAMVI,
-                                    MA_NHAN_VIEN: TxtMaNV.Text,
-                                    MOI_QUAN_HE: TxtMoiQuanHe.Text,
-                                    NGAY_SINH: DateNS_NDBH.SelectedDate,
-                                    NHOM: TxtNhomNDBH.Text,
-                                    SO_GIAY_TO: TxtSoGT_NDBH.Text
+                                    MA_CHUONG_TRINH: varMaCT,
+                                    NHOM_TINH_PHI: varNhomTP,
+                                    TEN_NDBH: dd.cr282_ten_ndbh,
+                                    MST: dd.cr282_mst,
+                                    DIA_CHI: dd.cr282_dia_chi,
+                                    MA_GIOI__TINH: dd.cr282_ma_gioi__tinh,
+                                    MA_TINH_TP: dd.cr282_ma_tinh_tp,
+                                    MA_NHAN_VIEN: dd.cr282_ma_nhan_vien,
+                                    MOI_QUAN_HE: dd.cr282_moi_quan_he,
+                                    NGAY_SINH: dd.cr282_ngay_sinh,
+                                    NHOM: dd.cr282_nhom,
+                                    SO_GIAY_TO: dd.cr282_so_giay_to, 
+                                    PHI_NDBH:dd.cr282_phi_ndbh
                                 }
                             ),
                             UpdateIf(
                                 DL_HOP_DONG_SP_NDBH,
-                                ID = ThisItem.cr282_id,
+                                ID = dd.cr282_id,
                                 {
-                                    TEN_NDBH: TxtTen_NDBH.Text,
-                                    MST: TxtMST_NDBH.Text,
-                                    DIA_CHI: TxtDiaChi_NDBH.Text,
-                                    MA_GIOI__TINH: DropGT_NDBH.Selected.MA_GIOI_TINH,
-                                    MA_TINH_TP: DropTinh_NDBH.Selected.MA_PHAMVI,
-                                    MA_NHAN_VIEN: TxtMaNV.Text,
-                                    MOI_QUAN_HE: TxtMoiQuanHe.Text,
-                                    NGAY_SINH: DateNS_NDBH.SelectedDate,
-                                    NHOM: TxtNhomNDBH.Text,
-                                    SO_GIAY_TO: TxtSoGT_NDBH.Text
-                                }
-                            );
-                        );*/
-                        UpdateIf(
-                            tmpNDBH,
-                            cr282_id = ThisItem.cr282_id,
-                            {
-                                cr282_mst: TxtMST_NDBH.Text,
-                                cr282_ten_ndbh: TxtTen_NDBH.Text,
-                                cr282_dia_chi: TxtDiaChi_NDBH.Text,
-                                cr282_ma_gioi__tinh: DropGT_NDBH.Selected.MA_GIOI_TINH,
-                                cr282_ma_nhan_vien: TxtMaNV.Text,
-                                cr282_ma_tinh_tp: DropTinh_NDBH.Selected.MA_PHAMVI,
-                                cr282_moi_quan_he: TxtMoiQuanHe.Text,
-                                cr282_ngay_sinh: DateNS_NDBH.SelectedDate,
-                                cr282_nhom: TxtNhomNDBH.Text,
-                                cr282_so_giay_to: TxtSoGT_NDBH.Text,
-                                edited: 0
-                            }
-                        );
-                        UpdateContext(
-                            {
-                                maAddedNDBH: "",
-                                maUpdatedNDBH: ""
-                            }
-                        );
-                        
-                    )
-                PressedBorderColor: =RGBA(0, 69, 120, 1)
-                PressedColor: =RGBA(255, 255, 255, 1)
-                PressedFill: =RGBA(16, 110, 190, 1)
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Size: =11
-                Text: ="Lưu"
-                Visible: =ThisItem.edited=1
-                Width: =60
-                X: =1092
-                Y: =2
-                ZIndex: =31
-
-            Btn_HuyDD_1 As button:
-                BorderColor: =RGBA(0, 0, 0, 0)
-                BorderStyle: =BorderStyle.None
-                DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                DisabledColor: =RGBA(161, 159, 157, 1)
-                DisabledFill: =RGBA(242, 242, 241, 0)
-                Fill: =RGBA(0, 120, 212, 1)
-                Font: =Font.'Segoe UI'
-                FontWeight: =FontWeight.Bold
-                Height: =25
-                HoverBorderColor: =RGBA(0, 0, 0, 0)
-                HoverFill: =RGBA(16, 110, 190, 1)
-                OnSelect: |-
-                    =If(
-                        ThisItem.cr282_id=Value(maAddedNDBH),
-                        Remove(tmpNDBH,ThisItem),
-                        UpdateIf(
-                            tmpNDBH,
-                            cr282_id=ThisItem.cr282_id,
-                            {
-                                edited:0
-                            }
-                        )
-                    );
-                    UpdateContext({
-                        maAddedNDBH:"",
-                        maUpdatedNDBH:""
-                    });
-                PressedBorderColor: =RGBA(0, 69, 120, 1)
-                PressedColor: =RGBA(255, 255, 255, 1)
-                PressedFill: =RGBA(16, 110, 190, 1)
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Size: =11
-                Text: ="Hủy"
-                Visible: =ThisItem.edited=1
-                Width: =60
-                X: =1162
-                Y: =2
-                ZIndex: =32
-
-            TxtMaNV As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Color: =RGBA(50, 49, 48, 1)
-                Default: =ThisItem.cr282_ma_nhan_vien
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                Height: =30
-                HoverBorderColor: =RGBA(16, 110, 190, 1)
-                HoverColor: =RGBA(50, 49, 48, 1)
-                HoverFill: =RGBA(255, 255, 255, 1)
-                OnChange: =
-                OnSelect: =Select(Parent)
-                PressedBorderColor: =RGBA(0, 120, 212, 1)
-                PressedColor: =RGBA(50, 49, 48, 1)
-                PressedFill: =RGBA(255, 255, 255, 1)
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Size: =11
-                Width: =120
-                X: =861
-                ZIndex: =35
-
-            TxtMoiQuanHe As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Color: =RGBA(50, 49, 48, 1)
-                Default: =ThisItem.cr282_moi_quan_he
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                Height: =30
-                HoverBorderColor: =RGBA(16, 110, 190, 1)
-                HoverColor: =RGBA(50, 49, 48, 1)
-                HoverFill: =RGBA(255, 255, 255, 1)
-                OnChange: =
-                OnSelect: =Select(Parent)
-                PressedBorderColor: =RGBA(0, 120, 212, 1)
-                PressedColor: =RGBA(50, 49, 48, 1)
-                PressedFill: =RGBA(255, 255, 255, 1)
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Size: =11
-                Width: =100
-                X: =981
-                ZIndex: =36
-
-            DropTinh_NDBH As dropdown:
-                BorderColor: =RGBA(54, 176, 75, 1)
-                ChevronBackground: =RGBA(255, 255, 255, 1)
-                ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
-                ChevronDisabledFill: =RGBA(161, 159, 157, 1)
-                ChevronFill: =RGBA(54, 176, 75, 1)
-                ChevronHoverBackground: =RGBA(245, 245, 245, 1)
-                ChevronHoverFill: =RGBA(50, 49, 48, 1)
-                Default: =LookUp(DM_PHAMVI_DIALYS, MA_PHAMVI=ThisItem.cr282_ma_tinh_tp && LOAI="TINH_TP").TEN_PHAMVI
-                DisabledBorderColor: =RGBA(153, 201, 238, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit)
-                Height: =30
-                HoverBorderColor: =RGBA(16, 110, 190, 1)
-                HoverColor: =RGBA(50, 49, 48, 1)
-                HoverFill: =RGBA(245, 245, 245, 1)
-                Items: =Filter(DM_PHAMVI_DIALYS, LOAI="TINH_TP")
-                OnSelect: =Select(Parent)
-                PaddingBottom: =5
-                PaddingLeft: =12
-                PaddingRight: =5
-                PaddingTop: =5
-                PressedBorderColor: =RGBA(16, 110, 190, 1)
-                PressedFill: =RGBA(0, 120, 212, 1)
-                SelectionColor: =RGBA(50, 49, 48, 1)
-                SelectionFill: =RGBA(0, 120, 212, 1)
-                Size: =11
-                Width: =120
-                X: =641
-                ZIndex: =37
-
-            DateNS_NDBH As datepicker:
-                BorderColor: =RGBA(54, 176, 75, 1)
-                CalendarHeaderFill: =RGBA(16, 110, 190, 1)
-                DefaultDate: =ThisItem.cr282_ngay_sinh
-                DisabledBorderColor: =RGBA(153, 201, 238, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit)
-                Format: ="dd/mm/yyyy"
-                Height: =30
-                HoverDateFill: =RGBA(184, 187, 184, 1)
-                IconBackground: =RGBA(0, 120, 212, 1)
-                InputTextPlaceholder: =
-                OnSelect: =Select(Parent)
-                PaddingTop: =5
-                SelectedDateFill: =RGBA(0, 120, 212, 1)
-                Size: =11
-                Width: =140
-                X: =201
-                ZIndex: =38
-
-            DropGT_NDBH As dropdown:
-                BorderColor: =RGBA(54, 176, 75, 1)
-                ChevronBackground: =RGBA(255, 255, 255, 1)
-                ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
-                ChevronDisabledFill: =RGBA(161, 159, 157, 1)
-                ChevronFill: =RGBA(54, 176, 75, 1)
-                ChevronHoverBackground: =RGBA(245, 245, 245, 1)
-                ChevronHoverFill: =RGBA(50, 49, 48, 1)
-                Color: =RGBA(50, 49, 48, 1)
-                Default: =LookUp(DM_GIOI_TINHS, MA_GIOI_TINH=ThisItem.cr282_ma_gioi__tinh).TEN_GIOI_TINH
-                DisabledBorderColor: =RGBA(153, 201, 238, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit)
-                Height: =30
-                HoverBorderColor: =RGBA(16, 110, 190, 1)
-                HoverColor: =RGBA(50, 49, 48, 1)
-                HoverFill: =RGBA(245, 245, 245, 1)
-                Items: =DM_GIOI_TINHS
-                OnSelect: =Select(Parent)
-                PaddingBottom: =5
-                PaddingLeft: =12
-                PaddingRight: =5
-                PaddingTop: =5
-                PressedBorderColor: =RGBA(16, 110, 190, 1)
-                PressedFill: =RGBA(0, 120, 212, 1)
-                SelectionColor: =RGBA(50, 49, 48, 1)
-                SelectionFill: =RGBA(0, 120, 212, 1)
-                Size: =11
-                Width: =80
-                X: =342
-                ZIndex: =39
-
-            TxtSoGT_NDBH As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Color: =RGBA(50, 49, 48, 1)
-                Default: =ThisItem.cr282_so_giay_to
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                Height: =30
-                HoverBorderColor: =RGBA(16, 110, 190, 1)
-                HoverColor: =RGBA(50, 49, 48, 1)
-                HoverFill: =RGBA(255, 255, 255, 1)
-                OnChange: =
-                OnSelect: =Select(Parent)
-                PressedBorderColor: =RGBA(0, 120, 212, 1)
-                PressedColor: =RGBA(50, 49, 48, 1)
-                PressedFill: =RGBA(255, 255, 255, 1)
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Size: =11
-                Width: =90
-                X: =422
-                ZIndex: =40
-
-        Btn_LuuKH_1 As button:
-            BorderColor: =RGBA(0, 0, 0, 0)
-            BorderStyle: =BorderStyle.None
-            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-            DisabledColor: =RGBA(161, 159, 157, 1)
-            DisabledFill: =RGBA(242, 242, 241, 0)
-            Fill: =RGBA(0, 120, 212, 1)
-            FontWeight: =FontWeight.Bold
-            Height: =42
-            HoverBorderColor: =RGBA(0, 0, 0, 0)
-            HoverFill: =RGBA(16, 110, 190, 1)
-            OnSelect: |
-                =UpdateContext({errorMsg: ""});
-                //Kiem tra Khong trung MST
-                If(
-                    CountRows(tmpNDBH) > 0,
-                    Clear(errorCol);
-                    ForAll(
-                        tmpNDBH As kh,
-                        If(
-                            CountIf(
-                                tmpNDBH,
-                                cr282_mst = kh.cr282_mst
-                            ) > 1,
-                            Collect(
-                                errorCol,
-                                {
-                                    Message: Concatenate(
-                                        "MST ",
-                                        kh.cr282_mst,
-                                        " bị lặp trong danh sách"
-                                    )
+                                    TEN_NDBH: dd.cr282_ten_ndbh,
+                                    MST: dd.cr282_mst,
+                                    DIA_CHI: dd.cr282_dia_chi,
+                                    MA_GIOI__TINH: dd.cr282_ma_gioi__tinh,
+                                    MA_TINH_TP: dd.cr282_ma_tinh_tp,
+                                    MA_NHAN_VIEN: dd.cr282_ma_nhan_vien,
+                                    MOI_QUAN_HE: dd.cr282_moi_quan_he,
+                                    NGAY_SINH: dd.cr282_ngay_sinh,
+                                    NHOM: dd.cr282_nhom,
+                                    SO_GIAY_TO: dd.cr282_so_giay_to, 
+                                    PHI_NDBH:dd.cr282_phi_ndbh
                                 }
                             )
-                        )
-                    );
-                    If(
-                        !IsEmpty(errorCol),
-                        UpdateContext({errorMsg: First(errorCol).Message})
+                        );
                     )
                 );
-                If(
-                    !IsBlank(errorMsg),
-                    Notify(
-                        errorMsg,
-                        NotificationType.Error,
-                        800
-                    ),
-                    RemoveIf(
-                        DL_HOP_DONG_SP_NDBH,
-                        MA_SAN_PHAM = varMaSP && MA_HOP_DONG = varMaHD
-                    );
-                    If(
-                        !IsEmpty(tmpNDBH),
-                        ForAll (
-                            tmpNDBH As dd,
-                            If(
-                                IsBlank(
-                                    LookUp(
-                                        DL_HOP_DONG_SP_NDBH,
-                                        ID = dd.cr282_id
-                                    )
-                                ),
-                                Patch(
-                                    DL_HOP_DONG_SP_NDBH,
-                                    {
-                                        ID: If(
-                                            CountIf(
-                                                DL_HOP_DONG_SP_NDBH,
-                                                ID
-                                            ) = 0,
-                                            1,
-                                            Max(
-                                                DL_HOP_DONG_SP_NDBH,
-                                                ID
-                                            ) + 1
-                                        ),
-                                        MA_HOP_DONG: varMaHD,
-                                        MA_SAN_PHAM: varMaSP,
-                                        TEN_NDBH: dd.cr282_ten_ndbh,
-                                        MST: dd.cr282_mst,
-                                        DIA_CHI: dd.cr282_dia_chi,
-                                        MA_GIOI__TINH: dd.cr282_ma_gioi__tinh,
-                                        MA_TINH_TP: dd.cr282_ma_tinh_tp,
-                                        MA_NHAN_VIEN: dd.cr282_ma_nhan_vien,
-                                        MOI_QUAN_HE: dd.cr282_moi_quan_he,
-                                        NGAY_SINH: dd.cr282_ngay_sinh,
-                                        NHOM: dd.cr282_nhom,
-                                        SO_GIAY_TO: dd.cr282_so_giay_to
-                                    }
-                                ),
-                                UpdateIf(
-                                    DL_HOP_DONG_SP_NDBH,
-                                    ID = dd.cr282_id,
-                                    {
-                                        TEN_NDBH: dd.cr282_ten_ndbh,
-                                        MST: dd.cr282_mst,
-                                        DIA_CHI: dd.cr282_dia_chi,
-                                        MA_GIOI__TINH: dd.cr282_ma_gioi__tinh,
-                                        MA_TINH_TP: dd.cr282_ma_tinh_tp,
-                                        MA_NHAN_VIEN: dd.cr282_ma_nhan_vien,
-                                        MOI_QUAN_HE: dd.cr282_moi_quan_he,
-                                        NGAY_SINH: dd.cr282_ngay_sinh,
-                                        NHOM: dd.cr282_nhom,
-                                        SO_GIAY_TO: dd.cr282_so_giay_to
-                                    }
-                                )
-                            );
-                        )
-                    );
-                    //Select(IconTaiLaiNDBH);
-                Notify(
-                        "Lưu dữ liệu thành công",
-                        NotificationType.Success,
-                        800
-                    );
+                //Select(IconTaiLaiNDBH);
+            Notify(
+                    "Lưu dữ liệu thành công",
+                    NotificationType.Success,
+                    800
                 );
-            PressedBorderColor: =RGBA(15, 84, 140, 1)
-            PressedColor: =RGBA(255, 255, 255, 1)
-            PressedFill: =RGBA(16, 110, 190, 1)
-            Size: =11
-            Text: ="Lưu"
-            Width: =150
-            X: =1063
-            Y: =380
-            ZIndex: =12
-
-        Btn_HuyKH_1 As button:
-            BorderColor: =RGBA(0, 0, 0, 0)
-            BorderStyle: =BorderStyle.None
-            DisabledBorderColor: =RGBA(0, 0, 0, 0)
-            DisabledColor: =RGBA(161, 159, 157, 1)
-            DisabledFill: =RGBA(242, 242, 241, 0)
-            Fill: =RGBA(0, 120, 212, 1)
-            FontWeight: =FontWeight.Bold
-            HoverBorderColor: =RGBA(0, 0, 0, 0)
-            HoverFill: =RGBA(16, 110, 190, 1)
-            OnSelect: |-
-                =Select(IconTaiLaiNDBH);
                 Back();
-            PressedBorderColor: =RGBA(15, 84, 140, 1)
-            PressedColor: =RGBA(255, 255, 255, 1)
-            PressedFill: =RGBA(16, 110, 190, 1)
-            Size: =11
-            Text: ="Quay lại"
-            Width: =150
-            X: =869
-            Y: =380
-            ZIndex: =13
+                
+            );
+        PressedBorderColor: =RGBA(0, 69, 120, 1)
+        PressedColor: =RGBA(255, 255, 255, 1)
+        PressedFill: =RGBA(16, 110, 190, 1)
+        Size: =11
+        Text: ="Lưu"
+        Width: =150
+        X: =1143
+        Y: =422
+        ZIndex: =2
 
-        TextCanvas2_222 As Text:
-            Align: ='TextCanvas.Align'.Center
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Giới tính"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =80
-            X: =342
-            Y: =90
-            ZIndex: =14
+    Btn_HuyKH_1 As button:
+        BorderColor: =RGBA(0, 0, 0, 0)
+        BorderStyle: =BorderStyle.None
+        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+        DisabledColor: =RGBA(161, 159, 157, 1)
+        DisabledFill: =RGBA(242, 242, 241, 0)
+        Fill: =RGBA(0, 120, 212, 1)
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Bold
+        HoverBorderColor: =RGBA(0, 0, 0, 0)
+        HoverFill: =RGBA(16, 110, 190, 1)
+        OnSelect: |-
+            =Select(IconTaiLaiNDBH);
+            Back();
+        PressedBorderColor: =RGBA(0, 69, 120, 1)
+        PressedColor: =RGBA(255, 255, 255, 1)
+        PressedFill: =RGBA(16, 110, 190, 1)
+        Size: =11
+        Text: ="Hủy bỏ"
+        Width: =150
+        X: =961
+        Y: =424
+        ZIndex: =3
 
-        TextCanvas2_223 As Text:
-            Align: ='TextCanvas.Align'.Center
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Ngày sinh"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =120
-            X: =212
-            Y: =90
-            ZIndex: =15
+    Label1_25 As label:
+        Align: =Align.Justify
+        BorderColor: =RGBA(0, 0, 0, 0)
+        BorderStyle: =BorderStyle.None
+        BorderThickness: =2
+        Color: =RGBA(50, 49, 48, 1)
+        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+        DisabledColor: =RGBA(161, 159, 157, 1)
+        FocusedBorderThickness: =4
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Bold
+        Height: =30
+        Size: =11
+        Text: ="Danh sách NĐBH"
+        Width: =Parent.Width-Self.X
+        X: =130
+        ZIndex: =4
 
-        TextCanvas2_224 As Text:
-            Align: ='TextCanvas.Align'.Center
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Mã nhân viên"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =120
-            X: =861
-            Y: =90
-            ZIndex: =16
+    ThemMoiCT_18 As button:
+        BorderColor: =RGBA(0, 0, 0, 0)
+        BorderStyle: =BorderStyle.None
+        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+        DisabledColor: =RGBA(161, 159, 157, 1)
+        DisabledFill: =RGBA(242, 242, 241, 0)
+        Fill: =RGBA(0, 120, 212, 1)
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Bold
+        Height: =30
+        HoverBorderColor: =RGBA(0, 0, 0, 0)
+        HoverFill: =RGBA(16, 110, 190, 1)
+        OnSelect: |-
+            =If(
+                Or(
+                    maAddedNDBH <> "",
+                    maUpdatedNDBH <> ""
+                ),
+                Notify(
+                    "Có dòng dữ liệu đang nhập",
+                    NotificationType.Error,
+                    800
+                );,
+                UpdateContext(
+                    {
+                        idNDBH: If(
+                            CountIf(
+                                DL_HOP_DONG_SP_NDBH,
+                                ID
+                            ) = 0,
+                            1,
+                            Max(
+                                DL_HOP_DONG_SP_NDBH,
+                                ID
+                            ) + 1
+                        )
+                    }
+                );
+                If(
+                    !IsEmpty(tmpNDBH) && Max(
+                        tmpNDBH,
+                        cr282_id
+                    ) >= idNDBH,
+                    UpdateContext(
+                        {
+                            idNDBH: If(
+                                CountIf(
+                                    tmpNDBH,
+                                    cr282_id
+                                ) = 0,
+                                1,
+                                Max(
+                                    tmpNDBH,
+                                    cr282_id
+                                ) + 1
+                            )
+                        }
+                    )
+                );
+                Collect(
+                    tmpNDBH,
+                    {
+                        cr282_id: idNDBH,
+                        cr282_ma_hop_dong: varMaHD,
+                        cr282_ma_san_pham: varMaSP,
+                        cr282_ma_chuong_trinh: varMaCT,
+                        edited: 1
+                    }
+                );
+                UpdateContext({maAddedNDBH: Text(idNDBH)})
+            )
+        PressedBorderColor: =RGBA(0, 69, 120, 1)
+        PressedColor: =RGBA(255, 255, 255, 1)
+        PressedFill: =RGBA(16, 110, 190, 1)
+        Size: =11
+        Text: ="Thêm mới"
+        Width: =96
+        X: =130
+        Y: =30
+        ZIndex: =5
 
-        TextCanvas2_225 As Text:
-            Align: ='TextCanvas.Align'.Center
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Mối quan hệ"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =100
-            X: =981
-            Y: =90
-            ZIndex: =17
-
-        TextCanvas2_226 As Text:
-            Align: ='TextCanvas.Align'.Center
-            DisplayMode: =DisplayMode.Edit
-            FontColor: =
-            Height: =37
-            Size: =14
-            Text: ="Số giấy tờ"
-            Weight: ='TextCanvas.Weight'.Bold
-            Width: =90
-            X: =422
-            Y: =90
-            ZIndex: =18
+    IconTaiLaiNDBH As icon.Sync:
+        BorderColor: =RGBA(0, 0, 0, 0)
+        Color: =RGBA(83, 144, 164, 1)
+        DisabledBorderColor: =RGBA(245, 245, 245, 1)
+        DisabledColor: =RGBA(225, 223, 221, 1)
+        DisabledFill: =RGBA(0, 0, 0, 0)
+        FocusedBorderThickness: =4
+        Height: =36
+        HoverBorderColor: =RGBA(0, 0, 0, 0)
+        HoverColor: =RGBA(16, 110, 190, 1)
+        HoverFill: =RGBA(0, 0, 0, 0)
+        Icon: =Icon.Sync
+        OnSelect: |
+            =ClearCollect(
+                tmpNDBH,
+                ShowColumns(
+                    AddColumns(
+                        SortByColumns(
+                            Filter(
+                                DL_HOP_DONG_SP_NDBH,
+                                MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT
+                            ),
+                            "cr282_id",
+                            SortOrder.Descending
+                        ),
+                        "edited",
+                        0
+                    ),
+                    "cr282_id",
+                    "cr282_ma_hop_dong",
+                    "cr282_ma_san_pham",
+                    "cr282_mst",
+                    "cr282_ten_ndbh",
+                    "cr282_dia_chi",
+                    "cr282_sdt",
+                    "cr282_email",
+                    "cr282_ma_gioi__tinh",
+                    "cr282_ma_nhan_vien",
+                    "cr282_ma_tinh_tp",
+                    "cr282_moi_quan_he",
+                    "cr282_ngay_sinh",
+                    "cr282_nhom",
+                    "cr282_so_giay_to",
+                    "cr282_phi_ndbh","cr282_ma_chuong_trinh","edited"
+                )
+            );
+            UpdateContext(
+                {
+                    maAddedNDBH: "",
+                    maUpdatedNDBH: ""
+                }
+            );
+        PressedBorderColor: =RGBA(0, 0, 0, 0)
+        PressedColor: =RGBA(16, 110, 190, 1)
+        PressedFill: =RGBA(0, 0, 0, 0)
+        Tooltip: ="Tải lại"
+        Visible: =false
+        Width: =32
+        X: =284
+        Y: =24
+        ZIndex: =6
 
