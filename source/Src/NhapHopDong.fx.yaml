@@ -990,7 +990,67 @@
                             HoverBorderColor: =RGBA(255, 255, 255, 1)
                             HoverColor: =RGBA(39, 113, 194, 1)
                             HoverFill: =RGBA(255, 255, 255, 1)
-                            OnSelect: =
+                            OnSelect: |
+                                =Set(idColSP,ThisItem.ID);
+                                Set(
+                                    varMaSP,
+                                    cbxMaSPNHD.Selected.MA_SAN_PHAM
+                                );
+                                Set(
+                                    varMaHD,
+                                    tiMaHDNHD.Text
+                                );
+                                Set(
+                                    varMaCT,
+                                    cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                );
+                                Set(
+                                    varNhomTP,
+                                    "Nhóm chính"
+                                );
+                                ClearCollect(
+                                    tmpNDBH,
+                                    ShowColumns(
+                                        AddColumns(
+                                            SortByColumns(
+                                                Filter(
+                                                    DL_HOP_DONG_SP_NDBH,
+                                                    MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT
+                                                ),
+                                                "cr282_id",
+                                                SortOrder.Descending
+                                            ),
+                                            "edited",
+                                            0
+                                        ),
+                                        "cr282_id",
+                                        "cr282_ma_hop_dong",
+                                        "cr282_ma_san_pham",
+                                        "cr282_mst",
+                                        "cr282_ten_ndbh",
+                                        "cr282_dia_chi",
+                                        "cr282_sdt",
+                                        "cr282_email",
+                                        "cr282_ma_gioi__tinh",
+                                        "cr282_ma_nhan_vien",
+                                        "cr282_ma_tinh_tp",
+                                        "cr282_moi_quan_he",
+                                        "cr282_ngay_sinh",
+                                        "cr282_nhom",
+                                        "cr282_so_giay_to",
+                                        "cr282_phi_ndbh",
+                                        "cr282_ma_chuong_trinh",
+                                        "cr282_nhom_tinh_phi",
+                                        "edited"
+                                    )
+                                );
+                                UpdateContext(
+                                    {
+                                        maAddedNDBH: "",
+                                        maUpdatedNDBH: ""
+                                    }
+                                );
+                                Navigate(NhapNDBH);
                             Size: =11
                             Underline: =true
                             Width: =142

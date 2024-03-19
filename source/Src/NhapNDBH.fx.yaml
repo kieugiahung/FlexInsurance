@@ -944,8 +944,8 @@ NhapNDBH As screen:
                                     MOI_QUAN_HE: dd.cr282_moi_quan_he,
                                     NGAY_SINH: dd.cr282_ngay_sinh,
                                     NHOM: dd.cr282_nhom,
-                                    SO_GIAY_TO: dd.cr282_so_giay_to, 
-                                    PHI_NDBH:dd.cr282_phi_ndbh
+                                    SO_GIAY_TO: dd.cr282_so_giay_to,
+                                    PHI_NDBH: dd.cr282_phi_ndbh
                                 }
                             ),
                             UpdateIf(
@@ -961,12 +961,20 @@ NhapNDBH As screen:
                                     MOI_QUAN_HE: dd.cr282_moi_quan_he,
                                     NGAY_SINH: dd.cr282_ngay_sinh,
                                     NHOM: dd.cr282_nhom,
-                                    SO_GIAY_TO: dd.cr282_so_giay_to, 
-                                    PHI_NDBH:dd.cr282_phi_ndbh
+                                    SO_GIAY_TO: dd.cr282_so_giay_to,
+                                    PHI_NDBH: dd.cr282_phi_ndbh
                                 }
                             )
                         );
                     )
+                );
+                UpdateIf(
+                    tmpDSHDSPNHDCollect,
+                    ID = idColSP,
+                    {
+                        TONG_TIEN_PHI: Sum(tmpNDBH, cr282_phi_ndbh),
+                        SO_NGUOI_TGIA: CountRows(tmpNDBH)
+                    }
                 );
                 //Select(IconTaiLaiNDBH);
             Notify(
@@ -981,7 +989,7 @@ NhapNDBH As screen:
         PressedColor: =RGBA(255, 255, 255, 1)
         PressedFill: =RGBA(16, 110, 190, 1)
         Size: =11
-        Text: ="Lưu"
+        Text: ="Tính phí"
         Width: =150
         X: =1143
         Y: =422
@@ -1005,7 +1013,7 @@ NhapNDBH As screen:
         PressedColor: =RGBA(255, 255, 255, 1)
         PressedFill: =RGBA(16, 110, 190, 1)
         Size: =11
-        Text: ="Hủy bỏ"
+        Text: ="Quay lại"
         Width: =150
         X: =961
         Y: =424
@@ -1153,7 +1161,10 @@ NhapNDBH As screen:
                     "cr282_ngay_sinh",
                     "cr282_nhom",
                     "cr282_so_giay_to",
-                    "cr282_phi_ndbh","cr282_ma_chuong_trinh","edited"
+                    "cr282_phi_ndbh",
+                    "cr282_ma_chuong_trinh",
+                    "cr282_nhom_tinh_phi",
+                    "edited"
                 )
             );
             UpdateContext(
