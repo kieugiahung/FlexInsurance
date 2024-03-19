@@ -1158,16 +1158,16 @@ TraCuuCSADDT As screen:
                     ClearCollect(
                         dsPVDLTCCSDTCollect,
                         {
-                            ma_pvdl:ComGiaTriCS.Selected.key,
-                            ma_cha:LookUp(tmpDMPVDiaLyCSCollect,MA_PHAMVI=ComGiaTriCS.Selected.key,MA_CHA),
+                            ma_pvdl:ComGiaTriCS.Selected.value,
+                            ma_cha:LookUp(tmpDMPVDiaLyCSCollect,MA_PHAMVI=ComGiaTriCS.Selected.value,MA_CHA),
                             duyet:0
                         }
                     );
                     ClearCollect(
                         dsPVDLTCCSDTCollect1,
                         {
-                            ma_pvdl:ComGiaTriCS.Selected.key,
-                            ma_cha:LookUp(tmpDMPVDiaLyCSCollect,MA_PHAMVI=ComGiaTriCS.Selected.key,MA_CHA),
+                            ma_pvdl:ComGiaTriCS.Selected.value,
+                            ma_cha:LookUp(tmpDMPVDiaLyCSCollect,MA_PHAMVI=ComGiaTriCS.Selected.value,MA_CHA),
                             duyet:0
                         }
                     );
@@ -1426,7 +1426,7 @@ TraCuuCSADDT As screen:
                                     THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="1" && KIEU="1")) ||
                                     !IsBlank(LookUp(tmpDLCSDoiTuongCTCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
                                     THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="1" &&
-                                    KIEU="2" && StartsWith(ComGiaTriCS.Selected.key,MA_GIA_TRI))),
+                                    KIEU="2" && StartsWith(ComGiaTriCS.Selected.value,MA_GIA_TRI))),
                                     Collect(
                                         tmpChonCSDTCollect,
                                         {
@@ -1439,7 +1439,7 @@ TraCuuCSADDT As screen:
                                     THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" && KIEU="1")) ||
                                     !IsBlank(LookUp(tmpDLCSDoiTuongCTCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
                                     THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" &&
-                                    KIEU="2" && StartsWith(ComGiaTriCS.Selected.key,MA_GIA_TRI))),
+                                    KIEU="2" && StartsWith(ComGiaTriCS.Selected.value,MA_GIA_TRI))),
                                     RemoveIf(
                                         tmpChonCSDTCollect,
                                         cr282_ma_chinh_sach=dsCha.cr282_ma_chinh_sach
@@ -1453,7 +1453,7 @@ TraCuuCSADDT As screen:
                                     THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" && KIEU="1")) ||
                                     !IsBlank(LookUp(tmpDLCSDoiTuongCTCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
                                     THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" &&
-                                    KIEU="2" && StartsWith(ComGiaTriCS.Selected.key,MA_GIA_TRI))),
+                                    KIEU="2" && StartsWith(ComGiaTriCS.Selected.value,MA_GIA_TRI))),
                                     Collect(
                                         tmpChonCSDTCollect,
                                         {
@@ -1472,7 +1472,7 @@ TraCuuCSADDT As screen:
                                     THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="1" && KIEU="1")) ||
                                     !IsBlank(LookUp(tmpDLCSDoiTuongCTCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
                                     THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="1" &&
-                                    KIEU="2" && MA_TIEU_CHI=ComTieuChiCS.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCS.Selected.key)),
+                                    KIEU="2" && MA_TIEU_CHI=ComTieuChiCS.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCS.Selected.value)),
                                     Collect(
                                         tmpChonCSDTCollect,
                                         {
@@ -1485,7 +1485,7 @@ TraCuuCSADDT As screen:
                                     THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" && KIEU="1")) ||
                                     !IsBlank(LookUp(tmpDLCSDoiTuongCTCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
                                     THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" &&
-                                    KIEU="2" && MA_TIEU_CHI=ComTieuChiCS.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCS.Selected.key)),
+                                    KIEU="2" && MA_TIEU_CHI=ComTieuChiCS.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCS.Selected.value)),
                                     RemoveIf(
                                         tmpChonCSDTCollect,
                                         cr282_ma_chinh_sach=dsCha.cr282_ma_chinh_sach
@@ -1499,7 +1499,7 @@ TraCuuCSADDT As screen:
                                     THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" && KIEU="1")) ||
                                     !IsBlank(LookUp(tmpDLCSDoiTuongCTCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
                                     THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" &&
-                                    KIEU="2" && MA_TIEU_CHI=ComTieuChiCS.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCS.Selected.key)),
+                                    KIEU="2" && MA_TIEU_CHI=ComTieuChiCS.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCS.Selected.value)),
                                     Collect(
                                         tmpChonCSDTCollect,
                                         {
