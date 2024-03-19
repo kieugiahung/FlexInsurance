@@ -179,13 +179,13 @@
 
                 cbxDVTienNHD As combobox:
                     BorderColor: =RGBA(72, 163, 62, 1)
-                    DefaultSelectedItems: =If(IsBlank(First(objHD).MA_HOP_DONG),LookUp(DM_TIENTE,TIEN_TE="VND"),LookUp(DM_TIENTE,TIEN_TE=First(objHD).DONVI_TIEN))
+                    DefaultSelectedItems: =If(IsBlank(First(objHD).MA_HOP_DONG),LookUp(BH_DM_TIENTES,TIEN_TE="VND"),LookUp(BH_DM_TIENTES,TIEN_TE=First(objHD).DONVI_TIEN))
                     DisplayFields: =["cr282_tien_te"]
                     Height: =32
                     InputTextPlaceholder: ="Chọn đơn vị tiền"
-                    Items: =DM_TIENTE
-                    SearchFields: =["cr282_tien_te"]
-                    SearchItems: =Search(DM_TIENTE,cbxDVTienNHD.SearchText,"cr282_tien_te")
+                    Items: =BH_DM_TIENTES
+                    SearchFields: =["cr282_id"]
+                    SearchItems: =Search(BH_DM_TIENTES,cbxDVTienNHD.SearchText,"cr282_id")
                     SelectMultiple: =false
                     Size: =11
                     Width: =200
@@ -548,13 +548,13 @@
 
                 cbxNgheNHD As combobox:
                     BorderColor: =RGBA(72, 163, 62, 1)
-                    DefaultSelectedItems: =LookUp(DM_NGANHNGHE,MA_NHOM_NGANH=First(objHD).NGHE_NGHIEP)
+                    DefaultSelectedItems: =LookUp(BH_DM_NGANHNGHES,MA_NHOM_NGANH=First(objHD).NGHE_NGHIEP)
                     DisplayFields: =["cr282_ten_nganh"]
                     Height: =32
                     InputTextPlaceholder: ="Chọn nghề nghiệp"
-                    Items: =DM_NGANHNGHE
-                    SearchFields: =["cr282_ten_nganh"]
-                    SearchItems: =Search(DM_NGANHNGHE,cbxNgheNHD.SearchText,"cr282_ten_nganh")
+                    Items: =BH_DM_NGANHNGHES
+                    SearchFields: =["cr282_id"]
+                    SearchItems: =Search(BH_DM_NGANHNGHES,cbxNgheNHD.SearchText,"cr282_id")
                     SelectMultiple: =false
                     Size: =11
                     Width: =200
@@ -990,12 +990,7 @@
                             HoverBorderColor: =RGBA(255, 255, 255, 1)
                             HoverColor: =RGBA(39, 113, 194, 1)
                             HoverFill: =RGBA(255, 255, 255, 1)
-                            OnSelect: |-
-                                =Set(dsMaSPNLKFwd,Concat(tmpDSHDSPNHDCollect,MA_SAN_PHAM,"|"));
-                                Set(maHDNLKFwd,tiMaHDNHD.Text);
-                                Set(maKBNLKFwd,cbxMaKBNHD.Selected.MA_KENH_BAN);
-                                Set(maKHNLKFwd,cbxMaKHNHD.Selected.MA_KHACH_HANG);
-                                Navigate(NhapHopDongLK)
+                            OnSelect: =
                             Size: =11
                             Underline: =true
                             Width: =142
@@ -1452,7 +1447,7 @@
                             )
                         );
                         Notify("Lưu dữ liệu thành công",NotificationType.Success,2000);
-                        Navigate(TraCuuHopDong)
+                        Navigate(TestNhapHD)
                     )
                 Size: =11
                 Text: ="Lưu"
@@ -1464,7 +1459,7 @@
             Button3_15 As button:
                 FontWeight: =FontWeight.Bold
                 Height: =32
-                OnSelect: =Navigate(TraCuuHopDong)
+                OnSelect: =Navigate(TestNhapHD)
                 Size: =11
                 Text: ="Hủy"
                 Width: =85
