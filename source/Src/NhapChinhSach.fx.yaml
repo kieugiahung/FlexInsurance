@@ -5466,7 +5466,10 @@ NhapChinhSach As screen:
                                         ),
                                         Ten,
                                         " + "
-                                    ), " trong ", First(colAD).Phamvi
+                                    ), " trong ", First(Filter(
+                                            colAD,
+                                            Loai = "COMBO_SP"
+                                        )).Phamvi
                                 )
                             }
                         );
@@ -5601,7 +5604,10 @@ NhapChinhSach As screen:
                                         ),
                                         Ten,
                                         " + "
-                                    ), " trong ", First(colLT).Phamvi
+                                    ), " trong ", First(Filter(
+                                            colLT,
+                                            Loai = "COMBO_SP"
+                                        )).Phamvi
                                 )
                             }
                         );
@@ -6495,6 +6501,7 @@ NhapChinhSach As screen:
                     {MO_TA: varMoTa}
                 );
             );
+            
             
             If(
                 IsBlank(errorMsgCS),
