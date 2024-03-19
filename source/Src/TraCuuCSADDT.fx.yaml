@@ -85,6 +85,12 @@ TraCuuCSADDT As screen:
                 strLT:"- Loại trừ: "
             }
         );
+        ClearCollect(
+            tmpVarCSDT,
+            {
+                ma_chi_tieu:""
+            }
+        );
         ForAll(
             tmpdsMaTCCSDTCollect As dsMa,
             //lay thong tin san pham
@@ -98,24 +104,49 @@ TraCuuCSADDT As screen:
                     }
                 ),
                 !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2")),
-                UpdateIf(
-                    tmpstrDLTCCSDTCollect,
-                    true,
-                    {
-                        strAD:Concatenate(
-                            strAD,
-                            Char(10),
-                            Concat(
-                                Filter(
-                                    tmpDLCSDoiTuongCTCSCollect,
-                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2"
-                                ) As dsCT,
-                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                Char(10)
-                            )
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                            }
                         )
-                    }
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
                 )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
             );
             UpdateIf(
                 tmpTCCSDTCollect,
@@ -134,24 +165,49 @@ TraCuuCSADDT As screen:
                     }
                 ),
                 !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2")),
-                UpdateIf(
-                    tmpstrDLTCCSDTCollect,
-                    true,
-                    {
-                        strLT:Concatenate(
-                            strLT,
-                            Char(10),
-                            Concat(
-                                Filter(
-                                    tmpDLCSDoiTuongCTCSCollect,
-                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2"
-                                ) As dsCT,
-                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                Char(10)
-                            )
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                            }
                         )
-                    }
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
                 )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
             );
             UpdateIf(
                 tmpTCCSDTCollect,
@@ -180,24 +236,49 @@ TraCuuCSADDT As screen:
                     }
                 ),
                 !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2")),
-                UpdateIf(
-                    tmpstrDLTCCSDTCollect,
-                    true,
-                    {
-                        strAD:Concatenate(
-                            strAD,
-                            Char(10),
-                            Concat(
-                                Filter(
-                                    tmpDLCSDoiTuongCTCSCollect,
-                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2"
-                                ) As dsCT,
-                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                Char(10)
-                            )
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                            }
                         )
-                    }
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
                 )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
             );
             UpdateIf(
                 tmpTCCSDTCollect,
@@ -216,24 +297,49 @@ TraCuuCSADDT As screen:
                     }
                 ),
                 !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2")),
-                UpdateIf(
-                    tmpstrDLTCCSDTCollect,
-                    true,
-                    {
-                        strLT:Concatenate(
-                            strLT,
-                            Char(10),
-                            Concat(
-                                Filter(
-                                    tmpDLCSDoiTuongCTCSCollect,
-                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2"
-                                ) As dsCT,
-                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                Char(10)
-                            )
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                            }
                         )
-                    }
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
                 )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
             );
             UpdateIf(
                 tmpTCCSDTCollect,
@@ -262,24 +368,49 @@ TraCuuCSADDT As screen:
                     }
                 ),
                 !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2")),
-                UpdateIf(
-                    tmpstrDLTCCSDTCollect,
-                    true,
-                    {
-                        strAD:Concatenate(
-                            strAD,
-                            Char(10),
-                            Concat(
-                                Filter(
-                                    tmpDLCSDoiTuongCTCSCollect,
-                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2"
-                                ) As dsCT,
-                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                Char(10)
-                            )
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                            }
                         )
-                    }
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
                 )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
             );
             UpdateIf(
                 tmpTCCSDTCollect,
@@ -298,24 +429,49 @@ TraCuuCSADDT As screen:
                     }
                 ),
                 !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2")),
-                UpdateIf(
-                    tmpstrDLTCCSDTCollect,
-                    true,
-                    {
-                        strLT:Concatenate(
-                            strLT,
-                            Char(10),
-                            Concat(
-                                Filter(
-                                    tmpDLCSDoiTuongCTCSCollect,
-                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2"
-                                ) As dsCT,
-                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                Char(10)
-                            )
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                            }
                         )
-                    }
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
                 )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
             );
             UpdateIf(
                 tmpTCCSDTCollect,
@@ -344,24 +500,49 @@ TraCuuCSADDT As screen:
                     }
                 ),
                 !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2")),
-                UpdateIf(
-                    tmpstrDLTCCSDTCollect,
-                    true,
-                    {
-                        strAD:Concatenate(
-                            strAD,
-                            Char(10),
-                            Concat(
-                                Filter(
-                                    tmpDLCSDoiTuongCTCSCollect,
-                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2"
-                                ) As dsCT,
-                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                Char(10)
-                            )
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                            }
                         )
-                    }
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
                 )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
             );
             UpdateIf(
                 tmpTCCSDTCollect,
@@ -380,24 +561,49 @@ TraCuuCSADDT As screen:
                     }
                 ),
                 !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2")),
-                UpdateIf(
-                    tmpstrDLTCCSDTCollect,
-                    true,
-                    {
-                        strLT:Concatenate(
-                            strLT,
-                            Char(10),
-                            Concat(
-                                Filter(
-                                    tmpDLCSDoiTuongCTCSCollect,
-                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2"
-                                ) As dsCT,
-                                Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                Char(10)
-                            )
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                            }
                         )
-                    }
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
                 )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
             );
             UpdateIf(
                 tmpTCCSDTCollect,
@@ -1397,6 +1603,12 @@ TraCuuCSADDT As screen:
                         strLT:"- Loại trừ: "
                     }
                 );
+                ClearCollect(
+                    tmpVarCSDT,
+                    {
+                        ma_chi_tieu:""
+                    }
+                );
                 ForAll(
                     tmpdsMaTCCSDTCollect As dsMa,
                     //lay thong tin san pham
@@ -1410,24 +1622,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strAD:Concatenate(
-                                    strAD,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -1446,24 +1683,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strLT:Concatenate(
-                                    strLT,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -1492,24 +1754,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strAD:Concatenate(
-                                    strAD,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -1528,24 +1815,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strLT:Concatenate(
-                                    strLT,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -1574,24 +1886,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strAD:Concatenate(
-                                    strAD,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -1610,24 +1947,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strLT:Concatenate(
-                                    strLT,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -1656,24 +2018,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strAD:Concatenate(
-                                    strAD,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -1692,24 +2079,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strLT:Concatenate(
-                                    strLT,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -1756,6 +2168,11 @@ TraCuuCSADDT As screen:
             OnSelect: |-
                 =Reset(ComLoaiDKCS);Reset(ComLoaiCSCS);Reset(DropTSoCS);Reset(TextInputTuCS);Reset(TextInputDenCS);Reset(cbxTPhanCS);Reset(cbxApDungCS);Reset(ComTieuChiCS);Reset(ComGiaTriCS);
                 Clear(tmpdsGiaTriTCCSCollect1);
+                //load bảng phamvi lên collect
+                ClearCollect(
+                    tmpDMPVDiaLyCSCollect,
+                    DM_PHAMVI_DIALYS
+                );
                 //load bảng chinhsachdoituong lên collect
                 ClearCollect(
                     tmpDLCSDoiTuongCSCollect,
@@ -1834,6 +2251,12 @@ TraCuuCSADDT As screen:
                         strLT:"- Loại trừ: "
                     }
                 );
+                ClearCollect(
+                    tmpVarCSDT,
+                    {
+                        ma_chi_tieu:""
+                    }
+                );
                 ForAll(
                     tmpdsMaTCCSDTCollect As dsMa,
                     //lay thong tin san pham
@@ -1847,24 +2270,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strAD:Concatenate(
-                                    strAD,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -1883,24 +2331,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strLT:Concatenate(
-                                    strLT,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -1929,24 +2402,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strAD:Concatenate(
-                                    strAD,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -1965,24 +2463,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strLT:Concatenate(
-                                    strLT,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -2011,24 +2534,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strAD:Concatenate(
-                                    strAD,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -2047,24 +2595,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strLT:Concatenate(
-                                    strLT,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -2093,24 +2666,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strAD:Concatenate(
-                                    strAD,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -2129,24 +2727,49 @@ TraCuuCSADDT As screen:
                             }
                         ),
                         !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2")),
-                        UpdateIf(
-                            tmpstrDLTCCSDTCollect,
-                            true,
-                            {
-                                strLT:Concatenate(
-                                    strLT,
-                                    Char(10),
-                                    Concat(
-                                        Filter(
-                                            tmpDLCSDoiTuongCTCSCollect,
-                                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2"
-                                        ) As dsCT,
-                                        Concatenate("+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI),
-                                        Char(10)
-                                    )
+                        ForAll(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCTCSCollect,
+                                    MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2"
+                                ),
+                                "cr282_ma_tieu_chi",
+                                SortOrder.Ascending,
+                                "cr282_ma_gia_tri",
+                                SortOrder.Ascending
+                            ) As dsCT,
+                            If(
+                                First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                    }
+                                ),
+                                UpdateIf(
+                                    tmpstrDLTCCSDTCollect,
+                                    true,
+                                    {
+                                        strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                    }
                                 )
-                            }
+                            );
+                            UpdateIf(
+                                tmpVarCSDT,
+                                true,
+                                {
+                                    ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                }
+                            )
                         )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:""
+                        }
                     );
                     UpdateIf(
                         tmpTCCSDTCollect,
@@ -2873,8 +3496,8 @@ TraCuuCSADDT As screen:
             Size: =10
             Text: ="Loại điều kiện"
             Weight: ='TextCanvas.Weight'.Bold
-            Width: =49
-            X: =818
+            Width: =60
+            X: =812
             Y: =132
             ZIndex: =19
 
@@ -2912,8 +3535,8 @@ TraCuuCSADDT As screen:
             Size: =10
             Text: ="Tỷ lệ (%)"
             Weight: ='TextCanvas.Weight'.Bold
-            Width: =30
-            X: =1028
+            Width: =40
+            X: =1022
             Y: =132
             ZIndex: =22
 
