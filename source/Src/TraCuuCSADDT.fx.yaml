@@ -2518,6 +2518,19 @@ TraCuuCSADDT As screen:
                             cr282_ten_gia_tri: "Tổ chức"
                         }
                     );
+                    ForAll(
+                        DM_KHACH_HANG As kh,
+                        Patch(
+                            tmpDsGiatriCS,
+                            Defaults(tmpDsGiatriCS),
+                            {
+                                Ma: kh.MA_KHACH_HANG,
+                                Ten: kh.TEN_KHACH_HANG,
+                                Loai: "MA_KH",
+                                cr282_ten_gia_tri: kh.TEN_KHACH_HANG
+                            }
+                        )
+                    );
                     //END KHACH HANG
                     //PHAM VI
                     ClearCollect(
