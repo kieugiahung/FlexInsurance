@@ -632,12 +632,12 @@ TraCuuCSAD As screen:
                         AddColumns(
                             tmpdsGiaTriTCCSCollect,
                             "title",
-                            Concatenate("cr282_ma_chuongtrinh"," - ","cr282_ten_chuong_trinh"),
+                            Concatenate(cr282_ma_chuongtrinh," - ",cr282_ten_chuong_trinh),
                             "value",
-                            "cr282_ma_chuongtrinh"
+                            cr282_ma_chuongtrinh
                         )
                     ),
-                    ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_SP",
+                    ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_SP" || ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_COMBO_SP",
                     ClearCollect(
                         tmpdsGiaTriTCCSCollect,
                         ShowColumns(
@@ -655,9 +655,9 @@ TraCuuCSAD As screen:
                         AddColumns(
                             tmpdsGiaTriTCCSCollect,
                             "title",
-                            Concatenate("cr282_ma_san_pham"," - ","cr282_ten_san_pham"),
+                            Concatenate(cr282_ma_san_pham," - ",cr282_ten_san_pham),
                             "value",
-                            "cr282_ma_san_pham"
+                            cr282_ma_san_pham
                         )
                     ),
                     ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_KHU_VUC",
@@ -681,9 +681,9 @@ TraCuuCSAD As screen:
                         AddColumns(
                             tmpdsGiaTriTCCSCollect,
                             "title",
-                            Concatenate("cr282_ma_phamvi"," - ","cr282_ten_phamvi"),
+                            Concatenate(cr282_ma_phamvi," - ",cr282_ten_phamvi),
                             "value",
-                            "cr282_ma_phamvi"
+                            cr282_ma_phamvi
                         )
                     ),
                     ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_QG",
@@ -707,9 +707,9 @@ TraCuuCSAD As screen:
                         AddColumns(
                             tmpdsGiaTriTCCSCollect,
                             "title",
-                            Concatenate("cr282_ma_phamvi"," - ","cr282_ten_phamvi"),
+                            Concatenate(cr282_ma_phamvi," - ",cr282_ten_phamvi),
                             "value",
-                            "cr282_ma_phamvi"
+                            cr282_ma_phamvi
                         )
                     ),
                     ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_QUAN_HUYEN",
@@ -733,9 +733,9 @@ TraCuuCSAD As screen:
                         AddColumns(
                             tmpdsGiaTriTCCSCollect,
                             "title",
-                            Concatenate("cr282_ma_phamvi"," - ","cr282_ten_phamvi"),
+                            Concatenate(cr282_ma_phamvi," - ",cr282_ten_phamvi),
                             "value",
-                            "cr282_ma_phamvi"
+                            cr282_ma_phamvi
                         )
                     ),
                     ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_TINH_TP",
@@ -759,9 +759,9 @@ TraCuuCSAD As screen:
                         AddColumns(
                             tmpdsGiaTriTCCSCollect,
                             "title",
-                            Concatenate("cr282_ma_phamvi"," - ","cr282_ten_phamvi"),
+                            Concatenate(cr282_ma_phamvi," - ",cr282_ten_phamvi),
                             "value",
-                            "cr282_ma_phamvi"
+                            cr282_ma_phamvi
                         )
                     ),
                     ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_VUNG_MIEN",
@@ -785,9 +785,9 @@ TraCuuCSAD As screen:
                         AddColumns(
                             tmpdsGiaTriTCCSCollect,
                             "title",
-                            Concatenate("cr282_ma_phamvi"," - ","cr282_ten_phamvi"),
+                            Concatenate(cr282_ma_phamvi," - ",cr282_ten_phamvi),
                             "value",
-                            "cr282_ma_phamvi"
+                            cr282_ma_phamvi
                         )
                     ),
                     ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_KH_LOAI",
@@ -798,8 +798,8 @@ TraCuuCSAD As screen:
                             value:"0"
                         },
                         {
-                            key:"1",
-                            value:"Tổ chức"
+                            title:"1 - Tổ chức",
+                            value:"1"
                         }
                     ),
                     ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_KH_NHOM",
@@ -817,12 +817,12 @@ TraCuuCSAD As screen:
                     );
                     ClearCollect(
                         tmpdsGiaTriTCCSCollect1,
-                        RenameColumns(
+                        AddColumns(
                             tmpdsGiaTriTCCSCollect,
-                            "cr282_ma_nhom_kh",
-                            "key",
-                            "cr282_ten_nhom_kh",
-                            "value"
+                            "title",
+                            Concatenate(cr282_ma_nhom_kh," - ",cr282_ten_nhom_kh),
+                            "value",
+                            cr282_ma_nhom_kh
                         )
                     ),
                     ComTieuChiCSAD.Selected.MA_CHI_TIEU="LHNV",
@@ -840,12 +840,12 @@ TraCuuCSAD As screen:
                     );
                     ClearCollect(
                         tmpdsGiaTriTCCSCollect1,
-                        RenameColumns(
+                        AddColumns(
                             tmpdsGiaTriTCCSCollect,
-                            "cr282_ma_lhnv",
-                            "key",
-                            "cr282_ten_lhnv",
-                            "value"
+                            "title",
+                            Concatenate(cr282_ma_lhnv," - ",cr282_ten_lhnv),
+                            "value",
+                            cr282_ma_lhnv
                         )
                     ),
                     ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_DON_VI",
@@ -863,12 +863,12 @@ TraCuuCSAD As screen:
                     );
                     ClearCollect(
                         tmpdsGiaTriTCCSCollect1,
-                        RenameColumns(
+                        AddColumns(
                             tmpdsGiaTriTCCSCollect,
-                            "cr282_ma_don_vi",
-                            "key",
-                            "cr282_ten_don_vi",
-                            "value"
+                            "title",
+                            Concatenate(cr282_ma_don_vi," - ",cr282_ten_don_vi),
+                            "value",
+                            cr282_ma_don_vi
                         )
                     ),
                     ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_KB_DM",
@@ -886,12 +886,12 @@ TraCuuCSAD As screen:
                     );
                     ClearCollect(
                         tmpdsGiaTriTCCSCollect1,
-                        RenameColumns(
+                        AddColumns(
                             tmpdsGiaTriTCCSCollect,
-                            "cr282_ma_kenh_ban",
-                            "key",
-                            "cr282_ten_kenh_ban",
-                            "value"
+                            "title",
+                            Concatenate(cr282_ma_kenh_ban," - ",cr282_ten_kenh_ban),
+                            "value",
+                            cr282_ma_kenh_ban
                         )
                     ),
                     ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_KB_LOAI",
@@ -909,24 +909,24 @@ TraCuuCSAD As screen:
                     );
                     ClearCollect(
                         tmpdsGiaTriTCCSCollect1,
-                        RenameColumns(
+                        AddColumns(
                             tmpdsGiaTriTCCSCollect,
-                            "cr282_ma_loai_kb",
-                            "key",
-                            "cr282_ten_loai_kb",
-                            "value"
+                            "title",
+                            Concatenate(cr282_ma_loai_kb," - ",cr282_ten_loai_kb),
+                            "value",
+                            cr282_ma_loai_kb
                         )
                     ),
                     ComTieuChiCSAD.Selected.MA_CHI_TIEU="MA_KB_NHOM",
                     ClearCollect(
                         tmpdsGiaTriTCCSCollect1,
                         {
-                            key:"0",
-                            value:"Cá nhân"
+                            title:"0 - Cá nhân",
+                            value:"0"
                         },
                         {
-                            key:"1",
-                            value:"Tổ chức"
+                            title:"1 - Tổ chức",
+                            value:"1"
                         }
                     ),
                     Clear(tmpdsGiaTriTCCSCollect1)
@@ -1013,16 +1013,16 @@ TraCuuCSAD As screen:
                     ClearCollect(
                         dsPVDLTCCSCollect,
                         {
-                            ma_pvdl:ComGiaTriCSAD.Selected.key,
-                            ma_cha:LookUp(tmpDMPVDLCSADCollect,MA_PHAMVI=ComGiaTriCSAD.Selected.key,MA_CHA),
+                            ma_pvdl:ComGiaTriCSAD.Selected.value,
+                            ma_cha:LookUp(tmpDMPVDLCSADCollect,MA_PHAMVI=ComGiaTriCSAD.Selected.value,MA_CHA),
                             duyet:0
                         }
                     );
                     ClearCollect(
                         dsPVDLTCCSCollect1,
                         {
-                            ma_pvdl:ComGiaTriCSAD.Selected.key,
-                            ma_cha:LookUp(tmpDMPVDLCSADCollect,MA_PHAMVI=ComGiaTriCSAD.Selected.key,MA_CHA),
+                            ma_pvdl:ComGiaTriCSAD.Selected.value,
+                            ma_cha:LookUp(tmpDMPVDLCSADCollect,MA_PHAMVI=ComGiaTriCSAD.Selected.value,MA_CHA),
                             duyet:0
                         }
                     );
@@ -1282,7 +1282,7 @@ TraCuuCSAD As screen:
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="1" && KIEU="1")) ||
                                     !IsBlank(LookUp(tmpDLDKADLoaiCTCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="1" &&
-                                    KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.key,MA_GIA_TRI))),
+                                    KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.value,MA_GIA_TRI))),
                                     Collect(
                                         tmpChonCSADCollect,
                                         {
@@ -1295,7 +1295,7 @@ TraCuuCSAD As screen:
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
                                     !IsBlank(LookUp(tmpDLDKADLoaiCTCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" &&
-                                    KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.key,MA_GIA_TRI))),
+                                    KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.value,MA_GIA_TRI))),
                                     RemoveIf(
                                         tmpChonCSADCollect,
                                         cr282_ma_dieu_kien=dsCha.cr282_ma_dieu_kien
@@ -1309,7 +1309,7 @@ TraCuuCSAD As screen:
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
                                     !IsBlank(LookUp(tmpDLDKADLoaiCTCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" &&
-                                    KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.key,MA_GIA_TRI))),
+                                    KIEU="2" && StartsWith(ComGiaTriCSAD.Selected.value,MA_GIA_TRI))),
                                     Collect(
                                         tmpChonCSADCollect,
                                         {
@@ -1328,7 +1328,7 @@ TraCuuCSAD As screen:
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="1" && KIEU="1")) ||
                                     !IsBlank(LookUp(tmpDLDKADLoaiCTCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="1" &&
-                                    KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
+                                    KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.value)),
                                     Collect(
                                         tmpChonCSADCollect,
                                         {
@@ -1341,7 +1341,7 @@ TraCuuCSAD As screen:
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
                                     !IsBlank(LookUp(tmpDLDKADLoaiCTCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" &&
-                                    KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
+                                    KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.value)),
                                     RemoveIf(
                                         tmpChonCSADCollect,
                                         cr282_ma_dieu_kien=dsCha.cr282_ma_dieu_kien
@@ -1355,7 +1355,7 @@ TraCuuCSAD As screen:
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" && KIEU="1")) ||
                                     !IsBlank(LookUp(tmpDLDKADLoaiCTCSADCollect,MA_DIEU_KIEN=dsCha.cr282_ma_dieu_kien && 
                                     THANH_PHAN=cbxTPhanCSAD.Selected.value && AP_DUNG="2" &&
-                                    KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.key)),
+                                    KIEU="2" && MA_TIEU_CHI=ComTieuChiCSAD.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCSAD.Selected.value)),
                                     Collect(
                                         tmpChonCSADCollect,
                                         {
@@ -1980,16 +1980,15 @@ TraCuuCSAD As screen:
             ZIndex: =8
 
         ComGiaTriCSAD As combobox:
-            DisplayFields: =["value","key"]
+            DisplayFields: =["title","key"]
             Height: =28
             InputTextPlaceholder: ="Chọn tiêu chí"
             IsSearchable: =false
-            Items: =SortByColumns(tmpdsGiaTriTCCSCollect1,"key",SortOrder.Ascending)
-            SearchFields: =["value"]
-            SearchItems: =[]
+            Items: =SortByColumns(tmpdsGiaTriTCCSCollect1,"value",SortOrder.Ascending)
+            SearchFields: =["cr282_ma_chuongtrinh"]
+            SearchItems: =Search(SortByColumns(tmpdsGiaTriTCCSCollect1,"value",SortOrder.Ascending),ComGiaTriCSAD.SearchText,"cr282_ma_chuongtrinh")
             SelectMultiple: =false
             Size: =10
-            Template: =ListItemTemplate.Double
             Width: =200
             X: =862
             Y: =43
