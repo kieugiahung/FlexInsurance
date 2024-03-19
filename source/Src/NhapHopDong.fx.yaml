@@ -718,7 +718,7 @@
                         Size: =11
                         Text: ="Mã sản phẩm (*)"
                         Width: =130
-                        X: =40
+                        X: =70
                         Y: =40
                         ZIndex: =2
 
@@ -727,7 +727,7 @@
                         Size: =11
                         Text: ="Tên chương trình"
                         Width: =140
-                        X: =953
+                        X: =990
                         Y: =40
                         ZIndex: =3
 
@@ -736,7 +736,7 @@
                         Size: =11
                         Text: ="Mã chương trình (*)"
                         Width: =160
-                        X: =660
+                        X: =690
                         Y: =40
                         ZIndex: =4
 
@@ -745,18 +745,9 @@
                         Size: =11
                         Text: ="Tên sản phẩm"
                         Width: =140
-                        X: =350
+                        X: =380
                         Y: =40
                         ZIndex: =5
-
-                    Label3_63 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Phí/người"
-                        Width: =140
-                        X: =350
-                        Y: =110
-                        ZIndex: =6
 
                     tiSoNTGSPNHD As text:
                         Align: =Align.Right
@@ -767,7 +758,7 @@
                         Height: =32
                         Size: =11
                         Width: =200
-                        X: =660
+                        X: =380
                         Y: =139
                         ZIndex: =7
 
@@ -780,7 +771,7 @@
                         Height: =32
                         Size: =11
                         Width: =200
-                        X: =953
+                        X: =690
                         Y: =139
                         ZIndex: =8
 
@@ -789,16 +780,16 @@
                         Size: =11
                         Text: ="Số người tham gia"
                         Width: =140
-                        X: =660
+                        X: =380
                         Y: =110
                         ZIndex: =9
 
                     Label3_65 As label:
                         Height: =25
                         Size: =11
-                        Text: ="Tổng phí"
+                        Text: ="Tổng phí/Nhóm"
                         Width: =140
-                        X: =953
+                        X: =690
                         Y: =110
                         ZIndex: =10
 
@@ -809,7 +800,7 @@
                         Height: =32
                         Size: =11
                         Width: =200
-                        X: =350
+                        X: =380
                         Y: =68
                         ZIndex: =11
 
@@ -820,21 +811,9 @@
                         Height: =32
                         Size: =11
                         Width: =200
-                        X: =953
+                        X: =990
                         Y: =68
                         ZIndex: =12
-
-                    tiPhiNGNHD As text:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =Value(ThisItem.PHI_TREN_NG)
-                        DisplayMode: =DisplayMode.Disabled
-                        Format: =TextFormat.Number
-                        Height: =32
-                        Size: =11
-                        Width: =200
-                        X: =350
-                        Y: =139
-                        ZIndex: =13
 
                     cbxMaCTNHD As combobox:
                         BorderColor: =RGBA(72, 163, 62, 1)
@@ -854,7 +833,7 @@
                         Size: =11
                         Template: =ListItemTemplate.Double
                         Width: =200
-                        X: =660
+                        X: =690
                         Y: =68
                         ZIndex: =14
 
@@ -873,7 +852,7 @@
                         Size: =11
                         Template: =ListItemTemplate.Double
                         Width: =200
-                        X: =40
+                        X: =70
                         Y: =68
                         ZIndex: =15
 
@@ -908,7 +887,6 @@
                                     MA_CHUONG_TRINH:cbxMaCTNHD.Selected.MA_CHUONG_TRINH,
                                     TEN_CHUONG_TRINH:tiTenCTNHD.Text,
                                     PTHUC_THANH_TOAN:cbxPTTTNHD.Selected.value,
-                                    PHI_TREN_NG:Value(tiPhiNGNHD.Text),
                                     SONGUOI_THAMGIA:Value(tiSoNTGSPNHD.Text),
                                     TONG_TIEN_PHI:Value(tiTongPhiNHD.Text),
                                     edited:0
@@ -1052,8 +1030,8 @@
                         Size: =11
                         Underline: =true
                         Width: =142
-                        X: =718
-                        Y: =192
+                        X: =980
+                        Y: =145
                         ZIndex: =20
 
                     Label3_66 As label:
@@ -1061,7 +1039,7 @@
                         Size: =11
                         Text: ="LHNV"
                         Width: =140
-                        X: =40
+                        X: =70
                         Y: =110
                         ZIndex: =21
 
@@ -1072,7 +1050,7 @@
                         Height: =32
                         Size: =11
                         Width: =200
-                        X: =40
+                        X: =70
                         Y: =139
                         ZIndex: =22
 
@@ -2142,7 +2120,6 @@
                                 TEN_CHUONG_TRINH:tiTenCTNHD.Text,
                                 TEN_SAN_PHAM:tiTenSPNHD.Text,
                                 DON_VI_TINH:cbxDVTienNHD.Selected.TIEN_TE,
-                                PHI_TREN_NG:Value(tiPhiNGNHD.Text),
                                 SONGUOI_THAMGIA:Value(tiSoNTGSPNHD.Text),
                                 TONG_TIEN_PHI:Value(tiTongPhiNHD.Text),
                                 MA_KENH_BAN:cbxMaKBNHD.Selected.MA_KENH_BAN,
@@ -2189,7 +2166,6 @@
                                 DL_HOP_DONG_SPS,
                                 ID=dsSP.ID,
                                 {
-                                    PHI_TREN_NG:Value(tiPhiNGNHD.Text),
                                     SONGUOI_THAMGIA:Value(tiSoNTGSPNHD.Text),
                                     TONG_TIEN_PHI:Value(tiTongPhiNHD.Text),
                                     MA_KENH_BAN:cbxMaKBNHD.Selected.MA_KENH_BAN,
@@ -2208,7 +2184,6 @@
                                     TEN_CHUONG_TRINH:tiTenCTNHD.Text,
                                     TEN_SAN_PHAM:tiTenSPNHD.Text,
                                     DON_VI_TINH:cbxDVTienNHD.Selected.TIEN_TE,
-                                    PHI_TREN_NG:Value(tiPhiNGNHD.Text),
                                     SONGUOI_THAMGIA:Value(tiSoNTGSPNHD.Text),
                                     TONG_TIEN_PHI:Value(tiTongPhiNHD.Text),
                                     MA_KENH_BAN:cbxMaKBNHD.Selected.MA_KENH_BAN,

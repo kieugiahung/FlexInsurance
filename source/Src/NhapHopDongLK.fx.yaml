@@ -1,6 +1,17 @@
 NhapHopDongLK As screen:
     OnVisible: |-
         =ClearCollect(
+            dmSanPhamHDLKCollect,
+            AddColumns(
+                Filter(
+                    DL_SAN_PHAM,
+                    !IsBlank(Find(MA_SAN_PHAM,dsMaSPNLKFwd))
+                ),
+                "title",
+                Concatenate(MA_SAN_PHAM," - ",TEN_SAN_PHAM)
+            )
+        );
+        ClearCollect(
             tmpDSHDLKNLKCollect,
             ShowColumns(
                 AddColumns(
@@ -52,7 +63,7 @@ NhapHopDongLK As screen:
             Size: =11
             Text: ="Mã sản phẩm"
             Width: =130
-            X: =96
+            X: =72
             Y: =32
             ZIndex: =3
 
@@ -61,7 +72,7 @@ NhapHopDongLK As screen:
             Size: =11
             Text: ="Mã kênh bán"
             Width: =130
-            X: =337
+            X: =313
             Y: =32
             ZIndex: =5
 
@@ -69,7 +80,7 @@ NhapHopDongLK As screen:
             Height: =25
             Size: =11
             Text: ="Mã khách hàng"
-            X: =579
+            X: =555
             Y: =32
             ZIndex: =6
 
@@ -78,7 +89,7 @@ NhapHopDongLK As screen:
             Size: =11
             Text: ="Ngày HĐ"
             Width: =120
-            X: =816
+            X: =792
             Y: =32
             ZIndex: =7
 
@@ -447,11 +458,11 @@ NhapHopDongLK As screen:
             ZIndex: =23
 
         cbxMaSPNLK As combobox:
-            DisplayFields: =["cr282_ten_san_pham","cr282_ma_san_pham"]
+            DisplayFields: =["title","cr282_ma_san_pham"]
             Height: =32
             InputTextPlaceholder: ="Chọn tiêu chí"
             IsSearchable: =false
-            Items: =Filter(DL_SAN_PHAM,!IsBlank(Find(MA_SAN_PHAM,dsMaSPNLKFwd)))
+            Items: =SortByColumns(dmSanPhamHDLKCollect,"cr282_ma_san_pham",SortOrder.Ascending)
             OnChange: |-
                 =ClearCollect(
                     tmpDSHDLKNLKCollect,
@@ -492,13 +503,12 @@ NhapHopDongLK As screen:
                 UpdateContext({
                     ngayHD:Blank()
                 })
-            SearchFields: =["cr282_ten_san_pham"]
-            SearchItems: =[]
+            SearchFields: =["title"]
+            SearchItems: =Search(SortByColumns(dmSanPhamHDLKCollect,"cr282_ma_san_pham",SortOrder.Ascending),cbxMaSPNLK.SearchText,"title")
             SelectMultiple: =false
             Size: =11
-            Template: =ListItemTemplate.Double
-            Width: =200
-            X: =96
+            Width: =210
+            X: =72
             Y: =59
             ZIndex: =25
 
@@ -557,8 +567,8 @@ NhapHopDongLK As screen:
                     Reset(dpNgayHDNLK)
                 )
             Size: =11
-            Width: =200
-            X: =821
+            Width: =210
+            X: =797
             Y: =59
             ZIndex: =27
 
@@ -567,8 +577,8 @@ NhapHopDongLK As screen:
             DisplayMode: =DisplayMode.Disabled
             Height: =32
             Size: =11
-            Width: =200
-            X: =339
+            Width: =210
+            X: =315
             Y: =59
             ZIndex: =28
 
@@ -577,8 +587,8 @@ NhapHopDongLK As screen:
             DisplayMode: =DisplayMode.Disabled
             Height: =32
             Size: =11
-            Width: =200
-            X: =583
+            Width: =210
+            X: =559
             Y: =59
             ZIndex: =29
 
