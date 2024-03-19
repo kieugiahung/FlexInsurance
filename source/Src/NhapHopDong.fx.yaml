@@ -1359,7 +1359,7 @@
                     HoverBorderColor: =RGBA(255, 255, 255, 1)
                     HoverColor: =RGBA(39, 113, 194, 1)
                     HoverFill: =RGBA(255, 255, 255, 1)
-                    OnSelect: |-
+                    OnSelect: |
                         =Set(
                             dsMaSPNLKFwd,
                             Concat(
@@ -1546,10 +1546,11 @@
                                     {ID: 6}
                                 );
                             );
+                            
                         //1.3. kiểm tra nhóm KB
                         // Nếu kênh bán áp dụng cho tất cả và có loại trừ
                         // Tìm giá trị loại trừ  cá nhân/tổ chức, nếu có dữ liệu thì false
-                            If(
+                        If(
                                 IsBlank(
                                     LookUp(
                                         DL_DIEUKIEN_APDUNG_LOAI_CT,
@@ -1607,12 +1608,12 @@
                                     {ID: 9}
                                 );
                             );
-                          
+                            
                         //2. Kiểm tra khách hàng     
                         //2.1. kiểm tra nhóm Kh
                         // Nếu kênh bán áp dụng cho tất cả và có loại trừ
                         // Tìm giá trị loại trừ  cá nhân/tổ chức, nếu có dữ liệu thì false
-                            If(
+                        If(
                                 IsBlank(
                                     LookUp(
                                         DL_DIEUKIEN_APDUNG_LOAI_CT,
@@ -1670,7 +1671,7 @@
                                     {ID: 12}
                                 );
                             );
-                        
+                            
                         //3. Kiểm tra phạm vi
                         //3.1 Kiểm tra tỉnh/thành phố
                         // Nếu áp dụng cho tất cả và có loại trừ
@@ -1926,6 +1927,65 @@
                                     Collect(
                                         tmpError,
                                         {ID: 24}
+                                    );
+                                );
+                         // 4.1.3 Kiểm tra thông tin LHNV
+                        // Nếu LHNV áp dụng cho tất cả và có loại trừ
+                        // Tìm giá trị loại trừ LHNV nếu có dữ liệu thì false
+                        If(
+                                    IsBlank(
+                                        LookUp(
+                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV"
+                                        )
+                                    ) And !IsBlank(
+                                        LookUp(
+                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                        )
+                                    ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
+                                    Collect(
+                                        tmpError,
+                                        {ID: 25}
+                                    );
+                                );
+                                    // Nếu sản phẩm áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã sản phẩm nếu không có thì false
+                        If(
+                                    !IsBlank(
+                                        LookUp(
+                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV"
+                                        )
+                                    ) And IsBlank(
+                                        LookUp(
+                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && KIEU = "2" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                        )
+                                    ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
+                                    Collect(
+                                        tmpError,
+                                        {ID: 26}
+                                    );
+                                );
+                                    // Nếu chương trình áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã chương trình nếu có dữ liệu
+                        // Tìm trong danh sách loại trừ theo mã chương trình nếu có dữ liệu thì -> false, nếu không có thì  -> pass
+                        If(
+                                    !IsBlank(
+                                        LookUp(
+                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                        )
+                                    ) And !IsBlank(
+                                        LookUp(
+                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                        )
+                                    ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
+                                    Collect(
+                                        tmpError,
+                                        {ID: 27}
                                     );
                                 );
                             );
