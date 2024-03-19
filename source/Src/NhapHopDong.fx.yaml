@@ -2,6 +2,7 @@
     OnVisible: |
         =Reset(dpNgayHDNHD);Reset(dpHLTuNHD);Reset(dpHLDenNHD);Reset(cbxDVQLNHD);Reset(cbxDVTienNHD);Reset(cbxLoaiKBNHD);Reset(cbxMaKBNHD);Reset(tiTenKBNHD);Reset(cbxDVKBNHD);
         Reset(cbxMaKHNHD);Reset(tiTenKHNHD);Reset(tiDChiNHD);Reset(dpNSinhNHD);Reset(cbxGTinhNHD);Reset(tiSDTNHD);Reset(tiEmailNHD);Reset(cbxLoaiKHNHD);Reset(cbxNgheNHD);
+        Reset(cbxTinhNHD);Reset(LinkHDLK);
         Reset(tiSoNTGNHD);
         If(
             IsBlank(LookUp(DL_HOP_DONGS,MA_HOP_DONG=maHopDongFwd)),
@@ -13,14 +14,33 @@
                 objHD,
                 LookUp(DL_HOP_DONGS,MA_HOP_DONG=maHopDongFwd)
             )
-        )
+        );
+        ClearCollect(
+            tmpDSHDSPNHDCollect,
+            AddColumns(
+                Filter(
+                    DL_HOP_DONG_SPS,
+                    MA_HOP_DONG=maHopDongFwd
+                ),
+                "added",
+                0,
+                "edited",
+                0
+            )
+        );
+        UpdateContext({
+            maHDSP:Max(DL_HOP_DONG_SPS,ID),
+            maAddedHDSPNHD:"",
+            maUpdatedHDSPNHD:"",
+            nhomKB:""
+        })
 
     Canvas2 As fluidGrid.fluidGridWithBlankCard:
         BorderThickness: =0
         Height: =768
         Width: =1306
         X: =60
-        Y: =RectQuickActionBar1.Y + RectQuickActionBar1.Height
+        Y: =
         ZIndex: =3
 
         DataCard2 As dataCard:
@@ -29,668 +49,1426 @@
             BorderThickness: =0
             DisplayMode: =DisplayMode.Edit
             Fill: =RGBA(0, 0, 0, 0)
-            Height: =768
+            Height: =1245
             Width: =1306
             X: =0
             Y: =0
             ZIndex: =1
 
-            Container2_2 As groupContainer.manualLayoutContainer:
-                Height: =768
-                Width: =1306
+            Container3_2 As groupContainer.manualLayoutContainer:
+                Height: =179
+                Width: =1267
+                X: =16
+                Y: =4
                 ZIndex: =1
 
-                Button2_3 As button:
-                    FontWeight: =FontWeight.Bold
+                Label3_32 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Mã"
+                    Width: =47
+                    X: =70
+                    Y: =24
+                    ZIndex: =1
+
+                tiMaHDNHD As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =If(IsBlank(First(objHD).MA_HOP_DONG),"Hệ thống tự sinh",First(objHD).MA_HOP_DONG) 
+                    DisplayMode: =DisplayMode.Disabled
                     Height: =32
-                    OnSelect: |-
-                        =If(
-                            IsBlank(dpNgayHDNHD.SelectedDate),
-                            Notify("Bắt buộc nhập ngày hợp đồng",NotificationType.Error,2000),
-                            IsBlank(dpHLTuNHD.SelectedDate),
-                            Notify("Bắt buộc nhập hiệu lực từ của hợp đồng",NotificationType.Error,2000),
-                        	IsBlank(dpHLDenNHD.SelectedDate),
-                        	Notify("Bắt buộc nhập hiệu lực đến của hợp đồng",NotificationType.Error,2000),
-                        	IsBlank(cbxDVQLNHD.Selected.MA_DON_VI),
-                        	Notify("Bắt buộc nhập đơn vị quản lý hợp đồng",NotificationType.Error,2000),
-                        	IsBlank(cbxDVTienNHD.Selected.TIEN_TE),
-                        	Notify("Bắt buộc nhập đơn vị tiền",NotificationType.Error,2000),
-                        	IsBlank(cbxLoaiKBNHD.Selected.MA_LOAI_KB),
-                        	Notify("Bắt buộc nhập loại kênh bán",NotificationType.Error,2000),
-                        	IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
-                        	Notify("Bắt buộc nhập mã kênh bán",NotificationType.Error,2000),
-                        	IsBlank(tiTenKBNHD.Text),
-                            Notify("Bắt buộc nhập tên kênh bán",NotificationType.Error,2000),
-                        	IsBlank(cbxMaKHNHD.Selected.MA_KHACH_HANG),
-                        	Notify("Bắt buộc nhập mã khách hàng",NotificationType.Error,2000),
-                        	IsBlank(tiTenKHNHD.Text),
-                        	Notify("Bắt buộc nhập tên khách hàng",NotificationType.Error,2000),
-                            dpNgayHDNHD.SelectedDate>dpHLTuNHD.SelectedDate,
-                        	Notify("Ngày hiệu lực từ phải sau hoặc bằng ngày hợp đồng",NotificationType.Error,2000),
-                            dpHLDenNHD.SelectedDate<=dpHLTuNHD.SelectedDate,
-                        	Notify("Ngày hiệu lực đến phải sau ngày hiệu lực từ",NotificationType.Error,2000),
-                            Refresh(DL_HOP_DONGS);
-                            If(
-                                CountIf(DL_HOP_DONGS,true)=0,
-                                UpdateContext({
-                                    genMaHD:"HD0001"
-                                }),
-                                UpdateContext({
-                                    sampleID:"000",
-                                    maxIdHD:Last(SortByColumns(DL_HOP_DONGS,"cr282_ma_hop_dong",SortOrder.Ascending)).MA_HOP_DONG
-                                });
-                                UpdateContext({
-                                    maIdHD:Text((Right(maxIdHD,4))+1)
-                                });
-                                UpdateContext({
-                                    genMaHD:Concatenate("HD",If(Len(maIdHD)>3,"",Left(sampleID,4-Len(maIdHD))),maIdHD)
-                                });
-                            );
-                            If(
-                                IsBlank(LookUp(DL_HOP_DONGS,MA_HOP_DONG=tiMaHDNHD.Text)),
-                                Patch(
-                                    DL_HOP_DONGS,
-                                    {
-                                        ID:Text(Max(DL_HOP_DONGS,ID)+1),
-                                        MA_HOP_DONG:genMaHD,
-                                        DIA_CHI:tiDChiNHD.Text,
-                                        DONVI_KENHBAN:cbxDVKBNHD.Selected.MA_DON_VI,
-                                        DONVI_QUANLY_HD:cbxDVQLNHD.Selected.MA_DON_VI,
-                                        DONVI_TIEN:cbxDVTienNHD.Selected.TIEN_TE,
-                                        EMAIL:tiEmailNHD.Text,
-                                        GIOI_TINH:cbxGTinhNHD.Selected.MA_GIOI_TINH,
-                                        HIEU_LUC_DEN:dpHLDenNHD.SelectedDate,
-                                        HIEU_LUC_TU:dpHLTuNHD.SelectedDate,
-                                        LOAI_KENH_BAN:cbxLoaiKBNHD.Selected.MA_LOAI_KB,
-                                        LOAI_KHACH_HANG:cbxLoaiKHNHD.Selected.MA_LOAI_KH,
-                                        MA_KENH_BAN:cbxMaKBNHD.Selected.MA_KENH_BAN,
-                                        MA_KHACH_HANG:cbxMaKHNHD.Selected.MA_KHACH_HANG,
-                                        NGAY_HOP_DONG:dpNgayHDNHD.SelectedDate,
-                                        NGAY_SINH:dpNSinhNHD.SelectedDate,
-                                        NGHE_NGHIEP:cbxNgheNHD.Selected.MA_NGHE_NGHIEP,
-                                        SO_DIEN_THOAI:tiSDTNHD.Text,
-                                        SO_NGUOI_TGIA:tiSoNTGNHD.Text,
-                                        TEN_KENH_BAN:tiTenKBNHD.Text,
-                                        TEN_KHACH_HANG:tiTenKHNHD.Text,
-                                        TRANG_THAI:"Hoạt động"
-                                    }
-                                ),
-                                UpdateIf(
-                                    DL_HOP_DONGS,
-                                    MA_HOP_DONG=tiMaHDNHD.Text,
-                                    {
-                                        DIA_CHI:tiDChiNHD.Text,
-                                        DONVI_KENHBAN:cbxDVKBNHD.Selected.MA_DON_VI,
-                                        DONVI_QUANLY_HD:cbxDVQLNHD.Selected.MA_DON_VI,
-                                        DONVI_TIEN:cbxDVTienNHD.Selected.TIEN_TE,
-                                        EMAIL:tiEmailNHD.Text,
-                                        GIOI_TINH:cbxGTinhNHD.Selected.MA_GIOI_TINH,
-                                        HIEU_LUC_DEN:dpHLDenNHD.SelectedDate,
-                                        HIEU_LUC_TU:dpHLTuNHD.SelectedDate,
-                                        LOAI_KENH_BAN:cbxLoaiKBNHD.Selected.MA_LOAI_KB,
-                                        LOAI_KHACH_HANG:cbxLoaiKHNHD.Selected.MA_LOAI_KH,
-                                        MA_KENH_BAN:cbxMaKBNHD.Selected.MA_KENH_BAN,
-                                        MA_KHACH_HANG:cbxMaKHNHD.Selected.MA_KHACH_HANG,
-                                        NGAY_HOP_DONG:dpNgayHDNHD.SelectedDate,
-                                        NGAY_SINH:dpNSinhNHD.SelectedDate,
-                                        NGHE_NGHIEP:cbxNgheNHD.Selected.MA_NGHE_NGHIEP,
-                                        SO_DIEN_THOAI:tiSDTNHD.Text,
-                                        SO_NGUOI_TGIA:tiSoNTGNHD.Text,
-                                        TEN_KENH_BAN:tiTenKBNHD.Text,
-                                        TEN_KHACH_HANG:tiTenKHNHD.Text,
-                                        TRANG_THAI:"Hoạt động"
-                                    }
+                    Size: =11
+                    Width: =200
+                    X: =70
+                    Y: =52
+                    ZIndex: =2
+
+                Label3_35 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Hiệu lực đến (*)"
+                    Width: =140
+                    X: =990
+                    Y: =24
+                    ZIndex: =3
+
+                Label3_37 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Đơn vị quản lý HĐ (*)"
+                    Width: =168
+                    X: =70
+                    Y: =95
+                    ZIndex: =7
+
+                cbxDVQLNHD As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =LookUp(Filter(DM_PHAMVI_DIALYS,LOAI="DON_VI"),MA_PHAMVI=First(objHD).DONVI_QUANLY_HD)
+                    DisplayFields: =["cr282_ma_phamvi"]
+                    Height: =32
+                    InputTextPlaceholder: ="Chọn đơn vị quản lý"
+                    Items: =Filter(DM_PHAMVI_DIALYS,LOAI="DON_VI")
+                    SearchFields: =["cr282_ma_phamvi"]
+                    SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="DON_VI"),cbxDVQLNHD.SearchText,"cr282_ma_phamvi")
+                    SelectMultiple: =false
+                    Size: =11
+                    Template: =ListItemTemplate.Double
+                    Width: =200
+                    X: =70
+                    Y: =122
+                    ZIndex: =8
+
+                Label3_34 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Hiệu lực từ (*)"
+                    Width: =140
+                    X: =690
+                    Y: =24
+                    ZIndex: =9
+
+                dpNgayHDNHD As datepicker:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultDate: =First(objHD).NGAY_HOP_DONG
+                    EndYear: =2200
+                    Format: ="dd/mm/yyyy"
+                    Height: =32
+                    InputTextPlaceholder: =
+                    Size: =11
+                    StartYear: =1900
+                    Width: =200
+                    X: =380
+                    Y: =52
+                    ZIndex: =13
+
+                Label3_33 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Ngày hợp đồng (*)"
+                    Width: =140
+                    X: =380
+                    Y: =24
+                    ZIndex: =14
+
+                dpHLTuNHD As datepicker:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultDate: =First(objHD).HIEU_LUC_TU
+                    EndYear: =2200
+                    Format: ="dd/mm/yyyy"
+                    Height: =32
+                    InputTextPlaceholder: =
+                    Size: =11
+                    StartYear: =1900
+                    Width: =200
+                    X: =690
+                    Y: =52
+                    ZIndex: =15
+
+                dpHLDenNHD As datepicker:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultDate: =First(objHD).HIEU_LUC_DEN
+                    EndYear: =2200
+                    Format: ="dd/mm/yyyy"
+                    Height: =32
+                    InputTextPlaceholder: =
+                    Size: =11
+                    StartYear: =1900
+                    Width: =200
+                    X: =990
+                    Y: =52
+                    ZIndex: =16
+
+                cbxDVTienNHD As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =If(IsBlank(First(objHD).MA_HOP_DONG),LookUp(DM_TIENTE,TIEN_TE="VND"),LookUp(DM_TIENTE,TIEN_TE=First(objHD).DONVI_TIEN))
+                    DisplayFields: =["cr282_tien_te"]
+                    Height: =32
+                    InputTextPlaceholder: ="Chọn đơn vị tiền"
+                    Items: =DM_TIENTE
+                    SearchFields: =["cr282_tien_te"]
+                    SearchItems: =Search(DM_TIENTE,cbxDVTienNHD.SearchText,"cr282_tien_te")
+                    SelectMultiple: =false
+                    Size: =11
+                    Width: =200
+                    X: =380
+                    Y: =122
+                    ZIndex: =17
+
+                Label3_38 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Đơn vị tiền (*)"
+                    Width: =140
+                    X: =380
+                    Y: =95
+                    ZIndex: =18
+
+                Label3_36 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =20
+                    Size: =11
+                    Text: ="1. Thông tin chung"
+                    Width: =254
+                    Y: =4
+                    ZIndex: =19
+
+                Label3_39 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Phương thức thanh toán"
+                    Width: =190
+                    X: =690
+                    Y: =95
+                    ZIndex: =20
+
+                cbxPTTTNHD As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: |-
+                        =LookUp([{title:"Tiền mặt",value:"0"},{title:"Chuyển khoản",value:"1"}],value=First(objHD).PTHUC_THANH_TOAN)
+                    DisplayFields: =["title"]
+                    Height: =32
+                    InputTextPlaceholder: ="Chọn phương thức TT"
+                    Items: |-
+                        =[{title:"Tiền mặt",value:"0"},{title:"Chuyển khoản",value:"1"}]
+                    SearchFields: =["title"]
+                    SearchItems: |-
+                        =Search([{title:"Tiền mặt",value:"0"},{title:"Chuyển khoản",value:"1"}],cbxPTTTNHD.SearchText,"title")
+                    SelectMultiple: =false
+                    Size: =11
+                    Width: =200
+                    X: =690
+                    Y: =122
+                    ZIndex: =21
+
+            Container3_3 As groupContainer.manualLayoutContainer:
+                Height: =99
+                Width: =1267
+                X: =16
+                Y: =183
+                ZIndex: =2
+
+                Label3_41 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Loại kênh bán (*)"
+                    Width: =137
+                    X: =70
+                    Y: =25
+                    ZIndex: =1
+
+                Label3_44 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Đơn vị kênh bán"
+                    Width: =133
+                    X: =990
+                    Y: =25
+                    ZIndex: =3
+
+                Label3_43 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Tên kênh bán (*)"
+                    Width: =140
+                    X: =690
+                    Y: =25
+                    ZIndex: =9
+
+                Label3_42 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Mã kênh bán (*)"
+                    Width: =140
+                    X: =380
+                    Y: =25
+                    ZIndex: =14
+
+                Label3_40 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =20
+                    Size: =11
+                    Text: ="2. Kênh bán"
+                    Width: =254
+                    Y: =4
+                    ZIndex: =19
+
+                tiTenKBNHD As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =First(objHD).TEN_KENH_BAN
+                    Height: =32
+                    Size: =11
+                    Width: =200
+                    X: =690
+                    Y: =52
+                    ZIndex: =20
+
+                cbxLoaiKBNHD As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=First(objHD).LOAI_KENH_BAN)
+                    DisplayFields: =["cr282_ten_loai_kb"]
+                    Height: =32
+                    InputTextPlaceholder: ="Chọn loại kênh bán"
+                    Items: =DM_LOAI_KENH_BANS
+                    OnChange: =Reset(cbxMaKBNHD)
+                    SearchFields: =["cr282_ten_loai_kb"]
+                    SearchItems: =Search(DM_LOAI_KENH_BANS,cbxLoaiKBNHD.SearchText,"cr282_ten_loai_kb")
+                    SelectMultiple: =false
+                    Size: =11
+                    Width: =200
+                    X: =70
+                    Y: =52
+                    ZIndex: =21
+
+                cbxMaKBNHD As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =LookUp(DM_KENH_BANS,MA_KENH_BAN=First(objHD).MA_KENH_BAN && LOAI=cbxLoaiKBNHD.Selected.MA_LOAI_KB)
+                    DisplayFields: =["cr282_ma_kenh_ban","cr282_ten_kenh_ban"]
+                    Height: =32
+                    InputTextPlaceholder: ="Chọn mã kênh bán"
+                    Items: =Filter(DM_KENH_BANS,LOAI=cbxLoaiKBNHD.Selected.MA_LOAI_KB)
+                    OnChange: |-
+                        =UpdateIf(
+                            objHD,
+                            true,
+                            {
+                                TEN_KENH_BAN:LookUp(DM_KENH_BANS,MA_KENH_BAN=cbxMaKBNHD.Selected.MA_KENH_BAN,TEN_KENH_BAN)
+                            }
+                        );
+                        UpdateContext({
+                            nhomKB:If(
+                                LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=cbxMaKBNHD.Selected.LOAI,CODE_KENH_BAN) in ["TT","CTV"],
+                                "0",
+                                LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=cbxMaKBNHD.Selected.LOAI,CODE_KENH_BAN) in ["MG","BA"],
+                                "1",
+                                LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=cbxMaKBNHD.Selected.LOAI,CODE_KENH_BAN) = "DL",
+                                cbxMaKBNHD.Selected.LOAI_CANHAN_TOCHUC
+                            )
+                        })
+                    SearchFields: =["cr282_ma_kenh_ban"]
+                    SearchItems: =Search(Filter(DM_KENH_BANS,LOAI=cbxLoaiKBNHD.Selected.MA_LOAI_KB),cbxMaKBNHD.SearchText,"cr282_ma_kenh_ban")
+                    SelectMultiple: =false
+                    Size: =11
+                    Template: =ListItemTemplate.Double
+                    Width: =200
+                    X: =380
+                    Y: =52
+                    ZIndex: =22
+
+                cbxDVKBNHD As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =LookUp(DM_DON_VI,MA_DON_VI=First(objHD).DONVI_KENHBAN)
+                    DisplayFields: =["cr282_ten_don_vi","cr282_ma_don_vi"]
+                    Height: =32
+                    InputTextPlaceholder: ="Chọn đơn vị kênh bán"
+                    Items: =DM_DON_VI
+                    SearchFields: =["cr282_ten_don_vi"]
+                    SearchItems: =Search(DM_DON_VI,cbxDVKBNHD.SearchText,"cr282_ten_don_vi")
+                    SelectMultiple: =false
+                    Size: =11
+                    Template: =ListItemTemplate.Double
+                    Width: =200
+                    X: =990
+                    Y: =52
+                    ZIndex: =23
+
+            Container3_4 As groupContainer.manualLayoutContainer:
+                Height: =239
+                Width: =1267
+                X: =16
+                Y: =282
+                ZIndex: =3
+
+                Label3_46 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Mã khách hàng (*)"
+                    Width: =137
+                    X: =70
+                    Y: =25
+                    ZIndex: =1
+
+                Label3_49 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Ngày sinh/Thành lập"
+                    Width: =160
+                    X: =70
+                    Y: =92
+                    ZIndex: =3
+
+                Label3_48 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Địa chỉ"
+                    Width: =83
+                    X: =690
+                    Y: =25
+                    ZIndex: =9
+
+                Label3_47 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Tên khách hàng (*)"
+                    Width: =140
+                    X: =380
+                    Y: =25
+                    ZIndex: =14
+
+                dpNSinhNHD As datepicker:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultDate: =First(objHD).NGAY_SINH
+                    EndYear: =2200
+                    Format: ="dd/mm/yyyy"
+                    Height: =32
+                    InputTextPlaceholder: =
+                    Size: =11
+                    StartYear: =1900
+                    Width: =200
+                    X: =70
+                    Y: =120
+                    ZIndex: =16
+
+                Label3_45 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =20
+                    Size: =11
+                    Text: ="3. Khách hàng"
+                    Width: =254
+                    Y: =4
+                    ZIndex: =19
+
+                tiDChiNHD As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =First(objHD).DIA_CHI
+                    Height: =32
+                    Size: =11
+                    Width: =200
+                    X: =690
+                    Y: =52
+                    ZIndex: =20
+
+                cbxMaKHNHD As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =LookUp(DM_KHACH_HANG,MA_KHACH_HANG=First(objHD).MA_KHACH_HANG)
+                    DisplayFields: =["cr282_ma_khach_hang","cr282_ten_khach_hang"]
+                    Height: =32
+                    InputTextPlaceholder: ="Chọn mã khách hàng"
+                    Items: =DM_KHACH_HANG
+                    OnChange: |-
+                        =UpdateIf(
+                            objHD,
+                            true,
+                            {
+                                TEN_KHACH_HANG:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,TEN_KHACH_HANG),
+                                DIA_CHI:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,DIA_CHI_KH),
+                                NGAY_SINH:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,NGAY_SINH),
+                                GIOI_TINH:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,MA_GIOI_TINH),
+                                SO_DIEN_THOAI:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,SDT_KHACH_HANG),
+                                EMAIL:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,EMAIL),
+                                LOAI_KHACH_HANG:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,LOAI_KHACH_HANG),
+                                NGHE_NGHIEP:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,NGANH_NGHE),
+                                SO_NGUOI_TGIA:Text(LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,SO_THANH_VIEN)),
+                                TINH_TP_KH:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,MA_TINH),
+                                NHOM_KHACH_HANG:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,MA_NHOM_KH)
+                            }
+                        )
+                    SearchFields: =["cr282_ma_khach_hang"]
+                    SearchItems: =Search(DM_KHACH_HANG,cbxMaKHNHD.SearchText,"cr282_ma_khach_hang")
+                    SelectMultiple: =false
+                    Size: =11
+                    Template: =ListItemTemplate.Double
+                    Width: =200
+                    X: =70
+                    Y: =52
+                    ZIndex: =21
+
+                tiTenKHNHD As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =First(objHD).TEN_KHACH_HANG
+                    Height: =32
+                    Size: =11
+                    Width: =200
+                    X: =380
+                    Y: =52
+                    ZIndex: =22
+
+                cbxGTinhNHD As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =LookUp(DM_GIOI_TINHS,MA_GIOI_TINH=First(objHD).GIOI_TINH)
+                    DisplayFields: =["cr282_ten_gioi_tinh"]
+                    Height: =32
+                    InputTextPlaceholder: ="Chọn giới tính"
+                    Items: =DM_GIOI_TINHS
+                    SearchFields: =["cr282_ten_gioi_tinh"]
+                    SearchItems: =Search(DM_GIOI_TINHS,cbxGTinhNHD.SearchText,"cr282_ten_gioi_tinh")
+                    SelectMultiple: =false
+                    Size: =11
+                    Width: =200
+                    X: =380
+                    Y: =120
+                    ZIndex: =23
+
+                Label3_50 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Giới tính"
+                    Width: =83
+                    X: =380
+                    Y: =92
+                    ZIndex: =24
+
+                tiSDTNHD As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =First(objHD).SO_DIEN_THOAI
+                    Height: =32
+                    Size: =11
+                    Width: =200
+                    X: =690
+                    Y: =120
+                    ZIndex: =25
+
+                tiEmailNHD As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =First(objHD).EMAIL
+                    Height: =32
+                    Size: =11
+                    Width: =200
+                    X: =990
+                    Y: =120
+                    ZIndex: =26
+
+                tiSoNTGNHD As text:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =First(objHD).SO_NGUOI_TGIA
+                    Height: =32
+                    Size: =11
+                    Width: =200
+                    X: =990
+                    Y: =190
+                    ZIndex: =27
+
+                cbxNgheNHD As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =LookUp(DM_NGANHNGHE,MA_NHOM_NGANH=First(objHD).NGHE_NGHIEP)
+                    DisplayFields: =["cr282_ten_nganh"]
+                    Height: =32
+                    InputTextPlaceholder: ="Chọn nghề nghiệp"
+                    Items: =DM_NGANHNGHE
+                    SearchFields: =["cr282_ten_nganh"]
+                    SearchItems: =Search(DM_NGANHNGHE,cbxNgheNHD.SearchText,"cr282_ten_nganh")
+                    SelectMultiple: =false
+                    Size: =11
+                    Width: =200
+                    X: =690
+                    Y: =190
+                    ZIndex: =28
+
+                Label3_51 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Số điện thoại"
+                    Width: =140
+                    X: =690
+                    Y: =92
+                    ZIndex: =29
+
+                Label3_52 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Email"
+                    Width: =83
+                    X: =990
+                    Y: =92
+                    ZIndex: =30
+
+                cbxLoaiKHNHD As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: |-
+                        =LookUp([{title:"Cá nhân",value:"0"},{title:"Tổ chức",value:"1"}],value=First(objHD).LOAI_KHACH_HANG)
+                    DisplayFields: =["title"]
+                    Height: =32
+                    InputTextPlaceholder: ="Chọn loại khách hàng"
+                    IsSearchable: =false
+                    Items: |-
+                        =[{title:"Cá nhân",value:"0"},{title:"Tổ chức",value:"1"}]
+                    SearchFields: =["title"]
+                    SearchItems: |-
+                        =Search([{title:"Cá nhân",value:"0"},{title:"Tổ chức",value:"1"}],cbxLoaiKHNHD.SearchText,"title")
+                    SelectMultiple: =false
+                    Size: =11
+                    Width: =200
+                    X: =70
+                    Y: =190
+                    ZIndex: =31
+
+                Label3_53 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Loại khách hàng"
+                    Width: =140
+                    X: =70
+                    Y: =162
+                    ZIndex: =32
+
+                Label3_54 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Nghề nghiệp/Nhóm nghề"
+                    Width: =200
+                    X: =690
+                    Y: =162
+                    ZIndex: =33
+
+                Label3_55 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Tổng số người tham gia"
+                    Width: =200
+                    X: =990
+                    Y: =162
+                    ZIndex: =34
+
+                cbxTinhNHD As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =LookUp(Filter(DM_PHAMVI_DIALYS,LOAI="TINH_TP"),MA_PHAMVI=First(objHD).TINH_TP_KH)
+                    DisplayFields: =["cr282_ma_phamvi"]
+                    Height: =32
+                    InputTextPlaceholder: ="Chọn tỉnh/thành phố"
+                    Items: =Filter(DM_PHAMVI_DIALYS,LOAI="TINH_TP")
+                    SearchFields: =["cr282_ma_phamvi"]
+                    SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="TINH_TP"),cbxTinhNHD.SearchText,"cr282_ma_phamvi")
+                    SelectMultiple: =false
+                    Size: =11
+                    Width: =200
+                    X: =990
+                    Y: =52
+                    ZIndex: =35
+
+                Label3_57 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Tỉnh/TP"
+                    Width: =83
+                    X: =990
+                    Y: =25
+                    ZIndex: =36
+
+                cbxNhomKHNHD As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =LookUp(DM_NHOM_KH,MA_NHOM_KH=First(objHD).NHOM_KHACH_HANG)
+                    DisplayFields: =["cr282_ten_nhom_kh"]
+                    Height: =32
+                    InputTextPlaceholder: ="Chọn loại khách hàng"
+                    IsSearchable: =false
+                    Items: =DM_NHOM_KH
+                    SearchFields: =["cr282_ten_nhom_kh"]
+                    SearchItems: =Search(DM_NHOM_KH,cbxNhomKHNHD.SearchText,"cr282_ten_nhom_kh")
+                    SelectMultiple: =false
+                    Size: =11
+                    Width: =200
+                    X: =380
+                    Y: =190
+                    ZIndex: =37
+
+                Label3_56 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Nhóm khách hàng"
+                    Width: =140
+                    X: =380
+                    Y: =162
+                    ZIndex: =38
+
+            Container3_5 As groupContainer.manualLayoutContainer:
+                Height: =315
+                Width: =1267
+                X: =16
+                Y: =521
+                ZIndex: =4
+
+                Label3_58 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =20
+                    Size: =11
+                    Text: ="4. Sản phẩm"
+                    Width: =254
+                    Y: =4
+                    ZIndex: =19
+
+                Gallery3_2 As gallery.variableTemplateHeightGallery:
+                    DelayItemLoading: =true
+                    Height: =226
+                    Items: |-
+                        =SortByColumns(
+                            tmpDSHDSPNHDCollect,
+                            "cr282_id",
+                            SortOrder.Ascending
+                        )
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplateSize: =220
+                    Width: =1267
+                    Y: =76
+                    ZIndex: =21
+
+                    Container4_2 As groupContainer.manualLayoutContainer:
+                        Height: =208
+                        Width: =1237
+                        X: =8
+                        Y: =5
+                        ZIndex: =1
+
+                        Label3_59 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="Mã sản phẩm (*)"
+                            Width: =130
+                            X: =62
+                            Y: =10
+                            ZIndex: =1
+
+                        Label3_61 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="Tên chương trình"
+                            Width: =140
+                            X: =975
+                            Y: =10
+                            ZIndex: =3
+
+                        Label3_62 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="Mã chương trình (*)"
+                            Width: =160
+                            X: =682
+                            Y: =10
+                            ZIndex: =6
+
+                        Label3_60 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="Tên sản phẩm"
+                            Width: =140
+                            X: =372
+                            Y: =10
+                            ZIndex: =8
+
+                        Label3_63 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="Phí/người"
+                            Width: =140
+                            X: =372
+                            Y: =80
+                            ZIndex: =12
+
+                        tiSoNTGSPNHD As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Default: =ThisItem.SONGUOI_THAMGIA
+                            DisplayMode: =DisplayMode.Disabled
+                            Format: =TextFormat.Number
+                            Height: =32
+                            Size: =11
+                            Width: =200
+                            X: =682
+                            Y: =109
+                            ZIndex: =14
+
+                        tiTongPhiNHD As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Default: =ThisItem.TONG_TIEN_PHI
+                            DisplayMode: =DisplayMode.Disabled
+                            Format: =TextFormat.Number
+                            Height: =32
+                            Size: =11
+                            Width: =200
+                            X: =975
+                            Y: =109
+                            ZIndex: =15
+
+                        Label3_64 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="Số người tham gia"
+                            Width: =140
+                            X: =682
+                            Y: =80
+                            ZIndex: =16
+
+                        Label3_65 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="Tổng phí"
+                            Width: =140
+                            X: =975
+                            Y: =80
+                            ZIndex: =17
+
+                        tiTenSPNHD As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Default: =LookUp(DL_SAN_PHAM,MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM,TEN_SAN_PHAM)
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =32
+                            Size: =11
+                            Width: =200
+                            X: =372
+                            Y: =38
+                            ZIndex: =18
+
+                        tiTenCTNHD As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Default: =LookUp(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=cbxMaCTNHD.Selected.MA_CHUONG_TRINH,TEN_CHUONG_TRINH)
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =32
+                            Size: =11
+                            Width: =200
+                            X: =975
+                            Y: =38
+                            ZIndex: =20
+
+                        tiPhiNGNHD As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Default: =Value(ThisItem.PHI_TREN_NG)
+                            DisplayMode: =DisplayMode.Disabled
+                            Format: =TextFormat.Number
+                            Height: =32
+                            Size: =11
+                            Width: =200
+                            X: =372
+                            Y: =109
+                            ZIndex: =22
+
+                        cbxMaCTNHD As combobox:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            DefaultSelectedItems: |
+                                =LookUp(
+                                    ' DL_SAN_PHAM_CT',
+                                    MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=ThisItem.MA_CHUONG_TRINH
                                 )
+                            DisplayFields: =["cr282_ma_chuongtrinh","cr282_ten_chuong_trinh"]
+                            DisplayMode: =If(ThisItem.edited=1 && ThisItem.added=1,DisplayMode.Edit,DisplayMode.Disabled)
+                            Height: =32
+                            InputTextPlaceholder: ="Chọn chương trình"
+                            Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM)
+                            SearchFields: =["cr282_ma_chuong_trinh"]
+                            SearchItems: =Search(Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM),cbxMaCTNHD.SearchText,"cr282_ma_chuong_trinh")
+                            SelectMultiple: =false
+                            Size: =11
+                            Template: =ListItemTemplate.Double
+                            Width: =200
+                            X: =682
+                            Y: =38
+                            ZIndex: =23
+
+                        cbxMaSPNHD As combobox:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            DefaultSelectedItems: =LookUp(DL_SAN_PHAM,MA_SAN_PHAM=ThisItem.MA_SAN_PHAM)
+                            DisplayFields: =["cr282_ma_san_pham","cr282_ten_san_pham"]
+                            DisplayMode: =If(ThisItem.edited=1 && ThisItem.added=1,DisplayMode.Edit,DisplayMode.Disabled)
+                            Height: =32
+                            InputTextPlaceholder: ="Chọn sản phẩm"
+                            Items: =DL_SAN_PHAM
+                            OnChange: =Reset(cbxMaCTNHD)
+                            SearchFields: =["cr282_ma_san_pham"]
+                            SearchItems: =Search(DL_SAN_PHAM,cbxMaSPNHD.SearchText,"cr282_ma_san_pham")
+                            SelectMultiple: =false
+                            Size: =11
+                            Template: =ListItemTemplate.Double
+                            Width: =200
+                            X: =62
+                            Y: =38
+                            ZIndex: =24
+
+                        btnXoaHDSPNHD As button:
+                            Height: =32
+                            OnSelect: |-
+                                =If(
+                                    Or(maAddedHDSPNHD<>"",maUpdatedHDSPNHD<>""),
+                                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
+                                    Refresh(DL_HOP_DONG_SPS);
+                                    RemoveIf(DL_HOP_DONG_SPS,ID=ThisItem.ID);
+                                    RemoveIf(tmpDSHDSPNHDCollect,ID=ThisItem.ID);
+                                    Notify("Xóa dữ liệu thành công", NotificationType.Success,2000)
+                                )
+                            Size: =11
+                            Text: ="Xóa"
+                            Visible: =ThisItem.edited=0
+                            Width: =90
+                            X: =1085
+                            Y: =158
+                            ZIndex: =26
+
+                        btnLuuHDSPNHD As button:
+                            Height: =32
+                            OnSelect: |-
+                                =UpdateIf(
+                                    tmpDSHDSPNHDCollect,
+                                    ID=ThisItem.ID,
+                                    {
+                                        MA_SAN_PHAM:cbxMaSPNHD.Selected.MA_SAN_PHAM,
+                                        TEN_SAN_PHAM:tiTenSPNHD.Text,
+                                        MA_CHUONG_TRINH:cbxMaCTNHD.Selected.MA_CHUONG_TRINH,
+                                        TEN_CHUONG_TRINH:tiTenCTNHD.Text,
+                                        PTHUC_THANH_TOAN:cbxPTTTNHD.Selected.value,
+                                        PHI_TREN_NG:Value(tiPhiNGNHD.Text),
+                                        SONGUOI_THAMGIA:Value(tiSoNTGSPNHD.Text),
+                                        TONG_TIEN_PHI:Value(tiTongPhiNHD.Text),
+                                        edited:0
+                                    }
+                                );
+                                UpdateContext({
+                                    maAddedHDSPNHD:"",
+                                    maUpdatedHDSPNHD:""
+                                });
+                            Size: =11
+                            Text: ="Lưu"
+                            Visible: =ThisItem.edited=1
+                            Width: =90
+                            X: =975
+                            Y: =158
+                            ZIndex: =27
+
+                        btnSuaHDSPNHD As button:
+                            Height: =32
+                            OnSelect: |-
+                                =If(
+                                    Or(maAddedHDSPNHD<>"",maUpdatedHDSPNHD<>""),
+                                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
+                                    UpdateIf(
+                                        tmpDSHDSPNHDCollect,
+                                        ID=ThisItem.ID,
+                                        {
+                                            edited:1
+                                        }
+                                    );
+                                    UpdateContext({
+                                        maUpdatedHDSPNHD:ThisItem.ID
+                                    })
+                                )
+                            Size: =11
+                            Text: ="Sửa"
+                            Visible: =ThisItem.edited=0
+                            Width: =90
+                            X: =975
+                            Y: =158
+                            ZIndex: =28
+
+                        btnHuyHDSPNHD As button:
+                            Height: =32
+                            OnSelect: |-
+                                =If(
+                                    ThisItem.ID=maAddedHDSPNHD,
+                                    Remove(tmpDSHDSPNHDCollect,ThisItem),
+                                    UpdateIf(
+                                        tmpDSHDSPNHDCollect,
+                                        ID=ThisItem.ID,
+                                        {
+                                            edited:0
+                                        }
+                                    )
+                                );
+                                UpdateContext({
+                                    maAddedHDSPNHD:"",
+                                    maUpdatedHDSPNHD:""
+                                });
+                            Size: =11
+                            Text: ="Hủy"
+                            Visible: =ThisItem.edited=1
+                            Width: =90
+                            X: =1085
+                            Y: =158
+                            ZIndex: =29
+
+                        LinkHDLK_1 As text:
+                            BorderThickness: =0
+                            Color: =RGBA(39, 113, 194, 1)
+                            Default: ="Danh sách NĐBH"
+                            DisabledBorderColor: =RGBA(255, 255, 255, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            DisplayMode: =If(ThisItem.edited=1,DisplayMode.Edit,DisplayMode.Disabled)
+                            Height: =28
+                            HoverBorderColor: =RGBA(255, 255, 255, 1)
+                            HoverColor: =RGBA(39, 113, 194, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            OnSelect: |-
+                                =Set(dsMaSPNLKFwd,Concat(tmpDSHDSPNHDCollect,MA_SAN_PHAM,"|"));
+                                Set(maHDNLKFwd,tiMaHDNHD.Text);
+                                Set(maKBNLKFwd,cbxMaKBNHD.Selected.MA_KENH_BAN);
+                                Set(maKHNLKFwd,cbxMaKHNHD.Selected.MA_KHACH_HANG);
+                                Navigate(NhapHopDongLK)
+                            Size: =11
+                            Underline: =true
+                            Width: =142
+                            X: =740
+                            Y: =162
+                            ZIndex: =30
+
+                        Label3_66 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="LHNV"
+                            Width: =140
+                            X: =62
+                            Y: =80
+                            ZIndex: =31
+
+                        tiPhiNGNHD_1 As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Default: =LookUp(DL_SAN_PHAM,MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM,LHNV)
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =32
+                            Size: =11
+                            Width: =200
+                            X: =62
+                            Y: =109
+                            ZIndex: =32
+
+                Button2_3 As button:
+                    Height: =32
+                    OnSelect: |
+                        =If(
+                            Or(maAddedHDSPNHD<>"",maUpdatedHDSPNHD<>""),
+                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
+                            Collect(
+                                tmpDSHDSPNHDCollect,
+                                Defaults(tmpDSHDSPNHDCollect)
                             );
-                            Notify("Lưu dữ liệu thành công",NotificationType.Success,2000);
-                            Navigate(TestNhapHD)
+                            UpdateIf(
+                                tmpDSHDSPNHDCollect,
+                                IsBlank(ID),
+                                {
+                                    ID:Text(maHDSP+1),
+                                    added:1,
+                                    edited:1
+                                }
+                            );
+                            UpdateContext({
+                                maAddedHDSPNHD:Text(maHDSP+1),
+                                maHDSP:maHDSP+1
+                            });
+                            Reset(LinkHDLK);
                         )
                     Size: =11
-                    Text: ="Lưu"
-                    Width: =85
-                    X: =1164
-                    Y: =712
-                    ZIndex: =45
+                    Text: ="Thêm mới"
+                    Width: =100
+                    X: =12
+                    Y: =36
+                    ZIndex: =22
 
-                Button3_15 As button:
+            Container3_6 As groupContainer.manualLayoutContainer:
+                Height: =262
+                Width: =1267
+                X: =16
+                Y: =836
+                ZIndex: =5
+
+                Label3_67 As label:
                     FontWeight: =FontWeight.Bold
-                    Height: =32
-                    OnSelect: =Navigate(TestNhapHD)
+                    Height: =20
                     Size: =11
-                    Text: ="Hủy"
-                    Width: =85
-                    X: =1044
-                    Y: =712
-                    ZIndex: =46
+                    Text: ="5. Hợp đồng liên kết"
+                    Width: =254
+                    Y: =4
+                    ZIndex: =19
 
-                Container3_2 As groupContainer.manualLayoutContainer:
-                    Height: =171
+                Gallery3_1 As gallery.variableTemplateHeightGallery:
+                    DelayItemLoading: =true
+                    Height: =190
+                    Items: |-
+                        =SortByColumns(
+                            Filter(
+                                DL_HOP_DONG_LIENKETS,
+                                SO_HOP_DONG=First(objHD).MA_HOP_DONG
+                            ),
+                            "cr282_so_hop_dong_lk",
+                            SortOrder.Ascending,
+                            "cr282_ma_khach_hang",
+                            SortOrder.Ascending
+                        )
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplateSize: =170
                     Width: =1267
-                    X: =15
-                    Y: =8
-                    ZIndex: =47
+                    Y: =62
+                    ZIndex: =21
 
-                    Label3_32 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Mã"
-                        Width: =47
-                        X: =70
-                        Y: =24
+                    Container4_3 As groupContainer.manualLayoutContainer:
+                        Height: =160
+                        Width: =1237
+                        X: =8
+                        Y: =5
                         ZIndex: =1
 
-                    tiMaHDNHD As text:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =If(IsBlank(First(objHD).MA_HOP_DONG),"Hệ thống tự sinh",First(objHD).MA_HOP_DONG) 
-                        DisplayMode: =DisplayMode.Disabled
-                        Height: =32
-                        Size: =11
-                        Width: =200
-                        X: =70
-                        Y: =52
-                        ZIndex: =2
+                        Label3_68 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="Số HĐ liên kết"
+                            Width: =130
+                            X: =62
+                            Y: =10
+                            ZIndex: =1
 
-                    Label3_35 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Hiệu lực đến (*)"
-                        Width: =140
-                        X: =990
-                        Y: =24
-                        ZIndex: =3
+                        Label3_71 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="Mã kênh bán"
+                            Width: =140
+                            X: =975
+                            Y: =10
+                            ZIndex: =3
 
-                    Label3_37 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Đơn vị quản lý HĐ (*)"
-                        Width: =168
-                        X: =70
-                        Y: =95
-                        ZIndex: =7
+                        Label3_72 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="Mã sản phẩm"
+                            Width: =168
+                            X: =62
+                            Y: =80
+                            ZIndex: =4
 
-                    cbxDVQLNHD As combobox:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: =LookUp(DM_DON_VI,MA_DON_VI=First(objHD).DONVI_QUANLY_HD)
-                        DisplayFields: =["cr282_ten_don_vi","cr282_ma_don_vi"]
-                        Height: =32
-                        InputTextPlaceholder: ="Chọn đơn vị quản lý"
-                        Items: =DM_DON_VI
-                        SearchFields: =["cr282_ten_don_vi"]
-                        SearchItems: =Search(DM_DON_VI,cbxDVQLNHD.SearchText,"cr282_ten_don_vi")
-                        SelectMultiple: =false
-                        Size: =11
-                        Template: =ListItemTemplate.Double
-                        Width: =200
-                        X: =70
-                        Y: =122
-                        ZIndex: =8
+                        Label3_70 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="Tên khách hàng"
+                            Width: =140
+                            X: =682
+                            Y: =10
+                            ZIndex: =6
 
-                    Label3_34 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Hiệu lực từ (*)"
-                        Width: =140
-                        X: =690
-                        Y: =24
-                        ZIndex: =9
+                        Label3_69 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="Mã khách hàng"
+                            Width: =140
+                            X: =372
+                            Y: =10
+                            ZIndex: =8
 
-                    dpNgayHDNHD As datepicker:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultDate: =First(objHD).NGAY_HOP_DONG
-                        EndYear: =2200
-                        Format: ="dd/mm/yyyy"
-                        Height: =32
-                        InputTextPlaceholder: =
-                        Size: =11
-                        StartYear: =1900
-                        Width: =200
-                        X: =380
-                        Y: =52
-                        ZIndex: =13
+                        Label3_73 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="Tên sản phẩm"
+                            Width: =140
+                            X: =372
+                            Y: =80
+                            ZIndex: =12
 
-                    Label3_33 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Ngày hợp đồng (*)"
-                        Width: =140
-                        X: =380
-                        Y: =24
-                        ZIndex: =14
+                        tiSoHDLKNHD_1 As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Default: =ThisItem.SO_HOP_DONG_LK
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =32
+                            Size: =11
+                            Width: =200
+                            X: =62
+                            Y: =38
+                            ZIndex: =13
 
-                    dpHLTuNHD As datepicker:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultDate: =First(objHD).HIEU_LUC_TU
-                        EndYear: =2200
-                        Format: ="dd/mm/yyyy"
-                        Height: =32
-                        InputTextPlaceholder: =
-                        Size: =11
-                        StartYear: =1900
-                        Width: =200
-                        X: =690
-                        Y: =52
-                        ZIndex: =15
+                        tiMaCTLKNHD_1 As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Default: =ThisItem.MA_CHUONG_TRINH
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =32
+                            Size: =11
+                            Width: =200
+                            X: =682
+                            Y: =109
+                            ZIndex: =14
 
-                    dpHLDenNHD As datepicker:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultDate: =First(objHD).HIEU_LUC_DEN
-                        EndYear: =2200
-                        Format: ="dd/mm/yyyy"
-                        Height: =32
-                        InputTextPlaceholder: =
-                        Size: =11
-                        StartYear: =1900
-                        Width: =200
-                        X: =990
-                        Y: =52
-                        ZIndex: =16
+                        tiTenCTLKNHD_1 As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Default: =ThisItem.TEN_CHUONG_TRINH
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =32
+                            Size: =11
+                            Width: =200
+                            X: =975
+                            Y: =109
+                            ZIndex: =15
 
-                    cbxDVTienNHD As combobox:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: =If(IsBlank(First(objHD).MA_HOP_DONG),LookUp(BH_DM_TIENTES,TIEN_TE="VND"),LookUp(BH_DM_TIENTES,TIEN_TE=First(objHD).DONVI_TIEN))
-                        DisplayFields: =["cr282_tien_te"]
-                        Height: =32
-                        InputTextPlaceholder: ="Chọn đơn vị tiền"
-                        Items: =BH_DM_TIENTES
-                        SearchFields: =["cr282_id"]
-                        SearchItems: =Search(BH_DM_TIENTES,cbxDVTienNHD.SearchText,"cr282_id")
-                        SelectMultiple: =false
-                        Size: =11
-                        Width: =200
-                        X: =380
-                        Y: =122
-                        ZIndex: =17
+                        Label3_74 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="Mã chương trình"
+                            Width: =140
+                            X: =682
+                            Y: =80
+                            ZIndex: =16
 
-                    Label3_38 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Đơn vị tiền (*)"
-                        Width: =140
-                        X: =380
-                        Y: =95
-                        ZIndex: =18
+                        Label3_75 As label:
+                            Height: =25
+                            Size: =11
+                            Text: ="Tên chương trình"
+                            Width: =140
+                            X: =975
+                            Y: =80
+                            ZIndex: =17
 
-                    Label3_36 As label:
-                        FontWeight: =FontWeight.Bold
-                        Height: =20
-                        Size: =11
-                        Text: ="1. Thông tin chung"
-                        Width: =254
-                        Y: =4
-                        ZIndex: =19
+                        tiMaKHLKNHD_1 As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Default: =ThisItem.MA_KHACH_HANG
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =32
+                            Size: =11
+                            Width: =200
+                            X: =372
+                            Y: =38
+                            ZIndex: =18
 
-                Container3_3 As groupContainer.manualLayoutContainer:
-                    Height: =99
-                    Width: =1267
-                    X: =15
-                    Y: =179
-                    ZIndex: =50
+                        tiTenKHLKNHD_1 As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Default: =LookUp(DM_KHACH_HANG,MA_KHACH_HANG=ThisItem.MA_KHACH_HANG,TEN_KHACH_HANG)
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =32
+                            Size: =11
+                            Width: =200
+                            X: =682
+                            Y: =38
+                            ZIndex: =19
 
-                    Label3_40 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Loại kênh bán (*)"
-                        Width: =137
-                        X: =70
-                        Y: =25
-                        ZIndex: =1
+                        tiTenKBLKNHD_1 As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Default: =ThisItem.MA_KENH_BAN
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =32
+                            Size: =11
+                            Width: =200
+                            X: =975
+                            Y: =38
+                            ZIndex: =20
 
-                    Label3_43 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Đơn vị kênh bán"
-                        Width: =133
-                        X: =990
-                        Y: =25
-                        ZIndex: =3
+                        tiMaSPLKNHD_1 As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Default: =ThisItem.MA_SAN_PHAM
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =32
+                            Size: =11
+                            Width: =200
+                            X: =62
+                            Y: =109
+                            ZIndex: =21
 
-                    Label3_42 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Tên kênh bán (*)"
-                        Width: =140
-                        X: =690
-                        Y: =25
-                        ZIndex: =9
+                        tiTenSPLKNHD_1 As text:
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            Default: =ThisItem.TEN_SAN_PHAM
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =32
+                            Size: =11
+                            Width: =200
+                            X: =372
+                            Y: =109
+                            ZIndex: =22
 
-                    Label3_41 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Mã kênh bán (*)"
-                        Width: =140
-                        X: =380
-                        Y: =25
-                        ZIndex: =14
+                LinkHDLK As text:
+                    BorderThickness: =0
+                    Color: =RGBA(39, 113, 194, 1)
+                    Default: ="Hợp đồng liên kết"
+                    DisabledBorderColor: =RGBA(255, 255, 255, 1)
+                    DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =If(CountIf(tmpDSHDSPNHDCollect,edited=1)=0 && CountIf(tmpDSHDSPNHDCollect,added=1)=0 && CountIf(DL_HOP_DONG_SPS,MA_HOP_DONG=tiMaHDNHD.Text)>0,DisplayMode.Edit,DisplayMode.Disabled)
+                    Height: =28
+                    HoverBorderColor: =RGBA(255, 255, 255, 1)
+                    HoverColor: =RGBA(39, 113, 194, 1)
+                    HoverFill: =RGBA(255, 255, 255, 1)
+                    OnSelect: |-
+                        =Set(dsMaSPNLKFwd,Concat(tmpDSHDSPNHDCollect,MA_SAN_PHAM,"|"));
+                        Set(maHDNLKFwd,tiMaHDNHD.Text);
+                        Set(maKBNLKFwd,cbxMaKBNHD.Selected.MA_KENH_BAN);
+                        Set(maKHNLKFwd,cbxMaKHNHD.Selected.MA_KHACH_HANG);
+                        Navigate(NhapHopDongLK)
+                    Size: =11
+                    Underline: =true
+                    Width: =142
+                    X: =20
+                    Y: =30
+                    ZIndex: =22
 
-                    Label3_39 As label:
-                        FontWeight: =FontWeight.Bold
-                        Height: =20
-                        Size: =11
-                        Text: ="2. Kênh bán"
-                        Width: =254
-                        ZIndex: =19
-
-                    tiTenKBNHD As text:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =First(objHD).TEN_KENH_BAN
-                        Height: =32
-                        Size: =11
-                        Width: =200
-                        X: =690
-                        Y: =52
-                        ZIndex: =20
-
-                    cbxLoaiKBNHD As combobox:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: =LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=First(objHD).LOAI_KENH_BAN)
-                        DisplayFields: =["cr282_ten_loai_kb"]
-                        Height: =32
-                        InputTextPlaceholder: ="Chọn loại kênh bán"
-                        Items: =DM_LOAI_KENH_BANS
-                        OnChange: =Reset(cbxMaKBNHD)
-                        SearchFields: =["cr282_ten_loai_kb"]
-                        SearchItems: =Search(DM_LOAI_KENH_BANS,cbxLoaiKBNHD.SearchText,"cr282_ten_loai_kb")
-                        SelectMultiple: =false
-                        Size: =11
-                        Width: =200
-                        X: =70
-                        Y: =52
-                        ZIndex: =21
-
-                    cbxMaKBNHD As combobox:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: =LookUp(DM_KENH_BANS,MA_KENH_BAN=First(objHD).MA_KENH_BAN && LOAI=cbxLoaiKBNHD.Selected.MA_LOAI_KB)
-                        DisplayFields: =["cr282_ten_kenh_ban","cr282_ma_kenh_ban"]
-                        Height: =32
-                        InputTextPlaceholder: ="Chọn mã kênh bán"
-                        Items: =Filter(DM_KENH_BANS,LOAI=cbxLoaiKBNHD.Selected.MA_LOAI_KB)
-                        OnChange: |-
-                            =UpdateIf(
-                                objHD,
-                                true,
+            Button2_4 As button:
+                FontWeight: =FontWeight.Bold
+                Height: =32
+                OnSelect: |-
+                    =If(
+                        IsBlank(dpNgayHDNHD.SelectedDate),
+                        Notify("Bắt buộc nhập ngày hợp đồng",NotificationType.Error,2000),
+                        IsBlank(dpHLTuNHD.SelectedDate),
+                        Notify("Bắt buộc nhập hiệu lực từ của hợp đồng",NotificationType.Error,2000),
+                    	IsBlank(dpHLDenNHD.SelectedDate),
+                    	Notify("Bắt buộc nhập hiệu lực đến của hợp đồng",NotificationType.Error,2000),
+                    	IsBlank(cbxDVQLNHD.Selected.MA_PHAMVI),
+                    	Notify("Bắt buộc nhập đơn vị quản lý hợp đồng",NotificationType.Error,2000),
+                    	IsBlank(cbxDVTienNHD.Selected.TIEN_TE),
+                    	Notify("Bắt buộc nhập đơn vị tiền",NotificationType.Error,2000),
+                    	IsBlank(cbxLoaiKBNHD.Selected.MA_LOAI_KB),
+                    	Notify("Bắt buộc nhập loại kênh bán",NotificationType.Error,2000),
+                    	IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
+                    	Notify("Bắt buộc nhập mã kênh bán",NotificationType.Error,2000),
+                    	IsBlank(tiTenKBNHD.Text),
+                        Notify("Bắt buộc nhập tên kênh bán",NotificationType.Error,2000),
+                    	IsBlank(cbxMaKHNHD.Selected.MA_KHACH_HANG),
+                    	Notify("Bắt buộc nhập mã khách hàng",NotificationType.Error,2000),
+                    	IsBlank(tiTenKHNHD.Text),
+                    	Notify("Bắt buộc nhập tên khách hàng",NotificationType.Error,2000),
+                        dpNgayHDNHD.SelectedDate>dpHLTuNHD.SelectedDate,
+                    	Notify("Ngày hiệu lực từ phải sau hoặc bằng ngày hợp đồng",NotificationType.Error,2000),
+                        dpHLDenNHD.SelectedDate<=dpHLTuNHD.SelectedDate,
+                    	Notify("Ngày hiệu lực đến phải sau ngày hiệu lực từ",NotificationType.Error,2000),
+                        Refresh(DL_HOP_DONGS);
+                        If(
+                            CountIf(DL_HOP_DONGS,true)=0,
+                            UpdateContext({
+                                genMaHD:"HD0001"
+                            }),
+                            UpdateContext({
+                                sampleID:"000",
+                                maxIdHD:Last(SortByColumns(DL_HOP_DONGS,"cr282_ma_hop_dong",SortOrder.Ascending)).MA_HOP_DONG
+                            });
+                            UpdateContext({
+                                maIdHD:Text((Right(maxIdHD,4))+1)
+                            });
+                            UpdateContext({
+                                genMaHD:Concatenate("HD",If(Len(maIdHD)>3,"",Left(sampleID,4-Len(maIdHD))),maIdHD)
+                            });
+                        );
+                        If(
+                            IsBlank(LookUp(DL_HOP_DONGS,MA_HOP_DONG=tiMaHDNHD.Text)),
+                            Patch(
+                                DL_HOP_DONGS,
                                 {
-                                    TEN_KENH_BAN:LookUp(DM_KENH_BANS,MA_KENH_BAN=cbxMaKBNHD.Selected.MA_KENH_BAN,TEN_KENH_BAN)
+                                    ID:Text(Max(DL_HOP_DONGS,ID)+1),
+                                    MA_HOP_DONG:genMaHD,
+                                    DIA_CHI:tiDChiNHD.Text,
+                                    DONVI_KENHBAN:cbxDVKBNHD.Selected.MA_DON_VI,
+                                    DONVI_QUANLY_HD:cbxDVQLNHD.Selected.MA_PHAMVI,
+                                    DONVI_TIEN:cbxDVTienNHD.Selected.TIEN_TE,
+                                    EMAIL:tiEmailNHD.Text,
+                                    GIOI_TINH:cbxGTinhNHD.Selected.MA_GIOI_TINH,
+                                    HIEU_LUC_DEN:dpHLDenNHD.SelectedDate,
+                                    HIEU_LUC_TU:dpHLTuNHD.SelectedDate,
+                                    LOAI_KENH_BAN:cbxLoaiKBNHD.Selected.MA_LOAI_KB,
+                                    LOAI_KHACH_HANG:cbxLoaiKHNHD.Selected.value,
+                                    MA_KENH_BAN:cbxMaKBNHD.Selected.MA_KENH_BAN,
+                                    MA_KHACH_HANG:cbxMaKHNHD.Selected.MA_KHACH_HANG,
+                                    NGAY_HOP_DONG:dpNgayHDNHD.SelectedDate,
+                                    NGAY_SINH:dpNSinhNHD.SelectedDate,
+                                    NGHE_NGHIEP:cbxNgheNHD.Selected.MA_NHOM_NGANH,
+                                    SO_DIEN_THOAI:tiSDTNHD.Text,
+                                    SO_NGUOI_TGIA:tiSoNTGNHD.Text,
+                                    TEN_KENH_BAN:tiTenKBNHD.Text,
+                                    TEN_KHACH_HANG:tiTenKHNHD.Text,
+                                    TRANG_THAI:"Hoạt động",
+                                    TINH_TP_KH:cbxTinhNHD.Selected.MA_PHAMVI,
+                                    PTHUC_THANH_TOAN:cbxPTTTNHD.Selected.value,
+                                    NHOM_KHACH_HANG:cbxNhomKHNHD.Selected.MA_NHOM_KH,
+                                    NHOM_KENH_BAN:nhomKB
                                 }
-                            )
-                        SearchFields: =["cr282_ten_kenh_ban"]
-                        SearchItems: =Search(Filter(DM_KENH_BANS,LOAI=cbxLoaiKBNHD.Selected.MA_LOAI_KB),cbxMaKBNHD.SearchText,"cr282_ten_kenh_ban")
-                        SelectMultiple: =false
-                        Size: =11
-                        Template: =ListItemTemplate.Double
-                        Width: =200
-                        X: =380
-                        Y: =52
-                        ZIndex: =22
-
-                    cbxDVKBNHD As combobox:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: =LookUp(DM_DON_VI,MA_DON_VI=First(objHD).DONVI_KENHBAN)
-                        DisplayFields: =["cr282_ten_don_vi","cr282_ma_don_vi"]
-                        Height: =32
-                        InputTextPlaceholder: ="Chọn đơn vị kênh bán"
-                        Items: =DM_DON_VI
-                        SearchFields: =["cr282_ten_don_vi"]
-                        SearchItems: =Search(DM_DON_VI,cbxDVKBNHD.SearchText,"cr282_ten_don_vi")
-                        SelectMultiple: =false
-                        Size: =11
-                        Template: =ListItemTemplate.Double
-                        Width: =200
-                        X: =990
-                        Y: =52
-                        ZIndex: =23
-
-                Container3_4 As groupContainer.manualLayoutContainer:
-                    Height: =240
-                    Width: =1267
-                    X: =15
-                    Y: =278
-                    ZIndex: =51
-
-                    Label3_45 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Mã khách hàng (*)"
-                        Width: =137
-                        X: =70
-                        Y: =25
-                        ZIndex: =1
-
-                    Label3_48 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Ngày sinh"
-                        Width: =133
-                        X: =990
-                        Y: =25
-                        ZIndex: =3
-
-                    Label3_47 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Địa chỉ"
-                        Width: =83
-                        X: =690
-                        Y: =25
-                        ZIndex: =9
-
-                    Label3_46 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Tên khách hàng (*)"
-                        Width: =140
-                        X: =380
-                        Y: =25
-                        ZIndex: =14
-
-                    dpNSinhNHD As datepicker:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultDate: =First(objHD).NGAY_SINH
-                        EndYear: =2200
-                        Format: ="dd/mm/yyyy"
-                        Height: =32
-                        InputTextPlaceholder: =
-                        Size: =11
-                        StartYear: =1900
-                        Width: =200
-                        X: =990
-                        Y: =52
-                        ZIndex: =16
-
-                    Label3_44 As label:
-                        FontWeight: =FontWeight.Bold
-                        Height: =20
-                        Size: =11
-                        Text: ="3. Khách hàng"
-                        Width: =254
-                        Y: =4
-                        ZIndex: =19
-
-                    tiDChiNHD As text:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =First(objHD).DIA_CHI
-                        Height: =32
-                        Size: =11
-                        Width: =200
-                        X: =690
-                        Y: =52
-                        ZIndex: =20
-
-                    cbxMaKHNHD As combobox:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: =LookUp(DM_KHACH_HANG,MA_KHACH_HANG=First(objHD).MA_KHACH_HANG)
-                        DisplayFields: =["cr282_ten_khach_hang","cr282_ma_khach_hang"]
-                        Height: =32
-                        InputTextPlaceholder: ="Chọn mã khách hàng"
-                        Items: =DM_KHACH_HANG
-                        OnChange: |-
-                            =UpdateIf(
-                                objHD,
-                                true,
+                            );
+                            ForAll(
+                                tmpDSHDSPNHDCollect As dsSP,
+                                Patch(
+                                    DL_HOP_DONG_SPS,
+                                    {
+                                        ID:dsSP.ID,
+                                        MA_HOP_DONG:genMaHD,
+                                        MA_SAN_PHAM:cbxMaSPNHD.Selected.MA_SAN_PHAM,
+                                        MA_CHUONG_TRINH:cbxMaCTNHD.Selected.MA_CHUONG_TRINH,
+                                        TEN_CHUONG_TRINH:tiTenCTNHD.Text,
+                                        TEN_SAN_PHAM:tiTenSPNHD.Text,
+                                        DON_VI_TINH:cbxDVTienNHD.Selected.TIEN_TE,
+                                        PHI_TREN_NG:Value(tiPhiNGNHD.Text),
+                                        SONGUOI_THAMGIA:Value(tiSoNTGSPNHD.Text),
+                                        TONG_TIEN_PHI:Value(tiTongPhiNHD.Text),
+                                        MA_KENH_BAN:cbxMaKBNHD.Selected.MA_KENH_BAN,
+                                        MA_KHACH_HANG:cbxMaKHNHD.Selected.MA_KHACH_HANG,
+                                        NGAY_HOP_DONG:dpNgayHDNHD.SelectedDate
+                                    }
+                                )
+                            ),
+                            UpdateIf(
+                                DL_HOP_DONGS,
+                                MA_HOP_DONG=tiMaHDNHD.Text,
                                 {
-                                    TEN_KHACH_HANG:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,TEN_KHACH_HANG),
-                                    DIA_CHI:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,DIA_CHI_KH),
-                                    NGAY_SINH:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,NGAY_SINH),
-                                    GIOI_TINH:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,MA_GIOI_TINH),
-                                    SO_DIEN_THOAI:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,SDT_KHACH_HANG),
-                                    EMAIL:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,EMAIL),
-                                    LOAI_KHACH_HANG:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,LOAI_KHACH_HANG),
-                                    NGHE_NGHIEP:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,NGANH_NGHE),
-                                    SO_NGUOI_TGIA:Text(LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,SO_THANH_VIEN))
+                                    DIA_CHI:tiDChiNHD.Text,
+                                    DONVI_KENHBAN:cbxDVKBNHD.Selected.MA_DON_VI,
+                                    DONVI_QUANLY_HD:cbxDVQLNHD.Selected.MA_PHAMVI,
+                                    DONVI_TIEN:cbxDVTienNHD.Selected.TIEN_TE,
+                                    EMAIL:tiEmailNHD.Text,
+                                    GIOI_TINH:cbxGTinhNHD.Selected.MA_GIOI_TINH,
+                                    HIEU_LUC_DEN:dpHLDenNHD.SelectedDate,
+                                    HIEU_LUC_TU:dpHLTuNHD.SelectedDate,
+                                    LOAI_KENH_BAN:cbxLoaiKBNHD.Selected.MA_LOAI_KB,
+                                    LOAI_KHACH_HANG:cbxLoaiKHNHD.Selected.value,
+                                    MA_KENH_BAN:cbxMaKBNHD.Selected.MA_KENH_BAN,
+                                    MA_KHACH_HANG:cbxMaKHNHD.Selected.MA_KHACH_HANG,
+                                    NGAY_HOP_DONG:dpNgayHDNHD.SelectedDate,
+                                    NGAY_SINH:dpNSinhNHD.SelectedDate,
+                                    NGHE_NGHIEP:cbxNgheNHD.Selected.MA_NHOM_NGANH,
+                                    SO_DIEN_THOAI:tiSDTNHD.Text,
+                                    SO_NGUOI_TGIA:tiSoNTGNHD.Text,
+                                    TEN_KENH_BAN:tiTenKBNHD.Text,
+                                    TEN_KHACH_HANG:tiTenKHNHD.Text,
+                                    TRANG_THAI:"Hoạt động",
+                                    TINH_TP_KH:cbxTinhNHD.Selected.MA_PHAMVI,
+                                    PTHUC_THANH_TOAN:cbxPTTTNHD.Selected.value,
+                                    NHOM_KHACH_HANG:cbxNhomKHNHD.Selected.MA_NHOM_KH,
+                                    NHOM_KENH_BAN:nhomKB
                                 }
+                            );
+                            ForAll(
+                                tmpDSHDSPNHDCollect As dsSP,
+                                If(
+                                    IsBlank(dsSP.added),
+                                    UpdateIf(
+                                        DL_HOP_DONG_SPS,
+                                        ID=dsSP.ID,
+                                        {
+                                            PHI_TREN_NG:Value(tiPhiNGNHD.Text),
+                                            SONGUOI_THAMGIA:Value(tiSoNTGSPNHD.Text),
+                                            TONG_TIEN_PHI:Value(tiTongPhiNHD.Text),
+                                            MA_KENH_BAN:cbxMaKBNHD.Selected.MA_KENH_BAN,
+                                            MA_KHACH_HANG:cbxMaKHNHD.Selected.MA_KHACH_HANG,
+                                            NGAY_HOP_DONG:dpNgayHDNHD.SelectedDate
+                                        }
+                                    ),
+                                    dsSP.added=1,
+                                    Patch(
+                                        DL_HOP_DONG_SPS,
+                                        {
+                                            ID:dsSP.ID,
+                                            MA_HOP_DONG:tiMaHDNHD.Text,
+                                            MA_SAN_PHAM:cbxMaSPNHD.Selected.MA_SAN_PHAM,
+                                            MA_CHUONG_TRINH:cbxMaCTNHD.Selected.MA_CHUONG_TRINH,
+                                            TEN_CHUONG_TRINH:tiTenCTNHD.Text,
+                                            TEN_SAN_PHAM:tiTenSPNHD.Text,
+                                            DON_VI_TINH:cbxDVTienNHD.Selected.TIEN_TE,
+                                            PHI_TREN_NG:Value(tiPhiNGNHD.Text),
+                                            SONGUOI_THAMGIA:Value(tiSoNTGSPNHD.Text),
+                                            TONG_TIEN_PHI:Value(tiTongPhiNHD.Text),
+                                            MA_KENH_BAN:cbxMaKBNHD.Selected.MA_KENH_BAN,
+                                            MA_KHACH_HANG:cbxMaKHNHD.Selected.MA_KHACH_HANG,
+                                            NGAY_HOP_DONG:dpNgayHDNHD.SelectedDate
+                                        }
+                                    )
+                                )
                             )
-                        SearchFields: =["cr282_ten_khach_hang"]
-                        SearchItems: =Search(DM_KHACH_HANG,cbxMaKHNHD.SearchText,"cr282_ten_khach_hang")
-                        SelectMultiple: =false
-                        Size: =11
-                        Template: =ListItemTemplate.Double
-                        Width: =200
-                        X: =70
-                        Y: =52
-                        ZIndex: =21
+                        );
+                        Notify("Lưu dữ liệu thành công",NotificationType.Success,2000);
+                        Navigate(TraCuuHopDong)
+                    )
+                Size: =11
+                Text: ="Lưu"
+                Width: =85
+                X: =1198
+                Y: =1127
+                ZIndex: =6
 
-                    tiTenKHNHD As text:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =First(objHD).TEN_KHACH_HANG
-                        Height: =32
-                        Size: =11
-                        Width: =200
-                        X: =380
-                        Y: =52
-                        ZIndex: =22
-
-                    cbxGTinhNHD As combobox:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: =LookUp(DM_GIOI_TINHS,MA_GIOI_TINH=First(objHD).GIOI_TINH)
-                        DisplayFields: =["cr282_ten_gioi_tinh"]
-                        Height: =32
-                        InputTextPlaceholder: ="Chọn giới tính"
-                        Items: =DM_GIOI_TINHS
-                        SearchFields: =["cr282_ten_gioi_tinh"]
-                        SearchItems: =Search(DM_GIOI_TINHS,cbxGTinhNHD.SearchText,"cr282_ten_gioi_tinh")
-                        SelectMultiple: =false
-                        Size: =11
-                        Width: =200
-                        X: =70
-                        Y: =122
-                        ZIndex: =23
-
-                    Label3_49 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Giới tính"
-                        Width: =83
-                        X: =70
-                        Y: =95
-                        ZIndex: =24
-
-                    tiSDTNHD As text:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =First(objHD).SO_DIEN_THOAI
-                        Height: =32
-                        Size: =11
-                        Width: =200
-                        X: =380
-                        Y: =122
-                        ZIndex: =25
-
-                    tiEmailNHD As text:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =First(objHD).EMAIL
-                        Height: =32
-                        Size: =11
-                        Width: =200
-                        X: =690
-                        Y: =122
-                        ZIndex: =26
-
-                    tiSoNTGNHD As text:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =First(objHD).SO_NGUOI_TGIA
-                        Height: =32
-                        Size: =11
-                        Width: =200
-                        X: =380
-                        Y: =192
-                        ZIndex: =27
-
-                    cbxNgheNHD As combobox:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: =LookUp(DM_NGHE_NGHIEP,MA_NGHE_NGHIEP=First(objHD).NGHE_NGHIEP)
-                        DisplayFields: =["cr282_ten_nghe_nghiep"]
-                        Height: =32
-                        InputTextPlaceholder: ="Chọn nghề nghiệp"
-                        Items: =DM_NGHE_NGHIEP
-                        SearchFields: =["cr282_ten_nghe_nghiep"]
-                        SearchItems: =Search(DM_NGHE_NGHIEP,cbxNgheNHD.SearchText,"cr282_ten_nghe_nghiep")
-                        SelectMultiple: =false
-                        Size: =11
-                        Width: =200
-                        X: =70
-                        Y: =192
-                        ZIndex: =28
-
-                    Label3_50 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Số điện thoại"
-                        Width: =140
-                        X: =380
-                        Y: =95
-                        ZIndex: =29
-
-                    Label3_51 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Email"
-                        Width: =83
-                        X: =690
-                        Y: =95
-                        ZIndex: =30
-
-                    cbxLoaiKHNHD As combobox:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: =LookUp(DM_LOAI_KH,MA_LOAI_KH=First(objHD).LOAI_KHACH_HANG)
-                        DisplayFields: =["cr282_ten_loai_kh"]
-                        Height: =32
-                        InputTextPlaceholder: ="Chọn loại khách hàng"
-                        Items: =DM_LOAI_KH
-                        SearchFields: =["cr282_ten_loai_kh"]
-                        SearchItems: =Search(DM_LOAI_KH,cbxLoaiKHNHD.SearchText,"cr282_ten_loai_kh")
-                        SelectMultiple: =false
-                        Size: =11
-                        Width: =200
-                        X: =990
-                        Y: =122
-                        ZIndex: =31
-
-                    Label3_52 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Loại khách hàng"
-                        Width: =140
-                        X: =990
-                        Y: =95
-                        ZIndex: =32
-
-                    Label3_53 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Nghề nghiệp"
-                        Width: =140
-                        X: =70
-                        Y: =165
-                        ZIndex: =33
-
-                    Label3_54 As label:
-                        Height: =25
-                        Size: =11
-                        Text: ="Số người tham gia"
-                        Width: =140
-                        X: =380
-                        Y: =165
-                        ZIndex: =34
-
-    LeftNavigation_30 As LeftNavigation_9:
-        Width: =LeftNavigation_30.MenuWidth - 10
-        ZIndex: =4
+            Button3_15 As button:
+                FontWeight: =FontWeight.Bold
+                Height: =32
+                OnSelect: =Navigate(TraCuuHopDong)
+                Size: =11
+                Text: ="Hủy"
+                Width: =85
+                X: =1078
+                Y: =1127
+                ZIndex: =7
 
