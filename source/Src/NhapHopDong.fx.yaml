@@ -1460,7 +1460,7 @@
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
                                 Collect(
                                     tmpError,
-                                    {ID: 1}
+                                    {ID: 2}
                                 );
                             );
                             
@@ -1481,7 +1481,7 @@
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
                                 Collect(
                                     tmpError,
-                                    {ID: 1}
+                                    {ID: 3}
                                 );
                             );
                             
@@ -1502,7 +1502,7 @@
                                 ) And !IsBlank(cbxLoaiKBNHD.Selected.MA_LOAI_KB),
                                 Collect(
                                     tmpError,
-                                    {ID: 1}
+                                    {ID: 4}
                                 );
                             );
                             
@@ -1522,7 +1522,7 @@
                                 ) And !IsBlank(cbxLoaiKBNHD.Selected.MA_LOAI_KB),
                                 Collect(
                                     tmpError,
-                                    {ID: 1}
+                                    {ID: 5}
                                 );
                             );
                             
@@ -1543,7 +1543,7 @@
                                 ) And !IsBlank(cbxLoaiKBNHD.Selected.MA_LOAI_KB),
                                 Collect(
                                     tmpError,
-                                    {ID: 1}
+                                    {ID: 6}
                                 );
                             );
                         //1.3. kiểm tra nhóm KB
@@ -1563,7 +1563,7 @@
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
                                 Collect(
                                     tmpError,
-                                    {ID: 1}
+                                    {ID: 7}
                                 );
                             );
                             
@@ -1583,7 +1583,7 @@
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
                                 Collect(
                                     tmpError,
-                                    {ID: 1}
+                                    {ID: 8}
                                 );
                             );
                             
@@ -1604,82 +1604,73 @@
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
                                 Collect(
                                     tmpError,
-                                    {ID: 1}
+                                    {ID: 9}
                                 );
                             );
-                         /*  
+                          
                         //2. Kiểm tra khách hàng     
-                        // Nếu khách hàng áp dụng cho tất cả và có loại trừ
-                        // Tìm giá trị loại trừ Loại khách hàng, Nhóm khách hàng nếu có dữ liệu thì false
-                        If(
-                                !IsBlank(
+                        //2.1. kiểm tra nhóm Kh
+                        // Nếu kênh bán áp dụng cho tất cả và có loại trừ
+                        // Tìm giá trị loại trừ  cá nhân/tổ chức, nếu có dữ liệu thì false
+                            If(
+                                IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI,
-                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "1"
-                                    )
-                                ) And !IsBlank(
-                                    LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI,
-                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "2"
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_KH_LOAI"
                                     )
                                 ) And !IsBlank(
                                     LookUp(
                                         DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "2" && (MA_GIA_TRI = cbxLoaiKBNHD.Selected.MA_LOAI_KB Or MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN)
+                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
                                     )
-                                ),
+                                ) And !IsBlank(cbxLoaiKHNHD.Selected.value),
                                 Collect(
                                     tmpError,
-                                    {ID: 1}
+                                    {ID: 10}
                                 );
                             );
                             
-                        // Nếu khách hàng áp dụng 1 phần
-                        // Tìm trong danh sách áp dụng theo Loại khách hàng, Nhóm khách hàng nếu không có thì false
+                        // Nếu kênh bán áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã kênh bán, loại kênh bán, cá nhân/tổ chức, nếu không có thì false
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI,
-                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2"
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KH_LOAI"
                                     )
                                 ) And IsBlank(
                                     LookUp(
                                         DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2" && (MA_GIA_TRI = cbxLoaiKBNHD.Selected.MA_LOAI_KB Or MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN)
+                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
                                     )
-                                ),
+                                ) And !IsBlank(cbxLoaiKHNHD.Selected.value),
                                 Collect(
                                     tmpError,
-                                    {ID: 1}
+                                    {ID: 11}
                                 );
                             );
                             
-                        // Nếu khách hàng áp dụng 1 phần
-                        // Tìm trong danh sách áp dụng theo Loại khách hàng, Nhóm khách hàng nếu có dữ liệu
-                        // Tìm trong danh sách loại trừ Loại khách hàng, Nhóm khách hàng nếu có dữ liệu thì -> false, nếu không có thì  -> pass
+                        // Nếu kênh bán áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã kênh bán nếu có dữ liệu
+                        // Tìm trong danh sách loại trừ theo mã kênh bán nếu có dữ liệu thì -> false, nếu không có thì  -> pass
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI,
-                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2"
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
                                     )
                                 ) And !IsBlank(
                                     LookUp(
                                         DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2" && (MA_GIA_TRI = cbxLoaiKBNHD.Selected.MA_LOAI_KB Or MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN)
+                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
                                     )
-                                ) And !IsBlank(
-                                    LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "2" && (MA_GIA_TRI = cbxLoaiKBNHD.Selected.MA_LOAI_KB Or MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN)
-                                    )
-                                ),
+                                ) And !IsBlank(cbxLoaiKHNHD.Selected.value),
                                 Collect(
                                     tmpError,
-                                    {ID: 1}
+                                    {ID: 12}
                                 );
                             );
-                            */
+                        
                         //3. Kiểm tra phạm vi
                         //3.1 Kiểm tra tỉnh/thành phố
                         // Nếu áp dụng cho tất cả và có loại trừ
@@ -1703,7 +1694,7 @@
                                 ) And !IsBlank(cbxTinhNHD.Selected.MA_PHAMVI),
                                 Collect(
                                     tmpError,
-                                    {ID: 4}
+                                    {ID: 13}
                                 );
                             );
                             
@@ -1723,7 +1714,7 @@
                                 ) And !IsBlank(cbxTinhNHD.Selected.MA_PHAMVI),
                                 Collect(
                                     tmpError,
-                                    {ID: 5}
+                                    {ID: 14}
                                 );
                             );
                             
@@ -1749,7 +1740,7 @@
                                 ) And !IsBlank(cbxTinhNHD.Selected.MA_PHAMVI),
                                 Collect(
                                     tmpError,
-                                    {ID: 6}
+                                    {ID: 15}
                                 );
                             );
                             
@@ -1770,7 +1761,7 @@
                                 ) And !IsBlank(cbxDVQLNHD.Selected.MA_PHAMVI),
                                 Collect(
                                     tmpError,
-                                    {ID: 4}
+                                    {ID: 16}
                                 );
                             );
                             
@@ -1790,7 +1781,7 @@
                                 ) And !IsBlank(cbxDVQLNHD.Selected.MA_PHAMVI),
                                 Collect(
                                     tmpError,
-                                    {ID: 5}
+                                    {ID: 17}
                                 );
                             );
                             
@@ -1811,7 +1802,7 @@
                                 ) And !IsBlank(cbxDVQLNHD.Selected.MA_PHAMVI),
                                 Collect(
                                     tmpError,
-                                    {ID: 6}
+                                    {ID: 18}
                                 );
                             );
                             
@@ -1835,7 +1826,7 @@
                                     ) And !IsBlank(sp.cbxMaSPNHD.Selected.MA_SAN_PHAM),
                                     Collect(
                                         tmpError,
-                                        {ID: 5}
+                                        {ID: 19}
                                     );
                                 );
                                     // Nếu sản phẩm áp dụng 1 phần
@@ -1854,7 +1845,7 @@
                                     ) And !IsBlank(sp.cbxMaSPNHD.Selected.MA_SAN_PHAM),
                                     Collect(
                                         tmpError,
-                                        {x: sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH}
+                                        {ID: 20}
                                     );
                                 );
                                 
@@ -1875,7 +1866,7 @@
                                     ) And !IsBlank(sp.cbxMaSPNHD.Selected.MA_SAN_PHAM),
                                     Collect(
                                         tmpError,
-                                        {ID: 7}
+                                        {ID: 21}
                                     );
                                 );
                                 // 4.1.2 Kiểm tra thông tin chương trình
@@ -1895,7 +1886,7 @@
                                     ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
                                     Collect(
                                         tmpError,
-                                        {ID: 8}
+                                        {ID: 22}
                                     );
                                 );
                                     // Nếu sản phẩm áp dụng 1 phần
@@ -1914,7 +1905,7 @@
                                     ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
                                     Collect(
                                         tmpError,
-                                        {ID: 9}
+                                        {ID: 23}
                                     );
                                 );
                                     // Nếu chương trình áp dụng 1 phần
@@ -1934,7 +1925,7 @@
                                     ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
                                     Collect(
                                         tmpError,
-                                        {ID: 10}
+                                        {ID: 24}
                                     );
                                 );
                             );
