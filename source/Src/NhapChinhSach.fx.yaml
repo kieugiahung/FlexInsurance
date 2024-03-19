@@ -1257,7 +1257,7 @@ NhapChinhSach As screen:
                             ZIndex: =1
 
                         DataCardValueFileCS As attachments:
-                            AddAttachmentText: ="Nhập file"
+                            AddAttachmentText: ="Chọn file"
                             BorderColor: =RGBA(230, 230, 230, 1)
                             Color: =RGBA(50, 49, 48, 1)
                             DisabledBorderColor: =RGBA(0, 0, 0, 0)
@@ -1266,7 +1266,7 @@ NhapChinhSach As screen:
                             DisplayMode: =If(varGhiCS,DisplayMode.Disabled, DisplayMode.Edit)
                             DropTargetBackgroundColor: =RGBA(255, 255, 255, 1)
                             Font: =Font.'Segoe UI'
-                            Height: =104
+                            Height: =106
                             HoverColor: =RGBA(50, 49, 48, 1)
                             HoverFill: =RGBA(245, 245, 245, 1)
                             IsInDataCard: =true
@@ -2504,9 +2504,7 @@ NhapChinhSach As screen:
 
                 RadioCSKB As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
-                    Default: |-
-                        =//If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
-                        If(IsBlank(varMaCS), "Tất cả",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaCS  && THANH_PHAN = "KB" && AP_DUNG = "1" ).TEN_KIEU)
+                    Default: =If(IsBlank(varMaCS), "Tất cả",LookUp(DL_CHINHSACH_DOITUONG, MA_CHINH_SACH =varMaCS  && THANH_PHAN = "KB" && AP_DUNG = "1" ).TEN_KIEU)
                     DisplayMode: =If(varGhiCS,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
@@ -2619,7 +2617,7 @@ NhapChinhSach As screen:
 
                 RadioCSKB_LoaiTru As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
-                    Default: =If(IsBlank(varMaCS) Or varXoaKB_CS, "",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaCS  && THANH_PHAN = "KB" && AP_DUNG = "2" ).TEN_KIEU)
+                    Default: =If(IsBlank(varMaCS) Or varXoaKB_CS, "",LookUp(DL_CHINHSACH_DOITUONG, MA_CHINH_SACH =varMaCS  && THANH_PHAN = "KB" && AP_DUNG = "2" ).TEN_KIEU)
                     DisplayMode: =If(varGhiCS,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
@@ -2943,9 +2941,7 @@ NhapChinhSach As screen:
 
                 RadioCSKH As radio:
                     BorderColor: =RGBA(54, 176, 75, 1)
-                    Default: |-
-                        =//If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KH" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
-                        If(IsBlank(varMaCS), "Tất cả",LookUp(DL_CHINHSACH_DOITUONG, MA_CHINH_SACH=varMaCS  && THANH_PHAN = "KH" && AP_DUNG ="1" ).TEN_KIEU)
+                    Default: =If(IsBlank(varMaCS), "Tất cả",LookUp(DL_CHINHSACH_DOITUONG, MA_CHINH_SACH=varMaCS  && THANH_PHAN = "KH" && AP_DUNG ="1" ).TEN_KIEU)
                     DisabledBorderColor: =RGBA(255, 255, 255, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
                     DisplayMode: =If(varGhiCS,DisplayMode.Disabled,DisplayMode.Edit)
@@ -3369,9 +3365,7 @@ NhapChinhSach As screen:
 
                 RadioCSPV As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
-                    Default: |-
-                        =//If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "PV" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
-                        If(IsBlank(varMaCS), "Tất cả",LookUp(DL_CHINHSACH_DOITUONG, MA_CHINH_SACH =varMaCS  && THANH_PHAN = "PV" && AP_DUNG = "1" ).TEN_KIEU)
+                    Default: =If(IsBlank(varMaCS), "Tất cả",LookUp(DL_CHINHSACH_DOITUONG, MA_CHINH_SACH =varMaCS  && THANH_PHAN = "PV" && AP_DUNG = "1" ).TEN_KIEU)
                     DisplayMode: =If(varGhiCS,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
                     Items: |-
@@ -3467,7 +3461,7 @@ NhapChinhSach As screen:
                 RadioCSPV_LoaiTru As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
                     Default: |-
-                        =If(IsBlank(varMaCS) Or varXoaPV_CS, "",LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaCS  && THANH_PHAN = "PV" && AP_DUNG = "2" ).TEN_KIEU
+                        =If(IsBlank(varMaCS) Or varXoaPV_CS, "",LookUp(DL_CHINHSACH_DOITUONG, MA_CHINH_SACH =varMaCS  && THANH_PHAN = "PV" && AP_DUNG = "2" ).TEN_KIEU
                         )
                     DisplayMode: =If(varGhiCS,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
@@ -3779,8 +3773,7 @@ NhapChinhSach As screen:
                 RadioCSSP As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
                     Default: |-
-                        =//If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "KB" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
-                        If(IsBlank(varMaCS), "Tất cả", 
+                        =If(IsBlank(varMaCS), "Tất cả", 
                         LookUp(DL_CHINHSACH_DOITUONG, MA_CHINH_SACH = varMaCS  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU)
                     DisplayMode: =If(varGhiCS,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
@@ -4289,7 +4282,7 @@ NhapChinhSach As screen:
                 RadioST As radio:
                     BorderColor: =RGBA(0, 0, 0, 0)
                     Default: |-
-                        =//If(CountRows(Filter(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "PV" && AP_DUNG = "1")) > 0, LookUp(DL_DIEUKIEN_APDUNG_LOAI, MA_DIEU_KIEN =varMaDKien  && THANH_PHAN = "SP" && AP_DUNG = "1" ).TEN_KIEU, "Tất cả" )
+                        =
                         If(IsBlank(varMaCS), "Tất cả",LookUp(DL_CHINHSACH_DOITUONG, MA_CHINH_SACH =varMaCS  && THANH_PHAN = "ST" && AP_DUNG = "1" ).TEN_KIEU)
                     DisplayMode: =If(varGhiCS,DisplayMode.Disabled,DisplayMode.Edit)
                     HoverColor: =RGBA(0, 0, 0, 1)
