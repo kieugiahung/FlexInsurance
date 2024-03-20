@@ -28,12 +28,34 @@
                 0
             )
         );
+        ClearCollect(
+            tmpKTTNHDCollect,
+            Filter(
+                DL_HOP_DONG_TTOANS,
+                MA_HOP_DONG=maHopDongFwd
+            )
+        );
         UpdateContext({
             maHDSP:Max(DL_HOP_DONG_SPS,ID),
+            maKTT:Max(DL_HOP_DONG_TTOANS,ID),
             maAddedHDSPNHD:"",
             maUpdatedHDSPNHD:"",
             nhomKB:""
         });
+        If(
+            CountIf(tmpKTTNHDCollect,true)=0,
+            Collect(
+                tmpKTTNHDCollect,
+                Defaults(tmpKTTNHDCollect)
+            );
+            UpdateIf(
+                tmpKTTNHDCollect,
+                IsBlank(ID),
+                {
+                    ID:Text(maKTT+1)
+                }
+            )
+        );
         Set(maHopDongFwd,"");
 
     Canvas2 As fluidGrid.fluidGridWithBlankCard:
@@ -3001,7 +3023,7 @@
                 tiTongTPNHD As text:
                     Align: =Align.Right
                     BorderColor: =RGBA(72, 163, 62, 1)
-                    Default: =First(objHD).TONG_TIEN_PHI
+                    Default: =If(IsBlank(First(objHD).TONG_TIEN_PHI),0,First(objHD).TONG_TIEN_PHI)
                     DisplayMode: =DisplayMode.Disabled
                     Format: =TextFormat.Number
                     Height: =32
@@ -3023,7 +3045,7 @@
                 tiSTGiamNHD As text:
                     Align: =Align.Right
                     BorderColor: =RGBA(72, 163, 62, 1)
-                    Default: = If(IsBlank(First(objHD).SO_TIEN_GIAM),0,First(objHD).SO_TIEN_GIAM)
+                    Default: =If(IsBlank(First(objHD).SO_TIEN_GIAM),0,First(objHD).SO_TIEN_GIAM)
                     DisplayMode: =DisplayMode.Disabled
                     Format: =TextFormat.Number
                     Height: =32
@@ -3045,7 +3067,7 @@
                 tiTienSauGiamNHD As text:
                     Align: =Align.Right
                     BorderColor: =RGBA(72, 163, 62, 1)
-                    Default: =First(objHD).TIEN_PHI_SAU_GIAM
+                    Default: =If(IsBlank(First(objHD).TIEN_PHI_SAU_GIAM),0,First(objHD).TIEN_PHI_SAU_GIAM)
                     DisplayMode: =DisplayMode.Disabled
                     Format: =TextFormat.Number
                     Height: =32
@@ -3324,4 +3346,47 @@
         X: =1140
         Y: =716
         ZIndex: =6
+
+    Button3_16 As button:
+        FontWeight: =FontWeight.Bold
+        Height: =32
+        OnSelect: |-
+            =UpdateIf(
+                objHD,
+                true,
+                {
+                    TONG_TIEN_PHI:Sum(Filter(tmpDSHDSPNHDCollect,edited=0),TONG_TIEN_PHI)-Sum(Filter(DL_HOP_DONG_KETQUA_CS,MA_HOP_DONG=First(objHD).MA_HOP_DONG),GIA_TRI)
+                }
+            );
+            UpdateIf(
+                objHD,
+                true,
+                {
+                    TIEN_PHI_SAU_GIAM:Value(tiTongTPNHD.Text)-Value(tiSTGiamNHD.Text)
+                }
+            );
+            UpdateIf(
+                tmpKTTNHDCollect,
+                true,
+                {
+                    PHI_THANH_TOAN:RoundDown(Value(tiTienSauGiamNHD.Text)/CountIf(tmpKTTNHDCollect,true),0)
+                }
+            );
+            If(
+                Mod(Value(tiTienSauGiamNHD.Text),CountIf(tmpKTTNHDCollect,true))<>0,
+                UpdateIf(
+                    tmpKTTNHDCollect,
+                    ID=Text(Max(tmpKTTNHDCollect,ID)),
+                    {
+                        PHI_THANH_TOAN:Sum(RoundDown(Value(tiTienSauGiamNHD.Text)/CountIf(tmpKTTNHDCollect,true),0),Mod(Value(tiTienSauGiamNHD.Text),CountIf(tmpKTTNHDCollect,true)))
+                    }
+                );
+                Notify(Mod(Value(tiTienSauGiamNHD.Text),CountIf(tmpKTTNHDCollect,true)),NotificationType.Success,2000);
+            )
+        Size: =11
+        Text: ="Tính phí"
+        Width: =85
+        X: =1022
+        Y: =716
+        ZIndex: =7
 
