@@ -1,0 +1,1231 @@
+ChonChinhSach As screen:
+
+    Container9 As groupContainer.manualLayoutContainer:
+        DropShadow: =DropShadow.None
+        Height: =Parent.Height
+        Width: =Parent.Width-Self.X
+        X: =60
+        ZIndex: =1
+
+        Container8_4 As groupContainer.manualLayoutContainer:
+            DropShadow: =DropShadow.None
+            Height: =484
+            Width: =1306
+            Y: =30
+            ZIndex: =1
+
+            Label2_32 As label:
+                Height: =25
+                Size: =11
+                Text: ="Mã khách hàng"
+                Width: =123
+                X: =500
+                ZIndex: =7
+
+            Button6_21 As button:
+                FontWeight: =FontWeight.Bold
+                Height: =28
+                OnSelect: |
+                    =ClearCollect(// lay gia tri cs chung
+                        tmpChonTCCSDT,
+                        ShowColumns(
+                            AddColumns(
+                                SortByColumns(
+                                    DL_CHINHSACH_CHUNG,
+                                    "cr282_ma_chinh_sach",
+                                    SortOrder.Ascending
+                                ),
+                                "hinh_thuc",
+                                "",
+                                "loai_dieu_kien",
+                                "",
+                                "loai_cs",
+                                "",
+                                "so_tien",
+                                0,
+                                "ty_le",
+                                0,
+                                "so_tien_max",
+                                0,
+                                "donvi_tien",
+                                "",
+                                "tich_chon",
+                                false
+                            ),
+                            "cr282_id",
+                            "cr282_ma_chinh_sach",
+                            "cr282_mo_ta",
+                            "cr282_san_pham",
+                            "cr282_kenh_ban",
+                            "cr282_khach_hang",
+                            "cr282_pham_vi",
+                            "cr282_hieu_luc_tu",
+                            "cr282_hieu_luc_den",
+                            "hinh_thuc",
+                            "loai_dieu_kien",
+                            "loai_cs",
+                            "so_tien",
+                            "ty_le",
+                            "so_tien_max",
+                            "donvi_tien",
+                            "tich_chon"
+                        )
+                    );
+                    ForAll(//Lay gia tri cs ap dung
+                        DL_CHINHSACH_APDUNG As cs,
+                        UpdateIf(
+                            tmpChonTCCSDT,
+                            cr282_ma_chinh_sach = cs.MA_CHINH_SACH,
+                            {
+                                hinh_thuc: cs.HINH_THUC,
+                                loai_dieu_kien: cs.LOAI_DK,
+                                loai_cs: cs.ANH_HUONG,
+                                so_tien: cs.SO_TIEN,
+                                ty_le: cs.TY_LE,
+                                so_tien_max: cs.SO_TIEN_TOI_DA,
+                                donvi_tien: cs.DONVI_TIEN_TE,
+                                tich_chon: If(!IsBlank(LookUp(DL_HOP_DONG_CHON_CS, MA_CHINH_SACH=cr282_ma_chinh_sach 
+                                && MA_HOP_DONG=varMaHD_CS).MA_CHINH_SACH), true,false)
+                            }
+                        )
+                    );
+                Size: =9
+                Text: ="Tra cứu"
+                Width: =80
+                X: =1218
+                Y: =31
+                ZIndex: =8
+
+            Label2_30 As label:
+                Height: =27
+                Size: =11
+                Text: ="Mã sản phẩm"
+                Width: =105
+                ZIndex: =25
+
+            Label2_31 As label:
+                Height: =25
+                Size: =11
+                Text: ="Mã kênh bán"
+                Width: =120
+                X: =250
+                ZIndex: =27
+
+            Label2_33 As label:
+                Height: =25
+                Size: =11
+                Text: ="Mã phạm vi"
+                Width: =101
+                X: =750
+                ZIndex: =33
+
+            Label2_34 As label:
+                Height: =25
+                Size: =11
+                Text: ="Ngày HĐ"
+                Width: =88
+                X: =1000
+                ZIndex: =34
+
+            DropMaSP As dropdown:
+                BorderColor: =RGBA(54, 176, 75, 1)
+                ChevronBackground: =RGBA(255, 255, 255, 1)
+                ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
+                ChevronDisabledFill: =RGBA(161, 159, 157, 1)
+                ChevronFill: =RGBA(54, 176, 75, 1)
+                ChevronHoverBackground: =RGBA(245, 245, 245, 1)
+                ChevronHoverFill: =RGBA(50, 49, 48, 1)
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(230, 230, 230, 1)
+                Height: =30
+                HoverBorderColor: =RGBA(16, 110, 190, 1)
+                HoverColor: =RGBA(50, 49, 48, 1)
+                HoverFill: =RGBA(245, 245, 245, 1)
+                Items: =DL_SAN_PHAM
+                PaddingBottom: =5
+                PaddingLeft: =12
+                PaddingRight: =5
+                PaddingTop: =5
+                PressedBorderColor: =RGBA(16, 110, 190, 1)
+                PressedFill: =RGBA(0, 120, 212, 1)
+                SelectionColor: =RGBA(50, 49, 48, 1)
+                SelectionFill: =RGBA(0, 120, 212, 1)
+                Size: =11
+                Width: =200
+                Y: =30
+                ZIndex: =35
+
+            DropMaKB As dropdown:
+                BorderColor: =RGBA(54, 176, 75, 1)
+                ChevronBackground: =RGBA(255, 255, 255, 1)
+                ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
+                ChevronDisabledFill: =RGBA(161, 159, 157, 1)
+                ChevronFill: =RGBA(54, 176, 75, 1)
+                ChevronHoverBackground: =RGBA(245, 245, 245, 1)
+                ChevronHoverFill: =RGBA(50, 49, 48, 1)
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(230, 230, 230, 1)
+                Height: =30
+                HoverBorderColor: =RGBA(16, 110, 190, 1)
+                HoverColor: =RGBA(50, 49, 48, 1)
+                HoverFill: =RGBA(245, 245, 245, 1)
+                Items: =DM_KENH_BANS
+                PaddingBottom: =5
+                PaddingLeft: =12
+                PaddingRight: =5
+                PaddingTop: =5
+                PressedBorderColor: =RGBA(16, 110, 190, 1)
+                PressedFill: =RGBA(0, 120, 212, 1)
+                SelectionColor: =RGBA(50, 49, 48, 1)
+                SelectionFill: =RGBA(0, 120, 212, 1)
+                Size: =11
+                Width: =200
+                X: =250
+                Y: =30
+                ZIndex: =36
+
+            DropMaKH As dropdown:
+                BorderColor: =RGBA(54, 176, 75, 1)
+                ChevronBackground: =RGBA(255, 255, 255, 1)
+                ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
+                ChevronDisabledFill: =RGBA(161, 159, 157, 1)
+                ChevronFill: =RGBA(54, 176, 75, 1)
+                ChevronHoverBackground: =RGBA(245, 245, 245, 1)
+                ChevronHoverFill: =RGBA(50, 49, 48, 1)
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(230, 230, 230, 1)
+                Height: =30
+                HoverBorderColor: =RGBA(16, 110, 190, 1)
+                HoverColor: =RGBA(50, 49, 48, 1)
+                HoverFill: =RGBA(245, 245, 245, 1)
+                Items: =DM_KHACH_HANG
+                PaddingBottom: =5
+                PaddingLeft: =12
+                PaddingRight: =5
+                PaddingTop: =5
+                PressedBorderColor: =RGBA(16, 110, 190, 1)
+                PressedFill: =RGBA(0, 120, 212, 1)
+                SelectionColor: =RGBA(50, 49, 48, 1)
+                SelectionFill: =RGBA(0, 120, 212, 1)
+                Size: =11
+                Width: =200
+                X: =500
+                Y: =27
+                ZIndex: =37
+
+            DropMaPV As dropdown:
+                BorderColor: =RGBA(54, 176, 75, 1)
+                ChevronBackground: =RGBA(255, 255, 255, 1)
+                ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
+                ChevronDisabledFill: =RGBA(161, 159, 157, 1)
+                ChevronFill: =RGBA(54, 176, 75, 1)
+                ChevronHoverBackground: =RGBA(245, 245, 245, 1)
+                ChevronHoverFill: =RGBA(50, 49, 48, 1)
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(230, 230, 230, 1)
+                Height: =30
+                HoverBorderColor: =RGBA(16, 110, 190, 1)
+                HoverColor: =RGBA(50, 49, 48, 1)
+                HoverFill: =RGBA(245, 245, 245, 1)
+                Items: =DM_PHAMVI_DIALYS
+                PaddingBottom: =5
+                PaddingLeft: =12
+                PaddingRight: =5
+                PaddingTop: =5
+                PressedBorderColor: =RGBA(16, 110, 190, 1)
+                PressedFill: =RGBA(0, 120, 212, 1)
+                SelectionColor: =RGBA(50, 49, 48, 1)
+                SelectionFill: =RGBA(0, 120, 212, 1)
+                Size: =11
+                Width: =200
+                X: =750
+                Y: =30
+                ZIndex: =38
+
+            DateHD As datepicker:
+                BorderColor: =RGBA(54, 176, 75, 1)
+                CalendarHeaderFill: =RGBA(16, 110, 190, 1)
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledBorderColor: =RGBA(204, 228, 246, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(230, 230, 230, 1)
+                Format: ="dd/mm/yyyy"
+                Height: =30
+                HoverDateFill: =RGBA(184, 187, 184, 1)
+                IconBackground: =RGBA(0, 120, 212, 1)
+                InputTextPlaceholder: =
+                IsEditable: =true
+                PaddingTop: =5
+                SelectedDateFill: =RGBA(0, 120, 212, 1)
+                Size: =11
+                Width: =200
+                X: =1000
+                Y: =30
+                ZIndex: =39
+
+            Container5_1 As groupContainer.horizontalAutoLayoutContainer:
+                DropShadow: =DropShadow.None
+                Height: =405
+                LayoutMode: =LayoutMode.Auto
+                LayoutOverflowX: =LayoutOverflow.Scroll
+                LayoutOverflowY: =LayoutOverflow.Scroll
+                Width: =Parent.Width
+                Y: =79
+                ZIndex: =40
+
+                Container6_1 As groupContainer.manualLayoutContainer:
+                    DropShadow: =DropShadow.None
+                    FillPortions: =0
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    Width: =1700
+                    ZIndex: =1
+
+                    GalleryChonCS As gallery.galleryVertical:
+                        BorderColor: =RGBA(102, 174, 229, 1)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =1
+                        DelayItemLoading: =true
+                        Height: =353
+                        Items: =SortByColumns(tmpChonTCCSDT,"cr282_ma_chinh_sach",SortOrder.Ascending)
+                        Layout: =Layout.Vertical
+                        LoadingSpinner: =LoadingSpinner.Data
+                        NavigationStep: =0
+                        TemplatePadding: =0
+                        TemplateSize: =103
+                        Width: =Parent.Width-5
+                        WrapCount: =0
+                        X: =5
+                        Y: =40
+                        ZIndex: =1
+
+                        ChonCS As checkbox:
+                            BorderColor: =RGBA(180, 214, 250, 1)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            CheckboxBorderColor: =RGBA(0, 108, 191, 1)
+                            CheckmarkFill: =RGBA(0, 120, 212, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =ThisItem.tich_chon
+                            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                            DisabledColor: =RGBA(161, 159, 157, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            FocusedBorderThickness: =4
+                            Height: =102
+                            HoverBorderColor: =RGBA(0, 0, 0, 0)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(0, 0, 0, 0)
+                            OnSelect: =Select(Parent)
+                            PressedBorderColor: =RGBA(0, 0, 0, 0)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(0, 0, 0, 0)
+                            Size: =11
+                            Text: =""
+                            Width: =46
+                            X: =7
+                            Y: =1
+                            ZIndex: =52
+
+                        HTMLMoTa As htmlViewer:
+                            BorderColor: =RGBA(180, 214, 250, 1)
+                            BorderStyle: =BorderStyle.Solid
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =102
+                            HtmlText: =ThisItem.cr282_mo_ta
+                            OnSelect: =Select(Parent)
+                            Width: =192
+                            X: =119
+                            Y: =1
+                            ZIndex: =54
+
+                        HtmlSP As htmlViewer:
+                            BorderColor: =RGBA(180, 214, 250, 1)
+                            BorderStyle: =BorderStyle.Solid
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =102
+                            HtmlText: =ThisItem.cr282_san_pham
+                            OnSelect: =Select(Parent)
+                            Width: =160
+                            X: =311
+                            Y: =1
+                            ZIndex: =55
+
+                        HTMLKB As htmlViewer:
+                            BorderColor: =RGBA(180, 214, 250, 1)
+                            BorderStyle: =BorderStyle.Solid
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =102
+                            HtmlText: =ThisItem.cr282_kenh_ban
+                            OnSelect: =Select(Parent)
+                            Width: =160
+                            X: =471
+                            Y: =1
+                            ZIndex: =56
+
+                        HtmlKH As htmlViewer:
+                            BorderColor: =RGBA(180, 214, 250, 1)
+                            BorderStyle: =BorderStyle.Solid
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =102
+                            HtmlText: =ThisItem.cr282_khach_hang
+                            OnSelect: =Select(Parent)
+                            Width: =160
+                            X: =632
+                            Y: =1
+                            ZIndex: =57
+
+                        HtmlPV As htmlViewer:
+                            BorderColor: =RGBA(180, 214, 250, 1)
+                            BorderStyle: =BorderStyle.Solid
+                            BorderThickness: =2
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            Fill: =RGBA(255, 255, 255, 1)
+                            Height: =102
+                            HtmlText: =ThisItem.cr282_pham_vi
+                            OnSelect: =Select(Parent)
+                            Width: =160
+                            X: =792
+                            Y: =1
+                            ZIndex: =58
+
+                        TextMaCS As text:
+                            BorderColor: =RGBA(245, 245, 245, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =ThisItem.cr282_ma_chinh_sach
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =102
+                            HoverBorderColor: =RGBA(16, 110, 190, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            OnSelect: =Select(Parent)
+                            PressedBorderColor: =RGBA(0, 120, 212, 1)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Size: =11
+                            Width: =66
+                            X: =53
+                            Y: =1
+                            ZIndex: =69
+
+                        TxtHT As text:
+                            BorderColor: =RGBA(245, 245, 245, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =If(ThisItem.hinh_thuc="001","Ưu tiên",If(ThisItem.hinh_thuc="002","Liên kết",If(ThisItem.hinh_thuc="003","Gộp","")))
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =102
+                            HoverBorderColor: =RGBA(16, 110, 190, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            OnSelect: =Select(Parent)
+                            PressedBorderColor: =RGBA(0, 120, 212, 1)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Size: =11
+                            Width: =86
+                            X: =952
+                            Y: =1
+                            ZIndex: =70
+
+                        TxtLoaiDK As text:
+                            BorderColor: =RGBA(245, 245, 245, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =If(ThisItem.loai_dieu_kien="1","Đơn",If(ThisItem.loai_dieu_kien="2","Kết hợp",""))
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =102
+                            HoverBorderColor: =RGBA(16, 110, 190, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            OnSelect: =Select(Parent)
+                            PressedBorderColor: =RGBA(0, 120, 212, 1)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Size: =11
+                            Width: =69
+                            X: =1038
+                            Y: =1
+                            ZIndex: =72
+
+                        TxtLoaiCS As text:
+                            BorderColor: =RGBA(245, 245, 245, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =If(ThisItem.loai_cs="1","Tăng",If(ThisItem.loai_cs="2","Giảm",""))
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =102
+                            HoverBorderColor: =RGBA(16, 110, 190, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            OnSelect: =Select(Parent)
+                            PressedBorderColor: =RGBA(0, 120, 212, 1)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Size: =11
+                            Width: =51
+                            X: =1107
+                            Y: =1
+                            ZIndex: =73
+
+                        TxtSoTien As text:
+                            Align: =Align.Right
+                            BorderColor: =RGBA(245, 245, 245, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =ThisItem.so_tien
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =102
+                            HoverBorderColor: =RGBA(16, 110, 190, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            OnSelect: =Select(Parent)
+                            PressedBorderColor: =RGBA(0, 120, 212, 1)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Size: =11
+                            Width: =89
+                            X: =1160
+                            Y: =1
+                            ZIndex: =74
+
+                        TxtTyLe_1 As text:
+                            Align: =Align.Right
+                            BorderColor: =RGBA(245, 245, 245, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =ThisItem.ty_le
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =102
+                            HoverBorderColor: =RGBA(16, 110, 190, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            OnSelect: =Select(Parent)
+                            PressedBorderColor: =RGBA(0, 120, 212, 1)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Size: =11
+                            Width: =57
+                            X: =1249
+                            Y: =1
+                            ZIndex: =75
+
+                        TxtMaxST As text:
+                            Align: =Align.Right
+                            BorderColor: =RGBA(245, 245, 245, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =ThisItem.so_tien_max
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =102
+                            HoverBorderColor: =RGBA(16, 110, 190, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            OnSelect: =Select(Parent)
+                            PressedBorderColor: =RGBA(0, 120, 212, 1)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Size: =11
+                            Width: =91
+                            X: =1306
+                            Y: =1
+                            ZIndex: =76
+
+                        TxtDVTien As text:
+                            BorderColor: =RGBA(245, 245, 245, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =ThisItem.donvi_tien
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =102
+                            HoverBorderColor: =RGBA(16, 110, 190, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            OnSelect: =Select(Parent)
+                            PressedBorderColor: =RGBA(0, 120, 212, 1)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Size: =11
+                            Width: =77
+                            X: =1397
+                            Y: =1
+                            ZIndex: =77
+
+                        TxtTuNgay As text:
+                            BorderColor: =RGBA(245, 245, 245, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =Text(ThisItem.cr282_hieu_luc_tu, "dd/mm/yyyy")
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =102
+                            HoverBorderColor: =RGBA(16, 110, 190, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            OnSelect: =Select(Parent)
+                            PressedBorderColor: =RGBA(0, 120, 212, 1)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Size: =11
+                            Width: =105
+                            X: =1474
+                            Y: =1
+                            ZIndex: =78
+
+                        TxtDenNgay As text:
+                            BorderColor: =RGBA(245, 245, 245, 1)
+                            Color: =RGBA(50, 49, 48, 1)
+                            Default: =Text(ThisItem.cr282_hieu_luc_den, "dd/mm/yyyy")
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledColor: =RGBA(0, 0, 0, 1)
+                            DisabledFill: =RGBA(255, 255, 255, 1)
+                            DisplayMode: =DisplayMode.Disabled
+                            Height: =102
+                            HoverBorderColor: =RGBA(16, 110, 190, 1)
+                            HoverColor: =RGBA(50, 49, 48, 1)
+                            HoverFill: =RGBA(255, 255, 255, 1)
+                            OnSelect: =Select(Parent)
+                            PressedBorderColor: =RGBA(0, 120, 212, 1)
+                            PressedColor: =RGBA(50, 49, 48, 1)
+                            PressedFill: =RGBA(255, 255, 255, 1)
+                            RadiusBottomLeft: =0
+                            RadiusBottomRight: =0
+                            RadiusTopLeft: =0
+                            RadiusTopRight: =0
+                            Size: =11
+                            Width: =105
+                            X: =1579
+                            Y: =1
+                            ZIndex: =79
+
+                    BadgeCanvas1_59 As Badge:
+                        BasePaletteColor: =
+                        Content: =""
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Width: =Parent.Width-5
+                        X: =5
+                        Y: =0
+                        ZIndex: =2
+
+                    TextCanvas2_249 As Text:
+                        Align: ='TextCanvas.Align'.Center
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Size: =10
+                        Text: ="Mã"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =27
+                        X: =77
+                        Y: =0
+                        ZIndex: =3
+
+                    TextCanvas2_261 As Text:
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Size: =10
+                        Text: ="Đơn vị tiền"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =53
+                        X: =1411
+                        Y: =0
+                        ZIndex: =4
+
+                    TextCanvas2_251 As Text:
+                        Align: ='TextCanvas.Align'.Center
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Size: =10
+                        Text: ="Sản phẩm"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =55
+                        X: =374
+                        Y: =0
+                        ZIndex: =5
+
+                    TextCanvas2_252 As Text:
+                        Align: ='TextCanvas.Align'.Center
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Size: =10
+                        Text: ="Kênh bán"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =59
+                        X: =515
+                        Y: =0
+                        ZIndex: =6
+
+                    TextCanvas2_253 As Text:
+                        Align: ='TextCanvas.Align'.Center
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Size: =10
+                        Text: ="Khách hàng"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =71
+                        X: =678
+                        Y: =0
+                        ZIndex: =7
+
+                    TextCanvas2_254 As Text:
+                        Align: ='TextCanvas.Align'.Center
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Size: =10
+                        Text: ="Phạm vi"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =84
+                        X: =832
+                        Y: =0
+                        ZIndex: =8
+
+                    TextCanvas2_256 As Text:
+                        Align: ='TextCanvas.Align'.Center
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Size: =10
+                        Text: ="Loại điều kiện"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =64
+                        X: =1047
+                        Y: =0
+                        ZIndex: =9
+
+                    TextCanvas2_257 As Text:
+                        Align: ='TextCanvas.Align'.Center
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Size: =10
+                        Text: ="Loại chính sách"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =49
+                        X: =1111
+                        Y: =0
+                        ZIndex: =10
+
+                    TextCanvas2_258 As Text:
+                        Align: ='TextCanvas.Align'.Center
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Size: =10
+                        Text: ="Số tiền"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =52
+                        X: =1178
+                        Y: =0
+                        ZIndex: =11
+
+                    TextCanvas2_259 As Text:
+                        Align: ='TextCanvas.Align'.Center
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Size: =10
+                        Text: ="Tỷ lệ (%)"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =55
+                        X: =1249
+                        Y: =0
+                        ZIndex: =12
+
+                    TextCanvas2_260 As Text:
+                        Align: ='TextCanvas.Align'.Center
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Size: =10
+                        Text: ="Số tiền tối đa"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =91
+                        X: =1306
+                        Y: =0
+                        ZIndex: =13
+
+                    TextCanvas2_262 As Text:
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Size: =10
+                        Text: ="Hiệu lực từ"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =57
+                        X: =1497
+                        Y: =0
+                        ZIndex: =14
+
+                    TextCanvas2_263 As Text:
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Size: =10
+                        Text: ="Hiệu lực đến"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =69
+                        X: =1600
+                        Y: =0
+                        ZIndex: =15
+
+                    TextCanvas2_255 As Text:
+                        Align: ='TextCanvas.Align'.Center
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Size: =10
+                        Text: ="Hình thức"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =84
+                        X: =951
+                        Y: =0
+                        ZIndex: =16
+
+                    TextCanvas2_250 As Text:
+                        Align: ='TextCanvas.Align'.Center
+                        DisplayMode: =DisplayMode.Edit
+                        FontColor: =
+                        Height: =40
+                        Size: =10
+                        Text: ="Mô tả"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =59
+                        X: =190
+                        Y: =0
+                        ZIndex: =17
+
+        Label1_26 As label:
+            Align: =Align.Justify
+            BorderColor: =RGBA(0, 0, 0, 0)
+            BorderStyle: =BorderStyle.None
+            BorderThickness: =2
+            Color: =RGBA(50, 49, 48, 1)
+            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+            DisabledColor: =RGBA(161, 159, 157, 1)
+            FocusedBorderThickness: =4
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Bold
+            Height: =30
+            Size: =11
+            Text: ="1. Chọn chính sách áp dụng"
+            Width: =1306
+            ZIndex: =2
+
+        Button6_22 As button:
+            FontWeight: =FontWeight.Bold
+            Height: =32
+            OnSelect: |
+                =RemoveIf(DL_HOP_DONG_CHON_CS,MA_HOP_DONG=varMaHD);
+                ForAll(
+                    GalleryChonCS.AllItems As cs,
+                    If(
+                        cs.ChonCS.Value = true,
+                        Patch(
+                            DL_HOP_DONG_CHON_CS,
+                            Defaults(DL_HOP_DONG_CHON_CS),
+                            {
+                                ID: Max(DL_HOP_DONG_CHON_CS, ID)+1,
+                                MA_CHINH_SACH:cs.TextMaCS.Text,
+                                MA_HOP_DONG:varMaHD,
+                                SO_TIEN: Value(cs.TxtSoTien.Text),
+                                TY_LE: Value(cs.TxtTyLe_1.Text),
+                                SO_TIEN_TOIDA: Value(cs.TxtMaxST.Text)
+                            }
+                        )
+                    )
+                );
+                Notify(
+                        "Chọn chính sách thành công",
+                        NotificationType.Success,
+                        800
+                    );
+            Size: =9
+            Text: ="Chọn chính sách"
+            Width: =123
+            X: =1182
+            Y: =537
+            ZIndex: =3
+
+        Label1_27 As label:
+            Align: =Align.Justify
+            BorderColor: =RGBA(0, 0, 0, 0)
+            BorderStyle: =BorderStyle.None
+            BorderThickness: =2
+            Color: =RGBA(50, 49, 48, 1)
+            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+            DisabledColor: =RGBA(161, 159, 157, 1)
+            FocusedBorderThickness: =4
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Bold
+            Height: =30
+            Size: =11
+            Text: ="2. Kết quả áp dụng chính sách"
+            Width: =1306
+            Y: =590
+            ZIndex: =4
+
+        Form1 As form:
+            DataSource: =DL_HOP_DONG_KETQUA_CS
+            Height: =123
+            NumberOfColumns: =4
+            Width: =1306
+            Y: =620
+            ZIndex: =5
+
+            LOAI_TAC_DONG_DataCard1 As typedDataCard.textualEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="cr282_loai_tac_dong"
+                Default: =ThisItem.LOAI_TAC_DONG
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS],DataSourceInfo.DisplayName,"cr282_loai_tac_dong")
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                MaxLength: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS], DataSourceInfo.MaxLength, "cr282_loai_tac_dong")
+                Required: =false
+                Update: =DataCardValue21.Text
+                Width: =326
+                X: =0
+                Y: =0
+                ZIndex: =6
+
+                DataCardKey38 As label:
+                    AutoHeight: =true
+                    Color: =RGBA(0, 0, 0, 1)
+                    Height: =34
+                    Size: =11
+                    Text: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue21 As text:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    Default: =Parent.Default
+                    DelayOutput: =true
+                    DisplayMode: =Parent.DisplayMode
+                    MaxLength: =Parent.MaxLength
+                    PaddingLeft: =5
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Tooltip: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardKey38.Y + DataCardKey38.Height + 5
+                    ZIndex: =2
+
+                ErrorMessage35 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue21.Y + DataCardValue21.Height
+                    ZIndex: =3
+
+                StarVisible36 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey38.Height
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey38.Y
+                    ZIndex: =4
+
+            SO_TIEN_TOI_DA_DataCard1 As typedDataCard.numberEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="cr282_so_tien_toi_da"
+                Default: =ThisItem.SO_TIEN_TOI_DA
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS],DataSourceInfo.DisplayName,"cr282_so_tien_toi_da")
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                Required: =false
+                Update: =Value(DataCardValue23.Text)
+                Width: =326
+                X: =3
+                Y: =0
+                ZIndex: =6
+
+                DataCardKey46 As label:
+                    AutoHeight: =true
+                    Height: =34
+                    Text: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue23 As text:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    Default: =Parent.Default
+                    DelayOutput: =true
+                    DisplayMode: =Parent.DisplayMode
+                    Format: =TextFormat.Number
+                    PaddingLeft: =5
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Tooltip: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardKey46.Y + DataCardKey46.Height + 5
+                    ZIndex: =2
+
+                ErrorMessage36 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue23.Y + DataCardValue23.Height
+                    ZIndex: =3
+
+                StarVisible43 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey46.Height
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey46.Y
+                    ZIndex: =4
+
+            KIEU_DU_LIEU_DataCard2 As typedDataCard.textualEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="cr282_kieu_du_lieu"
+                Default: =ThisItem.KIEU_DU_LIEU
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS],DataSourceInfo.DisplayName,"cr282_kieu_du_lieu")
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                MaxLength: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS], DataSourceInfo.MaxLength, "cr282_kieu_du_lieu")
+                Required: =false
+                Update: =DataCardValue19.Text
+                Width: =326
+                X: =1
+                Y: =0
+                ZIndex: =6
+
+                DataCardKey37 As label:
+                    AutoHeight: =true
+                    Color: =RGBA(0, 0, 0, 1)
+                    Height: =34
+                    Size: =11
+                    Text: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue19 As text:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    Default: =Parent.Default
+                    DelayOutput: =true
+                    DisplayMode: =Parent.DisplayMode
+                    MaxLength: =Parent.MaxLength
+                    PaddingLeft: =5
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Tooltip: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardKey37.Y + DataCardKey37.Height + 5
+                    ZIndex: =2
+
+                ErrorMessage34 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue19.Y + DataCardValue19.Height
+                    ZIndex: =3
+
+                StarVisible35 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey37.Height
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey37.Y
+                    ZIndex: =4
+
+            GIA_TRI_DataCard1 As typedDataCard.numberEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="cr282_gia_tri"
+                Default: =ThisItem.GIA_TRI
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS],DataSourceInfo.DisplayName,"cr282_gia_tri")
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                Required: =false
+                Update: =Value(DataCardValue14.Text)
+                Width: =326
+                X: =2
+                Y: =0
+                ZIndex: =6
+
+                DataCardKey35 As label:
+                    AutoHeight: =true
+                    Color: =RGBA(0, 0, 0, 1)
+                    Height: =34
+                    Size: =11
+                    Text: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue14 As text:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    Default: =Parent.Default
+                    DelayOutput: =true
+                    DisplayMode: =Parent.DisplayMode
+                    Format: =TextFormat.Number
+                    PaddingLeft: =5
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Tooltip: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardKey35.Y + DataCardKey35.Height + 5
+                    ZIndex: =2
+
+                ErrorMessage32 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue14.Y + DataCardValue14.Height
+                    ZIndex: =3
+
+                StarVisible33 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey35.Height
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey35.Y
+                    ZIndex: =4
+
