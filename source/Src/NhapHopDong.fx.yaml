@@ -57,7 +57,29 @@
                         ID:Text(maKTT+1)
                     }
                 )
-            );
+            ),
+            varUnReloadNHD="2",
+            ClearCollect(
+                tmpDSHDSPNHDCollect,
+                AddColumns(
+                    Filter(
+                        DL_HOP_DONG_SPS,
+                        MA_HOP_DONG=maHopDongFwd
+                    ),
+                    "added",
+                    0,
+                    "edited",
+                    0
+                )
+            ),
+            varUnReloadNHD="3",
+            ClearCollect(
+                tmpDSHDSPLKNHDCollect,
+                Filter(
+                    DL_HOP_DONG_LIENKETS,
+                    SO_HOP_DONG=First(objHD).MA_HOP_DONG
+                )
+            )
         );
         Set(maHopDongFwd,"");
         Set(varUnReloadNHD,Blank());
@@ -1172,10 +1194,7 @@
                     Height: =146
                     Items: |-
                         =SortByColumns(
-                            Filter(
-                                DL_HOP_DONG_LIENKETS,
-                                SO_HOP_DONG=First(objHD).MA_HOP_DONG
-                            ),
+                            tmpDSHDSPLKNHDCollect,
                             "cr282_so_hop_dong_lk",
                             SortOrder.Ascending,
                             "cr282_ma_khach_hang",

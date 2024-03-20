@@ -94,7 +94,7 @@ NhapHopDongLK As screen:
             FontWeight: =FontWeight.Bold
             Height: =28
             OnSelect: |-
-                =Set(varUnReloadNHD,"1");
+                =Set(varUnReloadNHD,"3");
                 Navigate(NhapHopDong)
             Size: =10
             Text: ="Hủy"
@@ -140,7 +140,7 @@ NhapHopDongLK As screen:
                     )
                 );
                 Notify("Lưu dữ liệu thành công",NotificationType.Success,2000);
-                Set(varUnReloadNHD,"1");
+                Set(varUnReloadNHD,"3");
                 Navigate(NhapHopDong)
             Size: =10
             Text: ="Lưu"
@@ -152,7 +152,7 @@ NhapHopDongLK As screen:
         GalleryDKCTCT_6 As gallery.galleryVertical:
             DelayItemLoading: =true
             Height: =604
-            Items: =SortByColumns(tmpDSHDLKNLKCollect,"cr282_ma_hop_dong",SortOrder.Ascending)
+            Items: =SortByColumns(tmpDSHDLKNLKCollect,"cr282_ngay_hop_dong",SortOrder.Ascending,"cr282_ma_hop_dong",SortOrder.Ascending)
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
             NavigationStep: =0
