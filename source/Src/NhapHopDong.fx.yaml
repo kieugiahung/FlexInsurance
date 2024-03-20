@@ -1069,17 +1069,23 @@
                     cbxMaSPNHD_1 As combobox:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         DefaultSelectedItems: =LookUp(DL_SAN_PHAM_NHOMQLS,MA_SP=cbxMaSPNHD.Selected.MA_SAN_PHAM && !IsBlank(Find(cbxMaCTNHD.Selected.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG)))
-                        DisplayFields: =["cr282_ma_san_pham","cr282_ten_san_pham"]
+                        DisplayFields: =["cr282_ma_sp","cr282_ten_san_pham"]
                         DisplayMode: =If(ThisItem.edited=1 && ThisItem.added=1,DisplayMode.Edit,DisplayMode.Disabled)
                         Height: =32
                         InputTextPlaceholder: ="Chọn nhóm tính phí"
-                        Items: =SortByColumns(Filter(DL_SAN_PHAM_NHOMQLS,MA_SP=cbxMaSPNHD.Selected.MA_SAN_PHAM && !IsBlank(Find(cbxMaCTNHD.Selected.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG))),"cr282_ma_dl",SortOrder.Ascending)
+                        Items: |-
+                            =SortByColumns(
+                                Filter(
+                                    DL_SAN_PHAM_NHOMQLS,
+                                    MA_SP=cbxMaSPNHD.Selected.MA_SAN_PHAM && !IsBlank(Find(cbxMaCTNHD.Selected.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG))
+                                ),
+                                "cr282_ma_dl",SortOrder.Ascending
+                            )
                         OnChange: =Reset(cbxMaCTNHD)
-                        SearchFields: =["cr282_ma_san_pham"]
+                        SearchFields: =["cr282_ma_sp"]
                         SearchItems: =Search(DL_SAN_PHAM,cbxMaSPNHD_1.SearchText,"cr282_ma_san_pham")
                         SelectMultiple: =false
                         Size: =11
-                        Template: =ListItemTemplate.Double
                         Width: =200
                         X: =70
                         Y: =139
