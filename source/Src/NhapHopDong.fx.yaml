@@ -1060,18 +1060,26 @@
                     Label3_66 As label:
                         Height: =25
                         Size: =11
-                        Text: ="LHNV"
+                        Text: ="Nhóm tính phí"
                         Width: =140
                         X: =70
                         Y: =110
                         ZIndex: =21
 
-                    tiPhiNGNHD_1 As text:
+                    cbxMaSPNHD_1 As combobox:
                         BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =LookUp(DL_SAN_PHAM,MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM,LHNV)
-                        DisplayMode: =DisplayMode.Disabled
+                        DefaultSelectedItems: =LookUp(DL_SAN_PHAM_NHOMQLS,MA_SP=cbxMaSPNHD.Selected.MA_SAN_PHAM && !IsBlank(Find(cbxMaCTNHD.Selected.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG)))
+                        DisplayFields: =["cr282_ma_san_pham","cr282_ten_san_pham"]
+                        DisplayMode: =If(ThisItem.edited=1 && ThisItem.added=1,DisplayMode.Edit,DisplayMode.Disabled)
                         Height: =32
+                        InputTextPlaceholder: ="Chọn nhóm tính phí"
+                        Items: =SortByColumns(Filter(DL_SAN_PHAM_NHOMQLS,MA_SP=cbxMaSPNHD.Selected.MA_SAN_PHAM && !IsBlank(Find(cbxMaCTNHD.Selected.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG))),"cr282_ma_dl",SortOrder.Ascending)
+                        OnChange: =Reset(cbxMaCTNHD)
+                        SearchFields: =["cr282_ma_san_pham"]
+                        SearchItems: =Search(DL_SAN_PHAM,cbxMaSPNHD_1.SearchText,"cr282_ma_san_pham")
+                        SelectMultiple: =false
                         Size: =11
+                        Template: =ListItemTemplate.Double
                         Width: =200
                         X: =70
                         Y: =139
@@ -2988,7 +2996,7 @@
                                             !IsBlank(
                                                 LookUp(
                                                     DL_HOP_DONG_CHON_CS,
-                                                    MA_CHINH_SACH = cr282_ma_chinh_sach && MA_HOP_DONG = varMaHD_CS
+                                                    MA_CHINH_SACH = MA_CHINH_SACH && MA_HOP_DONG = varMaHD_CS
                                                 ).MA_CHINH_SACH
                                             ),
                                             true,
