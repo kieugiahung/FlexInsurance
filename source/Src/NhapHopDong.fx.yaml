@@ -1,62 +1,66 @@
 "NhapHopDong As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
     OnVisible: |
-        =Reset(dpNgayHDNHD);Reset(dpHLTuNHD);Reset(dpHLDenNHD);Reset(cbxDVQLNHD);Reset(cbxDVTienNHD);Reset(cbxLoaiKBNHD);Reset(cbxMaKBNHD);Reset(tiTenKBNHD);Reset(cbxDVKBNHD);
-        Reset(cbxMaKHNHD);Reset(tiTenKHNHD);Reset(tiDChiNHD);Reset(dpNSinhNHD);Reset(cbxGTinhNHD);Reset(tiSDTNHD);Reset(tiEmailNHD);Reset(cbxLoaiKHNHD);Reset(cbxNgheNHD);
-        Reset(cbxTinhNHD);Reset(LinkHDLK);
-        Reset(tiSoNTGNHD);
-        If(
-            IsBlank(LookUp(DL_HOP_DONGS,MA_HOP_DONG=maHopDongFwd)),
-            ClearCollect(
-                objHD,
-                Defaults(DL_HOP_DONGS)
-            ),
-            ClearCollect(
-                objHD,
-                LookUp(DL_HOP_DONGS,MA_HOP_DONG=maHopDongFwd)
-            )
-        );
-        ClearCollect(
-            tmpDSHDSPNHDCollect,
-            AddColumns(
-                Filter(
-                    DL_HOP_DONG_SPS,
-                    MA_HOP_DONG=maHopDongFwd
+        =If(
+            varUnReloadNHD="",
+            Reset(dpNgayHDNHD);Reset(dpHLTuNHD);Reset(dpHLDenNHD);Reset(cbxDVQLNHD);Reset(cbxDVTienNHD);Reset(cbxLoaiKBNHD);Reset(cbxMaKBNHD);Reset(tiTenKBNHD);Reset(cbxDVKBNHD);
+            Reset(cbxMaKHNHD);Reset(tiTenKHNHD);Reset(tiDChiNHD);Reset(dpNSinhNHD);Reset(cbxGTinhNHD);Reset(tiSDTNHD);Reset(tiEmailNHD);Reset(cbxLoaiKHNHD);Reset(cbxNgheNHD);
+            Reset(cbxTinhNHD);Reset(LinkHDLK);
+            Reset(tiSoNTGNHD);
+            If(
+                IsBlank(LookUp(DL_HOP_DONGS,MA_HOP_DONG=maHopDongFwd)),
+                ClearCollect(
+                    objHD,
+                    Defaults(DL_HOP_DONGS)
                 ),
-                "added",
-                0,
-                "edited",
-                0
-            )
-        );
-        ClearCollect(
-            tmpKTTNHDCollect,
-            Filter(
-                DL_HOP_DONG_TTOANS,
-                MA_HOP_DONG=maHopDongFwd
-            )
-        );
-        UpdateContext({
-            maHDSP:Max(DL_HOP_DONG_SPS,ID),
-            maKTT:Max(DL_HOP_DONG_TTOANS,ID),
-            maAddedHDSPNHD:"",
-            maUpdatedHDSPNHD:"",
-            nhomKB:""
-        });
-        If(
-            CountIf(tmpKTTNHDCollect,true)=0,
-            Collect(
-                tmpKTTNHDCollect,
-                Defaults(tmpKTTNHDCollect)
+                ClearCollect(
+                    objHD,
+                    LookUp(DL_HOP_DONGS,MA_HOP_DONG=maHopDongFwd)
+                )
             );
-            UpdateIf(
+            ClearCollect(
+                tmpDSHDSPNHDCollect,
+                AddColumns(
+                    Filter(
+                        DL_HOP_DONG_SPS,
+                        MA_HOP_DONG=maHopDongFwd
+                    ),
+                    "added",
+                    0,
+                    "edited",
+                    0
+                )
+            );
+            ClearCollect(
                 tmpKTTNHDCollect,
-                IsBlank(ID),
-                {
-                    ID:Text(maKTT+1)
-                }
-            )
+                Filter(
+                    DL_HOP_DONG_TTOANS,
+                    MA_HOP_DONG=maHopDongFwd
+                )
+            );
+            UpdateContext({
+                maHDSP:Max(DL_HOP_DONG_SPS,ID),
+                maKTT:Max(DL_HOP_DONG_TTOANS,ID),
+                maAddedHDSPNHD:"",
+                maUpdatedHDSPNHD:"",
+                nhomKB:""
+            });
+            If(
+                CountIf(tmpKTTNHDCollect,true)=0,
+                Collect(
+                    tmpKTTNHDCollect,
+                    Defaults(tmpKTTNHDCollect)
+                );
+                UpdateIf(
+                    tmpKTTNHDCollect,
+                    IsBlank(ID),
+                    {
+                        ID:Text(maKTT+1)
+                    }
+                )
+            );
         );
         Set(maHopDongFwd,"");
+        Set(varUnReloadNHD,"");
 
     Canvas2 As fluidGrid.fluidGridWithBlankCard:
         BorderThickness: =0
@@ -72,7 +76,7 @@
             BorderThickness: =0
             DisplayMode: =DisplayMode.Edit
             Fill: =RGBA(0, 0, 0, 0)
-            Height: =1427
+            Height: =1464
             Width: =1306
             X: =0
             Y: =0
@@ -181,6 +185,14 @@
                     Height: =32
                     InputTextPlaceholder: =
                     IsEditable: =true
+                    OnChange: |-
+                        =UpdateIf(
+                            objHD,
+                            true,
+                            {
+                                HIEU_LUC_DEN:DateAdd(dpHLTuNHD.SelectedDate,1,TimeUnit.Years)
+                            }
+                        )
                     Size: =11
                     StartYear: =1900
                     Width: =250
