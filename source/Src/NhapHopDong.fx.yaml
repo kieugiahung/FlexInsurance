@@ -1068,8 +1068,8 @@
 
                     cbxMaSPNHD_1 As combobox:
                         BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: =LookUp(DL_SAN_PHAM_NHOMQLS,MA_SP=cbxMaSPNHD.Selected.MA_SAN_PHAM && !IsBlank(Find(cbxMaCTNHD.Selected.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG)))
-                        DisplayFields: =["cr282_ma_sp","cr282_ten_san_pham"]
+                        DefaultSelectedItems: =
+                        DisplayFields: =["cr282_ten_hien_thi"]
                         DisplayMode: =If(ThisItem.edited=1 && ThisItem.added=1,DisplayMode.Edit,DisplayMode.Disabled)
                         Height: =32
                         InputTextPlaceholder: ="Chọn nhóm tính phí"
@@ -1077,13 +1077,19 @@
                             =SortByColumns(
                                 Filter(
                                     DL_SAN_PHAM_NHOMQLS,
-                                    MA_SP=cbxMaSPNHD.Selected.MA_SAN_PHAM && !IsBlank(Find(cbxMaCTNHD.Selected.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG))
+                                    MA_SP=cbxMaSPNHD.Selected.MA_SAN_PHAM && !IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH)
                                 ),
                                 "cr282_ma_dl",SortOrder.Ascending
                             )
-                        OnChange: =Reset(cbxMaCTNHD)
-                        SearchFields: =["cr282_ma_sp"]
-                        SearchItems: =Search(DL_SAN_PHAM,cbxMaSPNHD_1.SearchText,"cr282_ma_san_pham")
+                        SearchFields: =["cr282_ten_hien_thi"]
+                        SearchItems: |-
+                            =Search(SortByColumns(
+                                Filter(
+                                    DL_SAN_PHAM_NHOMQLS,
+                                    MA_SP=cbxMaSPNHD.Selected.MA_SAN_PHAM && !IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH)
+                                ),
+                                "cr282_ma_dl",SortOrder.Ascending
+                            ),cbxMaSPNHD_1.SearchText,"cr282_ten_hien_thi")
                         SelectMultiple: =false
                         Size: =11
                         Width: =200
