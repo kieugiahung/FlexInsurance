@@ -632,6 +632,7 @@ TraCuuCSADDT As screen:
             DisplayFields: =["cr282_ten_chi_tieu"]
             Height: =28
             InputTextPlaceholder: ="Chọn tiêu chí"
+            IsSearchable: =false
             Items: =Filter(DM_TIEU_CHI_APDUNGS,LOAI=cbxTPhanCS.Selected.value)
             OnChange: |
                 =Reset(ComGiaTriCS);
@@ -1058,7 +1059,7 @@ TraCuuCSADDT As screen:
                     Clear(tmpdsGiaTriTCCSDTCollect1)
                 )
             SearchFields: =["cr282_ten_chi_tieu"]
-            SearchItems: =Search(Filter(DM_TIEU_CHI_APDUNGS,LOAI=cbxTPhanCS.Selected.value),ComTieuChiCS.SearchText,"cr282_ten_chi_tieu")
+            SearchItems: =[]
             SelectMultiple: =false
             Size: =9
             Width: =185
@@ -2149,9 +2150,10 @@ TraCuuCSADDT As screen:
             DisplayFields: =["title","key"]
             Height: =28
             InputTextPlaceholder: ="Chọn giá trị"
+            IsSearchable: =false
             Items: =SortByColumns(tmpdsGiaTriTCCSDTCollect1,"value",SortOrder.Ascending)
             SearchFields: =["cr282_ma_chuongtrinh"]
-            SearchItems: =Search(SortByColumns(tmpdsGiaTriTCCSDTCollect1,"value",SortOrder.Ascending),ComGiaTriCS.SearchText,"cr282_ma_chuongtrinh")
+            SearchItems: =[]
             SelectMultiple: =false
             Size: =9
             Width: =185
@@ -3493,8 +3495,8 @@ TraCuuCSADDT As screen:
             Size: =10
             Text: ="Loại điều khoản"
             Weight: ='TextCanvas.Weight'.Bold
-            Width: =60
-            X: =812
+            Width: =65
+            X: =810
             Y: =132
             ZIndex: =19
 
@@ -3648,6 +3650,7 @@ TraCuuCSADDT As screen:
             DisplayFields: =["title","key"]
             Height: =28
             InputTextPlaceholder: ="Chọn loại điều kiện"
+            IsSearchable: =false
             Items: |-
                 =[{title:"Riêng lẻ",value:"1"},{title:"Kết hợp",value:"2"}]
             SearchFields: =["title"]
@@ -3664,6 +3667,7 @@ TraCuuCSADDT As screen:
             DisplayFields: =["title","key"]
             Height: =28
             InputTextPlaceholder: ="Chọn loại chính sách"
+            IsSearchable: =false
             Items: |-
                 =[{title:"Tăng",value:"1"},{title:"Giảm",value:"2"}]
             SearchFields: =["title"]
@@ -3679,6 +3683,7 @@ TraCuuCSADDT As screen:
             DisplayFields: =["title"]
             Height: =28
             InputTextPlaceholder: ="Chọn loại dữ liệu"
+            IsSearchable: =false
             Items: |-
                 =[{title:"Sản phẩm",value:"SP"},{title:"Kênh bán",value:"KB"},{title:"Khách hàng",value:"KH"},{title:"Phạm vi",value:"PV"},{title:"Giá trị",value:"ST"}]
             OnChange: =Reset(ComTieuChiCS);Reset(ComTieuChiCS)
@@ -3695,6 +3700,7 @@ TraCuuCSADDT As screen:
             DisplayFields: =["title"]
             Height: =28
             InputTextPlaceholder: ="Chọn loại điều kiện"
+            IsSearchable: =false
             Items: |-
                 =[{title:"Áp dụng",value:"1"},{title:"Loại trừ",value:"2"}]
             SearchFields: =["title"]
@@ -3711,12 +3717,12 @@ TraCuuCSADDT As screen:
             DisplayFields: =["title","key"]
             Height: =28
             InputTextPlaceholder: ="Chọn tham số lọc"
+            IsSearchable: =false
             Items: |-
                 =[{title:"Tỷ lệ",value:"1"},{title:"Số tiền",value:"2"}]
             OnChange: =Reset(TextInputTuCS);Reset(TextInputDenCS)
             SearchFields: =["title"]
-            SearchItems: |-
-                =Search([{title:"Tỷ lệ",value:"1"},{title:"Số tiền",value:"2"}],ComThamSoCS.SearchText,"title")
+            SearchItems: =[]
             SelectMultiple: =false
             Size: =9
             Width: =185

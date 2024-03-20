@@ -40,9 +40,6 @@ TraCuuHopDong As screen:
             tmpDSHDSPTCHDCollect,
             DL_HOP_DONG_SPS
         );
-        UpdateContext({
-            ngayHD:Blank()
-        });
         Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTCHD);
 
     Container8_3 As groupContainer.manualLayoutContainer:
@@ -56,7 +53,7 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Đơn vị"
             Width: =130
-            X: =29
+            X: =10
             Y: =32
             ZIndex: =3
 
@@ -65,7 +62,7 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Mã sản phẩm"
             Width: =130
-            X: =245
+            X: =230
             Y: =32
             ZIndex: =5
 
@@ -73,7 +70,7 @@ TraCuuHopDong As screen:
             Height: =25
             Size: =11
             Text: ="Mã khách hàng"
-            X: =675
+            X: =674
             Y: =32
             ZIndex: =6
 
@@ -82,7 +79,7 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Ngày HĐ"
             Width: =120
-            X: =889
+            X: =895
             Y: =32
             ZIndex: =7
 
@@ -171,7 +168,7 @@ TraCuuHopDong As screen:
         GalleryDKCTCT_7 As gallery.galleryVertical:
             DelayItemLoading: =true
             Height: =604
-            Items: =SortByColumns(tmpDSHDTCHDCollect,"cr282_ma_hop_dong",SortOrder.Ascending)
+            Items: =SortByColumns(tmpDSHDTCHDCollect,"cr282_ngay_hop_dong",SortOrder.Ascending,"cr282_ma_hop_dong",SortOrder.Ascending)
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
             NavigationStep: =0
@@ -231,7 +228,7 @@ TraCuuHopDong As screen:
             TiGHSTVu_4 As text:
                 Align: =Align.Right
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =
+                Default: =ThisItem.TIEN_PHI_SAU_GIAM
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -247,7 +244,7 @@ TraCuuHopDong As screen:
 
             TiGHSTNam_7 As text:
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =
+                Default: =Concat(Filter(dmSanPhamTCHDCollect,MA_SAN_PHAM in Distinct(Filter(tmpDSHDSPTCHDCollect,MA_HOP_DONG=ThisItem.MA_HOP_DONG),MA_SAN_PHAM)),TEN_SAN_PHAM,", ")
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -256,13 +253,14 @@ TraCuuHopDong As screen:
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
+                Tooltip: =Concat(Filter(dmSanPhamTCHDCollect,MA_SAN_PHAM in Distinct(Filter(tmpDSHDSPTCHDCollect,MA_HOP_DONG=ThisItem.MA_HOP_DONG),MA_SAN_PHAM)),TEN_SAN_PHAM,", ")
                 Width: =125
                 X: =697
                 ZIndex: =37
 
             TiGHSTNgay_6 As text:
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.TEN_KENH_BAN
+                Default: =Concatenate(ThisItem.MA_KENH_BAN," - ",ThisItem.TEN_KENH_BAN)
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -271,6 +269,7 @@ TraCuuHopDong As screen:
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
+                Tooltip: =Concatenate(ThisItem.MA_KENH_BAN," - ",ThisItem.TEN_KENH_BAN)
                 Width: =118
                 X: =473
                 ZIndex: =38
@@ -309,7 +308,7 @@ TraCuuHopDong As screen:
 
             TiGHSTNam_6 As text:
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: ="Sức khỏe"
+                Default: =Concat(Distinct(Filter(dmSanPhamTCHDCollect,MA_SAN_PHAM in Distinct(Filter(tmpDSHDSPTCHDCollect,MA_HOP_DONG=ThisItem.MA_HOP_DONG),MA_SAN_PHAM)),LHNV),Value,", ")
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -318,6 +317,7 @@ TraCuuHopDong As screen:
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
+                Tooltip: =Concat(Distinct(Filter(dmSanPhamTCHDCollect,MA_SAN_PHAM in Distinct(Filter(tmpDSHDSPTCHDCollect,MA_HOP_DONG=ThisItem.MA_HOP_DONG),MA_SAN_PHAM)),LHNV),Value,", ")
                 Width: =106
                 X: =591
                 ZIndex: =44
@@ -340,7 +340,7 @@ TraCuuHopDong As screen:
 
             TiGHSLNam_6 As text:
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =
+                Default: ="Administrator"
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -524,36 +524,22 @@ TraCuuHopDong As screen:
             SearchItems: =Search(SortByColumns(dmDonViTCHDCollect,"cr282_ma_don_vi",SortOrder.Ascending),cbxMaDVTCHD.SearchText,"cr282_loai_don_vi")
             SelectMultiple: =false
             Size: =11
-            Width: =195
-            X: =29
+            Width: =200
+            X: =10
             Y: =59
             ZIndex: =25
 
         dpNgayHDTCHD As datepicker:
-            DefaultDate: =ngayHD
+            DefaultDate: =
             EndYear: =2200
             Format: ="dd/mm/yyyy"
             Height: =32
             InputTextPlaceholder: ="Chọn ngày HĐ"
-            OnChange: |-
-                =ClearCollect(
-                    tmpDSHDTCHDCollect1,
-                    DL_HOP_DONGS
-                );
-                UpdateContext({
-                    ngayHD:dpNgayHDTCHD.SelectedDate
-                })
-            OnSelect: |-
-                =If(
-                    !IsBlank(ngayHD),
-                    UpdateContext({
-                        ngayHD:Blank()
-                    });
-                )
+            IsEditable: =true
             Size: =11
             StartYear: =1900
-            Width: =195
-            X: =889
+            Width: =200
+            X: =895
             Y: =59
             ZIndex: =27
 
@@ -601,7 +587,7 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Mã kênh bán"
             Width: =130
-            X: =461
+            X: =452
             Y: =32
             ZIndex: =33
 
@@ -614,8 +600,8 @@ TraCuuHopDong As screen:
             SearchItems: =Search(SortByColumns(dmSanPhamTCHDCollect,"cr282_ma_san_pham",SortOrder.Ascending),cbxMaSPTCHD.SearchText,"cr282_doanh_nghiep_bh")
             SelectMultiple: =false
             Size: =11
-            Width: =195
-            X: =245
+            Width: =200
+            X: =230
             Y: =59
             ZIndex: =35
 
@@ -628,8 +614,8 @@ TraCuuHopDong As screen:
             SearchItems: =Search(SortByColumns(dmKenhBanTCHDCollect,"cr282_ma_kenh_ban",SortOrder.Ascending),cbxMaKBTCHD.SearchText,"cr282_dia_chi")
             SelectMultiple: =false
             Size: =11
-            Width: =195
-            X: =461
+            Width: =200
+            X: =452
             Y: =59
             ZIndex: =36
 
@@ -642,8 +628,8 @@ TraCuuHopDong As screen:
             SearchItems: =Search(SortByColumns(dmKhachHangTCHDCollect,"cr282_ma_khach_hang",SortOrder.Ascending),cbxMaKHTCHD.SearchText,"title")
             SelectMultiple: =false
             Size: =11
-            Width: =195
-            X: =675
+            Width: =200
+            X: =674
             Y: =59
             ZIndex: =37
 
