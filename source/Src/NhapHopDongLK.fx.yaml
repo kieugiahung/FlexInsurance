@@ -96,7 +96,9 @@ NhapHopDongLK As screen:
         Button6_2 As button:
             FontWeight: =FontWeight.Bold
             Height: =28
-            OnSelect: =Navigate(NhapHopDong)
+            OnSelect: |-
+                =Set(maHopDongFwd,maHDNLKFwd);
+                Navigate(NhapHopDong)
             Size: =10
             Text: ="Hủy"
             Width: =80
@@ -141,6 +143,7 @@ NhapHopDongLK As screen:
                     )
                 );
                 Notify("Lưu dữ liệu thành công",NotificationType.Success,2000);
+                Set(maHopDongFwd,maHDNLKFwd);
                 Navigate(NhapHopDong)
             Size: =10
             Text: ="Lưu"
