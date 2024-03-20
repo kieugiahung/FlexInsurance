@@ -1,4 +1,5 @@
 ChonChinhSach As screen:
+    OnVisible: =Select(Button6_21);
 
     Container9 As groupContainer.manualLayoutContainer:
         DropShadow: =DropShadow.None
@@ -91,7 +92,7 @@ ChonChinhSach As screen:
                                     !IsBlank(
                                         LookUp(
                                             DL_HOP_DONG_CHON_CS,
-                                            MA_CHINH_SACH = cr282_ma_chinh_sach && MA_HOP_DONG = varMaHD
+                                            MA_CHINH_SACH = cr282_ma_chinh_sach && MA_HOP_DONG = varMaHD_CS
                                         ).MA_CHINH_SACH
                                     ),
                                     true,
@@ -923,6 +924,10 @@ ChonChinhSach As screen:
                     DL_HOP_DONG_CHON_CS,
                     MA_HOP_DONG = varMaHD_CS
                 );
+                RemoveIf(
+                    DL_HOP_DONG_KETQUA_CS,
+                    MA_HOP_DONG = varMaHD_CS
+                );
                 ForAll(
                     GalleryChonCS.AllItems As cs,
                     If(
@@ -1002,11 +1007,12 @@ ChonChinhSach As screen:
             Y: =590
             ZIndex: =4
 
-        Form1 As form:
+        FormKQCS As form:
             DataSource: =DL_HOP_DONG_KETQUA_CS
             Height: =123
             Item: =LookUp(DL_HOP_DONG_KETQUA_CS, MA_HOP_DONG=varMaHD_CS)
             NumberOfColumns: =4
+            Visible: =If(!IsBlank(LookUp(DL_HOP_DONG_KETQUA_CS, MA_HOP_DONG=varMaHD_CS).MA_HOP_DONG), true,false)
             Width: =1306
             Y: =620
             ZIndex: =5
@@ -1229,6 +1235,7 @@ ChonChinhSach As screen:
                 Height: =50
                 Required: =false
                 Update: =Value(DataCardValue23.Text)
+                Visible: =false
                 Width: =326
                 X: =3
                 Y: =0
@@ -1290,4 +1297,17 @@ ChonChinhSach As screen:
                     Wrap: =false
                     Y: =DataCardKey46.Y
                     ZIndex: =4
+
+        Button6_23 As button:
+            FontWeight: =FontWeight.Bold
+            Height: =32
+            OnSelect: |-
+                =Set(maHopDongFwd, varMaHD_CS);
+                Back();
+            Size: =9
+            Text: ="Quay lại"
+            Width: =123
+            X: =1020
+            Y: =536
+            ZIndex: =6
 
