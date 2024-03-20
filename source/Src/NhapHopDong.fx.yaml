@@ -2960,7 +2960,7 @@
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     TemplatePadding: =0
-                    TemplateSize: =74
+                    TemplateSize: =75
                     Width: =611
                     X: =654
                     Y: =61
@@ -3230,7 +3230,11 @@
                             TINH_TP_KH:cbxTinhNHD.Selected.MA_PHAMVI,
                             PTHUC_THANH_TOAN:cbxPTTTNHD.Selected.value,
                             NHOM_KHACH_HANG:cbxNhomKHNHD.Selected.MA_NHOM_KH,
-                            NHOM_KENH_BAN:nhomKB
+                            NHOM_KENH_BAN:nhomKB,
+                            TONG_TIEN_PHI:Value(tiTongTPNHD.Text),
+                            MA_GIAM_GIA:cbxMaGGNHD.Selected.MA_GIAM_GIA,
+                            SO_TIEN_GIAM:Value(tiSTGiamNHD.Text),
+                            TIEN_PHI_SAU_GIAM:Value(tiTienSauGiamNHD.Text)
                         }
                     );
                     ForAll(
@@ -3257,7 +3261,7 @@
                         objHD,
                         true,
                         {
-                            MA_HOP_DONG=genMaHD
+                            MA_HOP_DONG:genMaHD
                         }
                     ),
                     UpdateIf(
@@ -3287,7 +3291,11 @@
                             TINH_TP_KH:cbxTinhNHD.Selected.MA_PHAMVI,
                             PTHUC_THANH_TOAN:cbxPTTTNHD.Selected.value,
                             NHOM_KHACH_HANG:cbxNhomKHNHD.Selected.MA_NHOM_KH,
-                            NHOM_KENH_BAN:nhomKB
+                            NHOM_KENH_BAN:nhomKB,
+                            TONG_TIEN_PHI:Value(tiTongTPNHD.Text),
+                            MA_GIAM_GIA:cbxMaGGNHD.Selected.MA_GIAM_GIA,
+                            SO_TIEN_GIAM:Value(tiSTGiamNHD.Text),
+                            TIEN_PHI_SAU_GIAM:Value(tiTienSauGiamNHD.Text)
                         }
                     );
                     ForAll(
@@ -3324,6 +3332,20 @@
                                 }
                             )
                         )
+                    )
+                );
+                Refresh(DL_HOP_DONG_TTOANS);
+                RemoveIf(DL_HOP_DONG_TTOANS,MA_HOP_DONG=First(objHD).MA_HOP_DONG);
+                ForAll(
+                    tmpKTTNHDCollect As ds,
+                    Patch(
+                        DL_HOP_DONG_TTOANS,
+                        {
+                            ID:ds.ID,
+                            MA_HOP_DONG:First(objHD).MA_HOP_DONG,
+                            PHI_THANH_TOAN:ds.PHI_THANH_TOAN,
+                            THOI_HAN_TTOAN:ds.THOI_HAN_TTOAN
+                        }
                     )
                 );
                 Reset(tiMaHDNHD);Reset(LinkHDLK);
