@@ -47,9 +47,6 @@ NhapHopDongLK As screen:
                 chon:1
             }
         );
-        UpdateContext({
-            ngayHD:Blank()
-        });
         Reset(cbxMaSPNLK);Reset(dpNgayHDNLK);
 
     Container8_2 As groupContainer.manualLayoutContainer:
@@ -63,7 +60,7 @@ NhapHopDongLK As screen:
             Size: =11
             Text: ="Mã sản phẩm"
             Width: =130
-            X: =72
+            X: =29
             Y: =32
             ZIndex: =3
 
@@ -72,7 +69,7 @@ NhapHopDongLK As screen:
             Size: =11
             Text: ="Mã kênh bán"
             Width: =130
-            X: =313
+            X: =300
             Y: =32
             ZIndex: =5
 
@@ -80,7 +77,7 @@ NhapHopDongLK As screen:
             Height: =25
             Size: =11
             Text: ="Mã khách hàng"
-            X: =555
+            X: =572
             Y: =32
             ZIndex: =6
 
@@ -89,7 +86,7 @@ NhapHopDongLK As screen:
             Size: =11
             Text: ="Ngày HĐ"
             Width: =120
-            X: =792
+            X: =845
             Y: =32
             ZIndex: =7
 
@@ -97,12 +94,12 @@ NhapHopDongLK As screen:
             FontWeight: =FontWeight.Bold
             Height: =28
             OnSelect: |-
-                =Set(maHopDongFwd,maHDNLKFwd);
+                =Set(varUnReloadNHD,"1");
                 Navigate(NhapHopDong)
             Size: =10
             Text: ="Hủy"
             Width: =80
-            X: =1066
+            X: =1105
             Y: =62
             ZIndex: =8
 
@@ -143,12 +140,12 @@ NhapHopDongLK As screen:
                     )
                 );
                 Notify("Lưu dữ liệu thành công",NotificationType.Success,2000);
-                Set(maHopDongFwd,maHDNLKFwd);
+                Set(varUnReloadNHD,"1");
                 Navigate(NhapHopDong)
             Size: =10
             Text: ="Lưu"
             Width: =80
-            X: =1161
+            X: =1205
             Y: =62
             ZIndex: =10
 
@@ -510,16 +507,16 @@ NhapHopDongLK As screen:
             SearchItems: =Search(SortByColumns(dmSanPhamHDLKCollect,"cr282_ma_san_pham",SortOrder.Ascending),cbxMaSPNLK.SearchText,"title")
             SelectMultiple: =false
             Size: =11
-            Width: =210
-            X: =72
+            Width: =235
+            X: =29
             Y: =59
             ZIndex: =25
 
         dpNgayHDNLK As datepicker:
-            DefaultDate: =ngayHD
+            DefaultDate: =
             Format: ="dd/mm/yyyy"
             Height: =32
-            InputTextPlaceholder: =
+            InputTextPlaceholder: ="Chọn ngày HĐ"
             IsEditable: =true
             OnChange: |-
                 =ClearCollect(
@@ -557,21 +554,10 @@ NhapHopDongLK As screen:
                     {
                         chon:1
                     }
-                );
-                UpdateContext({
-                    ngayHD:dpNgayHDNLK.SelectedDate
-                })
-            OnSelect: |-
-                =If(
-                    !IsBlank(ngayHD),
-                    UpdateContext({
-                        ngayHD:Blank()
-                    });
-                    Reset(dpNgayHDNLK)
                 )
             Size: =11
-            Width: =210
-            X: =797
+            Width: =235
+            X: =845
             Y: =59
             ZIndex: =27
 
@@ -580,8 +566,8 @@ NhapHopDongLK As screen:
             DisplayMode: =DisplayMode.Disabled
             Height: =32
             Size: =11
-            Width: =210
-            X: =315
+            Width: =235
+            X: =300
             Y: =59
             ZIndex: =28
 
@@ -590,8 +576,8 @@ NhapHopDongLK As screen:
             DisplayMode: =DisplayMode.Disabled
             Height: =32
             Size: =11
-            Width: =210
-            X: =559
+            Width: =235
+            X: =572
             Y: =59
             ZIndex: =29
 

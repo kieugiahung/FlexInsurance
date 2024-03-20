@@ -1,7 +1,7 @@
 "NhapHopDong As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
     OnVisible: |
         =If(
-            varUnReloadNHD="",
+            IsBlank(varUnReloadNHD),
             Reset(dpNgayHDNHD);Reset(dpHLTuNHD);Reset(dpHLDenNHD);Reset(cbxDVQLNHD);Reset(cbxDVTienNHD);Reset(cbxLoaiKBNHD);Reset(cbxMaKBNHD);Reset(tiTenKBNHD);Reset(cbxDVKBNHD);
             Reset(cbxMaKHNHD);Reset(tiTenKHNHD);Reset(tiDChiNHD);Reset(dpNSinhNHD);Reset(cbxGTinhNHD);Reset(tiSDTNHD);Reset(tiEmailNHD);Reset(cbxLoaiKHNHD);Reset(cbxNgheNHD);
             Reset(cbxTinhNHD);Reset(LinkHDLK);
@@ -60,7 +60,7 @@
             );
         );
         Set(maHopDongFwd,"");
-        Set(varUnReloadNHD,"");
+        Set(varUnReloadNHD,Blank());
 
     Canvas2 As fluidGrid.fluidGridWithBlankCard:
         BorderThickness: =0
@@ -576,8 +576,10 @@
                     ZIndex: =26
 
                 tiSoNTGNHD As text:
+                    Align: =Align.Right
                     BorderColor: =RGBA(72, 163, 62, 1)
                     Default: =First(objHD).SO_NGUOI_TGIA
+                    DisplayMode: =DisplayMode.Disabled
                     Height: =32
                     Size: =11
                     Width: =250
