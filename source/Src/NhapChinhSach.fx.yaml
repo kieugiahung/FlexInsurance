@@ -6977,28 +6977,30 @@ NhapChinhSach As screen:
                         TEN_KIEU: RadioCSSP.Selected.Text
                     }
                 );
-                If(RadioCSSP_LoaiTru.Selected.ID=2,
-                Patch(
-                    DL_CHINHSACH_DOITUONG,
-                    Set(
-                        varIdLtCSSP,
-                        Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1
+                If(
+                    RadioCSSP_LoaiTru.Selected.ID = 2,
+                    Patch(
+                        DL_CHINHSACH_DOITUONG,
+                        Set(
+                            varIdLtCSSP,
+                            Max(
+                                DL_CHINHSACH_DOITUONG,
+                                ID
+                            ) + 1
+                        );
+                        Defaults(DL_CHINHSACH_DOITUONG),
+                        {
+                            ID: varIdLtCSSP,
+                            MA_CHINH_SACH: newMaCS,
+                            LOAI_DK: DataCardLoaiDK.Selected.MA,
+                            ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                            THANH_PHAN: "SP",
+                            AP_DUNG: "2",
+                            KIEU: RadioCSSP_LoaiTru.Selected.ID,
+                            TEN_KIEU: RadioCSSP_LoaiTru.Selected.Text
+                        }
                     );
-                    Defaults(DL_CHINHSACH_DOITUONG),
-                    {
-                        ID: varIdLtCSSP,
-                        MA_CHINH_SACH: newMaCS,
-                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                        THANH_PHAN: "SP",
-                        AP_DUNG: "2",
-                        KIEU: RadioCSSP_LoaiTru.Selected.ID,
-                        TEN_KIEU: RadioCSSP_LoaiTru.Selected.Text
-                    }
-                ););
+                );
                 
             // lưu dữ liệu ở bảng chi tiết
             UpdateContext({varMTSP: ""});
@@ -7152,7 +7154,8 @@ NhapChinhSach As screen:
                         );
                         UpdateContext(
                             {
-                                varSP: Concatenate("-Áp dụng: </br>",
+                                varSP: Concatenate(
+                                    "-Áp dụng: </br>",
                                     varSP_Combo,
                                     "</br>+ ",
                                     Concat(
@@ -7169,21 +7172,20 @@ NhapChinhSach As screen:
                         ,
                         UpdateContext(
                             {
-                                varSP: 
-                                    Concat(
-                                        Filter(
-                                            colAD,
-                                            Loai = "SP"
-                                        ),
-                                        Ten,
-                                        ", "
-                                    )
-                                
+                                varSP: Concat(
+                                    Filter(
+                                        colAD,
+                                        Loai = "SP"
+                                    ),
+                                    Ten,
+                                    ", "
+                                )
                             }
                         );
                         UpdateContext(
                             {
-                                varSP: Concatenate("-Áp dụng: </br>",
+                                varSP: Concatenate(
+                                    "-Áp dụng: </br>",
                                     Concat(
                                         Filter(
                                             colAD,
@@ -7203,7 +7205,7 @@ NhapChinhSach As screen:
                 
             // lưu dữ liệu ở bảng chi tiết loai tru
             UpdateContext({varMTSP_LT: ""});
-            UpdateContext({varSP_LT: ""});
+                UpdateContext({varSP_LT: ""});
                 If(
                     RadioCSSP_LoaiTru.Selected.ID = 2,
                     If(
@@ -7309,7 +7311,8 @@ NhapChinhSach As screen:
                                     ).Phamvi
                                 )
                             }
-                        );UpdateContext(
+                        );
+                        UpdateContext(
                             {
                                 varSP_Combo: Concatenate(
                                     "+ Combo sản phẩm ",
@@ -7349,10 +7352,13 @@ NhapChinhSach As screen:
                                     varMTSP_Combo
                                 )
                             }
-                        );UpdateContext(
+                        );
+                        UpdateContext(
                             {
-                                varSP_LT: Concatenate("- Loại trừ:</br>",
-                                    varSP_Combo, "</br>+ ",
+                                varSP_LT: Concatenate(
+                                    "- Loại trừ:</br>",
+                                    varSP_Combo,
+                                    "</br>+ ",
                                     Concat(
                                         Filter(
                                             colLT,
@@ -7375,9 +7381,11 @@ NhapChinhSach As screen:
                                     ", "
                                 )
                             }
-                        );UpdateContext(
+                        );
+                        UpdateContext(
                             {
-                                varSP_LT: Concatenate("- Loại trừ:</br>+ ",
+                                varSP_LT: Concatenate(
+                                    "- Loại trừ:</br>+ ",
                                     Concat(
                                         Filter(
                                             colLT,
@@ -7425,32 +7433,34 @@ NhapChinhSach As screen:
                         TEN_KIEU: RadioCSKB.Selected.Text
                     }
                 );
-                If(RadioCSKB_LoaiTru.Selected.ID=2,
-                Patch(
-                    DL_CHINHSACH_DOITUONG,
-                    Set(
-                        varIdLtCSKB,
-                        Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1
+                If(
+                    RadioCSKB_LoaiTru.Selected.ID = 2,
+                    Patch(
+                        DL_CHINHSACH_DOITUONG,
+                        Set(
+                            varIdLtCSKB,
+                            Max(
+                                DL_CHINHSACH_DOITUONG,
+                                ID
+                            ) + 1
+                        );
+                        Defaults(DL_CHINHSACH_DOITUONG),
+                        {
+                            ID: varIdLtCSKB,
+                            MA_CHINH_SACH: newMaCS,
+                            LOAI_DK: DataCardLoaiDK.Selected.MA,
+                            ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                            THANH_PHAN: "KB",
+                            AP_DUNG: "2",
+                            KIEU: RadioCSKB_LoaiTru.Selected.ID,
+                            TEN_KIEU: RadioCSKB_LoaiTru.Selected.Text
+                        }
                     );
-                    Defaults(DL_CHINHSACH_DOITUONG),
-                    {
-                        ID: varIdLtCSKB,
-                        MA_CHINH_SACH: newMaCS,
-                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                        THANH_PHAN: "KB",
-                        AP_DUNG: "2",
-                        KIEU: RadioCSKB_LoaiTru.Selected.ID,
-                        TEN_KIEU: RadioCSKB_LoaiTru.Selected.Text
-                    }
-                ););
+                );
                 
             // lưu dữ liệu ở bảng chi tiết
             UpdateContext({varMTKB: ""});
-            UpdateContext({varKB: ""});
+                UpdateContext({varKB: ""});
                 If(
                     RadioCSKB.Selected.ID = 2,
                     If(
@@ -7509,17 +7519,20 @@ NhapChinhSach As screen:
                                 ", "
                             )
                         }
-                    );UpdateContext(
+                    );
+                    UpdateContext(
                         {
-                            varKB: Concatenate("- Áp dụng:</br>+ ",
-                            Concat(
-                                Filter(
-                                    colAD,
-                                    Loai = "KB"
-                                ),
-                                Ten,
-                                "</br>+ "
-                            ))
+                            varKB: Concatenate(
+                                "- Áp dụng:</br>+ ",
+                                Concat(
+                                    Filter(
+                                        colAD,
+                                        Loai = "KB"
+                                    ),
+                                    Ten,
+                                    "</br>+ "
+                                )
+                            )
                         }
                     ),
                     UpdateContext({varMTKB: "Tất cả kênh bán"});
@@ -7528,7 +7541,7 @@ NhapChinhSach As screen:
                 
             // lưu dữ liệu ở bảng chi tiết loai tru
             UpdateContext({varMTKB_LT: ""});
-            UpdateContext({varKB_LT: ""});
+                UpdateContext({varKB_LT: ""});
                 If(
                     RadioCSKB_LoaiTru.Selected.ID = 2,
                     If(
@@ -7587,19 +7600,23 @@ NhapChinhSach As screen:
                                 ", "
                             )
                         }
-                    );UpdateContext(
+                    );
+                    UpdateContext(
                         {
-                            varKB_LT: Concatenate("- Loại trừ:</br>+ ",
-                            Concat(
-                                Filter(
-                                    colLT,
-                                    Loai = "KB"
-                                ),
-                                Ten,
-                                "</br>+ "
-                            ))
+                            varKB_LT: Concatenate(
+                                "- Loại trừ:</br>+ ",
+                                Concat(
+                                    Filter(
+                                        colLT,
+                                        Loai = "KB"
+                                    ),
+                                    Ten,
+                                    "</br>+ "
+                                )
+                            )
                         }
-                    ),UpdateContext({varKB_LT: "- Loại trừ: "});
+                    ),
+                    UpdateContext({varKB_LT: "- Loại trừ: "});
                 );
                 
             //End kenh ban
@@ -7633,35 +7650,37 @@ NhapChinhSach As screen:
                         TEN_KIEU: RadioCSKH.Selected.Text
                     }
                 );
-                If(RadioCSKH_LoaiTru.Selected.ID=2,
-                Patch(
-                    DL_CHINHSACH_DOITUONG,
-                    Set(
-                        varIdLtCSKH,
-                        Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1
+                If(
+                    RadioCSKH_LoaiTru.Selected.ID = 2,
+                    Patch(
+                        DL_CHINHSACH_DOITUONG,
+                        Set(
+                            varIdLtCSKH,
+                            Max(
+                                DL_CHINHSACH_DOITUONG,
+                                ID
+                            ) + 1
+                        );
+                        Defaults(DL_CHINHSACH_DOITUONG),
+                        {
+                            ID: Max(
+                                DL_CHINHSACH_DOITUONG,
+                                ID
+                            ) + 1,
+                            MA_CHINH_SACH: newMaCS,
+                            LOAI_DK: DataCardLoaiDK.Selected.MA,
+                            ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                            THANH_PHAN: "KH",
+                            AP_DUNG: "2",
+                            KIEU: RadioCSKH_LoaiTru.Selected.ID,
+                            TEN_KIEU: RadioCSKH_LoaiTru.Selected.Text
+                        }
                     );
-                    Defaults(DL_CHINHSACH_DOITUONG),
-                    {
-                        ID: Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1,
-                        MA_CHINH_SACH: newMaCS,
-                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                        THANH_PHAN: "KH",
-                        AP_DUNG: "2",
-                        KIEU: RadioCSKH_LoaiTru.Selected.ID,
-                        TEN_KIEU: RadioCSKH_LoaiTru.Selected.Text
-                    }
-                ););
+                );
                 
             // lưu dữ liệu ở bảng chi tiết
             UpdateContext({varMTKH: ""});
-            UpdateContext({varKH: ""});
+                UpdateContext({varKH: ""});
                 If(
                     RadioCSKH.Selected.ID = 2,
                     If(
@@ -7720,17 +7739,20 @@ NhapChinhSach As screen:
                                 ", "
                             )
                         }
-                    );UpdateContext(
+                    );
+                    UpdateContext(
                         {
-                            varKH: Concatenate("- Áp dụng:</br>+ ",
-                            Concat(
-                                Filter(
-                                    colAD,
-                                    Loai = "KH"
-                                ),
-                                Ten,
-                                "</br>+ "
-                            ))
+                            varKH: Concatenate(
+                                "- Áp dụng:</br>+ ",
+                                Concat(
+                                    Filter(
+                                        colAD,
+                                        Loai = "KH"
+                                    ),
+                                    Ten,
+                                    "</br>+ "
+                                )
+                            )
                         }
                     ),
                     UpdateContext({varMTKH: "Tất cả khách hàng"});
@@ -7739,7 +7761,7 @@ NhapChinhSach As screen:
                 
             // lưu dữ liệu ở bảng chi tiết loai tru
             UpdateContext({varMTKH_LT: ""});
-            UpdateContext({varKH_LT: ""});
+                UpdateContext({varKH_LT: ""});
                 If(
                     RadioCSKH_LoaiTru.Selected.ID = 2,
                     If(
@@ -7798,20 +7820,24 @@ NhapChinhSach As screen:
                                 ", "
                             )
                         }
-                    );UpdateContext(
+                    );
+                    UpdateContext(
                         {
-                            varKH_LT: Concatenate("- Loại trừ:</br>+ ",
-                            Concat(
-                                Filter(
-                                    colLT,
-                                    Loai = "KH"
-                                ),
-                                Ten,
-                                "</br>+ "
-                            ))
+                            varKH_LT: Concatenate(
+                                "- Loại trừ:</br>+ ",
+                                Concat(
+                                    Filter(
+                                        colLT,
+                                        Loai = "KH"
+                                    ),
+                                    Ten,
+                                    "</br>+ "
+                                )
+                            )
                         }
                     );
-                    ,UpdateContext({varKH_LT: "- Loại trừ: "})
+                    ,
+                    UpdateContext({varKH_LT: "- Loại trừ: "})
                 );
                 
             // lưu dữ liệu ở bảng  DL_CHINHSACH_DOITUONG PHAM_VI
@@ -7844,35 +7870,37 @@ NhapChinhSach As screen:
                         TEN_KIEU: RadioCSPV.Selected.Text
                     }
                 );
-                If(RadioCSPV_LoaiTru.Selected.ID=2,
-                Patch(
-                    DL_CHINHSACH_DOITUONG,
-                    Set(
-                        varIdLtCSPV,
-                        Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1
+                If(
+                    RadioCSPV_LoaiTru.Selected.ID = 2,
+                    Patch(
+                        DL_CHINHSACH_DOITUONG,
+                        Set(
+                            varIdLtCSPV,
+                            Max(
+                                DL_CHINHSACH_DOITUONG,
+                                ID
+                            ) + 1
+                        );
+                        Defaults(DL_CHINHSACH_DOITUONG),
+                        {
+                            ID: Max(
+                                DL_CHINHSACH_DOITUONG,
+                                ID
+                            ) + 1,
+                            MA_CHINH_SACH: newMaCS,
+                            THANH_PHAN: "PV",
+                            LOAI_DK: DataCardLoaiDK.Selected.MA,
+                            ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                            AP_DUNG: "2",
+                            KIEU: RadioCSPV_LoaiTru.Selected.ID,
+                            TEN_KIEU: RadioCSPV_LoaiTru.Selected.Text
+                        }
                     );
-                    Defaults(DL_CHINHSACH_DOITUONG),
-                    {
-                        ID: Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1,
-                        MA_CHINH_SACH: newMaCS,
-                        THANH_PHAN: "PV",
-                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                        AP_DUNG: "2",
-                        KIEU: RadioCSPV_LoaiTru.Selected.ID,
-                        TEN_KIEU: RadioCSPV_LoaiTru.Selected.Text
-                    }
-                ););
+                );
                 
             // lưu dữ liệu ở bảng chi tiết
             UpdateContext({varMTPV: ""});
-            UpdateContext({varPV: ""});
+                UpdateContext({varPV: ""});
                 If(
                     RadioCSPV.Selected.ID = 2,
                     If(
@@ -7931,16 +7959,19 @@ NhapChinhSach As screen:
                                 ", "
                             )
                         }
-                    );UpdateContext(
+                    );
+                    UpdateContext(
                         {
-                            varPV: Concatenate("- Áp dụng:</br>+ ",
-                            Concat(
-                                Filter(
-                                    colAD,
-                                    Loai = "PV"
-                                ),
-                                Ten,
-                                "</br>+ "
+                            varPV: Concatenate(
+                                "- Áp dụng:</br>+ ",
+                                Concat(
+                                    Filter(
+                                        colAD,
+                                        Loai = "PV"
+                                    ),
+                                    Ten,
+                                    "</br>+ "
+                                )
                             )
                         }
                     ),
@@ -7950,7 +7981,7 @@ NhapChinhSach As screen:
                 
             // lưu dữ liệu ở bảng chi tiết loai tru
             UpdateContext({varMTPV_LT: ""});
-            UpdateContext({varPV_LT: ""});
+                UpdateContext({varPV_LT: ""});
                 If(
                     RadioCSPV_LoaiTru.Selected.ID = 2,
                     If(
@@ -8009,19 +8040,23 @@ NhapChinhSach As screen:
                                 ", "
                             )
                         }
-                    );UpdateContext(
+                    );
+                    UpdateContext(
                         {
-                            varPV_LT: Concatenate("- Loại trừ:</br>+ ",
-                            Concat(
-                                Filter(
-                                    colLT,
-                                    Loai = "PV"
-                                ),
-                                Ten,
-                                "</br>+  "
-                            ))
+                            varPV_LT: Concatenate(
+                                "- Loại trừ:</br>+ ",
+                                Concat(
+                                    Filter(
+                                        colLT,
+                                        Loai = "PV"
+                                    ),
+                                    Ten,
+                                    "</br>+  "
+                                )
+                            )
                         }
-                    ),UpdateContext({varPV_LT: "- Loại trừ: "});
+                    ),
+                    UpdateContext({varPV_LT: "- Loại trừ: "});
                 );
                 // lưu dữ liệu ở bảng  DL_CHINHSACH_DOITUONG SO TIEN
             Set(
@@ -8053,31 +8088,33 @@ NhapChinhSach As screen:
                         TEN_KIEU: RadioST.Selected.Text
                     }
                 );
-                If(RadioST_LoaiTru.Selected.ID=2,
-                Patch(
-                    DL_CHINHSACH_DOITUONG,
-                    Set(
-                        varIdLtCSST,
-                        Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1
+                If(
+                    RadioST_LoaiTru.Selected.ID = 2,
+                    Patch(
+                        DL_CHINHSACH_DOITUONG,
+                        Set(
+                            varIdLtCSST,
+                            Max(
+                                DL_CHINHSACH_DOITUONG,
+                                ID
+                            ) + 1
+                        );
+                        Defaults(DL_CHINHSACH_DOITUONG),
+                        {
+                            ID: Max(
+                                DL_CHINHSACH_DOITUONG,
+                                ID
+                            ) + 1,
+                            MA_CHINH_SACH: newMaCS,
+                            LOAI_DK: DataCardLoaiDK.Selected.MA,
+                            ANH_HUONG: DataCardAnhHuong.Selected.MA,
+                            THANH_PHAN: "ST",
+                            AP_DUNG: "2",
+                            KIEU: RadioST_LoaiTru.Selected.ID,
+                            TEN_KIEU: RadioST_LoaiTru.Selected.Text
+                        }
                     );
-                    Defaults(DL_CHINHSACH_DOITUONG),
-                    {
-                        ID: Max(
-                            DL_CHINHSACH_DOITUONG,
-                            ID
-                        ) + 1,
-                        MA_CHINH_SACH: newMaCS,
-                        LOAI_DK: DataCardLoaiDK.Selected.MA,
-                        ANH_HUONG: DataCardAnhHuong.Selected.MA,
-                        THANH_PHAN: "ST",
-                        AP_DUNG: "2",
-                        KIEU: RadioST_LoaiTru.Selected.ID,
-                        TEN_KIEU: RadioST_LoaiTru.Selected.Text
-                    }
-                ););
+                );
                 
             // lưu dữ liệu ở bảng chi tiết
             UpdateContext({varMTST: ""});
@@ -8337,10 +8374,59 @@ NhapChinhSach As screen:
                         )
                     }
                 );
+                //Sinh san pham
+            UpdateContext(
+                    {
+                        varSanPham: Concatenate(
+                            varSP,
+                            "</br>",
+                            varSP_LT
+                        )
+                    }
+                );
+                
+            //Sinh kenh ban
+            UpdateContext(
+                    {
+                        varKenhBan: Concatenate(
+                            varKB,
+                            "</br>",
+                            varKB_LT
+                        )
+                    }
+                );
+                
+            //Sinh khach hang
+            UpdateContext(
+                    {
+                        varKhachHang: Concatenate(
+                            varKH,
+                            "</br>",
+                            varKH_LT
+                        )
+                    }
+                );
+                
+            //Sinh pham vi
+            UpdateContext(
+                    {
+                        varPhamVi: Concatenate(
+                            varPV,
+                            "</br>",
+                            varPV_LT
+                        )
+                    }
+                );
                 UpdateIf(
                     DL_CHINHSACH_CHUNG,
                     MA_CHINH_SACH = newMaCS,
-                    {MO_TA: varMoTa}
+                    {
+                        MO_TA: varMoTa,
+                        SAN_PHAM: varSanPham,
+                        KENH_BAN: varKenhBan,
+                        KHACH_HANG: varKhachHang,
+                        PHAM_VI: varPhamVi
+                    }
                 );
                 IsBlank(errorMsgCS),
                 Notify(
