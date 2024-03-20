@@ -1,6 +1,6 @@
 TraCuuCSADDT As screen:
     OnVisible: |-
-        =Reset(ComLoaiDKCS);Reset(ComLoaiCSCS);Reset(DropTSoCS);Reset(TextInputTuCS);Reset(TextInputDenCS);Reset(cbxTPhanCS);Reset(cbxApDungCS);Reset(ComTieuChiCS);Reset(ComGiaTriCS);
+        =Reset(ComLoaiDKCS);Reset(ComLoaiCSCS);Reset(ComThamSoCS);Reset(TextInputTuCS);Reset(TextInputDenCS);Reset(cbxTPhanCS);Reset(cbxApDungCS);Reset(ComTieuChiCS);Reset(ComGiaTriCS);
         Clear(tmpdsGiaTriTCCSCollect1);
         //load bảng phamvi lên collect
         ClearCollect(
@@ -632,7 +632,6 @@ TraCuuCSADDT As screen:
             DisplayFields: =["cr282_ten_chi_tieu"]
             Height: =28
             InputTextPlaceholder: ="Chọn tiêu chí"
-            IsSearchable: =false
             Items: =Filter(DM_TIEU_CHI_APDUNGS,LOAI=cbxTPhanCS.Selected.value)
             OnChange: |
                 =Reset(ComGiaTriCS);
@@ -1059,10 +1058,10 @@ TraCuuCSADDT As screen:
                     Clear(tmpdsGiaTriTCCSDTCollect1)
                 )
             SearchFields: =["cr282_ten_chi_tieu"]
-            SearchItems: =[]
+            SearchItems: =Search(Filter(DM_TIEU_CHI_APDUNGS,LOAI=cbxTPhanCS.Selected.value),ComTieuChiCS.SearchText,"cr282_ten_chi_tieu")
             SelectMultiple: =false
             Size: =9
-            Width: =170
+            Width: =185
             X: =550
             Y: =90
             ZIndex: =2
@@ -1124,10 +1123,10 @@ TraCuuCSADDT As screen:
                             DL_CHINHSACH_APDUNG,
                             (IsBlank(ComLoaiDKCS.Selected.value) || (!IsBlank(ComLoaiDKCS.Selected.value) && LOAI_DK=ComLoaiDKCS.Selected.value)) &&
                             (IsBlank(ComLoaiCSCS.Selected.value) || (!IsBlank(ComLoaiCSCS.Selected.value) && ANH_HUONG=ComLoaiCSCS.Selected.value)) &&
-                            (IsBlank(TextInputTuCS.Text) || (!IsBlank(TextInputTuCS.Text) && ((DropTSoCS.Selected.value="1" && TY_LE>=Value(TextInputTuCS.Text)) || 
-                            (DropTSoCS.Selected.value="2" && SO_TIEN>=Value(TextInputTuCS.Text))))) &&
-                            (IsBlank(TextInputDenCS.Text) || (!IsBlank(TextInputDenCS.Text) && ((DropTSoCS.Selected.value="1" && TY_LE<=Value(TextInputDenCS.Text)) || 
-                            (DropTSoCS.Selected.value="2" && SO_TIEN<=Value(TextInputDenCS.Text)))))
+                            (IsBlank(TextInputTuCS.Text) || (!IsBlank(TextInputTuCS.Text) && ((ComThamSoCS.Selected.value="1" && TY_LE>=Value(TextInputTuCS.Text)) || 
+                            (ComThamSoCS.Selected.value="2" && SO_TIEN>=Value(TextInputTuCS.Text))))) &&
+                            (IsBlank(TextInputDenCS.Text) || (!IsBlank(TextInputDenCS.Text) && ((ComThamSoCS.Selected.value="1" && TY_LE<=Value(TextInputDenCS.Text)) || 
+                            (ComThamSoCS.Selected.value="2" && SO_TIEN<=Value(TextInputDenCS.Text)))))
                         ),
                         "cr282_ma_chinh_sach"
                     )
@@ -2149,14 +2148,13 @@ TraCuuCSADDT As screen:
         ComGiaTriCS As combobox:
             DisplayFields: =["title","key"]
             Height: =28
-            InputTextPlaceholder: ="Chọn tiêu chí"
-            IsSearchable: =false
+            InputTextPlaceholder: ="Chọn giá trị"
             Items: =SortByColumns(tmpdsGiaTriTCCSDTCollect1,"value",SortOrder.Ascending)
             SearchFields: =["cr282_ma_chuongtrinh"]
             SearchItems: =Search(SortByColumns(tmpdsGiaTriTCCSDTCollect1,"value",SortOrder.Ascending),ComGiaTriCS.SearchText,"cr282_ma_chuongtrinh")
             SelectMultiple: =false
             Size: =9
-            Width: =170
+            Width: =185
             X: =760
             Y: =90
             ZIndex: =9
@@ -2165,7 +2163,7 @@ TraCuuCSADDT As screen:
             FontWeight: =FontWeight.Bold
             Height: =28
             OnSelect: |-
-                =Reset(ComLoaiDKCS);Reset(ComLoaiCSCS);Reset(DropTSoCS);Reset(TextInputTuCS);Reset(TextInputDenCS);Reset(cbxTPhanCS);Reset(cbxApDungCS);Reset(ComTieuChiCS);Reset(ComGiaTriCS);
+                =Reset(ComLoaiDKCS);Reset(ComLoaiCSCS);Reset(ComThamSoCS);Reset(TextInputTuCS);Reset(TextInputDenCS);Reset(cbxTPhanCS);Reset(cbxApDungCS);Reset(ComTieuChiCS);Reset(ComGiaTriCS);
                 Clear(tmpdsGiaTriTCCSCollect1);
                 //load bảng phamvi lên collect
                 ClearCollect(
@@ -3493,7 +3491,7 @@ TraCuuCSADDT As screen:
             FontColor: =
             Height: =40
             Size: =10
-            Text: ="Loại điều kiện"
+            Text: ="Loại điều khoản"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =60
             X: =812
@@ -3607,24 +3605,12 @@ TraCuuCSADDT As screen:
             Y: =6
             ZIndex: =29
 
-        DropTSoCS As dropdown:
-            Default: ="Tỷ lệ"
-            Height: =28
-            Items: |-
-                =[{title:"Tỷ lệ",value:"1"},{title:"Số tiền",value:"2"}]
-            OnChange: =Reset(ComTieuChiCS);Reset(ComTieuChiCS)
-            Size: =9
-            Width: =170
-            X: =550
-            Y: =31
-            ZIndex: =30
-
         TextInputTuCS As text:
             Default: =
             Format: =TextFormat.Number
             Height: =28
             Size: =9
-            Width: =170
+            Width: =185
             X: =760
             Y: =31
             ZIndex: =31
@@ -3634,7 +3620,7 @@ TraCuuCSADDT As screen:
             Format: =TextFormat.Number
             Height: =28
             Size: =9
-            Width: =170
+            Width: =185
             X: =970
             Y: =31
             ZIndex: =32
@@ -3662,14 +3648,13 @@ TraCuuCSADDT As screen:
             DisplayFields: =["title","key"]
             Height: =28
             InputTextPlaceholder: ="Chọn loại điều kiện"
-            IsSearchable: =false
             Items: |-
                 =[{title:"Riêng lẻ",value:"1"},{title:"Kết hợp",value:"2"}]
             SearchFields: =["title"]
             SearchItems: =[]
             SelectMultiple: =false
             Size: =9
-            Width: =170
+            Width: =185
             X: =123
             Y: =31
             ZIndex: =35
@@ -3679,14 +3664,13 @@ TraCuuCSADDT As screen:
             DisplayFields: =["title","key"]
             Height: =28
             InputTextPlaceholder: ="Chọn loại chính sách"
-            IsSearchable: =false
             Items: |-
                 =[{title:"Tăng",value:"1"},{title:"Giảm",value:"2"}]
             SearchFields: =["title"]
             SearchItems: =[]
             SelectMultiple: =false
             Size: =9
-            Width: =170
+            Width: =185
             X: =340
             Y: =31
             ZIndex: =36
@@ -3694,8 +3678,7 @@ TraCuuCSADDT As screen:
         cbxTPhanCS As combobox:
             DisplayFields: =["title"]
             Height: =28
-            InputTextPlaceholder: ="Chọn tiêu chí"
-            IsSearchable: =false
+            InputTextPlaceholder: ="Chọn loại dữ liệu"
             Items: |-
                 =[{title:"Sản phẩm",value:"SP"},{title:"Kênh bán",value:"KB"},{title:"Khách hàng",value:"KH"},{title:"Phạm vi",value:"PV"},{title:"Giá trị",value:"ST"}]
             OnChange: =Reset(ComTieuChiCS);Reset(ComTieuChiCS)
@@ -3703,7 +3686,7 @@ TraCuuCSADDT As screen:
             SearchItems: =[]
             SelectMultiple: =false
             Size: =10
-            Width: =170
+            Width: =185
             X: =123
             Y: =90
             ZIndex: =37
@@ -3711,18 +3694,35 @@ TraCuuCSADDT As screen:
         cbxApDungCS As combobox:
             DisplayFields: =["title"]
             Height: =28
-            InputTextPlaceholder: ="Chọn tiêu chí"
-            IsSearchable: =false
+            InputTextPlaceholder: ="Chọn loại điều kiện"
             Items: |-
                 =[{title:"Áp dụng",value:"1"},{title:"Loại trừ",value:"2"}]
             SearchFields: =["title"]
             SearchItems: =[]
             SelectMultiple: =false
             Size: =10
-            Width: =170
+            Width: =185
             X: =340
             Y: =90
             ZIndex: =38
+
+        ComThamSoCS As combobox:
+            DefaultSelectedItems: =
+            DisplayFields: =["title","key"]
+            Height: =28
+            InputTextPlaceholder: ="Chọn tham số lọc"
+            Items: |-
+                =[{title:"Tỷ lệ",value:"1"},{title:"Số tiền",value:"2"}]
+            OnChange: =Reset(TextInputTuCS);Reset(TextInputDenCS)
+            SearchFields: =["title"]
+            SearchItems: |-
+                =Search([{title:"Tỷ lệ",value:"1"},{title:"Số tiền",value:"2"}],ComThamSoCS.SearchText,"title")
+            SelectMultiple: =false
+            Size: =9
+            Width: =185
+            X: =550
+            Y: =31
+            ZIndex: =39
 
     LeftNavigation_28 As LeftNavigation_9:
         Width: =LeftNavigation_28.MenuWidth - 10
