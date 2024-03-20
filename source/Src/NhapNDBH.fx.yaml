@@ -1,5 +1,5 @@
 NhapNDBH As screen:
-    OnVisible: |
+    OnVisible: |-
         =ClearCollect(
             tmpNDBH,
             ShowColumns(
@@ -7,7 +7,7 @@ NhapNDBH As screen:
                     SortByColumns(
                         Filter(
                             DL_HOP_DONG_SP_NDBH,
-                            MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP
+                            MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT
                         ),
                         "cr282_id",
                         SortOrder.Descending
@@ -494,7 +494,7 @@ NhapNDBH As screen:
                                         DL_CHUONG_TRINH_BANG_PHIS,
                                         MA_SAN_PHAM = varMaSP //MA_SP
                         && MA_CHUONG_TRINH = varMaCT //MA_CT
-                        && NHOM_TINH_PHI = varNhomTP //TEN_NHOM_TP
+                        && NHOM_TINH_PHI in varNhomTP //TEN_NHOM_TP
                         && (MA_PHAMVI_DIALY = DropTinh_NDBH.Selected.TEN_PHAMVI || IsBlank(MA_PHAMVI_DIALY)) //TEN_PHAMVI_DL
                         && (MA_GIOI_TINH = DropGT_NDBH.Selected.TEN_GIOI_TINH || IsBlank(MA_GIOI_TINH)) //TEN_GIOI_TINH
                         && (MA_DO_TUOI = LookUp(
