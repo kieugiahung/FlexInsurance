@@ -1662,7 +1662,7 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =100
+                        Width: =102
                         X: =410
                         ZIndex: =30
 
@@ -1933,13 +1933,23 @@
                                             GH_SOTIEN_VU:Value(TiGHSTVu.Text),
                                             PT_TU_CHITRA:Value(TiTuChiTra.Text),
                                             SO_TIEN_BH:Value(TiSTBH.Text),
-                                            TEN_QUYEN_LOI_HT:TiTenQLHTQLCTCT.Text
+                                            TEN_QUYEN_LOI_HT:If(IsBlank(TiTenQLHTQLCTCT.Text),CbxQLQLCTCT.Selected.TEN_QL_CHITIET,TiTenQLHTQLCTCT.Text) 
                                         }
                                     ),
-                                    UpdateIf(
+                                    Refresh(DL_CHUONGTRINH_QLCTS);
+                                    UpdateContext({
+                                        qlctUpdate:LookUp(DL_CHUONGTRINH_QLCTS,MA_QL_CT=ThisItem.cr282_ma_ql_ct && MA_SAN_PHAM=objCT.MA_SAN_PHAM && MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH)
+                                    });
+                                    Remove(
                                         DL_CHUONGTRINH_QLCTS,
-                                        MA_QL_CT=ThisItem.cr282_ma_ql_ct && MA_SAN_PHAM=objCT.MA_SAN_PHAM && MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH,
+                                        qlctUpdate
+                                    );
+                                    Patch(
+                                        DL_CHUONGTRINH_QLCTS,
                                         {
+                                            MA_QL_CT:CbxQLQLCTCT.Selected.MA_QL_CHITIET,
+                                            MA_SAN_PHAM:objCT.MA_SAN_PHAM,
+                                            MA_CHUONG_TRINH:objCT.MA_CHUONG_TRINH,
                                             TT_HIENTHI:Value(TiTthtQLCTCT.Text),
                                             MA_NHOM_QL:CbxNhomQLQLCTCT.Selected.MA_NHOM_QL,
                                             MA_NHOMQL_SP:Blank(),
@@ -1951,7 +1961,7 @@
                                             GH_SOTIEN_VU:Value(TiGHSTVu.Text),
                                             PT_TU_CHITRA:Value(TiTuChiTra.Text),
                                             SO_TIEN_BH:Value(TiSTBH.Text),
-                                            TEN_QUYEN_LOI_HT:TiTenQLHTQLCTCT.Text
+                                            TEN_QUYEN_LOI_HT:If(IsBlank(TiTenQLHTQLCTCT.Text),CbxQLQLCTCT.Selected.TEN_QL_CHITIET,TiTenQLHTQLCTCT.Text) 
                                         }
                                     )
                                 );
@@ -1970,12 +1980,12 @@
                                         cr282_gh_sotien_vu:Value(TiGHSTVu.Text),
                                         cr282_pt_tu_chitra:Value(TiTuChiTra.Text),
                                         cr282_so_tien_bh:Value(TiSTBH.Text),
-                                        cr282_ten_quyen_loi_ht:TiTenQLHTQLCTCT.Text,
+                                        cr282_ten_quyen_loi_ht:If(IsBlank(TiTenQLHTQLCTCT.Text),CbxQLQLCTCT.Selected.TEN_QL_CHITIET,TiTenQLHTQLCTCT.Text),
                                         edited:0,
                                         idQLCT:"0"
                                     }
                                 );
-                                Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
+                                Notify("Lưu dữ liệu thành công", NotificationType.Success,2000);
                                 ClearCollect(
                                     tmpQLCTCTCollect,
                                     ShowColumns(
@@ -2055,14 +2065,17 @@
                         OnSelect: |-
                             =If(
                                 Or(maAddedQLCTCT<>"",maUpdatedQLCTCT<>""),
-                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                                Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
                                 Refresh(DL_CHUONGTRINH_QLCTS);
-                                RemoveIf(
+                                UpdateContext({
+                                    qlctRemove:LookUp(DL_CHUONGTRINH_QLCTS,MA_QL_CT=ThisItem.cr282_ma_ql_ct && MA_SAN_PHAM=objCT.MA_SAN_PHAM && MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH)
+                                });
+                                Remove(
                                     DL_CHUONGTRINH_QLCTS,
-                                    MA_QL_CT=ThisItem.cr282_ma_ql_ct && MA_SAN_PHAM=objCT.MA_SAN_PHAM && MA_CHUONG_TRINH=objCT.MA_CHUONG_TRINH
+                                    qlctRemove
                                 );
                                 Remove(tmpQLCTCTCollect,ThisItem);
-                                Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
+                                Notify("Xóa dữ liệu thành công", NotificationType.Success,2000)
                             )
                         Size: =9
                         Text: ="Xóa"
