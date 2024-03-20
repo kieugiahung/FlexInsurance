@@ -2773,95 +2773,97 @@
                                     "Grouped"
                                 )
                             );
-                            If(CountRows(GroupedSp) > 1,
-                            Collect(
-                                dsCombosp,
-                                Filter(
-                                    DL_CHINHSACH_DOITUONG_CT,
-                                    MA_GIA_TRI,
-                                    MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP" && AP_DUNG = "1"
-                                )
-                            );
-                            Collect(
-                                dsCombospLt,
-                                Filter(
-                                    DL_CHINHSACH_DOITUONG_CT,
-                                    MA_GIA_TRI,
-                                    MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP" && AP_DUNG = "2"
-                                )
-                            );
-                            ForAll(
-                                GroupedSp As sp,
-                                RemoveIf(
+                            If(
+                                CountRows(GroupedSp) > 1,
+                                Collect(
                                     dsCombosp,
-                                    cr282_ma_gia_tri = sp.MA_SAN_PHAM
+                                    Filter(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_GIA_TRI,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP" && AP_DUNG = "1"
+                                    )
                                 );
-                            );
-                            ForAll(
-                                GroupedSp As sp,
-                                RemoveIf(
+                                Collect(
                                     dsCombospLt,
-                                    cr282_ma_gia_tri = sp.MA_SAN_PHAM
+                                    Filter(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_GIA_TRI,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP" && AP_DUNG = "2"
+                                    )
                                 );
-                            );
-                            
+                                ForAll(
+                                    GroupedSp As sp,
+                                    RemoveIf(
+                                        dsCombosp,
+                                        cr282_ma_gia_tri = sp.MA_SAN_PHAM
+                                    );
+                                );
+                                ForAll(
+                                    GroupedSp As sp,
+                                    RemoveIf(
+                                        dsCombospLt,
+                                        cr282_ma_gia_tri = sp.MA_SAN_PHAM
+                                    );
+                                );
+                                
                         // Nếu COMBO áp dụng cho tất cả và có loại trừ
                         // Tìm giá trị loại trừ theo combo sản phẩm nếu có dữ liệu thì false
                         If(
-                                IsBlank(
-                                    LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
-                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
-                                    )
-                                ) And !IsBlank(
-                                    LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
-                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_COMBO_SP"
-                                    )
-                                ) And CountRows(dsCombospLt) = 0 And CountRows(GroupedSp) = CountRows(
-                                    Filter(
-                                        DL_CHINHSACH_DOITUONG_CT,
-                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_COMBO_SP"
-                                    )
-                                ),
-                                Collect(
-                                    tmpErrorCs,
-                                    {ID: 28}
+                                    IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                        )
+                                    ) And !IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                        )
+                                    ) And CountRows(dsCombospLt) = 0 And CountRows(GroupedSp) = CountRows(
+                                        Filter(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                        )
+                                    ),
+                                    Collect(
+                                        tmpErrorCs,
+                                        {ID: 28}
+                                    );
                                 );
-                            );
-                            
+                                
                         // Nếu combo sản phẩm áp dụng 1 phần
                         // Tìm trong danh sách áp dụng theo COMBO SẢN PHẨM nếu không khớp có thì false
                         If(
-                                !IsBlank(
-                                    LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
-                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
-                                    )
-                                ) And (CountRows(dsCombosp) <> 0),
-                                Collect(
-                                    tmpErrorCs,
-                                    {ID: 29}
+                                    !IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                        )
+                                    ) And (CountRows(dsCombosp) <> 0),
+                                    Collect(
+                                        tmpErrorCs,
+                                        {ID: 29}
+                                    );
+                                );
+                                If(
+                                    !IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                        )
+                                    ) And CountRows(GroupedSp) <> CountRows(
+                                        Filter(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                        )
+                                    ),
+                                    Collect(
+                                        tmpErrorCs,
+                                        {ID: 30}
+                                    );
                                 );
                             );
-                            If(
-                                !IsBlank(
-                                    LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
-                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
-                                    )
-                                ) And CountRows(GroupedSp) <> CountRows(
-                                    Filter(
-                                        DL_CHINHSACH_DOITUONG_CT,
-                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
-                                    )
-                                ),
-                                Collect(
-                                    tmpErrorCs,
-                                    {ID: 30}
-                                );
-                            );
-                            )
+                            
                         // lấy số sản phẩm trong hợp đồng
                         If(
                                 CountRows(tmpErrorCs) <= 0,
