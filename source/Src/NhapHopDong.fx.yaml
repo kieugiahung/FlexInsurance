@@ -1812,7 +1812,7 @@
                             
                         //4. Kiểm tra sản phẩm
                         ForAll(
-                                Gallery3_3.AllItems As sp,
+                                Gallery3_2.AllItems As sp,
                                     // 4.1.1 Kiểm tra thông tin sản phẩm
                         // Nếu sản phẩm áp dụng cho tất cả và có loại trừ
                         // Tìm giá trị loại trừ mã sản phẩm nếu có dữ liệu thì false
@@ -1944,9 +1944,9 @@
                                     ) And !IsBlank(
                                         LookUp(
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD.Text
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD_1.Text
                                         )
-                                    ) And !IsBlank(tiPhiNGNHD.Text),
+                                    ) And !IsBlank(tiPhiNGNHD_1.Text),
                                     Collect(
                                         tmpError,
                                         {ID: 25}
@@ -1963,9 +1963,9 @@
                                     ) And IsBlank(
                                         LookUp(
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && KIEU = "2" && TEN_GIA_TRI = tiPhiNGNHD.Text
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && KIEU = "2" && TEN_GIA_TRI = tiPhiNGNHD_1.Text
                                         )
-                                    ) And !IsBlank(tiPhiNGNHD.Text),
+                                    ) And !IsBlank(tiPhiNGNHD_1.Text),
                                     Collect(
                                         tmpError,
                                         {ID: 26}
@@ -1978,14 +1978,14 @@
                                     !IsBlank(
                                         LookUp(
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD.Text
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD_1.Text
                                         )
                                     ) And !IsBlank(
                                         LookUp(
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD.Text
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD_1.Text
                                         )
-                                    ) And !IsBlank(tiPhiNGNHD.Text),
+                                    ) And !IsBlank(tiPhiNGNHD_1.Text),
                                     Collect(
                                         tmpError,
                                         {ID: 27}
@@ -1996,14 +1996,14 @@
                         //4.1.4 Kiểm tra combo sản phẩm
                         
                         ForAll(
-                                Gallery3_3.AllItems As sp,
+                                Gallery3_2.AllItems As sp,
                                 Collect(
                                     dsSpKetHop,
                                     {MA_SAN_PHAM: sp.cbxMaSPNHD.Selected.MA_SAN_PHAM}
                                 )
                             );
                             ForAll(
-                                Gallery3_4.AllItems As sp,
+                                Container4_3.AllItems As sp,
                                 Collect(
                                     dsSpKetHop,
                                     {MA_SAN_PHAM: sp.tiMaSPLKNHD_2.Text}
@@ -2576,7 +2576,7 @@
                             
                         //4. Kiểm tra sản phẩm
                         ForAll(
-                                Gallery3_3.AllItems As sp,
+                                Gallery3_2.AllItems As sp,
                                     // 4.1.1 Kiểm tra thông tin sản phẩm
                         // Nếu sản phẩm áp dụng cho tất cả và có loại trừ
                         // Tìm giá trị loại trừ mã sản phẩm nếu có dữ liệu thì false
@@ -2708,9 +2708,9 @@
                                     ) And !IsBlank(
                                         LookUp(
                                             DL_CHINHSACH_DOITUONG_CT,
-                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD.Text
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD_1.Text
                                         )
-                                    ) And !IsBlank(tiPhiNGNHD.Text),
+                                    ) And !IsBlank(tiPhiNGNHD_1.Text),
                                     Collect(
                                         tmpErrorCs,
                                         {ID: 25}
@@ -2727,9 +2727,9 @@
                                     ) And IsBlank(
                                         LookUp(
                                             DL_CHINHSACH_DOITUONG_CT,
-                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && KIEU = "2" && TEN_GIA_TRI = tiPhiNGNHD.Text
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && KIEU = "2" && TEN_GIA_TRI = tiPhiNGNHD_1.Text
                                         )
-                                    ) And !IsBlank(tiPhiNGNHD.Text),
+                                    ) And !IsBlank(tiPhiNGNHD_1.Text),
                                     Collect(
                                         tmpErrorCs,
                                         {ID: 26}
@@ -2743,14 +2743,14 @@
                                     !IsBlank(
                                         LookUp(
                                             DL_CHINHSACH_DOITUONG_CT,
-                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD.Text
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD_1.Text
                                         )
                                     ) And !IsBlank(
                                         LookUp(
                                             DL_CHINHSACH_DOITUONG_CT,
-                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD.Text
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD_1.Text
                                         )
-                                    ) And !IsBlank(tiPhiNGNHD.Text),
+                                    ) And !IsBlank(tiPhiNGNHD_1.Text),
                                     Collect(
                                         tmpErrorCs,
                                         {ID: 27}
