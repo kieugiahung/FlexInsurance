@@ -50,7 +50,7 @@
             BorderThickness: =0
             DisplayMode: =DisplayMode.Edit
             Fill: =RGBA(0, 0, 0, 0)
-            Height: =1352
+            Height: =1683
             Width: =1306
             X: =0
             Y: =0
@@ -2909,6 +2909,224 @@
                     X: =11
                     Y: =24
                     ZIndex: =20
+
+            Container3_9 As groupContainer.manualLayoutContainer:
+                Height: =218
+                Width: =1267
+                X: =16
+                Y: =1277
+                ZIndex: =9
+
+                Label3_63 As label:
+                    FontWeight: =FontWeight.Bold
+                    Height: =20
+                    Size: =11
+                    Text: ="7. Thanh toán"
+                    Width: =254
+                    Y: =4
+                    ZIndex: =19
+
+                Gallery3_3 As gallery.variableTemplateHeightGallery:
+                    DelayItemLoading: =true
+                    Height: =153
+                    Items: |-
+                        =SortByColumns(
+                            tmpKTTNHDCollect,
+                            "cr282_thoi_han_ttoan",
+                            SortOrder.Ascending
+                        )
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplatePadding: =0
+                    TemplateSize: =74
+                    Width: =611
+                    X: =654
+                    Y: =61
+                    ZIndex: =21
+
+                    Label3_80 As label:
+                        Height: =25
+                        Size: =11
+                        Text: ="Thời hạn đóng phí"
+                        X: =265
+                        Y: =5
+                        ZIndex: =2
+
+                    Label3_79 As label:
+                        Height: =25
+                        Size: =11
+                        Text: ="Phí thanh toán/kỳ"
+                        Width: =140
+                        X: =20
+                        Y: =5
+                        ZIndex: =3
+
+                    tiTenKHLKNHD_2 As text:
+                        Align: =Align.Right
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.PHI_THANH_TOAN
+                        Format: =TextFormat.Number
+                        Height: =32
+                        Size: =11
+                        Width: =220
+                        X: =20
+                        Y: =33
+                        ZIndex: =4
+
+                    dpNSinhNHD_1 As datepicker:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        DefaultDate: =ThisItem.THOI_HAN_TTOAN
+                        EndYear: =2200
+                        Format: ="dd/mm/yyyy"
+                        Height: =32
+                        InputTextPlaceholder: =
+                        Size: =11
+                        StartYear: =1900
+                        Width: =220
+                        X: =265
+                        Y: =33
+                        ZIndex: =5
+
+                    Button2_6 As button:
+                        Height: =32
+                        OnSelect: |
+                            =Remove(tmpKTTNHDCollect,ThisItem)
+                        Size: =11
+                        Text: ="Xóa"
+                        Width: =85
+                        X: =504
+                        Y: =33
+                        ZIndex: =6
+
+                tiTongTPNHD As text:
+                    Align: =Align.Right
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =First(objHD).TONG_TIEN_PHI
+                    DisplayMode: =DisplayMode.Disabled
+                    Format: =TextFormat.Number
+                    Height: =32
+                    Size: =11
+                    Width: =250
+                    X: =38
+                    Y: =94
+                    ZIndex: =22
+
+                Label3_78 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Tổng tiền phí"
+                    Width: =200
+                    X: =38
+                    Y: =66
+                    ZIndex: =23
+
+                tiSTGiamNHD As text:
+                    Align: =Align.Right
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: = If(IsBlank(First(objHD).SO_TIEN_GIAM),0,First(objHD).SO_TIEN_GIAM)
+                    DisplayMode: =DisplayMode.Disabled
+                    Format: =TextFormat.Number
+                    Height: =32
+                    Size: =11
+                    Width: =250
+                    X: =38
+                    Y: =168
+                    ZIndex: =24
+
+                Label3_81 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Số tiền giảm"
+                    Width: =200
+                    X: =38
+                    Y: =140
+                    ZIndex: =25
+
+                tiTienSauGiamNHD As text:
+                    Align: =Align.Right
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    Default: =First(objHD).TIEN_PHI_SAU_GIAM
+                    DisplayMode: =DisplayMode.Disabled
+                    Format: =TextFormat.Number
+                    Height: =32
+                    Size: =11
+                    Width: =250
+                    X: =342
+                    Y: =168
+                    ZIndex: =26
+
+                Label3_82 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Tổng tiền phí sau giảm"
+                    Width: =200
+                    X: =342
+                    Y: =140
+                    ZIndex: =27
+
+                Label3_77 As label:
+                    Height: =25
+                    Size: =11
+                    Text: ="Mã giảm giá"
+                    Width: =200
+                    X: =342
+                    Y: =66
+                    ZIndex: =28
+
+                cbxMaGGNHD As combobox:
+                    BorderColor: =RGBA(72, 163, 62, 1)
+                    DefaultSelectedItems: =LookUp(DM_MA_GIAMGIAS,MA_GIAM_GIA=First(objHD).MA_GIAM_GIA)
+                    DisplayFields: =["cr282_ma_giam_gia"]
+                    Height: =32
+                    InputTextPlaceholder: ="Chọn mã giảm giá"
+                    Items: =DM_MA_GIAMGIAS
+                    OnChange: |-
+                        =UpdateIf(
+                            objHD,
+                            true,
+                            {
+                                SO_TIEN_GIAM:If(
+                                    !IsBlank(cbxMaGGNHD.Selected.TY_LE_GIAM),
+                                    Value(tiTongTPNHD.Text)*cbxMaGGNHD.Selected.TY_LE_GIAM,
+                                    !IsBlank(cbxMaGGNHD.Selected.SO_TIEN),
+                                    cbxMaGGNHD.Selected.SO_TIEN
+                                )
+                            }
+                        );
+                        UpdateIf(
+                            objHD,
+                            true,
+                            {
+                                TIEN_PHI_SAU_GIAM:Value(tiTongTPNHD.Text)-Value(tiSTGiamNHD.Text)
+                            }
+                        );
+                    SearchFields: =["cr282_ma_giam_gia"]
+                    SearchItems: =Search(DM_MA_GIAMGIAS,cbxMaGGNHD.SearchText,"cr282_ma_giam_gia")
+                    SelectMultiple: =false
+                    Size: =11
+                    Width: =250
+                    X: =342
+                    Y: =94
+                    ZIndex: =29
+
+                Button2_5 As button:
+                    Height: =32
+                    OnSelect: |-
+                        =Collect(
+                            tmpKTTNHDCollect,
+                            {
+                                ID:Text(maKTT+1)
+                            }
+                        );
+                        UpdateContext({
+                            maKTT:maKTT+1
+                        });
+                    Size: =11
+                    Text: ="Thêm mới"
+                    Width: =98
+                    X: =678
+                    Y: =25
+                    ZIndex: =30
 
     LeftNavigation_30 As LeftNavigation_9:
         Width: =LeftNavigation_30.MenuWidth - 10
