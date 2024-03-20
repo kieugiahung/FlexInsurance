@@ -1987,6 +1987,7 @@
                             );
                             
                         //4.1.4 Kiểm tra combo sản phẩm
+                        
                         ForAll(
                                 Gallery3_2.AllItems As sp,
                                 Collect(
@@ -2009,6 +2010,7 @@
                                     "Grouped"
                                 )
                             );
+                          If(CountRows(GroupedSp) > 1,  
                             Collect(
                                 dsCombosp,
                                 Filter(
@@ -2079,7 +2081,7 @@
                                     {ID: 29}
                                 );
                             );
-                            
+                          );
                         // nếu điều kiện nào không lỗi thì đưa vào danh sách
                         If(
                                 CountRows(tmpError) <= 0,
