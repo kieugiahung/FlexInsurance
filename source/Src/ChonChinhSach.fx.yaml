@@ -84,7 +84,7 @@ ChonChinhSach As screen:
                                 ty_le: cs.TY_LE,
                                 so_tien_max: cs.SO_TIEN_TOI_DA,
                                 donvi_tien: cs.DONVI_TIEN_TE,
-                                tich_chon: If(!IsBlank(LookUp(DL_HOP_DONG_CHON_CS, MA_CHINH_SACH=cr282_ma_chinh_sach 
+                                tich_chon: If(!IsBlank(LookUp(DL_HOP_DONG_CHON_CS, MA_CHINH_SACH=MA_CHINH_SACH 
                                 && MA_HOP_DONG=varMaHD_CS).MA_CHINH_SACH), true,false)
                             }
                         )
@@ -1023,73 +1023,6 @@ ChonChinhSach As screen:
                     Y: =DataCardKey38.Y
                     ZIndex: =4
 
-            SO_TIEN_TOI_DA_DataCard1 As typedDataCard.numberEditCard:
-                BorderStyle: =BorderStyle.Solid
-                DataField: ="cr282_so_tien_toi_da"
-                Default: =ThisItem.SO_TIEN_TOI_DA
-                DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS],DataSourceInfo.DisplayName,"cr282_so_tien_toi_da")
-                Fill: =RGBA(0, 0, 0, 0)
-                Height: =50
-                Required: =false
-                Update: =Value(DataCardValue23.Text)
-                Width: =326
-                X: =3
-                Y: =0
-                ZIndex: =6
-
-                DataCardKey46 As label:
-                    AutoHeight: =true
-                    Height: =34
-                    Text: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    Wrap: =false
-                    X: =30
-                    Y: =10
-                    ZIndex: =1
-
-                DataCardValue23 As text:
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                    Default: =Parent.Default
-                    DelayOutput: =true
-                    DisplayMode: =Parent.DisplayMode
-                    Format: =TextFormat.Number
-                    PaddingLeft: =5
-                    RadiusBottomLeft: =0
-                    RadiusBottomRight: =0
-                    RadiusTopLeft: =0
-                    RadiusTopRight: =0
-                    Tooltip: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =DataCardKey46.Y + DataCardKey46.Height + 5
-                    ZIndex: =2
-
-                ErrorMessage36 As label:
-                    AutoHeight: =true
-                    Height: =10
-                    Live: =Live.Assertive
-                    PaddingBottom: =0
-                    PaddingLeft: =0
-                    PaddingRight: =0
-                    PaddingTop: =0
-                    Text: =Parent.Error
-                    Visible: =Parent.DisplayMode=DisplayMode.Edit
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =DataCardValue23.Y + DataCardValue23.Height
-                    ZIndex: =3
-
-                StarVisible43 As label:
-                    Align: =Align.Center
-                    Height: =DataCardKey46.Height
-                    Text: ="*"
-                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                    Width: =30
-                    Wrap: =false
-                    Y: =DataCardKey46.Y
-                    ZIndex: =4
-
             KIEU_DU_LIEU_DataCard2 As typedDataCard.textualEditCard:
                 BorderStyle: =BorderStyle.Solid
                 DataField: ="cr282_kieu_du_lieu"
@@ -1227,5 +1160,72 @@ ChonChinhSach As screen:
                     Width: =30
                     Wrap: =false
                     Y: =DataCardKey35.Y
+                    ZIndex: =4
+
+            SO_TIEN_TOI_DA_DataCard1 As typedDataCard.numberEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="cr282_so_tien_toi_da"
+                Default: =ThisItem.SO_TIEN_TOI_DA
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS],DataSourceInfo.DisplayName,"cr282_so_tien_toi_da")
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                Required: =false
+                Update: =Value(DataCardValue23.Text)
+                Width: =326
+                X: =3
+                Y: =0
+                ZIndex: =6
+
+                DataCardKey46 As label:
+                    AutoHeight: =true
+                    Height: =34
+                    Text: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue23 As text:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    Default: =Parent.Default
+                    DelayOutput: =true
+                    DisplayMode: =Parent.DisplayMode
+                    Format: =TextFormat.Number
+                    PaddingLeft: =5
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Tooltip: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardKey46.Y + DataCardKey46.Height + 5
+                    ZIndex: =2
+
+                ErrorMessage36 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue23.Y + DataCardValue23.Height
+                    ZIndex: =3
+
+                StarVisible43 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey46.Height
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey46.Y
                     ZIndex: =4
 

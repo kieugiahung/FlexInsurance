@@ -1362,6 +1362,7 @@
                             maKHNLKFwd,
                             cbxMaKHNHD.Selected.MA_KHACH_HANG
                         );
+                        // check điều kiện áp dụng
                         // lọc điều kiện áp dụng
                         UpdateContext({errorMsg: ""});
                         // lọc điều kiện
@@ -1385,29 +1386,49 @@
                             tmpPass,
                             {}
                         );
+                        ClearCollect(
+                            dsCombosp,
+                            {}
+                        );
+                        ClearCollect(
+                            dsCombospLt,
+                            {}
+                        );
+                        ClearCollect(
+                            GroupedSp,
+                            {}
+                        );
+                        ClearCollect(
+                            dsSpKetHop,
+                            {}
+                        );
                         RemoveIf(
                             tmpPass,
                             1 = 1
                         );
-                        // nếu không có điều kiện thỏa mãn thì báo lỗi
-                        If(
-                            CountRows(tmpDieuKien) <= 0,
-                            UpdateContext({errorMsg: "Không có điều kiện thỏa mãn"})
-                        );
-                        If(
-                            !IsBlank(errorMsg),
-                            Notify(
-                                errorMsg,
-                                NotificationType.Error,
-                                800
-                            )
-                        );
+                        // nếu không có điều kiện thỏa mãn thì mặc định 
                         ForAll(
                             tmpDieuKien As dk,
                         //1. kiểm tra kênh bán   
                         //1.1. kiểm tra mã kênh bán
                         // Nếu kênh bán áp dụng cho tất cả và có loại trừ
                         // Tìm giá trị loại trừ mã kênh bán, loại kênh bán, cá nhân/tổ chức, nếu có dữ liệu thì false
+                            RemoveIf(
+                                tmpError,
+                                1 = 1
+                            );
+                            RemoveIf(
+                                dsCombosp,
+                                1 = 1
+                            );
+                            RemoveIf(
+                                dsSpKetHop,
+                                1 = 1
+                            );
+                            RemoveIf(
+                                GroupedSp,
+                                1 = 1
+                            );
                             If(
                                 IsBlank(
                                     LookUp(
@@ -1791,7 +1812,7 @@
                             
                         //4. Kiểm tra sản phẩm
                         ForAll(
-                                Gallery3_2.AllItems As sp,
+                                Gallery3_3.AllItems As sp,
                                     // 4.1.1 Kiểm tra thông tin sản phẩm
                         // Nếu sản phẩm áp dụng cho tất cả và có loại trừ
                         // Tìm giá trị loại trừ mã sản phẩm nếu có dữ liệu thì false
@@ -1923,9 +1944,9 @@
                                     ) And !IsBlank(
                                         LookUp(
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD_1.Text
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD.Text
                                         )
-                                    ) And !IsBlank(tiPhiNGNHD_1.Text),
+                                    ) And !IsBlank(tiPhiNGNHD.Text),
                                     Collect(
                                         tmpError,
                                         {ID: 25}
@@ -1942,9 +1963,9 @@
                                     ) And IsBlank(
                                         LookUp(
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && KIEU = "2" && TEN_GIA_TRI = tiPhiNGNHD_1.Text
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && KIEU = "2" && TEN_GIA_TRI = tiPhiNGNHD.Text
                                         )
-                                    ) And !IsBlank(tiPhiNGNHD_1.Text),
+                                    ) And !IsBlank(tiPhiNGNHD.Text),
                                     Collect(
                                         tmpError,
                                         {ID: 26}
@@ -1957,47 +1978,117 @@
                                     !IsBlank(
                                         LookUp(
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD_1.Text
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD.Text
                                         )
                                     ) And !IsBlank(
                                         LookUp(
                                             DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD_1.Text
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD.Text
                                         )
-                                    ) And !IsBlank(tiPhiNGNHD_1.Text),
+                                    ) And !IsBlank(tiPhiNGNHD.Text),
                                     Collect(
                                         tmpError,
                                         {ID: 27}
                                     );
                                 );
                             );
-                            // Nếu có combo sản phẩm
-                        /*
+                            
+                        //4.1.4 Kiểm tra combo sản phẩm
+                        
+                        ForAll(
+                                Gallery3_3.AllItems As sp,
+                                Collect(
+                                    dsSpKetHop,
+                                    {MA_SAN_PHAM: sp.cbxMaSPNHD.Selected.MA_SAN_PHAM}
+                                )
+                            );
+                            ForAll(
+                                Gallery3_4.AllItems As sp,
+                                Collect(
+                                    dsSpKetHop,
+                                    {MA_SAN_PHAM: sp.tiMaSPLKNHD_2.Text}
+                                )
+                            );
+                            Collect(
+                                GroupedSp,
+                                GroupBy(
+                                    dsSpKetHop,
+                                    "MA_SAN_PHAM",
+                                    "Grouped"
+                                )
+                            );
+                            Collect(
+                                dsCombosp,
+                                Filter(
+                                    DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                    MA_GIA_TRI,
+                                    MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP" && AP_DUNG = "1"
+                                )
+                            );
+                            Collect(
+                                dsCombospLt,
+                                Filter(
+                                    DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                    MA_GIA_TRI,
+                                    MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP" && AP_DUNG = "2"
+                                )
+                            );
+                           
+                            ForAll(
+                                GroupedSp As sp,
+                                RemoveIf(
+                                    dsCombosp,
+                                    cr282_ma_gia_tri = sp.MA_SAN_PHAM
+                                );
+                            );
+                            
+                            ForAll(
+                                GroupedSp As sp,
+                                RemoveIf(
+                                    dsCombospLt,
+                                    cr282_ma_gia_tri = sp.MA_SAN_PHAM
+                                );
+                            );
+                            
+                        // Nếu COMBO áp dụng cho tất cả và có loại trừ
+                        // Tìm giá trị loại trừ theo combo sản phẩm nếu có dữ liệu thì false
+                        If(
+                                IsBlank(
+                                    LookUp(
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                    )
+                                ) And CountRows(dsCombospLt) = 0 And CountRows(GroupedSp) = CountRows(
+                                    Filter(
+                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                    )
+                                ),
+                                Collect(
+                                    tmpError,
+                                    {ID: 28}
+                                );
+                            );
+                        // Nếu combo sản phẩm áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo COMBO SẢN PHẨM nếu không khớp có thì false
                         If(
                                 !IsBlank(
                                     LookUp(
                                         DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
                                     )
-                                ),
-                                // nếu combo áp dụng với hợp đồng hiện tại thì check trong danh sách sản phẩm
-                                If(
-                                    LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP"
-                                    ).MA_PV_AD = "1",
-                                    1 = 1
+                                ) And (CountRows(dsCombosp) <> 0 ),
+                                Collect(
+                                    tmpError,
+                                    {ID: 29}
                                 );
-                                // nếu combo áp dụng với hợp đồng hiện tại thì check trong danh sách sản phẩm và hợp đồng liên kết
-                        If (
-                                    LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
-                                        MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP"
-                                    ).MA_PV_AD = "2",
-                                    1 = 1
-                                )
                             );
-                            */
+                            
                         // nếu điều kiện nào không lỗi thì đưa vào danh sách
                         If(
                                 CountRows(tmpError) <= 0,
@@ -2008,8 +2099,8 @@
                             )
                         );
                         If(
-                            CountRows(tmpError) > 0 && CountRows(tmpPass) <= 0,
-                            UpdateContext({errorMsg: "Không có điều kiện thoả mãn"})
+                            CountRows(tmpPass) <= 0,
+                            UpdateContext({errorMsg: "Không có điều kiện áp dụng thoả mãn"})
                         );
                         If(
                             !IsBlank(errorMsg),
@@ -2019,8 +2110,793 @@
                                 800
                             )
                         );
-                        Set(varMaHD_CS,tiMaHDNHD.Text);
-                        Navigate(ChonChinhSach);
+                        // end điều kiện áp dụng
+                        // lấy chính sách áp dụng
+                        UpdateContext({errorMsg: ""});
+                        // lọc điều kiện
+                        // lấy danh sách các điều kiện áp dụng còn hoạt động và ngày hợp đồng nằm trong khoảng hiệu lực
+                        ClearCollect (
+                            tmpChinhsach,
+                            Filter(
+                                DL_CHINHSACH_CHUNG,
+                                HOAT_DONG = "true" && DateValue(HIEU_LUC_TU) <= DateValue(dpNgayHDNHD.SelectedDate)
+                            )
+                        );
+                        ClearCollect(
+                            tmpErrorCs,
+                            {}
+                        );
+                        RemoveIf(
+                            tmpErrorCs,
+                            1 = 1
+                        );
+                        ClearCollect(
+                            tmpPassCs,
+                            {}
+                        );
+                        ClearCollect(
+                            dsCombosp,
+                            {}
+                        );
+                        ClearCollect(
+                            dsCombospLt,
+                            {}
+                        );
+                        ClearCollect(
+                            GroupedSp,
+                            {}
+                        );
+                        ClearCollect(
+                            dsSpKetHop,
+                            {}
+                        );
+                        RemoveIf(
+                            tmpPassCs,
+                            1 = 1
+                        );
+                        // nếu không có điều kiện thỏa mãn thì báo lỗi
+                        If(
+                            CountRows(tmpChinhsach) <= 0,
+                            UpdateContext({errorMsg: "Không có chính sách thỏa mãn"})
+                        );
+                        If(
+                            !IsBlank(errorMsg),
+                            Notify(
+                                errorMsg,
+                                NotificationType.Error,
+                                800
+                            )
+                        );
+                        ForAll(
+                            tmpChinhsach As dk,
+                        //1. kiểm tra kênh bán   
+                        //1.1. kiểm tra mã kênh bán
+                        // Nếu kênh bán áp dụng cho tất cả và có loại trừ
+                        // Tìm giá trị loại trừ mã kênh bán, loại kênh bán, cá nhân/tổ chức, nếu có dữ liệu thì false
+                            RemoveIf(
+                                tmpErrorCs,
+                                1 = 1
+                            );
+                            RemoveIf(
+                                dsCombosp,
+                                1 = 1
+                            );
+                            RemoveIf(
+                                dsCombospLt,
+                                1 = 1
+                            );
+                            RemoveIf(
+                                dsSpKetHop,
+                                1 = 1
+                            );
+                            RemoveIf(
+                                GroupedSp,
+                                1 = 1
+                            );
+                            If(
+                                IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_KB_DM"
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KB_DM" && MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN
+                                    )
+                                ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 1}
+                                );
+                            );
+                            
+                        // Nếu kênh bán áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã kênh bán, loại kênh bán, cá nhân/tổ chức, nếu không có thì false
+                        If(
+                                !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_DM"
+                                    )
+                                ) And IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_DM" && MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN
+                                    )
+                                ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 2}
+                                );
+                            );
+                            
+                        // Nếu kênh bán áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã kênh bán nếu có dữ liệu
+                        // Tìm trong danh sách loại trừ theo mã kênh bán nếu có dữ liệu thì -> false, nếu không có thì  -> pass
+                        If(
+                                !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_DM" && MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KB_DM" && MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN
+                                    )
+                                ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 3}
+                                );
+                            );
+                            
+                        //1.2. kiểm tra loại kênh bán
+                        // Nếu kênh bán áp dụng cho tất cả và có loại trừ
+                        // Tìm giá trị loại trừ loại kênh bán nếu có dữ liệu thì false
+                        If(
+                                IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_KB_LOAI"
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KB_LOAI" && MA_GIA_TRI = cbxLoaiKBNHD.Selected.MA_LOAI_KB
+                                    )
+                                ) And !IsBlank(cbxLoaiKBNHD.Selected.MA_LOAI_KB),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 4}
+                                );
+                            );
+                            
+                        // Nếu kênh bán áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã kênh bán, loại kênh bán, cá nhân/tổ chức, nếu không có thì false
+                        If(
+                                !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_LOAI"
+                                    )
+                                ) And IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_LOAI" && MA_GIA_TRI = cbxLoaiKBNHD.Selected.MA_LOAI_KB
+                                    )
+                                ) And !IsBlank(cbxLoaiKBNHD.Selected.MA_LOAI_KB),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 5}
+                                );
+                            );
+                            
+                        // Nếu kênh bán áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã kênh bán, loại kênh bán, cá nhân/tổ chức, nếu có dữ liệu
+                        // Tìm trong danh sách loại trừ (theo mã kênh bán, loại kênh bán, cá nhân/tổ chức) nếu có dữ liệu thì -> false, nếu không có thì  -> pass
+                        If(
+                                !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_LOAI" && MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "2" && (MA_GIA_TRI = cbxLoaiKBNHD.Selected.MA_LOAI_KB Or MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN)
+                                    )
+                                ) And !IsBlank(cbxLoaiKBNHD.Selected.MA_LOAI_KB),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 6}
+                                );
+                            );
+                            
+                        //1.3. kiểm tra nhóm KB
+                        // Nếu kênh bán áp dụng cho tất cả và có loại trừ
+                        // Tìm giá trị loại trừ  cá nhân/tổ chức, nếu có dữ liệu thì false
+                        If(
+                                IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_KB_NHOM"
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KB_NHOM" && MA_GIA_TRI = nhomKB
+                                    )
+                                ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 7}
+                                );
+                            );
+                            
+                        // Nếu kênh bán áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã kênh bán, loại kênh bán, cá nhân/tổ chức, nếu không có thì false
+                        If(
+                                !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_NHOM"
+                                    )
+                                ) And IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_NHOM" && MA_GIA_TRI = nhomKB
+                                    )
+                                ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 8}
+                                );
+                            );
+                            
+                        // Nếu kênh bán áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã kênh bán nếu có dữ liệu
+                        // Tìm trong danh sách loại trừ theo mã kênh bán nếu có dữ liệu thì -> false, nếu không có thì  -> pass
+                        If(
+                                !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_NHOM" && MA_GIA_TRI = nhomKB
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KB_NHOM" && MA_GIA_TRI = nhomKB
+                                    )
+                                ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 9}
+                                );
+                            );
+                            
+                        //2. Kiểm tra khách hàng     
+                        //2.1. kiểm tra nhóm Kh
+                        // Nếu kênh bán áp dụng cho tất cả và có loại trừ
+                        // Tìm giá trị loại trừ  cá nhân/tổ chức, nếu có dữ liệu thì false
+                        If(
+                                IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KH" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_KH_LOAI"
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KH" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
+                                    )
+                                ) And !IsBlank(cbxLoaiKHNHD.Selected.value),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 10}
+                                );
+                            );
+                            
+                        // Nếu kênh bán áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã kênh bán, loại kênh bán, cá nhân/tổ chức, nếu không có thì false
+                        If(
+                                !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KH_LOAI"
+                                    )
+                                ) And IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
+                                    )
+                                ) And !IsBlank(cbxLoaiKHNHD.Selected.value),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 11}
+                                );
+                            );
+                            
+                        // Nếu kênh bán áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã kênh bán nếu có dữ liệu
+                        // Tìm trong danh sách loại trừ theo mã kênh bán nếu có dữ liệu thì -> false, nếu không có thì  -> pass
+                        If(
+                                !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KH" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
+                                    )
+                                ) And !IsBlank(cbxLoaiKHNHD.Selected.value),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 12}
+                                );
+                            );
+                            
+                        //3. Kiểm tra phạm vi
+                        //3.1 Kiểm tra tỉnh/thành phố
+                        // Nếu áp dụng cho tất cả và có loại trừ
+                        // Tìm giá trị loại trừ tỉnh hoặc mã cấp cha của tỉnh nếu có dữ liệu thì false
+                        If(
+                                IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && (MA_TIEU_CHI = "MA_TINH_TP" Or MA_TIEU_CHI = "MA_VUNG_MIEN")
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "2" && (MA_TIEU_CHI = "MA_TINH_TP" Or MA_TIEU_CHI = "MA_VUNG_MIEN")
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "2" && (MA_GIA_TRI = cbxTinhNHD.Selected.MA_PHAMVI Or MA_GIA_TRI = cbxTinhNHD.Selected.MA_CHA)
+                                    )
+                                ) And !IsBlank(cbxTinhNHD.Selected.MA_PHAMVI),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 13}
+                                );
+                            );
+                            
+                        // Nếu phạm vi áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo tỉnh/thành phố hoặc là mã cha của tỉnh/thành phố nếu không có thì false
+                        If(
+                                !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && (MA_TIEU_CHI = "MA_TINH_TP" Or MA_TIEU_CHI = "MA_VUNG_MIEN")
+                                    )
+                                ) And IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && (MA_GIA_TRI = cbxTinhNHD.Selected.MA_PHAMVI Or MA_GIA_TRI = cbxTinhNHD.Selected.MA_CHA)
+                                    )
+                                ) And !IsBlank(cbxTinhNHD.Selected.MA_PHAMVI),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 14}
+                                );
+                            );
+                            
+                        // Nếu phạm vi áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo tỉnh/thành phố hoặc mã cha của tỉnh/thành phố nếu có dữ liệu
+                        // Tìm trong danh sách loại trừ theo tỉnh/thành phố và mã cha của tỉnh/thành phố nếu có dữ liệu thì -> false, nếu không có thì  -> pass
+                        If(
+                                !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && (MA_TIEU_CHI = "MA_TINH_TP" Or MA_TIEU_CHI = "MA_VUNG_MIEN")
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && (MA_GIA_TRI = cbxTinhNHD.Selected.MA_PHAMVI Or MA_GIA_TRI = cbxTinhNHD.Selected.MA_CHA)
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "2" && (MA_GIA_TRI = cbxTinhNHD.Selected.MA_PHAMVI Or MA_GIA_TRI = cbxTinhNHD.Selected.MA_CHA)
+                                    )
+                                ) And !IsBlank(cbxTinhNHD.Selected.MA_PHAMVI),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 15}
+                                );
+                            );
+                            
+                        //3.2 Kiểm tra đơn vị quản lý hợp đồng
+                        // Nếu áp dụng cho tất cả và có loại trừ
+                        // Tìm giá trị loại trừ đơn vị quản lý hợp đồng nếu có dữ liệu thì false
+                        If(
+                                IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_DON_VI"
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_DON_VI" && MA_GIA_TRI = cbxDVQLNHD.Selected.MA_PHAMVI
+                                    )
+                                ) And !IsBlank(cbxDVQLNHD.Selected.MA_PHAMVI),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 16}
+                                );
+                            );
+                            
+                        // Nếu phạm vi áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng đơn vị quản lý hợp đồng không có thì false
+                        If(
+                                !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_DON_VI"
+                                    )
+                                ) And IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && MA_GIA_TRI = cbxDVQLNHD.Selected.MA_PHAMVI
+                                    )
+                                ) And !IsBlank(cbxDVQLNHD.Selected.MA_PHAMVI),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 17}
+                                );
+                            );
+                            
+                        // Nếu phạm vi áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo đơn vị quản lý hợp đồng nếu có dữ liệu
+                        // Tìm trong danh sách loại trừ theo đơn vị quản lý hợp đồng nếu có dữ liệu thì -> false, nếu không có thì  -> pass
+                        If(
+                                !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_DON_VI" && MA_GIA_TRI = cbxDVQLNHD.Selected.MA_PHAMVI
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_DON_VI" && MA_GIA_TRI = cbxDVQLNHD.Selected.MA_PHAMVI
+                                    )
+                                ) And !IsBlank(cbxDVQLNHD.Selected.MA_PHAMVI),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 18}
+                                );
+                            );
+                            
+                        //4. Kiểm tra sản phẩm
+                        ForAll(
+                                Gallery3_3.AllItems As sp,
+                                    // 4.1.1 Kiểm tra thông tin sản phẩm
+                        // Nếu sản phẩm áp dụng cho tất cả và có loại trừ
+                        // Tìm giá trị loại trừ mã sản phẩm nếu có dữ liệu thì false
+                                If(
+                                    IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_SP"
+                                        )
+                                    ) And !IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_SP" && MA_GIA_TRI = sp.cbxMaSPNHD.Selected.MA_SAN_PHAM
+                                        )
+                                    ) And !IsBlank(sp.cbxMaSPNHD.Selected.MA_SAN_PHAM),
+                                    Collect(
+                                        tmpErrorCs,
+                                        {ID: 19}
+                                    );
+                                );
+                                    // Nếu sản phẩm áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã sản phẩm nếu không có thì false
+                        If(
+                                    !IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_SP"
+                                        )
+                                    ) And IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_SP" && KIEU = "2" && MA_GIA_TRI = sp.cbxMaSPNHD.Selected.MA_SAN_PHAM
+                                        )
+                                    ) And !IsBlank(sp.cbxMaSPNHD.Selected.MA_SAN_PHAM),
+                                    Collect(
+                                        tmpErrorCs,
+                                        {ID: 20}
+                                    );
+                                );
+                                
+                        // Nếu sản phẩm áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã sản phẩm nếu có dữ liệu
+                        // Tìm trong danh sách loại trừ theo mã sản phẩm nếu có dữ liệu thì -> false, nếu không có thì  -> pass
+                        If(
+                                    !IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_SP" && MA_GIA_TRI = sp.cbxMaSPNHD.Selected.MA_SAN_PHAM
+                                        )
+                                    ) And !IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_SP" && MA_GIA_TRI = sp.cbxMaSPNHD.Selected.MA_SAN_PHAM
+                                        )
+                                    ) And !IsBlank(sp.cbxMaSPNHD.Selected.MA_SAN_PHAM),
+                                    Collect(
+                                        tmpErrorCs,
+                                        {ID: 21}
+                                    );
+                                );
+                                // 4.1.2 Kiểm tra thông tin chương trình
+                        // Nếu chương trình áp dụng cho tất cả và có loại trừ
+                        // Tìm giá trị loại trừ chương trình nếu có dữ liệu thì false
+                        If(
+                                    IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT"
+                                        )
+                                    ) And !IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                        )
+                                    ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
+                                    Collect(
+                                        tmpErrorCs,
+                                        {ID: 22}
+                                    );
+                                );
+                                    // Nếu sản phẩm áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã sản phẩm nếu không có thì false
+                        If(
+                                    !IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT"
+                                        )
+                                    ) And IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT" && KIEU = "2" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                        )
+                                    ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
+                                    Collect(
+                                        tmpErrorCs,
+                                        {ID: 23}
+                                    );
+                                );
+                                    // Nếu chương trình áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã chương trình nếu có dữ liệu
+                        // Tìm trong danh sách loại trừ theo mã chương trình nếu có dữ liệu thì -> false, nếu không có thì  -> pass
+                        If(
+                                    !IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                        )
+                                    ) And !IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                        )
+                                    ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
+                                    Collect(
+                                        tmpErrorCs,
+                                        {ID: 24}
+                                    );
+                                );
+                         // 4.1.3 Kiểm tra thông tin LHNV
+                        // Nếu LHNV áp dụng cho tất cả và có loại trừ
+                        // Tìm giá trị loại trừ LHNV nếu có dữ liệu thì false
+                        If(
+                                    IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV"
+                                        )
+                                    ) And !IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD.Text
+                                        )
+                                    ) And !IsBlank(tiPhiNGNHD.Text),
+                                    Collect(
+                                        tmpErrorCs,
+                                        {ID: 25}
+                                    );
+                                );
+                                    // Nếu sản phẩm áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã sản phẩm nếu không có thì false
+                        If(
+                                    !IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV"
+                                        )
+                                    ) And IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && KIEU = "2" && TEN_GIA_TRI = tiPhiNGNHD.Text
+                                        )
+                                    ) And !IsBlank(tiPhiNGNHD.Text),
+                                    Collect(
+                                        tmpErrorCs,
+                                        {ID: 26}
+                                    );
+                                );
+                                
+                        // Nếu chương trình áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo mã chương trình nếu có dữ liệu
+                        // Tìm trong danh sách loại trừ theo mã chương trình nếu có dữ liệu thì -> false, nếu không có thì  -> pass
+                        If(
+                                    !IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD.Text
+                                        )
+                                    ) And !IsBlank(
+                                        LookUp(
+                                            DL_CHINHSACH_DOITUONG_CT,
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && TEN_GIA_TRI = tiPhiNGNHD.Text
+                                        )
+                                    ) And !IsBlank(tiPhiNGNHD.Text),
+                                    Collect(
+                                        tmpErrorCs,
+                                        {ID: 27}
+                                    );
+                                );
+                            );
+                            
+                        //4.1.4 Kiểm tra combo sản phẩm
+                        // lấy danh sách sản phẩm trên hợp đồng
+                        ForAll(
+                                Gallery3_3.AllItems As sp,
+                                Collect(
+                                    dsSpKetHop,
+                                    {MA_SAN_PHAM: sp.cbxMaSPNHD.Selected.MA_SAN_PHAM}
+                                )
+                            );
+                            ForAll(
+                                Gallery3_4.AllItems As sp,
+                                Collect(
+                                    dsSpKetHop,
+                                    {MA_SAN_PHAM: sp.tiMaSPLKNHD_2.Text}
+                                )
+                            );
+                            Collect(
+                                GroupedSp,
+                                GroupBy(
+                                    dsSpKetHop,
+                                    "MA_SAN_PHAM",
+                                    "Grouped"
+                                )
+                            );
+                            Collect(
+                                dsCombosp,
+                                Filter(
+                                    DL_CHINHSACH_DOITUONG_CT,
+                                    MA_GIA_TRI,
+                                    MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP" && AP_DUNG = "1"
+                                )
+                            );
+                            Collect(
+                                dsCombospLt,
+                                Filter(
+                                    DL_CHINHSACH_DOITUONG_CT,
+                                    MA_GIA_TRI,
+                                    MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP" && AP_DUNG = "2"
+                                )
+                            );
+                           
+                            ForAll(
+                                GroupedSp As sp,
+                                RemoveIf(
+                                    dsCombosp,
+                                    cr282_ma_gia_tri = sp.MA_SAN_PHAM
+                                );
+                            );
+                            
+                            ForAll(
+                                GroupedSp As sp,
+                                RemoveIf(
+                                    dsCombospLt,
+                                    cr282_ma_gia_tri = sp.MA_SAN_PHAM
+                                );
+                            );
+                            
+                        // Nếu COMBO áp dụng cho tất cả và có loại trừ
+                        // Tìm giá trị loại trừ theo combo sản phẩm nếu có dữ liệu thì false
+                        If(
+                                IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                    )
+                                ) And !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                    )
+                                ) And CountRows(dsCombospLt) = 0 And CountRows(GroupedSp) = CountRows(
+                                    Filter(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                    )
+                                ),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 28}
+                                );
+                            );
+                        // Nếu combo sản phẩm áp dụng 1 phần
+                        // Tìm trong danh sách áp dụng theo COMBO SẢN PHẨM nếu không khớp có thì false
+                        If(
+                                !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                    )
+                                ) And (CountRows(dsCombosp) <> 0 ),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 29}
+                                );
+                            );
+                            If(
+                                !IsBlank(
+                                    LookUp(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                    )
+                                ) And CountRows(GroupedSp) <> CountRows(
+                                    Filter(
+                                        DL_CHINHSACH_DOITUONG_CT,
+                                        MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
+                                    )
+                                ),
+                                Collect(
+                                    tmpErrorCs,
+                                    {ID: 30}
+                                );
+                            );
+                            
+                        // lấy số sản phẩm trong hợp đồng
+                        If(
+                                CountRows(tmpErrorCs) <= 0,
+                                Collect(
+                                    tmpPassCs,
+                                    {ma_chinh_sach: dk.MA_CHINH_SACH}
+                                );
+                            )
+                        );
+                        If(
+                            CountRows(tmpPass) <= 0,
+                            UpdateContext({errorMsg: "Không có điều kiện áp dụng thoả mãn"})
+                        );
+                        If(
+                            CountRows(tmpPassCs) <= 0,
+                            UpdateContext({errorMsg: "Không có chính sách áp dụng"})
+                        );
+                        // end chính sách áp dụng
+                        If(
+                            !IsBlank(errorMsg),
+                            Notify(
+                                errorMsg,
+                                NotificationType.Error,
+                                800
+                            )
+                        );
                     Size: =11
                     Underline: =true
                     Width: =142
