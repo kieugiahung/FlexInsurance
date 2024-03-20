@@ -49,6 +49,8 @@ ChonChinhSach As screen:
                                 0,
                                 "donvi_tien",
                                 "",
+                                "pass",
+                                0,
                                 "tich_chon",
                                 false
                             ),
@@ -68,6 +70,7 @@ ChonChinhSach As screen:
                             "ty_le",
                             "so_tien_max",
                             "donvi_tien",
+                            "pass",
                             "tich_chon"
                         )
                     );
@@ -84,10 +87,30 @@ ChonChinhSach As screen:
                                 ty_le: cs.TY_LE,
                                 so_tien_max: cs.SO_TIEN_TOI_DA,
                                 donvi_tien: cs.DONVI_TIEN_TE,
-                                tich_chon: If(!IsBlank(LookUp(DL_HOP_DONG_CHON_CS, MA_CHINH_SACH=MA_CHINH_SACH 
-                                && MA_HOP_DONG=varMaHD_CS).MA_CHINH_SACH), true,false)
+                                tich_chon: If(
+                                    !IsBlank(
+                                        LookUp(
+                                            DL_HOP_DONG_CHON_CS,
+                                            MA_CHINH_SACH = cr282_ma_chinh_sach && MA_HOP_DONG = varMaHD
+                                        ).MA_CHINH_SACH
+                                    ),
+                                    true,
+                                    false
+                                )
                             }
                         )
+                    );
+                    ForAll(
+                        tmpPassCs As ps,
+                        UpdateIf(
+                            tmpChonTCCSDT,
+                            cr282_ma_chinh_sach = ps.ma_chinh_sach,
+                            {pass: 1}
+                        )
+                    );
+                    RemoveIf(
+                        tmpChonTCCSDT,
+                        pass <> 1
                     );
                 Size: =9
                 Text: ="Tra cứu"
@@ -896,7 +919,10 @@ ChonChinhSach As screen:
             FontWeight: =FontWeight.Bold
             Height: =32
             OnSelect: |
-                =RemoveIf(DL_HOP_DONG_CHON_CS,MA_HOP_DONG=varMaHD);
+                =RemoveIf(
+                    DL_HOP_DONG_CHON_CS,
+                    MA_HOP_DONG = varMaHD_CS
+                );
                 ForAll(
                     GalleryChonCS.AllItems As cs,
                     If(
@@ -905,9 +931,12 @@ ChonChinhSach As screen:
                             DL_HOP_DONG_CHON_CS,
                             Defaults(DL_HOP_DONG_CHON_CS),
                             {
-                                ID: Max(DL_HOP_DONG_CHON_CS, ID)+1,
-                                MA_CHINH_SACH:cs.TextMaCS.Text,
-                                MA_HOP_DONG:varMaHD,
+                                ID: Max(
+                                    DL_HOP_DONG_CHON_CS,
+                                    ID
+                                ) + 1,
+                                MA_CHINH_SACH: cs.TextMaCS.Text,
+                                MA_HOP_DONG: varMaHD_CS,
                                 SO_TIEN: Value(cs.TxtSoTien.Text),
                                 TY_LE: Value(cs.TxtTyLe_1.Text),
                                 SO_TIEN_TOIDA: Value(cs.TxtMaxST.Text)
@@ -915,11 +944,39 @@ ChonChinhSach As screen:
                         )
                     )
                 );
+                If(
+                    !IsEmpty(
+                        Filter(
+                            DL_HOP_DONG_CHON_CS,
+                            MA_HOP_DONG = varMaHD_CS
+                        )
+                    ),
+                    Patch(
+                        DL_HOP_DONG_KETQUA_CS,
+                        Defaults(DL_HOP_DONG_KETQUA_CS),
+                        {
+                            ID: Max(
+                                DL_HOP_DONG_KETQUA_CS,
+                                ID
+                            ) + 1,
+                            MA_HOP_DONG: varMaHD_CS,
+                            KIEU_DU_LIEU: "002",
+                            LOAI_TAC_DONG: "2",
+                            GIA_TRI: Sum(
+                                Filter(
+                                    DL_HOP_DONG_CHON_CS,
+                                    MA_HOP_DONG = varMaHD_CS
+                                ),
+                                SO_TIEN
+                            )
+                        }
+                    )
+                );
                 Notify(
-                        "Chọn chính sách thành công",
-                        NotificationType.Success,
-                        800
-                    );
+                    "Chọn chính sách thành công",
+                    NotificationType.Success,
+                    800
+                );
             Size: =9
             Text: ="Chọn chính sách"
             Width: =123
@@ -948,6 +1005,7 @@ ChonChinhSach As screen:
         Form1 As form:
             DataSource: =DL_HOP_DONG_KETQUA_CS
             Height: =123
+            Item: =LookUp(DL_HOP_DONG_KETQUA_CS, MA_HOP_DONG=varMaHD_CS)
             NumberOfColumns: =4
             Width: =1306
             Y: =620
@@ -963,7 +1021,7 @@ ChonChinhSach As screen:
                 Height: =50
                 MaxLength: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS], DataSourceInfo.MaxLength, "cr282_loai_tac_dong")
                 Required: =false
-                Update: =DataCardValue21.Text
+                Update: =DataCardValue21.Selected.MA
                 Width: =326
                 X: =0
                 Y: =0
@@ -974,29 +1032,12 @@ ChonChinhSach As screen:
                     Color: =RGBA(0, 0, 0, 1)
                     Height: =34
                     Size: =11
-                    Text: =Parent.DisplayName
+                    Text: ="Loại tác động"
                     Width: =Parent.Width - 60
                     Wrap: =false
                     X: =30
                     Y: =10
                     ZIndex: =1
-
-                DataCardValue21 As text:
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                    Default: =Parent.Default
-                    DelayOutput: =true
-                    DisplayMode: =Parent.DisplayMode
-                    MaxLength: =Parent.MaxLength
-                    PaddingLeft: =5
-                    RadiusBottomLeft: =0
-                    RadiusBottomRight: =0
-                    RadiusTopLeft: =0
-                    RadiusTopRight: =0
-                    Tooltip: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =DataCardKey38.Y + DataCardKey38.Height + 5
-                    ZIndex: =2
 
                 ErrorMessage35 As label:
                     AutoHeight: =true
@@ -1023,6 +1064,20 @@ ChonChinhSach As screen:
                     Y: =DataCardKey38.Y
                     ZIndex: =4
 
+                DataCardValue21 As dropdown:
+                    ChevronDisabledBackground: =RGBA(122, 138, 143, 1)
+                    Default: =If(Parent.Default="1","Tăng",If(Parent.Default="2","Giảm"))
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(214, 221, 224, 1)
+                    DisplayMode: =DisplayMode.Disabled
+                    Items: |-
+                        =[{MA:"1",TEN:"Tăng"},{MA:"2",TEN:"Giảm"}]
+                    Width: =266
+                    X: =30
+                    Y: =45
+                    ZIndex: =5
+
             KIEU_DU_LIEU_DataCard2 As typedDataCard.textualEditCard:
                 BorderStyle: =BorderStyle.Solid
                 DataField: ="cr282_kieu_du_lieu"
@@ -1033,7 +1088,7 @@ ChonChinhSach As screen:
                 Height: =50
                 MaxLength: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS], DataSourceInfo.MaxLength, "cr282_kieu_du_lieu")
                 Required: =false
-                Update: =DataCardValue19.Text
+                Update: =DataCardValue19.Selected.MA
                 Width: =326
                 X: =1
                 Y: =0
@@ -1044,29 +1099,12 @@ ChonChinhSach As screen:
                     Color: =RGBA(0, 0, 0, 1)
                     Height: =34
                     Size: =11
-                    Text: =Parent.DisplayName
+                    Text: ="Kiểu dữ liệu"
                     Width: =Parent.Width - 60
                     Wrap: =false
                     X: =30
                     Y: =10
                     ZIndex: =1
-
-                DataCardValue19 As text:
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                    Default: =Parent.Default
-                    DelayOutput: =true
-                    DisplayMode: =Parent.DisplayMode
-                    MaxLength: =Parent.MaxLength
-                    PaddingLeft: =5
-                    RadiusBottomLeft: =0
-                    RadiusBottomRight: =0
-                    RadiusTopLeft: =0
-                    RadiusTopRight: =0
-                    Tooltip: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =DataCardKey37.Y + DataCardKey37.Height + 5
-                    ZIndex: =2
 
                 ErrorMessage34 As label:
                     AutoHeight: =true
@@ -1093,6 +1131,20 @@ ChonChinhSach As screen:
                     Y: =DataCardKey37.Y
                     ZIndex: =4
 
+                DataCardValue19 As dropdown:
+                    ChevronDisabledBackground: =RGBA(122, 138, 143, 1)
+                    Default: =If(Parent.Default="001","Tỷ lệ (%)",If(Parent.Default="002","Số tiền"))
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(214, 221, 224, 1)
+                    DisplayMode: =DisplayMode.Disabled
+                    Items: |-
+                        =[{MA:"001",TEN:"Tỷ lệ (%)"},{MA:"002",TEN:"Số tiền"}]
+                    Width: =266
+                    X: =30
+                    Y: =45
+                    ZIndex: =5
+
             GIA_TRI_DataCard1 As typedDataCard.numberEditCard:
                 BorderStyle: =BorderStyle.Solid
                 DataField: ="cr282_gia_tri"
@@ -1113,7 +1165,7 @@ ChonChinhSach As screen:
                     Color: =RGBA(0, 0, 0, 1)
                     Height: =34
                     Size: =11
-                    Text: =Parent.DisplayName
+                    Text: ="Giá trị"
                     Width: =Parent.Width - 60
                     Wrap: =false
                     X: =30
@@ -1121,16 +1173,21 @@ ChonChinhSach As screen:
                     ZIndex: =1
 
                 DataCardValue14 As text:
+                    Align: =Align.Right
                     BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                     Default: =Parent.Default
                     DelayOutput: =true
-                    DisplayMode: =Parent.DisplayMode
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(214, 221, 224, 1)
+                    DisplayMode: =DisplayMode.Disabled
                     Format: =TextFormat.Number
                     PaddingLeft: =5
                     RadiusBottomLeft: =0
                     RadiusBottomRight: =0
                     RadiusTopLeft: =0
                     RadiusTopRight: =0
+                    Size: =11
                     Tooltip: =Parent.DisplayName
                     Width: =Parent.Width - 60
                     X: =30
@@ -1180,7 +1237,7 @@ ChonChinhSach As screen:
                 DataCardKey46 As label:
                     AutoHeight: =true
                     Height: =34
-                    Text: =Parent.DisplayName
+                    Text: ="Số tiền tối đa"
                     Width: =Parent.Width - 60
                     Wrap: =false
                     X: =30
@@ -1188,16 +1245,21 @@ ChonChinhSach As screen:
                     ZIndex: =1
 
                 DataCardValue23 As text:
+                    Align: =Align.Right
                     BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                     Default: =Parent.Default
                     DelayOutput: =true
-                    DisplayMode: =Parent.DisplayMode
+                    DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                    DisabledColor: =RGBA(0, 0, 0, 1)
+                    DisabledFill: =RGBA(214, 221, 224, 1)
+                    DisplayMode: =DisplayMode.Disabled
                     Format: =TextFormat.Number
                     PaddingLeft: =5
                     RadiusBottomLeft: =0
                     RadiusBottomRight: =0
                     RadiusTopLeft: =0
                     RadiusTopRight: =0
+                    Size: =11
                     Tooltip: =Parent.DisplayName
                     Width: =Parent.Width - 60
                     X: =30

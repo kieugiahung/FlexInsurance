@@ -975,7 +975,7 @@
                             );
                             Set(
                                 varMaHD,
-                                tiMaHDNHD.Text
+                                If(IsBlank(tiMaHDNHD.Text),maHopDongFwd,tiMaHDNHD.Text) 
                             );
                             Set(
                                 varMaCT,
@@ -1987,7 +1987,6 @@
                             );
                             
                         //4.1.4 Kiểm tra combo sản phẩm
-                        
                         ForAll(
                                 Gallery3_2.AllItems As sp,
                                 Collect(
@@ -2026,7 +2025,6 @@
                                     MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP" && AP_DUNG = "2"
                                 )
                             );
-                           
                             ForAll(
                                 GroupedSp As sp,
                                 RemoveIf(
@@ -2034,7 +2032,6 @@
                                     cr282_ma_gia_tri = sp.MA_SAN_PHAM
                                 );
                             );
-                            
                             ForAll(
                                 GroupedSp As sp,
                                 RemoveIf(
@@ -2067,6 +2064,7 @@
                                     {ID: 28}
                                 );
                             );
+                            
                         // Nếu combo sản phẩm áp dụng 1 phần
                         // Tìm trong danh sách áp dụng theo COMBO SẢN PHẨM nếu không khớp có thì false
                         If(
@@ -2075,7 +2073,7 @@
                                         DL_DIEUKIEN_APDUNG_LOAI_CT,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
                                     )
-                                ) And (CountRows(dsCombosp) <> 0 ),
+                                ) And (CountRows(dsCombosp) <> 0),
                                 Collect(
                                     tmpError,
                                     {ID: 29}
@@ -2791,7 +2789,6 @@
                                     MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP" && AP_DUNG = "2"
                                 )
                             );
-                           
                             ForAll(
                                 GroupedSp As sp,
                                 RemoveIf(
@@ -2799,7 +2796,6 @@
                                     cr282_ma_gia_tri = sp.MA_SAN_PHAM
                                 );
                             );
-                            
                             ForAll(
                                 GroupedSp As sp,
                                 RemoveIf(
@@ -2832,6 +2828,7 @@
                                     {ID: 28}
                                 );
                             );
+                            
                         // Nếu combo sản phẩm áp dụng 1 phần
                         // Tìm trong danh sách áp dụng theo COMBO SẢN PHẨM nếu không khớp có thì false
                         If(
@@ -2840,7 +2837,7 @@
                                         DL_CHINHSACH_DOITUONG_CT,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
                                     )
-                                ) And (CountRows(dsCombosp) <> 0 ),
+                                ) And (CountRows(dsCombosp) <> 0),
                                 Collect(
                                     tmpErrorCs,
                                     {ID: 29}
@@ -2888,7 +2885,17 @@
                                 errorMsg,
                                 NotificationType.Error,
                                 800
-                            )
+                            ),
+                            Set(
+                                varMaHD_CS,
+                                If(
+                                    IsBlank(tiMaHDNHD.Text),
+                                    maHopDongFwd,
+                                    tiMaHDNHD.Text
+                                )
+                            );
+                            Navigate(ChonChinhSach);
+                            
                         );
                     Size: =11
                     Underline: =true
