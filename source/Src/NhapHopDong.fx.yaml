@@ -112,6 +112,13 @@
                     "edited",
                     0
                 )
+            );
+            UpdateIf(
+                objHD,
+                true,
+                {
+                    SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
+                }
             ),
             varUnReloadNHD = "3",
             ClearCollect(
@@ -600,6 +607,37 @@
                                 TINH_TP_KH:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,MA_TINH),
                                 NHOM_KHACH_HANG:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,MA_NHOM_KH)
                             }
+                        );
+                        If(
+                            LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,LOAI_KHACH_HANG)="0",
+                            ClearCollect(
+                                dmKhachHangNHDCollect,
+                                RenameColumns(
+                                    ShowColumns(
+                                        DM_NGHE_NGHIEP,
+                                        "cr282_ma_nghe_nghiep",
+                                        "cr282_ten_nghe_nghiep"
+                                    ),
+                                    "cr282_ma_nghe_nghiep",
+                                    "value",
+                                    "cr282_ten_nghe_nghiep",
+                                    "title"
+                                )
+                            ),
+                            ClearCollect(
+                                dmKhachHangNHDCollect,
+                                RenameColumns(
+                                    ShowColumns(
+                                        BH_DM_NGANHNGHES,
+                                        "cr282_ma_nhom_nganh",
+                                        "cr282_ten_nganh"
+                                    ),
+                                    "cr282_ma_nhom_nganh",
+                                    "value",
+                                    "cr282_ten_nganh",
+                                    "title"
+                                )
+                            )
                         )
                     SearchFields: =["cr282_ma_khach_hang"]
                     SearchItems: =Search(DM_KHACH_HANG,cbxMaKHNHD.SearchText,"cr282_ma_khach_hang")
@@ -680,13 +718,13 @@
 
                 cbxNgheNHD As combobox:
                     BorderColor: =RGBA(72, 163, 62, 1)
-                    DefaultSelectedItems: =LookUp(BH_DM_NGANHNGHES,MA_NHOM_NGANH=First(objHD).NGHE_NGHIEP)
-                    DisplayFields: =["cr282_ten_nganh"]
+                    DefaultSelectedItems: =LookUp(dmKhachHangNHDCollect,value=First(objHD).NGHE_NGHIEP)
+                    DisplayFields: =["title"]
                     Height: =32
-                    InputTextPlaceholder: ="Chọn nghề nghiệp"
-                    Items: =BH_DM_NGANHNGHES
-                    SearchFields: =["cr282_id"]
-                    SearchItems: =Search(BH_DM_NGANHNGHES,cbxNgheNHD.SearchText,"cr282_id")
+                    InputTextPlaceholder: =
+                    Items: =SortByColumns(dmKhachHangNHDCollect,"value",SortOrder.Ascending)
+                    SearchFields: =["title"]
+                    SearchItems: =Search(SortByColumns(dmKhachHangNHDCollect,"value",SortOrder.Ascending),cbxNgheNHD.SearchText,"title")
                     SelectMultiple: =false
                     Size: =11
                     Width: =250
@@ -836,7 +874,6 @@
                         )
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
-                    TemplatePadding: =0
                     TemplateSize: =184
                     Width: =1267
                     Y: =70
@@ -1754,7 +1791,6 @@
                         )
                     Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
-                    TemplatePadding: =0
                     TemplateSize: =143
                     Width: =1267
                     Y: =60
@@ -4111,7 +4147,7 @@
                     tiPhiTTNHD As text:
                         Align: =Align.Right
                         BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =ThisItem.PHI_THANH_TOAN
+                        Default: =If(IsBlank(ThisItem.PHI_THANH_TOAN) || ThisItem.PHI_THANH_TOAN<0,0,ThisItem.PHI_THANH_TOAN)
                         Format: =TextFormat.Number
                         Height: =32
                         OnChange: |-
@@ -4170,7 +4206,7 @@
                 tiTongTPNHD As text:
                     Align: =Align.Right
                     BorderColor: =RGBA(72, 163, 62, 1)
-                    Default: =If(IsBlank(First(objHD).TONG_TIEN_PHI),0,First(objHD).TONG_TIEN_PHI)
+                    Default: =If(IsBlank(First(objHD).TONG_TIEN_PHI) || First(objHD).TONG_TIEN_PHI<0,0,First(objHD).TONG_TIEN_PHI)
                     DisplayMode: =DisplayMode.Disabled
                     Format: =TextFormat.Number
                     Height: =32
@@ -4214,7 +4250,7 @@
                 tiTienSauGiamNHD As text:
                     Align: =Align.Right
                     BorderColor: =RGBA(72, 163, 62, 1)
-                    Default: =If(IsBlank(First(objHD).TIEN_PHI_SAU_GIAM),0,First(objHD).TIEN_PHI_SAU_GIAM)
+                    Default: =If(IsBlank(First(objHD).TIEN_PHI_SAU_GIAM) || First(objHD).TIEN_PHI_SAU_GIAM<0,0,First(objHD).TIEN_PHI_SAU_GIAM)
                     DisplayMode: =DisplayMode.Disabled
                     Format: =TextFormat.Number
                     Height: =32
