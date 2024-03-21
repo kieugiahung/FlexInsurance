@@ -4332,7 +4332,24 @@
                     )
                 );
                 //End muc 6
-                Notify(
+            //Clone QLCT chuong trinh
+            ForAll(
+                    tmpDSHDSPNHDCollect As sp,
+                    ForAll(
+                        Filter(
+                            DL_CHUONGTRINH_QLCTS,
+                            MA_CHUONG_TRINH = sp.MA_CHUONG_TRINH && MA_SAN_PHAM = sp.MA_SAN_PHAM
+                        ) As ql,
+                        /*Patch(
+                            DL_HOP_DONG_SP_QLCT, 
+                            Default(DL_HOP_DONG_SP_QLCT),
+                            {MA_HOP_DONG:tiMaHDNHD.Text}
+                        )*/
+                        ""
+                    )
+                );
+                //End clone
+            Notify(
                     "Lưu dữ liệu thành công",
                     NotificationType.Success,
                     2000

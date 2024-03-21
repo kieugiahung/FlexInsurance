@@ -1,0 +1,765 @@
+DSQuyenLoiHD As screen:
+    OnVisible: |
+        =ClearCollect(
+            tmpDSQL,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                        Filter(
+                            DL_HOP_DONG_SP_QLCT,
+                            MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT
+                        ),
+                        "cr282_ma_chuong_trinh",
+                        SortOrder.Descending
+                    ),
+                    "edited",
+                    0
+                ),
+                "cr282_ma_san_pham",
+                "cr282_ma_nhom_ql",
+                "cr282_ma_hop_dong",
+                "cr282_tt_hienthi",
+                "cr282_gh_solan_nam",
+                "cr282_gh_songay_nam",
+                "cr282_gh_sotien_benh",
+                "cr282_gh_sotien_nam",
+                "cr282_gh_sotien_ngay",
+                "cr282_gh_sotien_vu",
+                "cr282_ma_chuong_trinh",
+                "cr282_ma_nhomql_sp",
+                "cr282_ma_ql_ct",
+                "cr282_pt_tu_chitra",
+                "cr282_so_tien_bh",
+                "cr282_ten_quyen_loi_ht",
+                "edited"
+            )
+        );
+        UpdateContext(
+            {
+                maAddedQLHD: "",
+                maUpdatedQLHD: ""
+            }
+        );
+
+    ContainerDKCTCT_3 As groupContainer.manualLayoutContainer:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Height: =Parent.Height
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =Parent.Width-Self.X
+        X: =60
+        ZIndex: =1
+
+        GalleryDKCTCT_8 As gallery.galleryVertical:
+            DelayItemLoading: =true
+            Height: =363
+            Items: =SortByColumns(tmpDSQL,"cr282_ten_quyen_loi_ht",SortOrder.Ascending)
+            Layout: =Layout.Vertical
+            LoadingSpinner: =LoadingSpinner.Data
+            NavigationStep: =0
+            TemplatePadding: =0
+            TemplateSize: =30
+            Width: =Parent.Width
+            Y: =72
+            ZIndex: =1
+
+            TiTthtQLCTCT_7 As text:
+                Align: =Align.Right
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_tt_hienthi
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                Height: =30
+                OnChange: =
+                OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =60
+                X: =7
+                ZIndex: =27
+
+            TiTenQLHTQLCTCT_15 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_ten_quyen_loi_ht
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                Height: =30
+                OnChange: =
+                OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =102
+                X: =410
+                ZIndex: =30
+
+            TiSTBH_2 As text:
+                Align: =Align.Right
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_so_tien_bh
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                Format: =TextFormat.Number
+                Height: =30
+                OnChange: =
+                OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =79
+                X: =1071
+                ZIndex: =31
+
+            TiTuChiTra_2 As text:
+                Align: =Align.Right
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_pt_tu_chitra
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                Format: =TextFormat.Number
+                Height: =30
+                OnChange: =
+                OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =79
+                X: =992
+                ZIndex: =32
+
+            TiGHSTBenh_2 As text:
+                Align: =Align.Right
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_gh_sotien_benh
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                Format: =TextFormat.Number
+                Height: =30
+                OnChange: =
+                OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =80
+                X: =912
+                ZIndex: =33
+
+            TiGHSNNam_7 As text:
+                Align: =Align.Right
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_gh_songay_nam
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                Format: =TextFormat.Number
+                Height: =30
+                OnChange: =
+                OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =80
+                X: =832
+                ZIndex: =34
+
+            TiGHSLNam_7 As text:
+                Align: =Align.Right
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_gh_solan_nam
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                Format: =TextFormat.Number
+                Height: =30
+                OnChange: =
+                OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =80
+                X: =752
+                ZIndex: =35
+
+            TiGHSTVu_5 As text:
+                Align: =Align.Right
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_gh_sotien_vu
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                Format: =TextFormat.Number
+                Height: =30
+                OnChange: =
+                OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =80
+                X: =672
+                ZIndex: =36
+
+            TiGHSTNam_8 As text:
+                Align: =Align.Right
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_gh_sotien_nam
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                Format: =TextFormat.Number
+                Height: =30
+                OnChange: =
+                OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =80
+                X: =592
+                ZIndex: =37
+
+            TiGHSTNgay_7 As text:
+                Align: =Align.Right
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_gh_sotien_ngay
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                Format: =TextFormat.Number
+                Height: =30
+                OnChange: =
+                OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =80
+                X: =512
+                ZIndex: =38
+
+            CbxNhomQLQLCTCT_1 As combobox:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                ChevronBackground: =RGBA(255, 255, 255, 1)
+                ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                ChevronFill: =RGBA(72, 163, 62, 1)
+                ChevronHoverBackground: =RGBA(255, 255, 255, 1)
+                ChevronHoverFill: =RGBA(72, 163, 62, 1)
+                DefaultSelectedItems: =LookUp(DM_NHOM_QUYENLOIS,MA_NHOM_QL=ThisItem.cr282_ma_nhom_ql)
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayFields: =["cr282_ten_nhom_ql"]
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                Height: =30
+                HoverBorderColor: =RGBA(9, 33, 98, 1)
+                HoverFill: =RGBA(180, 214, 250, 1)
+                InputTextPlaceholder: ="Chọn nhóm quyền lợi"
+                IsSearchable: =false
+                Items: =SortByColumns(DM_NHOM_QUYENLOIS,"cr282_ma_nhom_ql",SortOrder.Ascending)
+                OnSelect: =Select(Parent)
+                PressedColor: =RGBA(72, 163, 62, 1)
+                PressedFill: =RGBA(255, 255, 255, 1)
+                SearchFields: =["cr282_ten_nhom_ql"]
+                SearchItems: =[]
+                SelectionColor: =RGBA(0, 0, 0, 1)
+                SelectionFill: =RGBA(214, 221, 224, 1)
+                SelectMultiple: =false
+                Size: =11
+                Width: =108
+                X: =157
+                ZIndex: =39
+
+            CbxQLQLCTCT_1 As combobox:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                ChevronBackground: =RGBA(255, 255, 255, 1)
+                ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                ChevronFill: =RGBA(72, 163, 62, 1)
+                ChevronHoverBackground: =RGBA(255, 255, 255, 1)
+                ChevronHoverFill: =RGBA(72, 163, 62, 1)
+                DefaultSelectedItems: =LookUp(DM_QUYENLOI_CHITIETS,MA_QL_CHITIET=ThisItem.cr282_ma_ql_ct)
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayFields: =["cr282_ten_ql_chitiet"]
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                Height: =30
+                HoverBorderColor: =RGBA(9, 33, 98, 1)
+                HoverFill: =RGBA(180, 214, 250, 1)
+                InputTextPlaceholder: ="Chọn nhóm quyền lợi"
+                IsSearchable: =false
+                Items: =Filter(SortByColumns(DM_QUYENLOI_CHITIETS,"cr282_ma_ql_chitiet",SortOrder.Ascending),MA_NHOM_QL=CbxNhomQLQLCTCT_1.Selected.MA_NHOM_QL)
+                OnSelect: =Select(Parent)
+                PressedColor: =RGBA(72, 163, 62, 1)
+                PressedFill: =RGBA(255, 255, 255, 1)
+                SearchFields: =["cr282_ten_ql_chitiet"]
+                SearchItems: =[]
+                SelectionColor: =RGBA(0, 0, 0, 1)
+                SelectionFill: =RGBA(214, 221, 224, 1)
+                SelectMultiple: =false
+                Size: =11
+                Width: =143
+                X: =266
+                ZIndex: =40
+
+            ButtonLuuQLCTCT_1 As button:
+                FontWeight: =FontWeight.Bold
+                Height: =25
+                OnSelect: |-
+                    =If(
+                        IsBlank(CbxNhomQLQLCTCT_1.Selected.MA_NHOM_QL),
+                        Notify(
+                            "Bắt buộc nhập nhóm quyền lợi",
+                            NotificationType.Error,
+                            800
+                        ),
+                        If(
+                            IsBlank(CbxQLQLCTCT_1.Selected.MA_QL_CHITIET),
+                            Notify(
+                                "Bắt buộc nhập quyền lợi",
+                                NotificationType.Error,
+                                800
+                            ),
+                            UpdateIf(
+                                DL_HOP_DONG_SP_QLCT,
+                                MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT,
+                                {
+                                    MA_QL_CT: CbxQLQLCTCT_1.Selected.MA_QL_CHITIET,
+                                    TT_HIENTHI: Value(TiTthtQLCTCT_7.Text),
+                                    MA_NHOM_QL: CbxNhomQLQLCTCT_1.Selected.MA_NHOM_QL,
+                                    MA_NHOMQL_SP: Blank(),
+                                    GH_SOLAN_NAM: Value(TiGHSLNam_7.Text),
+                                    GH_SONGAY_NAM: Value(TiGHSNNam_7.Text),
+                                    GH_SOTIEN_BENH: Value(TiGHSTBenh_2.Text),
+                                    GH_SOTIEN_NAM: Value(TiGHSTNam_8.Text),
+                                    GH_SOTIEN_NGAY: Value(TiGHSTNgay_7.Text),
+                                    GH_SOTIEN_VU: Value(TiGHSTVu_5.Text),
+                                    PT_TU_CHITRA: Value(TiTuChiTra_2.Text),
+                                    SO_TIEN_BH: Value(TiSTBH_2.Text),
+                                    TEN_QUYEN_LOI_HT: If(
+                                        IsBlank(TiTenQLHTQLCTCT_15.Text),
+                                        CbxQLQLCTCT_1.Selected.TEN_QL_CHITIET,
+                                        TiTenQLHTQLCTCT_15.Text
+                                    )
+                                }
+                            );
+                        );
+                        Notify(
+                            "Lưu dữ liệu thành công",
+                            NotificationType.Success,
+                            2000
+                        );
+                        Select(Icon3);
+                        
+                    )
+                Size: =9
+                Text: ="Lưu"
+                Visible: =ThisItem.edited=1
+                Width: =37
+                X: =1161
+                Y: =2
+                ZIndex: =41
+
+            ButtonSuaQLCTCT_1 As button:
+                FontWeight: =FontWeight.Bold
+                Height: =25
+                OnSelect: |-
+                    =If(
+                        Or(maAddedQLHD<>"",maUpdatedQLHD<>""),
+                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                        UpdateIf(
+                            tmpDSQL,
+                            cr282_ma_ql_ct=ThisItem.cr282_ma_ql_ct,
+                            {
+                                edited:1
+                            }
+                        );
+                        UpdateContext({
+                            maUpdatedQLHD:ThisItem.cr282_ma_ql_ct
+                        })
+                    )
+                Size: =9
+                Text: ="Sửa"
+                Visible: =ThisItem.edited=0
+                Width: =37
+                X: =1161
+                Y: =2
+                ZIndex: =42
+
+            ButtonXoaQLCTCT_1 As button:
+                FontWeight: =FontWeight.Bold
+                Height: =25
+                OnSelect: |-
+                    =If(
+                        Or(maAddedQLHD<>"",maUpdatedQLHD<>""),
+                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
+                        Refresh(DL_HOP_DONG_SP_QLCT);
+                        UpdateContext({
+                            qlctRemove:LookUp(DL_HOP_DONG_SP_QLCT,MA_QL_CT=ThisItem.cr282_ma_ql_ct && MA_SAN_PHAM=varMaSP && MA_CHUONG_TRINH=varMaCT && MA_HOP_DONG=varMaHD)
+                        });
+                        Remove(
+                            DL_HOP_DONG_SP_QLCT,
+                            qlctRemove
+                        );
+                        Select(Icon3);
+                        Notify("Xóa dữ liệu thành công", NotificationType.Success,2000)
+                    )
+                Size: =9
+                Text: ="Xóa"
+                Visible: =ThisItem.edited=0
+                Width: =37
+                X: =1210
+                Y: =2
+                ZIndex: =43
+
+            ButtonHuyQLCTCT_1 As button:
+                FontWeight: =FontWeight.Bold
+                Height: =25
+                OnSelect: |
+                    =UpdateIf(
+                        tmpDSQL,
+                        cr282_ma_ql_ct = ThisItem.cr282_ma_ql_ct,
+                        {edited: 0}
+                    );
+                    UpdateContext(
+                        {
+                            maAddedQLHD: "",
+                            maUpdatedQLHD: ""
+                        }
+                    );
+                Size: =9
+                Text: ="Hủy"
+                Visible: =ThisItem.edited=1
+                Width: =37
+                X: =1210
+                Y: =2
+                ZIndex: =44
+
+            TiTthtQLCTCT_8 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_ma_ql_ct
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =30
+                OnChange: =
+                OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =90
+                X: =67
+                ZIndex: =45
+
+        BadgeCanvas1_61 As Badge:
+            BasePaletteColor: =
+            Content: =""
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =39
+            Width: =Parent.Width
+            X: =0
+            Y: =34
+            ZIndex: =2
+
+        TextCanvas2_279 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =10
+            Text: ="Thao tác"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =84
+            X: =1160
+            Y: =35
+            ZIndex: =15
+
+        TextCanvas2_268 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =10
+            Text: |-
+                ="Thứ tự 
+                hiển thị"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =50
+            X: =13
+            Y: =35
+            ZIndex: =21
+
+        TextCanvas2_270 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =10
+            Text: |-
+                ="Nhóm
+                quyền lợi"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =59
+            X: =183
+            Y: =35
+            ZIndex: =22
+
+        TextCanvas2_271 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =36
+            Size: =10
+            Text: |-
+                ="Tên
+                quyền lợi"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =71
+            X: =299
+            Y: =35
+            ZIndex: =23
+
+        TextCanvas2_272 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =10
+            Text: |-
+                ="Tên quyền lợi
+                hiển thị"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =125
+            X: =406
+            Y: =35
+            ZIndex: =24
+
+        TextCanvas2_273 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =10
+            Text: |-
+                ="Giới hạn/ngày 
+                (số tiền)"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =80
+            X: =518
+            Y: =35
+            ZIndex: =25
+
+        TextCanvas2_274 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =10
+            Text: |-
+                ="Giới hạn/năm 
+                (số tiền)"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =77
+            X: =598
+            Y: =35
+            ZIndex: =26
+
+        TextCanvas2_275 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =10
+            Text: |-
+                ="Giới hạn/vụ 
+                (số tiền)"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =73
+            X: =680
+            Y: =35
+            ZIndex: =27
+
+        TextCanvas2_276 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =10
+            Text: |-
+                ="Giới hạn 
+                số lần/năm"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =83
+            X: =758
+            Y: =35
+            ZIndex: =28
+
+        TextCanvas2_277 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =10
+            Text: |-
+                ="Giới hạn 
+                số ngày/năm"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =74
+            X: =841
+            Y: =35
+            ZIndex: =31
+
+        TextCanvas2_266 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =10
+            Text: |-
+                ="Số tiền 
+                bảo hiểm"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =76
+            X: =1074
+            Y: =33
+            ZIndex: =32
+
+        TextCanvas2_278 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =10
+            Text: |-
+                ="Giới hạn bệnh 
+                (số tiền)"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =79
+            X: =917
+            Y: =35
+            ZIndex: =34
+
+        TextCanvas2_265 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =10
+            Text: |-
+                ="Tự chi trả
+                (%)"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =78
+            X: =996
+            Y: =33
+            ZIndex: =35
+
+        TextCanvas2_269 As Text:
+            Align: ='TextCanvas.Align'.Center
+            DisplayMode: =DisplayMode.Edit
+            FontColor: =
+            Height: =38
+            Size: =10
+            Text: ="Mã quyền lợi"
+            Weight: ='TextCanvas.Weight'.Bold
+            Width: =70
+            X: =76
+            Y: =35
+            ZIndex: =43
+
+        Label2_35 As label:
+            FontWeight: =FontWeight.Bold
+            Height: =33
+            Size: =11
+            Text: ="Danh sách quyền lợi chương trình"
+            Width: =Parent.Width
+            ZIndex: =44
+
+        Icon3 As icon.Reset:
+            Icon: =Icon.Reset
+            OnSelect: |
+                =ClearCollect(
+                    tmpDSQL,
+                    ShowColumns(
+                        AddColumns(
+                            SortByColumns(
+                                Filter(
+                                    DL_HOP_DONG_SP_QLCT,
+                                    MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT
+                                ),
+                                "cr282_ma_chuong_trinh",
+                                SortOrder.Descending
+                            ),
+                            "edited",
+                            0
+                        ),
+                        "cr282_ma_san_pham",
+                        "cr282_ma_nhom_ql",
+                        "cr282_ma_hop_dong",
+                        "cr282_tt_hienthi",
+                        "cr282_gh_solan_nam",
+                        "cr282_gh_songay_nam",
+                        "cr282_gh_sotien_benh",
+                        "cr282_gh_sotien_nam",
+                        "cr282_gh_sotien_ngay",
+                        "cr282_gh_sotien_vu",
+                        "cr282_ma_chuong_trinh",
+                        "cr282_ma_nhomql_sp",
+                        "cr282_ma_ql_ct",
+                        "cr282_pt_tu_chitra",
+                        "cr282_so_tien_bh",
+                        "cr282_ten_quyen_loi_ht",
+                        "edited"
+                    )
+                );
+                UpdateContext(
+                    {
+                        maAddedQLHD: "",
+                        maUpdatedQLHD: ""
+                    }
+                );
+            Visible: =false
+            X: =1208
+            Y: =422
+            ZIndex: =45
+
