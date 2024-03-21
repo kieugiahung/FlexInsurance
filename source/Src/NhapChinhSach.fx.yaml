@@ -5492,14 +5492,23 @@ NhapChinhSach As screen:
                                 varSP: Concatenate(
                                     "- Áp dụng: </br>",
                                     varSP_Combo,
-                                    "</br>+ ",
-                                    Concat(
-                                        Filter(
-                                            colAD,
-                                            Loai = "SP"
+                                    If(
+                                        CountRows(
+                                            Filter(
+                                                colAD,
+                                                Loai = "SP"
+                                            )
+                                        ) > 0,
+                                        "</br>+ ",
+                                        Concat(
+                                            Filter(
+                                                colAD,
+                                                Loai = "SP"
+                                            ),
+                                            Ten,
+                                            "</br>+ "
                                         ),
-                                        Ten,
-                                        "</br>+ "
+                                        ""
                                     )
                                 )
                             }
@@ -5693,14 +5702,23 @@ NhapChinhSach As screen:
                                 varSP_LT: Concatenate(
                                     "- Loại trừ:</br>",
                                     varSP_Combo,
-                                    "</br>+ ",
-                                    Concat(
-                                        Filter(
-                                            colLT,
-                                            Loai = "SP"
+                                    If(
+                                        CountRows(
+                                            Filter(
+                                                colLT,
+                                                Loai = "SP"
+                                            )
+                                        ) > 0,
+                                        "</br>+ ",
+                                        Concat(
+                                            Filter(
+                                                colLT,
+                                                Loai = "SP"
+                                            ),
+                                            Ten,
+                                            "</br>+ "
                                         ),
-                                        Ten,
-                                        "</br>+ "
+                                        ""
                                     )
                                 )
                             }
@@ -6633,11 +6651,17 @@ NhapChinhSach As screen:
                             " ",
                             DataCardTienTe.Selected.TIEN_TE,
                             " có hiệu lực từ ",
-                            Text(DateValueTuCS.SelectedDate),
+                            Text(
+                                DateValueTuCS.SelectedDate,
+                                "dd/mm/yyyy"
+                            ),
                             " đến ",
                             If(
                                 !IsBlank(DateValueDenCS.SelectedDate),
-                                Text(DateValueDenCS.SelectedDate),
+                                Text(
+                                    DateValueDenCS.SelectedDate,
+                                    "dd/mm/yyyy"
+                                ),
                                 "khi có thông báo mới"
                             ),
                             " nếu thỏa mãn ",
@@ -6764,7 +6788,6 @@ NhapChinhSach As screen:
                     }
                 );
             );
-            
             
             If(
                 IsBlank(errorMsgCS),
@@ -7491,14 +7514,23 @@ NhapChinhSach As screen:
                                 varSP: Concatenate(
                                     "- Áp dụng: </br>",
                                     varSP_Combo,
-                                    "</br>+ ",
-                                    Concat(
-                                        Filter(
-                                            colAD,
-                                            Loai = "SP"
+                                    If(
+                                        CountRows(
+                                            Filter(
+                                                colAD,
+                                                Loai = "SP"
+                                            )
+                                        ) > 0,
+                                        "</br>+ ",
+                                        Concat(
+                                            Filter(
+                                                colAD,
+                                                Loai = "SP"
+                                            ),
+                                            Ten,
+                                            "</br>+ "
                                         ),
-                                        Ten,
-                                        "</br>+ "
+                                        ""
                                     )
                                 )
                             }
@@ -7692,14 +7724,23 @@ NhapChinhSach As screen:
                                 varSP_LT: Concatenate(
                                     "- Loại trừ:</br>",
                                     varSP_Combo,
-                                    "</br>+ ",
-                                    Concat(
-                                        Filter(
-                                            colLT,
-                                            Loai = "SP"
+                                    If(
+                                        CountRows(
+                                            Filter(
+                                                colLT,
+                                                Loai = "SP"
+                                            )
+                                        ) > 0,
+                                        "</br>+ ",
+                                        Concat(
+                                            Filter(
+                                                colLT,
+                                                Loai = "SP"
+                                            ),
+                                            Ten,
+                                            "</br>+ "
                                         ),
-                                        Ten,
-                                        "</br>+ "
+                                        ""
                                     )
                                 )
                             }
@@ -8632,11 +8673,17 @@ NhapChinhSach As screen:
                             " ",
                             DataCardTienTe.Selected.TIEN_TE,
                             " có hiệu lực từ ",
-                            Text(DateValueTuCS.SelectedDate, "dd/mm/yyyy"),
+                            Text(
+                                DateValueTuCS.SelectedDate,
+                                "dd/mm/yyyy"
+                            ),
                             " đến ",
                             If(
                                 !IsBlank(DateValueDenCS.SelectedDate),
-                                Text(DateValueDenCS.SelectedDate, "dd/mm/yyyy"),
+                                Text(
+                                    DateValueDenCS.SelectedDate,
+                                    "dd/mm/yyyy"
+                                ),
                                 "khi có thông báo mới"
                             ),
                             " nếu thỏa mãn ",
