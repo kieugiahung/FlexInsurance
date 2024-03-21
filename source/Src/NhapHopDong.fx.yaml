@@ -277,7 +277,7 @@
                     IsEditable: =true
                     OnChange: |-
                         =If(
-                            IsBlank(First(objHD).HIEU_LUC_DEN),
+                            IsBlank(dpHLDenNHD.SelectedDate),
                             UpdateIf(
                                 objHD,
                                 true,
@@ -576,6 +576,10 @@
                     BorderColor: =RGBA(72, 163, 62, 1)
                     Default: =First(objHD).DIA_CHI
                     Height: =32
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
                     Size: =11
                     Width: =250
                     X: =672
@@ -653,6 +657,10 @@
                     BorderColor: =RGBA(72, 163, 62, 1)
                     Default: =First(objHD).TEN_KHACH_HANG
                     Height: =32
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
                     Size: =11
                     Width: =250
                     X: =355
@@ -688,6 +696,10 @@
                     BorderColor: =RGBA(72, 163, 62, 1)
                     Default: =First(objHD).SO_DIEN_THOAI
                     Height: =32
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
                     Size: =11
                     Width: =250
                     X: =672
@@ -698,6 +710,10 @@
                     BorderColor: =RGBA(72, 163, 62, 1)
                     Default: =First(objHD).EMAIL
                     Height: =32
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
                     Size: =11
                     Width: =250
                     X: =990
@@ -710,6 +726,10 @@
                     Default: =If(IsBlank(First(objHD).SO_NGUOI_TGIA),0,First(objHD).SO_NGUOI_TGIA)
                     DisplayMode: =DisplayMode.Disabled
                     Height: =32
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
                     Size: =11
                     Width: =250
                     X: =990
@@ -922,6 +942,10 @@
                         DisplayMode: =DisplayMode.Disabled
                         Format: =TextFormat.Number
                         Height: =32
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
                         Size: =11
                         Width: =250
                         X: =672
@@ -935,6 +959,10 @@
                         DisplayMode: =DisplayMode.Disabled
                         Format: =TextFormat.Number
                         Height: =32
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
                         Size: =11
                         Width: =250
                         X: =990
@@ -964,6 +992,10 @@
                         Default: =LookUp(DL_SAN_PHAM,MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM,TEN_SAN_PHAM)
                         DisplayMode: =DisplayMode.Disabled
                         Height: =32
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
                         Size: =11
                         Width: =250
                         X: =355
@@ -975,6 +1007,10 @@
                         Default: =LookUp(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=cbxMaCTNHD.Selected.MA_CHUONG_TRINH,TEN_CHUONG_TRINH)
                         DisplayMode: =DisplayMode.Disabled
                         Height: =32
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
                         Size: =11
                         Width: =250
                         X: =990
@@ -1530,6 +1566,10 @@
                         DisplayMode: =DisplayMode.Disabled
                         Format: =TextFormat.Number
                         Height: =32
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
                         Size: =11
                         Width: =250
                         X: =355
@@ -1661,6 +1701,10 @@
                         Default: =ThisItem.SO_HOP_DONG_LK
                         DisplayMode: =DisplayMode.Disabled
                         Height: =32
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
                         Size: =11
                         Width: =250
                         X: =30
@@ -1672,6 +1716,10 @@
                         Default: =ThisItem.MA_CHUONG_TRINH
                         DisplayMode: =DisplayMode.Disabled
                         Height: =32
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
                         Size: =11
                         Width: =250
                         X: =672
@@ -1683,6 +1731,10 @@
                         Default: =ThisItem.TEN_CHUONG_TRINH
                         DisplayMode: =DisplayMode.Disabled
                         Height: =32
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
                         Size: =11
                         Width: =250
                         X: =990
@@ -1712,6 +1764,10 @@
                         Default: =ThisItem.MA_KHACH_HANG
                         DisplayMode: =DisplayMode.Disabled
                         Height: =32
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
                         Size: =11
                         Width: =250
                         X: =355
@@ -1723,6 +1779,10 @@
                         Default: =LookUp(DM_KHACH_HANG,MA_KHACH_HANG=ThisItem.MA_KHACH_HANG,TEN_KHACH_HANG)
                         DisplayMode: =DisplayMode.Disabled
                         Height: =32
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
                         Size: =11
                         Width: =250
                         X: =672
@@ -1734,6 +1794,10 @@
                         Default: =ThisItem.MA_KENH_BAN
                         DisplayMode: =DisplayMode.Disabled
                         Height: =32
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
                         Size: =11
                         Width: =250
                         X: =990
@@ -1745,6 +1809,10 @@
                         Default: =ThisItem.MA_SAN_PHAM
                         DisplayMode: =DisplayMode.Disabled
                         Height: =32
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
                         Size: =11
                         Width: =250
                         X: =30
@@ -1756,6 +1824,10 @@
                         Default: =ThisItem.TEN_SAN_PHAM
                         DisplayMode: =DisplayMode.Disabled
                         Height: =32
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
                         Size: =11
                         Width: =250
                         X: =355
@@ -3953,7 +4025,7 @@
                     tiPhiTTNHD As text:
                         Align: =Align.Right
                         BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =If(IsBlank(ThisItem.PHI_THANH_TOAN) || ThisItem.PHI_THANH_TOAN<0,0,ThisItem.PHI_THANH_TOAN)
+                        Default: =ThisItem.PHI_THANH_TOAN
                         Format: =TextFormat.Number
                         Height: =32
                         OnChange: |-
@@ -3965,6 +4037,10 @@
                                     THOI_HAN_TTOAN:dpTHPhiNHD.SelectedDate
                                 }
                             )
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
                         Size: =11
                         Width: =230
                         X: =8
@@ -4016,6 +4092,10 @@
                     DisplayMode: =DisplayMode.Disabled
                     Format: =TextFormat.Number
                     Height: =32
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
                     Size: =11
                     Width: =250
                     X: =30
@@ -4038,6 +4118,10 @@
                     DisplayMode: =DisplayMode.Disabled
                     Format: =TextFormat.Number
                     Height: =32
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
                     Size: =11
                     Width: =250
                     X: =30
@@ -4060,6 +4144,10 @@
                     DisplayMode: =DisplayMode.Disabled
                     Format: =TextFormat.Number
                     Height: =32
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
                     Size: =11
                     Width: =250
                     X: =355
