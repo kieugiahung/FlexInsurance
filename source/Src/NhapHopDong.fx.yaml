@@ -1473,7 +1473,6 @@
                                 !IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH)
                             )
                         DisplayFields: =["Value"]
-                        DisplayMode: =If(ThisItem.ID=maAddedHDSPNHD || ThisItem.ID=maUpdatedHDSPNHD,DisplayMode.Edit,DisplayMode.Disabled)
                         Height: =32
                         InputTextPlaceholder: ="Chọn nhóm tính phí"
                         IsSearchable: =false
@@ -1492,6 +1491,7 @@
                         SearchFields: =["Value"]
                         SearchItems: =[]
                         Size: =11
+                        Visible: =ThisItem.ID=maAddedHDSPNHD || ThisItem.ID=maUpdatedHDSPNHD
                         Width: =250
                         X: =30
                         Y: =102
@@ -1597,6 +1597,24 @@
                         X: =355
                         Y: =74
                         ZIndex: =25
+
+                    tiNhomTPNHD As text:
+                        Align: =Align.Right
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =Concat(cbxNhomTPNHD.SelectedItems,Value,", ")
+                        DisplayMode: =DisplayMode.Disabled
+                        Format: =TextFormat.Number
+                        Height: =32
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Visible: =ThisItem.ID<>maAddedHDSPNHD && ThisItem.ID<>maUpdatedHDSPNHD
+                        Width: =250
+                        X: =30
+                        Y: =102
+                        ZIndex: =26
 
                 Button2_3 As button:
                     Height: =32
