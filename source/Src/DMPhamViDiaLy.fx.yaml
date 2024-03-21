@@ -6,12 +6,13 @@ DMPhamViDiaLy As screen:
                 AddColumns(
                     SortByColumns(
                         DM_PHAMVI_DIALYS,
-                        "cr282_ma_phamvi",
+                        "cr282_ma_dl",
                         SortOrder.Ascending
                     ),
                     "edited",
                     0
                 ),
+                "cr282_ma_dl",
                 "cr282_ma_phamvi",
                 "cr282_ten_phamvi",
                 "cr282_loai",
@@ -39,7 +40,7 @@ DMPhamViDiaLy As screen:
         GalleryPV As gallery.galleryVertical:
             DelayItemLoading: =true
             Height: =628
-            Items: =SortByColumns(tmpPVDLCollect,"cr282_ma_phamvi",SortOrder.Ascending)
+            Items: =SortByColumns(tmpPVDLCollect,"cr282_ma_dl",SortOrder.Ascending)
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
             NavigationStep: =0
@@ -56,10 +57,12 @@ DMPhamViDiaLy As screen:
                 OnSelect: |-
                     =If(
                         Or(maAdded<>"",maUpdated<>""),
-                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
+                        !IsBlank(LookUp(DM_PHAMVI_DIALYS,MA_CHA=ThisItem.cr282_ma_phamvi)),
+                        Notify("Đã tồn tại phạm vi con gắn với phạm vi này",NotificationType.Error,2000),
                         UpdateContext({
                             showConfirm:1,
-                            maDelete:ThisItem.cr282_ma_phamvi,
+                            maDelete:ThisItem.cr282_ma_dl,
                             objDelete:ThisItem
                         });
                     )
@@ -68,18 +71,6 @@ DMPhamViDiaLy As screen:
                 Width: =37
                 X: =1228
                 ZIndex: =7
-
-            TextMaPV As text:
-                BorderColor: =RGBA(15, 108, 189, 1)
-                Default: =ThisItem.cr282_ma_phamvi
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                DisabledColor: =RGBA(0, 0, 0, 1)
-                DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayMode: =DisplayMode.Disabled
-                OnChange: =
-                OnSelect: =Select(Parent)
-                Width: =115
-                ZIndex: =8
 
             TextTenPV As text:
                 BorderColor: =RGBA(72, 163, 62, 1)
@@ -130,13 +121,13 @@ DMPhamViDiaLy As screen:
                         Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
                         UpdateIf(
                             tmpPVDLCollect,
-                            cr282_ma_phamvi=ThisItem.cr282_ma_phamvi,
+                            cr282_ma_dl=ThisItem.cr282_ma_dl,
                             {
                                 edited:1
                             }
                         );
                         UpdateContext({
-                            maUpdated:ThisItem.cr282_ma_phamvi
+                            maUpdated:ThisItem.cr282_ma_dl
                         })
                     )
                 Tooltip: ="Sửa"
@@ -151,14 +142,17 @@ DMPhamViDiaLy As screen:
                 Icon: =Icon.Save
                 OnSelect: |
                     =If(
-                        TextTenPV.Text="",
-                        Notify("Bắt buộc nhập tên phạm vi", NotificationType.Error,800),
+                        IsBlank(TextMaPV.Text),
+                        Notify("Bắt buộc nhập mã phạm vi", NotificationType.Error,2000),
+                        IsBlank(TextTenPV.Text),
+                        Notify("Bắt buộc nhập tên phạm vi", NotificationType.Error,2000),
                         If(
-                            ThisItem.cr282_ma_phamvi=maAdded,
+                            ThisItem.cr282_ma_dl=maAdded,
                             Patch(
                                 DM_PHAMVI_DIALYS,
                                 {
-                                    MA_PHAMVI:ThisItem.cr282_ma_phamvi,
+                                    MA_DL:ThisItem.cr282_ma_dl,
+                                    MA_PHAMVI:TextMaPV.Text,
                                     TEN_PHAMVI:TextTenPV.Text,
                                     LOAI:cbxLoaiPV.Selected.key,
                                     MA_CHA:cbxMaChaPV.Selected.MA_PHAMVI,
@@ -168,8 +162,9 @@ DMPhamViDiaLy As screen:
                             ),
                             UpdateIf(
                                 DM_PHAMVI_DIALYS,
-                                MA_PHAMVI=ThisItem.cr282_ma_phamvi,
+                                MA_DL=ThisItem.cr282_ma_dl,
                                 {
+                                    MA_PHAMVI:TextMaPV.Text,
                                     TEN_PHAMVI:TextTenPV.Text,
                                     LOAI:cbxLoaiPV.Selected.key,
                                     MA_CHA:cbxMaChaPV.Selected.MA_PHAMVI,
@@ -180,8 +175,9 @@ DMPhamViDiaLy As screen:
                         );
                         UpdateIf(
                             tmpPVDLCollect,
-                            cr282_ma_phamvi=ThisItem.cr282_ma_phamvi,
+                            cr282_ma_dl=ThisItem.cr282_ma_dl,
                             {
+                                cr282_ma_phamvi:TextMaPV.Text,
                                 cr282_ten_phamvi:TextTenPV.Text,
                                 cr282_loai:cbxLoaiPV.Selected.key,
                                 cr282_ma_cha:cbxMaChaPV.Selected.MA_PHAMVI,
@@ -197,12 +193,13 @@ DMPhamViDiaLy As screen:
                                 AddColumns(
                                     SortByColumns(
                                         DM_PHAMVI_DIALYS,
-                                        "cr282_ma_phamvi",
+                                        "cr282_ma_dl",
                                         SortOrder.Ascending
                                     ),
                                     "edited",
                                     0
                                 ),
+                                "cr282_ma_dl",
                                 "cr282_ma_phamvi",
                                 "cr282_ten_phamvi",
                                 "cr282_loai",
@@ -230,11 +227,11 @@ DMPhamViDiaLy As screen:
                 Icon: =Icon.CancelBadge
                 OnSelect: |-
                     =If(
-                        ThisItem.cr282_ma_phamvi=maAdded,
+                        ThisItem.cr282_ma_dl=maAdded,
                         Remove(tmpPVDLCollect,ThisItem),
                         UpdateIf(
                             tmpPVDLCollect,
-                            cr282_ma_phamvi=ThisItem.cr282_ma_phamvi,
+                            cr282_ma_dl=ThisItem.cr282_ma_dl,
                             {
                                 edited:0
                             }
@@ -291,7 +288,7 @@ DMPhamViDiaLy As screen:
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
                 DisplayFields: =["value"]
-                DisplayMode: =If(ThisItem.cr282_ma_phamvi=maAdded,DisplayMode.Edit,DisplayMode.Disabled)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                 HoverBorderColor: =RGBA(9, 33, 98, 1)
                 HoverFill: =RGBA(180, 214, 250, 1)
                 InputTextPlaceholder: ="Chọn nhóm quyền lợi"
@@ -377,24 +374,36 @@ DMPhamViDiaLy As screen:
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
-                DisplayFields: =["cr282_ma_phamvi"]
-                DisplayMode: =If(ThisItem.cr282_ma_phamvi=maAdded,DisplayMode.Edit,DisplayMode.Disabled)
+                DisplayFields: =["cr282_ma_phamvi","cr282_ten_phamvi"]
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                 HoverBorderColor: =RGBA(9, 33, 98, 1)
                 HoverFill: =RGBA(180, 214, 250, 1)
-                InputTextPlaceholder: ="Chọn nhóm quyền lợi"
-                IsSearchable: =false
+                InputTextPlaceholder: =
                 Items: =SortByColumns(DM_PHAMVI_DIALYS,"cr282_ma_phamvi",SortOrder.Ascending)
                 OnSelect: =Select(Parent)
                 PressedColor: =RGBA(72, 163, 62, 1)
                 PressedFill: =RGBA(255, 255, 255, 1)
-                SearchFields: =["cr282_ma_phamvi"]
-                SearchItems: =Search(SortByColumns(DM_PHAMVI_DIALYS,"cr282_ma_phamvi",SortOrder.Ascending),cbxMaChaPV.SearchText,"cr282_ma_phamvi")
+                SearchFields: =["cr282_ten_phamvi"]
+                SearchItems: =Search(SortByColumns(DM_PHAMVI_DIALYS,"cr282_ma_phamvi",SortOrder.Ascending),cbxMaChaPV.SearchText,"cr282_ten_phamvi")
                 SelectionColor: =RGBA(0, 0, 0, 1)
                 SelectionFill: =RGBA(214, 221, 224, 1)
                 SelectMultiple: =false
+                Template: =ListItemTemplate.Double
                 Width: =200
                 X: =625
                 ZIndex: =20
+
+            TextMaPV As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =ThisItem.cr282_ma_phamvi
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                OnChange: =
+                OnSelect: =Select(Parent)
+                Width: =115
+                ZIndex: =21
 
         BadgeCanvas1 As Badge:
             BasePaletteColor: =
@@ -479,14 +488,17 @@ DMPhamViDiaLy As screen:
                         AddColumns(
                             SortByColumns(
                                 DM_PHAMVI_DIALYS,
-                                "cr282_ma_phamvi",
+                                "cr282_ma_dl",
                                 SortOrder.Ascending
                             ),
                             "edited",
                             0
                         ),
+                        "cr282_ma_dl",
                         "cr282_ma_phamvi",
                         "cr282_ten_phamvi",
+                        "cr282_loai",
+                        "cr282_ma_cha",
                         "cr282_ghi_chu",
                         "cr282_mota",
                         "edited"
@@ -516,13 +528,14 @@ DMPhamViDiaLy As screen:
                         idMa:If(
                             CountIf(DM_PHAMVI_DIALYS,true)=0,
                             1000,
-                            Value(Last(SortByColumns(DM_PHAMVI_DIALYS,"cr282_ma_phamvi",SortOrder.Ascending)).MA_PHAMVI)+1
+                            Value(Last(SortByColumns(DM_PHAMVI_DIALYS,"cr282_ma_dl",SortOrder.Ascending)).MA_DL)+1
                         )
                     });
                     Collect(
                         tmpPVDLCollect,
                         {
-                            cr282_ma_phamvi:Text(idMa),
+                            cr282_ma_dl:Text(idMa),
+                            cr282_ma_phamvi:"",
                             cr282_ten_phamvi:"",
                             cr282_ghi_chu:"",
                             cr282_mota:"",
@@ -588,15 +601,17 @@ DMPhamViDiaLy As screen:
                                         )
                                     )
                                 ),
-                                "cr282_ma_phamvi",
+                                "cr282_ma_dl",
                                 SortOrder.Ascending
                             ),
                             "edited",
                             0
                         ),
+                        "cr282_ma_dl",
                         "cr282_ma_phamvi",
                         "cr282_ten_phamvi",
-                        "cr282_dnbh",
+                        "cr282_loai",
+                        "cr282_ma_cha",
                         "cr282_ghi_chu",
                         "cr282_mota",
                         "edited"
