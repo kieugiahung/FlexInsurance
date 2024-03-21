@@ -190,9 +190,10 @@
 
                 tiMaHDNHD As text:
                     BorderColor: =RGBA(72, 163, 62, 1)
-                    Default: =If(IsBlank(First(objHD).MA_HOP_DONG),"Hệ thống tự sinh",First(objHD).MA_HOP_DONG) 
+                    Default: =If(IsBlank(First(objHD).MA_HOP_DONG),"",First(objHD).MA_HOP_DONG) 
                     DisplayMode: =DisplayMode.Disabled
                     Height: =32
+                    HintText: ="Hệ thống tự sinh"
                     Size: =11
                     Width: =250
                     X: =30
@@ -1296,7 +1297,7 @@
                         Underline: =true
                         Width: =142
                         X: =978
-                        Y: =102
+                        Y: =112
                         ZIndex: =20
 
                     Label3_66 As label:
@@ -1343,6 +1344,79 @@
                         X: =30
                         Y: =102
                         ZIndex: =22
+
+                    LinkHDLK_3 As text:
+                        BorderThickness: =0
+                        Color: =RGBA(39, 113, 194, 1)
+                        Default: ="Danh sách quyền lợi"
+                        DisabledBorderColor: =RGBA(255, 255, 255, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        Height: =27
+                        HoverBorderColor: =RGBA(255, 255, 255, 1)
+                        HoverColor: =RGBA(39, 113, 194, 1)
+                        HoverFill: =RGBA(255, 255, 255, 1)
+                        OnSelect: |
+                            =Set(idColSP,ThisItem.ID);
+                            Set(
+                                varMaSP,
+                                If(!IsBlank(ThisItem.MA_SAN_PHAM), ThisItem.MA_SAN_PHAM, cbxMaSPNHD.Selected.MA_SAN_PHAM)
+                            );
+                            Set(
+                                varMaHD,
+                                If(IsBlank(tiMaHDNHD.Text),maHopDongFwd,tiMaHDNHD.Text) 
+                            );
+                            Set(
+                                varMaCT,
+                                If(!IsBlank(ThisItem.MA_CHUONG_TRINH), ThisItem.MA_CHUONG_TRINH, cbxMaCTNHD.Selected.MA_CHUONG_TRINH)
+                            );
+                            ClearCollect(
+                                tmpDSQL,
+                                ShowColumns(
+                                    AddColumns(
+                                        SortByColumns(
+                                            Filter(
+                                                DL_HOP_DONG_SP_QLCT,
+                                                MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT
+                                            ),
+                                            "cr282_ma_chuong_trinh",
+                                            SortOrder.Descending
+                                        ),
+                                        "edited",
+                                        0
+                                    ),
+                                    "cr282_ma_san_pham",
+                                    "cr282_ma_nhom_ql",
+                                    "cr282_ma_hop_dong",
+                                    "cr282_tt_hienthi",
+                                    "cr282_gh_solan_nam",
+                                    "cr282_gh_songay_nam",
+                                    "cr282_gh_sotien_benh",
+                                    "cr282_gh_sotien_nam",
+                                    "cr282_gh_sotien_ngay",
+                                    "cr282_gh_sotien_vu",
+                                    "cr282_ma_chuong_trinh",
+                                    "cr282_ma_nhomql_sp",
+                                    "cr282_ma_ql_ct",
+                                    "cr282_pt_tu_chitra",
+                                    "cr282_so_tien_bh",
+                                    "cr282_ten_quyen_loi_ht",
+                                    "edited"
+                                )
+                            );
+                            UpdateContext(
+                                {
+                                    maAddedQLHD: "",
+                                    maUpdatedQLHD: ""
+                                }
+                            );
+                            Navigate(DSQuyenLoiHD);
+                        Size: =11
+                        Underline: =true
+                        Visible: =If(!IsBlank(tiMaHDNHD.Text),true,false)
+                        Width: =169
+                        X: =978
+                        Y: =72
+                        ZIndex: =23
 
                 Button2_3 As button:
                     Height: =32
@@ -4335,18 +4409,40 @@
             //Clone QLCT chuong trinh
             ForAll(
                     tmpDSHDSPNHDCollect As sp,
-                    ForAll(
-                        Filter(
-                            DL_CHUONGTRINH_QLCTS,
-                            MA_CHUONG_TRINH = sp.MA_CHUONG_TRINH && MA_SAN_PHAM = sp.MA_SAN_PHAM
-                        ) As ql,
-                        /*Patch(
-                            DL_HOP_DONG_SP_QLCT, 
-                            Default(DL_HOP_DONG_SP_QLCT),
-                            {MA_HOP_DONG:tiMaHDNHD.Text}
-                        )*/
-                        ""
-                    )
+                    If(
+                        CountIf(
+                            DL_HOP_DONG_SP_QLCT,
+                            MA_CHUONG_TRINH = sp.MA_CHUONG_TRINH && MA_SAN_PHAM = sp.MA_SAN_PHAM && MA_HOP_DONG = tiMaHDNHD.Text
+                        ) <= 0,
+                        ForAll(
+                            Filter(
+                                DL_CHUONGTRINH_QLCTS,
+                                MA_CHUONG_TRINH = sp.MA_CHUONG_TRINH && MA_SAN_PHAM = sp.MA_SAN_PHAM
+                            ) As ql,
+                            Patch(
+                                DL_HOP_DONG_SP_QLCT,
+                                Defaults(DL_HOP_DONG_SP_QLCT),
+                                {
+                                    MA_HOP_DONG: tiMaHDNHD.Text,
+                                    MA_CHUONG_TRINH: ql.MA_CHUONG_TRINH,
+                                    MA_SAN_PHAM: ql.MA_SAN_PHAM,
+                                    MA_QL_CT: ql.MA_QL_CT,
+                                    TT_HIENTHI: ql.TT_HIENTHI,
+                                    MA_NHOM_QL: ql.MA_NHOM_QL,
+                                    MA_NHOMQL_SP: ql.MA_NHOMQL_SP,
+                                    GH_SOLAN_NAM: ql.GH_SOLAN_NAM,
+                                    GH_SONGAY_NAM: ql.GH_SONGAY_NAM,
+                                    GH_SOTIEN_BENH: ql.GH_SOTIEN_BENH,
+                                    GH_SOTIEN_NAM: ql.GH_SOTIEN_NAM,
+                                    GH_SOTIEN_NGAY: ql.GH_SOTIEN_NGAY,
+                                    GH_SOTIEN_VU: ql.GH_SOTIEN_VU,
+                                    PT_TU_CHITRA: ql.PT_TU_CHITRA,
+                                    SO_TIEN_BH: ql.SO_TIEN_BH,
+                                    TEN_QUYEN_LOI_HT: ql.TEN_QUYEN_LOI_HT
+                                }
+                            )
+                        )
+                    );
                 );
                 //End clone
             Notify(

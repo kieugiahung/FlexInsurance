@@ -55,7 +55,7 @@ DSQuyenLoiHD As screen:
         GalleryDKCTCT_8 As gallery.galleryVertical:
             DelayItemLoading: =true
             Height: =363
-            Items: =SortByColumns(tmpDSQL,"cr282_ten_quyen_loi_ht",SortOrder.Ascending)
+            Items: =SortByColumns(tmpDSQL,"cr282_tt_hienthi",SortOrder.Ascending)
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
             NavigationStep: =0
@@ -100,7 +100,7 @@ DSQuyenLoiHD As screen:
                 RadiusTopLeft: =0
                 RadiusTopRight: =0
                 Size: =11
-                Width: =102
+                Width: =132
                 X: =410
                 ZIndex: =30
 
@@ -122,7 +122,7 @@ DSQuyenLoiHD As screen:
                 RadiusTopRight: =0
                 Size: =11
                 Width: =79
-                X: =1071
+                X: =1101
                 ZIndex: =31
 
             TiTuChiTra_2 As text:
@@ -143,7 +143,7 @@ DSQuyenLoiHD As screen:
                 RadiusTopRight: =0
                 Size: =11
                 Width: =79
-                X: =992
+                X: =1022
                 ZIndex: =32
 
             TiGHSTBenh_2 As text:
@@ -164,7 +164,7 @@ DSQuyenLoiHD As screen:
                 RadiusTopRight: =0
                 Size: =11
                 Width: =80
-                X: =912
+                X: =942
                 ZIndex: =33
 
             TiGHSNNam_7 As text:
@@ -185,7 +185,7 @@ DSQuyenLoiHD As screen:
                 RadiusTopRight: =0
                 Size: =11
                 Width: =80
-                X: =832
+                X: =862
                 ZIndex: =34
 
             TiGHSLNam_7 As text:
@@ -206,7 +206,7 @@ DSQuyenLoiHD As screen:
                 RadiusTopRight: =0
                 Size: =11
                 Width: =80
-                X: =752
+                X: =782
                 ZIndex: =35
 
             TiGHSTVu_5 As text:
@@ -227,7 +227,7 @@ DSQuyenLoiHD As screen:
                 RadiusTopRight: =0
                 Size: =11
                 Width: =80
-                X: =672
+                X: =702
                 ZIndex: =36
 
             TiGHSTNam_8 As text:
@@ -248,7 +248,7 @@ DSQuyenLoiHD As screen:
                 RadiusTopRight: =0
                 Size: =11
                 Width: =80
-                X: =592
+                X: =622
                 ZIndex: =37
 
             TiGHSTNgay_7 As text:
@@ -269,7 +269,7 @@ DSQuyenLoiHD As screen:
                 RadiusTopRight: =0
                 Size: =11
                 Width: =80
-                X: =512
+                X: =542
                 ZIndex: =38
 
             CbxNhomQLQLCTCT_1 As combobox:
@@ -358,7 +358,7 @@ DSQuyenLoiHD As screen:
                             ),
                             UpdateIf(
                                 DL_HOP_DONG_SP_QLCT,
-                                MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT,
+                                MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT && MA_QL_CT=CbxQLQLCTCT_1.Selected.MA_QL_CHITIET,
                                 {
                                     MA_QL_CT: CbxQLQLCTCT_1.Selected.MA_QL_CHITIET,
                                     TT_HIENTHI: Value(TiTthtQLCTCT_7.Text),
@@ -392,7 +392,7 @@ DSQuyenLoiHD As screen:
                 Text: ="Lưu"
                 Visible: =ThisItem.edited=1
                 Width: =37
-                X: =1161
+                X: =1198
                 Y: =2
                 ZIndex: =41
 
@@ -418,7 +418,7 @@ DSQuyenLoiHD As screen:
                 Text: ="Sửa"
                 Visible: =ThisItem.edited=0
                 Width: =37
-                X: =1161
+                X: =1198
                 Y: =2
                 ZIndex: =42
 
@@ -444,7 +444,7 @@ DSQuyenLoiHD As screen:
                 Text: ="Xóa"
                 Visible: =ThisItem.edited=0
                 Width: =37
-                X: =1210
+                X: =1247
                 Y: =2
                 ZIndex: =43
 
@@ -467,7 +467,7 @@ DSQuyenLoiHD As screen:
                 Text: ="Hủy"
                 Visible: =ThisItem.edited=1
                 Width: =37
-                X: =1210
+                X: =1247
                 Y: =2
                 ZIndex: =44
 
@@ -510,7 +510,7 @@ DSQuyenLoiHD As screen:
             Text: ="Thao tác"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =84
-            X: =1160
+            X: =1198
             Y: =35
             ZIndex: =15
 
@@ -585,8 +585,8 @@ DSQuyenLoiHD As screen:
                 (số tiền)"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =80
-            X: =518
-            Y: =35
+            X: =542
+            Y: =33
             ZIndex: =25
 
         TextCanvas2_274 As Text:
@@ -600,8 +600,8 @@ DSQuyenLoiHD As screen:
                 (số tiền)"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =77
-            X: =598
-            Y: =35
+            X: =622
+            Y: =33
             ZIndex: =26
 
         TextCanvas2_275 As Text:
@@ -615,8 +615,8 @@ DSQuyenLoiHD As screen:
                 (số tiền)"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =73
-            X: =680
-            Y: =35
+            X: =702
+            Y: =33
             ZIndex: =27
 
         TextCanvas2_276 As Text:
@@ -630,8 +630,8 @@ DSQuyenLoiHD As screen:
                 số lần/năm"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =83
-            X: =758
-            Y: =35
+            X: =781
+            Y: =33
             ZIndex: =28
 
         TextCanvas2_277 As Text:
@@ -645,8 +645,8 @@ DSQuyenLoiHD As screen:
                 số ngày/năm"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =74
-            X: =841
-            Y: =35
+            X: =863
+            Y: =33
             ZIndex: =31
 
         TextCanvas2_266 As Text:
@@ -660,7 +660,7 @@ DSQuyenLoiHD As screen:
                 bảo hiểm"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =76
-            X: =1074
+            X: =1104
             Y: =33
             ZIndex: =32
 
@@ -675,8 +675,8 @@ DSQuyenLoiHD As screen:
                 (số tiền)"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =79
-            X: =917
-            Y: =35
+            X: =947
+            Y: =33
             ZIndex: =34
 
         TextCanvas2_265 As Text:
@@ -690,7 +690,7 @@ DSQuyenLoiHD As screen:
                 (%)"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =78
-            X: =996
+            X: =1026
             Y: =33
             ZIndex: =35
 
@@ -762,4 +762,27 @@ DSQuyenLoiHD As screen:
             X: =1208
             Y: =422
             ZIndex: =45
+
+        Btn_HuyKH_2 As button:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            BorderStyle: =BorderStyle.None
+            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+            DisabledColor: =RGBA(161, 159, 157, 1)
+            DisabledFill: =RGBA(242, 242, 241, 0)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Bold
+            HoverBorderColor: =RGBA(0, 0, 0, 0)
+            HoverFill: =RGBA(16, 110, 190, 1)
+            OnSelect: |-
+                =Set(varUnReloadNHD,"2");
+                Back();
+            PressedBorderColor: =RGBA(0, 69, 120, 1)
+            PressedColor: =RGBA(56, 96, 178, 1)
+            PressedFill: =RGBA(16, 110, 190, 1)
+            Size: =11
+            Text: ="Quay lại"
+            Width: =150
+            X: =1132
+            Y: =407
+            ZIndex: =46
 
