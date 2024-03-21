@@ -464,7 +464,6 @@ NhapHopDongLK As screen:
             DisplayFields: =["title","cr282_ma_san_pham"]
             Height: =32
             InputTextPlaceholder: ="Chọn sản phẩm"
-            IsSearchable: =false
             Items: =SortByColumns(dmSanPhamHDLKCollect,"cr282_ma_san_pham",SortOrder.Ascending)
             OnChange: |-
                 =ClearCollect(
@@ -507,7 +506,7 @@ NhapHopDongLK As screen:
                     ngayHD:Blank()
                 })
             SearchFields: =["title"]
-            SearchItems: =[]
+            SearchItems: =Search(SortByColumns(dmSanPhamHDLKCollect,"cr282_ma_san_pham",SortOrder.Ascending),cbxMaSPNLK.SearchText,"title")
             SelectMultiple: =false
             Size: =11
             Width: =235
