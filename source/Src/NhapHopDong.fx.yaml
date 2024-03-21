@@ -57,6 +57,19 @@
                 )
             );
             ClearCollect(
+                dmMaGiamGiaNHDCollect,
+                AddColumns(
+                    DM_MA_GIAMGIAS,
+                    "title",
+                    Concatenate(
+                        "Mã: ",MA_GIAM_GIA,", Giảm theo: ",If(LOAI="SO_TIEN","Số tiền","Tỷ lệ"),", Giá trị giảm: ",
+                        If(LOAI="SO_TIEN",Text(SO_TIEN),Concatenate(Text(TY_LE_GIAM*100),"%",", Phí giảm tối đa: ",Text(SO_TIEN_TOIDA)))
+                    ),
+                    "gia_tri_tong",
+                    If(LOAI="SO_TIEN",SO_TIEN,SO_TIEN_TOIDA)
+                )
+            );
+            ClearCollect(
                 tmpKTTNHDCollect,
                 Filter(
                     DL_HOP_DONG_TTOANS,
@@ -1562,7 +1575,7 @@
                     tiPhiDCNHD As text:
                         Align: =Align.Right
                         BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =ThisItem.SONGUOI_THAMGIA
+                        Default: =ThisItem.PHI_DIEU_CHINH
                         DisplayMode: =DisplayMode.Disabled
                         Format: =TextFormat.Number
                         Height: =32
@@ -4178,27 +4191,7 @@
                     DisplayFields: =["cr282_ma_giam_gia"]
                     Height: =32
                     InputTextPlaceholder: ="Chọn mã giảm giá"
-                    Items: =DM_MA_GIAMGIAS
-                    OnChange: |-
-                        =UpdateIf(
-                            objHD,
-                            true,
-                            {
-                                SO_TIEN_GIAM:If(
-                                    !IsBlank(cbxMaGGNHD.Selected.TY_LE_GIAM),
-                                    Value(tiTongTPNHD.Text)*cbxMaGGNHD.Selected.TY_LE_GIAM,
-                                    !IsBlank(cbxMaGGNHD.Selected.SO_TIEN),
-                                    cbxMaGGNHD.Selected.SO_TIEN
-                                )
-                            }
-                        );
-                        UpdateIf(
-                            objHD,
-                            true,
-                            {
-                                TIEN_PHI_SAU_GIAM:Value(tiTongTPNHD.Text)-Value(tiSTGiamNHD.Text)
-                            }
-                        );
+                    Items: =SortByColumns(dmMaGiamGiaNHDCollect,"gia_tri_tong",SortOrder.Descending)
                     SearchFields: =["cr282_ma_giam_gia"]
                     SearchItems: =Search(DM_MA_GIAMGIAS,cbxMaGGNHD.SearchText,"cr282_ma_giam_gia")
                     SelectMultiple: =false
@@ -4576,6 +4569,18 @@
                 true,
                 {
                     TONG_TIEN_PHI:Sum(tmpDSHDSPNHDCollect,TONG_TIEN_PHI)-Sum(Filter(DL_HOP_DONG_KETQUA_CS,MA_HOP_DONG=First(objHD).MA_HOP_DONG),GIA_TRI)
+                }
+            );
+            UpdateIf(
+                objHD,
+                true,
+                {
+                    SO_TIEN_GIAM:If(
+                        !IsBlank(cbxMaGGNHD.Selected.TY_LE_GIAM),
+                        Value(tiTongTPNHD.Text)*cbxMaGGNHD.Selected.TY_LE_GIAM,
+                        !IsBlank(cbxMaGGNHD.Selected.SO_TIEN),
+                        cbxMaGGNHD.Selected.SO_TIEN
+                    )
                 }
             );
             UpdateIf(
