@@ -365,76 +365,6 @@ ThemKhachHang As screen:
                             Y: =10
                             ZIndex: =5
 
-                    MA_GIOI_TINH_DataCard1 As typedDataCard.textualEditCard:
-                        BorderStyle: =BorderStyle.Solid
-                        DataField: ="cr282_ma_gioi_tinh"
-                        Default: =ThisItem.MA_GIOI_TINH
-                        DisplayMode: =Parent.DisplayMode
-                        DisplayName: =DataSourceInfo([@DM_KHACH_HANG],DataSourceInfo.DisplayName,"cr282_ma_gioi_tinh")
-                        Fill: =RGBA(0, 0, 0, 0)
-                        Height: =50
-                        MaxLength: =DataSourceInfo([@DM_KHACH_HANG], DataSourceInfo.MaxLength, "cr282_ma_gioi_tinh")
-                        Required: =false
-                        Update: =DataCardValue10.Selected.MA_GIOI_TINH
-                        Visible: =If(DataCardValue12.Selected.ID="0",true,false)
-                        Width: =618
-                        X: =1
-                        Y: =10
-                        ZIndex: =1
-
-                        DataCardKey20 As label:
-                            AutoHeight: =true
-                            Color: =RGBA(0, 0, 0, 1)
-                            Font: =Font.'Segoe UI'
-                            Height: =34
-                            Size: =11
-                            Text: ="Giới tính"
-                            Width: =(Parent.Width - 60) * 0.4
-                            Wrap: =false
-                            X: =30
-                            Y: =10 + (DataCardValue10.Height / 2) - (Self.Height / 2)
-                            ZIndex: =1
-
-                        ErrorMessage20 As label:
-                            AutoHeight: =true
-                            Height: =10
-                            Live: =Live.Assertive
-                            PaddingBottom: =0
-                            PaddingLeft: =0
-                            PaddingRight: =0
-                            PaddingTop: =0
-                            Text: =Parent.Error
-                            Visible: =Parent.DisplayMode=DisplayMode.Edit
-                            Width: =Parent.Width - 60
-                            X: =30
-                            Y: =DataCardValue10.Y + DataCardValue10.Height
-                            ZIndex: =3
-
-                        StarVisible20 As label:
-                            Align: =Align.Center
-                            Height: =DataCardKey20.Height
-                            Text: ="*"
-                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                            Width: =30
-                            Wrap: =false
-                            Y: =DataCardKey20.Y
-                            ZIndex: =4
-
-                        DataCardValue10 As dropdown:
-                            AllowEmptySelection: =true
-                            BorderColor: =RGBA(72, 163, 62, 1)
-                            ChevronBackground: =RGBA(255, 255, 255, 1)
-                            ChevronFill: =RGBA(72, 163, 62, 1)
-                            Default: =LookUp(DM_GIOI_TINHS, MA_GIOI_TINH=Parent.Default).TEN_GIOI_TINH
-                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                            DisabledFill: =RGBA(214, 221, 224, 1)
-                            Items: =DM_GIOI_TINHS
-                            Size: =11
-                            Width: =334.8
-                            X: =253.2
-                            Y: =10
-                            ZIndex: =5
-
                     MA_NHOM_KH_DataCard1 As typedDataCard.textualEditCard:
                         BorderStyle: =BorderStyle.Solid
                         DataField: ="cr282_ma_nhom_kh"
@@ -801,6 +731,76 @@ ThemKhachHang As screen:
                             Wrap: =false
                             Y: =DataCardKey7_2.Y
                             ZIndex: =4
+
+                    MA_GIOI_TINH_DataCard1 As typedDataCard.textualEditCard:
+                        BorderStyle: =BorderStyle.Solid
+                        DataField: ="cr282_ma_gioi_tinh"
+                        Default: =ThisItem.MA_GIOI_TINH
+                        DisplayMode: =Parent.DisplayMode
+                        DisplayName: =DataSourceInfo([@DM_KHACH_HANG],DataSourceInfo.DisplayName,"cr282_ma_gioi_tinh")
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Height: =50
+                        MaxLength: =DataSourceInfo([@DM_KHACH_HANG], DataSourceInfo.MaxLength, "cr282_ma_gioi_tinh")
+                        Required: =false
+                        Update: =DataCardValue10.Selected.MA_GIOI_TINH
+                        Visible: =If(DataCardValue12.Selected.ID="0",true,false)
+                        Width: =618
+                        X: =1
+                        Y: =10
+                        ZIndex: =1
+
+                        DataCardKey20 As label:
+                            AutoHeight: =true
+                            Color: =RGBA(0, 0, 0, 1)
+                            Font: =Font.'Segoe UI'
+                            Height: =34
+                            Size: =11
+                            Text: ="Giới tính"
+                            Width: =(Parent.Width - 60) * 0.4
+                            Wrap: =false
+                            X: =30
+                            Y: =10 + (DataCardValue10.Height / 2) - (Self.Height / 2)
+                            ZIndex: =1
+
+                        ErrorMessage20 As label:
+                            AutoHeight: =true
+                            Height: =10
+                            Live: =Live.Assertive
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Text: =Parent.Error
+                            Visible: =Parent.DisplayMode=DisplayMode.Edit
+                            Width: =Parent.Width - 60
+                            X: =30
+                            Y: =DataCardValue10.Y + DataCardValue10.Height
+                            ZIndex: =3
+
+                        StarVisible20 As label:
+                            Align: =Align.Center
+                            Height: =DataCardKey20.Height
+                            Text: ="*"
+                            Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                            Width: =30
+                            Wrap: =false
+                            Y: =DataCardKey20.Y
+                            ZIndex: =4
+
+                        DataCardValue10 As dropdown:
+                            AllowEmptySelection: =true
+                            BorderColor: =RGBA(72, 163, 62, 1)
+                            ChevronBackground: =RGBA(255, 255, 255, 1)
+                            ChevronFill: =RGBA(72, 163, 62, 1)
+                            Default: =LookUp(DM_GIOI_TINHS, MA_GIOI_TINH=Parent.Default).TEN_GIOI_TINH
+                            DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                            DisabledFill: =RGBA(214, 221, 224, 1)
+                            Items: =DM_GIOI_TINHS
+                            Size: =11
+                            Width: =334.8
+                            X: =253.2
+                            Y: =10
+                            ZIndex: =5
 
                     MA_KHACH_HANG_DataCard1 As typedDataCard.textualEditCard:
                         BorderColor: =RGBA(166, 166, 166, 1)

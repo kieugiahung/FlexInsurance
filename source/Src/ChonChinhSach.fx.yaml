@@ -972,7 +972,24 @@ ChonChinhSach As screen:
                     NotificationType.Success,
                     800
                 );
-                ClearCollect(tmpCsDaChon,Filter(DL_HOP_DONG_CHON_CS, MA_HOP_DONG=varMaHD_CS));
+                Clear(tmpCsDaChon);
+                ForAll(
+                    Filter(
+                        DL_HOP_DONG_CHON_CS,
+                        MA_HOP_DONG = varMaHD_CS
+                    ) As cs,
+                    Collect(
+                        tmpCsDaChon,
+                        {   ID:cs.ID,
+                            MA_CHINH_SACH: cs.MA_CHINH_SACH,
+                            MO_TA: cs.MO_TA,
+                            SO_TIEN: cs.SO_TIEN,
+                            TY_LE: cs.TY_LE,
+                            SO_TIEN_TOIDA: cs.SO_TIEN_TOIDA
+                        }
+                    );
+                    
+                );
             Size: =9
             Text: ="Chọn chính sách"
             Width: =123

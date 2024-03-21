@@ -2,19 +2,44 @@
     OnVisible: |
         =If(
             IsBlank(varUnReloadNHD),
-            Reset(dpNgayHDNHD);Reset(dpHLTuNHD);Reset(dpHLDenNHD);Reset(cbxDVQLNHD);Reset(cbxDVTienNHD);Reset(cbxLoaiKBNHD);Reset(cbxMaKBNHD);Reset(tiTenKBNHD);Reset(cbxDVKBNHD);
-            Reset(cbxMaKHNHD);Reset(tiTenKHNHD);Reset(tiDChiNHD);Reset(dpNSinhNHD);Reset(cbxGTinhNHD);Reset(tiSDTNHD);Reset(tiEmailNHD);Reset(cbxLoaiKHNHD);Reset(cbxNgheNHD);
-            Reset(cbxTinhNHD);Reset(LinkHDLK);
+            Reset(dpNgayHDNHD);
+            Reset(dpHLTuNHD);
+            Reset(dpHLDenNHD);
+            Reset(cbxDVQLNHD);
+            Reset(cbxDVTienNHD);
+            Reset(cbxLoaiKBNHD);
+            Reset(cbxMaKBNHD);
+            Reset(tiTenKBNHD);
+            Reset(cbxDVKBNHD);
+            Reset(cbxMaKHNHD);
+            Reset(tiTenKHNHD);
+            Reset(tiDChiNHD);
+            Reset(dpNSinhNHD);
+            Reset(cbxGTinhNHD);
+            Reset(tiSDTNHD);
+            Reset(tiEmailNHD);
+            Reset(cbxLoaiKHNHD);
+            Reset(cbxNgheNHD);
+            Reset(cbxTinhNHD);
+            Reset(LinkHDLK);
             Reset(tiSoNTGNHD);
             If(
-                IsBlank(LookUp(DL_HOP_DONGS,MA_HOP_DONG=maHopDongFwd)),
+                IsBlank(
+                    LookUp(
+                        DL_HOP_DONGS,
+                        MA_HOP_DONG = maHopDongFwd
+                    )
+                ),
                 ClearCollect(
                     objHD,
                     Defaults(DL_HOP_DONGS)
                 ),
                 ClearCollect(
                     objHD,
-                    LookUp(DL_HOP_DONGS,MA_HOP_DONG=maHopDongFwd)
+                    LookUp(
+                        DL_HOP_DONGS,
+                        MA_HOP_DONG = maHopDongFwd
+                    )
                 )
             );
             ClearCollect(
@@ -22,7 +47,7 @@
                 AddColumns(
                     Filter(
                         DL_HOP_DONG_SPS,
-                        MA_HOP_DONG=maHopDongFwd
+                        MA_HOP_DONG = maHopDongFwd
                     ),
                     "added",
                     0,
@@ -34,25 +59,36 @@
                 tmpDSHDSPLKNHDCollect,
                 Filter(
                     DL_HOP_DONG_LIENKETS,
-                    SO_HOP_DONG=First(objHD).MA_HOP_DONG
+                    SO_HOP_DONG = First(objHD).MA_HOP_DONG
                 )
             );
             ClearCollect(
                 tmpKTTNHDCollect,
                 Filter(
                     DL_HOP_DONG_TTOANS,
-                    MA_HOP_DONG=maHopDongFwd
+                    MA_HOP_DONG = maHopDongFwd
                 )
             );
-            UpdateContext({
-                maHDSP:Max(DL_HOP_DONG_SPS,ID),
-                maKTT:Max(DL_HOP_DONG_TTOANS,ID),
-                maAddedHDSPNHD:"",
-                maUpdatedHDSPNHD:"",
-                nhomKB:""
-            });
+            UpdateContext(
+                {
+                    maHDSP: Max(
+                        DL_HOP_DONG_SPS,
+                        ID
+                    ),
+                    maKTT: Max(
+                        DL_HOP_DONG_TTOANS,
+                        ID
+                    ),
+                    maAddedHDSPNHD: "",
+                    maUpdatedHDSPNHD: "",
+                    nhomKB: ""
+                }
+            );
             If(
-                CountIf(tmpKTTNHDCollect,true)=0,
+                CountIf(
+                    tmpKTTNHDCollect,
+                    true
+                ) = 0,
                 Collect(
                     tmpKTTNHDCollect,
                     Defaults(tmpKTTNHDCollect)
@@ -60,18 +96,16 @@
                 UpdateIf(
                     tmpKTTNHDCollect,
                     IsBlank(ID),
-                    {
-                        ID:Text(maKTT+1)
-                    }
+                    {ID: Text(maKTT + 1)}
                 )
             ),
-            varUnReloadNHD="2",
+            varUnReloadNHD = "2",
             ClearCollect(
                 tmpDSHDSPNHDCollect,
                 AddColumns(
                     Filter(
                         DL_HOP_DONG_SPS,
-                        MA_HOP_DONG=maHopDongFwd
+                        MA_HOP_DONG = maHopDongFwd
                     ),
                     "added",
                     0,
@@ -79,20 +113,44 @@
                     0
                 )
             ),
-            varUnReloadNHD="3",
+            varUnReloadNHD = "3",
             ClearCollect(
                 tmpDSHDSPLKNHDCollect,
                 Filter(
                     DL_HOP_DONG_LIENKETS,
-                    SO_HOP_DONG=First(objHD).MA_HOP_DONG
+                    SO_HOP_DONG = First(objHD).MA_HOP_DONG
                 )
             );
-            //Lay muc 6
-            ClearCollect(tmpCsDaChon,Filter(DL_HOP_DONG_CHON_CS, MA_HOP_DONG=tiMaHDNHD.Text));
+            
         );
-        
-        Set(maHopDongFwd,"");
-        Set(varUnReloadNHD,Blank());
+        //Lay muc 6
+        Clear(tmpCsDaChon);
+        ForAll(
+            Filter(
+                DL_HOP_DONG_CHON_CS,
+                MA_HOP_DONG = tiMaHDNHD.Text
+            ) As cs,
+            Collect(
+                tmpCsDaChon,
+                {
+                    ID:cs.ID,
+                    MA_CHINH_SACH: cs.MA_CHINH_SACH,
+                    MO_TA: cs.MO_TA,
+                    SO_TIEN: cs.SO_TIEN,
+                    TY_LE: cs.TY_LE,
+                    SO_TIEN_TOIDA: cs.SO_TIEN_TOIDA
+                }
+            );
+            
+        );
+        Set(
+            maHopDongFwd,
+            ""
+        );
+        Set(
+            varUnReloadNHD,
+            Blank()
+        );
 
     Canvas2 As fluidGrid.fluidGridWithBlankCard:
         BorderThickness: =0
@@ -3762,11 +3820,7 @@
 
                         Button2_7 As button:
                             Height: =32
-                            OnSelect: |
-                                =If(
-                                    CountIf(tmpCsDaChon,true)>1,
-                                    Remove(tmpCsDaChon,ThisItem)
-                                )
+                            OnSelect: =RemoveIf(tmpCsDaChon,ID=ThisItem.ID);
                             Size: =11
                             Text: ="Xóa"
                             Width: =80
