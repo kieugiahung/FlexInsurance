@@ -12,13 +12,24 @@ NhapHopDongLK As screen:
             )
         );
         ClearCollect(
+            dmKenhBanHDLKCollect,
+            AddColumns(
+                Filter(
+                    DM_KENH_BANS,
+                    MA_KENH_BAN=maKBNLKFwd
+                ),
+                "title",
+                Concatenate(MA_KENH_BAN," - ",TEN_KENH_BAN)
+            )
+        );
+        ClearCollect(
             tmpDSHDLKNLKCollect,
             ShowColumns(
                 AddColumns(
                     Filter(
                         DL_HOP_DONG_SPS,
                         (IsBlank(cbxMaSPNLK.Selected.MA_SAN_PHAM) || MA_SAN_PHAM=cbxMaSPNLK.Selected.MA_SAN_PHAM) &&
-                        (IsBlank(tiMaKBNLK.Text) || MA_KENH_BAN=tiMaKBNLK.Text) && 
+                        (IsBlank(cbxMaKBNLK.Selected.MA_KENH_BAN) || MA_KENH_BAN=cbxMaKBNLK.Selected.MA_KENH_BAN) && 
                         (IsBlank(tiMaKHNLK.Text) || MA_KHACH_HANG=tiMaKHNLK.Text) &&
                         (IsBlank(dpNgayHDNLK.SelectedDate) || NGAY_HOP_DONG=dpNgayHDNLK.SelectedDate) &&
                         MA_HOP_DONG<>maHDNLKFwd
@@ -69,7 +80,7 @@ NhapHopDongLK As screen:
             Size: =11
             Text: ="Mã kênh bán"
             Width: =130
-            X: =300
+            X: =572
             Y: =32
             ZIndex: =5
 
@@ -77,7 +88,7 @@ NhapHopDongLK As screen:
             Height: =25
             Size: =11
             Text: ="Mã khách hàng"
-            X: =572
+            X: =300
             Y: =32
             ZIndex: =6
 
@@ -172,6 +183,10 @@ NhapHopDongLK As screen:
                 Height: =35
                 OnChange: =
                 OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
                 Size: =10
                 Tooltip: =
                 Width: =161
@@ -188,6 +203,10 @@ NhapHopDongLK As screen:
                 Height: =35
                 OnChange: =
                 OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
                 Size: =10
                 Tooltip: =LookUp(DL_HOP_DONGS,MA_HOP_DONG=ThisItem.cr282_ma_hop_dong,TEN_KHACH_HANG)
                 Width: =177
@@ -204,6 +223,10 @@ NhapHopDongLK As screen:
                 Height: =35
                 OnChange: =
                 OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
                 Size: =10
                 Width: =62
                 X: =1223
@@ -212,7 +235,8 @@ NhapHopDongLK As screen:
             TiGHSTVu_3 As text:
                 Align: =Align.Right
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.cr282_tong_tien_phi
+                Default: |-
+                    =Text(ThisItem.cr282_tong_tien_phi,"#,###")
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -221,6 +245,10 @@ NhapHopDongLK As screen:
                 Height: =35
                 OnChange: =
                 OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
                 Size: =10
                 Width: =128
                 X: =1095
@@ -236,6 +264,10 @@ NhapHopDongLK As screen:
                 Height: =35
                 OnChange: =
                 OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
                 Size: =10
                 Tooltip: =ThisItem.cr282_ten_chuong_trinh
                 Width: =182
@@ -252,6 +284,10 @@ NhapHopDongLK As screen:
                 Height: =35
                 OnChange: =
                 OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
                 Size: =10
                 Tooltip: =Concatenate(ThisItem.cr282_ma_kenh_ban," - ",LookUp(DL_HOP_DONGS,MA_HOP_DONG=ThisItem.cr282_ma_hop_dong,TEN_KENH_BAN))
                 Width: =165
@@ -294,6 +330,10 @@ NhapHopDongLK As screen:
                 Height: =35
                 OnChange: =
                 OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
                 Size: =10
                 Tooltip: =
                 Width: =95
@@ -310,6 +350,10 @@ NhapHopDongLK As screen:
                 Height: =35
                 OnChange: =
                 OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
                 Size: =10
                 Tooltip: =
                 Width: =105
@@ -326,6 +370,10 @@ NhapHopDongLK As screen:
                 Height: =35
                 OnChange: =
                 OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
                 Size: =10
                 Tooltip: =ThisItem.cr282_ten_san_pham
                 Width: =170
@@ -463,7 +511,7 @@ NhapHopDongLK As screen:
         cbxMaSPNLK As combobox:
             DisplayFields: =["title","cr282_ma_san_pham"]
             Height: =32
-            InputTextPlaceholder: ="Chọn sản phẩm"
+            InputTextPlaceholder: =
             Items: =SortByColumns(dmSanPhamHDLKCollect,"cr282_ma_san_pham",SortOrder.Ascending)
             OnChange: |-
                 =ClearCollect(
@@ -473,7 +521,7 @@ NhapHopDongLK As screen:
                             Filter(
                                 DL_HOP_DONG_SPS,
                                 (IsBlank(cbxMaSPNLK.Selected.MA_SAN_PHAM) || MA_SAN_PHAM=cbxMaSPNLK.Selected.MA_SAN_PHAM) &&
-                                (IsBlank(tiMaKBNLK.Text) || MA_KENH_BAN=tiMaKBNLK.Text) && 
+                                (IsBlank(cbxMaKBNLK.Selected.MA_KENH_BAN) || MA_KENH_BAN=cbxMaKBNLK.Selected.MA_KENH_BAN) && 
                                 (IsBlank(tiMaKHNLK.Text) || MA_KHACH_HANG=tiMaKHNLK.Text) &&
                                 (IsBlank(dpNgayHDNLK.SelectedDate) || NGAY_HOP_DONG=dpNgayHDNLK.SelectedDate) &&
                                 MA_HOP_DONG<>maHDNLKFwd
@@ -528,7 +576,7 @@ NhapHopDongLK As screen:
                             Filter(
                                 DL_HOP_DONG_SPS,
                                 (IsBlank(cbxMaSPNLK.Selected.MA_SAN_PHAM) || MA_SAN_PHAM=cbxMaSPNLK.Selected.MA_SAN_PHAM) &&
-                                (IsBlank(tiMaKBNLK.Text) || MA_KENH_BAN=tiMaKBNLK.Text) && 
+                                (IsBlank(cbxMaKBNLK.Selected.MA_KENH_BAN) || MA_KENH_BAN=cbxMaKBNLK.Selected.MA_KENH_BAN) && 
                                 (IsBlank(tiMaKHNLK.Text) || MA_KHACH_HANG=tiMaKHNLK.Text) &&
                                 (IsBlank(dpNgayHDNLK.SelectedDate) || NGAY_HOP_DONG=dpNgayHDNLK.SelectedDate) &&
                                 MA_HOP_DONG<>maHDNLKFwd
@@ -563,25 +611,75 @@ NhapHopDongLK As screen:
             Y: =59
             ZIndex: =27
 
-        tiMaKBNLK As text:
-            Default: =maKBNLKFwd
+        tiMaKHNLK As text:
+            Default: =maKHNLKFwd
             DisplayMode: =DisplayMode.Disabled
             Height: =32
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
             Size: =11
             Width: =235
             X: =300
             Y: =59
             ZIndex: =28
 
-        tiMaKHNLK As text:
-            Default: =maKHNLKFwd
-            DisplayMode: =DisplayMode.Disabled
+        cbxMaKBNLK As combobox:
+            Default: =First(dmKenhBanHDLKCollect)
+            DisplayFields: =["cr282_ma_kenh_ban","cr282_ma_san_pham"]
             Height: =32
+            InputTextPlaceholder: =
+            IsSearchable: =false
+            Items: =dmKenhBanHDLKCollect
+            OnChange: |-
+                =ClearCollect(
+                    tmpDSHDLKNLKCollect,
+                    ShowColumns(
+                        AddColumns(
+                            Filter(
+                                DL_HOP_DONG_SPS,
+                                (IsBlank(cbxMaSPNLK.Selected.MA_SAN_PHAM) || MA_SAN_PHAM=cbxMaSPNLK.Selected.MA_SAN_PHAM) &&
+                                (IsBlank(cbxMaKBNLK.Selected.MA_KENH_BAN) || MA_KENH_BAN=cbxMaKBNLK.Selected.MA_KENH_BAN) && 
+                                (IsBlank(tiMaKHNLK.Text) || MA_KHACH_HANG=tiMaKHNLK.Text) &&
+                                (IsBlank(dpNgayHDNLK.SelectedDate) || NGAY_HOP_DONG=dpNgayHDNLK.SelectedDate) &&
+                                MA_HOP_DONG<>maHDNLKFwd
+                            ),
+                            "chon",
+                            0
+                        ),
+                        "cr282_id",
+                        "cr282_ma_hop_dong",
+                        "cr282_ngay_hop_dong",
+                        "cr282_ma_san_pham",
+                        "cr282_ten_san_pham",
+                        "cr282_ma_chuong_trinh",
+                        "cr282_ten_chuong_trinh",
+                        "cr282_ma_kenh_ban",
+                        "cr282_ma_khach_hang",
+                        "cr282_tong_tien_phi",
+                        "cr282_don_vi_tinh",
+                        "chon"
+                    )
+                );
+                UpdateIf(
+                    tmpDSHDLKNLKCollect As ds,
+                    !IsBlank(LookUp(DL_HOP_DONG_LIENKETS,SO_HOP_DONG=maHDNLKFwd && ID_HOPDONG_SP=ds.cr282_id)),
+                    {
+                        chon:1
+                    }
+                );
+                UpdateContext({
+                    ngayHD:Blank()
+                })
+            SearchFields: =["cr282_ma_kenh_ban"]
+            SearchItems: =[]
+            SelectMultiple: =false
             Size: =11
             Width: =235
             X: =572
             Y: =59
-            ZIndex: =29
+            ZIndex: =30
 
     LeftNavigation_31 As LeftNavigation_9:
         Width: =LeftNavigation_31.MenuWidth - 10
