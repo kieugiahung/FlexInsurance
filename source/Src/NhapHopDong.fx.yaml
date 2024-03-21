@@ -31,6 +31,13 @@
                 )
             );
             ClearCollect(
+                tmpDSHDSPLKNHDCollect,
+                Filter(
+                    DL_HOP_DONG_LIENKETS,
+                    SO_HOP_DONG=First(objHD).MA_HOP_DONG
+                )
+            );
+            ClearCollect(
                 tmpKTTNHDCollect,
                 Filter(
                     DL_HOP_DONG_TTOANS,
@@ -600,7 +607,7 @@
                 tiSoNTGNHD As text:
                     Align: =Align.Right
                     BorderColor: =RGBA(72, 163, 62, 1)
-                    Default: =First(objHD).SO_NGUOI_TGIA
+                    Default: =If(IsBlank(First(objHD).SO_NGUOI_TGIA),0,First(objHD).SO_NGUOI_TGIA)
                     DisplayMode: =DisplayMode.Disabled
                     Height: =32
                     Size: =11
@@ -958,6 +965,13 @@
                                 maAddedHDSPNHD:"",
                                 maUpdatedHDSPNHD:""
                             });
+                            UpdateIf(
+                                objHD,
+                                true,
+                                {
+                                    SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
+                                }
+                            )
                         Size: =11
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
@@ -1023,7 +1037,6 @@
                         Default: ="Danh sách NĐBH"
                         DisabledBorderColor: =RGBA(255, 255, 255, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
-                        DisplayMode: =If(ThisItem.edited=1,DisplayMode.Edit,DisplayMode.Disabled)
                         Height: =28
                         HoverBorderColor: =RGBA(255, 255, 255, 1)
                         HoverColor: =RGBA(39, 113, 194, 1)
@@ -1092,7 +1105,7 @@
                         Size: =11
                         Underline: =true
                         Width: =142
-                        X: =976
+                        X: =978
                         Y: =102
                         ZIndex: =20
 
@@ -3471,7 +3484,10 @@
                     Button2_6 As button:
                         Height: =32
                         OnSelect: |
-                            =Remove(tmpKTTNHDCollect,ThisItem)
+                            =If(
+                                CountIf(tmpKTTNHDCollect,true)>1,
+                                Remove(tmpKTTNHDCollect,ThisItem)
+                            )
                         Size: =11
                         Text: ="Xóa"
                         Width: =80
@@ -3855,7 +3871,7 @@
                 tmpKTTNHDCollect,
                 true,
                 {
-                    PHI_THANH_TOAN:RoundDown(Value(tiTienSauGiamNHD.Text)/CountIf(tmpKTTNHDCollect,true),0)
+                    PHI_THANH_TOAN:Trunc((Value(tiTienSauGiamNHD.Text)/CountIf(tmpKTTNHDCollect,true))/1000)*1000
                 }
             );
             If(
@@ -3864,7 +3880,7 @@
                     tmpKTTNHDCollect,
                     ID=Text(Max(tmpKTTNHDCollect,ID)),
                     {
-                        PHI_THANH_TOAN:Sum(RoundDown(Value(tiTienSauGiamNHD.Text)/CountIf(tmpKTTNHDCollect,true),0),Mod(Value(tiTienSauGiamNHD.Text),CountIf(tmpKTTNHDCollect,true)))
+                        PHI_THANH_TOAN:Value(tiTienSauGiamNHD.Text) - Trunc((Value(tiTienSauGiamNHD.Text)/CountIf(tmpKTTNHDCollect,true))/1000)*1000*(CountIf(tmpKTTNHDCollect,true)-1)
                     }
                 );
                 Notify(Mod(Value(tiTienSauGiamNHD.Text),CountIf(tmpKTTNHDCollect,true)),NotificationType.Success,2000);
