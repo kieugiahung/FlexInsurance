@@ -52,7 +52,7 @@ NhapDMKenhBan As screen:
                 	Notify("Bắt buộc nhập quận/huyện",NotificationType.Error,2000),
                 	ComboBoxLoaiKB.Selected.MA_LOAI_KB="4" && IsBlank(ComboBoxNHangBA.Selected.MA_NGAN_HANG),
                 	Notify("Bắt buộc nhập ngân hàng",NotificationType.Error,2000),
-                	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || 
+                	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB = "Trực tiếp" || 
                 	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân")) 
                 	&& IsBlank(TextMaNV.Text),
                 	Notify("Bắt buộc nhập mã nhân viên",NotificationType.Error,2000),
@@ -921,7 +921,7 @@ NhapDMKenhBan As screen:
                 ZIndex: =13
 
         Container7 As groupContainer.manualLayoutContainer:
-            Height: =If(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân"),58,0)
+            Height: =If(ComboBoxLoaiKB.Selected.TEN_LOAI_KB = "Trực tiếp" || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân"),58,0)
             Width: =1267
             X: =8
             Y: =414
