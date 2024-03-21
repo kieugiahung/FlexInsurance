@@ -310,12 +310,11 @@ NhapNDBH As screen:
                     DisabledBorderColor: =RGBA(0, 0, 0, 0)
                     DisabledColor: =RGBA(161, 159, 157, 1)
                     DisabledFill: =RGBA(242, 242, 241, 0)
-                    Fill: =RGBA(0, 120, 212, 1)
                     Font: =Font.'Segoe UI'
                     FontWeight: =FontWeight.Bold
                     Height: =25
                     HoverBorderColor: =RGBA(0, 0, 0, 0)
-                    HoverFill: =RGBA(16, 110, 190, 1)
+                    HoverFill: =RGBA(56, 96, 178, 1)
                     OnSelect: |-
                         =If(
                             Or(maAddedNDBH<>"",maUpdatedNDBH<>""),
@@ -333,7 +332,7 @@ NhapNDBH As screen:
                         )
                     PressedBorderColor: =RGBA(0, 69, 120, 1)
                     PressedColor: =RGBA(255, 255, 255, 1)
-                    PressedFill: =RGBA(16, 110, 190, 1)
+                    PressedFill: =RGBA(56, 96, 178, 1)
                     Size: =11
                     Text: ="Sửa"
                     Visible: =ThisItem.edited=0
@@ -347,12 +346,11 @@ NhapNDBH As screen:
                     DisabledBorderColor: =RGBA(0, 0, 0, 0)
                     DisabledColor: =RGBA(161, 159, 157, 1)
                     DisabledFill: =RGBA(242, 242, 241, 0)
-                    Fill: =RGBA(0, 120, 212, 1)
                     Font: =Font.'Segoe UI'
                     FontWeight: =FontWeight.Bold
                     Height: =25
                     HoverBorderColor: =RGBA(0, 0, 0, 0)
-                    HoverFill: =RGBA(16, 110, 190, 1)
+                    HoverFill: =RGBA(56, 96, 178, 1)
                     OnSelect: |-
                         =If(
                             Or(maAddedNDBH<>"",maUpdatedNDBH<>""),
@@ -363,7 +361,7 @@ NhapNDBH As screen:
                         )
                     PressedBorderColor: =RGBA(0, 69, 120, 1)
                     PressedColor: =RGBA(255, 255, 255, 1)
-                    PressedFill: =RGBA(16, 110, 190, 1)
+                    PressedFill: =RGBA(56, 96, 178, 1)
                     Size: =11
                     Text: ="Xóa"
                     Visible: =ThisItem.edited=0
@@ -377,12 +375,11 @@ NhapNDBH As screen:
                     DisabledBorderColor: =RGBA(0, 0, 0, 0)
                     DisabledColor: =RGBA(161, 159, 157, 1)
                     DisabledFill: =RGBA(242, 242, 241, 0)
-                    Fill: =RGBA(0, 120, 212, 1)
                     Font: =Font.'Segoe UI'
                     FontWeight: =FontWeight.Bold
                     Height: =25
                     HoverBorderColor: =RGBA(0, 0, 0, 0)
-                    HoverFill: =RGBA(16, 110, 190, 1)
+                    HoverFill: =RGBA(56, 96, 178, 1)
                     OnSelect: |-
                         =UpdateContext({errorMsgGal: ""});
                         If(
@@ -541,7 +538,7 @@ NhapNDBH As screen:
                         )
                     PressedBorderColor: =RGBA(0, 69, 120, 1)
                     PressedColor: =RGBA(255, 255, 255, 1)
-                    PressedFill: =RGBA(16, 110, 190, 1)
+                    PressedFill: =RGBA(56, 96, 178, 1)
                     Size: =11
                     Text: ="Lưu"
                     Visible: =ThisItem.edited=1
@@ -555,12 +552,11 @@ NhapNDBH As screen:
                     DisabledBorderColor: =RGBA(0, 0, 0, 0)
                     DisabledColor: =RGBA(161, 159, 157, 1)
                     DisabledFill: =RGBA(242, 242, 241, 0)
-                    Fill: =RGBA(0, 120, 212, 1)
                     Font: =Font.'Segoe UI'
                     FontWeight: =FontWeight.Bold
                     Height: =25
                     HoverBorderColor: =RGBA(0, 0, 0, 0)
-                    HoverFill: =RGBA(16, 110, 190, 1)
+                    HoverFill: =RGBA(56, 96, 178, 1)
                     OnSelect: |-
                         =If(
                             ThisItem.cr282_id=Value(maAddedNDBH),
@@ -579,7 +575,7 @@ NhapNDBH As screen:
                         });
                     PressedBorderColor: =RGBA(0, 69, 120, 1)
                     PressedColor: =RGBA(255, 255, 255, 1)
-                    PressedFill: =RGBA(16, 110, 190, 1)
+                    PressedFill: =RGBA(56, 96, 178, 1)
                     Size: =11
                     Text: ="Hủy"
                     Visible: =ThisItem.edited=1
@@ -867,7 +863,7 @@ NhapNDBH As screen:
         FontWeight: =FontWeight.Bold
         Height: =42
         HoverBorderColor: =RGBA(0, 0, 0, 0)
-        HoverFill: =RGBA(16, 110, 190, 1)
+        HoverFill: =RGBA(56, 96, 178, 1)
         OnSelect: |
             =UpdateContext({errorMsg: ""});
             //Kiem tra Khong trung MST
@@ -975,10 +971,13 @@ NhapNDBH As screen:
                     DL_HOP_DONG_SPS,
                     MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT && MA_HOP_DONG = varMaHD && ID = idColSP,
                     {
-                        TONG_TIEN_PHI: Sum(
+                        TONG_TIEN_PHI: If(IsBlank(LookUp(DL_HOP_DONG_SPS,
+                    MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT && MA_HOP_DONG = varMaHD && ID = idColSP).PHI_DIEU_CHINH),
+                        Sum(
                             tmpNDBH,
                             cr282_phi_ndbh
-                        ),
+                        ), LookUp(DL_HOP_DONG_SPS,
+                    MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT && MA_HOP_DONG = varMaHD && ID = idColSP).PHI_DIEU_CHINH) * CountRows(tmpNDBH),
                         SONGUOI_THAMGIA: CountRows(tmpNDBH)
                     }
                 );
@@ -1004,7 +1003,7 @@ NhapNDBH As screen:
                 
             );
         PressedBorderColor: =RGBA(0, 69, 120, 1)
-        PressedColor: =RGBA(56, 96, 178, 1)
+        PressedColor: =RGBA(255, 255, 255, 1)
         PressedFill: =RGBA(16, 110, 190, 1)
         Size: =11
         Text: ="Tính phí"
@@ -1022,13 +1021,13 @@ NhapNDBH As screen:
         Font: =Font.'Segoe UI'
         FontWeight: =FontWeight.Bold
         HoverBorderColor: =RGBA(0, 0, 0, 0)
-        HoverFill: =RGBA(16, 110, 190, 1)
+        HoverFill: =RGBA(56, 96, 178, 1)
         OnSelect: |-
             =Select(IconTaiLaiNDBH);
             Set(varUnReloadNHD,"2");
             Back();
         PressedBorderColor: =RGBA(0, 69, 120, 1)
-        PressedColor: =RGBA(56, 96, 178, 1)
+        PressedColor: =RGBA(255, 255, 255, 1)
         PressedFill: =RGBA(16, 110, 190, 1)
         Size: =11
         Text: ="Quay lại"
@@ -1065,7 +1064,7 @@ NhapNDBH As screen:
         FontWeight: =FontWeight.Bold
         Height: =30
         HoverBorderColor: =RGBA(0, 0, 0, 0)
-        HoverFill: =RGBA(16, 110, 190, 1)
+        HoverFill: =RGBA(56, 96, 178, 1)
         OnSelect: |-
             =If(
                 Or(
@@ -1126,7 +1125,7 @@ NhapNDBH As screen:
                 UpdateContext({maAddedNDBH: Text(idNDBH)})
             )
         PressedBorderColor: =RGBA(0, 69, 120, 1)
-        PressedColor: =RGBA(56, 96, 178, 1)
+        PressedColor: =RGBA(255, 255, 255, 1)
         PressedFill: =RGBA(16, 110, 190, 1)
         Size: =11
         Text: ="Thêm mới"
