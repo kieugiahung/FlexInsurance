@@ -952,7 +952,7 @@
                                 MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=ThisItem.MA_CHUONG_TRINH
                             )
                         DisplayFields: =["cr282_ma_chuongtrinh","cr282_ten_chuong_trinh"]
-                        DisplayMode: =If(ThisItem.edited=1 && ThisItem.added=1,DisplayMode.Edit,DisplayMode.Disabled)
+                        DisplayMode: =If(ThisItem.ID=maAddedHDSPNHD || ThisItem.ID=maUpdatedHDSPNHD,DisplayMode.Edit,DisplayMode.Disabled)
                         Height: =32
                         InputTextPlaceholder: ="Chọn chương trình"
                         Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM)
@@ -971,7 +971,7 @@
                         BorderColor: =RGBA(72, 163, 62, 1)
                         DefaultSelectedItems: =LookUp(DL_SAN_PHAM,MA_SAN_PHAM=ThisItem.MA_SAN_PHAM)
                         DisplayFields: =["cr282_ma_san_pham","cr282_ten_san_pham"]
-                        DisplayMode: =If(ThisItem.edited=1 && ThisItem.added=1,DisplayMode.Edit,DisplayMode.Disabled)
+                        DisplayMode: =If(ThisItem.ID=maAddedHDSPNHD || ThisItem.ID=maUpdatedHDSPNHD,DisplayMode.Edit,DisplayMode.Disabled)
                         Height: =32
                         InputTextPlaceholder: ="Chọn sản phẩm"
                         Items: =DL_SAN_PHAM
@@ -1027,7 +1027,7 @@
                                     SONGUOI_THAMGIA:Value(tiSoNTGSPNHD.Text),
                                     TONG_TIEN_PHI:Value(tiTongPhiNHD.Text),
                                     NHOM_TINH_PHI:Concat(cbxNhomTPNHD.SelectedItems, MA_NHOM_TINHPHI,"|"),
-                                    edited:0
+                                    PHI_DIEU_CHINH:Value(tiPhiDCNHD.Text)
                                 }
                             );
                             If(
@@ -1051,7 +1051,8 @@
                                             cbxNhomTPNHD.SelectedItems,
                                             MA_DL,
                                             "|"
-                                        )
+                                        ),
+                                        PHI_DIEU_CHINH:Value(tiPhiDCNHD.Text)
                                     }
                                 ),
                                 ThisItem.ID=maUpdatedHDSPNHD,
@@ -1068,7 +1069,8 @@
                                             cbxNhomTPNHD.SelectedItems,
                                             MA_DL,
                                             "|"
-                                        )
+                                        ),
+                                        PHI_DIEU_CHINH:Value(tiPhiDCNHD.Text)
                                     }
                                 )
                             );
@@ -1338,8 +1340,8 @@
                         Size: =11
                         Underline: =true
                         Width: =142
-                        X: =665
-                        Y: =144
+                        X: =356
+                        Y: =145
                         ZIndex: =20
 
                     Label3_66 As label:
@@ -1361,7 +1363,7 @@
                                 !IsBlank(Find(MA_DL,ThisItem.NHOM_TINH_PHI))
                             )
                         DisplayFields: =["cr282_ten_hien_thi"]
-                        DisplayMode: =If(ThisItem.edited=1 && ThisItem.added=1,DisplayMode.Edit,DisplayMode.Disabled)
+                        DisplayMode: =If(ThisItem.ID=maAddedHDSPNHD || ThisItem.ID=maUpdatedHDSPNHD,DisplayMode.Edit,DisplayMode.Disabled)
                         Height: =32
                         InputTextPlaceholder: ="Chọn nhóm tính phí"
                         Items: |-
@@ -1454,13 +1456,15 @@
                             Navigate(DSQuyenLoiHD);
                         Size: =11
                         Underline: =true
-                        Visible: =If(!IsBlank(tiMaHDNHD.Text),true,false)
+                        Visible: |-
+                            =//If(!IsBlank(tiMaHDNHD.Text),true,false)
+                            true
                         Width: =169
-                        X: =978
-                        Y: =72
+                        X: =30
+                        Y: =145
                         ZIndex: =23
 
-                    tiSoNTGSPNHD_1 As text:
+                    tiPhiDCNHD As text:
                         Align: =Align.Right
                         BorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.SONGUOI_THAMGIA
@@ -1922,7 +1926,7 @@
                     Default: ="Hợp đồng liên kết"
                     DisabledBorderColor: =RGBA(255, 255, 255, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
-                    DisplayMode: =If(CountIf(tmpDSHDSPNHDCollect,edited=1)=0 && CountIf(tmpDSHDSPNHDCollect,added=1)=0 && CountIf(DL_HOP_DONG_SPS,MA_HOP_DONG=tiMaHDNHD.Text)>0,DisplayMode.Edit,DisplayMode.Disabled)
+                    DisplayMode: =If(CountIf(tmpDSHDSPNHDCollect,true)>0 && maAddedHDSPNHD="" && maUpdatedHDSPNHD="",DisplayMode.Edit,DisplayMode.Disabled)
                     Height: =28
                     HoverBorderColor: =RGBA(255, 255, 255, 1)
                     HoverColor: =RGBA(39, 113, 194, 1)
@@ -4665,7 +4669,7 @@
         Height: =32
         OnSelect: =Navigate(TraCuuHopDong)
         Size: =11
-        Text: ="Hủy"
+        Text: ="Quay lại"
         Width: =85
         X: =1140
         Y: =716
