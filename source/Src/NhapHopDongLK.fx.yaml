@@ -189,7 +189,7 @@ NhapHopDongLK As screen:
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
-                Tooltip: =
+                Tooltip: =LookUp(DL_HOP_DONGS,MA_HOP_DONG=ThisItem.cr282_ma_hop_dong,TEN_KHACH_HANG)
                 Width: =177
                 X: =401
                 ZIndex: =30
@@ -237,13 +237,14 @@ NhapHopDongLK As screen:
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
+                Tooltip: =ThisItem.cr282_ten_chuong_trinh
                 Width: =182
                 X: =913
                 ZIndex: =37
 
             TiGHSTNgay_5 As text:
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =LookUp(DL_HOP_DONGS,MA_HOP_DONG=ThisItem.cr282_ma_hop_dong,TEN_KENH_BAN)
+                Default: =Concatenate(ThisItem.cr282_ma_kenh_ban," - ",LookUp(DL_HOP_DONGS,MA_HOP_DONG=ThisItem.cr282_ma_hop_dong,TEN_KENH_BAN))
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -252,6 +253,7 @@ NhapHopDongLK As screen:
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
+                Tooltip: =Concatenate(ThisItem.cr282_ma_kenh_ban," - ",LookUp(DL_HOP_DONGS,MA_HOP_DONG=ThisItem.cr282_ma_hop_dong,TEN_KENH_BAN))
                 Width: =165
                 X: =578
                 ZIndex: =38
@@ -325,6 +327,7 @@ NhapHopDongLK As screen:
                 OnChange: =
                 OnSelect: =Select(Parent)
                 Size: =10
+                Tooltip: =ThisItem.cr282_ten_san_pham
                 Width: =170
                 X: =743
                 ZIndex: =44
@@ -460,7 +463,7 @@ NhapHopDongLK As screen:
         cbxMaSPNLK As combobox:
             DisplayFields: =["title","cr282_ma_san_pham"]
             Height: =32
-            InputTextPlaceholder: ="Chọn tiêu chí"
+            InputTextPlaceholder: ="Chọn sản phẩm"
             IsSearchable: =false
             Items: =SortByColumns(dmSanPhamHDLKCollect,"cr282_ma_san_pham",SortOrder.Ascending)
             OnChange: |-
