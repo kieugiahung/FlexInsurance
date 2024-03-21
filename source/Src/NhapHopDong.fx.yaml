@@ -44,15 +44,9 @@
             );
             ClearCollect(
                 tmpDSHDSPNHDCollect,
-                AddColumns(
-                    Filter(
-                        DL_HOP_DONG_SPS,
-                        MA_HOP_DONG = maHopDongFwd
-                    ),
-                    "added",
-                    0,
-                    "edited",
-                    0
+                Filter(
+                    DL_HOP_DONG_SPS,
+                    MA_HOP_DONG = maHopDongFwd
                 )
             );
             ClearCollect(
@@ -102,15 +96,9 @@
             varUnReloadNHD = "2",
             ClearCollect(
                 tmpDSHDSPNHDCollect,
-                AddColumns(
-                    Filter(
-                        DL_HOP_DONG_SPS,
-                        MA_HOP_DONG = maHopDongFwd
-                    ),
-                    "added",
-                    0,
-                    "edited",
-                    0
+                Filter(
+                    DL_HOP_DONG_SPS,
+                    MA_HOP_DONG = First(objHD).MA_HOP_DONG
                 )
             );
             UpdateIf(
@@ -284,12 +272,15 @@
                     InputTextPlaceholder: =
                     IsEditable: =true
                     OnChange: |-
-                        =UpdateIf(
-                            objHD,
-                            true,
-                            {
-                                HIEU_LUC_DEN:DateAdd(dpHLTuNHD.SelectedDate,364,TimeUnit.Days)
-                            }
+                        =If(
+                            IsBlank(First(objHD).HIEU_LUC_DEN),
+                            UpdateIf(
+                                objHD,
+                                true,
+                                {
+                                    HIEU_LUC_DEN:DateAdd(dpHLTuNHD.SelectedDate,364,TimeUnit.Days)
+                                }
+                            )
                         )
                     Size: =11
                     StartYear: =1900
