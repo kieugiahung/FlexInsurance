@@ -189,6 +189,10 @@
                     DisplayMode: =DisplayMode.Disabled
                     Height: =32
                     HintText: ="Hệ thống tự sinh"
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
                     Size: =11
                     Width: =250
                     X: =30
@@ -422,6 +426,10 @@
                     BorderColor: =RGBA(72, 163, 62, 1)
                     Default: =First(objHD).TEN_KENH_BAN
                     Height: =32
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
                     Size: =11
                     Width: =250
                     X: =672
@@ -1160,13 +1168,6 @@
                             =If(
                                 Or(maAddedHDSPNHD<>"",maUpdatedHDSPNHD<>""),
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
-                                UpdateIf(
-                                    tmpDSHDSPNHDCollect,
-                                    ID=ThisItem.ID,
-                                    {
-                                        edited:1
-                                    }
-                                );
                                 UpdateContext({
                                     maUpdatedHDSPNHD:ThisItem.ID
                                 })
@@ -1184,14 +1185,7 @@
                         OnSelect: |-
                             =If(
                                 ThisItem.ID=maAddedHDSPNHD,
-                                Remove(tmpDSHDSPNHDCollect,ThisItem),
-                                UpdateIf(
-                                    tmpDSHDSPNHDCollect,
-                                    ID=ThisItem.ID,
-                                    {
-                                        edited:0
-                                    }
-                                )
+                                Remove(tmpDSHDSPNHDCollect,ThisItem)
                             );
                             UpdateContext({
                                 maAddedHDSPNHD:"",
@@ -1560,15 +1554,6 @@
                             Collect(
                                 tmpDSHDSPNHDCollect,
                                 Defaults(tmpDSHDSPNHDCollect)
-                            );
-                            UpdateIf(
-                                tmpDSHDSPNHDCollect,
-                                IsBlank(ID),
-                                {
-                                    ID:Text(maHDSP+1),
-                                    added:1,
-                                    edited:1
-                                }
                             );
                             UpdateContext({
                                 maAddedHDSPNHD:Text(maHDSP+1),
@@ -4502,7 +4487,7 @@
                 objHD,
                 true,
                 {
-                    TONG_TIEN_PHI:Sum(Filter(tmpDSHDSPNHDCollect,edited=0),TONG_TIEN_PHI)-Sum(Filter(DL_HOP_DONG_KETQUA_CS,MA_HOP_DONG=First(objHD).MA_HOP_DONG),GIA_TRI)
+                    TONG_TIEN_PHI:Sum(tmpDSHDSPNHDCollect,TONG_TIEN_PHI)-Sum(Filter(DL_HOP_DONG_KETQUA_CS,MA_HOP_DONG=First(objHD).MA_HOP_DONG),GIA_TRI)
                 }
             );
             UpdateIf(
