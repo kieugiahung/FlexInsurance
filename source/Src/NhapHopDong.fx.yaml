@@ -1112,6 +1112,45 @@
                                     }
                                 )
                             );
+                            //Clone QLCT chuong trinh
+                            ForAll(
+                                    tmpDSHDSPNHDCollect As sp,
+                                    If(
+                                        CountIf(
+                                            DL_HOP_DONG_SP_QLCT,
+                                            MA_CHUONG_TRINH = sp.MA_CHUONG_TRINH && MA_SAN_PHAM = sp.MA_SAN_PHAM && MA_HOP_DONG = tiMaHDNHD.Text
+                                        ) <= 0,
+                                        ForAll(
+                                            Filter(
+                                                DL_CHUONGTRINH_QLCTS,
+                                                MA_CHUONG_TRINH = sp.MA_CHUONG_TRINH && MA_SAN_PHAM = sp.MA_SAN_PHAM
+                                            ) As ql,
+                                            Patch(
+                                                DL_HOP_DONG_SP_QLCT,
+                                                Defaults(DL_HOP_DONG_SP_QLCT),
+                                                {
+                                                    MA_HOP_DONG: tiMaHDNHD.Text,
+                                                    MA_CHUONG_TRINH: ql.MA_CHUONG_TRINH,
+                                                    MA_SAN_PHAM: ql.MA_SAN_PHAM,
+                                                    MA_QL_CT: ql.MA_QL_CT,
+                                                    TT_HIENTHI: ql.TT_HIENTHI,
+                                                    MA_NHOM_QL: ql.MA_NHOM_QL,
+                                                    MA_NHOMQL_SP: ql.MA_NHOMQL_SP,
+                                                    GH_SOLAN_NAM: ql.GH_SOLAN_NAM,
+                                                    GH_SONGAY_NAM: ql.GH_SONGAY_NAM,
+                                                    GH_SOTIEN_BENH: ql.GH_SOTIEN_BENH,
+                                                    GH_SOTIEN_NAM: ql.GH_SOTIEN_NAM,
+                                                    GH_SOTIEN_NGAY: ql.GH_SOTIEN_NGAY,
+                                                    GH_SOTIEN_VU: ql.GH_SOTIEN_VU,
+                                                    PT_TU_CHITRA: ql.PT_TU_CHITRA,
+                                                    SO_TIEN_BH: ql.SO_TIEN_BH,
+                                                    TEN_QUYEN_LOI_HT: ql.TEN_QUYEN_LOI_HT
+                                                }
+                                            )
+                                        )
+                                    );
+                                );
+                                //End clone
                             UpdateContext({
                                 maAddedHDSPNHD:"",
                                 maUpdatedHDSPNHD:""
@@ -4438,45 +4477,7 @@
                     )
                 );
                 //End muc 6
-            //Clone QLCT chuong trinh
-            ForAll(
-                    tmpDSHDSPNHDCollect As sp,
-                    If(
-                        CountIf(
-                            DL_HOP_DONG_SP_QLCT,
-                            MA_CHUONG_TRINH = sp.MA_CHUONG_TRINH && MA_SAN_PHAM = sp.MA_SAN_PHAM && MA_HOP_DONG = tiMaHDNHD.Text
-                        ) <= 0,
-                        ForAll(
-                            Filter(
-                                DL_CHUONGTRINH_QLCTS,
-                                MA_CHUONG_TRINH = sp.MA_CHUONG_TRINH && MA_SAN_PHAM = sp.MA_SAN_PHAM
-                            ) As ql,
-                            Patch(
-                                DL_HOP_DONG_SP_QLCT,
-                                Defaults(DL_HOP_DONG_SP_QLCT),
-                                {
-                                    MA_HOP_DONG: tiMaHDNHD.Text,
-                                    MA_CHUONG_TRINH: ql.MA_CHUONG_TRINH,
-                                    MA_SAN_PHAM: ql.MA_SAN_PHAM,
-                                    MA_QL_CT: ql.MA_QL_CT,
-                                    TT_HIENTHI: ql.TT_HIENTHI,
-                                    MA_NHOM_QL: ql.MA_NHOM_QL,
-                                    MA_NHOMQL_SP: ql.MA_NHOMQL_SP,
-                                    GH_SOLAN_NAM: ql.GH_SOLAN_NAM,
-                                    GH_SONGAY_NAM: ql.GH_SONGAY_NAM,
-                                    GH_SOTIEN_BENH: ql.GH_SOTIEN_BENH,
-                                    GH_SOTIEN_NAM: ql.GH_SOTIEN_NAM,
-                                    GH_SOTIEN_NGAY: ql.GH_SOTIEN_NGAY,
-                                    GH_SOTIEN_VU: ql.GH_SOTIEN_VU,
-                                    PT_TU_CHITRA: ql.PT_TU_CHITRA,
-                                    SO_TIEN_BH: ql.SO_TIEN_BH,
-                                    TEN_QUYEN_LOI_HT: ql.TEN_QUYEN_LOI_HT
-                                }
-                            )
-                        )
-                    );
-                );
-                //End clone
+            
             Notify(
                     "Lưu dữ liệu thành công",
                     NotificationType.Success,
