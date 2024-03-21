@@ -1124,10 +1124,12 @@ TraCuuCSADDT As screen:
                             DL_CHINHSACH_APDUNG,
                             (IsBlank(ComLoaiDKCS.Selected.value) || (!IsBlank(ComLoaiDKCS.Selected.value) && LOAI_DK=ComLoaiDKCS.Selected.value)) &&
                             (IsBlank(ComLoaiCSCS.Selected.value) || (!IsBlank(ComLoaiCSCS.Selected.value) && ANH_HUONG=ComLoaiCSCS.Selected.value)) &&
+                            (IsBlank(ComThamSoCS.Selected.value) || (!IsBlank(ComThamSoCS.Selected.value) && 
                             (IsBlank(TextInputTuCS.Text) || (!IsBlank(TextInputTuCS.Text) && ((ComThamSoCS.Selected.value="1" && TY_LE>=Value(TextInputTuCS.Text)) || 
                             (ComThamSoCS.Selected.value="2" && SO_TIEN>=Value(TextInputTuCS.Text))))) &&
                             (IsBlank(TextInputDenCS.Text) || (!IsBlank(TextInputDenCS.Text) && ((ComThamSoCS.Selected.value="1" && TY_LE<=Value(TextInputDenCS.Text)) || 
                             (ComThamSoCS.Selected.value="2" && SO_TIEN<=Value(TextInputDenCS.Text)))))
+                            ))
                         ),
                         "cr282_ma_chinh_sach"
                     )
@@ -2878,7 +2880,8 @@ TraCuuCSADDT As screen:
             TiGHSTVu_2 As text:
                 Align: =Align.Right
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =If(ThisItem.so_tien=0,Blank(),ThisItem.so_tien)
+                Default: |-
+                    =Text(If(ThisItem.so_tien=0,Blank(),ThisItem.so_tien),"#,###")
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -3611,6 +3614,7 @@ TraCuuCSADDT As screen:
             Default: =
             Format: =TextFormat.Number
             Height: =28
+            HintText: =""
             Size: =9
             Width: =185
             X: =760
@@ -3720,7 +3724,6 @@ TraCuuCSADDT As screen:
             IsSearchable: =false
             Items: |-
                 =[{title:"Tỷ lệ",value:"1"},{title:"Số tiền",value:"2"}]
-            OnChange: =Reset(TextInputTuCS);Reset(TextInputDenCS)
             SearchFields: =["title"]
             SearchItems: =[]
             SelectMultiple: =false
