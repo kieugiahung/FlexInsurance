@@ -1046,9 +1046,16 @@
                     cbxMaCTNHD As combobox:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         DefaultSelectedItems: |
-                            =LookUp(
-                                ' DL_SAN_PHAM_CT',
-                                MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=ThisItem.MA_CHUONG_TRINH
+                            =If(
+                                ThisItem.edited=1,
+                                LookUp(
+                                    ' DL_SAN_PHAM_CT',
+                                    MA_CHUONG_TRINH=LookUp(objHDSPUpdated,ID=ThisItem.ID,MA_CHUONG_TRINH)
+                                ),
+                                LookUp(
+                                    ' DL_SAN_PHAM_CT',
+                                    MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=ThisItem.MA_CHUONG_TRINH
+                                )
                             )
                         DisplayFields: =["cr282_ma_chuongtrinh","cr282_ten_chuong_trinh"]
                         DisplayMode: =If(ThisItem.edited=1,DisplayMode.Edit,DisplayMode.Disabled)
@@ -1081,24 +1088,23 @@
 
                     cbxMaSPNHD As combobox:
                         BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: =LookUp(DL_SAN_PHAM,MA_SAN_PHAM=ThisItem.MA_SAN_PHAM)
+                        DefaultSelectedItems: =If(ThisItem.edited=1,LookUp(DL_SAN_PHAM,MA_SAN_PHAM=LookUp(objHDSPUpdated,ID=ThisItem.ID,MA_SAN_PHAM)),LookUp(DL_SAN_PHAM,MA_SAN_PHAM=ThisItem.MA_SAN_PHAM))
                         DisplayFields: =["cr282_ma_san_pham","cr282_ten_san_pham"]
                         DisplayMode: =If(ThisItem.edited=1,DisplayMode.Edit,DisplayMode.Disabled)
                         Height: =32
                         InputTextPlaceholder: ="Chọn sản phẩm"
                         Items: =DL_SAN_PHAM
                         OnChange: |-
-                            =UpdateIf(
-                                tmpDSHDSPNHDCollect,
-                                ID=ThisItem.ID,
-                                {
-                                    MA_SAN_PHAM:cbxMaSPNHD.Selected.MA_SAN_PHAM,
-                                    MA_CHUONG_TRINH:Blank(),
-                                    NHOM_TINH_PHI:Blank(),
-                                    PHI_DIEU_CHINH:Value(tiPhiDCNHD.Text),
-                                    SONGUOI_THAMGIA:Value(tiSoNTGSPNHD.Text),
-                                    TONG_TIEN_PHI:Value(tiTongPhiNHD.Text)
-                                }
+                            =If(
+                                LookUp(objHDSPUpdated,ID=ThisItem.ID,MA_SAN_PHAM)<>LookUp(tmpDSHDSPNHDCollect,ID=ThisItem.ID,MA_SAN_PHAM),
+                                UpdateIf(
+                                    objHDSPUpdated,
+                                    ID=maUpdatedHDSPNHD,
+                                    {
+                                        MA_CHUONG_TRINH:Blank()
+                                    }
+                                );
+                                Reset(cbxMaCTNHD)
                             )
                         SearchFields: =["cr282_ma_san_pham"]
                         SearchItems: =Search(DL_SAN_PHAM,cbxMaSPNHD.SearchText,"cr282_ma_san_pham")
@@ -1266,7 +1272,7 @@
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
                                 ClearCollect(
                                     objHDSPUpdated,
-                                    ThisItem
+                                    tmpDSHDSPNHDCollect
                                 );
                                 UpdateIf(
                                     tmpDSHDSPNHDCollect,
@@ -4283,7 +4289,7 @@
                     IsSearchable: =false
                     Items: =SortByColumns(dmMaGiamGiaNHDCollect,"gia_tri_tong",SortOrder.Descending)
                     SearchFields: =["title"]
-                    SearchItems: =Search(SortByColumns(dmMaGiamGiaNHDCollect,"gia_tri_tong",SortOrder.Descending),cbxMaGGNHD.SearchText,"title")
+                    SearchItems: =[]
                     SelectMultiple: =false
                     Size: =11
                     Width: =250
