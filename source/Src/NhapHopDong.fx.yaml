@@ -2031,6 +2031,10 @@
                             tmpPass,
                             1 = 1
                         );
+                        If(CountRows(tmpDieuKien) <=0 , Collect(
+                                    tmpPass,
+                                    {ma_chinh_sach: "1"}
+                                );)
                         // nếu không có điều kiện thỏa mãn thì mặc định 
                         ForAll(
                             tmpDieuKien As dk,
@@ -2737,7 +2741,7 @@
                             Notify(
                                 errorMsg,
                                 NotificationType.Error,
-                                800
+                                5000
                             )
                         );
                         // end điều kiện áp dụng
@@ -2783,19 +2787,6 @@
                         RemoveIf(
                             tmpPassCs,
                             1 = 1
-                        );
-                        // nếu không có điều kiện thỏa mãn thì báo lỗi
-                        If(
-                            CountRows(tmpChinhsach) <= 0,
-                            UpdateContext({errorMsg: "Không có chính sách thỏa mãn"})
-                        );
-                        If(
-                            !IsBlank(errorMsg),
-                            Notify(
-                                errorMsg,
-                                NotificationType.Error,
-                                800
-                            )
                         );
                         ForAll(
                             tmpChinhsach As dk,
