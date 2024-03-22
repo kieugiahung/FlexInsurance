@@ -12546,12 +12546,12 @@
                     NotificationType.Warning,
                     800
                 ),
-            //lấy danh sách chương trình có trạng thái = 0
+            //lấy danh sách chương trình có trạng thái = 0 của sản phẩm
                 ClearCollect(
                     tempCTTrangThai0,
                     Filter(
                         ' DL_SAN_PHAM_CT',
-                        TRANG_THAI = 0
+                        TRANG_THAI = 0 && MA_SAN_PHAM = valMaSP
                     )
                 );
             // quét từng chương trình để chuyển dữ liệu
@@ -12574,7 +12574,7 @@
                     )
                 );
                 // chuyển dữ liệu quyền lợi chi tiết
-                RemoveIf(DL_CHUONGTRINH_QLCTS, MA_SAN_PHAM = valMaSP && MaCT = CT.MA_CHUONG_TRINH);
+                RemoveIf(DL_CHUONGTRINH_QLCTS, ma_ = valMaSP && MA_CT = CT.MA_CHUONG_TRINH);
                 ForAll(Filter(DL_SAN_PHAM_QLCT_CHONS,MA_SAN_PHAM = valMaSP ) As qlc,
                     Patch(
                         DL_CHUONGTRINH_QLCTS,
