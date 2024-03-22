@@ -1,5 +1,5 @@
 "NhapHopDong As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
-    OnVisible: |
+    OnVisible: |-
         =If(
             IsBlank(varUnReloadNHD),
             Reset(dpNgayHDNHD);
@@ -111,7 +111,7 @@
                 )
             ),
             varUnReloadNHD = "2",
-            Refresh(DL_HOP_DONG_SPS);
+            /*Refresh(DL_HOP_DONG_SPS);
             ClearCollect(
                 tmpDSHDSPNHDCollect,
                 AddColumns(
@@ -128,7 +128,7 @@
                     maAddedHDSPNHD: "",
                     maUpdatedHDSPNHD: ""
                 }
-            );
+            );*/
             UpdateIf(
                 objHD,
                 true,
@@ -173,6 +173,44 @@
         Set(
             varUnReloadNHD,
             Blank()
+        );
+        If(!IsBlank(tiMaHDNHD.Text),
+        ClearCollect(
+            tmpNDBH,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                        Filter(
+                            DL_HOP_DONG_SP_NDBH,
+                            MA_HOP_DONG = tiMaHDNHD.Text
+                        ),
+                        "cr282_id",
+                        SortOrder.Descending
+                    ),
+                    "edited",
+                    0
+                ),
+                "cr282_id",
+                "cr282_id_cha",
+                "cr282_ma_hop_dong",
+                "cr282_ma_san_pham",
+                "cr282_mst",
+                "cr282_ten_ndbh",
+                "cr282_dia_chi",
+                "cr282_sdt",
+                "cr282_email",
+                "cr282_ma_gioi__tinh",
+                "cr282_ma_nhan_vien",
+                "cr282_ma_tinh_tp",
+                "cr282_moi_quan_he",
+                "cr282_ngay_sinh",
+                "cr282_nhom",
+                "cr282_so_giay_to",
+                "cr282_phi_ndbh",
+                "cr282_ma_chuong_trinh",
+                "cr282_nhom_tinh_phi",
+                "edited"
+            ))
         );
 
     Canvas2 As fluidGrid.fluidGridWithBlankCard:
@@ -1311,6 +1349,11 @@
                                 If(!IsBlank(ThisItem.MA_SAN_PHAM), ThisItem.MA_SAN_PHAM, cbxMaSPNHD.Selected.MA_SAN_PHAM)
                             );
                             Set(
+                                varPhiDieuChinh,
+                                If(!IsBlank(tiPhiDCNHD.Text), Value(tiPhiDCNHD.Text),0)
+                            );
+                            
+                            Set(
                                 varMaHD,
                                 If(IsBlank(tiMaHDNHD.Text),maHopDongFwd,tiMaHDNHD.Text) 
                             );
@@ -1322,49 +1365,13 @@
                                 varNhomTP,
                                 Concat(cbxNhomTPNHD.SelectedItems, Value,"|")//If(!IsBlank(ThisItem.NHOM_TINH_PHI), ThisItem.NHOM_TINH_PHI, Concatenate(cbxMaSPNHD_1.Selected.MA_NHOM_TINHPHI,"|"))
                             );
-                            ClearCollect(
-                                tmpNDBH,
-                                ShowColumns(
-                                    AddColumns(
-                                        SortByColumns(
-                                            Filter(
-                                                DL_HOP_DONG_SP_NDBH,
-                                                MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT && NHOM_TINH_PHI = varNhomTP
-                                            ),
-                                            "cr282_id",
-                                            SortOrder.Descending
-                                        ),
-                                        "edited",
-                                        0
-                                    ),
-                                    "cr282_id",
-                                    "cr282_ma_hop_dong",
-                                    "cr282_ma_san_pham",
-                                    "cr282_mst",
-                                    "cr282_ten_ndbh",
-                                    "cr282_dia_chi",
-                                    "cr282_sdt",
-                                    "cr282_email",
-                                    "cr282_ma_gioi__tinh",
-                                    "cr282_ma_nhan_vien",
-                                    "cr282_ma_tinh_tp",
-                                    "cr282_moi_quan_he",
-                                    "cr282_ngay_sinh",
-                                    "cr282_nhom",
-                                    "cr282_so_giay_to",
-                                    "cr282_phi_ndbh",
-                                    "cr282_ma_chuong_trinh",
-                                    "cr282_nhom_tinh_phi",
-                                    "edited"
-                                )
-                            );
                             UpdateContext(
                                 {
                                     maAddedNDBH: "",
                                     maUpdatedNDBH: ""
                                 }
                             );
-                            If(cbxLoaiKHNHD.Selected.value="0" && IsBlank(LookUp(tmpNDBH, cr282_mst= cbxMaKHNHD.Selected.MST).cr282_mst), 
+                            If(cbxLoaiKHNHD.Selected.value="0" && IsBlank(LookUp(tmpNDBH, cr282_mst= cbxMaKHNHD.Selected.MST && cr282_id_cha=Value(ThisItem.ID)).cr282_mst), 
                             UpdateContext({varPhiNDBH: 0});
                                 UpdateContext({varTuoi: 0});
                                 UpdateContext({varDVTuoi: 0});
@@ -1476,6 +1483,7 @@
                                     tmpNDBH,
                                     {
                                         cr282_id: idNDBH,
+                                        cr282_id_cha: Value(ThisItem.ID),
                                         cr282_ma_hop_dong: varMaHD,
                                         cr282_ma_san_pham: varMaSP,
                                         cr282_ma_chuong_trinh: varMaCT,
@@ -4618,7 +4626,79 @@
         FontWeight: =FontWeight.Bold
         Height: =32
         OnSelect: |-
-            =UpdateIf(
+            =//Xu ly muc 6
+            RemoveIf(
+                    DL_HOP_DONG_CHON_CS,
+                    MA_HOP_DONG = tiMaHDNHD.Text
+                );
+                RemoveIf(
+                    DL_HOP_DONG_KETQUA_CS,
+                    MA_HOP_DONG = tiMaHDNHD.Text
+                );
+                ForAll(
+                    GalleryCSDaChon.AllItems As cs,
+                    Patch(
+                        DL_HOP_DONG_CHON_CS,
+                        Defaults(DL_HOP_DONG_CHON_CS),
+                        {
+                            ID: Max(
+                                DL_HOP_DONG_CHON_CS,
+                                ID
+                            ) + 1,
+                            MA_CHINH_SACH: cs.TextMaCS_1.Text,
+                            MA_HOP_DONG: tiMaHDNHD.Text,
+                            SO_TIEN: Value(
+                                LookUp(
+                                    DL_CHINHSACH_APDUNG,
+                                    MA_CHINH_SACH = cs.TextMaCS_1.Text
+                                ).SO_TIEN
+                            ),
+                            TY_LE: Value(
+                                LookUp(
+                                    DL_CHINHSACH_APDUNG,
+                                    MA_CHINH_SACH = cs.TextMaCS_1.Text
+                                ).TY_LE
+                            ),
+                            SO_TIEN_TOIDA: Value(
+                                LookUp(
+                                    DL_CHINHSACH_APDUNG,
+                                    MA_CHINH_SACH = cs.TextMaCS_1.Text
+                                ).SO_TIEN_TOI_DA
+                            ),
+                            MO_TA: cs.HtmlMoTa_1.HtmlText
+                        }
+                    )
+                );
+                If(
+                    !IsEmpty(
+                        Filter(
+                            DL_HOP_DONG_CHON_CS,
+                            MA_HOP_DONG = tiMaHDNHD.Text
+                        )
+                    ),
+                    Patch(
+                        DL_HOP_DONG_KETQUA_CS,
+                        Defaults(DL_HOP_DONG_KETQUA_CS),
+                        {
+                            ID: Max(
+                                DL_HOP_DONG_KETQUA_CS,
+                                ID
+                            ) + 1,
+                            MA_HOP_DONG: tiMaHDNHD.Text,
+                            KIEU_DU_LIEU: "002",
+                            LOAI_TAC_DONG: "2",
+                            GIA_TRI: Sum(
+                                Filter(
+                                    DL_HOP_DONG_CHON_CS,
+                                    MA_HOP_DONG = tiMaHDNHD.Text
+                                ),
+                                SO_TIEN
+                            )
+                        }
+                    )
+                );
+                //End muc 6
+            UpdateIf(
                 objHD,
                 true,
                 {

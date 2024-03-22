@@ -1,42 +1,6 @@
 NhapNDBH As screen:
     OnVisible: |-
-        =/*ClearCollect(
-            tmpNDBH,
-            ShowColumns(
-                AddColumns(
-                    SortByColumns(
-                        Filter(
-                            DL_HOP_DONG_SP_NDBH,
-                            MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT
-                        ),
-                        "cr282_id",
-                        SortOrder.Descending
-                    ),
-                    "edited",
-                    0
-                ),
-                "cr282_id",
-                "cr282_ma_hop_dong",
-                "cr282_ma_san_pham",
-                "cr282_mst",
-                "cr282_ten_ndbh",
-                "cr282_dia_chi",
-                "cr282_sdt",
-                "cr282_email",
-                "cr282_ma_gioi__tinh",
-                "cr282_ma_nhan_vien",
-                "cr282_ma_tinh_tp",
-                "cr282_moi_quan_he",
-                "cr282_ngay_sinh",
-                "cr282_nhom",
-                "cr282_so_giay_to",
-                "cr282_phi_ndbh",
-                "cr282_ma_chuong_trinh",
-                "cr282_nhom_tinh_phi",
-                "edited"
-            )
-        );*/
-        UpdateContext(
+        =UpdateContext(
             {
                 maAddedNDBH: "",
                 maUpdatedNDBH: ""
@@ -162,7 +126,7 @@ NhapNDBH As screen:
                 BorderColor: =RGBA(245, 245, 245, 1)
                 DelayItemLoading: =true
                 Height: =221
-                Items: =tmpNDBH
+                Items: =Filter(tmpNDBH, cr282_id_cha=Value(idColSP))
                 Layout: =Layout.Vertical
                 LoadingSpinner: =LoadingSpinner.Data
                 NavigationStep: =0
@@ -487,7 +451,7 @@ NhapNDBH As screen:
                         //Kiem tra dap ung chi tieu
                         UpdateContext(
                                 {
-                                    varPhiNDBH: LookUp(
+                                    varPhiNDBH: Sum(LookUp(
                                         DL_CHUONG_TRINH_BANG_PHIS,
                                         MA_SAN_PHAM = varMaSP //MA_SP
                         && MA_CHUONG_TRINH = varMaCT //MA_CT
@@ -506,7 +470,7 @@ NhapNDBH As screen:
                                                 TUOI_DEN
                                             ) >= varTuoi)
                                         ).MO_TA || IsBlank(MA_DO_TUOI))
-                                    ).PHI_BH
+                                    ).PHI_BH)
                                 }
                             );
                             //Lay phi chuong trinh
@@ -514,6 +478,9 @@ NhapNDBH As screen:
                                 tmpNDBH,
                                 cr282_id = ThisItem.cr282_id,
                                 {
+                                    cr282_ma_hop_dong: varMaHD,
+                                    cr282_ma_san_pham: varMaSP,
+                                    cr282_ma_chuong_trinh: varMaCT,
                                     cr282_mst: TxtMST_NDBH.Text,
                                     cr282_ten_ndbh: TxtTen_NDBH.Text,
                                     cr282_dia_chi: TxtDiaChi_NDBH.Text,
@@ -871,11 +838,11 @@ NhapNDBH As screen:
                 CountRows(tmpNDBH) > 0,
                 Clear(errorCol);
                 ForAll(
-                    tmpNDBH As kh,
+                    Filter(tmpNDBH, cr282_id_cha=Value(idColSP)) As kh,
                     If(
                         CountIf(
                             tmpNDBH,
-                            cr282_mst = kh.cr282_mst
+                            cr282_mst = kh.cr282_mst && !IsBlank(kh.cr282_mst)
                         ) > 1,
                         Collect(
                             errorCol,
@@ -903,8 +870,9 @@ NhapNDBH As screen:
                 ),
                 RemoveIf(
                     DL_HOP_DONG_SP_NDBH,
-                    MA_SAN_PHAM = varMaSP && MA_HOP_DONG = varMaHD && MA_CHUONG_TRINH= varMaCT && NHOM_TINH_PHI= varNhomTP
+                    ID_CHA=idColSP && MA_HOP_DONG=varMaHD
                 );
+                /*
                 If(
                     !IsEmpty(tmpNDBH),
                     ForAll (
@@ -944,13 +912,18 @@ NhapNDBH As screen:
                                     NGAY_SINH: dd.cr282_ngay_sinh,
                                     NHOM: dd.cr282_nhom,
                                     SO_GIAY_TO: dd.cr282_so_giay_to,
-                                    PHI_NDBH: dd.cr282_phi_ndbh
+                                    PHI_NDBH: dd.cr282_phi_ndbh,
+                                    ID_CHA:Value(idColSP)
                                 }
                             ),
                             UpdateIf(
                                 DL_HOP_DONG_SP_NDBH,
                                 ID = dd.cr282_id,
                                 {
+                                    MA_HOP_DONG: varMaHD,
+                                    MA_SAN_PHAM: varMaSP,
+                                    MA_CHUONG_TRINH: varMaCT,
+                                    NHOM_TINH_PHI: varNhomTP,
                                     TEN_NDBH: dd.cr282_ten_ndbh,
                                     MST: dd.cr282_mst,
                                     DIA_CHI: dd.cr282_dia_chi,
@@ -980,27 +953,23 @@ NhapNDBH As screen:
                     MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT && MA_HOP_DONG = varMaHD && ID = idColSP).PHI_DIEU_CHINH) * CountRows(tmpNDBH),
                         SONGUOI_THAMGIA: CountRows(tmpNDBH)
                     }
-                );
+                );*/
                 UpdateIf(
                     tmpDSHDSPNHDCollect,
                     ID = idColSP,
                     {
-                        TONG_TIEN_PHI: Sum(
-                            tmpNDBH,
+                        TONG_TIEN_PHI: If(varPhiDieuChinh=0,
+                        Sum(
+                            Filter(tmpNDBH, cr282_id_cha=Value(idColSP)),
                             cr282_phi_ndbh
+                        ), varPhiDieuChinh*CountRows(Filter(tmpNDBH, cr282_id_cha=Value(idColSP)))
                         ),
-                        SONGUOI_THAMGIA: CountRows(tmpNDBH)
+                        SONGUOI_THAMGIA: CountRows(Filter(tmpNDBH, cr282_id_cha=Value(idColSP)))
                     }
                 );
                 Set(varUnReloadNHD,"2");
                 //Select(IconTaiLaiNDBH);
-            Notify(
-                    "Lưu dữ liệu thành công",
-                    NotificationType.Success,
-                    800
-                );
                 Back();
-                
             );
         PressedBorderColor: =RGBA(0, 69, 120, 1)
         PressedColor: =RGBA(255, 255, 255, 1)
@@ -1116,6 +1085,7 @@ NhapNDBH As screen:
                     tmpNDBH,
                     {
                         cr282_id: idNDBH,
+                        cr282_id_cha:Value(idColSP),
                         cr282_ma_hop_dong: varMaHD,
                         cr282_ma_san_pham: varMaSP,
                         cr282_ma_chuong_trinh: varMaCT,
