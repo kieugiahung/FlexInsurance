@@ -146,12 +146,21 @@ DMPhamViDiaLy As screen:
                         Notify("Bắt buộc nhập mã phạm vi", NotificationType.Error,2000),
                         IsBlank(TextTenPV.Text),
                         Notify("Bắt buộc nhập tên phạm vi", NotificationType.Error,2000),
+                        IsBlank(cbxLoaiPV.Selected.key),
+                        Notify("Bắt buộc nhập tên phạm vi", NotificationType.Error,2000),
+                        UpdateContext({
+                            idMa:If(
+                                CountIf(DM_PHAMVI_DIALYS,true)=0,
+                                1000,
+                                Value(Last(SortByColumns(DM_PHAMVI_DIALYS,"cr282_ma_dl",SortOrder.Ascending)).MA_DL)+1
+                            )
+                        });
                         If(
                             ThisItem.cr282_ma_dl=maAdded,
                             Patch(
                                 DM_PHAMVI_DIALYS,
                                 {
-                                    MA_DL:ThisItem.cr282_ma_dl,
+                                    MA_DL:Text(idMa),
                                     MA_PHAMVI:TextMaPV.Text,
                                     TEN_PHAMVI:TextTenPV.Text,
                                     LOAI:cbxLoaiPV.Selected.key,
@@ -177,6 +186,7 @@ DMPhamViDiaLy As screen:
                             tmpPVDLCollect,
                             cr282_ma_dl=ThisItem.cr282_ma_dl,
                             {
+                                cr282_ma_dl:Text(idMa),
                                 cr282_ma_phamvi:TextMaPV.Text,
                                 cr282_ten_phamvi:TextTenPV.Text,
                                 cr282_loai:cbxLoaiPV.Selected.key,
@@ -352,7 +362,7 @@ DMPhamViDiaLy As screen:
                 DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                 HoverBorderColor: =RGBA(9, 33, 98, 1)
                 HoverFill: =RGBA(180, 214, 250, 1)
-                InputTextPlaceholder: =
+                InputTextPlaceholder: =""
                 Items: =SortByColumns(DM_PHAMVI_DIALYS,"cr282_ma_phamvi",SortOrder.Ascending)
                 OnSelect: =Select(Parent)
                 PressedColor: =RGBA(72, 163, 62, 1)
@@ -497,18 +507,11 @@ DMPhamViDiaLy As screen:
             OnSelect: |
                 =If(
                     Or(maAdded<>"",maUpdated<>""),
-                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                    UpdateContext({
-                        idMa:If(
-                            CountIf(DM_PHAMVI_DIALYS,true)=0,
-                            1000,
-                            Value(Last(SortByColumns(DM_PHAMVI_DIALYS,"cr282_ma_dl",SortOrder.Ascending)).MA_DL)+1
-                        )
-                    });
+                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
                     Collect(
                         tmpPVDLCollect,
                         {
-                            cr282_ma_dl:Text(idMa),
+                            cr282_ma_dl:"0",
                             cr282_ma_phamvi:"",
                             cr282_ten_phamvi:"",
                             cr282_ghi_chu:"",
@@ -516,7 +519,7 @@ DMPhamViDiaLy As screen:
                             edited:1
                         }
                     );
-                    UpdateContext({maAdded:Text(idMa)})
+                    UpdateContext({maAdded:"0"})
                 )
             Tooltip: ="Thêm mới"
             Width: =40
