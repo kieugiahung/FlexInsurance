@@ -2031,6 +2031,7 @@
                             tmpPass,
                             1 = 1
                         );
+                        // NẾU K TÌM THẤY ĐIỀU KIỆN THÌ MẶC ĐỊNH LÀ CÓ
                         If(CountRows(tmpDieuKien) <=0 , Collect(
                                     tmpPass,
                                     {ma_dieu_kien: "1"}
@@ -2730,18 +2731,6 @@
                                     tmpPass,
                                     {ma_dieu_kien: dk.MA_DIEU_KIEN}
                                 );
-                            )
-                        );
-                        If(
-                            CountRows(tmpPass) <= 0,
-                            UpdateContext({errorMsg: "Không có điều kiện áp dụng thoả mãn"})
-                        );
-                        If(
-                            !IsBlank(errorMsg),
-                            Notify(
-                                errorMsg,
-                                NotificationType.Error,
-                                5000
                             )
                         );
                         // end điều kiện áp dụng
