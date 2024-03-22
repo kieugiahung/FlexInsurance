@@ -1631,7 +1631,7 @@
                     tiPhiDCNHD As text:
                         Align: =Align.Right
                         BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =ThisItem.PHI_DIEU_CHINH
+                        Default: =If(ThisItem.PHI_DIEU_CHINH=0,Blank(),ThisItem.PHI_DIEU_CHINH)
                         DisplayMode: =If(ThisItem.edited=1,DisplayMode.Edit,DisplayMode.Disabled)
                         Format: =TextFormat.Number
                         Height: =32
@@ -1648,8 +1648,8 @@
                     Label3_87 As label:
                         Height: =25
                         Size: =11
-                        Text: ="Phí điều chỉnh"
-                        Width: =140
+                        Text: ="Phí/Người điều chỉnh"
+                        Width: =180
                         X: =355
                         Y: =74
                         ZIndex: =25
@@ -3511,11 +3511,11 @@
                         );
                         If(
                             CountRows(tmpPass) <= 0,
-                            UpdateContext({errorMsg: "Không có điều kiện áp dụng thoả mãn"})
+                            UpdateContext({errorMsg: "Các thông tin không đủ điều kiện để cấp hợp đồng"})
                         );
                         If(
                             CountRows(tmpPassCs) <= 0,
-                            UpdateContext({errorMsg: "Không có chính sách thoả mãn điều kiện"})
+                            UpdateContext({errorMsg: "Không có chính sách thỏa mãn điều kiện"})
                         );
                         // end chính sách áp dụng
                         If(
