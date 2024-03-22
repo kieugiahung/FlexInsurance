@@ -872,7 +872,7 @@ NhapNDBH As screen:
                     DL_HOP_DONG_SP_NDBH,
                     ID_CHA=idColSP && MA_HOP_DONG=varMaHD
                 );
-                /*
+                
                 If(
                     !IsEmpty(tmpNDBH),
                     ForAll (
@@ -940,7 +940,7 @@ NhapNDBH As screen:
                         );
                     )
                 );
-                UpdateIf(
+                /*UpdateIf(
                     DL_HOP_DONG_SPS,
                     MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT && MA_HOP_DONG = varMaHD && ID = idColSP,
                     {
@@ -958,6 +958,11 @@ NhapNDBH As screen:
                     tmpDSHDSPNHDCollect,
                     ID = idColSP,
                     {
+                        MA_SAN_PHAM:varMaSP,
+                        MA_CHUONG_TRINH:varMaCT,
+                        MA_HOP_DONG:varMaHD,
+                        NHOM_TINH_PHI:varNhomTP,
+                        PHI_DIEU_CHINH:varPhiDieuChinh,
                         TONG_TIEN_PHI: If(varPhiDieuChinh=0,
                         Sum(
                             Filter(tmpNDBH, cr282_id_cha=Value(idColSP)),
