@@ -2151,11 +2151,10 @@ TraCuuCSADDT As screen:
         ComGiaTriCS As combobox:
             DisplayFields: =["title","key"]
             Height: =28
-            InputTextPlaceholder: ="Chọn giá trị"
-            IsSearchable: =false
+            InputTextPlaceholder: =""
             Items: =SortByColumns(tmpdsGiaTriTCCSDTCollect1,"value",SortOrder.Ascending)
-            SearchFields: =["cr282_ma_chuongtrinh"]
-            SearchItems: =[]
+            SearchFields: =["title"]
+            SearchItems: =Search(SortByColumns(tmpdsGiaTriTCCSDTCollect1,"value",SortOrder.Ascending),ComGiaTriCS.SearchText,"title")
             SelectMultiple: =false
             Size: =9
             Width: =185
@@ -3536,10 +3535,12 @@ TraCuuCSADDT As screen:
             FontColor: =
             Height: =40
             Size: =10
-            Text: ="Loại điều khoản"
+            Text: |-
+                ="Loại 
+                điều khoản"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =65
-            X: =810
+            X: =809
             Y: =132
             ZIndex: =19
 
@@ -3549,10 +3550,12 @@ TraCuuCSADDT As screen:
             FontColor: =
             Height: =40
             Size: =10
-            Text: ="Loại chính sách"
+            Text: |-
+                ="Loại 
+                chính sách"
             Weight: ='TextCanvas.Weight'.Bold
-            Width: =65
-            X: =872
+            Width: =60
+            X: =874
             Y: =132
             ZIndex: =20
 
@@ -3575,10 +3578,12 @@ TraCuuCSADDT As screen:
             FontColor: =
             Height: =40
             Size: =10
-            Text: ="Tỷ lệ (%)"
+            Text: |-
+                ="Tỷ lệ 
+                (%)"
             Weight: ='TextCanvas.Weight'.Bold
-            Width: =40
-            X: =1022
+            Width: =55
+            X: =1015
             Y: =132
             ZIndex: =22
 

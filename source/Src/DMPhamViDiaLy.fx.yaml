@@ -147,7 +147,9 @@ DMPhamViDiaLy As screen:
                         IsBlank(TextTenPV.Text),
                         Notify("Bắt buộc nhập tên phạm vi", NotificationType.Error,2000),
                         IsBlank(cbxLoaiPV.Selected.key),
-                        Notify("Bắt buộc nhập tên phạm vi", NotificationType.Error,2000),
+                        Notify("Bắt buộc nhập loại phạm vi", NotificationType.Error,2000),
+                        maAdded<>"" && CountIf(DM_PHAMVI_DIALYS,MA_PHAMVI=TextMaPV.Text)>0,
+                        Notify("Mã phạm vi đã tồn tại", NotificationType.Error,2000),
                         UpdateContext({
                             idMa:If(
                                 CountIf(DM_PHAMVI_DIALYS,true)=0,
@@ -711,7 +713,7 @@ DMPhamViDiaLy As screen:
                 Refresh(DM_PHAMVI_DIALYS);
                 RemoveIf(
                     DM_PHAMVI_DIALYS,
-                    MA_PHAMVI=maDelete
+                    MA_DL=maDelete
                 );
                 Remove(tmpPVDLCollect,objDelete);
                 Notify("Xóa dữ liệu thành công", NotificationType.Success,800) 

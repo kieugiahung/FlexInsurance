@@ -53,8 +53,8 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Đơn vị"
             Width: =130
-            X: =10
-            Y: =32
+            X: =351
+            Y: =15
             ZIndex: =3
 
         Label2_26 As label:
@@ -62,25 +62,25 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Mã sản phẩm"
             Width: =130
-            X: =230
-            Y: =32
+            X: =677
+            Y: =15
             ZIndex: =5
 
         Label2_27 As label:
             Height: =25
             Size: =11
             Text: ="Mã khách hàng"
-            X: =674
-            Y: =32
+            X: =1015
+            Y: =15
             ZIndex: =6
 
         Label2_28 As label:
             Height: =25
             Size: =11
-            Text: ="Ngày HĐ"
+            Text: ="Ngày HĐ từ"
             Width: =120
-            X: =895
-            Y: =32
+            X: =371
+            Y: =107
             ZIndex: =7
 
         Button6_17 As button:
@@ -106,8 +106,8 @@ TraCuuHopDong As screen:
             Size: =10
             Text: ="Tra cứu"
             Width: =80
-            X: =1118
-            Y: =61
+            X: =990
+            Y: =136
             ZIndex: =8
 
         Button6_18 As button:
@@ -161,13 +161,13 @@ TraCuuHopDong As screen:
             Size: =10
             Text: ="Tải lại"
             Width: =80
-            X: =1208
-            Y: =61
+            X: =1080
+            Y: =136
             ZIndex: =10
 
         GalleryDKCTCT_7 As gallery.galleryVertical:
             DelayItemLoading: =true
-            Height: =604
+            Height: =442
             Items: =SortByColumns(tmpDSHDTCHDCollect,"cr282_ngay_hop_dong",SortOrder.Ascending,"cr282_ma_hop_dong",SortOrder.Ascending)
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
@@ -175,7 +175,7 @@ TraCuuHopDong As screen:
             TemplatePadding: =0
             TemplateSize: =36
             Width: =1306
-            Y: =163
+            Y: =233
             ZIndex: =11
 
             TiTthtQLCTCT_6 As text:
@@ -437,7 +437,7 @@ TraCuuHopDong As screen:
             Height: =49
             Width: =1298
             X: =1
-            Y: =114
+            Y: =184
             ZIndex: =12
 
         TextCanvas2_237 As Text:
@@ -450,7 +450,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =68
             X: =10
-            Y: =114
+            Y: =184
             ZIndex: =15
 
         TextCanvas2_238 As Text:
@@ -463,7 +463,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =59
             X: =96
-            Y: =114
+            Y: =184
             ZIndex: =16
 
         TextCanvas2_239 As Text:
@@ -476,7 +476,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =77
             X: =182
-            Y: =114
+            Y: =184
             ZIndex: =17
 
         TextCanvas2_240 As Text:
@@ -489,7 +489,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =66
             X: =273
-            Y: =114
+            Y: =184
             ZIndex: =18
 
         TextCanvas2_242 As Text:
@@ -502,7 +502,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =66
             X: =497
-            Y: =114
+            Y: =184
             ZIndex: =19
 
         TextCanvas2_243 As Text:
@@ -515,7 +515,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =81
             X: =612
-            Y: =114
+            Y: =184
             ZIndex: =20
 
         TextCanvas2_244 As Text:
@@ -528,7 +528,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =100
             X: =732
-            Y: =114
+            Y: =184
             ZIndex: =21
 
         TextCanvas2_245 As Text:
@@ -541,7 +541,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =75
             X: =855
-            Y: =114
+            Y: =184
             ZIndex: =22
 
         TextCanvas2_248 As Text:
@@ -554,21 +554,21 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =73
             X: =1181
-            Y: =114
+            Y: =184
             ZIndex: =23
 
         cbxMaDVTCHD As combobox:
             DisplayFields: =["title","cr282_ma_don_vi"]
             Height: =32
-            InputTextPlaceholder: ="Chọn đơn vị"
+            InputTextPlaceholder: =""
             Items: =SortByColumns(dmDonViTCHDCollect,"cr282_ma_don_vi",SortOrder.Ascending)
-            SearchFields: =["cr282_loai_don_vi"]
-            SearchItems: =Search(SortByColumns(dmDonViTCHDCollect,"cr282_ma_don_vi",SortOrder.Ascending),cbxMaDVTCHD.SearchText,"cr282_loai_don_vi")
+            SearchFields: =["title"]
+            SearchItems: =Search(SortByColumns(dmDonViTCHDCollect,"cr282_ma_don_vi",SortOrder.Ascending),cbxMaDVTCHD.SearchText,"title")
             SelectMultiple: =false
             Size: =11
-            Width: =200
-            X: =10
-            Y: =59
+            Width: =250
+            X: =351
+            Y: =46
             ZIndex: =25
 
         dpNgayHDTCHD As datepicker:
@@ -576,13 +576,13 @@ TraCuuHopDong As screen:
             EndYear: =2200
             Format: ="dd/mm/yyyy"
             Height: =32
-            InputTextPlaceholder: ="Chọn ngày HĐ"
+            InputTextPlaceholder: =""
             IsEditable: =true
             Size: =11
             StartYear: =1900
-            Width: =200
-            X: =895
-            Y: =59
+            Width: =250
+            X: =371
+            Y: =134
             ZIndex: =27
 
         TextCanvas2_241 As Text:
@@ -595,7 +595,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =100
             X: =361
-            Y: =114
+            Y: =184
             ZIndex: =30
 
         TextCanvas2_246 As Text:
@@ -608,7 +608,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =65
             X: =950
-            Y: =114
+            Y: =184
             ZIndex: =31
 
         TextCanvas2_247 As Text:
@@ -621,7 +621,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =86
             X: =1038
-            Y: =114
+            Y: =184
             ZIndex: =32
 
         Label2_29 As label:
@@ -629,51 +629,91 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Mã kênh bán"
             Width: =130
-            X: =452
-            Y: =32
+            X: =23
+            Y: =102
             ZIndex: =33
 
         cbxMaSPTCHD As combobox:
             DisplayFields: =["title","cr282_ten_san_pham"]
             Height: =32
-            InputTextPlaceholder: ="Chọn sản phẩm"
+            InputTextPlaceholder: =""
             Items: =SortByColumns(dmSanPhamTCHDCollect,"cr282_ma_san_pham",SortOrder.Ascending)
-            SearchFields: =["cr282_doanh_nghiep_bh"]
-            SearchItems: =Search(SortByColumns(dmSanPhamTCHDCollect,"cr282_ma_san_pham",SortOrder.Ascending),cbxMaSPTCHD.SearchText,"cr282_doanh_nghiep_bh")
+            SearchFields: =["title"]
+            SearchItems: =Search(SortByColumns(dmSanPhamTCHDCollect,"cr282_ma_san_pham",SortOrder.Ascending),cbxMaSPTCHD.SearchText,"title")
             SelectMultiple: =false
             Size: =11
-            Width: =200
-            X: =230
-            Y: =59
+            Width: =250
+            X: =677
+            Y: =46
             ZIndex: =35
 
         cbxMaKBTCHD As combobox:
             DisplayFields: =["title","cr282_ten_kenh_ban"]
             Height: =32
-            InputTextPlaceholder: ="Chọn kênh bán"
+            InputTextPlaceholder: =""
             Items: =SortByColumns(dmKenhBanTCHDCollect,"cr282_ma_kenh_ban",SortOrder.Ascending)
-            SearchFields: =["cr282_dia_chi"]
-            SearchItems: =Search(SortByColumns(dmKenhBanTCHDCollect,"cr282_ma_kenh_ban",SortOrder.Ascending),cbxMaKBTCHD.SearchText,"cr282_dia_chi")
+            SearchFields: =["title"]
+            SearchItems: =Search(SortByColumns(dmKenhBanTCHDCollect,"cr282_ma_kenh_ban",SortOrder.Ascending),cbxMaKBTCHD.SearchText,"title")
             SelectMultiple: =false
             Size: =11
-            Width: =200
-            X: =452
-            Y: =59
+            Width: =250
+            X: =23
+            Y: =129
             ZIndex: =36
 
         cbxMaKHTCHD As combobox:
             DisplayFields: =["title"]
             Height: =32
-            InputTextPlaceholder: ="Chọn khách hàng"
+            InputTextPlaceholder: =""
             Items: =SortByColumns(dmKhachHangTCHDCollect,"cr282_ma_khach_hang",SortOrder.Ascending)
             SearchFields: =["title"]
             SearchItems: =Search(SortByColumns(dmKhachHangTCHDCollect,"cr282_ma_khach_hang",SortOrder.Ascending),cbxMaKHTCHD.SearchText,"title")
             SelectMultiple: =false
             Size: =11
-            Width: =200
-            X: =674
-            Y: =59
+            Width: =250
+            X: =1015
+            Y: =46
             ZIndex: =37
+
+        TextInput9 As text:
+            Default: =
+            Height: =32
+            Width: =250
+            X: =23
+            Y: =46
+            ZIndex: =38
+
+        Label2_36 As label:
+            Height: =25
+            Size: =11
+            Text: ="Số hợp đồng"
+            Width: =130
+            X: =23
+            Y: =15
+            ZIndex: =39
+
+        Label2_37 As label:
+            Height: =25
+            Size: =11
+            Text: ="Ngày HĐ đến"
+            Width: =120
+            X: =685
+            Y: =107
+            ZIndex: =40
+
+        dpNgayHDTCHD_1 As datepicker:
+            DefaultDate: =
+            EndYear: =2200
+            Format: ="dd/mm/yyyy"
+            Height: =32
+            InputTextPlaceholder: =""
+            IsEditable: =true
+            Size: =11
+            StartYear: =1900
+            Width: =250
+            X: =685
+            Y: =134
+            ZIndex: =41
 
     LeftNavigation_32 As LeftNavigation_9:
         Width: =LeftNavigation_32.MenuWidth - 10

@@ -1982,11 +1982,10 @@ TraCuuCSAD As screen:
         ComGiaTriCSAD As combobox:
             DisplayFields: =["title","key"]
             Height: =28
-            InputTextPlaceholder: ="Chọn tiêu chí"
-            IsSearchable: =false
+            InputTextPlaceholder: =""
             Items: =SortByColumns(tmpdsGiaTriTCCSCollect1,"value",SortOrder.Ascending)
-            SearchFields: =["cr282_ma_chuongtrinh"]
-            SearchItems: =[]
+            SearchFields: =["title"]
+            SearchItems: =Search(SortByColumns(tmpdsGiaTriTCCSCollect1,"value",SortOrder.Ascending),ComGiaTriCSAD.SearchText,"title")
             SelectMultiple: =false
             Size: =10
             Width: =220
