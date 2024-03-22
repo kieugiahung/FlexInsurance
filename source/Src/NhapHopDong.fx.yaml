@@ -57,7 +57,7 @@
                 tmpDSHDSPLKNHDCollect,
                 Filter(
                     DL_HOP_DONG_LIENKETS,
-                    SO_HOP_DONG = First(objHD).MA_HOP_DONG
+                    SO_HOP_DONG = maHopDongFwd
                 )
             );
             ClearCollect(
@@ -247,12 +247,12 @@
                 cbxDVQLNHD As combobox:
                     BorderColor: =RGBA(72, 163, 62, 1)
                     DefaultSelectedItems: =LookUp(Filter(DM_PHAMVI_DIALYS,LOAI="DON_VI"),MA_PHAMVI=First(objHD).DONVI_QUANLY_HD)
-                    DisplayFields: =["cr282_ma_phamvi"]
+                    DisplayFields: =["cr282_ten_phamvi","cr282_ma_phamvi"]
                     Height: =32
                     InputTextPlaceholder: ="Chọn đơn vị quản lý"
                     Items: =Filter(DM_PHAMVI_DIALYS,LOAI="DON_VI")
-                    SearchFields: =["cr282_ma_phamvi"]
-                    SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="DON_VI"),cbxDVQLNHD.SearchText,"cr282_ma_phamvi")
+                    SearchFields: =["cr282_ten_phamvi"]
+                    SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="DON_VI"),cbxDVQLNHD.SearchText,"cr282_ten_phamvi")
                     SelectMultiple: =false
                     Size: =11
                     Template: =ListItemTemplate.Double
@@ -633,7 +633,6 @@
                                 EMAIL:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,EMAIL),
                                 LOAI_KHACH_HANG:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,LOAI_KHACH_HANG),
                                 NGHE_NGHIEP:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,NGANH_NGHE),
-                                SO_NGUOI_TGIA:Text(LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,SO_THANH_VIEN)),
                                 TINH_TP_KH:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,MA_TINH),
                                 NHOM_KHACH_HANG:LookUp(DM_KHACH_HANG,MA_KHACH_HANG=cbxMaKHNHD.Selected.MA_KHACH_HANG,MA_NHOM_KH)
                             }
@@ -1298,6 +1297,9 @@
                         Default: ="Danh sách NĐBH"
                         DisabledBorderColor: =RGBA(255, 255, 255, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: |-
+                            =//If(ThisItem.edited=0,DisplayMode.Edit,DisplayMode.Disabled) 
+                            DisplayMode.Edit
                         Height: =28
                         HoverBorderColor: =RGBA(255, 255, 255, 1)
                         HoverColor: =RGBA(39, 113, 194, 1)
@@ -1535,7 +1537,8 @@
                         SearchFields: =["Value"]
                         SearchItems: =[]
                         Size: =11
-                        Visible: =ThisItem.edited=1
+                        Visible: |
+                            =ThisItem.edited=1
                         Width: =250
                         X: =30
                         Y: =102
@@ -1620,7 +1623,7 @@
                         Align: =Align.Right
                         BorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.PHI_DIEU_CHINH
-                        DisplayMode: =DisplayMode.Disabled
+                        DisplayMode: =If(ThisItem.edited=1,DisplayMode.Edit,DisplayMode.Disabled)
                         Format: =TextFormat.Number
                         Height: =32
                         RadiusBottomLeft: =0
@@ -1644,16 +1647,16 @@
 
                     tiNhomTPNHD As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =Concat(cbxNhomTPNHD.SelectedItems,Value,", ")
+                        Default: =Concat(Split(ThisItem.NHOM_TINH_PHI,"|"), Value,", ") 
                         DisplayMode: =DisplayMode.Disabled
-                        Format: =TextFormat.Number
                         Height: =32
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Visible: =ThisItem.edited=0
+                        Visible: |
+                            =ThisItem.edited=0
                         Width: =250
                         X: =30
                         Y: =102
@@ -4352,7 +4355,7 @@
                     NotificationType.Error,
                     2000
                 ),
-                Value(tiTienSauGiamNHD.Text) <> Sum(
+                !IsBlank(Sum(tmpKTTNHDCollect,PHI_THANH_TOAN)) && Value(tiTienSauGiamNHD.Text) <> Sum(
                     tmpKTTNHDCollect,
                     PHI_THANH_TOAN
                 ),
