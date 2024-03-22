@@ -40,7 +40,7 @@ TraCuuHopDong As screen:
             tmpDSHDSPTCHDCollect,
             DL_HOP_DONG_SPS
         );
-        Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTCHD);
+        Reset(tiSoHDTCHD);Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTuTCHD);Reset(dpNgayHDDenTCHD);
 
     Container8_3 As groupContainer.manualLayoutContainer:
         Height: =768
@@ -53,7 +53,7 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Đơn vị"
             Width: =130
-            X: =351
+            X: =365
             Y: =15
             ZIndex: =3
 
@@ -62,7 +62,7 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Mã sản phẩm"
             Width: =130
-            X: =677
+            X: =690
             Y: =15
             ZIndex: =5
 
@@ -70,7 +70,7 @@ TraCuuHopDong As screen:
             Height: =25
             Size: =11
             Text: ="Mã khách hàng"
-            X: =1015
+            X: =1010
             Y: =15
             ZIndex: =6
 
@@ -79,13 +79,13 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Ngày HĐ từ"
             Width: =120
-            X: =371
-            Y: =107
+            X: =365
+            Y: =81
             ZIndex: =7
 
         Button6_17 As button:
             FontWeight: =FontWeight.Bold
-            Height: =28
+            Height: =32
             OnSelect: |-
                 =ClearCollect(
                     tmpDSHDSPTCHDCollect,
@@ -95,24 +95,26 @@ TraCuuHopDong As screen:
                     tmpDSHDTCHDCollect,
                     Filter(
                         DL_HOP_DONGS,
+                        (IsBlank(tiSoHDTCHD.Text) || MA_HOP_DONG=tiSoHDTCHD.Text) &&
                         (IsBlank(cbxMaDVTCHD.Selected.MA_DON_VI) || DONVI_QUANLY_HD=cbxMaDVTCHD.Selected.MA_DON_VI) &&
                         (IsBlank(cbxMaSPTCHD.Selected.MA_SAN_PHAM) || 
                         CountIf(tmpDSHDSPTCHDCollect As hdsp,hdsp.MA_HOP_DONG=MA_HOP_DONG && hdsp.MA_SAN_PHAM=cbxMaSPTCHD.Selected.MA_SAN_PHAM)>0) && 
                         (IsBlank(cbxMaKBTCHD.Selected.MA_KENH_BAN) || MA_KENH_BAN=cbxMaKBTCHD.Selected.MA_KENH_BAN) && 
                         (IsBlank(cbxMaKHTCHD.Selected.MA_KHACH_HANG) || MA_KHACH_HANG=cbxMaKHTCHD.Selected.MA_KHACH_HANG) && 
-                        (IsBlank(dpNgayHDTCHD.SelectedDate) || NGAY_HOP_DONG=dpNgayHDTCHD.SelectedDate) 
+                        (IsBlank(dpNgayHDTuTCHD.SelectedDate) || NGAY_HOP_DONG>=dpNgayHDTuTCHD.SelectedDate) &&
+                        (IsBlank(dpNgayHDDenTCHD.SelectedDate) || NGAY_HOP_DONG<=dpNgayHDDenTCHD.SelectedDate)
                     )
                 );
             Size: =10
             Text: ="Tra cứu"
-            Width: =80
-            X: =990
-            Y: =136
+            Width: =95
+            X: =1010
+            Y: =108
             ZIndex: =8
 
         Button6_18 As button:
             FontWeight: =FontWeight.Bold
-            Height: =28
+            Height: =32
             OnSelect: |-
                 =ClearCollect(
                     dmDonViTCHDCollect,
@@ -157,17 +159,17 @@ TraCuuHopDong As screen:
                 UpdateContext({
                     ngayHD:Blank()
                 });
-                Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTCHD);
+                Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTuTCHD);
             Size: =10
             Text: ="Tải lại"
-            Width: =80
-            X: =1080
-            Y: =136
+            Width: =95
+            X: =1124
+            Y: =108
             ZIndex: =10
 
         GalleryDKCTCT_7 As gallery.galleryVertical:
             DelayItemLoading: =true
-            Height: =442
+            Height: =562
             Items: =SortByColumns(tmpDSHDTCHDCollect,"cr282_ngay_hop_dong",SortOrder.Ascending,"cr282_ma_hop_dong",SortOrder.Ascending)
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
@@ -175,7 +177,7 @@ TraCuuHopDong As screen:
             TemplatePadding: =0
             TemplateSize: =36
             Width: =1306
-            Y: =233
+            Y: =205
             ZIndex: =11
 
             TiTthtQLCTCT_6 As text:
@@ -437,7 +439,7 @@ TraCuuHopDong As screen:
             Height: =49
             Width: =1298
             X: =1
-            Y: =184
+            Y: =156
             ZIndex: =12
 
         TextCanvas2_237 As Text:
@@ -450,7 +452,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =68
             X: =10
-            Y: =184
+            Y: =156
             ZIndex: =15
 
         TextCanvas2_238 As Text:
@@ -463,7 +465,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =59
             X: =96
-            Y: =184
+            Y: =156
             ZIndex: =16
 
         TextCanvas2_239 As Text:
@@ -476,7 +478,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =77
             X: =182
-            Y: =184
+            Y: =156
             ZIndex: =17
 
         TextCanvas2_240 As Text:
@@ -489,7 +491,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =66
             X: =273
-            Y: =184
+            Y: =156
             ZIndex: =18
 
         TextCanvas2_242 As Text:
@@ -502,7 +504,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =66
             X: =497
-            Y: =184
+            Y: =156
             ZIndex: =19
 
         TextCanvas2_243 As Text:
@@ -515,7 +517,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =81
             X: =612
-            Y: =184
+            Y: =156
             ZIndex: =20
 
         TextCanvas2_244 As Text:
@@ -528,7 +530,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =100
             X: =732
-            Y: =184
+            Y: =156
             ZIndex: =21
 
         TextCanvas2_245 As Text:
@@ -541,7 +543,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =75
             X: =855
-            Y: =184
+            Y: =156
             ZIndex: =22
 
         TextCanvas2_248 As Text:
@@ -554,7 +556,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =73
             X: =1181
-            Y: =184
+            Y: =156
             ZIndex: =23
 
         cbxMaDVTCHD As combobox:
@@ -567,11 +569,11 @@ TraCuuHopDong As screen:
             SelectMultiple: =false
             Size: =11
             Width: =250
-            X: =351
-            Y: =46
+            X: =365
+            Y: =42
             ZIndex: =25
 
-        dpNgayHDTCHD As datepicker:
+        dpNgayHDTuTCHD As datepicker:
             DefaultDate: =
             EndYear: =2200
             Format: ="dd/mm/yyyy"
@@ -581,8 +583,8 @@ TraCuuHopDong As screen:
             Size: =11
             StartYear: =1900
             Width: =250
-            X: =371
-            Y: =134
+            X: =365
+            Y: =108
             ZIndex: =27
 
         TextCanvas2_241 As Text:
@@ -595,7 +597,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =100
             X: =361
-            Y: =184
+            Y: =156
             ZIndex: =30
 
         TextCanvas2_246 As Text:
@@ -608,7 +610,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =65
             X: =950
-            Y: =184
+            Y: =156
             ZIndex: =31
 
         TextCanvas2_247 As Text:
@@ -621,7 +623,7 @@ TraCuuHopDong As screen:
             Weight: ='TextCanvas.Weight'.Bold
             Width: =86
             X: =1038
-            Y: =184
+            Y: =156
             ZIndex: =32
 
         Label2_29 As label:
@@ -629,8 +631,8 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Mã kênh bán"
             Width: =130
-            X: =23
-            Y: =102
+            X: =40
+            Y: =81
             ZIndex: =33
 
         cbxMaSPTCHD As combobox:
@@ -643,8 +645,8 @@ TraCuuHopDong As screen:
             SelectMultiple: =false
             Size: =11
             Width: =250
-            X: =677
-            Y: =46
+            X: =690
+            Y: =42
             ZIndex: =35
 
         cbxMaKBTCHD As combobox:
@@ -657,8 +659,8 @@ TraCuuHopDong As screen:
             SelectMultiple: =false
             Size: =11
             Width: =250
-            X: =23
-            Y: =129
+            X: =40
+            Y: =108
             ZIndex: =36
 
         cbxMaKHTCHD As combobox:
@@ -671,16 +673,16 @@ TraCuuHopDong As screen:
             SelectMultiple: =false
             Size: =11
             Width: =250
-            X: =1015
-            Y: =46
+            X: =1010
+            Y: =42
             ZIndex: =37
 
-        TextInput9 As text:
+        tiSoHDTCHD As text:
             Default: =
             Height: =32
             Width: =250
-            X: =23
-            Y: =46
+            X: =40
+            Y: =42
             ZIndex: =38
 
         Label2_36 As label:
@@ -688,7 +690,7 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Số hợp đồng"
             Width: =130
-            X: =23
+            X: =40
             Y: =15
             ZIndex: =39
 
@@ -697,11 +699,11 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Ngày HĐ đến"
             Width: =120
-            X: =685
-            Y: =107
+            X: =690
+            Y: =81
             ZIndex: =40
 
-        dpNgayHDTCHD_1 As datepicker:
+        dpNgayHDDenTCHD As datepicker:
             DefaultDate: =
             EndYear: =2200
             Format: ="dd/mm/yyyy"
@@ -711,8 +713,8 @@ TraCuuHopDong As screen:
             Size: =11
             StartYear: =1900
             Width: =250
-            X: =685
-            Y: =134
+            X: =690
+            Y: =108
             ZIndex: =41
 
     LeftNavigation_32 As LeftNavigation_9:
