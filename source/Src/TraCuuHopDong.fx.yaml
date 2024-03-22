@@ -95,7 +95,7 @@ TraCuuHopDong As screen:
                     tmpDSHDTCHDCollect,
                     Filter(
                         DL_HOP_DONGS,
-                        (IsBlank(tiSoHDTCHD.Text) || MA_HOP_DONG=tiSoHDTCHD.Text) &&
+                        (IsBlank(tiSoHDTCHD.Text) || !IsBlank(Find(tiSoHDTCHD.Text,MA_HOP_DONG))) &&
                         (IsBlank(cbxMaDVTCHD.Selected.MA_DON_VI) || DONVI_QUANLY_HD=cbxMaDVTCHD.Selected.MA_DON_VI) &&
                         (IsBlank(cbxMaSPTCHD.Selected.MA_SAN_PHAM) || 
                         CountIf(tmpDSHDSPTCHDCollect As hdsp,hdsp.MA_HOP_DONG=MA_HOP_DONG && hdsp.MA_SAN_PHAM=cbxMaSPTCHD.Selected.MA_SAN_PHAM)>0) && 

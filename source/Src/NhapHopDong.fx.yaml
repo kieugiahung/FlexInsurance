@@ -1131,8 +1131,7 @@
                                 Or(maAddedHDSPNHD<>"",maUpdatedHDSPNHD<>""),
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
                                 Refresh(DL_HOP_DONG_SP_NDBH);
-                                RemoveIf(DL_HOP_DONG_SP_NDBH,MA_HOP_DONG=First(objHD).MA_HOP_DONG && MA_SAN_PHAM=ThisItem.MA_SAN_PHAM 
-                                && MA_CHUONG_TRINH=ThisItem.MA_CHUONG_TRINH && NHOM_TINH_PHI=ThisItem.NHOM_TINH_PHI);
+                                RemoveIf(DL_HOP_DONG_SP_NDBH,ID_CHA=ThisItem.ID);
                                 Refresh(DL_HOP_DONG_SPS);
                                 RemoveIf(DL_HOP_DONG_SPS,ID=ThisItem.ID);
                                 RemoveIf(tmpDSHDSPNHDCollect,ID=ThisItem.ID);
@@ -1150,7 +1149,7 @@
                         Visible: =ThisItem.edited=0
                         Width: =90
                         X: =1100
-                        Y: =140
+                        Y: =143
                         ZIndex: =16
 
                     btnLuuHDSPNHD As button:
@@ -1277,7 +1276,7 @@
                         Visible: =ThisItem.edited=1
                         Width: =90
                         X: =990
-                        Y: =140
+                        Y: =143
                         ZIndex: =17
 
                     btnSuaHDSPNHD As button:
@@ -1302,7 +1301,7 @@
                         Visible: =ThisItem.edited=0
                         Width: =90
                         X: =990
-                        Y: =140
+                        Y: =143
                         ZIndex: =18
 
                     btnHuyHDSPNHD As button:
@@ -1328,7 +1327,7 @@
                         Visible: =ThisItem.edited=1
                         Width: =90
                         X: =1100
-                        Y: =140
+                        Y: =143
                         ZIndex: =19
 
                     LinkHDLK_1 As text:
@@ -1507,7 +1506,7 @@
                         Size: =11
                         Underline: =true
                         Width: =142
-                        X: =356
+                        X: =342
                         Y: =145
                         ZIndex: =20
 
@@ -1936,7 +1935,6 @@
                     Default: ="Hợp đồng liên kết"
                     DisabledBorderColor: =RGBA(255, 255, 255, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
-                    DisplayMode: =If(CountIf(tmpDSHDSPNHDCollect,true)>0 && maAddedHDSPNHD="" && maUpdatedHDSPNHD="",DisplayMode.Edit,DisplayMode.Disabled)
                     Height: =28
                     HoverBorderColor: =RGBA(255, 255, 255, 1)
                     HoverColor: =RGBA(39, 113, 194, 1)
@@ -1975,7 +1973,9 @@
                     Color: =RGBA(39, 113, 194, 1)
                     Default: ="Chọn chính sách"
                     DisabledBorderColor: =RGBA(255, 255, 255, 1)
+                    DisabledColor: =RGBA(39, 113, 194, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
+                    DisplayMode: =DisplayMode.Disabled
                     Height: =28
                     HoverBorderColor: =RGBA(255, 255, 255, 1)
                     HoverColor: =RGBA(39, 113, 194, 1)
