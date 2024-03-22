@@ -451,7 +451,7 @@ NhapNDBH As screen:
                         //Kiem tra dap ung chi tieu
                         UpdateContext(
                                 {
-                                    varPhiNDBH: Sum(LookUp(
+                                    varPhiNDBH: Sum(Filter(
                                         DL_CHUONG_TRINH_BANG_PHIS,
                                         MA_SAN_PHAM = varMaSP //MA_SP
                         && MA_CHUONG_TRINH = varMaCT //MA_CT
@@ -470,7 +470,7 @@ NhapNDBH As screen:
                                                 TUOI_DEN
                                             ) >= varTuoi)
                                         ).MO_TA || IsBlank(MA_DO_TUOI))
-                                    ).PHI_BH)
+                                    ),PHI_BH)
                                 }
                             );
                             //Lay phi chuong trinh
