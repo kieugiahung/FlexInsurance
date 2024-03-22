@@ -415,16 +415,13 @@ TraCuuHopDong As screen:
                 FontWeight: =FontWeight.Bold
                 Height: =28
                 OnSelect: |-
-                    =If(
-                        false,
-                        Refresh(DL_HOP_DONG_LIENKETS);
-                        RemoveIf(DL_HOP_DONG_LIENKETS,SO_HOP_DONG=ThisItem.MA_HOP_DONG || SO_HOP_DONG_LK=ThisItem.MA_HOP_DONG);
-                        Refresh(DL_HOP_DONG_SPS);
-                        RemoveIf(DL_HOP_DONG_SPS,MA_HOP_DONG=ThisItem.MA_HOP_DONG);
-                        Refresh(DL_HOP_DONGS);
-                        RemoveIf(DL_HOP_DONGS,MA_HOP_DONG=ThisItem.MA_HOP_DONG);
-                        Notify("Xóa dữ liệu thành công",NotificationType.Success,2000)
-                    )
+                    =Refresh(DL_HOP_DONG_LIENKETS);
+                    RemoveIf(DL_HOP_DONG_LIENKETS,SO_HOP_DONG=ThisItem.MA_HOP_DONG || SO_HOP_DONG_LK=ThisItem.MA_HOP_DONG);
+                    Refresh(DL_HOP_DONG_SPS);
+                    RemoveIf(DL_HOP_DONG_SPS,MA_HOP_DONG=ThisItem.MA_HOP_DONG);
+                    Refresh(DL_HOP_DONGS);
+                    RemoveIf(DL_HOP_DONGS,MA_HOP_DONG=ThisItem.MA_HOP_DONG);
+                    Notify("Xóa dữ liệu thành công",NotificationType.Success,2000)
                 Size: =10
                 Text: ="Xóa"
                 Width: =70

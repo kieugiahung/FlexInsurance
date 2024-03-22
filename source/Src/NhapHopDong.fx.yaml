@@ -1045,37 +1045,17 @@
 
                     cbxMaCTNHD As combobox:
                         BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: |
-                            =If(
-                                ThisItem.edited=1,
-                                LookUp(
-                                    ' DL_SAN_PHAM_CT',
-                                    MA_CHUONG_TRINH=LookUp(objHDSPUpdated,ID=ThisItem.ID,MA_CHUONG_TRINH)
-                                ),
-                                LookUp(
-                                    ' DL_SAN_PHAM_CT',
-                                    MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=ThisItem.MA_CHUONG_TRINH
-                                )
+                        DefaultSelectedItems: |-
+                            =LookUp(
+                                ' DL_SAN_PHAM_CT',
+                                MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=ThisItem.MA_CHUONG_TRINH
                             )
                         DisplayFields: =["cr282_ma_chuongtrinh","cr282_ten_chuong_trinh"]
                         DisplayMode: =If(ThisItem.edited=1,DisplayMode.Edit,DisplayMode.Disabled)
                         Height: =32
                         InputTextPlaceholder: ="Chọn chương trình"
                         Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM)
-                        OnChange: |-
-                            =UpdateIf(
-                                tmpDSHDSPNHDCollect,
-                                ID=ThisItem.ID,
-                                {
-                                    MA_SAN_PHAM:cbxMaSPNHD.Selected.MA_SAN_PHAM,
-                                    MA_CHUONG_TRINH:cbxMaCTNHD.Selected.MA_CHUONG_TRINH,
-                                    NHOM_TINH_PHI:Blank(),
-                                    PHI_DIEU_CHINH:Value(tiPhiDCNHD.Text),
-                                    SONGUOI_THAMGIA:Value(tiSoNTGSPNHD.Text),
-                                    TONG_TIEN_PHI:Value(tiTongPhiNHD.Text)
-                                }
-                            );
-                            Reset(cbxNhomTPNHD)
+                        OnChange: =Reset(cbxNhomTPNHD)
                         SearchFields: =["cr282_ma_chuong_trinh"]
                         SearchItems: =Search(Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM),cbxMaCTNHD.SearchText,"cr282_ma_chuong_trinh")
                         SelectMultiple: =false
@@ -1088,24 +1068,13 @@
 
                     cbxMaSPNHD As combobox:
                         BorderColor: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: =If(ThisItem.edited=1,LookUp(DL_SAN_PHAM,MA_SAN_PHAM=LookUp(objHDSPUpdated,ID=ThisItem.ID,MA_SAN_PHAM)),LookUp(DL_SAN_PHAM,MA_SAN_PHAM=ThisItem.MA_SAN_PHAM))
+                        DefaultSelectedItems: =LookUp(DL_SAN_PHAM,MA_SAN_PHAM=ThisItem.MA_SAN_PHAM)
                         DisplayFields: =["cr282_ma_san_pham","cr282_ten_san_pham"]
                         DisplayMode: =If(ThisItem.edited=1,DisplayMode.Edit,DisplayMode.Disabled)
                         Height: =32
                         InputTextPlaceholder: ="Chọn sản phẩm"
                         Items: =DL_SAN_PHAM
-                        OnChange: |-
-                            =If(
-                                LookUp(objHDSPUpdated,ID=ThisItem.ID,MA_SAN_PHAM)<>LookUp(tmpDSHDSPNHDCollect,ID=ThisItem.ID,MA_SAN_PHAM),
-                                UpdateIf(
-                                    objHDSPUpdated,
-                                    ID=maUpdatedHDSPNHD,
-                                    {
-                                        MA_CHUONG_TRINH:Blank()
-                                    }
-                                );
-                                Reset(cbxMaCTNHD)
-                            )
+                        OnChange: =Reset(cbxMaCTNHD)
                         SearchFields: =["cr282_ma_san_pham"]
                         SearchItems: =Search(DL_SAN_PHAM,cbxMaSPNHD.SearchText,"cr282_ma_san_pham")
                         SelectMultiple: =false
@@ -1122,6 +1091,9 @@
                             =If(
                                 Or(maAddedHDSPNHD<>"",maUpdatedHDSPNHD<>""),
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
+                                Refresh(DL_HOP_DONG_SP_NDBH);
+                                RemoveIf(DL_HOP_DONG_SP_NDBH,MA_HOP_DONG=First(objHD).MA_HOP_DONG && MA_SAN_PHAM=ThisItem.MA_SAN_PHAM 
+                                && MA_CHUONG_TRINH=ThisItem.MA_CHUONG_TRINH && NHOM_TINH_PHI=ThisItem.NHOM_TINH_PHI);
                                 Refresh(DL_HOP_DONG_SPS);
                                 RemoveIf(DL_HOP_DONG_SPS,ID=ThisItem.ID);
                                 RemoveIf(tmpDSHDSPNHDCollect,ID=ThisItem.ID);
@@ -1198,6 +1170,10 @@
                                         DL_HOP_DONG_SPS,
                                         ID = ThisItem.ID,
                                         {
+                                            MA_SAN_PHAM:cbxMaSPNHD.Selected.MA_SAN_PHAM,
+                                            TEN_SAN_PHAM:tiTenSPNHD.Text,
+                                            MA_CHUONG_TRINH:cbxMaCTNHD.Selected.MA_CHUONG_TRINH,
+                                            TEN_CHUONG_TRINH:tiTenCTNHD.Text,
                                             SONGUOI_THAMGIA: Value(tiSoNTGSPNHD.Text),
                                             TONG_TIEN_PHI: Value(tiTongPhiNHD.Text),
                                             MA_KENH_BAN: cbxMaKBNHD.Selected.MA_KENH_BAN,
@@ -1270,10 +1246,6 @@
                             =If(
                                 Or(maAddedHDSPNHD<>"",maUpdatedHDSPNHD<>""),
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
-                                ClearCollect(
-                                    objHDSPUpdated,
-                                    tmpDSHDSPNHDCollect
-                                );
                                 UpdateIf(
                                     tmpDSHDSPNHDCollect,
                                     ID=ThisItem.ID,
@@ -1302,7 +1274,9 @@
                                 UpdateIf(
                                     tmpDSHDSPNHDCollect,
                                     ID=ThisItem.ID,
-                                    First(objHDSPUpdated)
+                                    {
+                                        edited:0
+                                    }
                                 )
                             );
                             UpdateContext({
