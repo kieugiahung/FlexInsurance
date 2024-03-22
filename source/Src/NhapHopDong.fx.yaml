@@ -4364,10 +4364,10 @@
                     NotificationType.Error,
                     2000
                 ),
-                !IsBlank(Sum(tmpKTTNHDCollect,PHI_THANH_TOAN)) && Value(tiTienSauGiamNHD.Text) <> Sum(
+                (!IsBlank(Sum(tmpKTTNHDCollect,PHI_THANH_TOAN)) && Value(tiTienSauGiamNHD.Text) <> Sum(
                     tmpKTTNHDCollect,
                     PHI_THANH_TOAN
-                ),
+                )) || (IsBlank(Sum(tmpKTTNHDCollect,PHI_THANH_TOAN)) && Value(tiTienSauGiamNHD.Text) <> 0),
                 Notify(
                     "Tổng tiền phí (sau miễn giảm) khác tổng phí trên các kỳ thanh toán",
                     NotificationType.Error,
