@@ -11444,8 +11444,9 @@
                     ZIndex: =1
 
                 btnXuatFile As button:
+                    BorderColor: =RGBA(255, 255, 255, 1)
                     DisplayMode: =If(!IsEmpty(Filter(DL_SAN_PHAM_MATRANPHI, MA_SAN_PHAM=valMaSP)), DisplayMode.Edit,DisplayMode.Disabled)
-                    Fill: =RGBA(39, 113, 194, 1)
+                    Fill: =RGBA(15, 84, 140, 1)
                     FontWeight: =FontWeight.Bold
                     Height: =30
                     OnSelect: |
@@ -11572,9 +11573,12 @@
                             )
                         );
                         //Download("https://5ddm0q.sharepoint.com/:x:/s/Test/EW4AFywm7c9EhhALbkXGoEEBKRl3CeUjPhJpm75mUbZ4Ug?e=ZyjhT1");
+                    PressedBorderColor: =ColorFade(Self.Fill, -15%)
                     Size: =11
                     Text: ="Xuất file mẫu"
-                    Y: =61
+                    Visible: =false
+                    X: =877
+                    Y: =78
                     ZIndex: =2
 
                 Label2_3 As label:
@@ -11743,8 +11747,141 @@
                     Size: =11
                     Text: ="Nhận file excel"
                     X: =507
-                    Y: =61
+                    Y: =34
                     ZIndex: =8
+
+                ThemMoiCT_22 As button:
+                    DisplayMode: =If(!IsEmpty(Filter(DL_SAN_PHAM_MATRANPHI, MA_SAN_PHAM=valMaSP)), DisplayMode.Edit,DisplayMode.Disabled)
+                    FontWeight: =FontWeight.Bold
+                    Height: =30
+                    OnSelect: |
+                        =Clear(OldCollection);
+                        Set(
+                            varCheck_CT,
+                            ChuongTrinh_1.Value
+                        );
+                        Set(
+                            varCheck_NTP,
+                            NhomTP_1.Value
+                        );
+                        Set(
+                            varCheck_PV,
+                            PVDiaLy_1.Value
+                        );
+                        Set(
+                            varCheck_DT,
+                            DoTuoi_1.Value
+                        );
+                        Set(
+                            varCheck_GT,
+                            GioiTinh_1.Value
+                        );
+                        Set(
+                            varCheck_NN,
+                            NganhNghe_1.Value
+                        );
+                        Set(
+                            varCheck_ST,
+                            BH_SoTien_1.Value
+                        );
+                        Set(
+                            varCheck_SN,
+                            BH_SoNguoi_1.Value
+                        );
+                        Set(
+                            varCheck_TH,
+                            BH_ThoiHan_1.Value
+                        );
+                        Set(
+                            varCheck_PT,
+                            BH_PhuongThuc_1.Value
+                        );
+                        Collect(
+                            NewCollection,
+                            {}
+                        );
+                        
+                        Collect(
+                            OldCollection,
+                            {       MA_SAN_PHAM: "",
+                                    MA_CHUONG_TRINH: "",
+                                    TEN_SAN_PHAM: "",
+                                    TEN_CHUONG_TRINH: "",
+                                    NHOM_TINH_PHI: "",
+                                    PHAMVI: "",
+                                    DO_TUOI: "",
+                                    GIOI_TINH: "",
+                                    NGANH_NGHE: "",
+                                    SOTIEN: "",
+                                    SO_NGUOI: "",
+                                    THOI_HAN: "",
+                                    PHUONG_THUC: "",
+                                    PHI: "",
+                                    TY_LE: ""
+                        
+                            }
+                        );
+                        
+                        
+                        ClearCollect(
+                           OldCollection,
+                          ForAll(
+                               Filter(
+                                  DL_SAN_PHAM_MATRANPHI,
+                                   MA_SAN_PHAM = valMaSP
+                               ),
+                               {    MA_SAN_PHAM: valMaSP,
+                                    MA_CHUONG_TRINH: MA_CHUONG_TRINH,
+                                    TEN_SAN_PHAM: valTenSP,
+                                    TEN_CHUONG_TRINH: CHUONG_TRINH,
+                                    NHOM_TINH_PHI: NHOM_TINH_PHI,
+                                    PHAMVI: PHAM_VI_DL,
+                                    DO_TUOI: DO_TUOI,
+                                    GIOI_TINH: GIOI_TINH,
+                                    NGANH_NGHE: NGANH_NGHE,
+                                    SOTIEN: SO_TIEN,
+                                    SO_NGUOI: SO_NGUOI,
+                                    THOI_HAN: THOI_HAN,
+                                    PHUONG_THUC: PHUONG_THUC_DP,
+                                    PHI: "",
+                                    TY_LE: ""
+                            }
+                           )
+                        );
+                        
+                        ForAll(Filter(DL_SAN_PHAM_LOAITRU, MA_SAN_PHAM=valMaSP) As lt,
+                        RemoveIf(OldCollection,
+                            MA_SAN_PHAM=lt.MA_SAN_PHAM &&
+                                 TEN_CHUONG_TRINH=lt.TEN_CHUONG_TRINH &&
+                                 NHOM_TINH_PHI=lt.TEN_NHOM_TP &&
+                                 PHAMVI=lt.TEN_PHAMVI &&
+                                 DO_TUOI=lt.MO_TA &&
+                                 GIOI_TINH=lt.TEN_GIOI_TINH &&
+                                 NGANH_NGHE=lt.TEN_NGANH &&
+                                 SOTIEN=lt.TEN_SOTIEN &&
+                                 SO_NGUOI=lt.TEN_SO_NGUOI &&
+                                 THOI_HAN=lt.TEN_THOI_HAN &&
+                                 PHUONG_THUC=lt.TEN_PT
+                        )
+                        );
+                        
+                        ClearCollect(
+                            NewCollection,
+                            OldCollection
+                        );
+                        
+                        
+                        ExportToExcel.Run(
+                            JSON(
+                                NewCollection,
+                                JSONFormat.IgnoreBinaryData// & JSONFormat.IgnoreUnsupportedTypes
+                            )
+                        );
+                        //Download("https://5ddm0q.sharepoint.com/:x:/s/Test/EW4AFywm7c9EhhALbkXGoEEBKRl3CeUjPhJpm75mUbZ4Ug?e=ZyjhT1");
+                    Size: =11
+                    Text: ="Xuất file mẫu"
+                    Y: =34
+                    ZIndex: =9
 
         DataCard5_1 As dataCard.blankCard:
             BorderColor: =RGBA(0, 0, 0, 1)
