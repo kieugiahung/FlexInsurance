@@ -126,7 +126,7 @@ NhapNDBH As screen:
                 BorderColor: =RGBA(245, 245, 245, 1)
                 DelayItemLoading: =true
                 Height: =221
-                Items: =Filter(tmpNDBH, cr282_id_cha=Value(idColSP))
+                Items: =SortByColumns(tmpDSNDBHNHDCollect,"cr282_id",SortOrder.Ascending)
                 Layout: =Layout.Vertical
                 LoadingSpinner: =LoadingSpinner.Data
                 NavigationStep: =0
@@ -139,7 +139,7 @@ NhapNDBH As screen:
                 TxtTen_NDBH As text:
                     BorderColor: =RGBA(54, 176, 75, 1)
                     Color: =RGBA(50, 49, 48, 1)
-                    Default: =ThisItem.cr282_ten_ndbh
+                    Default: =ThisItem.TEN_NDBH
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisabledColor: =RGBA(0, 0, 0, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
@@ -165,7 +165,7 @@ NhapNDBH As screen:
                 TxtMST_NDBH As text:
                     BorderColor: =RGBA(72, 163, 62, 1)
                     Color: =RGBA(50, 49, 48, 1)
-                    Default: =ThisItem.cr282_mst
+                    Default: =ThisItem.MST
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisabledColor: =RGBA(0, 0, 0, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
@@ -218,7 +218,7 @@ NhapNDBH As screen:
                 TxtDiaChi_NDBH As text:
                     BorderColor: =RGBA(72, 163, 62, 1)
                     Color: =RGBA(50, 49, 48, 1)
-                    Default: =ThisItem.cr282_dia_chi
+                    Default: =ThisItem.DIA_CHI
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisabledColor: =RGBA(0, 0, 0, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
@@ -245,7 +245,7 @@ NhapNDBH As screen:
                 TxtNhomNDBH As text:
                     BorderColor: =RGBA(72, 163, 62, 1)
                     Color: =RGBA(50, 49, 48, 1)
-                    Default: =ThisItem.cr282_nhom
+                    Default: =ThisItem.NHOM
                     DisabledBorderColor: =RGBA(153, 201, 238, 1)
                     DisabledColor: =RGBA(0, 0, 0, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
@@ -274,6 +274,7 @@ NhapNDBH As screen:
                     DisabledBorderColor: =RGBA(0, 0, 0, 0)
                     DisabledColor: =RGBA(161, 159, 157, 1)
                     DisabledFill: =RGBA(242, 242, 241, 0)
+                    DisplayMode: =If(modeMHNDBH="1",DisplayMode.Edit,DisplayMode.Disabled)
                     Font: =Font.'Segoe UI'
                     FontWeight: =FontWeight.Bold
                     Height: =25
@@ -282,16 +283,16 @@ NhapNDBH As screen:
                     OnSelect: |-
                         =If(
                             Or(maAddedNDBH<>"",maUpdatedNDBH<>""),
-                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
                             UpdateIf(
-                                tmpNDBH,
-                                cr282_id=ThisItem.cr282_id,
+                                tmpDSNDBHNHDCollect,
+                                ID=ThisItem.ID,
                                 {
                                     edited:1
                                 }
                             );
                             UpdateContext({
-                                maUpdatedNDBH:Text(ThisItem.cr282_id)
+                                maUpdatedNDBH:Text(ThisItem.ID)
                             })
                         )
                     PressedBorderColor: =RGBA(0, 69, 120, 1)
@@ -310,6 +311,7 @@ NhapNDBH As screen:
                     DisabledBorderColor: =RGBA(0, 0, 0, 0)
                     DisabledColor: =RGBA(161, 159, 157, 1)
                     DisabledFill: =RGBA(242, 242, 241, 0)
+                    DisplayMode: =If(modeMHNDBH="1",DisplayMode.Edit,DisplayMode.Disabled)
                     Font: =Font.'Segoe UI'
                     FontWeight: =FontWeight.Bold
                     Height: =25
@@ -318,10 +320,9 @@ NhapNDBH As screen:
                     OnSelect: |-
                         =If(
                             Or(maAddedNDBH<>"",maUpdatedNDBH<>""),
-                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
-                            Refresh(DL_HOP_DONG_SP_NDBH);
-                            Remove(tmpNDBH,ThisItem);
-                            Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
+                            Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
+                            Remove(tmpDSNDBHNHDCollect,ThisItem);
+                            Notify("Xóa dữ liệu thành công", NotificationType.Success,2000)
                         )
                     PressedBorderColor: =RGBA(0, 69, 120, 1)
                     PressedColor: =RGBA(255, 255, 255, 1)
@@ -339,59 +340,23 @@ NhapNDBH As screen:
                     DisabledBorderColor: =RGBA(0, 0, 0, 0)
                     DisabledColor: =RGBA(161, 159, 157, 1)
                     DisabledFill: =RGBA(242, 242, 241, 0)
+                    DisplayMode: =If(modeMHNDBH="1",DisplayMode.Edit,DisplayMode.Disabled)
                     Font: =Font.'Segoe UI'
                     FontWeight: =FontWeight.Bold
                     Height: =25
                     HoverBorderColor: =RGBA(0, 0, 0, 0)
                     HoverFill: =RGBA(56, 96, 178, 1)
                     OnSelect: |-
-                        =UpdateContext({errorMsgGal: ""});
-                        If(
-                            TxtTen_NDBH.Text = "",
-                            UpdateContext({errorMsgGal: "Bắt buộc nhập tên người được bảo hiểm"})
-                        );
-                        /*If(
-                            IsBlank(errorMsgGal),
-                            If(
-                                TxtMST_NDBH.Text = "",
-                                UpdateContext({errorMsgGal: "Bắt buộc nhập MST người được bảo hiểm"})
-                            )
-                        );*/
-                        If(
-                            IsBlank(errorMsgGal),
-                            If(
-                                CountIf(
-                                    tmpNDBH,
-                                    cr282_mst = ThisItem.cr282_mst
-                                ) > 1,
-                                Collect(
-                                    errorCol,
-                                    {
-                                        Message: Concatenate(
-                                            "MST ",
-                                            ThisItem.cr282_mst,
-                                            " bị lặp trong danh sách"
-                                        )
-                                    }
-                                )
-                            )
-                        );
-                        If(
-                            !IsEmpty(errorCol),
-                            UpdateContext({errorMsg: First(errorCol).Message})
-                        );
-                        If(
-                            !IsBlank(errorMsgGal),
-                            Notify(
-                                errorMsgGal,
-                                NotificationType.Error,
-                                800
-                            ),
+                        =If(
+                            IsBlank(TxtTen_NDBH.Text),
+                            Notify("Bắt buộc nhập tên người được bảo hiểm",NotificationType.Error,2000),
+                            CountIf(tmpDSNDBHNHDCollect,MST = ThisItem.MST && ID<>ThisItem.ID) > 1,
+                            Notify("MST đã tồn tại trong danh sách",NotificationType.Error,2000),
                             UpdateContext({varPhiNDBH: 0});
                             UpdateContext({varTuoi: 0});
                             UpdateContext({varDVTuoi: 0});
                             //Tinh tuoi
-                        If(
+                            If(
                                 !IsBlank(DateNS_NDBH.SelectedDate),
                                 If(
                                     DateDiff(
@@ -432,33 +397,14 @@ NhapNDBH As screen:
                                     )
                                 )
                             );
-                            /*UpdateContext(
-                                {
-                                    varDMTuoi: LookUp(
-                                        DM_DO_TUOIS,
-                                        (If(
-                                            DONVI_TUOI_TU > 100,
-                                            1,
-                                            TUOI_TU
-                                        ) <= varTuoi) && (If(
-                                            DONVI_TUOI_DEN > 100,
-                                            1,
-                                            TUOI_DEN
-                                        ) >= varTuoi)
-                                    ).MO_TA
-                                }
-                            );*/
-                        //Kiem tra dap ung chi tieu
-                        UpdateContext(
-                                {
+                            //Kiem tra dap ung chi tieu
+                            UpdateContext(
+                                {   
                                     varPhiNDBH: Sum(Filter(
-                                        DL_CHUONG_TRINH_BANG_PHIS,
-                                        MA_SAN_PHAM = varMaSP //MA_SP
-                        && MA_CHUONG_TRINH = varMaCT //MA_CT
-                        && NHOM_TINH_PHI in varNhomTP //TEN_NHOM_TP
-                        && (MA_PHAMVI_DIALY = DropTinh_NDBH.Selected.TEN_PHAMVI || IsBlank(MA_PHAMVI_DIALY)) //TEN_PHAMVI_DL
-                        && (MA_GIOI_TINH = DropGT_NDBH.Selected.TEN_GIOI_TINH || IsBlank(MA_GIOI_TINH)) //TEN_GIOI_TINH
-                        && (MA_DO_TUOI = LookUp(
+                                        DL_CHUONG_TRINH_BANG_PHIS,MA_SAN_PHAM = maSPNDBH && MA_CHUONG_TRINH = maCTNDBH && !IsBlank(Find(NHOM_TINH_PHI,nhomTPNDBH)) && 
+                                        (IsBlank(MA_PHAMVI_DIALY) || (!IsBlank(cbxTinhNHD.Selected.MA_PHAMVI) && MA_PHAMVI_DIALY = cbxTinhNHD.Selected.MA_PHAMVI)) && 
+                                        (IsBlank(MA_GIOI_TINH) || (!IsBlank(cbxGTinhNHD.Selected.MA_GIOI_TINH) && MA_GIOI_TINH = cbxGTinhNHD.Selected.MA_GIOI_TINH)) && 
+                                        (IsBlank(MA_DO_TUOI) || MA_DO_TUOI = LookUp(
                                             DM_DO_TUOIS,
                                             (If(
                                                 MO_TA = MA_DO_TUOI && DONVI_TUOI_TU > 100,
@@ -474,24 +420,21 @@ NhapNDBH As screen:
                                 }
                             );
                             //Lay phi chuong trinh
-                        UpdateIf(
-                                tmpNDBH,
-                                cr282_id = ThisItem.cr282_id,
+                            UpdateIf(
+                                tmpDSNDBHNHDCollect,
+                                ID = ThisItem.ID,
                                 {
-                                    cr282_ma_hop_dong: varMaHD,
-                                    cr282_ma_san_pham: varMaSP,
-                                    cr282_ma_chuong_trinh: varMaCT,
-                                    cr282_mst: TxtMST_NDBH.Text,
-                                    cr282_ten_ndbh: TxtTen_NDBH.Text,
-                                    cr282_dia_chi: TxtDiaChi_NDBH.Text,
-                                    cr282_ma_gioi__tinh: DropGT_NDBH.Selected.MA_GIOI_TINH,
-                                    cr282_ma_nhan_vien: TxtMaNV.Text,
-                                    cr282_ma_tinh_tp: DropTinh_NDBH.Selected.MA_PHAMVI,
-                                    cr282_moi_quan_he: TxtMoiQuanHe.Text,
-                                    cr282_ngay_sinh: DateNS_NDBH.SelectedDate,
-                                    cr282_nhom: TxtNhomNDBH.Text,
-                                    cr282_so_giay_to: TxtSoGT_NDBH.Text,
-                                    cr282_phi_ndbh: Value(varPhiNDBH),
+                                    MST: TxtMST_NDBH.Text,
+                                    TEN_NDBH: TxtTen_NDBH.Text,
+                                    DIA_CHI: TxtDiaChi_NDBH.Text,
+                                    MA_GIOI__TINH: DropGT_NDBH.Selected.MA_GIOI_TINH,
+                                    MA_NHAN_VIEN: TxtMaNV.Text,
+                                    MA_TINH_TP: DropTinh_NDBH.Selected.MA_PHAMVI,
+                                    MOI_QUAN_HE: TxtMoiQuanHe.Text,
+                                    NGAY_SINH: DateNS_NDBH.SelectedDate,
+                                    NHOM: TxtNhomNDBH.Text,
+                                    SO_GIAY_TO: TxtSoGT_NDBH.Text,
+                                    PHI_NDBH: Value(varPhiNDBH),
                                     edited: 0
                                 }
                             );
@@ -500,8 +443,7 @@ NhapNDBH As screen:
                                     maAddedNDBH: "",
                                     maUpdatedNDBH: ""
                                 }
-                            );
-                            
+                            )
                         )
                     PressedBorderColor: =RGBA(0, 69, 120, 1)
                     PressedColor: =RGBA(255, 255, 255, 1)
@@ -519,6 +461,7 @@ NhapNDBH As screen:
                     DisabledBorderColor: =RGBA(0, 0, 0, 0)
                     DisabledColor: =RGBA(161, 159, 157, 1)
                     DisabledFill: =RGBA(242, 242, 241, 0)
+                    DisplayMode: =If(modeMHNDBH="1",DisplayMode.Edit,DisplayMode.Disabled)
                     Font: =Font.'Segoe UI'
                     FontWeight: =FontWeight.Bold
                     Height: =25
@@ -526,11 +469,11 @@ NhapNDBH As screen:
                     HoverFill: =RGBA(56, 96, 178, 1)
                     OnSelect: |-
                         =If(
-                            ThisItem.cr282_id=Value(maAddedNDBH),
-                            Remove(tmpNDBH,ThisItem),
+                            ThisItem.ID=maAddedNDBH,
+                            Remove(tmpDSNDBHNHDCollect,ThisItem),
                             UpdateIf(
-                                tmpNDBH,
-                                cr282_id=ThisItem.cr282_id,
+                                tmpDSNDBHNHDCollect,
+                                ID=ThisItem.ID,
                                 {
                                     edited:0
                                 }
@@ -553,7 +496,7 @@ NhapNDBH As screen:
                 TxtMaNV As text:
                     BorderColor: =RGBA(72, 163, 62, 1)
                     Color: =RGBA(50, 49, 48, 1)
-                    Default: =ThisItem.cr282_ma_nhan_vien
+                    Default: =ThisItem.MA_NHAN_VIEN
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisabledColor: =RGBA(0, 0, 0, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
@@ -579,7 +522,7 @@ NhapNDBH As screen:
                 TxtMoiQuanHe As text:
                     BorderColor: =RGBA(72, 163, 62, 1)
                     Color: =RGBA(50, 49, 48, 1)
-                    Default: =ThisItem.cr282_moi_quan_he
+                    Default: =ThisItem.MOI_QUAN_HE
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisabledColor: =RGBA(0, 0, 0, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
@@ -610,7 +553,7 @@ NhapNDBH As screen:
                     ChevronFill: =RGBA(54, 176, 75, 1)
                     ChevronHoverBackground: =RGBA(245, 245, 245, 1)
                     ChevronHoverFill: =RGBA(50, 49, 48, 1)
-                    Default: =LookUp(DM_PHAMVI_DIALYS, MA_PHAMVI=ThisItem.cr282_ma_tinh_tp && LOAI="TINH_TP").TEN_PHAMVI
+                    Default: =LookUp(DM_PHAMVI_DIALYS, MA_PHAMVI=ThisItem.MA_TINH_TP && LOAI="TINH_TP").TEN_PHAMVI
                     DisabledBorderColor: =RGBA(153, 201, 238, 1)
                     DisabledColor: =RGBA(0, 0, 0, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
@@ -637,7 +580,7 @@ NhapNDBH As screen:
                 DateNS_NDBH As datepicker:
                     BorderColor: =RGBA(54, 176, 75, 1)
                     CalendarHeaderFill: =RGBA(16, 110, 190, 1)
-                    DefaultDate: =ThisItem.cr282_ngay_sinh
+                    DefaultDate: =ThisItem.NGAY_SINH
                     DisabledBorderColor: =RGBA(153, 201, 238, 1)
                     DisabledColor: =RGBA(0, 0, 0, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
@@ -665,7 +608,7 @@ NhapNDBH As screen:
                     ChevronHoverBackground: =RGBA(245, 245, 245, 1)
                     ChevronHoverFill: =RGBA(50, 49, 48, 1)
                     Color: =RGBA(50, 49, 48, 1)
-                    Default: =LookUp(DM_GIOI_TINHS, MA_GIOI_TINH=ThisItem.cr282_ma_gioi__tinh).TEN_GIOI_TINH
+                    Default: =LookUp(DM_GIOI_TINHS, MA_GIOI_TINH=ThisItem.MA_GIOI__TINH).TEN_GIOI_TINH
                     DisabledBorderColor: =RGBA(153, 201, 238, 1)
                     DisabledColor: =RGBA(0, 0, 0, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
@@ -692,7 +635,7 @@ NhapNDBH As screen:
                 TxtSoGT_NDBH As text:
                     BorderColor: =RGBA(72, 163, 62, 1)
                     Color: =RGBA(50, 49, 48, 1)
-                    Default: =ThisItem.cr282_so_giay_to
+                    Default: =ThisItem.SO_GIAY_TO
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisabledColor: =RGBA(0, 0, 0, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
@@ -718,7 +661,7 @@ NhapNDBH As screen:
                 TxtPhiNDBH As text:
                     BorderColor: =RGBA(72, 163, 62, 1)
                     Color: =RGBA(50, 49, 48, 1)
-                    Default: =ThisItem.cr282_phi_ndbh
+                    Default: =ThisItem.PHI_NDBH
                     DisabledBorderColor: =RGBA(180, 214, 250, 1)
                     DisabledColor: =RGBA(0, 0, 0, 1)
                     DisabledFill: =RGBA(255, 255, 255, 1)
@@ -823,159 +766,28 @@ NhapNDBH As screen:
     Btn_LuuKH_1 As button:
         BorderColor: =RGBA(0, 0, 0, 0)
         BorderStyle: =BorderStyle.None
-        DisabledBorderColor: =RGBA(0, 0, 0, 0)
-        DisabledColor: =RGBA(161, 159, 157, 1)
-        DisabledFill: =RGBA(242, 242, 241, 0)
+        DisplayMode: =If(modeMHNDBH="1",DisplayMode.Edit,DisplayMode.Disabled)
         Font: =Font.'Segoe UI'
         FontWeight: =FontWeight.Bold
         Height: =42
         HoverBorderColor: =RGBA(0, 0, 0, 0)
         HoverFill: =RGBA(56, 96, 178, 1)
-        OnSelect: |
-            =UpdateContext({errorMsg: ""});
-            //Kiem tra Khong trung MST
-            If(
-                CountRows(tmpNDBH) > 0,
-                Clear(errorCol);
-                ForAll(
-                    Filter(tmpNDBH, cr282_id_cha=Value(idColSP)) As kh,
-                    If(
-                        CountIf(
-                            tmpNDBH,
-                            cr282_mst = kh.cr282_mst && !IsBlank(kh.cr282_mst)
-                        ) > 1,
-                        Collect(
-                            errorCol,
-                            {
-                                Message: Concatenate(
-                                    "MST ",
-                                    kh.cr282_mst,
-                                    " bị lặp trong danh sách"
-                                )
-                            }
-                        )
-                    )
-                );
-                If(
-                    !IsEmpty(errorCol),
-                    UpdateContext({errorMsg: First(errorCol).Message})
-                )
+        OnSelect: |-
+            =UpdateIf(
+                tmpMaCTChangeNHD,
+                ID = idHopDongSPNDBH,
+                {
+                    TONG_TIEN_PHI: If(
+                        IsBlank(phiDCNDBH) || Value(phiDCNDBH)=0,
+                        Sum(tmpDSNDBHNHDCollect,PHI_NDBH),
+                        Value(phiDCNDBH)*CountIf(tmpDSNDBHNHDCollect,true)
+                    ),
+                    SONGUOI_THAMGIA: CountIf(tmpDSNDBHNHDCollect,true)
+                }
             );
-            If(
-                !IsBlank(errorMsg),
-                Notify(
-                    errorMsg,
-                    NotificationType.Error,
-                    800
-                ),
-                RemoveIf(
-                    DL_HOP_DONG_SP_NDBH,
-                    ID_CHA=idColSP && MA_HOP_DONG=varMaHD
-                );
-                
-                If(
-                    !IsEmpty(tmpNDBH),
-                    ForAll (
-                        tmpNDBH As dd,
-                        If(
-                            IsBlank(
-                                LookUp(
-                                    DL_HOP_DONG_SP_NDBH,
-                                    ID = dd.cr282_id
-                                )
-                            ),
-                            Patch(
-                                DL_HOP_DONG_SP_NDBH,
-                                {
-                                    ID: If(
-                                        CountIf(
-                                            DL_HOP_DONG_SP_NDBH,
-                                            ID
-                                        ) = 0,
-                                        1,
-                                        Max(
-                                            DL_HOP_DONG_SP_NDBH,
-                                            ID
-                                        ) + 1
-                                    ),
-                                    MA_HOP_DONG: varMaHD,
-                                    MA_SAN_PHAM: varMaSP,
-                                    MA_CHUONG_TRINH: varMaCT,
-                                    NHOM_TINH_PHI: varNhomTP,
-                                    TEN_NDBH: dd.cr282_ten_ndbh,
-                                    MST: dd.cr282_mst,
-                                    DIA_CHI: dd.cr282_dia_chi,
-                                    MA_GIOI__TINH: dd.cr282_ma_gioi__tinh,
-                                    MA_TINH_TP: dd.cr282_ma_tinh_tp,
-                                    MA_NHAN_VIEN: dd.cr282_ma_nhan_vien,
-                                    MOI_QUAN_HE: dd.cr282_moi_quan_he,
-                                    NGAY_SINH: dd.cr282_ngay_sinh,
-                                    NHOM: dd.cr282_nhom,
-                                    SO_GIAY_TO: dd.cr282_so_giay_to,
-                                    PHI_NDBH: dd.cr282_phi_ndbh,
-                                    ID_CHA:Value(idColSP)
-                                }
-                            ),
-                            UpdateIf(
-                                DL_HOP_DONG_SP_NDBH,
-                                ID = dd.cr282_id,
-                                {
-                                    MA_HOP_DONG: varMaHD,
-                                    MA_SAN_PHAM: varMaSP,
-                                    MA_CHUONG_TRINH: varMaCT,
-                                    NHOM_TINH_PHI: varNhomTP,
-                                    TEN_NDBH: dd.cr282_ten_ndbh,
-                                    MST: dd.cr282_mst,
-                                    DIA_CHI: dd.cr282_dia_chi,
-                                    MA_GIOI__TINH: dd.cr282_ma_gioi__tinh,
-                                    MA_TINH_TP: dd.cr282_ma_tinh_tp,
-                                    MA_NHAN_VIEN: dd.cr282_ma_nhan_vien,
-                                    MOI_QUAN_HE: dd.cr282_moi_quan_he,
-                                    NGAY_SINH: dd.cr282_ngay_sinh,
-                                    NHOM: dd.cr282_nhom,
-                                    SO_GIAY_TO: dd.cr282_so_giay_to,
-                                    PHI_NDBH: dd.cr282_phi_ndbh
-                                }
-                            )
-                        );
-                    )
-                );
-                /*UpdateIf(
-                    DL_HOP_DONG_SPS,
-                    MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT && MA_HOP_DONG = varMaHD && ID = idColSP,
-                    {
-                        TONG_TIEN_PHI: If(IsBlank(LookUp(DL_HOP_DONG_SPS,
-                    MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT && MA_HOP_DONG = varMaHD && ID = idColSP).PHI_DIEU_CHINH),
-                        Sum(
-                            tmpNDBH,
-                            cr282_phi_ndbh
-                        ), LookUp(DL_HOP_DONG_SPS,
-                    MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT && MA_HOP_DONG = varMaHD && ID = idColSP).PHI_DIEU_CHINH) * CountRows(tmpNDBH),
-                        SONGUOI_THAMGIA: CountRows(tmpNDBH)
-                    }
-                );*/
-                UpdateIf(
-                    tmpDSHDSPNHDCollect,
-                    ID = idColSP,
-                    {
-                        MA_SAN_PHAM:varMaSP,
-                        MA_CHUONG_TRINH:varMaCT,
-                        MA_HOP_DONG:varMaHD,
-                        NHOM_TINH_PHI:varNhomTP,
-                        PHI_DIEU_CHINH:varPhiDieuChinh,
-                        TONG_TIEN_PHI: If(varPhiDieuChinh=0,
-                        Sum(
-                            Filter(tmpNDBH, cr282_id_cha=Value(idColSP)),
-                            cr282_phi_ndbh
-                        ), varPhiDieuChinh*CountRows(Filter(tmpNDBH, cr282_id_cha=Value(idColSP)))
-                        ),
-                        SONGUOI_THAMGIA: CountRows(Filter(tmpNDBH, cr282_id_cha=Value(idColSP)))
-                    }
-                );
-                Set(varUnReloadNHD,"2");
-                //Select(IconTaiLaiNDBH);
-                Navigate(NhapHopDong);
-            );
+            Set(varUnReloadNHD,"2");
+            //Select(IconTaiLaiNDBH);
+            Navigate(NhapHopDong);
         PressedBorderColor: =RGBA(0, 69, 120, 1)
         PressedColor: =RGBA(255, 255, 255, 1)
         PressedFill: =RGBA(16, 110, 190, 1)
@@ -997,9 +809,10 @@ NhapNDBH As screen:
         HoverBorderColor: =RGBA(0, 0, 0, 0)
         HoverFill: =RGBA(56, 96, 178, 1)
         OnSelect: |-
-            =Select(IconTaiLaiNDBH);
-            Set(varUnReloadNHD,"2");
-            Back();
+            =//Select(IconTaiLaiNDBH);
+            Set(varUnReloadNHD,"00");
+            Navigate(NhapHopDong);
+            Clear(tmpDSNDBHNHDCollect);
         PressedBorderColor: =RGBA(0, 69, 120, 1)
         PressedColor: =RGBA(255, 255, 255, 1)
         PressedFill: =RGBA(16, 110, 190, 1)
@@ -1031,9 +844,7 @@ NhapNDBH As screen:
     ThemMoiCT_18 As button:
         BorderColor: =RGBA(0, 0, 0, 0)
         BorderStyle: =BorderStyle.None
-        DisabledBorderColor: =RGBA(0, 0, 0, 0)
-        DisabledColor: =RGBA(161, 159, 157, 1)
-        DisabledFill: =RGBA(242, 242, 241, 0)
+        DisplayMode: =If(modeMHNDBH="1",DisplayMode.Edit,DisplayMode.Disabled)
         Font: =Font.'Segoe UI'
         FontWeight: =FontWeight.Bold
         Height: =30
@@ -1048,52 +859,23 @@ NhapNDBH As screen:
                 Notify(
                     "Có dòng dữ liệu đang nhập",
                     NotificationType.Error,
-                    800
+                    2000
                 );,
-                UpdateContext(
-                    {
-                        idNDBH: If(
-                            CountIf(
-                                DL_HOP_DONG_SP_NDBH,
-                                ID
-                            ) = 0,
-                            1,
-                            Max(
-                                DL_HOP_DONG_SP_NDBH,
-                                ID
-                            ) + 1
-                        )
-                    }
-                );
-                If(
-                    !IsEmpty(tmpNDBH) && Max(
-                        tmpNDBH,
-                        cr282_id
-                    ) >= idNDBH,
-                    UpdateContext(
-                        {
-                            idNDBH: If(
-                                CountIf(
-                                    tmpNDBH,
-                                    cr282_id
-                                ) = 0,
-                                1,
-                                Max(
-                                    tmpNDBH,
-                                    cr282_id
-                                ) + 1
-                            )
-                        }
+                UpdateContext({
+                    idNDBH: If(
+                        CountIf(DL_HOP_DONG_SP_NDBH,true) = 0,
+                        1,
+                        Max(DL_HOP_DONG_SP_NDBH,ID) + 1
                     )
-                );
-                Collect(
-                    tmpNDBH,
+                });
+                Patch(
+                    tmpDSNDBHNHDCollect,
                     {
-                        cr282_id: idNDBH,
-                        cr282_id_cha:Value(idColSP),
-                        cr282_ma_hop_dong: varMaHD,
-                        cr282_ma_san_pham: varMaSP,
-                        cr282_ma_chuong_trinh: varMaCT,
+                        ID: idNDBH,
+                        ID_HOPDONG_SP:idColSP,
+                        MA_HOP_DONG: varMaHD,
+                        MA_SAN_PHAM: varMaSP,
+                        MA_CHUONG_TRINH: varMaCT,
                         edited: 1
                     }
                 );
