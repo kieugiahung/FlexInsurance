@@ -731,7 +731,14 @@
                                 )
                             )
                         );
-                        Reset(cbxNgheNHD)
+                        Reset(cbxNgheNHD);
+                        If(
+                            First(objHD).MA_KHACH_HANG<>First(objHD).TEN_KHACH_HANG_SAVED,
+                            RemoveIf(
+                                tmpNDBH,
+                                true
+                            )
+                        )
                     OnSelect: |-
                         =UpdateContext({
                             checkChangeKH1:"1"
@@ -1543,23 +1550,28 @@
                                     {
                                         cr282_id: idNDBH,
                                         cr282_id_cha: Value(ThisItem.ID),
-                                        cr282_ma_hop_dong: varMaHD,
-                                        cr282_ma_san_pham: varMaSP,
-                                        cr282_ma_chuong_trinh: varMaCT,
+                                        cr282_ma_hop_dong: First(objHD).MA_HOP_DONG,
+                                        cr282_ma_san_pham: ThisItem.MA_SAN_PHAM,
+                                        cr282_ma_chuong_trinh: ThisItem.MA_CHUONG_TRINH,
                                         cr282_mst: cbxMaKHNHD.Selected.MST,
-                                        cr282_ten_ndbh: cbxMaKHNHD.Selected.TEN_KHACH_HANG,
-                                        cr282_dia_chi: cbxMaKHNHD.Selected.DIA_CHI_KH,
-                                        cr282_ma_gioi__tinh: cbxMaKHNHD.Selected.MA_GIOI_TINH,
+                                        cr282_ten_ndbh: tiTenKHNHD.Text,
+                                        cr282_dia_chi: tiDChiNHD.Text,
+                                        cr282_ma_gioi__tinh: cbxGTinhNHD.Selected.MA_GIOI_TINH,
                                         cr282_ma_nhan_vien: "",
-                                        cr282_ma_tinh_tp: cbxMaKHNHD.Selected.MA_TINH,
+                                        cr282_ma_tinh_tp: cbxTinhNHD.Selected.MA_PHAMVI,
                                         cr282_moi_quan_he: "",
-                                        cr282_ngay_sinh: cbxMaKHNHD.Selected.NGAY_SINH,
+                                        cr282_ngay_sinh: dpNSinhNHD.SelectedDate,
                                         cr282_nhom: "",
                                         cr282_so_giay_to: cbxMaKHNHD.Selected.SO_GIAY_TO,
                                         cr282_phi_ndbh: Value(varPhiNDBH),
                                         edited: 0
                                     }
                                 )
+                            );
+                            If(
+                                ThisItem.edited=1,
+                                Set(modeMHNDBH,"1"),
+                                Set(modeMHNDBH,"0")
                             );
                             Navigate(NhapNDBH);
                         Size: =11
@@ -4578,7 +4590,8 @@
                             MA_GIAM_GIA: cbxMaGGNHD.Selected.MA_GIAM_GIA,
                             SO_TIEN_GIAM: Value(tiSTGiamNHD.Text),
                             TIEN_PHI_SAU_GIAM: Value(tiTienSauGiamNHD.Text),
-                            LOAI_HOP_DONG:ddLoaiHDNHD.Selected.value
+                            LOAI_HOP_DONG:ddLoaiHDNHD.Selected.value,
+                            TEN_KHACH_HANG_SAVED:cbxMaKHNHD.Selected.MA_KHACH_HANG
                         }
                     ),
                     UpdateIf(
@@ -4613,7 +4626,8 @@
                             MA_GIAM_GIA: cbxMaGGNHD.Selected.MA_GIAM_GIA,
                             SO_TIEN_GIAM: Value(tiSTGiamNHD.Text),
                             TIEN_PHI_SAU_GIAM: Value(tiTienSauGiamNHD.Text),
-                            LOAI_HOP_DONG:ddLoaiHDNHD.Selected.value
+                            LOAI_HOP_DONG:ddLoaiHDNHD.Selected.value,
+                            TEN_KHACH_HANG_SAVED:cbxMaKHNHD.Selected.MA_KHACH_HANG
                         }
                     )
                 );
@@ -4656,7 +4670,8 @@
                         MA_GIAM_GIA: cbxMaGGNHD.Selected.MA_GIAM_GIA,
                         SO_TIEN_GIAM: Value(tiSTGiamNHD.Text),
                         TIEN_PHI_SAU_GIAM: Value(tiTienSauGiamNHD.Text),
-                        LOAI_HOP_DONG:ddLoaiHDNHD.Selected.value
+                        LOAI_HOP_DONG:ddLoaiHDNHD.Selected.value,
+                        TEN_KHACH_HANG_SAVED:cbxMaKHNHD.Selected.MA_KHACH_HANG
                     }
                 );
                 Refresh(DL_HOP_DONG_TTOANS);
