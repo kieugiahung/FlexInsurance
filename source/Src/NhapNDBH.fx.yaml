@@ -126,7 +126,7 @@ NhapNDBH As screen:
                 BorderColor: =RGBA(245, 245, 245, 1)
                 DelayItemLoading: =true
                 Height: =221
-                Items: =SortByColumns(tmpDSNDBHNHDCollect,"cr282_id",SortOrder.Ascending)
+                Items: =SortByColumns(Filter(tmpDSNDBHNHDCollect,ID_HOPDONG_SP=idHopDongSPNDBH),"cr282_id",SortOrder.Ascending)
                 Layout: =Layout.Vertical
                 LoadingSpinner: =LoadingSpinner.Data
                 NavigationStep: =0
@@ -874,7 +874,6 @@ NhapNDBH As screen:
                     {
                         ID: idNDBH,
                         ID_HOPDONG_SP:idColSP,
-                        MA_HOP_DONG: varMaHD,
                         MA_SAN_PHAM: varMaSP,
                         MA_CHUONG_TRINH: varMaCT,
                         edited: 1

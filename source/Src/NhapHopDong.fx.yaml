@@ -55,6 +55,17 @@
                 )
             );
             ClearCollect(
+                tmpDSNDBHNHDCollect,
+                AddColumns(
+                    Filter(
+                        DL_HOP_DONG_SP_NDBH,
+                        MA_HOP_DONG=First(objHD).MA_HOP_DONG
+                    ),
+                    "edited",
+                    0
+                )
+            );
+            ClearCollect(
                 tmpDSHDSPLKNHDCollect,
                 Filter(
                     DL_HOP_DONG_LIENKETS,
@@ -1149,7 +1160,7 @@
                                 Or(maAddedHDSPNHD<>"",maUpdatedHDSPNHD<>""),
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
                                 Refresh(DL_HOP_DONG_SP_NDBH);
-                                RemoveIf(DL_HOP_DONG_SP_NDBH,ID_CHA=ThisItem.ID);
+                                RemoveIf(DL_HOP_DONG_SP_NDBH,ID_HOPDONG_SP=ThisItem.ID);
                                 Refresh(DL_HOP_DONG_SPS);
                                 RemoveIf(DL_HOP_DONG_SPS,ID=ThisItem.ID);
                                 RemoveIf(tmpDSHDSPNHDCollect,ID=ThisItem.ID);
@@ -1371,6 +1382,10 @@
                         OnSelect: |-
                             =If(
                                 ThisItem.ID=maAddedHDSPNHD,
+                                RemoveIf(
+                                    tmpDSNDBHNHDCollect,
+                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                                );
                                 Remove(tmpDSHDSPNHDCollect,ThisItem),
                                 UpdateIf(
                                     tmpDSHDSPNHDCollect,
@@ -1420,17 +1435,6 @@
                             Set(maCTNDBH,ThisItem.MA_CHUONG_TRINH);
                             Set(nhomTPNDBH,Concat(cbxNhomTPNHD.SelectedItems, Value,"|"));
                             Set(phiDCNDBH,tiPhiDCNHD.Text);
-                            ClearCollect(
-                                tmpDSNDBHNHDCollect,
-                                AddColumns(
-                                    Filter(
-                                        DL_HOP_DONG_SP_NDBH,
-                                        MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
-                                    ),
-                                    "edited",
-                                    0
-                                )
-                            );
                             If(
                                 cbxLoaiKHNHD.Selected.value="0" && IsBlank(ThisItem.AUTO_GEN_NDBH), 
                                 UpdateContext({
@@ -1511,7 +1515,6 @@
                                     {
                                         ID: idNDBH,
                                         ID_HOPDONG_SP: Value(ThisItem.ID),
-                                        MA_HOP_DONG: First(objHD).MA_HOP_DONG,
                                         MA_SAN_PHAM: ThisItem.MA_SAN_PHAM,
                                         MA_CHUONG_TRINH: ThisItem.MA_CHUONG_TRINH,
                                         MST: cbxMaKHNHD.Selected.MST,
