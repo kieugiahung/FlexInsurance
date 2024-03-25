@@ -1695,6 +1695,18 @@
                         DisplayMode: =If(ThisItem.edited=1,DisplayMode.Edit,DisplayMode.Disabled)
                         Format: =TextFormat.Number
                         Height: =32
+                        OnChange: |-
+                            =If(
+                                Value(tiPhiDCNHD.Text)<>ThisItem.PHI_DIEU_CHINH && !IsBlank(tiPhiDCNHD.Text) && Value(tiPhiDCNHD.Text)<>0,
+                                UpdateIf(
+                                    tmpMaCTChangeNHD,
+                                    ID=ThisItem.ID,
+                                    {
+                                        PHI_DIEU_CHINH:Value(tiPhiDCNHD.Text)*Value(tiSoNTGSPNHD.Text)
+                                    }
+                                )
+                            );
+                            Reset(tiTongPhiNHD);
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
