@@ -1107,7 +1107,18 @@
                         Height: =32
                         InputTextPlaceholder: =
                         Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM)
-                        OnChange: =Reset(cbxNhomTPNHD)
+                        OnChange: |-
+                            =If(
+                                cbxMaCTNHD.Selected.MA_CHUONG_TRINH<>ThisItem.MA_CHUONG_TRINH,
+                                UpdateIf(
+                                    tmpMaCTChangeNHD,
+                                    ID=ThisItem.ID,
+                                    {
+                                        NHOM_TINH_PHI:Blank()
+                                    }
+                                )
+                            );
+                            Reset(cbxNhomTPNHD);Reset(tiNhomTPNHD);Reset(tiNhomTPHideNHD)
                         SearchFields: =["cr282_ma_chuong_trinh"]
                         SearchItems: =Search(Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM),cbxMaCTNHD.SearchText,"cr282_ma_chuong_trinh")
                         SelectMultiple: =false
@@ -1133,11 +1144,12 @@
                                     tmpMaCTChangeNHD,
                                     ID=ThisItem.ID,
                                     {
-                                        MA_CHUONG_TRINH:Blank()
+                                        MA_CHUONG_TRINH:Blank(),
+                                        NHOM_TINH_PHI:Blank()
                                     }
                                 )
                             );
-                            Reset(cbxMaCTNHD);Reset(tiMaCTNHD)
+                            Reset(cbxMaCTNHD);Reset(tiMaCTNHD);Reset(cbxNhomTPNHD);Reset(tiNhomTPNHD);Reset(tiNhomTPHideNHD)
                         SearchFields: =["cr282_ma_san_pham"]
                         SearchItems: =Search(DL_SAN_PHAM,cbxMaSPNHD.SearchText,"cr282_ma_san_pham")
                         SelectMultiple: =false
@@ -1353,7 +1365,8 @@
                                     tmpMaCTChangeNHD,
                                     ID=ThisItem.ID,
                                     {
-                                        MA_CHUONG_TRINH:LookUp(tmpDSHDSPNHDCollect,ID=ThisItem.ID,MA_CHUONG_TRINH)
+                                        MA_CHUONG_TRINH:LookUp(tmpDSHDSPNHDCollect,ID=ThisItem.ID,MA_CHUONG_TRINH),
+                                        NHOM_TINH_PHI:LookUp(tmpDSHDSPNHDCollect,ID=ThisItem.ID,NHOM_TINH_PHI)
                                     }
                                 )
                             );
@@ -1561,10 +1574,18 @@
                     cbxNhomTPNHD As combobox:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         DefaultSelectedItems: |-
-                            =Filter(
-                                ["Nhóm chính","Nhóm bổ sung","Nhóm thai sản","Nha khoa/Chăm sóc răng","Ngoại trú","Nhóm thương tật, tử vong"],
-                                !IsBlank(Find(Value,ThisItem.NHOM_TINH_PHI)) &&
-                                !IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH)
+                            =If (
+                                ThisItem.edited=1,
+                                Filter(
+                                    ["Nhóm chính","Nhóm bổ sung","Nhóm thai sản","Nha khoa/Chăm sóc răng","Ngoại trú","Nhóm thương tật, tử vong"],
+                                    !IsBlank(Find(Value,tiNhomTPHideNHD.Text)) &&
+                                    !IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH)
+                                ),
+                                Filter(
+                                    ["Nhóm chính","Nhóm bổ sung","Nhóm thai sản","Nha khoa/Chăm sóc răng","Ngoại trú","Nhóm thương tật, tử vong"],
+                                    !IsBlank(Find(Value,ThisItem.NHOM_TINH_PHI)) &&
+                                    !IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH)
+                                )
                             )
                         DisplayFields: =["Value"]
                         Height: =32
@@ -1721,15 +1742,16 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
+                        Visible: =false
                         Width: =250
-                        X: =880
-                        Y: =66
+                        X: =672
+                        Y: =34
                         ZIndex: =27
 
                     tiNhomTPHideNHD As text:
                         Align: =Align.Right
                         BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =ThisItem.SONGUOI_THAMGIA
+                        Default: =LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,NHOM_TINH_PHI)
                         DisplayMode: =DisplayMode.Disabled
                         Height: =32
                         RadiusBottomLeft: =0
@@ -1737,9 +1759,10 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
+                        Visible: =false
                         Width: =250
-                        X: =199
-                        Y: =70
+                        X: =30
+                        Y: =102
                         ZIndex: =28
 
                 Button2_3 As button:
