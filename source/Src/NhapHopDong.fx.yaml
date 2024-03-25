@@ -1244,6 +1244,8 @@
                                         }
                                     )
                                 );
+                                Refresh(DL_HOP_DONG_SP_NDBH);
+                                Remo
                                 //Clone QLCT chuong trinh
                                 ForAll(
                                     tmpDSHDSPNHDCollect As sp,
@@ -1646,16 +1648,38 @@
                         Height: =32
                         OnChange: |-
                             =If(
+                                Value(tiPhiDCNHD.Text)=0,
+                                UpdateIf(
+                                    tmpMaCTChangeNHD,
+                                    ID=ThisItem.ID,
+                                    {
+                                        PHI_DIEU_CHINH:Blank()
+                                    }
+                                );
+                            );
+                            If(
+                                IsBlank(tiPhiDCNHD.Text) || Value(tiPhiDCNHD.Text)=0,
+                                UpdateContext({
+                                    tongPhiNDBH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,TONG_PHI_DANHSACH)
+                                });
+                                UpdateIf(
+                                    tmpMaCTChangeNHD,
+                                    ID=ThisItem.ID,
+                                    {
+                                        TONG_TIEN_PHI:tongPhiNDBH
+                                    }
+                                );
+                                Reset(tiTongPhiNHD),
                                 Value(tiPhiDCNHD.Text)<>ThisItem.PHI_DIEU_CHINH && !IsBlank(tiPhiDCNHD.Text) && Value(tiPhiDCNHD.Text)<>0,
                                 UpdateIf(
                                     tmpMaCTChangeNHD,
                                     ID=ThisItem.ID,
                                     {
-                                        PHI_DIEU_CHINH:Value(tiPhiDCNHD.Text)*Value(tiSoNTGSPNHD.Text)
+                                        TONG_TIEN_PHI:Value(tiPhiDCNHD.Text)*Value(tiSoNTGSPNHD.Text)
                                     }
-                                )
-                            );
-                            Reset(tiTongPhiNHD);
+                                );
+                                Reset(tiTongPhiNHD)
+                            )
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0

@@ -782,7 +782,8 @@ NhapNDBH As screen:
                         Sum(tmpDSNDBHNHDCollect,PHI_NDBH),
                         Value(phiDCNDBH)*CountIf(tmpDSNDBHNHDCollect,true)
                     ),
-                    SONGUOI_THAMGIA: CountIf(tmpDSNDBHNHDCollect,true)
+                    SONGUOI_THAMGIA: CountIf(tmpDSNDBHNHDCollect,true),
+                    TONG_PHI_DANHSACH:Sum(tmpDSNDBHNHDCollect,PHI_NDBH)
                 }
             );
             Set(varUnReloadNHD,"2");
@@ -868,7 +869,7 @@ NhapNDBH As screen:
                         Max(DL_HOP_DONG_SP_NDBH,ID) + 1
                     )
                 });
-                Patch(
+                Collect(
                     tmpDSNDBHNHDCollect,
                     {
                         ID: idNDBH,
