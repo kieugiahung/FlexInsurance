@@ -1384,7 +1384,8 @@
                                 ThisItem.ID=maAddedHDSPNHD,
                                 RemoveIf(
                                     tmpDSNDBHNHDCollect,
-                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG 
+                                    //&& ID_HOPDONG_SP=ThisItem.ID
                                 );
                                 Remove(tmpDSHDSPNHDCollect,ThisItem),
                                 UpdateIf(
@@ -1436,7 +1437,7 @@
                             Set(nhomTPNDBH,Concat(cbxNhomTPNHD.SelectedItems, Value,"|"));
                             Set(phiDCNDBH,tiPhiDCNHD.Text);
                             If(
-                                cbxLoaiKHNHD.Selected.value="0" && IsBlank(ThisItem.AUTO_GEN_NDBH), 
+                                cbxLoaiKHNHD.Selected.value="0" && IsBlank(LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,AUTO_GEN_NDBH)), 
                                 UpdateContext({
                                     varPhiNDBH: 0
                                 });
@@ -1504,17 +1505,17 @@
                                 UpdateContext(
                                     {
                                         idNDBH: If(
-                                            CountIf(DL_HOP_DONG_SP_NDBH,ID) = 0,
-                                            1,
+                                            CountIf(tmpDSNDBHNHDCollect,true)>0,
+                                            Max(tmpDSNDBHNHDCollect,ID) + 1,
                                             Max(DL_HOP_DONG_SP_NDBH,ID) + 1
                                         )
                                     }
                                 );
-                                Patch(
+                                Collect(
                                     tmpDSNDBHNHDCollect,
                                     {
                                         ID: idNDBH,
-                                        ID_HOPDONG_SP: Value(ThisItem.ID),
+                                        ID_HOPDONG_SP: ThisItem.ID,
                                         MA_SAN_PHAM: ThisItem.MA_SAN_PHAM,
                                         MA_CHUONG_TRINH: ThisItem.MA_CHUONG_TRINH,
                                         MST: cbxMaKHNHD.Selected.MST,
@@ -1813,6 +1814,10 @@
                                     ID:Text(maHDSP+1),
                                     edited:1
                                 }
+                            );
+                            ClearCollect(
+                                tmpMaCTChangeNHD,
+                                tmpDSHDSPNHDCollect
                             );
                             UpdateContext({
                                 maAddedHDSPNHD:Text(maHDSP+1),
