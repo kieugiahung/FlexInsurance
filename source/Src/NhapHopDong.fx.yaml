@@ -1193,6 +1193,8 @@
                                         TONG_TIEN_PHI:Value(tiTongPhiNHD.Text),
                                         NHOM_TINH_PHI:Concat(cbxNhomTPNHD.SelectedItems, Value,"|"),
                                         PHI_DIEU_CHINH:Value(tiPhiDCNHD.Text),
+                                        TONG_PHI_DANHSACH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,TONG_PHI_DANHSACH),
+                                        AUTO_GEN_NDBH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,AUTO_GEN_NDBH),
                                         edited:0
                                     }
                                 );
@@ -1218,7 +1220,9 @@
                                                 Value,
                                                 "|"
                                             ),
-                                            PHI_DIEU_CHINH:Value(tiPhiDCNHD.Text)
+                                            PHI_DIEU_CHINH:Value(tiPhiDCNHD.Text),
+                                            TONG_PHI_DANHSACH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,TONG_PHI_DANHSACH),
+                                            AUTO_GEN_NDBH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,AUTO_GEN_NDBH)
                                         }
                                     ),
                                     ThisItem.ID=maUpdatedHDSPNHD,
@@ -1240,12 +1244,42 @@
                                                 Value,
                                                 "|"
                                             ),
-                                            PHI_DIEU_CHINH:Value(tiPhiDCNHD.Text)
+                                            PHI_DIEU_CHINH:Value(tiPhiDCNHD.Text),
+                                            TONG_PHI_DANHSACH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,TONG_PHI_DANHSACH),
+                                            AUTO_GEN_NDBH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,AUTO_GEN_NDBH)
                                         }
                                     )
                                 );
                                 Refresh(DL_HOP_DONG_SP_NDBH);
-                                Remo
+                                RemoveIf(
+                                    DL_HOP_DONG_SP_NDBH,
+                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG
+                                );
+                                ForAll(
+                                    tmpDSNDBHNHDCollect As ds,
+                                    Patch(
+                                        DL_HOP_DONG_SP_NDBH,
+                                        {
+                                            ID:ds.ID,
+                                            MA_HOP_DONG:First(objHD).MA_HOP_DONG,
+                                            MA_SAN_PHAM:ThisItem.MA_SAN_PHAM,
+                                            MA_CHUONG_TRINH:ThisItem.MA_CHUONG_TRINH,
+                                            NHOM_TINH_PHI:ThisItem.NHOM_TINH_PHI,
+                                            TEN_NDBH:ds.TEN_NDBH,
+                                            MST:ds.MST,
+                                            DIA_CHI:ds.DIA_CHI,
+                                            MA_GIOI__TINH:ds.MA_GIOI__TINH,
+                                            MA_TINH_TP: ds.MA_TINH_TP,
+                                            MA_NHAN_VIEN: ds.MA_NHAN_VIEN,
+                                            MOI_QUAN_HE: ds.MOI_QUAN_HE,
+                                            NGAY_SINH: ds.NGAY_SINH,
+                                            NHOM: ds.NHOM,
+                                            SO_GIAY_TO: ds.SO_GIAY_TO,
+                                            PHI_NDBH: ds.PHI_NDBH,
+                                            ID_HOPDONG_SP:ThisItem.ID
+                                        }
+                                    )
+                                );
                                 //Clone QLCT chuong trinh
                                 ForAll(
                                     tmpDSHDSPNHDCollect As sp,
@@ -1493,6 +1527,13 @@
                                         PHI_NDBH: Value(varPhiNDBH),
                                         edited: 0
                                     }
+                                );
+                                UpdateIf(
+                                    tmpMaCTChangeNHD,
+                                    ID=ThisItem.ID,
+                                    {
+                                        AUTO_GEN_NDBH:"1"
+                                    }
                                 )
                             );
                             If(
@@ -1656,6 +1697,7 @@
                                         PHI_DIEU_CHINH:Blank()
                                     }
                                 );
+                                Reset(tiPhiDCNHD)
                             );
                             If(
                                 IsBlank(tiPhiDCNHD.Text) || Value(tiPhiDCNHD.Text)=0,
