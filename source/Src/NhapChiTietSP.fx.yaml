@@ -109,6 +109,7 @@
                 "cr282_id_giamphi",
                 "cr282_ma_san_pham",
                 "cr282_thong_tin",
+                "cr282_loai_tac_dong",
                 "cr282_mo_ta",
                 "cr282_so_tien",
                 "cr282_donvi_tien",
@@ -11972,10 +11973,10 @@
                                         {
                                             ID_GIAMPHI:ThisItem.cr282_id_giamphi,
                                             MA_SAN_PHAM:valMaSP,
-                                            THONG_TIN:TxtThongtin_1.Text,
+                                            THONG_TIN:CbxNhom_thongtin_2.Selected.MA_YEU_TO,
+                                            LOAI_TAC_DONG:ddLoaiTDNSP.Selected.value,
                                             MO_TA:TxtMota_2.Text,
                                             SO_TIEN:Value(TxtSo_tien_2.Text),
-                                            DONVI_TIEN: TxtDonvi_tien_2.Text,
                                             TY_LE:TxtTy_le_2.Text
                                         }
                                     ),
@@ -11983,11 +11984,11 @@
                                         DL_SAN_PHAM_GPS,
                                         ID_GIAMPHI=ThisItem.cr282_id_giamphi,
                                         {
-                                            THONG_TIN:TxtThongtin_1.Text,
+                                            THONG_TIN:CbxNhom_thongtin_2.Selected.MA_YEU_TO,
+                                            LOAI_TAC_DONG:ddLoaiTDNSP.Selected.value,
                                             MA_SAN_PHAM:valMaSP,
                                             MO_TA:TxtMota_2.Text,
                                             SO_TIEN:Value(TxtSo_tien_2.Text),
-                                            DONVI_TIEN: TxtDonvi_tien_2.Text,
                                             TY_LE:TxtTy_le_2.Text
                                         }
                                     )
@@ -11996,10 +11997,10 @@
                                     tmpGPCCollect,
                                     cr282_id_giamphi=ThisItem.cr282_id_giamphi,
                                     {
-                                            cr282_thong_tin:TxtThongtin_1.Text,
+                                            cr282_thong_tin:CbxNhom_thongtin_2.Selected.MA_YEU_TO,
+                                            cr282_loai_tac_dong:ddLoaiTDNSP.Selected.value,
                                             cr282_mo_ta:TxtMota_2.Text,
                                             cr282_so_tien:Value(TxtSo_tien_2.Text),
-                                            cr282_donvi_tien: TxtDonvi_tien_2.Text,
                                             cr282_ty_le:TxtTy_le_2.Text,
                                         edited:0
                                     }
@@ -12076,24 +12077,6 @@
                         X: =3
                         ZIndex: =21
 
-                    TxtThongtin_1 As text:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =ThisItem.cr282_thong_tin
-                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                        DisabledColor: =RGBA(0, 0, 0, 1)
-                        DisabledFill: =RGBA(255, 255, 255, 1)
-                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =30
-                        OnChange: =
-                        OnSelect: =Select(Parent)
-                        RadiusBottomLeft: =0
-                        RadiusBottomRight: =0
-                        RadiusTopLeft: =0
-                        RadiusTopRight: =0
-                        Size: =11
-                        Width: =205
-                        ZIndex: =22
-
                     TxtMota_2 As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         Default: =ThisItem.cr282_mo_ta
@@ -12131,27 +12114,8 @@
                         RadiusTopRight: =0
                         Size: =11
                         Width: =138
-                        X: =514
+                        X: =718
                         ZIndex: =24
-
-                    TxtDonvi_tien_2 As text:
-                        BorderColor: =RGBA(72, 163, 62, 1)
-                        Default: =ThisItem.cr282_donvi_tien
-                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
-                        DisabledColor: =RGBA(0, 0, 0, 1)
-                        DisabledFill: =RGBA(255, 255, 255, 1)
-                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
-                        Height: =30
-                        OnChange: =
-                        OnSelect: =Select(Parent)
-                        RadiusBottomLeft: =0
-                        RadiusBottomRight: =0
-                        RadiusTopLeft: =0
-                        RadiusTopRight: =0
-                        Size: =11
-                        Width: =205
-                        X: =652
-                        ZIndex: =25
 
                     TxtTy_le_2 As text:
                         BorderColor: =RGBA(72, 163, 62, 1)
@@ -12171,6 +12135,66 @@
                         Width: =191
                         X: =857
                         ZIndex: =26
+
+                    CbxNhom_thongtin_2 As combobox:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                        ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
+                        ChevronHoverBackground: =RGBA(255, 255, 255, 1)
+                        ChevronHoverFill: =RGBA(72, 163, 62, 1)
+                        DefaultSelectedItems: =LookUp(DM_YEUTO_AH_PHIS, MA_YEU_TO =ThisItem.cr282_thong_tin)
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayFields: =["cr282_ten_yeu_to"]
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
+                        HoverBorderColor: =RGBA(9, 33, 98, 1)
+                        HoverFill: =RGBA(180, 214, 250, 1)
+                        InputTextPlaceholder: =""
+                        IsSearchable: =false
+                        Items: =Filter(DM_YEUTO_AH_PHIS, LHNV = "Sức khoẻ")
+                        OnSelect: =Select(Parent)
+                        PressedColor: =RGBA(72, 163, 62, 1)
+                        PressedFill: =RGBA(255, 255, 255, 1)
+                        SearchFields: =["cr282_ten_yeu_to"]
+                        SearchItems: =[]
+                        SelectionColor: =RGBA(0, 0, 0, 1)
+                        SelectionFill: =RGBA(214, 221, 224, 1)
+                        SelectMultiple: =false
+                        Size: =11
+                        Width: =202
+                        X: =3
+                        ZIndex: =27
+
+                    ddLoaiTDNSP As dropdown:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                        ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
+                        ChevronHoverBackground: =RGBA(255, 255, 255, 1)
+                        ChevronHoverFill: =RGBA(72, 163, 62, 1)
+                        Default: |-
+                            =If(IsBlank(ThisItem.cr282_loai_tac_dong),"Giảm",LookUp([{title:"Tăng",value:"1"},{title:"Giảm",value:"0"}],value=ThisItem.cr282_loai_tac_dong,title))
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        Height: =30
+                        HoverBorderColor: =RGBA(9, 33, 98, 1)
+                        HoverFill: =RGBA(180, 214, 250, 1)
+                        Items: |-
+                            =[{title:"Tăng",value:"1"},{title:"Giảm",value:"0"}]
+                        PressedColor: =RGBA(72, 163, 62, 1)
+                        PressedFill: =RGBA(255, 255, 255, 1)
+                        SelectionColor: =RGBA(0, 0, 0, 1)
+                        SelectionFill: =RGBA(214, 221, 224, 1)
+                        Size: =11
+                        Width: =204
+                        X: =514
+                        ZIndex: =28
 
                 BadgeCanvas1_20 As Badge:
                     BasePaletteColor: =
@@ -12242,6 +12266,7 @@
                                     cr282_id_giamphi:Text(idMa),
                                     cr282_ma_san_pham:valMaSP,
                                     cr282_thong_tin:"",
+                                    cr282_loai_tac_dong:Blank(),
                                     cr282_mo_ta:"",
                                     cr282_so_tien:0,
                                     cr282_donvi_tien:"",
@@ -12261,12 +12286,12 @@
                     Align: ='TextCanvas.Align'.Center
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =34
+                    Height: =30
                     Size: =14
                     Text: ="Số tiền"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =136
-                    X: =520
+                    X: =720
                     Y: =86
                     ZIndex: =14
 
@@ -12274,12 +12299,12 @@
                     Align: ='TextCanvas.Align'.Center
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =31
+                    Height: =30
                     Size: =14
-                    Text: ="Đơn vị tiền"
+                    Text: ="Loại tác động"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =199
-                    X: =656
+                    Width: =150
+                    X: =540
                     Y: =86
                     ZIndex: =15
 
