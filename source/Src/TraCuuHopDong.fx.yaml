@@ -40,7 +40,7 @@ TraCuuHopDong As screen:
             tmpDSHDSPTCHDCollect,
             DL_HOP_DONG_SPS
         );
-        Reset(tiSoHDTCHD);Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTuTCHD);Reset(dpNgayHDDenTCHD);
+        Reset(cbxLoaiHDTCHD);Reset(tiSoHDTCHD);Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTuTCHD);Reset(dpNgayHDDenTCHD);
 
     Container8_3 As groupContainer.manualLayoutContainer:
         Height: =768
@@ -53,8 +53,8 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Đơn vị"
             Width: =130
-            X: =365
-            Y: =15
+            X: =20
+            Y: =81
             ZIndex: =3
 
         Label2_26 As label:
@@ -62,16 +62,16 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Mã sản phẩm"
             Width: =130
-            X: =690
-            Y: =15
+            X: =895
+            Y: =81
             ZIndex: =5
 
         Label2_27 As label:
             Height: =25
             Size: =11
             Text: ="Mã khách hàng"
-            X: =1010
-            Y: =15
+            X: =600
+            Y: =81
             ZIndex: =6
 
         Label2_28 As label:
@@ -79,8 +79,8 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Ngày HĐ từ"
             Width: =120
-            X: =365
-            Y: =81
+            X: =600
+            Y: =15
             ZIndex: =7
 
         Button6_17 As button:
@@ -95,6 +95,7 @@ TraCuuHopDong As screen:
                     tmpDSHDTCHDCollect,
                     Filter(
                         DL_HOP_DONGS,
+                        (IsBlank(cbxLoaiHDTCHD.Selected.value) || LOAI_HOP_DONG=cbxLoaiHDTCHD.Selected.value) &&
                         (IsBlank(tiSoHDTCHD.Text) || !IsBlank(Find(tiSoHDTCHD.Text,MA_HOP_DONG))) &&
                         (IsBlank(cbxMaDVTCHD.Selected.MA_DON_VI) || DONVI_QUANLY_HD=cbxMaDVTCHD.Selected.MA_DON_VI) &&
                         (IsBlank(cbxMaSPTCHD.Selected.MA_SAN_PHAM) || 
@@ -108,8 +109,8 @@ TraCuuHopDong As screen:
             Size: =10
             Text: ="Tra cứu"
             Width: =95
-            X: =1010
-            Y: =108
+            X: =1180
+            Y: =42
             ZIndex: =8
 
         Button6_18 As button:
@@ -159,11 +160,11 @@ TraCuuHopDong As screen:
                 UpdateContext({
                     ngayHD:Blank()
                 });
-                Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTuTCHD);
+                Reset(cbxLoaiHDTCHD);Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTuTCHD);
             Size: =10
             Text: ="Tải lại"
             Width: =95
-            X: =1124
+            X: =1180
             Y: =108
             ZIndex: =10
 
@@ -217,7 +218,7 @@ TraCuuHopDong As screen:
                 Size: =10
                 Tooltip: =
                 Width: =85
-                X: =267
+                X: =352
                 ZIndex: =30
 
             TiGHSLNam_5 As text:
@@ -236,7 +237,7 @@ TraCuuHopDong As screen:
                 RadiusTopRight: =0
                 Size: =10
                 Width: =94
-                X: =936
+                X: =1040
                 ZIndex: =35
 
             TiGHSTVu_4 As text:
@@ -258,7 +259,7 @@ TraCuuHopDong As screen:
                 RadiusTopRight: =0
                 Size: =10
                 Width: =88
-                X: =848
+                X: =952
                 ZIndex: =36
 
             TiGHSTNam_7 As text:
@@ -278,7 +279,7 @@ TraCuuHopDong As screen:
                 Size: =10
                 Tooltip: =Concat(Filter(dmSanPhamTCHDCollect,MA_SAN_PHAM in Distinct(Filter(tmpDSHDSPTCHDCollect,MA_HOP_DONG=ThisItem.MA_HOP_DONG),MA_SAN_PHAM)),TEN_SAN_PHAM,", ")
                 Width: =134
-                X: =714
+                X: =818
                 ZIndex: =37
 
             TiGHSTNgay_6 As text:
@@ -297,8 +298,8 @@ TraCuuHopDong As screen:
                 RadiusTopRight: =0
                 Size: =10
                 Tooltip: =Concatenate(ThisItem.MA_KENH_BAN," - ",ThisItem.TEN_KENH_BAN)
-                Width: =118
-                X: =473
+                Width: =127
+                X: =568
                 ZIndex: =38
 
             TiTenQLHTQLCTCT_11 As text:
@@ -318,7 +319,7 @@ TraCuuHopDong As screen:
                 Size: =10
                 Tooltip: =
                 Width: =95
-                X: =79
+                X: =164
                 ZIndex: =42
 
             TiTenQLHTQLCTCT_12 As text:
@@ -338,7 +339,7 @@ TraCuuHopDong As screen:
                 Size: =10
                 Tooltip: =
                 Width: =93
-                X: =174
+                X: =259
                 ZIndex: =43
 
             TiGHSTNam_6 As text:
@@ -358,7 +359,7 @@ TraCuuHopDong As screen:
                 Size: =10
                 Tooltip: =Concat(Distinct(Filter(dmSanPhamTCHDCollect,MA_SAN_PHAM in Distinct(Filter(tmpDSHDSPTCHDCollect,MA_HOP_DONG=ThisItem.MA_HOP_DONG),MA_SAN_PHAM)),LHNV),Value,", ")
                 Width: =123
-                X: =591
+                X: =695
                 ZIndex: =44
 
             TiTenQLHTQLCTCT_14 As text:
@@ -377,13 +378,14 @@ TraCuuHopDong As screen:
                 RadiusTopRight: =0
                 Size: =10
                 Tooltip: =ThisItem.TEN_KHACH_HANG
-                Width: =121
-                X: =352
+                Width: =131
+                X: =437
                 ZIndex: =45
 
             TiGHSLNam_6 As text:
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: ="Administrator"
+                Default: |-
+                    =LookUp([{title:"Lần đầu",value:"0"},{title:"Tái tục",value:"1"}],value=ThisItem.LOAI_HOP_DONG,title)
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -396,8 +398,8 @@ TraCuuHopDong As screen:
                 RadiusTopLeft: =0
                 RadiusTopRight: =0
                 Size: =10
-                Width: =103
-                X: =1030
+                Width: =85
+                X: =79
                 ZIndex: =46
 
             Button6_19 As button:
@@ -451,7 +453,7 @@ TraCuuHopDong As screen:
             Text: ="Mã đơn vị"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =68
-            X: =10
+            X: =8
             Y: =156
             ZIndex: =15
 
@@ -464,7 +466,7 @@ TraCuuHopDong As screen:
             Text: ="Ngày HĐ"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =59
-            X: =96
+            X: =180
             Y: =156
             ZIndex: =16
 
@@ -477,7 +479,7 @@ TraCuuHopDong As screen:
             Text: ="Số HĐ"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =77
-            X: =182
+            X: =266
             Y: =156
             ZIndex: =17
 
@@ -490,7 +492,7 @@ TraCuuHopDong As screen:
             Text: ="Mã khách hàng"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =66
-            X: =273
+            X: =357
             Y: =156
             ZIndex: =18
 
@@ -503,7 +505,7 @@ TraCuuHopDong As screen:
             Text: ="Kênh bán"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =66
-            X: =497
+            X: =600
             Y: =156
             ZIndex: =19
 
@@ -516,7 +518,7 @@ TraCuuHopDong As screen:
             Text: ="LHNV"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =81
-            X: =612
+            X: =715
             Y: =156
             ZIndex: =20
 
@@ -529,7 +531,7 @@ TraCuuHopDong As screen:
             Text: ="Sản phẩm"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =100
-            X: =732
+            X: =835
             Y: =156
             ZIndex: =21
 
@@ -542,7 +544,7 @@ TraCuuHopDong As screen:
             Text: ="Số tiền phí"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =75
-            X: =855
+            X: =958
             Y: =156
             ZIndex: =22
 
@@ -569,8 +571,8 @@ TraCuuHopDong As screen:
             SelectMultiple: =false
             Size: =11
             Width: =250
-            X: =365
-            Y: =42
+            X: =20
+            Y: =108
             ZIndex: =25
 
         dpNgayHDTuTCHD As datepicker:
@@ -583,8 +585,8 @@ TraCuuHopDong As screen:
             Size: =11
             StartYear: =1900
             Width: =250
-            X: =365
-            Y: =108
+            X: =600
+            Y: =42
             ZIndex: =27
 
         TextCanvas2_241 As Text:
@@ -596,7 +598,7 @@ TraCuuHopDong As screen:
             Text: ="Tên khách hàng"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =100
-            X: =361
+            X: =450
             Y: =156
             ZIndex: =30
 
@@ -609,7 +611,7 @@ TraCuuHopDong As screen:
             Text: ="Trạng thái"
             Weight: ='TextCanvas.Weight'.Bold
             Width: =65
-            X: =950
+            X: =1053
             Y: =156
             ZIndex: =31
 
@@ -619,10 +621,12 @@ TraCuuHopDong As screen:
             FontColor: =
             Height: =49
             Size: =12
-            Text: ="Người nhập"
+            Text: |-
+                ="Loại 
+                hợp đồng"
             Weight: ='TextCanvas.Weight'.Bold
-            Width: =86
-            X: =1038
+            Width: =80
+            X: =82
             Y: =156
             ZIndex: =32
 
@@ -631,7 +635,7 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Mã kênh bán"
             Width: =130
-            X: =40
+            X: =310
             Y: =81
             ZIndex: =33
 
@@ -645,8 +649,8 @@ TraCuuHopDong As screen:
             SelectMultiple: =false
             Size: =11
             Width: =250
-            X: =690
-            Y: =42
+            X: =895
+            Y: =108
             ZIndex: =35
 
         cbxMaKBTCHD As combobox:
@@ -659,7 +663,7 @@ TraCuuHopDong As screen:
             SelectMultiple: =false
             Size: =11
             Width: =250
-            X: =40
+            X: =310
             Y: =108
             ZIndex: =36
 
@@ -673,15 +677,15 @@ TraCuuHopDong As screen:
             SelectMultiple: =false
             Size: =11
             Width: =250
-            X: =1010
-            Y: =42
+            X: =600
+            Y: =108
             ZIndex: =37
 
         tiSoHDTCHD As text:
             Default: =
             Height: =32
             Width: =250
-            X: =40
+            X: =310
             Y: =42
             ZIndex: =38
 
@@ -690,7 +694,7 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Số hợp đồng"
             Width: =130
-            X: =40
+            X: =310
             Y: =15
             ZIndex: =39
 
@@ -699,8 +703,8 @@ TraCuuHopDong As screen:
             Size: =11
             Text: ="Ngày HĐ đến"
             Width: =120
-            X: =690
-            Y: =81
+            X: =895
+            Y: =15
             ZIndex: =40
 
         dpNgayHDDenTCHD As datepicker:
@@ -713,9 +717,36 @@ TraCuuHopDong As screen:
             Size: =11
             StartYear: =1900
             Width: =250
-            X: =690
-            Y: =108
+            X: =895
+            Y: =42
             ZIndex: =41
+
+        Label2_38 As label:
+            Height: =25
+            Size: =11
+            Text: ="Loại hợp đồng"
+            Width: =130
+            X: =20
+            Y: =15
+            ZIndex: =42
+
+        cbxLoaiHDTCHD As combobox:
+            Default: |-
+                ={title:"Lần đầu",value:"0"}
+            DisplayFields: =["title","cr282_ma_don_vi"]
+            Height: =32
+            InputTextPlaceholder: =""
+            IsSearchable: =false
+            Items: |-
+                =[{title:"Lần đầu",value:"0"},{title:"Tái tục",value:"1"}]
+            SearchFields: =["title"]
+            SearchItems: =[]
+            SelectMultiple: =false
+            Size: =11
+            Width: =250
+            X: =20
+            Y: =42
+            ZIndex: =43
 
     LeftNavigation_32 As LeftNavigation_9:
         Width: =LeftNavigation_32.MenuWidth - 10
