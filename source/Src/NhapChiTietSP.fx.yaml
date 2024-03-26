@@ -12103,8 +12103,26 @@
                                 !IsBlank(TxtSo_tien_2.Text) && !IsBlank(TxtTy_le_2.Text),
                                 Notify("Chỉ được nhập số tiền hoặc tỷ lệ", NotificationType.Error,2000),
                                 UpdateContext({
-                                    
-                            
+                                    genMoTaNSPGP:Concatenate(
+                                        ddLoaiTDNSP.Selected.title,
+                                        " ",
+                                        If(
+                                            !IsBlank(TxtSo_tien_2.Text),
+                                            Concatenate(
+                                                Text(Value(TxtSo_tien_2.Text),"#,###"),
+                                                " số tiền phí bảo hiểm "
+                                            ),
+                                            !IsBlank(TxtTy_le_2.Text),
+                                            Concatenate(
+                                                TxtTy_le_2.Text,
+                                                "% phí bảo hiểm "
+                                            )
+                                        ),
+                                        "đối với thông tin ",
+                                        Lower(cbxTTinNSPGP.Selected.TEN_YEU_TO),
+                                        " có giá trị ",
+                                        Lower(cbxGTriNSPGP.Selected.title)
+                                    )
                                 });
                                 If( 
                                     ThisItem.cr282_id_giamphi=maAddedGP,
@@ -12116,7 +12134,7 @@
                                             THONG_TIN:cbxTTinNSPGP.Selected.MA_YEU_TO,
                                             GIA_TRI:cbxGTriNSPGP.Selected.value,
                                             LOAI_TAC_DONG:ddLoaiTDNSP.Selected.value,
-                                            MO_TA:TxtMota_2.Text,
+                                            MO_TA:genMoTaNSPGP,
                                             SO_TIEN:Value(TxtSo_tien_2.Text),
                                             TY_LE:TxtTy_le_2.Text
                                         }
@@ -12129,7 +12147,7 @@
                                             GIA_TRI:cbxGTriNSPGP.Selected.value,
                                             LOAI_TAC_DONG:ddLoaiTDNSP.Selected.value,
                                             MA_SAN_PHAM:valMaSP,
-                                            MO_TA:TxtMota_2.Text,
+                                            MO_TA:genMoTaNSPGP,
                                             SO_TIEN:Value(TxtSo_tien_2.Text),
                                             TY_LE:TxtTy_le_2.Text
                                         }
@@ -12142,7 +12160,7 @@
                                             cr282_thong_tin:cbxTTinNSPGP.Selected.MA_YEU_TO,
                                             cr282_gia_tri:cbxGTriNSPGP.Selected.value,
                                             cr282_loai_tac_dong:ddLoaiTDNSP.Selected.value,
-                                            cr282_mo_ta:TxtMota_2.Text,
+                                            cr282_mo_ta:genMoTaNSPGP,
                                             cr282_so_tien:Value(TxtSo_tien_2.Text),
                                             cr282_ty_le:TxtTy_le_2.Text,
                                         edited:0
@@ -12230,6 +12248,7 @@
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =DisplayMode.Disabled
                         Height: =30
+                        MaxLength: =4000
                         OnChange: =
                         OnSelect: =Select(Parent)
                         RadiusBottomLeft: =0
