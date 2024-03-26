@@ -1473,14 +1473,15 @@
                                     MA_HOP_DONG=First(objHD).MA_HOP_DONG 
                                     && ID_HOPDONG_SP=ThisItem.ID
                                 );
-                                ForAll(
-                                    Filter(
-                                        DL_HOP_DONG_SP_NDBH,
-                                        MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
-                                    ) As ds,
-                                    Collect(
-                                        tmpDSNDBHNHDCollect,
-                                        ds
+                                Collect(
+                                    tmpDSNDBHNHDCollect,
+                                    AddColumns(
+                                        Filter(
+                                            DL_HOP_DONG_SP_NDBH,
+                                            MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                                        ),
+                                        "edited",
+                                        0
                                     )
                                 );
                                 UpdateIf(
@@ -1499,6 +1500,20 @@
                                     {
                                         MA_CHUONG_TRINH:LookUp(tmpDSHDSPNHDCollect,ID=ThisItem.ID,MA_CHUONG_TRINH),
                                         NHOM_TINH_PHI:LookUp(tmpDSHDSPNHDCollect,ID=ThisItem.ID,NHOM_TINH_PHI)
+                                    }
+                                );
+                                UpdateIf(
+                                    objHD,
+                                    true,
+                                    {
+                                        SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
+                                    }
+                                );
+                                UpdateIf(
+                                    DL_HOP_DONG_SPS,
+                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG,
+                                    {
+                                        SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
                                     }
                                 )
                             );
@@ -1536,9 +1551,9 @@
                                 IsEmpty(cbxNhomTPNHD.SelectedItems),
                                 Notify("Bắt buộc chọn nhóm tính phí",NotificationType.Error,2000),
                                 Set(idHopDongSPNDBH,ThisItem.ID);
-                                Set(maSPNDBH,ThisItem.MA_SAN_PHAM);
+                                Set(maSPNDBH,cbxMaSPNHD.Selected.MA_SAN_PHAM);
                                 Set(maHDNDBH,First(objHD).MA_HOP_DONG);
-                                Set(maCTNDBH,ThisItem.MA_CHUONG_TRINH);
+                                Set(maCTNDBH,cbxMaCTNHD.Selected.MA_CHUONG_TRINH);
                                 Set(nhomTPNDBH,Concat(cbxNhomTPNHD.SelectedItems, Value,"|"));
                                 Set(phiDCNDBH,tiPhiDCNHD.Text);
                                 If(
@@ -1621,6 +1636,7 @@
                                         {
                                             ID: idNDBH,
                                             ID_HOPDONG_SP: ThisItem.ID,
+                                            MA_HOP_DONG:First(objHD).MA_HOP_DONG,
                                             MA_SAN_PHAM: ThisItem.MA_SAN_PHAM,
                                             MA_CHUONG_TRINH: ThisItem.MA_CHUONG_TRINH,
                                             MST: cbxMaKHNHD.Selected.MST,

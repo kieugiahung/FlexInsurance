@@ -341,7 +341,7 @@ NhapNDBH As screen:
                         =If(
                             IsBlank(TxtTen_NDBH.Text),
                             Notify("Bắt buộc nhập tên người được bảo hiểm",NotificationType.Error,2000),
-                            CountIf(tmpDSNDBHNHDCollect,MST = ThisItem.MST && ID<>ThisItem.ID) > 1,
+                            CountIf(tmpDSNDBHNHDCollect,MST = TxtMST_NDBH.Text && ID<>ThisItem.ID && ID_HOPDONG_SP=idHopDongSPNDBH) > 0,
                             Notify("MST đã tồn tại trong danh sách",NotificationType.Error,2000),
                             UpdateContext({varPhiNDBH: 0});
                             UpdateContext({varTuoi: 0});
@@ -392,7 +392,9 @@ NhapNDBH As screen:
                             UpdateContext(
                                 {   
                                     varPhiNDBH: Sum(Filter(
-                                        DL_CHUONG_TRINH_BANG_PHIS,MA_SAN_PHAM = maSPNDBH && MA_CHUONG_TRINH = maCTNDBH && !IsBlank(Find(NHOM_TINH_PHI,nhomTPNDBH)) && 
+                                        DL_CHUONG_TRINH_BANG_PHIS,MA_SAN_PHAM = maSPNDBH && 
+                                        MA_CHUONG_TRINH = maCTNDBH && 
+                                        //!IsBlank(Find(NHOM_TINH_PHI,nhomTPNDBH)) && 
                                         (IsBlank(MA_PHAMVI_DIALY) || (!IsBlank(cbxTinhNHD.Selected.MA_PHAMVI) && MA_PHAMVI_DIALY = cbxTinhNHD.Selected.MA_PHAMVI)) && 
                                         (IsBlank(MA_GIOI_TINH) || (!IsBlank(cbxGTinhNHD.Selected.MA_GIOI_TINH) && MA_GIOI_TINH = cbxGTinhNHD.Selected.MA_GIOI_TINH)) && 
                                         (IsBlank(MA_DO_TUOI) || MA_DO_TUOI = LookUp(
@@ -457,7 +459,7 @@ NhapNDBH As screen:
                     HoverFill: =RGBA(56, 96, 178, 1)
                     OnSelect: |-
                         =If(
-                            ThisItem.ID=maAddedNDBH,
+                            ThisItem.ID=Value(maAddedNDBH),
                             Remove(tmpDSNDBHNHDCollect,ThisItem),
                             UpdateIf(
                                 tmpDSNDBHNHDCollect,
@@ -862,6 +864,7 @@ NhapNDBH As screen:
                     tmpDSNDBHNHDCollect,
                     {
                         ID: idNDBH,
+                        MA_HOP_DONG:maHDNDBH,
                         ID_HOPDONG_SP:idHopDongSPNDBH,
                         MA_SAN_PHAM: maSPNDBH,
                         MA_CHUONG_TRINH: maCTNDBH,
