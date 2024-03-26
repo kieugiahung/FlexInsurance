@@ -706,6 +706,7 @@
                                     DL_HOP_DONG_SPS,
                                     MA_HOP_DONG=First(objHD).MA_HOP_DONG,
                                     {
+                                        AUTO_GEN_NDBH:Blank(),
                                         SONGUOI_THAMGIA:0,
                                         TONG_TIEN_PHI:0,
                                         TONG_PHI_DANHSACH:0
@@ -1225,6 +1226,7 @@
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
                                 Refresh(DL_HOP_DONG_SP_NDBH);
                                 RemoveIf(DL_HOP_DONG_SP_NDBH,ID_HOPDONG_SP=ThisItem.ID);
+                                RemoveIf(tmpDSNDBHNHDCollect,ID_HOPDONG_SP=ThisItem.ID);
                                 Refresh(DL_HOP_DONG_SPS);
                                 RemoveIf(DL_HOP_DONG_SPS,ID=ThisItem.ID);
                                 RemoveIf(tmpDSHDSPNHDCollect,ID=ThisItem.ID);
@@ -1232,6 +1234,13 @@
                                 UpdateIf(
                                     objHD,
                                     true,
+                                    {
+                                        SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
+                                    }
+                                );
+                                UpdateIf(
+                                    DL_HOP_DONG_SPS,
+                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG,
                                     {
                                         SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
                                     }
