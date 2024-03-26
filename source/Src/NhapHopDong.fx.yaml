@@ -1598,6 +1598,7 @@
                                             AUTO_GEN_NDBH
                                         )
                                     ) && ThisItem.edited = 1,
+                                    /* 
                                     UpdateContext({varPhiNDBH: 0});
                                     UpdateContext({varTuoi: 0});
                                     UpdateContext({varDVTuoi: 0});
@@ -1670,7 +1671,7 @@
                                                 PHI_BH
                                             )
                                         }
-                                    );
+                                    );*/
                                     //Lay phi chuong trinh
                             UpdateContext(
                                         {
@@ -1708,7 +1709,7 @@
                                             NGAY_SINH: dpNSinhNHD.SelectedDate,
                                             NHOM: "",
                                             SO_GIAY_TO: cbxMaKHNHD.Selected.SO_GIAY_TO,
-                                            PHI_NDBH: Value(varPhiNDBH),
+                                            PHI_NDBH: Blank(),
                                             edited: 0
                                         }
                                     );
@@ -1719,6 +1720,7 @@
                                     )
                                 );
                             	//tinh lai phi neu thay doi san pham, ctrinh hoac nhom tinh phi
+                                /*
                                 UpdateContext(
                                     {
                                         objChangeNDBH: First(
@@ -1728,7 +1730,7 @@
                                             )
                                         )
                                     }
-                                );
+                                );*/
                                 ClearCollect(
                                     tmpTinhLaiPhiNDBHCollect,
                                     {
@@ -1745,6 +1747,7 @@
                                     }
                                 );
                                 Clear(tmpKQPhiNDBHCollect);
+                                /*
                                 ClearCollect(
                                     changeNhomTPNDBH,
                                     {
@@ -1778,7 +1781,7 @@
                                     )
                                 );
                                 If(
-                                    objChangeNDBH.MA_SAN_PHAM<>maSPNDBH || objChangeNDBH.MA_CHUONG_TRINH<>maCTNDBH || First(changeNhomTPNDBH).check,
+                                    objChangeNDBH.MA_SAN_PHAM<>maSPNDBH || objChangeNDBH.MA_CHUONG_TRINH<>maCTNDBH || First(changeNhomTPNDBH).check,*/
                                     ForAll(
                                         Filter(
                             				tmpDSNDBHNHDCollect,
@@ -1880,23 +1883,23 @@
                                             }
                                         );
                             			//Lay phi chuong trinh
-                                    Collect(
-                                        tmpKQPhiNDBHCollect,
-                                        {
-                                            ID:ds.ID,
-                                            PHI_NDBH:First(tmpTinhLaiPhiNDBHCollect).varPhiNDBHCol
-                                        }
+                                        Collect(
+                                            tmpKQPhiNDBHCollect,
+                                            {
+                                                ID:ds.ID,
+                                                PHI_NDBH:First(tmpTinhLaiPhiNDBHCollect).varPhiNDBHCol
+                                            }
+                                        );
+                                        UpdateIf(
+                                            tmpTinhLaiPhiNDBHCollect,
+                                            true,
+                                            {
+                                                varPhiNDBHCol:0,
+                                                varTuoiCol:0,
+                                                varDVTuoiCol:0
+                                            }
+                                        )
                                     );
-                                    UpdateIf(
-                                        tmpTinhLaiPhiNDBHCollect,
-                                        true,
-                                        {
-                                            varPhiNDBHCol:0,
-                                            varTuoiCol:0,
-                                            varDVTuoiCol:0
-                                        }
-                                    )
-                                );
                                     ForAll(
                                         tmpKQPhiNDBHCollect As ds,
                                         UpdateIf(
@@ -1906,10 +1909,10 @@
                                                 PHI_NDBH:ds.PHI_NDBH
                                             }
                                         )
-                                    )
-                                );
+                                    );
+                                //);
                                 // end tinh lai phi neu thay doi san pham, ctrinh hoac nhom tinh phi
-                            If(
+                                If(
                                     ThisItem.edited = 1,
                                     Set(
                                         modeMHNDBH,
@@ -1921,7 +1924,6 @@
                                     )
                                 );
                                 Navigate(NhapNDBH);
-                                
                             )
                         Size: =11
                         Underline: =true

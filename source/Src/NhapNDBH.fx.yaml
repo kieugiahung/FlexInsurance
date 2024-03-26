@@ -763,7 +763,19 @@ NhapNDBH As screen:
         HoverBorderColor: =RGBA(0, 0, 0, 0)
         HoverFill: =RGBA(56, 96, 178, 1)
         OnSelect: |-
-            =UpdateIf(
+            =If(
+                maAddedNDBH<>"",
+                RemoveIf(tmpDSNDBHNHDCollect,ID=Value(maAddedNDBH)),
+                maUpdatedNDBH<>"",
+                UpdateIf(
+                    tmpDSNDBHNHDCollect,
+                    ID=Value(maUpdatedNDBH),
+                    {
+                        edited:0
+                    }
+                )
+            );
+            UpdateIf(
                 tmpMaCTChangeNHD,
                 ID = idHopDongSPNDBH,
                 {
