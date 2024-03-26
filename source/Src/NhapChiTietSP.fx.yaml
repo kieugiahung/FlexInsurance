@@ -93,7 +93,134 @@
                 maUpdatedDKC: ""
             }
         );
-        
+        // lay datasource cho GIAM_PHI
+        ClearCollect(
+            tmpDMGTriNSPGPCollect,
+            AddColumns(
+        		RenameColumns(
+        			ShowColumns(
+        				DM_GIOI_TINHS,
+        				"cr282_ma_gioi_tinh",
+        				"cr282_ten_gioi_tinh"
+        			),
+        			"cr282_ma_gioi_tinh",
+        			"value",
+        			"cr282_ten_gioi_tinh",
+        			"title"
+        		),
+        		"type",
+        		"Giới tính"
+            )
+        );
+        Collect(
+        	tmpDMGTriNSPGPCollect,	
+        	AddColumns(
+        		RenameColumns(
+        			ShowColumns(
+        				DM_DO_TUOIS,
+        				"cr282_ma_do_tuoi",
+        				"cr282_mo_ta"
+        			),
+        			"cr282_ma_do_tuoi",
+        			"value",
+        			"cr282_mo_ta",
+        			"title"
+        		),
+        		"type",
+        		"Độ tuổi"
+            )
+        );
+        Collect(
+        	tmpDMGTriNSPGPCollect,
+        	AddColumns(
+        		RenameColumns(
+        			ShowColumns(
+        				BH_DM_NGANHNGHES,
+        				"cr282_ma_nhom_nganh",
+        				"cr282_ten_nganh"
+        			),
+        			"cr282_ma_nhom_nganh",
+        			"value",
+        			"cr282_ten_nganh",
+        			"title"
+        		),
+        		"type",
+        		"Ngành nghề"
+            )
+        );
+        Collect(
+        	tmpDMGTriNSPGPCollect,
+        	AddColumns(
+        		RenameColumns(
+        			ShowColumns(
+        				BH_DM_PT_DONG,
+        				"cr282_id",
+        				"cr282_ten_pt"
+        			),
+        			"cr282_id",
+        			"value",
+        			"cr282_ten_pt",
+        			"title"
+        		),
+        		"type",
+        		"Phương thức đóng phí"
+            )
+        );
+        Collect(
+        	tmpDMGTriNSPGPCollect,
+        	AddColumns(
+        		RenameColumns(
+        			ShowColumns(
+        				BH_DM_SOTIEN,
+        				"cr282_id",
+        				"cr282_ten_sotien"
+        			),
+        			"cr282_id",
+        			"value",
+        			"cr282_ten_sotien",
+        			"title"
+        		),
+        		"type",
+        		"Số tiền bảo hiểm"
+            )
+        );
+        Collect(
+        	tmpDMGTriNSPGPCollect,
+        	AddColumns(
+        		RenameColumns(
+        			ShowColumns(
+        				BH_DM_SONGUOI,
+        				"cr282_id",
+        				"cr282_ten_so_nguoi"
+        			),
+        			"cr282_id",
+        			"value",
+        			"cr282_ten_so_nguoi",
+        			"title"
+        		),
+        		"type",
+        		"Số người được BH"
+            )
+        );
+        Collect(
+        	tmpDMGTriNSPGPCollect,
+        	AddColumns(
+        		RenameColumns(
+        			ShowColumns(
+        				BH_DM_THOIHAN,
+        				"cr282_id",
+        				"cr282_ten_thoi_han"
+        			),
+        			"cr282_id",
+        			"value",
+        			"cr282_ten_thoi_han",
+        			"title"
+        		),
+        		"type",
+        		"Thời hạn bảo hiểm"
+            )
+        );
+        // end lay datasource cho GIAM_PHI
         ClearCollect(
             tmpGPCCollect,
             ShowColumns(
@@ -109,6 +236,7 @@
                 "cr282_id_giamphi",
                 "cr282_ma_san_pham",
                 "cr282_thong_tin",
+                "cr282_gia_tri",
                 "cr282_loai_tac_dong",
                 "cr282_mo_ta",
                 "cr282_so_tien",
@@ -11968,17 +12096,25 @@
                             =If(
                                 IsBlank(cbxTTinNSPGP.Selected.MA_YEU_TO),
                                 Notify("Bắt buộc nhập thông tin", NotificationType.Error,2000),
+                                IsBlank(cbxGTriNSPGP.Selected.value),
+                                Notify("Bắt buộc nhập giá trị", NotificationType.Error,2000),
                                 IsBlank(TxtSo_tien_2.Text) && IsBlank(TxtTy_le_2.Text),
                                 Notify("Bắt buộc nhập số tiền hoặc tỷ lệ", NotificationType.Error,2000),
                                 !IsBlank(TxtSo_tien_2.Text) && !IsBlank(TxtTy_le_2.Text),
                                 Notify("Chỉ được nhập số tiền hoặc tỷ lệ", NotificationType.Error,2000),
-                                If( ThisItem.cr282_id_giamphi=maAddedGP,
+                                UpdateContext({
+                                    
+                            
+                                });
+                                If( 
+                                    ThisItem.cr282_id_giamphi=maAddedGP,
                                     Patch(
                                         DL_SAN_PHAM_GPS,
                                         {
                                             ID_GIAMPHI:ThisItem.cr282_id_giamphi,
                                             MA_SAN_PHAM:valMaSP,
                                             THONG_TIN:cbxTTinNSPGP.Selected.MA_YEU_TO,
+                                            GIA_TRI:cbxGTriNSPGP.Selected.value,
                                             LOAI_TAC_DONG:ddLoaiTDNSP.Selected.value,
                                             MO_TA:TxtMota_2.Text,
                                             SO_TIEN:Value(TxtSo_tien_2.Text),
@@ -11990,6 +12126,7 @@
                                         ID_GIAMPHI=ThisItem.cr282_id_giamphi,
                                         {
                                             THONG_TIN:cbxTTinNSPGP.Selected.MA_YEU_TO,
+                                            GIA_TRI:cbxGTriNSPGP.Selected.value,
                                             LOAI_TAC_DONG:ddLoaiTDNSP.Selected.value,
                                             MA_SAN_PHAM:valMaSP,
                                             MO_TA:TxtMota_2.Text,
@@ -12003,6 +12140,7 @@
                                     cr282_id_giamphi=ThisItem.cr282_id_giamphi,
                                     {
                                             cr282_thong_tin:cbxTTinNSPGP.Selected.MA_YEU_TO,
+                                            cr282_gia_tri:cbxGTriNSPGP.Selected.value,
                                             cr282_loai_tac_dong:ddLoaiTDNSP.Selected.value,
                                             cr282_mo_ta:TxtMota_2.Text,
                                             cr282_so_tien:Value(TxtSo_tien_2.Text),
@@ -12026,6 +12164,7 @@
                                     "cr282_id_giamphi",
                                     "cr282_ma_san_pham",
                                     "cr282_thong_tin",
+                                    "cr282_gia_tri",
                                     "cr282_loai_tac_dong",
                                     "cr282_mo_ta",
                                     "cr282_so_tien",
@@ -12098,8 +12237,8 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =246
-                        X: =798
+                        Width: =383
+                        X: =666
                         ZIndex: =23
 
                     TxtSo_tien_2 As text:
@@ -12119,8 +12258,8 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =123
-                        X: =582
+                        Width: =98
+                        X: =508
                         ZIndex: =24
 
                     TxtTy_le_2 As text:
@@ -12139,8 +12278,8 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =93
-                        X: =705
+                        Width: =60
+                        X: =606
                         ZIndex: =26
 
                     cbxTTinNSPGP As combobox:
@@ -12163,54 +12302,6 @@
                         InputTextPlaceholder: =""
                         IsSearchable: =false
                         Items: =Filter(DM_YEUTO_AH_PHIS, LHNV = "Sức khoẻ")
-                        OnChange: |-
-                            =If(
-                                cbxTTinNSPGP.Selected.TEN_YEU_TO="Giới tính",
-                                ClearCollect(
-                                    tmpDMGTriNSPGPCollect,
-                                    RenameColumns(
-                                        ShowColumns(
-                                            DM_GIOI_TINHS,
-                                            "cr282_ma_gioi_tinh",
-                                            "cr282_ten_gioi_tinh"
-                                        ),
-                                        "cr282_ma_gioi_tinh",
-                                        "value",
-                                        "cr282_ten_gioi_tinh",
-                                        "title"
-                                    )
-                                ),
-                                cbxTTinNSPGP.Selected.TEN_YEU_TO="Độ tuổi",
-                                ClearCollect(
-                                    tmpDMGTriNSPGPCollect,
-                                    RenameColumns(
-                                        ShowColumns(
-                                            DM_DO_TUOIS,
-                                            "cr282_ma_do_tuoi",
-                                            "cr282_mo_ta"
-                                        ),
-                                        "cr282_ma_do_tuoi",
-                                        "value",
-                                        "cr282_mo_ta",
-                                        "title"
-                                    )
-                                ),
-                                cbxTTinNSPGP.Selected.TEN_YEU_TO="Ngành nghề",
-                                ClearCollect(
-                                    tmpDMGTriNSPGPCollect,
-                                    RenameColumns(
-                                        ShowColumns(
-                                            BH_DM_NGANHNGHES,
-                                            "cr282_ma_do_tuoi",
-                                            "cr282_mo_ta"
-                                        ),
-                                        "cr282_ma_do_tuoi",
-                                        "value",
-                                        "cr282_mo_ta",
-                                        "title"
-                                    )
-                                )
-                            )
                         OnSelect: =Select(Parent)
                         PressedColor: =RGBA(72, 163, 62, 1)
                         PressedFill: =RGBA(255, 255, 255, 1)
@@ -12220,7 +12311,7 @@
                         SelectionFill: =RGBA(214, 221, 224, 1)
                         SelectMultiple: =false
                         Size: =11
-                        Width: =202
+                        Width: =200
                         X: =3
                         ZIndex: =27
 
@@ -12247,8 +12338,8 @@
                         SelectionColor: =RGBA(0, 0, 0, 1)
                         SelectionFill: =RGBA(214, 221, 224, 1)
                         Size: =11
-                        Width: =103
-                        X: =479
+                        Width: =85
+                        X: =423
                         ZIndex: =28
 
                     cbxGTriNSPGP As combobox:
@@ -12259,29 +12350,28 @@
                         ChevronFill: =RGBA(72, 163, 62, 1)
                         ChevronHoverBackground: =RGBA(255, 255, 255, 1)
                         ChevronHoverFill: =RGBA(72, 163, 62, 1)
-                        DefaultSelectedItems: =LookUp(DM_YEUTO_AH_PHIS, MA_YEU_TO =ThisItem.cr282_thong_tin)
+                        DefaultSelectedItems: =LookUp(tmpDMGTriNSPGPCollect,type=cbxTTinNSPGP.Selected.TEN_YEU_TO && value=ThisItem.cr282_gia_tri)
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
-                        DisplayFields: =["cr282_ten_yeu_to"]
+                        DisplayFields: =["title"]
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Height: =30
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)
                         InputTextPlaceholder: =""
-                        IsSearchable: =false
-                        Items: =Filter(DM_YEUTO_AH_PHIS, LHNV = "Sức khoẻ")
+                        Items: =SortByColumns(Filter(tmpDMGTriNSPGPCollect,type=cbxTTinNSPGP.Selected.TEN_YEU_TO),"value",SortOrder.Ascending)
                         OnSelect: =Select(Parent)
                         PressedColor: =RGBA(72, 163, 62, 1)
                         PressedFill: =RGBA(255, 255, 255, 1)
-                        SearchFields: =["cr282_ten_yeu_to"]
-                        SearchItems: =[]
+                        SearchFields: =["title"]
+                        SearchItems: =Search(SortByColumns(Filter(tmpDMGTriNSPGPCollect,type=cbxTTinNSPGP.Selected.TEN_YEU_TO),"value",SortOrder.Ascending),cbxGTriNSPGP.SearchText,"title")
                         SelectionColor: =RGBA(0, 0, 0, 1)
                         SelectionFill: =RGBA(214, 221, 224, 1)
                         SelectMultiple: =false
                         Size: =11
-                        Width: =274
-                        X: =205
+                        Width: =220
+                        X: =203
                         ZIndex: =29
 
                 BadgeCanvas1_20 As Badge:
@@ -12318,7 +12408,7 @@
                     Text: ="Mô tả"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =102
-                    X: =870
+                    X: =810
                     Y: =86
                     ZIndex: =4
 
@@ -12356,9 +12446,8 @@
                                     cr282_thong_tin:"",
                                     cr282_loai_tac_dong:Blank(),
                                     cr282_mo_ta:"",
-                                    cr282_so_tien:0,
-                                    cr282_donvi_tien:"",
-                                    cr282_donvi_ty_le:"",
+                                    cr282_so_tien:Blank(),
+                                    cr282_ty_le:Blank(),
                                     edited:1
                                 }
                             );
@@ -12378,8 +12467,8 @@
                     Size: =14
                     Text: ="Số tiền"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =110
-                    X: =587
+                    Width: =70
+                    X: =524
                     Y: =86
                     ZIndex: =14
 
@@ -12391,8 +12480,8 @@
                     Size: =14
                     Text: ="Loại tác động"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =110
-                    X: =477
+                    Width: =105
+                    X: =410
                     Y: =86
                     ZIndex: =15
 
@@ -12405,7 +12494,7 @@
                     Text: ="Tỷ lệ"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =70
-                    X: =716
+                    X: =602
                     Y: =86
                     ZIndex: =16
 
@@ -12468,7 +12557,7 @@
                     Text: ="Giá trị"
                     Weight: ='TextCanvas.Weight'.Bold
                     Width: =102
-                    X: =288
+                    X: =248
                     Y: =86
                     ZIndex: =19
 
