@@ -112,7 +112,6 @@
                 "cr282_loai_tac_dong",
                 "cr282_mo_ta",
                 "cr282_so_tien",
-                "cr282_donvi_tien",
                 "cr282_ty_le",
                 "edited"
             )
@@ -12021,9 +12020,9 @@
                                     "cr282_id_giamphi",
                                     "cr282_ma_san_pham",
                                     "cr282_thong_tin",
+                                    "cr282_loai_tac_dong",
                                     "cr282_mo_ta",
                                     "cr282_so_tien",
-                                    "cr282_donvi_tien",
                                     "cr282_ty_le",
                                     "edited"
                                     )
@@ -12177,11 +12176,11 @@
                         ChevronFill: =RGBA(72, 163, 62, 1)
                         ChevronHoverBackground: =RGBA(255, 255, 255, 1)
                         ChevronHoverFill: =RGBA(72, 163, 62, 1)
-                        Default: |-
-                            =If(IsBlank(ThisItem.cr282_loai_tac_dong),"Giảm",LookUp([{title:"Tăng",value:"1"},{title:"Giảm",value:"0"}],value=ThisItem.cr282_loai_tac_dong,title))
+                        Default: =If(IsBlank(ThisItem.cr282_loai_tac_dong) || ThisItem.cr282_loai_tac_dong="0","Giảm","Tăng")
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
                         Height: =30
                         HoverBorderColor: =RGBA(9, 33, 98, 1)
                         HoverFill: =RGBA(180, 214, 250, 1)

@@ -1324,6 +1324,13 @@
                                         }
                                     )
                                 );
+                                UpdateIf(
+                                    DL_HOP_DONGS,
+                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG,
+                                    {
+                                        SO_NGUOI_TGIA:Value(tiSoNTGNHD.Text)
+                                    }
+                                );
                                 //Clone QLCT chuong trinh
                                 ForAll(
                                     tmpDSHDSPNHDCollect As sp,
@@ -1418,13 +1425,31 @@
                                 RemoveIf(
                                     tmpDSNDBHNHDCollect,
                                     MA_HOP_DONG=First(objHD).MA_HOP_DONG 
-                                    //&& ID_HOPDONG_SP=ThisItem.ID
+                                    && ID_HOPDONG_SP=ThisItem.ID
                                 );
                                 Remove(tmpDSHDSPNHDCollect,ThisItem),
+                                RemoveIf(
+                                    tmpDSNDBHNHDCollect,
+                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG 
+                                    && ID_HOPDONG_SP=ThisItem.ID
+                                );
+                                ForAll(
+                                    Filter(
+                                        DL_HOP_DONG_SP_NDBH,
+                                        MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                                    ) As ds,
+                                    Collect(
+                                        tmpDSNDBHNHDCollect,
+                                        ds
+                                    )
+                                );
                                 UpdateIf(
                                     tmpDSHDSPNHDCollect,
                                     ID=ThisItem.ID,
                                     {
+                                        SONGUOI_THAMGIA:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,SONGUOI_THAMGIA),
+                                        TONG_TIEN_PHI:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,TONG_TIEN_PHI),
+                                        TONG_PHI_DANHSACH:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,TONG_PHI_DANHSACH),
                                         edited:0
                                     }
                                 );
