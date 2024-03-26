@@ -11965,14 +11965,20 @@
                     Btn_LuuCT_5 As button:
                         Height: =25
                         OnSelect: |
-                            =
+                            =If(
+                                IsBlank(cbxTTinNSPGP.Selected.MA_YEU_TO),
+                                Notify("Bắt buộc nhập thông tin", NotificationType.Error,2000),
+                                IsBlank(TxtSo_tien_2.Text) && IsBlank(TxtTy_le_2.Text),
+                                Notify("Bắt buộc nhập số tiền hoặc tỷ lệ", NotificationType.Error,2000),
+                                !IsBlank(TxtSo_tien_2.Text) && !IsBlank(TxtTy_le_2.Text),
+                                Notify("Chỉ được nhập số tiền hoặc tỷ lệ", NotificationType.Error,2000),
                                 If( ThisItem.cr282_id_giamphi=maAddedGP,
                                     Patch(
                                         DL_SAN_PHAM_GPS,
                                         {
                                             ID_GIAMPHI:ThisItem.cr282_id_giamphi,
                                             MA_SAN_PHAM:valMaSP,
-                                            THONG_TIN:CbxNhom_thongtin_2.Selected.MA_YEU_TO,
+                                            THONG_TIN:cbxTTinNSPGP.Selected.MA_YEU_TO,
                                             LOAI_TAC_DONG:ddLoaiTDNSP.Selected.value,
                                             MO_TA:TxtMota_2.Text,
                                             SO_TIEN:Value(TxtSo_tien_2.Text),
@@ -11983,7 +11989,7 @@
                                         DL_SAN_PHAM_GPS,
                                         ID_GIAMPHI=ThisItem.cr282_id_giamphi,
                                         {
-                                            THONG_TIN:CbxNhom_thongtin_2.Selected.MA_YEU_TO,
+                                            THONG_TIN:cbxTTinNSPGP.Selected.MA_YEU_TO,
                                             LOAI_TAC_DONG:ddLoaiTDNSP.Selected.value,
                                             MA_SAN_PHAM:valMaSP,
                                             MO_TA:TxtMota_2.Text,
@@ -11996,7 +12002,7 @@
                                     tmpGPCCollect,
                                     cr282_id_giamphi=ThisItem.cr282_id_giamphi,
                                     {
-                                            cr282_thong_tin:CbxNhom_thongtin_2.Selected.MA_YEU_TO,
+                                            cr282_thong_tin:cbxTTinNSPGP.Selected.MA_YEU_TO,
                                             cr282_loai_tac_dong:ddLoaiTDNSP.Selected.value,
                                             cr282_mo_ta:TxtMota_2.Text,
                                             cr282_so_tien:Value(TxtSo_tien_2.Text),
@@ -12004,7 +12010,7 @@
                                         edited:0
                                     }
                                 );
-                                Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
+                                Notify("Lưu dữ liệu thành công", NotificationType.Success,2000);
                                 ClearCollect(
                                     tmpGPCCollect,
                                     ShowColumns(
@@ -12030,7 +12036,8 @@
                                 UpdateContext({
                                     maAddedGP:"",
                                     maUpdatedGP:""
-                                });
+                                })
+                            )
                         Size: =11
                         Text: ="Lưu"
                         Visible: =ThisItem.edited=1
@@ -12082,7 +12089,7 @@
                         DisabledBorderColor: =RGBA(180, 214, 250, 1)
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
-                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        DisplayMode: =DisplayMode.Disabled
                         Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
@@ -12091,8 +12098,8 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =309
-                        X: =205
+                        Width: =246
+                        X: =798
                         ZIndex: =23
 
                     TxtSo_tien_2 As text:
@@ -12112,8 +12119,8 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =138
-                        X: =718
+                        Width: =123
+                        X: =582
                         ZIndex: =24
 
                     TxtTy_le_2 As text:
@@ -12123,6 +12130,7 @@
                         DisabledColor: =RGBA(0, 0, 0, 1)
                         DisabledFill: =RGBA(255, 255, 255, 1)
                         DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Format: =TextFormat.Number
                         Height: =30
                         OnChange: =
                         OnSelect: =Select(Parent)
@@ -12131,11 +12139,11 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Width: =191
-                        X: =857
+                        Width: =93
+                        X: =705
                         ZIndex: =26
 
-                    CbxNhom_thongtin_2 As combobox:
+                    cbxTTinNSPGP As combobox:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         ChevronBackground: =RGBA(255, 255, 255, 1)
                         ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
@@ -12155,6 +12163,54 @@
                         InputTextPlaceholder: =""
                         IsSearchable: =false
                         Items: =Filter(DM_YEUTO_AH_PHIS, LHNV = "Sức khoẻ")
+                        OnChange: |-
+                            =If(
+                                cbxTTinNSPGP.Selected.TEN_YEU_TO="Giới tính",
+                                ClearCollect(
+                                    tmpDMGTriNSPGPCollect,
+                                    RenameColumns(
+                                        ShowColumns(
+                                            DM_GIOI_TINHS,
+                                            "cr282_ma_gioi_tinh",
+                                            "cr282_ten_gioi_tinh"
+                                        ),
+                                        "cr282_ma_gioi_tinh",
+                                        "value",
+                                        "cr282_ten_gioi_tinh",
+                                        "title"
+                                    )
+                                ),
+                                cbxTTinNSPGP.Selected.TEN_YEU_TO="Độ tuổi",
+                                ClearCollect(
+                                    tmpDMGTriNSPGPCollect,
+                                    RenameColumns(
+                                        ShowColumns(
+                                            DM_DO_TUOIS,
+                                            "cr282_ma_do_tuoi",
+                                            "cr282_mo_ta"
+                                        ),
+                                        "cr282_ma_do_tuoi",
+                                        "value",
+                                        "cr282_mo_ta",
+                                        "title"
+                                    )
+                                ),
+                                cbxTTinNSPGP.Selected.TEN_YEU_TO="Ngành nghề",
+                                ClearCollect(
+                                    tmpDMGTriNSPGPCollect,
+                                    RenameColumns(
+                                        ShowColumns(
+                                            BH_DM_NGANHNGHES,
+                                            "cr282_ma_do_tuoi",
+                                            "cr282_mo_ta"
+                                        ),
+                                        "cr282_ma_do_tuoi",
+                                        "value",
+                                        "cr282_mo_ta",
+                                        "title"
+                                    )
+                                )
+                            )
                         OnSelect: =Select(Parent)
                         PressedColor: =RGBA(72, 163, 62, 1)
                         PressedFill: =RGBA(255, 255, 255, 1)
@@ -12191,9 +12247,42 @@
                         SelectionColor: =RGBA(0, 0, 0, 1)
                         SelectionFill: =RGBA(214, 221, 224, 1)
                         Size: =11
-                        Width: =204
-                        X: =514
+                        Width: =103
+                        X: =479
                         ZIndex: =28
+
+                    cbxGTriNSPGP As combobox:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                        ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
+                        ChevronHoverBackground: =RGBA(255, 255, 255, 1)
+                        ChevronHoverFill: =RGBA(72, 163, 62, 1)
+                        DefaultSelectedItems: =LookUp(DM_YEUTO_AH_PHIS, MA_YEU_TO =ThisItem.cr282_thong_tin)
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayFields: =["cr282_ten_yeu_to"]
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                        Height: =30
+                        HoverBorderColor: =RGBA(9, 33, 98, 1)
+                        HoverFill: =RGBA(180, 214, 250, 1)
+                        InputTextPlaceholder: =""
+                        IsSearchable: =false
+                        Items: =Filter(DM_YEUTO_AH_PHIS, LHNV = "Sức khoẻ")
+                        OnSelect: =Select(Parent)
+                        PressedColor: =RGBA(72, 163, 62, 1)
+                        PressedFill: =RGBA(255, 255, 255, 1)
+                        SearchFields: =["cr282_ten_yeu_to"]
+                        SearchItems: =[]
+                        SelectionColor: =RGBA(0, 0, 0, 1)
+                        SelectionFill: =RGBA(214, 221, 224, 1)
+                        SelectMultiple: =false
+                        Size: =11
+                        Width: =274
+                        X: =205
+                        ZIndex: =29
 
                 BadgeCanvas1_20 As Badge:
                     BasePaletteColor: =
@@ -12224,12 +12313,12 @@
                     Align: ='TextCanvas.Align'.Center
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =32
+                    Height: =30
                     Size: =14
                     Text: ="Mô tả"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =316
-                    X: =204
+                    Width: =102
+                    X: =870
                     Y: =86
                     ZIndex: =4
 
@@ -12289,8 +12378,8 @@
                     Size: =14
                     Text: ="Số tiền"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =136
-                    X: =720
+                    Width: =110
+                    X: =587
                     Y: =86
                     ZIndex: =14
 
@@ -12302,8 +12391,8 @@
                     Size: =14
                     Text: ="Loại tác động"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =150
-                    X: =540
+                    Width: =110
+                    X: =477
                     Y: =86
                     ZIndex: =15
 
@@ -12311,13 +12400,13 @@
                     Align: ='TextCanvas.Align'.Center
                     DisplayMode: =DisplayMode.Edit
                     FontColor: =
-                    Height: =32
+                    Height: =30
                     Size: =14
                     Text: ="Tỷ lệ"
                     Weight: ='TextCanvas.Weight'.Bold
-                    Width: =191
-                    X: =856
-                    Y: =85
+                    Width: =70
+                    X: =716
+                    Y: =86
                     ZIndex: =16
 
                 Label2 As label:
@@ -12369,6 +12458,19 @@
                     X: =192
                     Y: =48
                     ZIndex: =18
+
+                TextCanvas2_280 As Text:
+                    Align: ='TextCanvas.Align'.Center
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =
+                    Height: =30
+                    Size: =14
+                    Text: ="Giá trị"
+                    Weight: ='TextCanvas.Weight'.Bold
+                    Width: =102
+                    X: =288
+                    Y: =86
+                    ZIndex: =19
 
             "'4.3Thongtinphikhac' As groupContainer.manualLayoutContainer":
                 Height: =417
