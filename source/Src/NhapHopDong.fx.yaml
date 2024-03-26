@@ -1602,7 +1602,7 @@
                                     UpdateContext({varTuoi: 0});
                                     UpdateContext({varDVTuoi: 0});
                                     //Tinh tuoi
-                            If(
+                                    If(
                                         !IsBlank(dpNSinhNHD.SelectedDate),
                                         If(
                                             DateDiff(
@@ -1718,7 +1718,7 @@
                                         {AUTO_GEN_NDBH: "1"}
                                     )
                                 );
-                                //tinh lai phi neu thay doi san pham, ctrinh hoac nhom tinh phi
+                            	//tinh lai phi neu thay doi san pham, ctrinh hoac nhom tinh phi
                                 UpdateContext(
                                     {
                                         objChangeNDBH: First(
@@ -1729,11 +1729,153 @@
                                         )
                                     }
                                 );
+                                ClearCollect(
+                                    tmpTinhLaiPhiNDBHCollect,
+                                    {
+                                        varPhiNDBHCol:0,
+                                        varTuoiCol:0,
+                                        varDVTuoiCol:0
+                                    }
+                                );
+                                ClearCollect(
+                                    tmpKQPhiNDBHCollect,
+                                    {
+                                        ID:0,
+                                        PHI_NDBH:0
+                                    }
+                                );
+                                Clear(tmpKQPhiNDBHCollect);
                                 If(
                                     objChangeNDBH.MA_SAN_PHAM<>maSPNDBH || objChangeNDBH.MA_CHUONG_TRINH<>maCTNDBH || objChangeNDBH.NHOM_TINH_PHI<>nhomTPNDBH,
-                            
-                            
-                                )
+                                    ForAll(
+                                        Filter(
+                            				tmpDSNDBHNHDCollect,
+                            				ID_HOPDONG_SP = ThisItem.ID
+                            			) As ds,
+                            			//Tinh tuoi
+                            			If(
+                            				!IsBlank(ds.NGAY_SINH),
+                            				If(
+                            					DateDiff(
+                            						ds.NGAY_SINH,
+                            						Today(),
+                            						TimeUnit.Years
+                            					) > 0,
+                                                UpdateIf(
+                                                    tmpTinhLaiPhiNDBHCollect,
+                                                    true,
+                                                    {
+                                                        varTuoiCol:DateDiff(
+                            								ds.NGAY_SINH,
+                            								Today(),
+                            								TimeUnit.Years
+                            							),
+                                                        varDVTuoiCol: 100
+                                                    }
+                                                ),
+                            					If(
+                            						DateDiff(
+                            							ds.NGAY_SINH,
+                            							Today(),
+                            							TimeUnit.Months
+                            						) > 0,
+                                                    UpdateIf(
+                            							tmpTinhLaiPhiNDBHCollect,
+                            							true,
+                            							{
+                            								varTuoiCol:1,
+                            								varDVTuoiCol: 200
+                            							}
+                            						),
+                            						If(
+                            							DateDiff(
+                            								ds.NGAY_SINH,
+                            								Today(),
+                            								TimeUnit.Days
+                            							) >= 60,
+                                                        UpdateIf(
+                                                            tmpTinhLaiPhiNDBHCollect,
+                                                            true,
+                                                            {
+                                                                varTuoiCol: 1,
+                                                                varDVTuoiCol: 400
+                                                            }
+                                                        ),
+                                                        UpdateIf(
+                                                            tmpTinhLaiPhiNDBHCollect,
+                                                            true,
+                                                            {
+                                                                varTuoiCol: 0
+                                                            }
+                                                        )
+                            						)
+                            					)
+                            				)
+                            			);
+                            			//Kiem tra dap ung chi tieu
+                                        UpdateIf(
+                                            tmpTinhLaiPhiNDBHCollect,
+                                            true,
+                                            {
+                                                varPhiNDBHCol:Sum(
+                            					Filter(
+                            						DL_CHUONG_TRINH_BANG_PHIS,MA_SAN_PHAM = maSPNDBH && MA_CHUONG_TRINH = maCTNDBH && 
+                            						!IsBlank(
+                            							Find(
+                            								NHOM_TINH_PHI,
+                            								nhomTPNDBH
+                            							)
+                            						) && 
+                            						(IsBlank(MA_PHAMVI_DIALY) || (!IsBlank(cbxTinhNHD.Selected.MA_PHAMVI) && 
+                            						MA_PHAMVI_DIALY = cbxTinhNHD.Selected.MA_PHAMVI)) && 
+                            						(IsBlank(MA_GIOI_TINH) || (!IsBlank(cbxGTinhNHD.Selected.MA_GIOI_TINH) && 
+                            						MA_GIOI_TINH = cbxGTinhNHD.Selected.MA_GIOI_TINH)) && 
+                            						(IsBlank(MA_DO_TUOI) || MA_DO_TUOI = LookUp(
+                            							DM_DO_TUOIS,
+                            							(If(
+                            								MO_TA = MA_DO_TUOI && DONVI_TUOI_TU > 100,
+                            								1,
+                            								TUOI_TU
+                            							) <= varTuoiCol) && (If(
+                            								DONVI_TUOI_DEN > 100,
+                            								1,
+                            								TUOI_DEN
+                            							) >= varTuoiCol)
+                            						).MO_TA || IsBlank(MA_DO_TUOI))
+                            					),
+                            					PHI_BH
+                            				)
+                                            }
+                                        );
+                            			//Lay phi chuong trinh
+                                    Patch(
+                                        tmpKQPhiNDBHCollect,
+                                        {
+                                            ID:ds.ID,
+                                            PHI_NDBH:First(tmpTinhLaiPhiNDBHCollect).varPhiNDBHCol
+                                        }
+                                    );
+                                    UpdateIf(
+                                        tmpTinhLaiPhiNDBHCollect,
+                                        true,
+                                        {
+                                            varPhiNDBHCol:0,
+                                            varTuoiCol:0,
+                                            varDVTuoiCol:0
+                                        }
+                                    )
+                                );
+                                    ForAll(
+                                        tmpKQPhiNDBHCollect As ds,
+                                        UpdateIf(
+                                            tmpDSNDBHNHDCollect,
+                                            ID_HOPDONG_SP=ThisItem.ID && ID=ds.ID,
+                                            {
+                                                PHI_NDBH:ds.PHI_NDBH
+                                            }
+                                        )
+                                    )
+                                );
                                 // end tinh lai phi neu thay doi san pham, ctrinh hoac nhom tinh phi
                             If(
                                     ThisItem.edited = 1,
