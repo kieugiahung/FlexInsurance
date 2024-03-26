@@ -1745,8 +1745,40 @@
                                     }
                                 );
                                 Clear(tmpKQPhiNDBHCollect);
+                                ClearCollect(
+                                    changeNhomTPNDBH,
+                                    {
+                                        check:false
+                                    }
+                                );
+                                ForAll(
+                                    Split(objChangeNDBH.NHOM_TINH_PHI,"|") As ds,
+                                    If(
+                                        IsBlank(Find(ds.Value,nhomTPNDBH)),
+                                        UpdateIf(
+                                            changeNhomTPNDBH,
+                                            true,
+                                            {
+                                                check:true
+                                            }
+                                        )
+                                    )
+                                );
+                                ForAll(
+                                    Split(nhomTPNDBH,"|") As ds,
+                                    If(
+                                        IsBlank(Find(ds.Value,objChangeNDBH.NHOM_TINH_PHI)),
+                                        UpdateIf(
+                                            changeNhomTPNDBH,
+                                            true,
+                                            {
+                                                check:true
+                                            }
+                                        )
+                                    )
+                                );
                                 If(
-                                    objChangeNDBH.MA_SAN_PHAM<>maSPNDBH || objChangeNDBH.MA_CHUONG_TRINH<>maCTNDBH || objChangeNDBH.NHOM_TINH_PHI<>nhomTPNDBH,
+                                    objChangeNDBH.MA_SAN_PHAM<>maSPNDBH || objChangeNDBH.MA_CHUONG_TRINH<>maCTNDBH || First(changeNhomTPNDBH).check,
                                     ForAll(
                                         Filter(
                             				tmpDSNDBHNHDCollect,
@@ -1848,7 +1880,7 @@
                                             }
                                         );
                             			//Lay phi chuong trinh
-                                    Patch(
+                                    Collect(
                                         tmpKQPhiNDBHCollect,
                                         {
                                             ID:ds.ID,
