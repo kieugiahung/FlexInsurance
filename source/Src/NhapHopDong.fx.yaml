@@ -719,11 +719,42 @@
                                     tmpDSHDSPNHDCollect,
                                     MA_HOP_DONG=First(objHD).MA_HOP_DONG,
                                     {
+                                        AUTO_GEN_NDBH:Blank(),
                                         SONGUOI_THAMGIA:0,
                                         TONG_TIEN_PHI:0,
                                         TONG_PHI_DANHSACH:0
                                     }
                                 );
+                                ClearCollect(
+                                    tmpMaCTChangeNHD,
+                                    tmpDSHDSPNHDCollect
+                                );
+                                UpdateIf(
+                                    objHD,
+                                    true,
+                                    {
+                                        SO_NGUOI_TGIA:"0"
+                                    }
+                                );
+                                UpdateIf(
+                                    DL_HOP_DONGS,
+                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG,
+                                    {
+                                        DIA_CHI: tiDChiNHD.Text,
+                                        EMAIL: tiEmailNHD.Text,
+                                        GIOI_TINH: cbxGTinhNHD.Selected.MA_GIOI_TINH,
+                                        LOAI_KHACH_HANG: cbxLoaiKHNHD.Selected.value,
+                                        MA_KHACH_HANG: cbxMaKHNHD.Selected.MA_KHACH_HANG,
+                                        NGAY_SINH: dpNSinhNHD.SelectedDate,
+                                        NGHE_NGHIEP: cbxNgheNHD.Selected.value,
+                                        SO_DIEN_THOAI: tiSDTNHD.Text,
+                                        TEN_KHACH_HANG: tiTenKHNHD.Text,
+                                        TINH_TP_KH: cbxTinhNHD.Selected.MA_PHAMVI,
+                                        NHOM_KHACH_HANG: cbxNhomKHNHD.Selected.MA_NHOM_KH,
+                                        TEN_KHACH_HANG_SAVED:cbxMaKHNHD.Selected.MA_KHACH_HANG,
+                                        SO_NGUOI_TGIA:"0"
+                                    }
+                                )
                             )
                         )
                     OnSelect: |-
@@ -1502,7 +1533,7 @@
                                 Set(nhomTPNDBH,Concat(cbxNhomTPNHD.SelectedItems, Value,"|"));
                                 Set(phiDCNDBH,tiPhiDCNHD.Text);
                                 If(
-                                    cbxLoaiKHNHD.Selected.value="0" && IsBlank(LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,AUTO_GEN_NDBH)), 
+                                    cbxLoaiKHNHD.Selected.value="0" && IsBlank(LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,AUTO_GEN_NDBH)) && ThisItem.edited=1, 
                                     UpdateContext({
                                         varPhiNDBH: 0
                                     });
