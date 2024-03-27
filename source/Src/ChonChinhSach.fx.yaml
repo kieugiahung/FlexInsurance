@@ -44,6 +44,10 @@ ChonChinhSach As screen:
                 Concatenate(MA_PHAMVI," - ",TEN_PHAMVI)
             )
         );
+        ClearCollect(
+            dlCSDTCSSCollect,
+            DL_CHINHSACH_DOITUONG
+        );
         Select(Button6_21);
 
     Container9 As groupContainer.manualLayoutContainer:
@@ -72,7 +76,130 @@ ChonChinhSach As screen:
                 FontWeight: =FontWeight.Bold
                 Height: =28
                 OnSelect: |
-                    =
+                    =ClearCollect(
+                        tmpTCCSCCSCollect,
+                        DL_CHINHSACH_APDUNG
+                    );
+                    ClearCollect(
+                        tmpTCCSCCSCollect1,
+                        DL_CHINHSACH_APDUNG
+                    );
+                    Clear(tmpTCCSCCSCollect1);
+                    
+                    //loc theo san pham
+                    If(
+                        !IsBlank(cbxMaSPCCS.Selected.MA_SAN_PHAM),
+                        ForAll(
+                            tmpTCCSCCSCollect As ds,
+                            If(
+                                !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")) &&
+                                !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=cbxMaSPCCS.Selected.MA_SAN_PHAM)) &&
+                                IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")) &&
+                                IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=cbxMaSPCCS.Selected.MA_SAN_PHAM)),
+                                Collect(
+                                    tmpTCCSCCSCollect1,
+                                    {
+                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
+                                    }
+                                )
+                            )
+                        );
+                        Clear(tmpTCCSCCSCollect);
+                    );
+                    
+                    //loc theo kenh ban
+                    If(
+                        !IsBlank(cbxMaKBCCS.Selected.MA_KENH_BAN),
+                        ForAll(
+                            tmpTCCSCCSCollect1 As ds,
+                            If(
+                                !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="1")) &&
+                                !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_KB_DM" && MA_GIA_TRI=cbxMaKBCCS.Selected.MA_KENH_BAN)) &&
+                                IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="1")) &&
+                                IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_KB_DM" && MA_GIA_TRI=cbxMaKBCCS.Selected.MA_KENH_BAN)),
+                                Collect(
+                                    tmpTCCSCCSCollect,
+                                    {
+                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
+                                    }
+                                )
+                            )
+                        );
+                        Clear(tmpTCCSCCSCollect1);
+                    );
+                    
+                    //loc theo khach hang
+                    If(
+                        !IsBlank(cbxMaKHCCS.Selected.MA_KHACH_HANG),
+                        ForAll(
+                            tmpTCCSCCSCollect As ds,
+                            If(
+                                !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="1")) &&
+                                !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_KH" && MA_GIA_TRI=cbxMaKHCCS.Selected.MA_KHACH_HANG)) &&
+                                IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="1")) &&
+                                IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_KH" && MA_GIA_TRI=cbxMaKHCCS.Selected.MA_KHACH_HANG)),
+                                Collect(
+                                    tmpTCCSCCSCollect1,
+                                    {
+                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
+                                    }
+                                )
+                            )
+                        );
+                        Clear(tmpTCCSCCSCollect);
+                    );
+                    
+                    //loc theo pham vi don vi
+                    If(
+                        !IsBlank(cbxMaPVCCS.Selected.MA_PHAMVI) && LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=cbxMaPVCCS.Selected.MA_PHAMVI,LOAI)="DON_VI",
+                        ForAll(
+                            tmpTCCSCCSCollect1 As ds,
+                            If(
+                                !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="1")) &&
+                                !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_DON_VI" && MA_GIA_TRI=cbxMaPVCCS.Selected.MA_PHAMVI)) &&
+                                IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="1")) &&
+                                IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_DON_VI" && MA_GIA_TRI=cbxMaPVCCS.Selected.MA_PHAMVI)),
+                                Collect(
+                                    tmpTCCSCCSCollect,
+                                    {
+                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
+                                    }
+                                )
+                            )
+                        );
+                        Clear(tmpTCCSCCSCollect1);
+                    );
+                    
+                    //loc theo pham vi tinh tp
+                    If(
+                        !IsBlank(cbxMaPVCCS.Selected.MA_PHAMVI) && LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=cbxMaPVCCS.Selected.MA_PHAMVI,LOAI)="TINH_TP",
+                        ForAll(
+                            tmpTCCSCCSCollect As ds,
+                            If(
+                                !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="1")) &&
+                                !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_TINH_TP" && MA_GIA_TRI=cbxMaPVCCS.Selected.MA_PHAMVI)) &&
+                                IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="1")) &&
+                                IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_TINH_TP" && MA_GIA_TRI=cbxMaPVCCS.Selected.MA_PHAMVI)),
+                                Collect(
+                                    tmpTCCSCCSCollect1,
+                                    {
+                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
+                                    }
+                                )
+                            )
+                        );
+                        Clear(tmpTCCSCCSCollect);
+                    );
                     
                     ClearCollect(// lay gia tri cs chung
                         tmpChonTCCSDT,
