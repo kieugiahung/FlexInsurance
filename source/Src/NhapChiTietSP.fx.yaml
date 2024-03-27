@@ -759,15 +759,7 @@
                                             ' DL_SAN_PHAM_CT',true
                                         ) = 0,
                                         1000,
-                                        Value(
-                                            Last(
-                                                SortByColumns(
-                                                    ' DL_SAN_PHAM_CT',
-                                                    "cr282_ma_chuong_trinh",
-                                                    SortOrder.Ascending
-                                                )
-                                            ).ID
-                                        ) + 1
+                                        Max(' DL_SAN_PHAM_CT',ID)+1
                                     )
                                 }
                             );
@@ -12946,7 +12938,12 @@
                 );
                 // chuyển dữ liệu quyền lợi chi tiết
                 RemoveIf(DL_CHUONGTRINH_QLCTS, MA_SAN_PHAM = valMaSP && MA_CHUONG_TRINH = CT.MA_CHUONG_TRINH);
-                ForAll(Filter(DL_SAN_PHAM_QLCT_CHONS,MA_SAN_PHAM = valMaSP ) As qlc,
+                ForAll(
+                    Filter(
+                        DL_SAN_PHAM_QLCT_CHONS,
+                        MA_SAN_PHAM = valMaSP && 
+                        !IsBlank(LookUp(Filter(DL_SAN_PHAM_NHOMQLS,MA_SAN_PHAM=valMaSP && !IsBlank(Find(CT.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG))) As ds,ds.MA_DL=MA_NHOMQL_SP)) 
+                    ) As qlc,
                     Patch(
                         DL_CHUONGTRINH_QLCTS,
                         Defaults(DL_CHUONGTRINH_QLCTS),
