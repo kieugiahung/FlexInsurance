@@ -72,7 +72,9 @@ ChonChinhSach As screen:
                 FontWeight: =FontWeight.Bold
                 Height: =28
                 OnSelect: |
-                    =ClearCollect(// lay gia tri cs chung
+                    =
+                    
+                    ClearCollect(// lay gia tri cs chung
                         tmpChonTCCSDT,
                         ShowColumns(
                             AddColumns(
@@ -567,7 +569,7 @@ ChonChinhSach As screen:
                             RadiusTopLeft: =0
                             RadiusTopRight: =0
                             Size: =11
-                            Width: =51
+                            Width: =53
                             X: =915
                             Y: =1
                             ZIndex: =73
@@ -964,13 +966,13 @@ ChonChinhSach As screen:
                 DisabledBorderColor: =RGBA(204, 228, 246, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(230, 230, 230, 1)
-                DisplayFields: =["cr282_doanh_nghiep_bh"]
+                DisplayFields: =["cr282_dia_chi"]
                 Height: =30
                 InputTextPlaceholder: =""
                 IsSearchable: =false
                 Items: =SortByColumns(dmKenhBanCCSCollect,"cr282_ma_kenh_ban",SortOrder.Ascending)
-                SearchFields: =["cr282_doanh_nghiep_bh"]
-                SearchItems: =[]
+                SearchFields: =["cr282_dia_chi"]
+                SearchItems: =Search(SortByColumns(dmKenhBanCCSCollect,"cr282_ma_kenh_ban",SortOrder.Ascending),cbxMaKBCCS.SearchText,"cr282_dia_chi")
                 SelectMultiple: =false
                 Size: =11
                 Width: =200
@@ -986,13 +988,13 @@ ChonChinhSach As screen:
                 DisabledBorderColor: =RGBA(204, 228, 246, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(230, 230, 230, 1)
-                DisplayFields: =["cr282_doanh_nghiep_bh"]
+                DisplayFields: =["cr282_dia_chi_kh"]
                 Height: =30
                 InputTextPlaceholder: =""
                 IsSearchable: =false
                 Items: =SortByColumns(dmKhachHangCCSCollect,"cr282_ma_khach_hang",SortOrder.Ascending)
-                SearchFields: =["cr282_doanh_nghiep_bh"]
-                SearchItems: =[]
+                SearchFields: =["cr282_dia_chi_kh"]
+                SearchItems: =Search(SortByColumns(dmKhachHangCCSCollect,"cr282_ma_khach_hang",SortOrder.Ascending),cbxMaKHCCS.SearchText,"cr282_dia_chi_kh")
                 SelectMultiple: =false
                 Size: =11
                 Width: =200
@@ -1007,13 +1009,13 @@ ChonChinhSach As screen:
                 DisabledBorderColor: =RGBA(204, 228, 246, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(230, 230, 230, 1)
-                DisplayFields: =["cr282_doanh_nghiep_bh"]
+                DisplayFields: =["cr282_dnbh"]
                 Height: =30
                 InputTextPlaceholder: =""
                 IsSearchable: =false
                 Items: =SortByColumns(dmPhamViCCSCollect,"cr282_ma_phamvi",SortOrder.Ascending)
-                SearchFields: =["cr282_doanh_nghiep_bh"]
-                SearchItems: =[]
+                SearchFields: =["cr282_dnbh"]
+                SearchItems: =Search(SortByColumns(dmPhamViCCSCollect,"cr282_ma_phamvi",SortOrder.Ascending),cbxMaPVCCS.SearchText,"cr282_dnbh")
                 SelectMultiple: =false
                 Size: =11
                 Width: =200
@@ -1444,7 +1446,7 @@ ChonChinhSach As screen:
             Height: =32
             OnSelect: |-
                 =Set(varUnReloadNHD,"1");
-                Back();
+                Navigate(NhapHopDong);
             Size: =9
             Text: ="Quay lại"
             Width: =123

@@ -2489,7 +2489,15 @@
                     HoverColor: =RGBA(39, 113, 194, 1)
                     HoverFill: =RGBA(255, 255, 255, 1)
                     OnSelect: |
-                        =Set(
+                        =ClearCollect(
+                            dlDKADLoaiCTCCSCollect,
+                            DL_DIEUKIEN_APDUNG_LOAI_CT
+                        );
+                        ClearCollect(
+                            dlChinhSachDTCTCCSCollect,
+                            DL_CHINHSACH_DOITUONG_CT
+                        );
+                        Set(
                             dsMaSPNLKFwd,
                             Concat(
                                 tmpDSHDSPNHDCollect,
@@ -2589,12 +2597,12 @@
                             If(
                                 IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_KB_DM"
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KB_DM" && MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN
                                     )
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
@@ -2609,12 +2617,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_DM"
                                     )
                                 ) And IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_DM" && MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN
                                     )
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
@@ -2630,12 +2638,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_DM" && MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KB_DM" && MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN
                                     )
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
@@ -2651,12 +2659,12 @@
                         If(
                                 IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_KB_LOAI"
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KB_LOAI" && MA_GIA_TRI = cbxLoaiKBNHD.Selected.MA_LOAI_KB
                                     )
                                 ) And !IsBlank(cbxLoaiKBNHD.Selected.MA_LOAI_KB),
@@ -2671,12 +2679,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_LOAI"
                                     )
                                 ) And IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_LOAI" && MA_GIA_TRI = cbxLoaiKBNHD.Selected.MA_LOAI_KB
                                     )
                                 ) And !IsBlank(cbxLoaiKBNHD.Selected.MA_LOAI_KB),
@@ -2692,12 +2700,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_LOAI" && MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "2" && (MA_GIA_TRI = cbxLoaiKBNHD.Selected.MA_LOAI_KB Or MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN)
                                     )
                                 ) And !IsBlank(cbxLoaiKBNHD.Selected.MA_LOAI_KB),
@@ -2713,12 +2721,12 @@
                         If(
                                 IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_KB_NHOM"
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KB_NHOM" && MA_GIA_TRI = nhomKB
                                     )
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
@@ -2733,12 +2741,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_NHOM"
                                     )
                                 ) And IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_NHOM" && MA_GIA_TRI = nhomKB
                                     )
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
@@ -2754,12 +2762,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_NHOM" && MA_GIA_TRI = nhomKB
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KB" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KB_NHOM" && MA_GIA_TRI = nhomKB
                                     )
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
@@ -2776,12 +2784,12 @@
                         If(
                                 IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_KH_LOAI"
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
                                     )
                                 ) And !IsBlank(cbxLoaiKHNHD.Selected.value),
@@ -2796,12 +2804,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KH_LOAI"
                                     )
                                 ) And IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
                                     )
                                 ) And !IsBlank(cbxLoaiKHNHD.Selected.value),
@@ -2817,12 +2825,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "KH" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
                                     )
                                 ) And !IsBlank(cbxLoaiKHNHD.Selected.value),
@@ -2839,17 +2847,17 @@
                         If(
                                 IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "PV" && AP_DUNG = "1" && (MA_TIEU_CHI = "MA_TINH_TP" Or MA_TIEU_CHI = "MA_VUNG_MIEN")
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "PV" && AP_DUNG = "2" && (MA_TIEU_CHI = "MA_TINH_TP" Or MA_TIEU_CHI = "MA_VUNG_MIEN")
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "PV" && AP_DUNG = "2" && (MA_GIA_TRI = cbxTinhNHD.Selected.MA_PHAMVI Or MA_GIA_TRI = cbxTinhNHD.Selected.MA_CHA)
                                     )
                                 ) And !IsBlank(cbxTinhNHD.Selected.MA_PHAMVI),
@@ -2864,12 +2872,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && (MA_TIEU_CHI = "MA_TINH_TP" Or MA_TIEU_CHI = "MA_VUNG_MIEN")
                                     )
                                 ) And IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && (MA_GIA_TRI = cbxTinhNHD.Selected.MA_PHAMVI Or MA_GIA_TRI = cbxTinhNHD.Selected.MA_CHA)
                                     )
                                 ) And !IsBlank(cbxTinhNHD.Selected.MA_PHAMVI),
@@ -2885,17 +2893,17 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && (MA_TIEU_CHI = "MA_TINH_TP" Or MA_TIEU_CHI = "MA_VUNG_MIEN")
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && (MA_GIA_TRI = cbxTinhNHD.Selected.MA_PHAMVI Or MA_GIA_TRI = cbxTinhNHD.Selected.MA_CHA)
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "PV" && AP_DUNG = "2" && (MA_GIA_TRI = cbxTinhNHD.Selected.MA_PHAMVI Or MA_GIA_TRI = cbxTinhNHD.Selected.MA_CHA)
                                     )
                                 ) And !IsBlank(cbxTinhNHD.Selected.MA_PHAMVI),
@@ -2911,12 +2919,12 @@
                         If(
                                 IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "PV" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_DON_VI"
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "PV" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_DON_VI" && MA_GIA_TRI = cbxDVQLNHD.Selected.MA_PHAMVI
                                     )
                                 ) And !IsBlank(cbxDVQLNHD.Selected.MA_PHAMVI),
@@ -2931,12 +2939,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_DON_VI"
                                     )
                                 ) And IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && MA_GIA_TRI = cbxDVQLNHD.Selected.MA_PHAMVI
                                     )
                                 ) And !IsBlank(cbxDVQLNHD.Selected.MA_PHAMVI),
@@ -2952,12 +2960,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_DON_VI" && MA_GIA_TRI = cbxDVQLNHD.Selected.MA_PHAMVI
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "PV" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_DON_VI" && MA_GIA_TRI = cbxDVQLNHD.Selected.MA_PHAMVI
                                     )
                                 ) And !IsBlank(cbxDVQLNHD.Selected.MA_PHAMVI),
@@ -2976,12 +2984,12 @@
                                 If(
                                     IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_SP"
                                         )
                                     ) And !IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_SP" && MA_GIA_TRI = sp.cbxMaSPNHD.Selected.MA_SAN_PHAM
                                         )
                                     ) And !IsBlank(sp.cbxMaSPNHD.Selected.MA_SAN_PHAM),
@@ -2995,12 +3003,12 @@
                         If(
                                     !IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_SP"
                                         )
                                     ) And IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_SP" && KIEU = "2" && MA_GIA_TRI = sp.cbxMaSPNHD.Selected.MA_SAN_PHAM
                                         )
                                     ) And !IsBlank(sp.cbxMaSPNHD.Selected.MA_SAN_PHAM),
@@ -3016,12 +3024,12 @@
                         If(
                                     !IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_SP" && MA_GIA_TRI = sp.cbxMaSPNHD.Selected.MA_SAN_PHAM
                                         )
                                     ) And !IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_SP" && MA_GIA_TRI = sp.cbxMaSPNHD.Selected.MA_SAN_PHAM
                                         )
                                     ) And !IsBlank(sp.cbxMaSPNHD.Selected.MA_SAN_PHAM),
@@ -3036,12 +3044,12 @@
                         If(
                                     IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT"
                                         )
                                     ) And !IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
                                         )
                                     ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
@@ -3055,12 +3063,12 @@
                         If(
                                     !IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT"
                                         )
                                     ) And IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT" && KIEU = "2" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
                                         )
                                     ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
@@ -3075,12 +3083,12 @@
                         If(
                                     !IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
                                         )
                                     ) And !IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
                                         )
                                     ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
@@ -3095,12 +3103,12 @@
                         If(
                                     IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV"
                                         )
                                     ) And !IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" 
                                             && TEN_GIA_TRI = LookUp(DL_SAN_PHAM,MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM,LHNV)
                                         )
@@ -3115,12 +3123,12 @@
                         If(
                                     !IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV"
                                         )
                                     ) And IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && KIEU = "2" && 
                                             TEN_GIA_TRI = LookUp(DL_SAN_PHAM,MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM,LHNV)
                                         )
@@ -3136,13 +3144,13 @@
                         If(
                                     !IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && 
                                             TEN_GIA_TRI = LookUp(DL_SAN_PHAM,MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM,LHNV)
                                         )
                                     ) And !IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && 
                                             TEN_GIA_TRI = LookUp(DL_SAN_PHAM,MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM,LHNV)
                                         )
@@ -3182,7 +3190,7 @@
                                 Collect(
                                     dsCombosp,
                                     Filter(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_GIA_TRI,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP" && AP_DUNG = "1"
                                     )
@@ -3190,7 +3198,7 @@
                                 Collect(
                                     dsCombospLt,
                                     Filter(
-                                        DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                        dlDKADLoaiCTCCSCollect,
                                         MA_GIA_TRI,
                                         MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP" && AP_DUNG = "2"
                                     )
@@ -3215,17 +3223,17 @@
                         If(
                                     IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
                                         )
                                     ) And !IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_COMBO_SP"
                                         )
                                     ) And CountRows(dsCombospLt) = 0 And CountRows(GroupedSp) = CountRows(
                                         Filter(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_COMBO_SP"
                                         )
                                     ),
@@ -3240,7 +3248,7 @@
                         If(
                                     !IsBlank(
                                         LookUp(
-                                            DL_DIEUKIEN_APDUNG_LOAI_CT,
+                                            dlDKADLoaiCTCCSCollect,
                                             MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
                                         )
                                     ) And (CountRows(dsCombosp) <> 0),
@@ -3333,12 +3341,12 @@
                             If(
                                 IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_KB_DM"
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KB_DM" && MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN
                                     )
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
@@ -3353,12 +3361,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_DM"
                                     )
                                 ) And IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_DM" && MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN
                                     )
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
@@ -3374,12 +3382,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_DM" && MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KB_DM" && MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN
                                     )
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
@@ -3395,12 +3403,12 @@
                         If(
                                 IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_KB_LOAI"
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KB_LOAI" && MA_GIA_TRI = cbxLoaiKBNHD.Selected.MA_LOAI_KB
                                     )
                                 ) And !IsBlank(cbxLoaiKBNHD.Selected.MA_LOAI_KB),
@@ -3415,12 +3423,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_LOAI"
                                     )
                                 ) And IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_LOAI" && MA_GIA_TRI = cbxLoaiKBNHD.Selected.MA_LOAI_KB
                                     )
                                 ) And !IsBlank(cbxLoaiKBNHD.Selected.MA_LOAI_KB),
@@ -3436,12 +3444,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_LOAI" && MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "2" && (MA_GIA_TRI = cbxLoaiKBNHD.Selected.MA_LOAI_KB Or MA_GIA_TRI = cbxMaKBNHD.Selected.MA_KENH_BAN)
                                     )
                                 ) And !IsBlank(cbxLoaiKBNHD.Selected.MA_LOAI_KB),
@@ -3457,12 +3465,12 @@
                         If(
                                 IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_KB_NHOM"
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KB_NHOM" && MA_GIA_TRI = nhomKB
                                     )
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
@@ -3477,12 +3485,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_NHOM"
                                     )
                                 ) And IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_NHOM" && MA_GIA_TRI = nhomKB
                                     )
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
@@ -3498,12 +3506,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KB_NHOM" && MA_GIA_TRI = nhomKB
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KB" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KB_NHOM" && MA_GIA_TRI = nhomKB
                                     )
                                 ) And !IsBlank(cbxMaKBNHD.Selected.MA_KENH_BAN),
@@ -3520,12 +3528,12 @@
                         If(
                                 IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KH" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_KH_LOAI"
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KH" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
                                     )
                                 ) And !IsBlank(cbxLoaiKHNHD.Selected.value),
@@ -3540,12 +3548,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KH_LOAI"
                                     )
                                 ) And IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
                                     )
                                 ) And !IsBlank(cbxLoaiKHNHD.Selected.value),
@@ -3561,12 +3569,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KH" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "KH" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_KH_LOAI" && MA_GIA_TRI = cbxLoaiKHNHD.Selected.value
                                     )
                                 ) And !IsBlank(cbxLoaiKHNHD.Selected.value),
@@ -3583,17 +3591,17 @@
                         If(
                                 IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && (MA_TIEU_CHI = "MA_TINH_TP" Or MA_TIEU_CHI = "MA_VUNG_MIEN")
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "2" && (MA_TIEU_CHI = "MA_TINH_TP" Or MA_TIEU_CHI = "MA_VUNG_MIEN")
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "2" && (MA_GIA_TRI = cbxTinhNHD.Selected.MA_PHAMVI Or MA_GIA_TRI = cbxTinhNHD.Selected.MA_CHA)
                                     )
                                 ) And !IsBlank(cbxTinhNHD.Selected.MA_PHAMVI),
@@ -3608,12 +3616,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && (MA_TIEU_CHI = "MA_TINH_TP" Or MA_TIEU_CHI = "MA_VUNG_MIEN")
                                     )
                                 ) And IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && (MA_GIA_TRI = cbxTinhNHD.Selected.MA_PHAMVI Or MA_GIA_TRI = cbxTinhNHD.Selected.MA_CHA)
                                     )
                                 ) And !IsBlank(cbxTinhNHD.Selected.MA_PHAMVI),
@@ -3629,17 +3637,17 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && (MA_TIEU_CHI = "MA_TINH_TP" Or MA_TIEU_CHI = "MA_VUNG_MIEN")
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && (MA_GIA_TRI = cbxTinhNHD.Selected.MA_PHAMVI Or MA_GIA_TRI = cbxTinhNHD.Selected.MA_CHA)
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "2" && (MA_GIA_TRI = cbxTinhNHD.Selected.MA_PHAMVI Or MA_GIA_TRI = cbxTinhNHD.Selected.MA_CHA)
                                     )
                                 ) And !IsBlank(cbxTinhNHD.Selected.MA_PHAMVI),
@@ -3655,12 +3663,12 @@
                         If(
                                 IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_DON_VI"
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_DON_VI" && MA_GIA_TRI = cbxDVQLNHD.Selected.MA_PHAMVI
                                     )
                                 ) And !IsBlank(cbxDVQLNHD.Selected.MA_PHAMVI),
@@ -3675,12 +3683,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_DON_VI"
                                     )
                                 ) And IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && MA_GIA_TRI = cbxDVQLNHD.Selected.MA_PHAMVI
                                     )
                                 ) And !IsBlank(cbxDVQLNHD.Selected.MA_PHAMVI),
@@ -3696,12 +3704,12 @@
                         If(
                                 !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "1" && KIEU = "2" && MA_TIEU_CHI = "MA_DON_VI" && MA_GIA_TRI = cbxDVQLNHD.Selected.MA_PHAMVI
                                     )
                                 ) And !IsBlank(
                                     LookUp(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "PV" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_DON_VI" && MA_GIA_TRI = cbxDVQLNHD.Selected.MA_PHAMVI
                                     )
                                 ) And !IsBlank(cbxDVQLNHD.Selected.MA_PHAMVI),
@@ -3720,12 +3728,12 @@
                                 If(
                                     IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_SP"
                                         )
                                     ) And !IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_SP" && MA_GIA_TRI = sp.cbxMaSPNHD.Selected.MA_SAN_PHAM
                                         )
                                     ) And !IsBlank(sp.cbxMaSPNHD.Selected.MA_SAN_PHAM),
@@ -3739,12 +3747,12 @@
                         If(
                                     !IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_SP"
                                         )
                                     ) And IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_SP" && KIEU = "2" && MA_GIA_TRI = sp.cbxMaSPNHD.Selected.MA_SAN_PHAM
                                         )
                                     ) And !IsBlank(sp.cbxMaSPNHD.Selected.MA_SAN_PHAM),
@@ -3760,12 +3768,12 @@
                         If(
                                     !IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_SP" && MA_GIA_TRI = sp.cbxMaSPNHD.Selected.MA_SAN_PHAM
                                         )
                                     ) And !IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_SP" && MA_GIA_TRI = sp.cbxMaSPNHD.Selected.MA_SAN_PHAM
                                         )
                                     ) And !IsBlank(sp.cbxMaSPNHD.Selected.MA_SAN_PHAM),
@@ -3780,12 +3788,12 @@
                         If(
                                     IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT"
                                         )
                                     ) And !IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
                                         )
                                     ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
@@ -3799,12 +3807,12 @@
                         If(
                                     !IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT"
                                         )
                                     ) And IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT" && KIEU = "2" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
                                         )
                                     ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
@@ -3819,12 +3827,12 @@
                         If(
                                     !IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
                                         )
                                     ) And !IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
                                         )
                                     ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
@@ -3839,12 +3847,12 @@
                         If(
                                     IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV"
                                         )
                                     ) And !IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && 
                                             TEN_GIA_TRI = LookUp(DL_SAN_PHAM,MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM,LHNV)
                                         )
@@ -3859,12 +3867,12 @@
                         If(
                                     !IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV"
                                         )
                                     ) And IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && KIEU = "2" && 
                                             TEN_GIA_TRI = LookUp(DL_SAN_PHAM,MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM,LHNV)
                                         )
@@ -3881,13 +3889,13 @@
                         If(
                                     !IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "LHNV" && 
                                             TEN_GIA_TRI = LookUp(DL_SAN_PHAM,MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM,LHNV)
                                         )
                                     ) And !IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "LHNV" && 
                                             TEN_GIA_TRI = LookUp(DL_SAN_PHAM,MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM,LHNV)
                                         )
@@ -3928,7 +3936,7 @@
                                 Collect(
                                     dsCombosp,
                                     Filter(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_GIA_TRI,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP" && AP_DUNG = "1"
                                     )
@@ -3936,7 +3944,7 @@
                                 Collect(
                                     dsCombospLt,
                                     Filter(
-                                        DL_CHINHSACH_DOITUONG_CT,
+                                        dlChinhSachDTCTCCSCollect,
                                         MA_GIA_TRI,
                                         MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && MA_TIEU_CHI = "MA_COMBO_SP" && AP_DUNG = "2"
                                     )
@@ -3961,17 +3969,17 @@
                         If(
                                     IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
                                         )
                                     ) And !IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_COMBO_SP"
                                         )
                                     ) And CountRows(dsCombospLt) = 0 And CountRows(GroupedSp) = CountRows(
                                         Filter(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_COMBO_SP"
                                         )
                                     ),
@@ -3986,7 +3994,7 @@
                         If(
                                     !IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
                                         )
                                     ) And (CountRows(dsCombosp) <> 0),
@@ -3998,12 +4006,12 @@
                                 If(
                                     !IsBlank(
                                         LookUp(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
                                         )
                                     ) And CountRows(GroupedSp) <> CountRows(
                                         Filter(
-                                            DL_CHINHSACH_DOITUONG_CT,
+                                            dlChinhSachDTCTCCSCollect,
                                             MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_COMBO_SP"
                                         )
                                     ),
