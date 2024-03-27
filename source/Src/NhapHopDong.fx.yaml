@@ -2449,7 +2449,7 @@
                     HoverColor: =RGBA(39, 113, 194, 1)
                     HoverFill: =RGBA(255, 255, 255, 1)
                     OnSelect: |-
-                        =Set(dsMaSPNLKFwd,Concat(tmpDSHDSPNHDCollect,MA_SAN_PHAM,"|"));
+                        =Set(dsMaSPNLKFwd,Concat(Filter(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG),MA_SAN_PHAM,"|"));
                         Set(maHDNLKFwd,tiMaHDNHD.Text);
                         Set(maKBNLKFwd,cbxMaKBNHD.Selected.MA_KENH_BAN);
                         Set(maKHNLKFwd,cbxMaKHNHD.Selected.MA_KHACH_HANG);
@@ -2509,6 +2509,11 @@
                             maKHNLKFwd,
                             cbxMaKHNHD.Selected.MA_KHACH_HANG
                         );
+                        Set(dsMaSPCCSFwd,Concat(Filter(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG),MA_SAN_PHAM,"|"));
+                        Set(maKBCCSFwd,cbxMaKBNHD.Selected.MA_KENH_BAN);
+                        Set(maKHCCSFwd,cbxMaKHNHD.Selected.MA_KHACH_HANG);
+                        Set(maDVCCSFwd,cbxDVQLNHD.Selected.MA_PHAMVI);
+                        Set(maTinhTPCCSFwd,cbxTinhNHD.Selected.MA_PHAMVI);
                         // check điều kiện áp dụng
                         // lọc điều kiện áp dụng
                         UpdateContext({errorMsg: ""});
