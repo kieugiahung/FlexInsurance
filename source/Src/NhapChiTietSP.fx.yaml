@@ -12942,7 +12942,7 @@
                     Filter(
                         DL_SAN_PHAM_QLCT_CHONS,
                         MA_SAN_PHAM = valMaSP && 
-                        !IsBlank(LookUp(Filter(DL_SAN_PHAM_NHOMQLS,MA_SAN_PHAM=valMaSP && !IsBlank(Find(CT.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG))) As ds,ds.MA_DL=MA_NHOMQL_SP)) 
+                        MA_NHOMQL_SP in Distinct(Filter(DL_SAN_PHAM_NHOMQLS,MA_SAN_PHAM=valMaSP && !IsBlank(Find(CT.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG))),MA_DL)
                     ) As qlc,
                     Patch(
                         DL_CHUONGTRINH_QLCTS,

@@ -1375,21 +1375,21 @@
                                 If(
                                     CountIf(
                                         DL_HOP_DONG_SP_QLCT,
-                                        MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && MA_SAN_PHAM = ThisItem.MA_SAN_PHAM && MA_HOP_DONG = First(objHD).MA_HOP_DONG
+                                        MA_HOP_DONG = First(objHD).MA_HOP_DONG && ID_CHA=Value(ThisItem.ID)
                                     ) <= 0,
                                     ForAll(
                                         Filter(
                                             DL_CHUONGTRINH_QLCTS,
                                             MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && MA_SAN_PHAM = ThisItem.MA_SAN_PHAM &&
-                                            !IsBlank(LookUp(Filter(DL_SAN_PHAM_NHOMQLS,MA_SAN_PHAM = ThisItem.MA_SAN_PHAM && 
-                                            !IsBlank(Find(ThisItem.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG)) &&
-                                            !IsBlank(Find(MA_NHOM_TINHPHI,ThisItem.NHOM_TINH_PHI))) As ds,ds.MA_NHOM_QL=MA_NHOM_QL)) 
+                                            MA_NHOM_QL in Distinct(Filter(DL_SAN_PHAM_NHOMQLS,MA_SP = ThisItem.MA_SAN_PHAM && 
+                                                !IsBlank(Find(ThisItem.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG)) &&
+                                                !IsBlank(Find(MA_NHOM_TINHPHI,ThisItem.NHOM_TINH_PHI))
+                                            ),MA_NHOM_QL)
                                         ) As ql,
                                         Patch(
                                             DL_HOP_DONG_SP_QLCT,
-                                            Defaults(DL_HOP_DONG_SP_QLCT),
                                             {
-                                                MA_HOP_DONG: tiMaHDNHD.Text,
+                                                MA_HOP_DONG: First(objHD).MA_HOP_DONG,
                                                 MA_CHUONG_TRINH: ql.MA_CHUONG_TRINH,
                                                 MA_SAN_PHAM: ql.MA_SAN_PHAM,
                                                 MA_QL_CT: ql.MA_QL_CT,
