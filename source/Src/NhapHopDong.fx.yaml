@@ -272,7 +272,7 @@
 
                 dpNgayHDNHD As datepicker:
                     BorderColor: =RGBA(72, 163, 62, 1)
-                    DefaultDate: =First(objHD).NGAY_HOP_DONG
+                    DefaultDate: =If(IsBlank(First(objHD).MA_HOP_DONG),Today(),First(objHD).NGAY_HOP_DONG)
                     EndYear: =2200
                     Format: ="dd/mm/yyyy"
                     Height: =32

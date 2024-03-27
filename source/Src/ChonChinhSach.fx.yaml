@@ -84,6 +84,7 @@ ChonChinhSach As screen:
                         tmpTCCSCCSCollect1,
                         DL_CHINHSACH_APDUNG
                     );
+                    Clear(tmpTCCSCCSCollect1);
                     ClearCollect(
                         tmpCSChungCCSCollect,
                         DL_CHINHSACH_CHUNG
@@ -95,12 +96,14 @@ ChonChinhSach As screen:
                         ForAll(
                             tmpTCCSCCSCollect As ds,
                             If(
-                                !(LookUp(tmpCSChungCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH,HIEU_LUC_TU)<=DateHD.SelectedDate && 
+                                LookUp(tmpCSChungCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH,HIEU_LUC_TU)<=DateHD.SelectedDate && 
                                 (IsBlank(LookUp(tmpCSChungCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH,HIEU_LUC_DEN)) || 
-                                DateHD.SelectedDate<=LookUp(tmpCSChungCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH,HIEU_LUC_DEN))),
-                                RemoveIf(
+                                DateHD.SelectedDate<=LookUp(tmpCSChungCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH,HIEU_LUC_DEN)),
+                                Collect(
                                     tmpTCCSCCSCollect1,
-                                    MA_CHINH_SACH=ds.MA_CHINH_SACH
+                                    {
+                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
+                                    }
                                 )
                             )
                         );
@@ -108,6 +111,7 @@ ChonChinhSach As screen:
                             tmpTCCSCCSCollect,
                             tmpTCCSCCSCollect1
                         );
+                        Clear(tmpTCCSCCSCollect1)
                     );
                     
                     //loc theo san pham
@@ -116,15 +120,17 @@ ChonChinhSach As screen:
                         ForAll(
                             tmpTCCSCCSCollect As ds,
                             If(
-                                !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")) &&
+                                (!IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")) ||
                                 !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" &&
-                                MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=cbxMaSPCCS.Selected.MA_SAN_PHAM)) &&
+                                MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=cbxMaSPCCS.Selected.MA_SAN_PHAM))) &&
                                 IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")) &&
                                 IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" &&
                                 MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=cbxMaSPCCS.Selected.MA_SAN_PHAM)),
-                                RemoveIf(
+                                Collect(
                                     tmpTCCSCCSCollect1,
-                                    MA_CHINH_SACH=ds.MA_CHINH_SACH
+                                    {
+                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
+                                    }
                                 )
                             )
                         );
@@ -132,6 +138,7 @@ ChonChinhSach As screen:
                             tmpTCCSCCSCollect,
                             tmpTCCSCCSCollect1
                         );
+                        Clear(tmpTCCSCCSCollect1)
                     );
                     
                     //loc theo kenh ban
@@ -140,15 +147,17 @@ ChonChinhSach As screen:
                         ForAll(
                             tmpTCCSCCSCollect As ds,
                             If(
-                                !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="1")) &&
+                                (!IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="1")) ||
                                 !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2" &&
-                                MA_TIEU_CHI="MA_KB_DM" && MA_GIA_TRI=cbxMaKBCCS.Selected.MA_KENH_BAN)) &&
+                                MA_TIEU_CHI="MA_KB_DM" && MA_GIA_TRI=cbxMaKBCCS.Selected.MA_KENH_BAN))) &&
                                 IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="1")) &&
                                 IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2" &&
                                 MA_TIEU_CHI="MA_KB_DM" && MA_GIA_TRI=cbxMaKBCCS.Selected.MA_KENH_BAN)),
-                                RemoveIf(
+                                Collect(
                                     tmpTCCSCCSCollect1,
-                                    MA_CHINH_SACH=ds.MA_CHINH_SACH
+                                    {
+                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
+                                    }
                                 )
                             )
                         );
@@ -156,6 +165,7 @@ ChonChinhSach As screen:
                             tmpTCCSCCSCollect,
                             tmpTCCSCCSCollect1
                         );
+                        Clear(tmpTCCSCCSCollect1)
                     );
                     
                     //loc theo khach hang
@@ -164,15 +174,17 @@ ChonChinhSach As screen:
                         ForAll(
                             tmpTCCSCCSCollect As ds,
                             If(
-                                !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="1")) &&
+                                (!IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="1")) ||
                                 !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2" &&
-                                MA_TIEU_CHI="MA_KH" && MA_GIA_TRI=cbxMaKHCCS.Selected.MA_KHACH_HANG)) &&
+                                MA_TIEU_CHI="MA_KH" && MA_GIA_TRI=cbxMaKHCCS.Selected.MA_KHACH_HANG))) &&
                                 IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="1")) &&
                                 IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2" &&
                                 MA_TIEU_CHI="MA_KH" && MA_GIA_TRI=cbxMaKHCCS.Selected.MA_KHACH_HANG)),
-                                RemoveIf(
+                                Collect(
                                     tmpTCCSCCSCollect1,
-                                    MA_CHINH_SACH=ds.MA_CHINH_SACH
+                                    {
+                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
+                                    }
                                 )
                             )
                         );
@@ -180,6 +192,7 @@ ChonChinhSach As screen:
                             tmpTCCSCCSCollect,
                             tmpTCCSCCSCollect1
                         );
+                        Clear(tmpTCCSCCSCollect1)
                     );
                     
                     //loc theo pham vi don vi
@@ -188,15 +201,17 @@ ChonChinhSach As screen:
                         ForAll(
                             tmpTCCSCCSCollect As ds,
                             If(
-                                !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="1")) &&
+                                (!IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="1")) ||
                                 !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2" &&
-                                MA_TIEU_CHI="MA_DON_VI" && MA_GIA_TRI=cbxMaPVCCS.Selected.MA_PHAMVI)) &&
+                                MA_TIEU_CHI="MA_DON_VI" && MA_GIA_TRI=cbxMaPVCCS.Selected.MA_PHAMVI))) &&
                                 IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="1")) &&
                                 IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2" &&
                                 MA_TIEU_CHI="MA_DON_VI" && MA_GIA_TRI=cbxMaPVCCS.Selected.MA_PHAMVI)),
-                                RemoveIf(
+                                Collect(
                                     tmpTCCSCCSCollect1,
-                                    MA_CHINH_SACH=ds.MA_CHINH_SACH
+                                    {
+                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
+                                    }
                                 )
                             )
                         );
@@ -204,6 +219,7 @@ ChonChinhSach As screen:
                             tmpTCCSCCSCollect,
                             tmpTCCSCCSCollect1
                         );
+                        Clear(tmpTCCSCCSCollect1)
                     );
                     
                     //loc theo pham vi tinh tp
@@ -393,15 +409,17 @@ ChonChinhSach As screen:
                         ForAll(
                             tmpTCCSCCSCollect As ds,
                             If(
-                                !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="1")) &&
+                                (!IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="1")) ||
                                 !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2" &&
-                                MA_TIEU_CHI="MA_TINH_TP" && CountIf(dsPVDLTCCSSCollect1,ma_pvdl=MA_GIA_TRI)>0)) &&
+                                MA_TIEU_CHI="MA_TINH_TP" && CountIf(dsPVDLTCCSSCollect1,ma_pvdl=MA_GIA_TRI)>0))) &&
                                 IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="1")) &&
                                 IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2" &&
                                 MA_TIEU_CHI="MA_TINH_TP" && CountIf(dsPVDLTCCSSCollect1,ma_pvdl=MA_GIA_TRI)>0)),
-                                RemoveIf(
+                                Collect(
                                     tmpTCCSCCSCollect1,
-                                    MA_CHINH_SACH=ds.MA_CHINH_SACH
+                                    {
+                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
+                                    }
                                 )
                             )
                         );
@@ -409,6 +427,7 @@ ChonChinhSach As screen:
                             tmpTCCSCCSCollect,
                             tmpTCCSCCSCollect1
                         );
+                        Clear(tmpTCCSCCSCollect1)
                     );
                     
                     ClearCollect(// lay gia tri cs chung
@@ -418,7 +437,7 @@ ChonChinhSach As screen:
                                 SortByColumns(
                                     Filter(
                                         DL_CHINHSACH_CHUNG As ds,
-                                        CountIf(tmpTCCSCCSCollect1,MA_CHINH_SACH=ds.MA_CHINH_SACH)>0
+                                        CountIf(tmpTCCSCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH)>0
                                     ),
                                     "cr282_ma_chinh_sach",
                                     SortOrder.Ascending
