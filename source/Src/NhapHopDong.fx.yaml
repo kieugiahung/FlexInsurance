@@ -1543,7 +1543,15 @@
                         HoverColor: =RGBA(39, 113, 194, 1)
                         HoverFill: =RGBA(255, 255, 255, 1)
                         OnSelect: |-
-                            =If(
+                            =ClearCollect(
+                                dmGioiTinhNDBHCollect,
+                                DM_GIOI_TINHS
+                            );
+                            ClearCollect(
+                                dmPhamViNDBHCollect,
+                                DM_PHAMVI_DIALYS
+                            );
+                            If(
                                 IsBlank(cbxMaSPNHD.Selected.MA_SAN_PHAM),
                                 Notify(
                                     "Bắt buộc chọn sản phẩm",
@@ -1589,14 +1597,6 @@
                                 Set(
                                     phiDCNDBH,
                                     tiPhiDCNHD.Text
-                                );
-                                ClearCollect(
-                                    dmGioiTinhNDBHCollect,
-                                    DM_GIOI_TINHS
-                                );
-                                ClearCollect(
-                                    dmPhamViNDBHCollect,
-                                    DM_PHAMVI_DIALYS
                                 );
                                 If(
                                     cbxLoaiKHNHD.Selected.value = "0" && IsBlank(
