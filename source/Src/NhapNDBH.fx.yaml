@@ -395,8 +395,10 @@ NhapNDBH As screen:
                                         DL_CHUONG_TRINH_BANG_PHIS,MA_SAN_PHAM = maSPNDBH && 
                                         MA_CHUONG_TRINH = maCTNDBH && 
                                         !IsBlank(Find(NHOM_TINH_PHI,nhomTPNDBH)) && 
-                                        (IsBlank(MA_PHAMVI_DIALY) || (!IsBlank(cbxTinhNHD.Selected.MA_PHAMVI) && MA_PHAMVI_DIALY = cbxTinhNHD.Selected.MA_PHAMVI)) && 
-                                        (IsBlank(MA_GIOI_TINH) || (!IsBlank(cbxGTinhNHD.Selected.MA_GIOI_TINH) && MA_GIOI_TINH = cbxGTinhNHD.Selected.MA_GIOI_TINH)) && 
+                                        (IsBlank(MA_PHAMVI_DIALY) || (!IsBlank(cbxTinhNHD.Selected.MA_PHAMVI) && 
+                                        MA_PHAMVI_DIALY = LookUp(dmPhamViNDBHCollect,MA_PHAMVI=cbxTinhNHD.Selected.MA_PHAMVI,TEN_PHAMVI))) && 
+                                        (IsBlank(MA_GIOI_TINH) || (!IsBlank(cbxGTinhNHD.Selected.MA_GIOI_TINH) && 
+                                        MA_GIOI_TINH = LookUp(dmGioiTinhNDBHCollect,MA_GIOI_TINH=cbxGTinhNHD.Selected.MA_GIOI_TINH,TEN_GIOI_TINH))) && 
                                         (IsBlank(MA_DO_TUOI) || MA_DO_TUOI = LookUp(
                                             DM_DO_TUOIS,
                                             (If(

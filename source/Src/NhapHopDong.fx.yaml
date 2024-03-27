@@ -1590,6 +1590,14 @@
                                     phiDCNDBH,
                                     tiPhiDCNHD.Text
                                 );
+                                ClearCollect(
+                                    dmGioiTinhNDBHCollect,
+                                    DM_GIOI_TINHS
+                                );
+                                ClearCollect(
+                                    dmPhamViNDBHCollect,
+                                    DM_PHAMVI_DIALYS
+                                );
                                 If(
                                     cbxLoaiKHNHD.Selected.value = "0" && IsBlank(
                                         LookUp(
@@ -1857,9 +1865,9 @@
                             						DL_CHUONG_TRINH_BANG_PHIS,MA_SAN_PHAM = maSPNDBH && MA_CHUONG_TRINH = maCTNDBH && 
                                                     !IsBlank(Find(NHOM_TINH_PHI,nhomTPNDBH)) &&
                             						(IsBlank(MA_PHAMVI_DIALY) || (!IsBlank(ds.MA_TINH_TP) && 
-                            						MA_PHAMVI_DIALY = ds.MA_TINH_TP)) /*&& 
+                            						MA_PHAMVI_DIALY = LookUp(dmPhamViNDBHCollect,MA_PHAMVI=ds.MA_TINH_TP,TEN_PHAMVI))) && 
                             						(IsBlank(MA_GIOI_TINH) || (!IsBlank(ds.MA_GIOI__TINH) && 
-                            						MA_GIOI_TINH = ds.MA_GIOI__TINH)) && 
+                            						MA_GIOI_TINH = LookUp(dmGioiTinhNDBHCollect,MA_GIOI_TINH=ds.MA_GIOI__TINH,TEN_GIOI_TINH))) && 
                             						(IsBlank(MA_DO_TUOI) || MA_DO_TUOI = LookUp(
                             							DM_DO_TUOIS,
                             							(If(
@@ -1871,7 +1879,7 @@
                             								1,
                             								TUOI_DEN
                             							) >= varTuoiCol)
-                            						).MO_TA || IsBlank(MA_DO_TUOI))*/
+                            						).MO_TA || IsBlank(MA_DO_TUOI))
                             					),
                             					PHI_BH
                             				)
