@@ -77,37 +77,37 @@ ChonChinhSach As screen:
                 Height: =28
                 OnSelect: |
                     =ClearCollect(
-                        tmpTCCSCCSCollect1,
+                        tmpTCCSCCSCollect,
                         DL_CHINHSACH_APDUNG
                     );
                     ClearCollect(
-                        tmpTCCSCCSCollect,
+                        tmpTCCSCCSCollect1,
                         DL_CHINHSACH_APDUNG
                     );
                     ClearCollect(
                         tmpCSChungCCSCollect,
                         DL_CHINHSACH_CHUNG
                     );
-                    Clear(tmpTCCSCCSCollect);
                     
                     //loc theo ngay hd
                     If(
                         !IsBlank(DateHD.SelectedDate),
                         ForAll(
-                            tmpTCCSCCSCollect1 As ds,
+                            tmpTCCSCCSCollect As ds,
                             If(
-                                LookUp(tmpCSChungCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH,HIEU_LUC_TU)<=DateHD.SelectedDate && 
+                                !(LookUp(tmpCSChungCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH,HIEU_LUC_TU)<=DateHD.SelectedDate && 
                                 (IsBlank(LookUp(tmpCSChungCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH,HIEU_LUC_DEN)) || 
-                                DateHD.SelectedDate<=LookUp(tmpCSChungCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH,HIEU_LUC_DEN)),
-                                Collect(
-                                    tmpTCCSCCSCollect,
-                                    {
-                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
-                                    }
+                                DateHD.SelectedDate<=LookUp(tmpCSChungCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH,HIEU_LUC_DEN))),
+                                RemoveIf(
+                                    tmpTCCSCCSCollect1,
+                                    MA_CHINH_SACH=ds.MA_CHINH_SACH
                                 )
                             )
                         );
-                        Clear(tmpTCCSCCSCollect1);
+                        ClearCollect(
+                            tmpTCCSCCSCollect,
+                            tmpTCCSCCSCollect1
+                        );
                     );
                     
                     //loc theo san pham
@@ -122,22 +122,23 @@ ChonChinhSach As screen:
                                 IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")) &&
                                 IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" &&
                                 MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=cbxMaSPCCS.Selected.MA_SAN_PHAM)),
-                                Collect(
+                                RemoveIf(
                                     tmpTCCSCCSCollect1,
-                                    {
-                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
-                                    }
+                                    MA_CHINH_SACH=ds.MA_CHINH_SACH
                                 )
                             )
                         );
-                        Clear(tmpTCCSCCSCollect);
+                        ClearCollect(
+                            tmpTCCSCCSCollect,
+                            tmpTCCSCCSCollect1
+                        );
                     );
                     
                     //loc theo kenh ban
                     If(
                         !IsBlank(cbxMaKBCCS.Selected.MA_KENH_BAN),
                         ForAll(
-                            tmpTCCSCCSCollect1 As ds,
+                            tmpTCCSCCSCollect As ds,
                             If(
                                 !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="1")) &&
                                 !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2" &&
@@ -145,15 +146,16 @@ ChonChinhSach As screen:
                                 IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="1")) &&
                                 IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2" &&
                                 MA_TIEU_CHI="MA_KB_DM" && MA_GIA_TRI=cbxMaKBCCS.Selected.MA_KENH_BAN)),
-                                Collect(
-                                    tmpTCCSCCSCollect,
-                                    {
-                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
-                                    }
+                                RemoveIf(
+                                    tmpTCCSCCSCollect1,
+                                    MA_CHINH_SACH=ds.MA_CHINH_SACH
                                 )
                             )
                         );
-                        Clear(tmpTCCSCCSCollect1);
+                        ClearCollect(
+                            tmpTCCSCCSCollect,
+                            tmpTCCSCCSCollect1
+                        );
                     );
                     
                     //loc theo khach hang
@@ -168,22 +170,23 @@ ChonChinhSach As screen:
                                 IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="1")) &&
                                 IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2" &&
                                 MA_TIEU_CHI="MA_KH" && MA_GIA_TRI=cbxMaKHCCS.Selected.MA_KHACH_HANG)),
-                                Collect(
+                                RemoveIf(
                                     tmpTCCSCCSCollect1,
-                                    {
-                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
-                                    }
+                                    MA_CHINH_SACH=ds.MA_CHINH_SACH
                                 )
                             )
                         );
-                        Clear(tmpTCCSCCSCollect);
+                        ClearCollect(
+                            tmpTCCSCCSCollect,
+                            tmpTCCSCCSCollect1
+                        );
                     );
                     
                     //loc theo pham vi don vi
                     If(
                         !IsBlank(cbxMaPVCCS.Selected.MA_PHAMVI) && LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=cbxMaPVCCS.Selected.MA_PHAMVI,LOAI)="DON_VI",
                         ForAll(
-                            tmpTCCSCCSCollect1 As ds,
+                            tmpTCCSCCSCollect As ds,
                             If(
                                 !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="1")) &&
                                 !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2" &&
@@ -191,15 +194,16 @@ ChonChinhSach As screen:
                                 IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="1")) &&
                                 IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2" &&
                                 MA_TIEU_CHI="MA_DON_VI" && MA_GIA_TRI=cbxMaPVCCS.Selected.MA_PHAMVI)),
-                                Collect(
-                                    tmpTCCSCCSCollect,
-                                    {
-                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
-                                    }
+                                RemoveIf(
+                                    tmpTCCSCCSCollect1,
+                                    MA_CHINH_SACH=ds.MA_CHINH_SACH
                                 )
                             )
                         );
-                        Clear(tmpTCCSCCSCollect1);
+                        ClearCollect(
+                            tmpTCCSCCSCollect,
+                            tmpTCCSCCSCollect1
+                        );
                     );
                     
                     //loc theo pham vi tinh tp
@@ -395,15 +399,16 @@ ChonChinhSach As screen:
                                 IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="1")) &&
                                 IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2" &&
                                 MA_TIEU_CHI="MA_TINH_TP" && CountIf(dsPVDLTCCSSCollect1,ma_pvdl=MA_GIA_TRI)>0)),
-                                Collect(
+                                RemoveIf(
                                     tmpTCCSCCSCollect1,
-                                    {
-                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
-                                    }
+                                    MA_CHINH_SACH=ds.MA_CHINH_SACH
                                 )
                             )
                         );
-                        Clear(tmpTCCSCCSCollect)
+                        ClearCollect(
+                            tmpTCCSCCSCollect,
+                            tmpTCCSCCSCollect1
+                        );
                     );
                     
                     ClearCollect(// lay gia tri cs chung
@@ -491,10 +496,10 @@ ChonChinhSach As screen:
                             {pass: 1}
                         )
                     );
-                    RemoveIf(
+                    /*RemoveIf(
                         tmpChonTCCSDT,
                         pass <> 1
-                    );
+                    );*/
                 Size: =9
                 Text: ="Tra cứu"
                 Width: =80
