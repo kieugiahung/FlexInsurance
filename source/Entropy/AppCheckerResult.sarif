@@ -1703,10 +1703,10 @@
                   "relativeAddress": 0
                 },
                 "region": {
-                  "charLength": 39,
+                  "charLength": 81,
                   "charOffset": 109,
                   "snippet": {
-                    "text": "IsBlank(Find(MA_SAN_PHAM,dsMaSPCCSFwd))"
+                    "text": "IsBlank(Find(Concatenate(\"|\",MA_SAN_PHAM,\"|\"),Concatenate(\"|\",dsMaSPCCSFwd,\"|\")))"
                   }
                 }
               },
@@ -1754,6 +1754,86 @@
                 "member": "OnVisible",
                 "module": "ChonChinhSach",
                 "type": "ChonChinhSach"
+              }
+            }
+          ],
+          "message": {
+            "arguments": [
+              "Filter"
+            ],
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-SuggestRemoteExecutionHint",
+          "ruleIndex": 1
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ChonChinhSach.Container9.Container8_4.Button6_21.OnSelect"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "ChonChinhSach.Container9.Container8_4.Button6_21.OnSelect",
+                  "relativeAddress": 0
+                },
+                "region": {
+                  "charLength": 58,
+                  "charOffset": 10976,
+                  "snippet": {
+                    "text": "CountIf(tmpTCCSCCSCollect1,MA_CHINH_SACH=ds.MA_CHINH_SACH)"
+                  }
+                }
+              },
+              "properties": {
+                "member": "OnSelect",
+                "module": "ChonChinhSach",
+                "type": "ChonChinhSach.Container9.Container8_4.Button6_21"
+              }
+            }
+          ],
+          "message": {
+            "arguments": [
+              "CountIf"
+            ],
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-SuggestRemoteExecutionHint",
+          "ruleIndex": 1
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ChonChinhSach.Container9.Container8_4.Button6_21.OnSelect"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "ChonChinhSach.Container9.Container8_4.Button6_21.OnSelect",
+                  "relativeAddress": 0
+                },
+                "region": {
+                  "charLength": 1,
+                  "charOffset": 11034,
+                  "snippet": {
+                    "text": ">"
+                  }
+                }
+              },
+              "properties": {
+                "member": "OnSelect",
+                "module": "ChonChinhSach",
+                "type": "ChonChinhSach.Container9.Container8_4.Button6_21"
               }
             }
           ],
@@ -37747,6 +37827,36 @@
             {
               "logicalLocations": [
                 {
+                  "fullyQualifiedName": "ChonChinhSach.Container9.Container8_4.Button6_21.OnSelect"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "ChonChinhSach.Container9.Container8_4.Button6_21.OnSelect",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "OnSelect",
+                "module": "ChonChinhSach",
+                "type": "ChonChinhSach.Container9.Container8_4.Button6_21"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-CollectDelegatableDataSource",
+          "ruleIndex": 12
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
                   "fullyQualifiedName": "TraCuuCSADDT.OnVisible"
                 }
               ],
@@ -38450,6 +38560,36 @@
                 "member": "OnSelect",
                 "module": "NhapHopDong",
                 "type": "NhapHopDong.Canvas2.DataCard2.Container3_5.Gallery3_2.LinkHDLK_1"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-CollectDelegatableDataSource",
+          "ruleIndex": 12
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ChonChinhSach.Container9.Container8_4.Button6_21.OnSelect"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "ChonChinhSach.Container9.Container8_4.Button6_21.OnSelect",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "OnSelect",
+                "module": "ChonChinhSach",
+                "type": "ChonChinhSach.Container9.Container8_4.Button6_21"
               }
             }
           ],
@@ -39492,7 +39632,7 @@
               "properties": {
                 "componentType": "app",
                 "howToFix": [
-                  "Limit the data collected from the data source by updating the formula \"ClearCollect(tmpTCCSCCSCollect, DL_CHINHSACH_APDUNG)\" to include a filtering function, such as 'Filter' or 'Search'."
+                  "Limit the data collected from the data source by updating the formula \"ClearCollect(tmpTCCSCCSCollect1, DL_CHINHSACH_APDUNG)\" to include a filtering function, such as 'Filter' or 'Search'."
                 ],
                 "level": "Medium",
                 "primaryCategory": "performance",

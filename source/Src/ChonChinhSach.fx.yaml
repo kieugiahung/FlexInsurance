@@ -5,7 +5,7 @@ ChonChinhSach As screen:
             AddColumns(
                 Filter(
                     DL_SAN_PHAM,
-                    !IsBlank(Find(MA_SAN_PHAM,dsMaSPCCSFwd))
+                    !IsBlank(Find(Concatenate("|",MA_SAN_PHAM,"|"),Concatenate("|",dsMaSPCCSFwd,"|")))
                 ),
                 "title",
                 Concatenate(MA_SAN_PHAM," - ",TEN_SAN_PHAM)
@@ -77,14 +77,38 @@ ChonChinhSach As screen:
                 Height: =28
                 OnSelect: |
                     =ClearCollect(
+                        tmpTCCSCCSCollect1,
+                        DL_CHINHSACH_APDUNG
+                    );
+                    ClearCollect(
                         tmpTCCSCCSCollect,
                         DL_CHINHSACH_APDUNG
                     );
                     ClearCollect(
-                        tmpTCCSCCSCollect1,
-                        DL_CHINHSACH_APDUNG
+                        tmpCSChungCCSCollect,
+                        DL_CHINHSACH_CHUNG
                     );
-                    Clear(tmpTCCSCCSCollect1);
+                    Clear(tmpTCCSCCSCollect);
+                    
+                    //loc theo ngay hd
+                    If(
+                        !IsBlank(DateHD.SelectedDate),
+                        ForAll(
+                            tmpTCCSCCSCollect1 As ds,
+                            If(
+                                LookUp(tmpCSChungCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH,HIEU_LUC_TU)<=DateHD.SelectedDate && 
+                                (IsBlank(LookUp(tmpCSChungCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH,HIEU_LUC_DEN)) || 
+                                DateHD.SelectedDate<=LookUp(tmpCSChungCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH,HIEU_LUC_DEN)),
+                                Collect(
+                                    tmpTCCSCCSCollect,
+                                    {
+                                        MA_CHINH_SACH:ds.MA_CHINH_SACH
+                                    }
+                                )
+                            )
+                        );
+                        Clear(tmpTCCSCCSCollect1);
+                    );
                     
                     //loc theo san pham
                     If(
@@ -181,15 +205,196 @@ ChonChinhSach As screen:
                     //loc theo pham vi tinh tp
                     If(
                         !IsBlank(cbxMaPVCCS.Selected.MA_PHAMVI) && LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=cbxMaPVCCS.Selected.MA_PHAMVI,LOAI)="TINH_TP",
+                        //load bảng phamvi lên collect
+                        ClearCollect(
+                            tmpDMPVDiaLyCCSCollect,
+                            DM_PHAMVI_DIALYS
+                        );
+                        ClearCollect(
+                            dsPVDLTCCSSCollect,
+                            {
+                                ma_pvdl:cbxMaPVCCS.Selected.MA_PHAMVI,
+                                ma_cha:LookUp(tmpDMPVDiaLyCCSCollect,MA_PHAMVI=cbxMaPVCCS.Selected.MA_PHAMVI,MA_CHA),
+                                duyet:0
+                            }
+                        );
+                        ClearCollect(
+                            dsPVDLTCCSSCollect1,
+                            {
+                                ma_pvdl:cbxMaPVCCS.Selected.MA_PHAMVI,
+                                ma_cha:LookUp(tmpDMPVDiaLyCCSCollect,MA_PHAMVI=cbxMaPVCCS.Selected.MA_PHAMVI,MA_CHA),
+                                duyet:0
+                            }
+                        );
+                        //lan 1
+                        ForAll(
+                            dsPVDLTCCSSCollect As dsPV,
+                            If(
+                                dsPV.duyet=0,
+                                UpdateIf(
+                                    dsPVDLTCCSSCollect1 As dsUp,
+                                    dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                    {
+                                        duyet:1
+                                    }
+                                );
+                                ForAll(
+                                    Filter(
+                                        tmpDMPVDiaLyCCSCollect,
+                                        MA_PHAMVI=dsPV.ma_cha
+                                    ) As dsIns,
+                                    Collect(
+                                        dsPVDLTCCSSCollect1,
+                                        {
+                                            ma_pvdl:dsIns.MA_PHAMVI,
+                                            ma_cha:dsIns.MA_CHA,
+                                            duyet:0
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        ClearCollect(
+                            dsPVDLTCCSSCollect,
+                            dsPVDLTCCSSCollect1
+                        );
+                    
+                        // lan 2
+                        ForAll(
+                            dsPVDLTCCSSCollect As dsPV,
+                            If(
+                                dsPV.duyet=0,
+                                UpdateIf(
+                                    dsPVDLTCCSSCollect1 As dsUp,
+                                    dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                    {
+                                        duyet:1
+                                    }
+                                );
+                                ForAll(
+                                    Filter(
+                                        tmpDMPVDiaLyCCSCollect,
+                                        MA_PHAMVI=dsPV.ma_cha
+                                    ) As dsIns,
+                                    Collect(
+                                        dsPVDLTCCSSCollect1,
+                                        {
+                                            ma_pvdl:dsIns.MA_PHAMVI,
+                                            ma_cha:dsIns.MA_CHA,
+                                            duyet:0
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        ClearCollect(
+                            dsPVDLTCCSSCollect,
+                            dsPVDLTCCSSCollect1
+                        );
+                    
+                        //lan 3
+                        ForAll(
+                            dsPVDLTCCSSCollect As dsPV,
+                            If(
+                                dsPV.duyet=0,
+                                UpdateIf(
+                                    dsPVDLTCCSSCollect1 As dsUp,
+                                    dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                    {
+                                        duyet:1
+                                    }
+                                );
+                                ForAll(
+                                    Filter(
+                                        tmpDMPVDiaLyCCSCollect,
+                                        MA_PHAMVI=dsPV.ma_cha
+                                    ) As dsIns,
+                                    Collect(
+                                        dsPVDLTCCSSCollect1,
+                                        {
+                                            ma_pvdl:dsIns.MA_PHAMVI,
+                                            ma_cha:dsIns.MA_CHA,
+                                            duyet:0
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        ClearCollect(
+                            dsPVDLTCCSSCollect,
+                            dsPVDLTCCSSCollect1
+                        );
+                    
+                        //lan 4
+                        ForAll(
+                            dsPVDLTCCSSCollect As dsPV,
+                            If(
+                                dsPV.duyet=0,
+                                UpdateIf(
+                                    dsPVDLTCCSSCollect1 As dsUp,
+                                    dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                    {
+                                        duyet:1
+                                    }
+                                );
+                                ForAll(
+                                    Filter(
+                                        tmpDMPVDiaLyCCSCollect,
+                                        MA_PHAMVI=dsPV.ma_cha
+                                    ) As dsIns,
+                                    Collect(
+                                        dsPVDLTCCSSCollect1,
+                                        {
+                                            ma_pvdl:dsIns.MA_PHAMVI,
+                                            ma_cha:dsIns.MA_CHA,
+                                            duyet:0
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        ClearCollect(
+                            dsPVDLTCCSSCollect,
+                            dsPVDLTCCSSCollect1
+                        );
+                    
+                        //lan 5
+                        ForAll(
+                            dsPVDLTCCSSCollect As dsPV,
+                            If(
+                                dsPV.duyet=0,
+                                UpdateIf(
+                                    dsPVDLTCCSSCollect1 As dsUp,
+                                    dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                    {
+                                        duyet:1
+                                    }
+                                );
+                                ForAll(
+                                    Filter(
+                                        tmpDMPVDiaLyCCSCollect,
+                                        MA_PHAMVI=dsPV.ma_cha
+                                    ) As dsIns,
+                                    Collect(
+                                        dsPVDLTCCSSCollect1,
+                                        {
+                                            ma_pvdl:dsIns.MA_PHAMVI,
+                                            ma_cha:dsIns.MA_CHA,
+                                            duyet:0
+                                        }
+                                    )
+                                )
+                            )
+                        );
                         ForAll(
                             tmpTCCSCCSCollect As ds,
                             If(
                                 !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="1")) &&
                                 !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2" &&
-                                MA_TIEU_CHI="MA_TINH_TP" && MA_GIA_TRI=cbxMaPVCCS.Selected.MA_PHAMVI)) &&
+                                MA_TIEU_CHI="MA_TINH_TP" && CountIf(dsPVDLTCCSSCollect1,ma_pvdl=MA_GIA_TRI)>0)) &&
                                 IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="1")) &&
                                 IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2" &&
-                                MA_TIEU_CHI="MA_TINH_TP" && MA_GIA_TRI=cbxMaPVCCS.Selected.MA_PHAMVI)),
+                                MA_TIEU_CHI="MA_TINH_TP" && CountIf(dsPVDLTCCSSCollect1,ma_pvdl=MA_GIA_TRI)>0)),
                                 Collect(
                                     tmpTCCSCCSCollect1,
                                     {
@@ -198,7 +403,7 @@ ChonChinhSach As screen:
                                 )
                             )
                         );
-                        Clear(tmpTCCSCCSCollect);
+                        Clear(tmpTCCSCCSCollect)
                     );
                     
                     ClearCollect(// lay gia tri cs chung
@@ -206,7 +411,10 @@ ChonChinhSach As screen:
                         ShowColumns(
                             AddColumns(
                                 SortByColumns(
-                                    DL_CHINHSACH_CHUNG,
+                                    Filter(
+                                        DL_CHINHSACH_CHUNG As ds,
+                                        CountIf(tmpTCCSCCSCollect1,MA_CHINH_SACH=ds.MA_CHINH_SACH)>0
+                                    ),
                                     "cr282_ma_chinh_sach",
                                     SortOrder.Ascending
                                 ),
@@ -1073,12 +1281,12 @@ ChonChinhSach As screen:
                 DisabledBorderColor: =RGBA(204, 228, 246, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(230, 230, 230, 1)
-                DisplayFields: =["cr282_doanh_nghiep_bh"]
+                DisplayFields: =["title"]
                 Height: =30
                 InputTextPlaceholder: =""
-                Items: =SortByColumns(dmSanPhamHDLKCollect,"cr282_ma_san_pham",SortOrder.Ascending)
+                Items: =SortByColumns(dmSanPhamCCSCollect,"cr282_ma_san_pham",SortOrder.Ascending)
                 SearchFields: =["cr282_doanh_nghiep_bh"]
-                SearchItems: =Search(SortByColumns(dmSanPhamHDLKCollect,"cr282_ma_san_pham",SortOrder.Ascending),cbxMaSPCCS.SearchText,"cr282_doanh_nghiep_bh")
+                SearchItems: =Search(SortByColumns(dmSanPhamCCSCollect,"cr282_ma_san_pham",SortOrder.Ascending),cbxMaSPCCS.SearchText,"cr282_doanh_nghiep_bh")
                 SelectMultiple: =false
                 Size: =11
                 Width: =200
@@ -1093,13 +1301,13 @@ ChonChinhSach As screen:
                 DisabledBorderColor: =RGBA(204, 228, 246, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(230, 230, 230, 1)
-                DisplayFields: =["cr282_dia_chi"]
+                DisplayFields: =["title"]
                 Height: =30
                 InputTextPlaceholder: =""
                 IsSearchable: =false
                 Items: =SortByColumns(dmKenhBanCCSCollect,"cr282_ma_kenh_ban",SortOrder.Ascending)
-                SearchFields: =["cr282_dia_chi"]
-                SearchItems: =Search(SortByColumns(dmKenhBanCCSCollect,"cr282_ma_kenh_ban",SortOrder.Ascending),cbxMaKBCCS.SearchText,"cr282_dia_chi")
+                SearchFields: =["title"]
+                SearchItems: =Search(SortByColumns(dmKenhBanCCSCollect,"cr282_ma_kenh_ban",SortOrder.Ascending),cbxMaKBCCS.SearchText,"title")
                 SelectMultiple: =false
                 Size: =11
                 Width: =200
@@ -1115,13 +1323,13 @@ ChonChinhSach As screen:
                 DisabledBorderColor: =RGBA(204, 228, 246, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(230, 230, 230, 1)
-                DisplayFields: =["cr282_dia_chi_kh"]
+                DisplayFields: =["title"]
                 Height: =30
                 InputTextPlaceholder: =""
                 IsSearchable: =false
                 Items: =SortByColumns(dmKhachHangCCSCollect,"cr282_ma_khach_hang",SortOrder.Ascending)
-                SearchFields: =["cr282_dia_chi_kh"]
-                SearchItems: =Search(SortByColumns(dmKhachHangCCSCollect,"cr282_ma_khach_hang",SortOrder.Ascending),cbxMaKHCCS.SearchText,"cr282_dia_chi_kh")
+                SearchFields: =["title"]
+                SearchItems: =Search(SortByColumns(dmKhachHangCCSCollect,"cr282_ma_khach_hang",SortOrder.Ascending),cbxMaKHCCS.SearchText,"title")
                 SelectMultiple: =false
                 Size: =11
                 Width: =200
@@ -1136,13 +1344,13 @@ ChonChinhSach As screen:
                 DisabledBorderColor: =RGBA(204, 228, 246, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(230, 230, 230, 1)
-                DisplayFields: =["cr282_dnbh"]
+                DisplayFields: =["title"]
                 Height: =30
                 InputTextPlaceholder: =""
                 IsSearchable: =false
                 Items: =SortByColumns(dmPhamViCCSCollect,"cr282_ma_phamvi",SortOrder.Ascending)
-                SearchFields: =["cr282_dnbh"]
-                SearchItems: =Search(SortByColumns(dmPhamViCCSCollect,"cr282_ma_phamvi",SortOrder.Ascending),cbxMaPVCCS.SearchText,"cr282_dnbh")
+                SearchFields: =["title"]
+                SearchItems: =Search(SortByColumns(dmPhamViCCSCollect,"cr282_ma_phamvi",SortOrder.Ascending),cbxMaPVCCS.SearchText,"title")
                 SelectMultiple: =false
                 Size: =11
                 Width: =200
@@ -1232,7 +1440,7 @@ ChonChinhSach As screen:
                 Notify(
                     "Chọn chính sách thành công",
                     NotificationType.Success,
-                    800
+                    2000
                 );
                 Clear(tmpCsDaChon);
                 ForAll(
