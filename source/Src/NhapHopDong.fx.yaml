@@ -1337,7 +1337,10 @@
                                     MA_HOP_DONG=First(objHD).MA_HOP_DONG
                                 );
                                 ForAll(
-                                    tmpDSNDBHNHDCollect As ds,
+                                    Filter(
+                                        tmpDSNDBHNHDCollect,
+                                        ID_HOPDONG_SP=ThisItem.ID
+                                    ) As ds,
                                     Patch(
                                         DL_HOP_DONG_SP_NDBH,
                                         {
