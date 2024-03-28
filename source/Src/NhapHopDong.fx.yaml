@@ -1205,16 +1205,22 @@
                         Items: =DL_SAN_PHAM
                         OnChange: |-
                             =If(
-                                cbxMaSPNHD.Selected.MA_SAN_PHAM<>ThisItem.MA_SAN_PHAM,
+                                cbxMaSPNHD.Selected.MA_SAN_PHAM<>ThisItem.MA_SAN_PHAM 
+                                //&& IsBlank(unReloadMaSP)
+                                ,
+                                Notify(cbxMaSPNHD.Selected.MA_SAN_PHAM,NotificationType.Error,2000);
                                 UpdateIf(
                                     tmpMaCTChangeNHD,
                                     ID=ThisItem.ID,
                                     {
-                                        MA_CHUONG_TRINH:Blank(),
+                                        MA_CHUONG_TRINH:"1",
                                         NHOM_TINH_PHI:Blank()
                                     }
                                 )
                             );
+                            UpdateContext({
+                                unReloadMaSP:Blank()
+                            });
                             Reset(cbxMaCTNHD);Reset(tiMaCTNHD);Reset(cbxNhomTPNHD);Reset(tiNhomTPNHD);Reset(tiNhomTPHideNHD)
                         SearchFields: =["cr282_ma_san_pham"]
                         SearchItems: =Search(DL_SAN_PHAM,cbxMaSPNHD.SearchText,"cr282_ma_san_pham")
@@ -1347,6 +1353,7 @@
                                         }
                                     )
                                 );
+                                
                                 Refresh(DL_HOP_DONG_SP_NDBH);
                                 RemoveIf(
                                     DL_HOP_DONG_SP_NDBH,
@@ -1453,7 +1460,8 @@
                                     tmpDSHDSPNHDCollect
                                 );
                                 UpdateContext({
-                                    maUpdatedHDSPNHD:ThisItem.ID
+                                    maUpdatedHDSPNHD:ThisItem.ID,
+                                    unReloadMaSP:"1"
                                 })
                             )
                         Size: =11
@@ -2137,9 +2145,21 @@
                                                 PT_TU_CHITRA: ql.PT_TU_CHITRA,
                                                 SO_TIEN_BH: ql.SO_TIEN_BH,
                                                 TEN_QUYEN_LOI_HT: ql.TEN_QUYEN_LOI_HT,
-                                                ID_HOPDONG_SP:ThisItem.ID
+                                                ID_HOPDONG_SP:ThisItem.ID,
+                                                edited:0
                                             }
                                         )
+                                    )
+                                );
+                                If(
+                                    ThisItem.edited = 1,
+                                    Set(
+                                        modeMHQLCT,
+                                        "1"
+                                    ),
+                                    Set(
+                                        modeMHQLCT,
+                                        "0"
                                     )
                                 );
                                 Navigate(DSQuyenLoiHD)
