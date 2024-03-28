@@ -97,14 +97,6 @@
             );
             UpdateContext(
                 {
-                    maHDSP: Max(
-                        DL_HOP_DONG_SPS,
-                        ID
-                    ),
-                    maKTT: Max(
-                        DL_HOP_DONG_TTOANS,
-                        ID
-                    ),
                     maAddedHDSPNHD: "",
                     maUpdatedHDSPNHD: "",
                     nhomKB:First(objHD).NHOM_KENH_BAN
@@ -119,10 +111,15 @@
                     tmpKTTNHDCollect,
                     Defaults(tmpKTTNHDCollect)
                 );
+                UpdateContext({
+                    maKTT:Max(DL_HOP_DONG_TTOANS,ID)+1
+                });
                 UpdateIf(
                     tmpKTTNHDCollect,
                     IsBlank(ID),
-                    {ID: Text(maKTT + 1)}
+                    {
+                        ID: Text(maKTT)
+                    }
                 )
             ),
             varUnReloadNHD = "2",
@@ -2178,6 +2175,23 @@
                         Y: =102
                         ZIndex: =28
 
+                    tiPhiDCNHD_1 As text:
+                        Align: =Align.Right
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.ID
+                        DisplayMode: =If(ThisItem.edited=1,DisplayMode.Edit,DisplayMode.Disabled)
+                        Format: =TextFormat.Number
+                        Height: =32
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =250
+                        X: =450
+                        Y: =66
+                        ZIndex: =29
+
                 Button2_3 As button:
                     DisplayMode: =If(IsBlank(First(objHD).MA_HOP_DONG),DisplayMode.Disabled,DisplayMode.Edit)
                     Height: =32
@@ -2189,11 +2203,14 @@
                                 tmpDSHDSPNHDCollect,
                                 Defaults(tmpDSHDSPNHDCollect)
                             );
+                            UpdateContext({
+                                maHDSP:Max(DL_HOP_DONG_SPS,ID)+1
+                            });
                             UpdateIf(
                                 tmpDSHDSPNHDCollect,
                                 IsBlank(ID),
                                 {
-                                    ID:Text(maHDSP+1),
+                                    ID:Text(maHDSP),
                                     MA_HOP_DONG:First(objHD).MA_HOP_DONG,
                                     edited:1
                                 }
@@ -2203,8 +2220,7 @@
                                 tmpDSHDSPNHDCollect
                             );
                             UpdateContext({
-                                maAddedHDSPNHD:Text(maHDSP+1),
-                                maHDSP:maHDSP+1
+                                maAddedHDSPNHD:Text(maHDSP)
                             });
                             Reset(LinkHDLK);
                         )
@@ -4792,15 +4808,15 @@
                 Button2_5 As button:
                     Height: =32
                     OnSelect: |-
-                        =Collect(
+                        =UpdateContext({
+                            maKTT:Max(DL_HOP_DONG_TTOANS,ID)+1
+                        });
+                        Collect(
                             tmpKTTNHDCollect,
                             {
-                                ID:Text(maKTT+1)
+                                ID:Text(maKTT)
                             }
                         );
-                        UpdateContext({
-                            maKTT:maKTT+1
-                        });
                     Size: =11
                     Text: ="Thêm mới"
                     Width: =98
