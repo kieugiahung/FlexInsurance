@@ -1,7 +1,6 @@
 "NhapHopDong As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
     OnVisible: |-
-        =UpdateContext({nhomKB:"2"});
-        If(
+        =If(
             IsBlank(varUnReloadNHD),
             UpdateContext({
                 unReloadCbxNHD:"1"
@@ -107,10 +106,8 @@
                         ID
                     ),
                     maAddedHDSPNHD: "",
-                    maUpdatedHDSPNHD: ""
-                    //,
-                    //nhomKB:"0"
-                    //First(objHD).NHOM_KENH_BAN
+                    maUpdatedHDSPNHD: "",
+                    nhomKB:First(objHD).NHOM_KENH_BAN
                 }
             );
             If(
@@ -522,7 +519,7 @@
                                     TEN_KENH_BAN:LookUp(DM_KENH_BANS,MA_KENH_BAN=cbxMaKBNHD.Selected.MA_KENH_BAN,TEN_KENH_BAN)
                                 }
                             );
-                            /*UpdateContext({
+                            UpdateContext({
                                 nhomKB:If(
                                     LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=cbxMaKBNHD.Selected.LOAI,CODE_KENH_BAN) in ["TT","CTV"],
                                     "0",
@@ -531,7 +528,7 @@
                                     LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=cbxMaKBNHD.Selected.LOAI,CODE_KENH_BAN) = "DL",
                                     cbxMaKBNHD.Selected.LOAI_CANHAN_TOCHUC
                                 )
-                            })*/
+                            })
                         )
                     SearchFields: =["cr282_ma_kenh_ban"]
                     SearchItems: =Search(Filter(DM_KENH_BANS,LOAI=cbxLoaiKBNHD.Selected.MA_LOAI_KB),cbxMaKBNHD.SearchText,"cr282_ma_kenh_ban")
