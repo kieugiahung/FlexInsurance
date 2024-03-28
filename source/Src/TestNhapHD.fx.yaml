@@ -2,8 +2,24 @@ TestNhapHD As screen:
 
     Button1_2 As button:
         OnSelect: |-
-            =Set(maHopDongFwd,TextInput1_1.Text);
-            Navigate(NhapHopDong)
+            =    ClearCollect(
+                    tmpDSQLCTRemoveNHDCollect,
+                    Filter(
+                        DL_HOP_DONG_SP_QLCT,
+                        MA_HOP_DONG="HD0084"
+                    )
+                );
+                ForAll(
+                    tmpDSQLCTRemoveNHDCollect As ds,
+                    Remove(
+                        DL_HOP_DONG_SP_QLCT,
+                        ds
+                    )
+                );
+            
+            
+            /*Refresh(DL_HOP_DONG_SP_QLCT);
+            RemoveIf(DL_HOP_DONG_SP_QLCT,MA_HOP_DONG="HD0084")*/
         Text: |-
             ="ale
             "

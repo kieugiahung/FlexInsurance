@@ -3,7 +3,9 @@
         =If(
             IsBlank(varUnReloadNHD),
             UpdateContext({
-                unReloadCbxNHD:"1"
+                unReloadCbxNHD:"1",
+                unReloadMaSP:"1",
+                unReloadMaCT:"1"
             });
             Reset(dpNgayHDNHD);
             Reset(dpHLTuNHD);
@@ -1157,8 +1159,20 @@
                     cbxMaCTNHD As combobox:
                         BorderColor: =RGBA(72, 163, 62, 1)
                         DefaultSelectedItems: |-
-                            =If (
+                            =/*If (
                                 ThisItem.edited=1,
+                                LookUp(
+                                    ' DL_SAN_PHAM_CT',
+                                    MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=tiMaCTNHD.Text
+                                ),
+                                LookUp(
+                                    ' DL_SAN_PHAM_CT',
+                                    MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=ThisItem.MA_CHUONG_TRINH
+                                )
+                            )*/
+                            
+                            If (
+                                IsBlank(unReloadMaSP),
                                 LookUp(
                                     ' DL_SAN_PHAM_CT',
                                     MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=tiMaCTNHD.Text
@@ -1175,16 +1189,17 @@
                         Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM)
                         OnChange: |-
                             =If(
-                                cbxMaCTNHD.Selected.MA_CHUONG_TRINH<>ThisItem.MA_CHUONG_TRINH,
+                                cbxMaCTNHD.Selected.MA_CHUONG_TRINH<>ThisItem.MA_CHUONG_TRINH && IsBlank(unReloadMaCT),
+                                Notify(cbxMaCTNHD.Selected.MA_CHUONG_TRINH,NotificationType.Error,2000);
                                 UpdateIf(
                                     tmpMaCTChangeNHD,
                                     ID=ThisItem.ID,
                                     {
                                         NHOM_TINH_PHI:Blank()
                                     }
-                                )
+                                );
+                                Reset(cbxNhomTPNHD);Reset(tiNhomTPNHD);Reset(tiNhomTPHideNHD)
                             );
-                            Reset(cbxNhomTPNHD);Reset(tiNhomTPNHD);Reset(tiNhomTPHideNHD)
                         SearchFields: =["cr282_ma_chuong_trinh"]
                         SearchItems: =Search(Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM),cbxMaCTNHD.SearchText,"cr282_ma_chuong_trinh")
                         SelectMultiple: =false
@@ -1211,15 +1226,17 @@
                                     tmpMaCTChangeNHD,
                                     ID=ThisItem.ID,
                                     {
-                                        MA_CHUONG_TRINH:"1",
+                                        MA_CHUONG_TRINH:Blank(),
                                         NHOM_TINH_PHI:Blank()
                                     }
-                                )
+                                );
+                                Reset(cbxMaCTNHD);Reset(tiMaCTNHD);Reset(cbxNhomTPNHD);Reset(tiNhomTPNHD);Reset(tiNhomTPHideNHD)
                             );
-                            UpdateContext({
-                                unReloadMaSP:Blank()
-                            });
-                            Reset(cbxMaCTNHD);Reset(tiMaCTNHD);Reset(cbxNhomTPNHD);Reset(tiNhomTPNHD);Reset(tiNhomTPHideNHD)
+                        OnSelect: |-
+                            =UpdateContext({
+                                unReloadMaSP:Blank(),
+                                unReloadMaCT:Blank()
+                            })
                         SearchFields: =["cr282_ma_san_pham"]
                         SearchItems: =Search(DL_SAN_PHAM,cbxMaSPNHD.SearchText,"cr282_ma_san_pham")
                         SelectMultiple: =false
@@ -1261,7 +1278,7 @@
                                     {
                                         SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
                                     }
-                                )
+                                );
                             )
                         Size: =11
                         Text: ="Xóa"
@@ -1395,9 +1412,19 @@
                                     }
                                 );
                                 Refresh(DL_HOP_DONG_SP_QLCT);
-                                RemoveIf(
-                                    DL_HOP_DONG_SP_QLCT,
-                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                                ClearCollect(
+                                    tmpDSQLCTRemoveNHDCollect,
+                                    Filter(
+                                        DL_HOP_DONG_SP_QLCT,
+                                        MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                                    )
+                                );
+                                ForAll(
+                                    tmpDSQLCTRemoveNHDCollect As ds,
+                                    Remove(
+                                        DL_HOP_DONG_SP_QLCT,
+                                        ds
+                                    )
                                 );
                                 ForAll(
                                     Filter(
@@ -1412,6 +1439,8 @@
                                             MA_CHUONG_TRINH:ThisItem.MA_CHUONG_TRINH,
                                             NHOM_TINH_PHI:ThisItem.NHOM_TINH_PHI,
                                             ID_HOPDONG_SP:ThisItem.ID,
+                                            MA_QL_CT:ds.MA_QL_CT,
+                                            MA_NHOM_QL:ds.MA_NHOM_QL,
                                             TT_HIENTHI:ds.TT_HIENTHI,
                                             GH_SOLAN_NAM:ds.GH_SOLAN_NAM,
                                             GH_SONGAY_NAM:ds.GH_SONGAY_NAM,
@@ -1431,9 +1460,8 @@
                                 );
                                 UpdateContext({
                                     maAddedHDSPNHD:"",
-                                    maUpdatedHDSPNHD:"",
-                                    unReloadMaSP:Blank()
-                                })
+                                    maUpdatedHDSPNHD:""
+                                });
                             )
                         Size: =11
                         Text: ="Lưu"
@@ -1461,8 +1489,7 @@
                                     tmpDSHDSPNHDCollect
                                 );
                                 UpdateContext({
-                                    maUpdatedHDSPNHD:ThisItem.ID,
-                                    unReloadMaSP:"1"
+                                    maUpdatedHDSPNHD:ThisItem.ID
                                 })
                             )
                         Size: =11
@@ -1490,12 +1517,12 @@
                                 );
                                 Remove(tmpDSHDSPNHDCollect,ThisItem),
                                 RemoveIf(
-                                    tmpDSNDBHNHDCollect,
+                                    tmpQLCTHDSPNHDCollect,
                                     MA_HOP_DONG=First(objHD).MA_HOP_DONG 
                                     && ID_HOPDONG_SP=ThisItem.ID
                                 );
                                 RemoveIf(
-                                    tmpQLCTHDSPNHDCollect,
+                                    tmpDSNDBHNHDCollect,
                                     MA_HOP_DONG=First(objHD).MA_HOP_DONG 
                                     && ID_HOPDONG_SP=ThisItem.ID
                                 );
@@ -1510,35 +1537,27 @@
                                         0
                                     )
                                 );
-                                Collect(
-                                    tmpQLCTHDSPNHDCollect,
-                                    AddColumns(
-                                        Filter(
-                                            DL_HOP_DONG_SP_QLCT,
-                                            MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
-                                        ),
-                                        "edited",
-                                        0
-                                    )
-                                );
                                 UpdateIf(
                                     tmpDSHDSPNHDCollect,
                                     ID=ThisItem.ID,
                                     {
+                                        MA_SAN_PHAM:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,MA_SAN_PHAM),
+                                        MA_CHUONG_TRINH:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,MA_CHUONG_TRINH),
+                                        NHOM_TINH_PHI:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,NHOM_TINH_PHI),
                                         SONGUOI_THAMGIA:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,SONGUOI_THAMGIA),
                                         TONG_TIEN_PHI:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,TONG_TIEN_PHI),
                                         TONG_PHI_DANHSACH:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,TONG_PHI_DANHSACH),
                                         edited:0
                                     }
                                 );
-                                UpdateIf(
+                                /*UpdateIf(
                                     tmpMaCTChangeNHD,
                                     ID=ThisItem.ID,
                                     {
                                         MA_CHUONG_TRINH:LookUp(tmpDSHDSPNHDCollect,ID=ThisItem.ID,MA_CHUONG_TRINH),
                                         NHOM_TINH_PHI:LookUp(tmpDSHDSPNHDCollect,ID=ThisItem.ID,NHOM_TINH_PHI)
                                     }
-                                );
+                                );*/
                                 UpdateIf(
                                     objHD,
                                     true,
@@ -1552,11 +1571,24 @@
                                     {
                                         SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
                                     }
-                                )
+                                );
+                                Collect(
+                                    tmpQLCTHDSPNHDCollect,
+                                    AddColumns(
+                                        Filter(
+                                            DL_HOP_DONG_SP_QLCT,
+                                            MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                                        ),
+                                        "edited",
+                                        0
+                                    )
+                                );
                             );
                             UpdateContext({
                                 maAddedHDSPNHD:"",
-                                maUpdatedHDSPNHD:""
+                                maUpdatedHDSPNHD:"",
+                                unReloadMaCT:"1",
+                                unReloadMaSP:"1"
                             });
                         Size: =11
                         Text: ="Hủy"
@@ -2136,7 +2168,6 @@
                                                 MA_QL_CT: ql.MA_QL_CT,
                                                 TT_HIENTHI: ql.TT_HIENTHI,
                                                 MA_NHOM_QL: ql.MA_NHOM_QL,
-                                                MA_NHOMQL_SP: ql.MA_NHOMQL_SP,
                                                 GH_SOLAN_NAM: ql.GH_SOLAN_NAM,
                                                 GH_SONGAY_NAM: ql.GH_SONGAY_NAM,
                                                 GH_SOTIEN_BENH: ql.GH_SOTIEN_BENH,
@@ -2269,10 +2300,9 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Visible: =false
                         Width: =250
-                        X: =672
-                        Y: =34
+                        X: =812
+                        Y: =67
                         ZIndex: =27
 
                     tiNhomTPHideNHD As text:
@@ -2286,10 +2316,9 @@
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Size: =11
-                        Visible: =false
                         Width: =250
-                        X: =30
-                        Y: =102
+                        X: =160
+                        Y: =68
                         ZIndex: =28
 
                 Button2_3 As button:
@@ -2320,7 +2349,8 @@
                                 tmpDSHDSPNHDCollect
                             );
                             UpdateContext({
-                                maAddedHDSPNHD:Text(maHDSP)
+                                maAddedHDSPNHD:Text(maHDSP),
+                                unReloadMaSP:Blank()
                             });
                             Reset(LinkHDLK);
                         )
