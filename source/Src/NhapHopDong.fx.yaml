@@ -1233,8 +1233,13 @@
                                 Or(maAddedHDSPNHD<>"",maUpdatedHDSPNHD<>""),
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
                                 Refresh(DL_HOP_DONG_SP_NDBH);
-                                RemoveIf(DL_HOP_DONG_SP_NDBH,ID_HOPDONG_SP=ThisItem.ID);
+                                RemoveIf(DL_HOP_DONG_SP_NDBH,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID);
                                 RemoveIf(tmpDSNDBHNHDCollect,ID_HOPDONG_SP=ThisItem.ID);
+                                
+                                Refresh(DL_HOP_DONG_SP_QLCT);
+                                RemoveIf(DL_HOP_DONG_SP_QLCT,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID);
+                                RemoveIf(tmpDSNDBHNHDCollect,ID_HOPDONG_SP=ThisItem.ID);
+                            
                                 Refresh(DL_HOP_DONG_SPS);
                                 RemoveIf(DL_HOP_DONG_SPS,ID=ThisItem.ID);
                                 RemoveIf(tmpDSHDSPNHDCollect,ID=ThisItem.ID);
@@ -1382,46 +1387,37 @@
                                         SO_NGUOI_TGIA:Value(tiSoNTGNHD.Text)
                                     }
                                 );
-                                //Clone QLCT chuong trinh
-                                If(
-                                    CountIf(
+                                Refresh(DL_HOP_DONG_SP_QLCT);
+                                RemoveIf(
+                                    DL_HOP_DONG_SP_QLCT,
+                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                                );
+                                ForAll(
+                                    Filter(
+                                        tmpQLCTHDSPNHDCollect,
+                                        ID_HOPDONG_SP=ThisItem.ID
+                                    ) As ds,
+                                    Patch(
                                         DL_HOP_DONG_SP_QLCT,
-                                        MA_HOP_DONG = First(objHD).MA_HOP_DONG && ID_CHA=Value(ThisItem.ID)
-                                    ) <= 0,
-                                    ForAll(
-                                        Filter(
-                                            DL_CHUONGTRINH_QLCTS,
-                                            MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && MA_SAN_PHAM = ThisItem.MA_SAN_PHAM &&
-                                            MA_NHOM_QL in Distinct(Filter(DL_SAN_PHAM_NHOMQLS,MA_SP = ThisItem.MA_SAN_PHAM && 
-                                                !IsBlank(Find(ThisItem.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG)) &&
-                                                !IsBlank(Find(MA_NHOM_TINHPHI,ThisItem.NHOM_TINH_PHI))
-                                            ),MA_NHOM_QL)
-                                        ) As ql,
-                                        Patch(
-                                            DL_HOP_DONG_SP_QLCT,
-                                            {
-                                                MA_HOP_DONG: First(objHD).MA_HOP_DONG,
-                                                MA_CHUONG_TRINH: ql.MA_CHUONG_TRINH,
-                                                MA_SAN_PHAM: ql.MA_SAN_PHAM,
-                                                MA_QL_CT: ql.MA_QL_CT,
-                                                TT_HIENTHI: ql.TT_HIENTHI,
-                                                MA_NHOM_QL: ql.MA_NHOM_QL,
-                                                MA_NHOMQL_SP: ql.MA_NHOMQL_SP,
-                                                GH_SOLAN_NAM: ql.GH_SOLAN_NAM,
-                                                GH_SONGAY_NAM: ql.GH_SONGAY_NAM,
-                                                GH_SOTIEN_BENH: ql.GH_SOTIEN_BENH,
-                                                GH_SOTIEN_NAM: ql.GH_SOTIEN_NAM,
-                                                GH_SOTIEN_NGAY: ql.GH_SOTIEN_NGAY,
-                                                GH_SOTIEN_VU: ql.GH_SOTIEN_VU,
-                                                PT_TU_CHITRA: ql.PT_TU_CHITRA,
-                                                SO_TIEN_BH: ql.SO_TIEN_BH,
-                                                TEN_QUYEN_LOI_HT: ql.TEN_QUYEN_LOI_HT,
-                                                ID_CHA:Value(ThisItem.ID)
-                                            }
-                                        )
+                                        {
+                                            MA_HOP_DONG:First(objHD).MA_HOP_DONG,
+                                            MA_SAN_PHAM:ThisItem.MA_SAN_PHAM,
+                                            MA_CHUONG_TRINH:ThisItem.MA_CHUONG_TRINH,
+                                            NHOM_TINH_PHI:ThisItem.NHOM_TINH_PHI,
+                                            ID_HOPDONG_SP:ThisItem.ID,
+                                            TT_HIENTHI:ds.TT_HIENTHI,
+                                            GH_SOLAN_NAM:ds.GH_SOLAN_NAM,
+                                            GH_SONGAY_NAM:ds.GH_SONGAY_NAM,
+                                            GH_SOTIEN_BENH: ds.GH_SOTIEN_BENH,
+                                            GH_SOTIEN_NAM: ds.GH_SOTIEN_NAM,
+                                            GH_SOTIEN_NGAY: ds.GH_SOTIEN_NGAY,
+                                            GH_SOTIEN_VU: ds.GH_SOTIEN_VU,
+                                            PT_TU_CHITRA: ds.PT_TU_CHITRA,
+                                            SO_TIEN_BH: ds.SO_TIEN_BH,
+                                            TEN_QUYEN_LOI_HT: ds.TEN_QUYEN_LOI_HT
+                                        }
                                     )
                                 );
-                                //End clone
                                 ClearCollect(
                                     tmpMaCTChangeNHD,
                                     tmpDSHDSPNHDCollect
@@ -1478,9 +1474,19 @@
                                     MA_HOP_DONG=First(objHD).MA_HOP_DONG 
                                     && ID_HOPDONG_SP=ThisItem.ID
                                 );
+                                RemoveIf(
+                                    tmpQLCTHDSPNHDCollect,
+                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG 
+                                    && ID_HOPDONG_SP=ThisItem.ID
+                                );
                                 Remove(tmpDSHDSPNHDCollect,ThisItem),
                                 RemoveIf(
                                     tmpDSNDBHNHDCollect,
+                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG 
+                                    && ID_HOPDONG_SP=ThisItem.ID
+                                );
+                                RemoveIf(
+                                    tmpQLCTHDSPNHDCollect,
                                     MA_HOP_DONG=First(objHD).MA_HOP_DONG 
                                     && ID_HOPDONG_SP=ThisItem.ID
                                 );
@@ -1489,6 +1495,17 @@
                                     AddColumns(
                                         Filter(
                                             DL_HOP_DONG_SP_NDBH,
+                                            MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                                        ),
+                                        "edited",
+                                        0
+                                    )
+                                );
+                                Collect(
+                                    tmpQLCTHDSPNHDCollect,
+                                    AddColumns(
+                                        Filter(
+                                            DL_HOP_DONG_SP_QLCT,
                                             MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
                                         ),
                                         "edited",
