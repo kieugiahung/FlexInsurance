@@ -1,6 +1,7 @@
 "NhapHopDong As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
     OnVisible: |-
-        =If(
+        =UpdateContext({nhomKB:"2"});
+        If(
             IsBlank(varUnReloadNHD),
             UpdateContext({
                 unReloadCbxNHD:"1"
@@ -106,8 +107,9 @@
                         ID
                     ),
                     maAddedHDSPNHD: "",
-                    maUpdatedHDSPNHD: "",
-                    nhomKB:"0"
+                    maUpdatedHDSPNHD: ""
+                    //,
+                    //nhomKB:"0"
                     //First(objHD).NHOM_KENH_BAN
                 }
             );
@@ -520,7 +522,7 @@
                                     TEN_KENH_BAN:LookUp(DM_KENH_BANS,MA_KENH_BAN=cbxMaKBNHD.Selected.MA_KENH_BAN,TEN_KENH_BAN)
                                 }
                             );
-                            UpdateContext({
+                            /*UpdateContext({
                                 nhomKB:If(
                                     LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=cbxMaKBNHD.Selected.LOAI,CODE_KENH_BAN) in ["TT","CTV"],
                                     "0",
@@ -529,7 +531,7 @@
                                     LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=cbxMaKBNHD.Selected.LOAI,CODE_KENH_BAN) = "DL",
                                     cbxMaKBNHD.Selected.LOAI_CANHAN_TOCHUC
                                 )
-                            })
+                            })*/
                         )
                     SearchFields: =["cr282_ma_kenh_ban"]
                     SearchItems: =Search(Filter(DM_KENH_BANS,LOAI=cbxLoaiKBNHD.Selected.MA_LOAI_KB),cbxMaKBNHD.SearchText,"cr282_ma_kenh_ban")
@@ -4946,14 +4948,52 @@
                     );
                 );
                 If(
-                    IsBlank(
-                        LookUp(
-                            DL_HOP_DONGS,
-                            MA_HOP_DONG = tiMaHDNHD.Text
-                        )
-                    ),
+                    IsBlank(First(objHD).MA_HOP_DONG),
                     Patch(
                         DL_HOP_DONGS,
+                        {
+                            ID: Text(
+                                Max(
+                                    DL_HOP_DONGS,
+                                    ID
+                                ) + 1
+                            ),
+                            MA_HOP_DONG: genMaHD,
+                            DIA_CHI: tiDChiNHD.Text,
+                            DONVI_KENHBAN: cbxDVKBNHD.Selected.MA_DON_VI,
+                            DONVI_QUANLY_HD: cbxDVQLNHD.Selected.MA_PHAMVI,
+                            DONVI_TIEN: cbxDVTienNHD.Selected.TIEN_TE,
+                            EMAIL: tiEmailNHD.Text,
+                            GIOI_TINH: cbxGTinhNHD.Selected.MA_GIOI_TINH,
+                            HIEU_LUC_DEN: dpHLDenNHD.SelectedDate,
+                            HIEU_LUC_TU: dpHLTuNHD.SelectedDate,
+                            LOAI_KENH_BAN: cbxLoaiKBNHD.Selected.MA_LOAI_KB,
+                            LOAI_KHACH_HANG: cbxLoaiKHNHD.Selected.value,
+                            MA_KENH_BAN: cbxMaKBNHD.Selected.MA_KENH_BAN,
+                            MA_KHACH_HANG: cbxMaKHNHD.Selected.MA_KHACH_HANG,
+                            NGAY_HOP_DONG: dpNgayHDNHD.SelectedDate,
+                            NGAY_SINH: dpNSinhNHD.SelectedDate,
+                            NGHE_NGHIEP: cbxNgheNHD.Selected.value,
+                            SO_DIEN_THOAI: tiSDTNHD.Text,
+                            SO_NGUOI_TGIA: tiSoNTGNHD.Text,
+                            TEN_KENH_BAN: tiTenKBNHD.Text,
+                            TEN_KHACH_HANG: tiTenKHNHD.Text,
+                            TRANG_THAI: "Hoạt động",
+                            TINH_TP_KH: cbxTinhNHD.Selected.MA_PHAMVI,
+                            PTHUC_THANH_TOAN: cbxPTTTNHD.Selected.value,
+                            NHOM_KHACH_HANG: cbxNhomKHNHD.Selected.MA_NHOM_KH,
+                            NHOM_KENH_BAN: nhomKB,
+                            TONG_TIEN_PHI: Value(tiTongTPNHD.Text),
+                            MA_GIAM_GIA: cbxMaGGNHD.Selected.MA_GIAM_GIA,
+                            SO_TIEN_GIAM: Value(tiSTGiamNHD.Text),
+                            TIEN_PHI_SAU_GIAM: Value(tiTienSauGiamNHD.Text),
+                            LOAI_HOP_DONG:ddLoaiHDNHD.Selected.value,
+                            TEN_KHACH_HANG_SAVED:cbxMaKHNHD.Selected.MA_KHACH_HANG
+                        }
+                    );
+                    UpdateIf(
+                        objHD,
+                        true,
                         {
                             ID: Text(
                                 Max(
@@ -5029,50 +5069,43 @@
                             LOAI_HOP_DONG:ddLoaiHDNHD.Selected.value,
                             TEN_KHACH_HANG_SAVED:cbxMaKHNHD.Selected.MA_KHACH_HANG
                         }
+                    );
+                    UpdateIf(
+                        objHD,
+                        true,
+                        {
+                            DIA_CHI: tiDChiNHD.Text,
+                            DONVI_KENHBAN: cbxDVKBNHD.Selected.MA_DON_VI,
+                            DONVI_QUANLY_HD: cbxDVQLNHD.Selected.MA_PHAMVI,
+                            DONVI_TIEN: cbxDVTienNHD.Selected.TIEN_TE,
+                            EMAIL: tiEmailNHD.Text,
+                            GIOI_TINH: cbxGTinhNHD.Selected.MA_GIOI_TINH,
+                            HIEU_LUC_DEN: dpHLDenNHD.SelectedDate,
+                            HIEU_LUC_TU: dpHLTuNHD.SelectedDate,
+                            LOAI_KENH_BAN: cbxLoaiKBNHD.Selected.MA_LOAI_KB,
+                            LOAI_KHACH_HANG: cbxLoaiKHNHD.Selected.value,
+                            MA_KENH_BAN: cbxMaKBNHD.Selected.MA_KENH_BAN,
+                            MA_KHACH_HANG: cbxMaKHNHD.Selected.MA_KHACH_HANG,
+                            NGAY_HOP_DONG: dpNgayHDNHD.SelectedDate,
+                            NGAY_SINH: dpNSinhNHD.SelectedDate,
+                            NGHE_NGHIEP: cbxNgheNHD.Selected.value,
+                            SO_DIEN_THOAI: tiSDTNHD.Text,
+                            SO_NGUOI_TGIA: tiSoNTGNHD.Text,
+                            TEN_KENH_BAN: tiTenKBNHD.Text,
+                            TEN_KHACH_HANG: tiTenKHNHD.Text,
+                            TRANG_THAI: "Hoạt động",
+                            TINH_TP_KH: cbxTinhNHD.Selected.MA_PHAMVI,
+                            PTHUC_THANH_TOAN: cbxPTTTNHD.Selected.value,
+                            NHOM_KHACH_HANG: cbxNhomKHNHD.Selected.MA_NHOM_KH,
+                            NHOM_KENH_BAN: nhomKB,
+                            TONG_TIEN_PHI: Value(tiTongTPNHD.Text),
+                            MA_GIAM_GIA: cbxMaGGNHD.Selected.MA_GIAM_GIA,
+                            SO_TIEN_GIAM: Value(tiSTGiamNHD.Text),
+                            TIEN_PHI_SAU_GIAM: Value(tiTienSauGiamNHD.Text),
+                            LOAI_HOP_DONG:ddLoaiHDNHD.Selected.value,
+                            TEN_KHACH_HANG_SAVED:cbxMaKHNHD.Selected.MA_KHACH_HANG
+                        }
                     )
-                );
-                UpdateIf(
-                    objHD,
-                    true,
-                    {
-                        ID: Text(
-                            Max(
-                                DL_HOP_DONGS,
-                                ID
-                            ) + 1
-                        ),
-                        MA_HOP_DONG: genMaHD,
-                        DIA_CHI: tiDChiNHD.Text,
-                        DONVI_KENHBAN: cbxDVKBNHD.Selected.MA_DON_VI,
-                        DONVI_QUANLY_HD: cbxDVQLNHD.Selected.MA_PHAMVI,
-                        DONVI_TIEN: cbxDVTienNHD.Selected.TIEN_TE,
-                        EMAIL: tiEmailNHD.Text,
-                        GIOI_TINH: cbxGTinhNHD.Selected.MA_GIOI_TINH,
-                        HIEU_LUC_DEN: dpHLDenNHD.SelectedDate,
-                        HIEU_LUC_TU: dpHLTuNHD.SelectedDate,
-                        LOAI_KENH_BAN: cbxLoaiKBNHD.Selected.MA_LOAI_KB,
-                        LOAI_KHACH_HANG: cbxLoaiKHNHD.Selected.value,
-                        MA_KENH_BAN: cbxMaKBNHD.Selected.MA_KENH_BAN,
-                        MA_KHACH_HANG: cbxMaKHNHD.Selected.MA_KHACH_HANG,
-                        NGAY_HOP_DONG: dpNgayHDNHD.SelectedDate,
-                        NGAY_SINH: dpNSinhNHD.SelectedDate,
-                        NGHE_NGHIEP: cbxNgheNHD.Selected.value,
-                        SO_DIEN_THOAI: tiSDTNHD.Text,
-                        SO_NGUOI_TGIA: tiSoNTGNHD.Text,
-                        TEN_KENH_BAN: tiTenKBNHD.Text,
-                        TEN_KHACH_HANG: tiTenKHNHD.Text,
-                        TRANG_THAI: "Hoạt động",
-                        TINH_TP_KH: cbxTinhNHD.Selected.MA_PHAMVI,
-                        PTHUC_THANH_TOAN: cbxPTTTNHD.Selected.value,
-                        NHOM_KHACH_HANG: cbxNhomKHNHD.Selected.MA_NHOM_KH,
-                        NHOM_KENH_BAN: nhomKB,
-                        TONG_TIEN_PHI: Value(tiTongTPNHD.Text),
-                        MA_GIAM_GIA: cbxMaGGNHD.Selected.MA_GIAM_GIA,
-                        SO_TIEN_GIAM: Value(tiSTGiamNHD.Text),
-                        TIEN_PHI_SAU_GIAM: Value(tiTienSauGiamNHD.Text),
-                        LOAI_HOP_DONG:ddLoaiHDNHD.Selected.value,
-                        TEN_KHACH_HANG_SAVED:cbxMaKHNHD.Selected.MA_KHACH_HANG
-                    }
                 );
                 Refresh(DL_HOP_DONG_TTOANS);
                 RemoveIf(
@@ -5094,10 +5127,12 @@
                 Reset(tiMaHDNHD);
                 Reset(LinkHDLK);
                 //Xu ly muc 6
+                Refresh(DL_HOP_DONG_CHON_CS);
             RemoveIf(
                     DL_HOP_DONG_CHON_CS,
                     MA_HOP_DONG = tiMaHDNHD.Text
                 );
+                Refresh(DL_HOP_DONG_KETQUA_CS);
                 RemoveIf(
                     DL_HOP_DONG_KETQUA_CS,
                     MA_HOP_DONG = tiMaHDNHD.Text
@@ -5196,10 +5231,12 @@
         Height: =32
         OnSelect: |-
             =//Xu ly muc 6
+            Refresh(DL_HOP_DONG_CHON_CS);
             RemoveIf(
                     DL_HOP_DONG_CHON_CS,
                     MA_HOP_DONG = tiMaHDNHD.Text
                 );
+                Refresh(DL_HOP_DONG_KETQUA_CS);
                 RemoveIf(
                     DL_HOP_DONG_KETQUA_CS,
                     MA_HOP_DONG = tiMaHDNHD.Text
