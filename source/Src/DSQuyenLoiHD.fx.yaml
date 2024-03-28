@@ -1,40 +1,6 @@
 DSQuyenLoiHD As screen:
     OnVisible: |
-        =ClearCollect(
-            tmpDSQL,
-            ShowColumns(
-                AddColumns(
-                    SortByColumns(
-                        Filter(
-                            DL_HOP_DONG_SP_QLCT,
-                            MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT
-                        ),
-                        "cr282_ma_chuong_trinh",
-                        SortOrder.Descending
-                    ),
-                    "edited",
-                    0
-                ),
-                "cr282_ma_san_pham",
-                "cr282_ma_nhom_ql",
-                "cr282_ma_hop_dong",
-                "cr282_tt_hienthi",
-                "cr282_gh_solan_nam",
-                "cr282_gh_songay_nam",
-                "cr282_gh_sotien_benh",
-                "cr282_gh_sotien_nam",
-                "cr282_gh_sotien_ngay",
-                "cr282_gh_sotien_vu",
-                "cr282_ma_chuong_trinh",
-                "cr282_ma_nhomql_sp",
-                "cr282_ma_ql_ct",
-                "cr282_pt_tu_chitra",
-                "cr282_so_tien_bh",
-                "cr282_ten_quyen_loi_ht",
-                "edited"
-            )
-        );
-        UpdateContext(
+        =UpdateContext(
             {
                 maAddedQLHD: "",
                 maUpdatedQLHD: ""
@@ -55,7 +21,7 @@ DSQuyenLoiHD As screen:
         GalleryDKCTCT_8 As gallery.galleryVertical:
             DelayItemLoading: =true
             Height: =612
-            Items: =SortByColumns(tmpDSQL,"cr282_tt_hienthi",SortOrder.Ascending)
+            Items: =SortByColumns(Filter(tmpQLCTHDSPNHDCollect,ID_HOPDONG_SP=idHopDongSPQLCT),"cr282_tt_hienthi",SortOrder.Ascending)
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
             NavigationStep: =0
@@ -68,7 +34,7 @@ DSQuyenLoiHD As screen:
             TiTthtQLCTCT_7 As text:
                 Align: =Align.Right
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.cr282_tt_hienthi
+                Default: =ThisItem.TT_HIENTHI
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -87,7 +53,7 @@ DSQuyenLoiHD As screen:
 
             TiTenQLHTQLCTCT_15 As text:
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.cr282_ten_quyen_loi_ht
+                Default: =ThisItem.TEN_QUYEN_LOI_HT
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -107,7 +73,7 @@ DSQuyenLoiHD As screen:
             TiSTBH_2 As text:
                 Align: =Align.Right
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.cr282_so_tien_bh
+                Default: =ThisItem.SO_TIEN_BH
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -128,7 +94,7 @@ DSQuyenLoiHD As screen:
             TiTuChiTra_2 As text:
                 Align: =Align.Right
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.cr282_pt_tu_chitra
+                Default: =ThisItem.PT_TU_CHITRA
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -149,7 +115,7 @@ DSQuyenLoiHD As screen:
             TiGHSTBenh_2 As text:
                 Align: =Align.Right
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.cr282_gh_sotien_benh
+                Default: =ThisItem.GH_SOTIEN_BENH
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -170,7 +136,7 @@ DSQuyenLoiHD As screen:
             TiGHSNNam_7 As text:
                 Align: =Align.Right
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.cr282_gh_songay_nam
+                Default: =ThisItem.GH_SONGAY_NAM
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -191,7 +157,7 @@ DSQuyenLoiHD As screen:
             TiGHSLNam_7 As text:
                 Align: =Align.Right
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.cr282_gh_solan_nam
+                Default: =ThisItem.GH_SOLAN_NAM
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -212,7 +178,7 @@ DSQuyenLoiHD As screen:
             TiGHSTVu_5 As text:
                 Align: =Align.Right
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.cr282_gh_sotien_vu
+                Default: =ThisItem.GH_SOTIEN_VU
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -233,7 +199,7 @@ DSQuyenLoiHD As screen:
             TiGHSTNam_8 As text:
                 Align: =Align.Right
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.cr282_gh_sotien_nam
+                Default: =ThisItem.GH_SOTIEN_NAM
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -254,7 +220,7 @@ DSQuyenLoiHD As screen:
             TiGHSTNgay_7 As text:
                 Align: =Align.Right
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.cr282_gh_sotien_ngay
+                Default: =ThisItem.GH_SOTIEN_NGAY
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -280,7 +246,7 @@ DSQuyenLoiHD As screen:
                 ChevronFill: =RGBA(72, 163, 62, 1)
                 ChevronHoverBackground: =RGBA(255, 255, 255, 1)
                 ChevronHoverFill: =RGBA(72, 163, 62, 1)
-                DefaultSelectedItems: =LookUp(DM_NHOM_QUYENLOIS,MA_NHOM_QL=ThisItem.cr282_ma_nhom_ql)
+                DefaultSelectedItems: =LookUp(DM_NHOM_QUYENLOIS,MA_NHOM_QL=ThisItem.MA_NHOM_QL)
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -313,7 +279,7 @@ DSQuyenLoiHD As screen:
                 ChevronFill: =RGBA(72, 163, 62, 1)
                 ChevronHoverBackground: =RGBA(255, 255, 255, 1)
                 ChevronHoverFill: =RGBA(72, 163, 62, 1)
-                DefaultSelectedItems: =LookUp(DM_QUYENLOI_CHITIETS,MA_QL_CHITIET=ThisItem.cr282_ma_ql_ct)
+                DefaultSelectedItems: =LookUp(DM_QUYENLOI_CHITIETS,MA_QL_CHITIET=ThisItem.MA_QL_CT)
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -473,7 +439,7 @@ DSQuyenLoiHD As screen:
 
             TiTthtQLCTCT_8 As text:
                 BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =ThisItem.cr282_ma_ql_ct
+                Default: =ThisItem.MA_QL_CT
                 DisabledBorderColor: =RGBA(180, 214, 250, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)

@@ -2031,7 +2031,65 @@
                                 Set(maSPQLCTNHD,cbxMaSPNHD.Selected.MA_SAN_PHAM);
                                 Set(maHDQLCTNHD,First(objHD).MA_HOP_DONG);
                                 Set(maCTQLCTNHD,cbxMaCTNHD.Selected.MA_CHUONG_TRINH);
-                                Set(maNhomTPQLCTNHD,cbxMaCTNHD.Selected.MA_CHUONG_TRINH);
+                                Set(maNhomTPQLCTNHD,Concat(cbxNhomTPNHD.SelectedItems,Value,"|"));
+                                UpdateContext({
+                                    objChangeQLCTNHD:First(
+                                        Filter(
+                                            tmpQLCTHDSPNHDCollect,
+                                            ID_HOPDONG_SP=ThisItem.ID
+                                        )
+                                    )
+                                });
+                                ClearCollect(
+                                    tmpChangeQLCTNHD,
+                                    {
+                                        check:false
+                                    }
+                                );
+                                If(
+                                    objChangeQLCTNHD.MA_SAN_PHAM<>cbxMaSPNHD.Selected.MA_SAN_PHAM || 
+                                    objChangeQLCTNHD.MA_CHUONG_TRINH<>cbxMaCTNHD.Selected.MA_CHUONG_TRINH,
+                                    UpdateIf(
+                                        tmpChangeQLCTNHD,
+                                        true,
+                                        {
+                                            check:true
+                                        }
+                                    )
+                                );
+                                ForAll(
+                                    Split(maNhomTPQLCTNHD,"|") As ds,
+                                    If(
+                                        IsBlank(Find(ds.Value,objChangeQLCTNHD.NHOM_TINH_PHI)),
+                                        UpdateIf(
+                                            tmpChangeQLCTNHD,
+                                            true,
+                                            {
+                                                check:true
+                                            }
+                                        )
+                                    )
+                                );
+                                ForAll(
+                                    Split(objChangeQLCTNHD.NHOM_TINH_PHI,"|") As ds,
+                                    If(
+                                        IsBlank(Find(ds.Value,maNhomTPQLCTNHD)),
+                                        UpdateIf(
+                                            tmpChangeQLCTNHD,
+                                            true,
+                                            {
+                                                check:true
+                                            }
+                                        )
+                                    )
+                                );
+                                If(
+                                    First(tmpChangeQLCTNHD).check,
+                                    RemoveIf(
+                                        tmpQLCTHDSPNHDCollect,
+                                        ID_HOPDONG_SP=ThisItem.ID
+                                    )
+                                );
                                 If(
                                     CountIf(Filter(tmpQLCTHDSPNHDCollect,ID_HOPDONG_SP=ThisItem.ID),true)=0,
                                     ForAll(
@@ -2048,7 +2106,7 @@
                                             {
                                                 MA_CHUONG_TRINH: cbxMaCTNHD.Selected.MA_CHUONG_TRINH,
                                                 MA_SAN_PHAM: cbxMaSPNHD.Selected.MA_SAN_PHAM,
-                                                NHOM_TINH_PHI:ql.NHOM_TINH_PHI,
+                                                NHOM_TINH_PHI:Concat(cbxNhomTPNHD.SelectedItems,Value,"|"),
                                                 MA_QL_CT: ql.MA_QL_CT,
                                                 TT_HIENTHI: ql.TT_HIENTHI,
                                                 MA_NHOM_QL: ql.MA_NHOM_QL,
