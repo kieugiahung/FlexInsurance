@@ -1,6 +1,7 @@
 TraCuuHopDong As screen:
     OnVisible: |-
-        =ClearCollect(
+        =Reset(cbxLoaiHDTCHD);Reset(tiSoHDTCHD);Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTuTCHD);Reset(dpNgayHDDenTCHD);
+        ClearCollect(
             dmDonViTCHDCollect,
             AddColumns(
                 DM_DON_VI,
@@ -33,8 +34,8 @@ TraCuuHopDong As screen:
             )
         );
         ClearCollect(
-            tmpDSHDTCHDCollect,
-            DL_HOP_DONGS
+            tmpDSHDSPTCHDCollect,
+            DL_HOP_DONG_SPS
         );
         ClearCollect(
             tmpDSHDTCHDCollect,
@@ -51,7 +52,6 @@ TraCuuHopDong As screen:
                 (IsBlank(dpNgayHDDenTCHD.SelectedDate) || NGAY_HOP_DONG<=dpNgayHDDenTCHD.SelectedDate)
             )
         );
-        Reset(cbxLoaiHDTCHD);Reset(tiSoHDTCHD);Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTuTCHD);Reset(dpNgayHDDenTCHD);
 
     Container8_3 As groupContainer.manualLayoutContainer:
         Height: =768
@@ -128,7 +128,8 @@ TraCuuHopDong As screen:
             FontWeight: =FontWeight.Bold
             Height: =32
             OnSelect: |-
-                =ClearCollect(
+                =Reset(cbxLoaiHDTCHD);Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTuTCHD);
+                ClearCollect(
                     dmDonViTCHDCollect,
                     AddColumns(
                         DM_DON_VI,
@@ -161,17 +162,27 @@ TraCuuHopDong As screen:
                     )
                 );
                 ClearCollect(
-                    tmpDSHDTCHDCollect,
-                    DL_HOP_DONGS
-                );
-                ClearCollect(
                     tmpDSHDSPTCHDCollect,
                     DL_HOP_DONG_SPS
+                );
+                ClearCollect(
+                    tmpDSHDTCHDCollect,
+                    Filter(
+                        DL_HOP_DONGS,
+                        (IsBlank(cbxLoaiHDTCHD.Selected.value) || LOAI_HOP_DONG=cbxLoaiHDTCHD.Selected.value) &&
+                        (IsBlank(tiSoHDTCHD.Text) || !IsBlank(Find(tiSoHDTCHD.Text,MA_HOP_DONG))) &&
+                        (IsBlank(cbxMaDVTCHD.Selected.MA_DON_VI) || DONVI_QUANLY_HD=cbxMaDVTCHD.Selected.MA_DON_VI) &&
+                        (IsBlank(cbxMaSPTCHD.Selected.MA_SAN_PHAM) || 
+                        CountIf(tmpDSHDSPTCHDCollect As hdsp,hdsp.MA_HOP_DONG=MA_HOP_DONG && hdsp.MA_SAN_PHAM=cbxMaSPTCHD.Selected.MA_SAN_PHAM)>0) && 
+                        (IsBlank(cbxMaKBTCHD.Selected.MA_KENH_BAN) || MA_KENH_BAN=cbxMaKBTCHD.Selected.MA_KENH_BAN) && 
+                        (IsBlank(cbxMaKHTCHD.Selected.MA_KHACH_HANG) || MA_KHACH_HANG=cbxMaKHTCHD.Selected.MA_KHACH_HANG) && 
+                        (IsBlank(dpNgayHDTuTCHD.SelectedDate) || NGAY_HOP_DONG>=dpNgayHDTuTCHD.SelectedDate) &&
+                        (IsBlank(dpNgayHDDenTCHD.SelectedDate) || NGAY_HOP_DONG<=dpNgayHDDenTCHD.SelectedDate)
+                    )
                 );
                 UpdateContext({
                     ngayHD:Blank()
                 });
-                Reset(cbxLoaiHDTCHD);Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTuTCHD);
             Size: =10
             Text: ="Tải lại"
             Width: =95
