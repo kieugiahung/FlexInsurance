@@ -1205,9 +1205,7 @@
                         Items: =DL_SAN_PHAM
                         OnChange: |-
                             =If(
-                                cbxMaSPNHD.Selected.MA_SAN_PHAM<>ThisItem.MA_SAN_PHAM 
-                                //&& IsBlank(unReloadMaSP)
-                                ,
+                                cbxMaSPNHD.Selected.MA_SAN_PHAM<>ThisItem.MA_SAN_PHAM && IsBlank(unReloadMaSP),
                                 Notify(cbxMaSPNHD.Selected.MA_SAN_PHAM,NotificationType.Error,2000);
                                 UpdateIf(
                                     tmpMaCTChangeNHD,
@@ -1283,24 +1281,9 @@
                                 Notify("Bắt buộc chọn chương trình",NotificationType.Error,2000),
                                 IsEmpty(cbxNhomTPNHD.SelectedItems),
                                 Notify("Bắt buộc chọn nhóm tính phí",NotificationType.Error,2000),
-                                UpdateIf(
-                                    tmpDSHDSPNHDCollect,
-                                    ID=ThisItem.ID,
-                                    {
-                                        MA_SAN_PHAM:cbxMaSPNHD.Selected.MA_SAN_PHAM,
-                                        TEN_SAN_PHAM:tiTenSPNHD.Text,
-                                        MA_CHUONG_TRINH:cbxMaCTNHD.Selected.MA_CHUONG_TRINH,
-                                        TEN_CHUONG_TRINH:tiTenCTNHD.Text,
-                                        PTHUC_THANH_TOAN:cbxPTTTNHD.Selected.value,
-                                        SONGUOI_THAMGIA:Value(tiSoNTGSPNHD.Text),
-                                        TONG_TIEN_PHI:Value(tiTongPhiNHD.Text),
-                                        NHOM_TINH_PHI:Concat(cbxNhomTPNHD.SelectedItems, Value,"|"),
-                                        PHI_DIEU_CHINH:Value(tiPhiDCNHD.Text),
-                                        TONG_PHI_DANHSACH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,TONG_PHI_DANHSACH),
-                                        AUTO_GEN_NDBH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,AUTO_GEN_NDBH),
-                                        edited:0
-                                    }
-                                );
+                                UpdateContext({
+                                    unReloadMaSP:"1"
+                                });
                                 If(
                                     ThisItem.ID=maAddedHDSPNHD,
                                     Patch(
@@ -1353,7 +1336,24 @@
                                         }
                                     )
                                 );
-                                
+                                UpdateIf(
+                                    tmpDSHDSPNHDCollect,
+                                    ID=ThisItem.ID,
+                                    {
+                                        MA_SAN_PHAM:cbxMaSPNHD.Selected.MA_SAN_PHAM,
+                                        TEN_SAN_PHAM:tiTenSPNHD.Text,
+                                        MA_CHUONG_TRINH:cbxMaCTNHD.Selected.MA_CHUONG_TRINH,
+                                        TEN_CHUONG_TRINH:tiTenCTNHD.Text,
+                                        PTHUC_THANH_TOAN:cbxPTTTNHD.Selected.value,
+                                        SONGUOI_THAMGIA:Value(tiSoNTGSPNHD.Text),
+                                        TONG_TIEN_PHI:Value(tiTongPhiNHD.Text),
+                                        NHOM_TINH_PHI:Concat(cbxNhomTPNHD.SelectedItems, Value,"|"),
+                                        PHI_DIEU_CHINH:Value(tiPhiDCNHD.Text),
+                                        TONG_PHI_DANHSACH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,TONG_PHI_DANHSACH),
+                                        AUTO_GEN_NDBH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,AUTO_GEN_NDBH),
+                                        edited:0
+                                    }
+                                );
                                 Refresh(DL_HOP_DONG_SP_NDBH);
                                 RemoveIf(
                                     DL_HOP_DONG_SP_NDBH,
@@ -1431,7 +1431,8 @@
                                 );
                                 UpdateContext({
                                     maAddedHDSPNHD:"",
-                                    maUpdatedHDSPNHD:""
+                                    maUpdatedHDSPNHD:"",
+                                    unReloadMaSP:Blank()
                                 })
                             )
                         Size: =11
