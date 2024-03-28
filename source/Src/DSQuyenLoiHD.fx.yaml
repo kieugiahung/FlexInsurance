@@ -2,7 +2,6 @@ DSQuyenLoiHD As screen:
     OnVisible: |
         =UpdateContext(
             {
-                maAddedQLHD: "",
                 maUpdatedQLHD: ""
             }
         );
@@ -251,7 +250,7 @@ DSQuyenLoiHD As screen:
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
                 DisplayFields: =["cr282_ten_nhom_ql"]
-                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                DisplayMode: =DisplayMode.Disabled
                 Height: =30
                 HoverBorderColor: =RGBA(9, 33, 98, 1)
                 HoverFill: =RGBA(180, 214, 250, 1)
@@ -284,7 +283,7 @@ DSQuyenLoiHD As screen:
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
                 DisplayFields: =["cr282_ten_ql_chitiet"]
-                DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) 
+                DisplayMode: =DisplayMode.Disabled
                 Height: =30
                 HoverBorderColor: =RGBA(9, 33, 98, 1)
                 HoverFill: =RGBA(180, 214, 250, 1)
@@ -308,52 +307,37 @@ DSQuyenLoiHD As screen:
                 FontWeight: =FontWeight.Bold
                 Height: =25
                 OnSelect: |-
-                    =If(
-                        IsBlank(CbxNhomQLQLCTCT_1.Selected.MA_NHOM_QL),
-                        Notify(
-                            "Bắt buộc nhập nhóm quyền lợi",
-                            NotificationType.Error,
-                            800
-                        ),
-                        If(
-                            IsBlank(CbxQLQLCTCT_1.Selected.MA_QL_CHITIET),
-                            Notify(
-                                "Bắt buộc nhập quyền lợi",
-                                NotificationType.Error,
-                                800
-                            ),
-                            UpdateIf(
-                                DL_HOP_DONG_SP_QLCT,
-                                MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT && MA_QL_CT=CbxQLQLCTCT_1.Selected.MA_QL_CHITIET,
-                                {
-                                    MA_QL_CT: CbxQLQLCTCT_1.Selected.MA_QL_CHITIET,
-                                    TT_HIENTHI: Value(TiTthtQLCTCT_7.Text),
-                                    MA_NHOM_QL: CbxNhomQLQLCTCT_1.Selected.MA_NHOM_QL,
-                                    MA_NHOMQL_SP: Blank(),
-                                    GH_SOLAN_NAM: Value(TiGHSLNam_7.Text),
-                                    GH_SONGAY_NAM: Value(TiGHSNNam_7.Text),
-                                    GH_SOTIEN_BENH: Value(TiGHSTBenh_2.Text),
-                                    GH_SOTIEN_NAM: Value(TiGHSTNam_8.Text),
-                                    GH_SOTIEN_NGAY: Value(TiGHSTNgay_7.Text),
-                                    GH_SOTIEN_VU: Value(TiGHSTVu_5.Text),
-                                    PT_TU_CHITRA: Value(TiTuChiTra_2.Text),
-                                    SO_TIEN_BH: Value(TiSTBH_2.Text),
-                                    TEN_QUYEN_LOI_HT: If(
-                                        IsBlank(TiTenQLHTQLCTCT_15.Text),
-                                        CbxQLQLCTCT_1.Selected.TEN_QL_CHITIET,
-                                        TiTenQLHTQLCTCT_15.Text
-                                    )
-                                }
-                            );
-                        );
-                        Notify(
-                            "Lưu dữ liệu thành công",
-                            NotificationType.Success,
-                            2000
-                        );
-                        Select(Icon3);
-                        
-                    )
+                    =UpdateIf(
+                        tmpQLCTHDSPNHDCollect,
+                        MA_QL_CT=ThisItem.MA_QL_CT && ID_HOPDONG_SP=idHopDongSPQLCT,
+                        {
+                            //MA_QL_CT: CbxQLQLCTCT_1.Selected.MA_QL_CHITIET,
+                            TT_HIENTHI: Value(TiTthtQLCTCT_7.Text),
+                            //MA_NHOM_QL: CbxNhomQLQLCTCT_1.Selected.MA_NHOM_QL,
+                            //MA_NHOMQL_SP: Blank(),
+                            GH_SOLAN_NAM: Value(TiGHSLNam_7.Text),
+                            GH_SONGAY_NAM: Value(TiGHSNNam_7.Text),
+                            GH_SOTIEN_BENH: Value(TiGHSTBenh_2.Text),
+                            GH_SOTIEN_NAM: Value(TiGHSTNam_8.Text),
+                            GH_SOTIEN_NGAY: Value(TiGHSTNgay_7.Text),
+                            GH_SOTIEN_VU: Value(TiGHSTVu_5.Text),
+                            PT_TU_CHITRA: Value(TiTuChiTra_2.Text),
+                            SO_TIEN_BH: Value(TiSTBH_2.Text),
+                            TEN_QUYEN_LOI_HT: If(
+                                IsBlank(TiTenQLHTQLCTCT_15.Text),
+                                CbxQLQLCTCT_1.Selected.TEN_QL_CHITIET,
+                                TiTenQLHTQLCTCT_15.Text
+                            )
+                        }
+                    );
+                    UpdateContext({
+                        maUpdatedQLHD:""
+                    });
+                    Notify(
+                        "Lưu dữ liệu thành công",
+                        NotificationType.Success,
+                        2000
+                    );    
                 Size: =9
                 Text: ="Lưu"
                 Visible: =ThisItem.edited=1
@@ -367,17 +351,17 @@ DSQuyenLoiHD As screen:
                 Height: =25
                 OnSelect: |-
                     =If(
-                        Or(maAddedQLHD<>"",maUpdatedQLHD<>""),
-                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                        maUpdatedQLHD<>"",
+                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
                         UpdateIf(
-                            tmpDSQL,
-                            cr282_ma_ql_ct=ThisItem.cr282_ma_ql_ct,
+                            tmpQLCTHDSPNHDCollect,
+                            MA_QL_CT=ThisItem.MA_QL_CT && ID_HOPDONG_SP=idHopDongSPQLCT,
                             {
                                 edited:1
                             }
                         );
                         UpdateContext({
-                            maUpdatedQLHD:ThisItem.cr282_ma_ql_ct
+                            maUpdatedQLHD:ThisItem.MA_QL_CT
                         })
                     )
                 Size: =9
@@ -393,17 +377,12 @@ DSQuyenLoiHD As screen:
                 Height: =25
                 OnSelect: |-
                     =If(
-                        Or(maAddedQLHD<>"",maUpdatedQLHD<>""),
+                        maUpdatedQLHD<>"",
                         Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
-                        Refresh(DL_HOP_DONG_SP_QLCT);
-                        UpdateContext({
-                            qlctRemove:LookUp(DL_HOP_DONG_SP_QLCT,MA_QL_CT=ThisItem.cr282_ma_ql_ct && MA_SAN_PHAM=varMaSP && MA_CHUONG_TRINH=varMaCT && MA_HOP_DONG=varMaHD)
-                        });
-                        Remove(
-                            DL_HOP_DONG_SP_QLCT,
-                            qlctRemove
+                        RemoveIf(
+                            tmpQLCTHDSPNHDCollect,
+                            ID_HOPDONG_SP=idHopDongSPQLCT && MA_QL_CT=ThisItem.MA_QL_CT
                         );
-                        Select(Icon3);
                         Notify("Xóa dữ liệu thành công", NotificationType.Success,2000)
                     )
                 Size: =9
@@ -419,13 +398,12 @@ DSQuyenLoiHD As screen:
                 Height: =25
                 OnSelect: |
                     =UpdateIf(
-                        tmpDSQL,
-                        cr282_ma_ql_ct = ThisItem.cr282_ma_ql_ct,
+                        tmpQLCTHDSPNHDCollect,
+                        MA_QL_CT = ThisItem.MA_QL_CT && ID_HOPDONG_SP=idHopDongSPQLCT,
                         {edited: 0}
                     );
                     UpdateContext(
                         {
-                            maAddedQLHD: "",
                             maUpdatedQLHD: ""
                         }
                     );
@@ -681,54 +659,6 @@ DSQuyenLoiHD As screen:
             Width: =Parent.Width
             ZIndex: =44
 
-        Icon3 As icon.Reset:
-            Icon: =Icon.Reset
-            OnSelect: |
-                =ClearCollect(
-                    tmpDSQL,
-                    ShowColumns(
-                        AddColumns(
-                            SortByColumns(
-                                Filter(
-                                    DL_HOP_DONG_SP_QLCT,
-                                    MA_HOP_DONG = varMaHD && MA_SAN_PHAM = varMaSP && MA_CHUONG_TRINH = varMaCT
-                                ),
-                                "cr282_ma_chuong_trinh",
-                                SortOrder.Descending
-                            ),
-                            "edited",
-                            0
-                        ),
-                        "cr282_ma_san_pham",
-                        "cr282_ma_nhom_ql",
-                        "cr282_ma_hop_dong",
-                        "cr282_tt_hienthi",
-                        "cr282_gh_solan_nam",
-                        "cr282_gh_songay_nam",
-                        "cr282_gh_sotien_benh",
-                        "cr282_gh_sotien_nam",
-                        "cr282_gh_sotien_ngay",
-                        "cr282_gh_sotien_vu",
-                        "cr282_ma_chuong_trinh",
-                        "cr282_ma_nhomql_sp",
-                        "cr282_ma_ql_ct",
-                        "cr282_pt_tu_chitra",
-                        "cr282_so_tien_bh",
-                        "cr282_ten_quyen_loi_ht",
-                        "edited"
-                    )
-                );
-                UpdateContext(
-                    {
-                        maAddedQLHD: "",
-                        maUpdatedQLHD: ""
-                    }
-                );
-            Visible: =false
-            X: =1208
-            Y: =422
-            ZIndex: =45
-
         Btn_HuyKH_2 As button:
             BorderColor: =RGBA(0, 0, 0, 0)
             BorderStyle: =BorderStyle.None
@@ -741,8 +671,21 @@ DSQuyenLoiHD As screen:
             HoverBorderColor: =RGBA(0, 0, 0, 0)
             HoverFill: =RGBA(16, 110, 190, 1)
             OnSelect: |-
-                =Set(varUnReloadNHD,"2");
-                Back();
+                =If(
+                    maUpdatedQLHD<>"",
+                    UpdateIf(
+                        tmpQLCTHDSPNHDCollect,
+                        MA_QL_CT=maUpdatedQLHD && ID_HOPDONG_SP=idHopDongSPQLCT,
+                        {
+                            edited:0
+                        }
+                    );
+                    UpdateContext({
+                        maUpdatedQLHD:""
+                    })
+                );
+                Set(varUnReloadNHD,"5");
+                Navigate(NhapHopDong)
             PressedBorderColor: =RGBA(0, 69, 120, 1)
             PressedColor: =RGBA(56, 96, 178, 1)
             PressedFill: =RGBA(16, 110, 190, 1)
@@ -816,7 +759,7 @@ DSQuyenLoiHD As screen:
             DefaultSelectedItems: |
                 =LookUp(
                     ' DL_SAN_PHAM_CT',
-                    MA_SAN_PHAM=cbxMaSPNHD_1.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=varMaCT
+                    MA_SAN_PHAM=cbxMaSPNHD_1.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=maCTQLCTNHD
                 )
             DisplayFields: =["cr282_ma_chuongtrinh","cr282_ten_chuong_trinh"]
             DisplayMode: =DisplayMode.Disabled
@@ -836,7 +779,7 @@ DSQuyenLoiHD As screen:
 
         cbxMaSPNHD_1 As combobox:
             BorderColor: =RGBA(72, 163, 62, 1)
-            DefaultSelectedItems: =LookUp(DL_SAN_PHAM,MA_SAN_PHAM=varMaSP)
+            DefaultSelectedItems: =LookUp(DL_SAN_PHAM,MA_SAN_PHAM=maSPQLCTNHD)
             DisplayFields: =["cr282_ma_san_pham","cr282_ten_san_pham"]
             DisplayMode: =DisplayMode.Disabled
             Height: =32
