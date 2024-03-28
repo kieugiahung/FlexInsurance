@@ -783,11 +783,11 @@ NhapNDBH As screen:
                 {
                     TONG_TIEN_PHI: If(
                         IsBlank(phiDCNDBH) || Value(phiDCNDBH)=0,
-                        Sum(tmpDSNDBHNHDCollect,PHI_NDBH),
-                        Value(phiDCNDBH)*CountIf(tmpDSNDBHNHDCollect,true)
+                        Sum(Filter(tmpDSNDBHNHDCollect,ID_HOPDONG_SP=idHopDongSPNDBH),PHI_NDBH),
+                        Value(phiDCNDBH)*CountIf(Filter(tmpDSNDBHNHDCollect,ID_HOPDONG_SP=idHopDongSPNDBH),true)
                     ),
-                    SONGUOI_THAMGIA: CountIf(tmpDSNDBHNHDCollect,true),
-                    TONG_PHI_DANHSACH:Sum(tmpDSNDBHNHDCollect,PHI_NDBH)
+                    SONGUOI_THAMGIA: CountIf(Filter(tmpDSNDBHNHDCollect,ID_HOPDONG_SP=idHopDongSPNDBH),true),
+                    TONG_PHI_DANHSACH:Sum(Filter(tmpDSNDBHNHDCollect,ID_HOPDONG_SP=idHopDongSPNDBH),PHI_NDBH)
                 }
             );
             Set(varUnReloadNHD,"2");
