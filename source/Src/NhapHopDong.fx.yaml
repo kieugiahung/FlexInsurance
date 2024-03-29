@@ -1622,7 +1622,7 @@
                                     NotificationType.Error,
                                     2000
                                 ),
-                                IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
+                                (ThisItem.edited=1 && IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH)) || (ThisItem.edited=0 && IsBlank(cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH)),
                                 Notify(
                                     "Bắt buộc chọn chương trình",
                                     NotificationType.Error,
@@ -1648,7 +1648,11 @@
                                 );
                                 Set(
                                     maCTNDBH,
-                                    cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                    If(
+                                        ThisItem.edited=1,
+                                        cbxMaCTNHD.Selected.MA_CHUONG_TRINH,
+                                        cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH
+                                    )
                                 );
                                 Set(
                                     nhomTPNDBH,
@@ -2073,7 +2077,7 @@
                                     NotificationType.Error,
                                     2000
                                 ),
-                                IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
+                                (ThisItem.edited=1 && IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH)) || (ThisItem.edited=0 && IsBlank(cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH)),
                                 Notify(
                                     "Bắt buộc chọn chương trình",
                                     NotificationType.Error,
@@ -2088,7 +2092,14 @@
                                 Set(idHopDongSPQLCT,ThisItem.ID);
                                 Set(maSPQLCTNHD,cbxMaSPNHD.Selected.MA_SAN_PHAM);
                                 Set(maHDQLCTNHD,First(objHD).MA_HOP_DONG);
-                                Set(maCTQLCTNHD,cbxMaCTNHD.Selected.MA_CHUONG_TRINH);
+                                Set(
+                                    maCTQLCTNHD,
+                                    If(
+                                        ThisItem.edited=1,
+                                        cbxMaCTNHD.Selected.MA_CHUONG_TRINH,
+                                        cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH
+                                    )
+                                );
                                 Set(maNhomTPQLCTNHD,Concat(cbxNhomTPNHD.SelectedItems,Value,"|"));
                                 UpdateContext({
                                     objChangeQLCTNHD:First(
@@ -2106,7 +2117,7 @@
                                 );
                                 If(
                                     objChangeQLCTNHD.MA_SAN_PHAM<>cbxMaSPNHD.Selected.MA_SAN_PHAM || 
-                                    objChangeQLCTNHD.MA_CHUONG_TRINH<>cbxMaCTNHD.Selected.MA_CHUONG_TRINH,
+                                    objChangeQLCTNHD.MA_CHUONG_TRINH<>maCTQLCTNHD,
                                     UpdateIf(
                                         tmpChangeQLCTNHD,
                                         true,
@@ -2162,7 +2173,7 @@
                                         Collect(
                                             tmpQLCTHDSPNHDCollect,
                                             {
-                                                MA_CHUONG_TRINH: cbxMaCTNHD.Selected.MA_CHUONG_TRINH,
+                                                MA_CHUONG_TRINH: maCTQLCTNHD,
                                                 MA_SAN_PHAM: cbxMaSPNHD.Selected.MA_SAN_PHAM,
                                                 NHOM_TINH_PHI:Concat(cbxNhomTPNHD.SelectedItems,Value,"|"),
                                                 MA_QL_CT: ql.MA_QL_CT,
@@ -3200,9 +3211,10 @@
                                     ) And !IsBlank(
                                         LookUp(
                                             dlDKADLoaiCTCCSCollect,
-                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_CT" && 
+                                            MA_GIA_TRI = sp.cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH
                                         )
-                                    ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
+                                    ) And !IsBlank(sp.cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH),
                                     Collect(
                                         tmpError,
                                         {ID: 22}
@@ -3219,9 +3231,9 @@
                                     ) And IsBlank(
                                         LookUp(
                                             dlDKADLoaiCTCCSCollect,
-                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT" && KIEU = "2" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT" && KIEU = "2" && MA_GIA_TRI = sp.cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH
                                         )
-                                    ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
+                                    ) And !IsBlank(sp.cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH),
                                     Collect(
                                         tmpError,
                                         {ID: 23}
@@ -3234,14 +3246,14 @@
                                     !IsBlank(
                                         LookUp(
                                             dlDKADLoaiCTCCSCollect,
-                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH
                                         )
                                     ) And !IsBlank(
                                         LookUp(
                                             dlDKADLoaiCTCCSCollect,
-                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                            MA_DIEU_KIEN = dk.MA_DIEU_KIEN && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH
                                         )
-                                    ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
+                                    ) And !IsBlank(sp.cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH),
                                     Collect(
                                         tmpError,
                                         {ID: 24}
@@ -3944,9 +3956,9 @@
                                     ) And !IsBlank(
                                         LookUp(
                                             dlChinhSachDTCTCCSCollect,
-                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH
                                         )
-                                    ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
+                                    ) And !IsBlank(sp.cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH),
                                     Collect(
                                         tmpErrorCs,
                                         {ID: 22}
@@ -3963,9 +3975,9 @@
                                     ) And IsBlank(
                                         LookUp(
                                             dlChinhSachDTCTCCSCollect,
-                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT" && KIEU = "2" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT" && KIEU = "2" && MA_GIA_TRI = sp.cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH
                                         )
-                                    ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
+                                    ) And !IsBlank(sp.cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH),
                                     Collect(
                                         tmpErrorCs,
                                         {ID: 23}
@@ -3978,14 +3990,14 @@
                                     !IsBlank(
                                         LookUp(
                                             dlChinhSachDTCTCCSCollect,
-                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "1" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH
                                         )
                                     ) And !IsBlank(
                                         LookUp(
                                             dlChinhSachDTCTCCSCollect,
-                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH
+                                            MA_CHINH_SACH = dk.MA_CHINH_SACH && THANH_PHAN = "SP" && AP_DUNG = "2" && MA_TIEU_CHI = "MA_CT" && MA_GIA_TRI = sp.cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH
                                         )
-                                    ) And !IsBlank(sp.cbxMaCTNHD.Selected.MA_CHUONG_TRINH),
+                                    ) And !IsBlank(sp.cbxMaCTNHDHide.Selected.MA_CHUONG_TRINH),
                                     Collect(
                                         tmpErrorCs,
                                         {ID: 24}
