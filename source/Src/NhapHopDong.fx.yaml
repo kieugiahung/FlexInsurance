@@ -1249,17 +1249,102 @@
                             =If(
                                 Or(maAddedHDSPNHD<>"",maUpdatedHDSPNHD<>""),
                                 Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
+                                //xoa ds ndbh
                                 Refresh(DL_HOP_DONG_SP_NDBH);
-                                RemoveIf(DL_HOP_DONG_SP_NDBH,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID);
-                                RemoveIf(tmpDSNDBHNHDCollect,ID_HOPDONG_SP=ThisItem.ID);
+                                ClearCollect(
+                                    tmpDSNDBHRemoveNHDCollect,
+                                    Filter(
+                                        DL_HOP_DONG_SP_NDBH,
+                                        MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                                    )
+                                );
+                                ForAll(
+                                    tmpDSNDBHRemoveNHDCollect As ds,
+                                    Remove(
+                                        DL_HOP_DONG_SP_NDBH,
+                                        ds
+                                    )
+                                );
+                                ClearCollect(
+                                    tmpDSNDBHRemoveNHDCollect,
+                                    Filter(
+                                        tmpDSNDBHNHDCollect,
+                                        ID_HOPDONG_SP=ThisItem.ID
+                                    )
+                                );
+                                ForAll(
+                                    tmpDSNDBHRemoveNHDCollect As ds,
+                                    Remove(
+                                        tmpDSNDBHNHDCollect,
+                                        ds
+                                    )
+                                );
+                                //end xoa ds ndbh
                                 
+                                //xoa ds qlct
                                 Refresh(DL_HOP_DONG_SP_QLCT);
-                                RemoveIf(DL_HOP_DONG_SP_QLCT,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID);
-                                RemoveIf(tmpDSNDBHNHDCollect,ID_HOPDONG_SP=ThisItem.ID);
+                                ClearCollect(
+                                    tmpDSQLCTRemoveNHDCollect,
+                                    Filter(
+                                        DL_HOP_DONG_SP_QLCT,
+                                        MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                                    )
+                                );
+                                ForAll(
+                                    tmpDSQLCTRemoveNHDCollect As ds,
+                                    Remove(
+                                        DL_HOP_DONG_SP_QLCT,
+                                        ds
+                                    )
+                                );
+                                ClearCollect(
+                                    tmpDSQLCTRemoveNHDCollect,
+                                    Filter(
+                                        tmpQLCTHDSPNHDCollect,
+                                        ID_HOPDONG_SP=ThisItem.ID
+                                    )
+                                );
+                                ForAll(
+                                    tmpDSQLCTRemoveNHDCollect As ds,
+                                    Remove(
+                                        tmpQLCTHDSPNHDCollect,
+                                        ds
+                                    )
+                                );
+                                //end xoa ds qlct
                             
+                                //xoa ds hdsp
                                 Refresh(DL_HOP_DONG_SPS);
-                                RemoveIf(DL_HOP_DONG_SPS,ID=ThisItem.ID);
-                                RemoveIf(tmpDSHDSPNHDCollect,ID=ThisItem.ID);
+                                ClearCollect(
+                                    tmpDSHDSPRemoveNHDCollect,
+                                    Filter(
+                                        DL_HOP_DONG_SPS,
+                                        ID=ThisItem.ID
+                                    )
+                                );
+                                ForAll(
+                                    tmpDSHDSPRemoveNHDCollect As ds,
+                                    Remove(
+                                        DL_HOP_DONG_SPS,
+                                        ds
+                                    )
+                                );
+                                ClearCollect(
+                                    tmpDSHDSPRemoveNHDCollect,
+                                    Filter(
+                                        tmpDSHDSPNHDCollect,
+                                        ID=ThisItem.ID
+                                    )
+                                );
+                                ForAll(
+                                    tmpDSHDSPRemoveNHDCollect As ds,
+                                    Remove(
+                                        tmpDSHDSPNHDCollect,
+                                        ds
+                                    )
+                                );
+                                //end xoa ds hdsp
+                            
                                 UpdateIf(
                                     objHD,
                                     true,
