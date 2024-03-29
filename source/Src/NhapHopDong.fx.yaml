@@ -1295,7 +1295,8 @@
                                 IsEmpty(cbxNhomTPNHD.SelectedItems),
                                 Notify("Bắt buộc chọn nhóm tính phí",NotificationType.Error,2000),
                                 UpdateContext({
-                                    unReloadMaSP:"1"
+                                    unReloadMaSP:"1",
+                                    unReloadMaCT:"1"
                                 });
                                 If(
                                     ThisItem.ID=maAddedHDSPNHD,
@@ -2165,10 +2166,10 @@
                                     ForAll(
                                         Filter(
                                             DL_CHUONGTRINH_QLCTS,
-                                            MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && MA_SAN_PHAM = ThisItem.MA_SAN_PHAM &&
-                                            MA_NHOM_QL in Distinct(Filter(DL_SAN_PHAM_NHOMQLS,MA_SP = ThisItem.MA_SAN_PHAM && 
-                                                !IsBlank(Find(ThisItem.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG)) &&
-                                                !IsBlank(Find(MA_NHOM_TINHPHI,ThisItem.NHOM_TINH_PHI))
+                                            MA_CHUONG_TRINH = maCTQLCTNHD && MA_SAN_PHAM = maSPQLCTNHD &&
+                                            MA_NHOM_QL in Distinct(Filter(DL_SAN_PHAM_NHOMQLS,MA_SP = maSPQLCTNHD && 
+                                                !IsBlank(Find(maCTQLCTNHD,CHUONGTRINH_APDUNG)) &&
+                                                !IsBlank(Find(MA_NHOM_TINHPHI,maNhomTPQLCTNHD))
                                             ),MA_NHOM_QL)
                                         ) As ql,
                                         Collect(
