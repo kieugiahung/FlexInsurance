@@ -1,6 +1,7 @@
 ChonChinhSach As screen:
     OnVisible: |-
-        =ClearCollect(
+        =Reset(cbxMaSPCCS);Reset(DateHD);
+        ClearCollect(
             dmSanPhamCCSCollect,
             AddColumns(
                 Filter(
@@ -121,11 +122,26 @@ ChonChinhSach As screen:
                             tmpTCCSCCSCollect As ds,
                             If(
                                 (!IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")) ||
+                    
+                                !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" &&
+                                MA_TIEU_CHI="LHNV" && MA_GIA_TRI=cbxMaSPCCS.Selected.LHNV)) ||
+                    
+                                !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_COMBO_SP" && MA_GIA_TRI=cbxMaSPCCS.Selected.MA_SAN_PHAM)) ||
+                    
                                 !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" &&
                                 MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=cbxMaSPCCS.Selected.MA_SAN_PHAM))) &&
+                    
                                 IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")) &&
+                    
                                 IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" &&
-                                MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=cbxMaSPCCS.Selected.MA_SAN_PHAM)),
+                                MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=cbxMaSPCCS.Selected.MA_SAN_PHAM)) &&
+                    
+                                IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" &&
+                                MA_TIEU_CHI="LHNV" && MA_GIA_TRI=cbxMaSPCCS.Selected.LHNV)) &&
+                    
+                                IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_COMBO_SP" && MA_GIA_TRI=cbxMaSPCCS.Selected.MA_SAN_PHAM)),
                                 Collect(
                                     tmpTCCSCCSCollect1,
                                     {
@@ -148,9 +164,24 @@ ChonChinhSach As screen:
                             tmpTCCSCCSCollect As ds,
                             If(
                                 (!IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="1")) ||
+                    
+                                !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_KB_LOAI" && MA_GIA_TRI=cbxMaKBCCS.Selected.LOAI)) ||
+                    
+                                !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_KB_NHOM" && MA_GIA_TRI=nhomKBCCSFwd)) ||
+                    
                                 !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2" &&
                                 MA_TIEU_CHI="MA_KB_DM" && MA_GIA_TRI=cbxMaKBCCS.Selected.MA_KENH_BAN))) &&
+                    
                                 IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="1")) &&
+                    
+                                IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_KB_LOAI" && MA_GIA_TRI=cbxMaKBCCS.Selected.LOAI)) &&
+                    
+                                IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_KB_NHOM" && MA_GIA_TRI=nhomKBCCSFwd)) &&
+                    
                                 IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2" &&
                                 MA_TIEU_CHI="MA_KB_DM" && MA_GIA_TRI=cbxMaKBCCS.Selected.MA_KENH_BAN)),
                                 Collect(
@@ -175,9 +206,24 @@ ChonChinhSach As screen:
                             tmpTCCSCCSCollect As ds,
                             If(
                                 (!IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="1")) ||
+                    
+                                !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_KH_LOAI" && MA_GIA_TRI=cbxMaKHCCS.Selected.LOAI_KHACH_HANG)) ||
+                    
+                                !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_KH_NHOM" && MA_GIA_TRI=cbxMaKHCCS.Selected.MA_NHOM_KH)) ||
+                    
                                 !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2" &&
                                 MA_TIEU_CHI="MA_KH" && MA_GIA_TRI=cbxMaKHCCS.Selected.MA_KHACH_HANG))) &&
+                    
                                 IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="1")) &&
+                    
+                                IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_KH_LOAI" && MA_GIA_TRI=cbxMaKHCCS.Selected.LOAI_KHACH_HANG)) &&
+                    
+                                IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2" &&
+                                MA_TIEU_CHI="MA_KH_NHOM" && MA_GIA_TRI=cbxMaKHCCS.Selected.MA_NHOM_KH)) &&
+                    
                                 IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2" &&
                                 MA_TIEU_CHI="MA_KH" && MA_GIA_TRI=cbxMaKHCCS.Selected.MA_KHACH_HANG)),
                                 Collect(
@@ -1327,6 +1373,7 @@ ChonChinhSach As screen:
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(230, 230, 230, 1)
                 DisplayFields: =["title"]
+                DisplayMode: =DisplayMode.Disabled
                 Height: =30
                 InputTextPlaceholder: =""
                 IsSearchable: =false
@@ -1349,6 +1396,7 @@ ChonChinhSach As screen:
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(230, 230, 230, 1)
                 DisplayFields: =["title"]
+                DisplayMode: =DisplayMode.Disabled
                 Height: =30
                 InputTextPlaceholder: =""
                 IsSearchable: =false
