@@ -979,6 +979,14 @@ ThemKhachHang As screen:
                             DisabledFill: =RGBA(214, 221, 224, 1)
                             Items: |-
                                 =[{ID:"0", TEN: "Cá nhân"},{ID:"1", TEN: "Tổ chức"}]
+                            OnChange: |-
+                                =UpdateContext({
+                                    changeLoaiKHNKH:If(
+                                        Parent.Default="0",
+                                        true,
+                                        false
+                                    )
+                                })
                             Size: =11
                             Width: =334.8
                             X: =253.2
@@ -2429,9 +2437,14 @@ ThemKhachHang As screen:
             DisplayMode: =DisplayMode.Edit
             Fill: =RGBA(0, 0, 0, 0)
             Height: =356
-            Visible: |-
-                =
-                resetCan=false
+            Visible: |+
+                =If(
+                    DataCardValue12.Selected.ID="1",
+                    true,
+                    false
+                )
+                //resetCan=false
+                
             Width: =1366
             X: =0
             Y: =1
