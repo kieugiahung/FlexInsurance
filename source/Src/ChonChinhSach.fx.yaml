@@ -481,10 +481,11 @@ ChonChinhSach As screen:
                         ShowColumns(
                             AddColumns(
                                 SortByColumns(
-                                    Filter(
+                                    /*Filter(
                                         DL_CHINHSACH_CHUNG As ds,
                                         CountIf(tmpTCCSCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH)>0
-                                    ),
+                                    ),*/
+                                    DL_CHINHSACH_CHUNG,
                                     "cr282_ma_chinh_sach",
                                     SortOrder.Ascending
                                 ),
@@ -561,10 +562,10 @@ ChonChinhSach As screen:
                             {pass: 1}
                         )
                     );
-                    /*RemoveIf(
+                    RemoveIf(
                         tmpChonTCCSDT,
                         pass <> 1
-                    );*/
+                    );
                 Size: =9
                 Text: ="Tra cứu"
                 Width: =80
@@ -1373,7 +1374,6 @@ ChonChinhSach As screen:
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(230, 230, 230, 1)
                 DisplayFields: =["title"]
-                DisplayMode: =DisplayMode.Disabled
                 Height: =30
                 InputTextPlaceholder: =""
                 IsSearchable: =false

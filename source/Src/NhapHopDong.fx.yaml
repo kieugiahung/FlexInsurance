@@ -535,7 +535,8 @@
                                     "0",
                                     LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=cbxMaKBNHD.Selected.LOAI,CODE_KENH_BAN) in ["MG","BA"],
                                     "1",
-                                    LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=cbxMaKBNHD.Selected.LOAI,CODE_KENH_BAN) = "DL",
+                                    LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=cbxMaKBNHD.Selected.LOAI,CODE_KENH_BAN) = "DL" &&
+                                    LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=cbxMaKBNHD.Selected.LOAI,CODE_KENH_BAN),
                                     cbxMaKBNHD.Selected.LOAI_CANHAN_TOCHUC
                                 )
                             })
@@ -1173,7 +1174,7 @@
                             
                             LookUp(
                                 ' DL_SAN_PHAM_CT',
-                                MA_SAN_PHAM=LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_SAN_PHAM) && MA_CHUONG_TRINH=LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_CHUONG_TRINH)
+                                MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_CHUONG_TRINH)
                             )
                         DisplayFields: =["cr282_ma_chuongtrinh","cr282_ten_chuong_trinh"]
                         Height: =32
@@ -1181,11 +1182,12 @@
                         Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM)
                         OnChange: |-
                             =If(
-                                cbxMaCTNHD.Selected.MA_CHUONG_TRINH<>ThisItem.MA_CHUONG_TRINH && IsBlank(unReloadMaCT),
+                                cbxMaCTNHD.Selected.MA_CHUONG_TRINH<>LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_CHUONG_TRINH) && IsBlank(unReloadMaCT),
                                 UpdateIf(
                                     tmpMaCTChangeNHD,
                                     ID=ThisItem.ID,
                                     {
+                                        MA_CHUONG_TRINH:cbxMaCTNHD.Selected.MA_CHUONG_TRINH,
                                         NHOM_TINH_PHI:Blank()
                                     }
                                 );
@@ -1201,6 +1203,7 @@
                         SelectMultiple: =false
                         Size: =11
                         Template: =ListItemTemplate.Double
+                        Visible: =ThisItem.edited=1
                         Width: =250
                         X: =672
                         Y: =34
@@ -1216,7 +1219,7 @@
                         Items: =DL_SAN_PHAM
                         OnChange: |-
                             =If(
-                                cbxMaSPNHD.Selected.MA_SAN_PHAM<>ThisItem.MA_SAN_PHAM && IsBlank(unReloadMaSP),
+                                cbxMaSPNHD.Selected.MA_SAN_PHAM<>LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_SAN_PHAM) && IsBlank(unReloadMaSP),
                                 UpdateIf(
                                     tmpMaCTChangeNHD,
                                     ID=ThisItem.ID,
@@ -1608,7 +1611,8 @@
                                 );
                                 UpdateContext({
                                     maUpdatedHDSPNHD:ThisItem.ID
-                                })
+                                });
+                                Reset(cbxMaSPNHD);Reset(cbxMaCTNHD);
                             )
                         Size: =11
                         Text: ="Sửa"
@@ -1668,14 +1672,14 @@
                                         edited:0
                                     }
                                 );
-                                /*UpdateIf(
+                                UpdateIf(
                                     tmpMaCTChangeNHD,
                                     ID=ThisItem.ID,
                                     {
                                         MA_CHUONG_TRINH:LookUp(tmpDSHDSPNHDCollect,ID=ThisItem.ID,MA_CHUONG_TRINH),
                                         NHOM_TINH_PHI:LookUp(tmpDSHDSPNHDCollect,ID=ThisItem.ID,NHOM_TINH_PHI)
                                     }
-                                );*/
+                                );
                                 UpdateIf(
                                     objHD,
                                     true,
@@ -2167,7 +2171,9 @@
                                 Distinct(
                                     Filter(
                                         DL_SAN_PHAM_NHOMQLS,
-                                        MA_SP=cbxMaSPNHD.Selected.MA_SAN_PHAM && !IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH) && !IsBlank(Find(cbxMaCTNHD.Selected.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG))
+                                        MA_SP=cbxMaSPNHD.Selected.MA_SAN_PHAM && 
+                                        !IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH) && 
+                                        !IsBlank(Find(LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_CHUONG_TRINH),CHUONGTRINH_APDUNG))
                                     ),
                                     MA_NHOM_TINHPHI
                                 )
@@ -2175,8 +2181,7 @@
                         SearchFields: =["Value"]
                         SearchItems: =[]
                         Size: =11
-                        Visible: |
-                            =ThisItem.edited=1
+                        Visible: =ThisItem.edited=1
                         Width: =250
                         X: =30
                         Y: =102
