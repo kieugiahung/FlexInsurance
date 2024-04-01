@@ -2812,7 +2812,22 @@
                             maKHNLKFwd,
                             cbxMaKHNHD.Selected.MA_KHACH_HANG
                         );
-                        Set(dsMaSPCCSFwd,Concat(Filter(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG),MA_SAN_PHAM,"|"));
+                        Set(
+                            dsMaSPCCSFwd, 
+                            Concatenate(
+                                Concat(
+                                    Filter(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG),
+                                    MA_SAN_PHAM,
+                                    "|"
+                                ),
+                                "|",
+                                Concat(
+                                    tmpDSHDSPLKNHDCollect,
+                                    MA_SAN_PHAM,
+                                    "|"
+                                )
+                            )
+                        );
                         Set(maKBCCSFwd,cbxMaKBNHD.Selected.MA_KENH_BAN);
                         Set(maKHCCSFwd,cbxMaKHNHD.Selected.MA_KHACH_HANG);
                         Set(maDVCCSFwd,cbxDVQLNHD.Selected.MA_PHAMVI);
