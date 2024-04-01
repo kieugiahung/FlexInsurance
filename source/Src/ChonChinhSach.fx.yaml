@@ -140,35 +140,8 @@ ChonChinhSach As screen:
                         Clear(tmpDSComboSPCCS);
                         ForAll(
                             tmpTCCSCCSCollect As ds,
-                            ForAll(
-                                dmSanPhamCCSCollect As dsSP,
-                                If(
-                                    (IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")) &&
-                    
-                                    IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" &&
-                                    MA_TIEU_CHI="LHNV" && MA_GIA_TRI=dsSP.LHNV)) &&
-                    
-                                    IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" &&
-                                    MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=dsSP.MA_SAN_PHAM))) ||
-                    
-                                    !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")) ||
-                    
-                                    !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" &&
-                                    MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=dsSP.MA_SAN_PHAM)) ||
-                    
-                                    !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" &&
-                                    MA_TIEU_CHI="LHNV" && MA_GIA_TRI=dsSP.LHNV)),
-                                    UpdateIf(
-                                        tmpCheckCSSPCCS,
-                                        true,
-                                        {
-                                            check:false
-                                        }
-                                    );
-                                )
-                            );
                             If(
-                                First(tmpCheckCSSPCCS).check &&
+                                IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")) &&
                                 !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" && MA_TIEU_CHI="MA_COMBO_SP")),
                                 ForAll(
                                     Filter(
@@ -189,6 +162,14 @@ ChonChinhSach As screen:
                                 If(
                                     First(tmpCheckCSSPCCS).check,
                                     If(
+                                        !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")),
+                                        UpdateIf(
+                                            tmpCheckCSSPCCS,
+                                            true,
+                                            {
+                                                check:false
+                                            }
+                                        ),
                                         !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" && MA_TIEU_CHI="MA_COMBO_SP")),
                                         ForAll(
                                             Filter(
@@ -218,6 +199,43 @@ ChonChinhSach As screen:
                                         )
                                     )
                                 )
+                            );
+                            If(
+                                First(tmpCheckCSSPCCS).check,
+                                ForAll(
+                                    dmSanPhamCCSCollect As dsSP,
+                                    If(
+                                        (IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")) &&
+                    
+                                        IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" &&
+                                        MA_TIEU_CHI="LHNV" && MA_GIA_TRI=dsSP.LHNV)) &&
+                    
+                                        IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" &&
+                                        MA_TIEU_CHI="MA_COMBO_SP")) &&
+                    
+                                        IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" &&
+                                        MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=dsSP.MA_SAN_PHAM))) ||
+                    
+                                        !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")) ||
+                    
+                                        !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" &&
+                                        MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=dsSP.MA_SAN_PHAM)) ||
+                    
+                                        !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" &&
+                                        MA_TIEU_CHI="LHNV" && MA_GIA_TRI=dsSP.LHNV)),
+                                        UpdateIf(
+                                            tmpCheckCSSPCCS,
+                                            true,
+                                            {
+                                                check:false
+                                            }
+                                        );
+                                    )
+                                )
+                            );
+                            If(
+                                ds.MA_CHINH_SACH="CS0009",
+                                Notify(First(tmpCheckCSSPCCS).check,NotificationType.Error,2000)
                             );
                             If(
                                 First(tmpCheckCSSPCCS).check,
