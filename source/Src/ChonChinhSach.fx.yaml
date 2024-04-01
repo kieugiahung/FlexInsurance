@@ -126,6 +126,12 @@ ChonChinhSach As screen:
                             }
                         );
                         ClearCollect(
+                            tmpCheckLTComboSPCCS,
+                            {
+                                check:true
+                            }
+                        );
+                        ClearCollect(
                             tmpDSComboSPCCS,
                             {
                                 MA_SAN_PHAM:""
@@ -134,7 +140,35 @@ ChonChinhSach As screen:
                         Clear(tmpDSComboSPCCS);
                         ForAll(
                             tmpTCCSCCSCollect As ds,
+                            ForAll(
+                                dmSanPhamCCSCollect As dsSP,
+                                If(
+                                    (IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")) &&
+                    
+                                    IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" &&
+                                    MA_TIEU_CHI="LHNV" && MA_GIA_TRI=dsSP.LHNV)) &&
+                    
+                                    IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" &&
+                                    MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=dsSP.MA_SAN_PHAM))) ||
+                    
+                                    !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")) ||
+                    
+                                    !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" &&
+                                    MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=dsSP.MA_SAN_PHAM)) ||
+                    
+                                    !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" &&
+                                    MA_TIEU_CHI="LHNV" && MA_GIA_TRI=dsSP.LHNV)),
+                                    UpdateIf(
+                                        tmpCheckCSSPCCS,
+                                        true,
+                                        {
+                                            check:false
+                                        }
+                                    );
+                                )
+                            );
                             If(
+                                First(tmpCheckCSSPCCS).check &&
                                 !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" && MA_TIEU_CHI="MA_COMBO_SP")),
                                 ForAll(
                                     Filter(
@@ -153,44 +187,36 @@ ChonChinhSach As screen:
                                     )
                                 );
                                 If(
-                                    First(tmpCheckCSSPCCS).check &&
-                                    !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" && MA_TIEU_CHI="MA_COMBO_SP")),
-                                    ForAll(
-                                        
+                                    First(tmpCheckCSSPCCS).check,
+                                    If(
+                                        !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" && MA_TIEU_CHI="MA_COMBO_SP")),
+                                        ForAll(
+                                            Filter(
+                                                dlChinhSachDTCTCCSCollect,
+                                                MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" && MA_TIEU_CHI="MA_COMBO_SP"
+                                            ) As dsCombo,
+                                            If(
+                                                IsBlank(LookUp(dmSanPhamCCSCollect,MA_SAN_PHAM=dsCombo.MA_GIA_TRI)),
+                                                UpdateIf(
+                                                    tmpCheckLTComboSPCCS,
+                                                    true,
+                                                    {
+                                                        check:false
+                                                    }
+                                                )
+                                            )
+                                        );
+                                        If(
+                                            First(tmpCheckLTComboSPCCS).check,
+                                            UpdateIf(
+                                                tmpCheckCSSPCCS,
+                                                true,
+                                                {
+                                                    check:false
+                                                }
+                                            );
+                                        )
                                     )
-                                )
-                            );
-                            ForAll(
-                                dmSanPhamCCSCollect As dsSP,
-                                If(
-                                    (IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")) &&
-                    
-                                    IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" &&
-                                    MA_TIEU_CHI="LHNV" && MA_GIA_TRI=dsSP.LHNV)) &&
-                    
-                                    IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" &&
-                                    MA_TIEU_CHI="MA_COMBO_SP" && MA_GIA_TRI=dsSP.MA_SAN_PHAM)) &&
-                    
-                                    IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" &&
-                                    MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=dsSP.MA_SAN_PHAM))) ||
-                    
-                                    !IsBlank(LookUp(dlCSDTCSSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")) ||
-                    
-                                    !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" &&
-                                    MA_TIEU_CHI="MA_SP" && MA_GIA_TRI=dsSP.MA_SAN_PHAM)) ||
-                    
-                                    !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" &&
-                                    MA_TIEU_CHI="LHNV" && MA_GIA_TRI=dsSP.LHNV)) ||
-                    
-                                    !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" &&
-                                    MA_TIEU_CHI="MA_COMBO_SP" && MA_GIA_TRI=dsSP.MA_SAN_PHAM)),
-                                    UpdateIf(
-                                        tmpCheckCSSPCCS,
-                                        true,
-                                        {
-                                            check:false
-                                        }
-                                    );
                                 )
                             );
                             If(
@@ -204,6 +230,13 @@ ChonChinhSach As screen:
                             );
                             UpdateIf(
                                 tmpCheckCSSPCCS,
+                                true,
+                                {
+                                    check:true
+                                }
+                            );
+                            UpdateIf(
+                                tmpCheckLTComboSPCCS,
                                 true,
                                 {
                                     check:true
