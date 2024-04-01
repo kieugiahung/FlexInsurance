@@ -125,8 +125,41 @@ ChonChinhSach As screen:
                                 check:true
                             }
                         );
+                        ClearCollect(
+                            tmpDSComboSPCCS,
+                            {
+                                MA_SAN_PHAM:""
+                            }
+                        );
+                        Clear(tmpDSComboSPCCS);
                         ForAll(
                             tmpTCCSCCSCollect As ds,
+                            If(
+                                !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" && MA_TIEU_CHI="MA_COMBO_SP")),
+                                ForAll(
+                                    Filter(
+                                        dlChinhSachDTCTCCSCollect,
+                                        MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2" && MA_TIEU_CHI="MA_COMBO_SP"
+                                    ) As dsCombo,
+                                    If(
+                                        IsBlank(LookUp(dmSanPhamCCSCollect,MA_SAN_PHAM=dsCombo.MA_GIA_TRI)),
+                                        UpdateIf(
+                                            tmpCheckCSSPCCS,
+                                            true,
+                                            {
+                                                check:false
+                                            }
+                                        )
+                                    )
+                                );
+                                If(
+                                    First(tmpCheckCSSPCCS).check &&
+                                    !IsBlank(LookUp(dlChinhSachDTCTCCSCollect,MA_CHINH_SACH=ds.MA_CHINH_SACH && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2" && MA_TIEU_CHI="MA_COMBO_SP")),
+                                    ForAll(
+                                        
+                                    )
+                                )
+                            );
                             ForAll(
                                 dmSanPhamCCSCollect As dsSP,
                                 If(
