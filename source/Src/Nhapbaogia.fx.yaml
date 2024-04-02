@@ -41,10 +41,10 @@
             Label3_90 As label:
                 Height: =25
                 Size: =11
-                Text: ="Mã sản phẩm (*)"
+                Text: ="Sản phẩm"
                 Width: =130
                 X: =30
-                Y: =6
+                Y: =9
                 ZIndex: =2
 
             Label3_93 As label:
@@ -61,20 +61,11 @@
                 Height: =25
                 Size: =11
                 Text: ="Mã chương trình (*)"
+                Visible: =false
                 Width: =160
                 X: =368
                 Y: =14
                 ZIndex: =4
-
-            Label3_91 As label:
-                Height: =25
-                Size: =11
-                Text: ="Tên sản phẩm"
-                Visible: =false
-                Width: =140
-                X: =734
-                Y: =6
-                ZIndex: =5
 
             tiSoNTGSPNHD_1 As text:
                 Align: =Align.Right
@@ -218,8 +209,8 @@
                 Template: =ListItemTemplate.Double
                 Visible: =ThisItem.edited=1
                 Width: =250
-                X: =368
-                Y: =36
+                X: =1007
+                Y: =88
                 ZIndex: =14
 
             cbxMaSPNHD_2 As combobox:
@@ -255,8 +246,8 @@
                 Size: =11
                 Template: =ListItemTemplate.Double
                 Width: =250
-                X: =30
-                Y: =39
+                X: =170
+                Y: =6
                 ZIndex: =15
 
             btnXoaHDSPNHD_1 As button:
@@ -1185,7 +1176,7 @@
                             Filter(
                                 DL_SAN_PHAM_NHOMQLS,
                                 MA_SP=cbxMaSPNHD_2.Selected.MA_SAN_PHAM && 
-                                !IsBlank(cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH) && 
+                                !IsBlank(RadioGroupCanvas1.Selected.MA_CHUONG_TRINH) && 
                                 !IsBlank(Find(LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_CHUONG_TRINH),CHUONGTRINH_APDUNG))
                             ),
                             MA_NHOM_TINHPHI
@@ -1470,13 +1461,13 @@
 
             RadioGroupCanvas1 As Radio.pcfdataset:
                 DisplayMode: =DisplayMode.Edit
-                Height: =39
+                Height: =46
                 Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD_2.Selected.MA_SAN_PHAM)
-                Layout: =Layout.Horizontal
+                Layout: ='RadioGroupCanvas.Layout'.Horizontal
                 OnSelect: =Select(Parent)
-                Width: =568
-                X: =679
-                Y: =0
+                Width: =1242
+                X: =15
+                Y: =38
                 ZIndex: =30
 
                 ID1 As pcfDataField.textualColumn:
