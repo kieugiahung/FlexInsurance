@@ -868,10 +868,12 @@
                 Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD_2.Selected.MA_SAN_PHAM)
                 Layout: ='RadioGroupCanvas.Layout'.Horizontal
                 OnChange: |
-                    =
+                    =Set(CheckedCT, false);
                     Reset(Gallery1);
                 OnSelect: |-
-                    =Refresh(Gallery1.Selected);
+                    =
+                    Set(CheckedCT, false);
+                    Refresh(Gallery1.Selected);
                     Reset(Gallery1);
                     Reset(CheckboxCanvas1);
                     
@@ -957,7 +959,7 @@
                 DelayItemLoading: =true
                 Height: =71
                 Items: |+
-                    =Filter(
+                    =/*Filter(
                         ["Nhóm chính","Nhóm bổ sung","Nhóm thai sản","Nha khoa/Chăm sóc răng","Ngoại trú","Nhóm thương tật, tử vong"],
                         Value in
                         Distinct(
@@ -969,6 +971,15 @@
                             ),
                             MA_NHOM_TINHPHI
                         )
+                    )
+                    */
+                    Distinct(
+                            Filter(
+                                DL_SAN_PHAM_NHOMQLS,
+                                MA_SP=cbxMaSPNHD_2.Selected.MA_SAN_PHAM && 
+                                !IsBlank(Search(DL_SAN_PHAM_NHOMQLS, RadioGroupCanvas1.Selected.MA_CHUONG_TRINH,"cr282_chuongtrinh_apdung"))
+                                
+                            ),MA_NHOM_TINHPHI
                     )
                     
                 Layout: =Layout.Vertical
@@ -983,7 +994,7 @@
 
                 CheckboxCanvas1 As Checkbox:
                     BasePaletteColor: =
-                    Checked: =CheckedCT
+                    Checked: =false
                     DisplayMode: =DisplayMode.Edit
                     Height: =30
                     Label: =""
