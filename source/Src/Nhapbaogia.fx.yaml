@@ -870,7 +870,7 @@
                 OnChange: |
                     =Set(CheckedCT, false);
                     Reset(Gallery1);
-                OnSelect: |
+                OnSelect: |-
                     =
                     Set(CheckedCT, false);
                     Refresh(Gallery1.Selected);
@@ -878,6 +878,15 @@
                     Reset(CheckboxCanvas1);
                     
                     Set(CheckedCT, false);
+                    ClearCollect (temp, Distinct(
+                            Filter(
+                                DL_SAN_PHAM_NHOMQLS,
+                                MA_SP=cbxMaSPNHD_2.Selected.MA_SAN_PHAM && 
+                                !IsBlank( Search ( DL_SAN_PHAM_NHOMQLS,  RadioGroupCanvas1.Selected.MA_CHUONG_TRINH, "cr282_chuongtrinh_apdung" ) )
+                    
+                                
+                            ),MA_NHOM_TINHPHI
+                    ))
                 Width: =1087
                 X: =169
                 Y: =65
