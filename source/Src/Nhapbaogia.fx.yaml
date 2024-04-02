@@ -870,7 +870,7 @@
                 OnChange: |
                     =Set(CheckedCT, false);
                     Reset(Gallery1);
-                OnSelect: |-
+                OnSelect: |
                     =
                     Set(CheckedCT, false);
                     Refresh(Gallery1.Selected);
@@ -878,16 +878,6 @@
                     Reset(CheckboxCanvas1);
                     
                     Set(CheckedCT, false);
-                    
-                    
-                    ClearCollect (tmp, Distinct(
-                            Filter(
-                                DL_SAN_PHAM_NHOMQLS,
-                                MA_SP=cbxMaSPNHD_2.Selected.MA_SAN_PHAM && 
-                                IsBlank( Search("a",CHUONGTRINH_APDUNG))
-                            ),
-                            MA_NHOM_TINHPHI
-                        ) );
                 Width: =1087
                 X: =169
                 Y: =65
