@@ -1,0 +1,1514 @@
+"Nhapbaogia As screen.'autoLayout_Approval_ver1.0'":
+
+    Container3_10 As groupContainer.manualLayoutContainer:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        DropShadow: =DropShadow.None
+        Height: =257
+        Width: =1267
+        X: =76
+        Y: =148
+        ZIndex: =1
+
+        Label3_89 As label:
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =11
+            Text: ="4. Sản phẩm"
+            Width: =254
+            Y: =4
+            ZIndex: =19
+
+        Gallery3_4 As gallery.variableTemplateHeightGallery:
+            DelayItemLoading: =true
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =184
+            Items: |-
+                =SortByColumns(
+                    tmpDSHDSPNHDCollect,
+                    "cr282_id",
+                    SortOrder.Ascending
+                )
+            Layout: =Layout.Vertical
+            LoadingSpinner: =LoadingSpinner.Data
+            TemplateSize: =184
+            Width: =1267
+            Y: =70
+            ZIndex: =21
+
+            Label3_90 As label:
+                Height: =25
+                Size: =11
+                Text: ="Mã sản phẩm (*)"
+                Width: =130
+                X: =30
+                Y: =6
+                ZIndex: =2
+
+            Label3_93 As label:
+                Height: =25
+                Size: =11
+                Text: ="Tên chương trình"
+                Width: =140
+                X: =990
+                Y: =6
+                ZIndex: =3
+
+            Label3_92 As label:
+                Height: =25
+                Size: =11
+                Text: ="Mã chương trình (*)"
+                Width: =160
+                X: =672
+                Y: =6
+                ZIndex: =4
+
+            Label3_91 As label:
+                Height: =25
+                Size: =11
+                Text: ="Tên sản phẩm"
+                Width: =140
+                X: =355
+                Y: =6
+                ZIndex: =5
+
+            tiSoNTGSPNHD_1 As text:
+                Align: =Align.Right
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: |-
+                    =If (
+                        ThisItem.edited=1,
+                        LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,SONGUOI_THAMGIA),
+                        ThisItem.SONGUOI_THAMGIA
+                    )
+                DisplayMode: =DisplayMode.Disabled
+                Format: =TextFormat.Number
+                Height: =32
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =250
+                X: =672
+                Y: =102
+                ZIndex: =7
+
+            tiTongPhiNHD_1 As text:
+                Align: =Align.Right
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: |-
+                    =If (
+                        ThisItem.edited=1,
+                        LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,TONG_TIEN_PHI),
+                        ThisItem.TONG_TIEN_PHI
+                    )
+                DisplayMode: =DisplayMode.Disabled
+                Format: =TextFormat.Number
+                Height: =32
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =250
+                X: =990
+                Y: =102
+                ZIndex: =8
+
+            Label3_96 As label:
+                Height: =25
+                Size: =11
+                Text: ="Số người tham gia"
+                Width: =140
+                X: =672
+                Y: =74
+                ZIndex: =9
+
+            Label3_97 As label:
+                Height: =25
+                Size: =11
+                Text: ="Tổng phí/Nhóm"
+                Width: =140
+                X: =990
+                Y: =74
+                ZIndex: =10
+
+            tiTenSPNHD_2 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =LookUp(DL_SAN_PHAM,MA_SAN_PHAM=cbxMaSPNHD_2.Selected.MA_SAN_PHAM,TEN_SAN_PHAM)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =32
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =250
+                X: =355
+                Y: =34
+                ZIndex: =11
+
+            tiTenCTNHD_2 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =LookUp(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD_2.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,TEN_CHUONG_TRINH)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =32
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =250
+                X: =990
+                Y: =34
+                ZIndex: =12
+
+            cbxMaCTNHD_2 As combobox:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultSelectedItems: |-
+                    =/*If (
+                        ThisItem.edited=1,
+                        LookUp(
+                            ' DL_SAN_PHAM_CT',
+                            MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=tiMaCTNHD.Text
+                        ),
+                        LookUp(
+                            ' DL_SAN_PHAM_CT',
+                            MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=ThisItem.MA_CHUONG_TRINH
+                        )
+                    )*/
+                    
+                    LookUp(
+                        ' DL_SAN_PHAM_CT',
+                        MA_SAN_PHAM=cbxMaSPNHD_2.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_CHUONG_TRINH)
+                    )
+                DisplayFields: =["cr282_ma_chuongtrinh","cr282_ten_chuong_trinh"]
+                Height: =32
+                InputTextPlaceholder: =""
+                Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD_2.Selected.MA_SAN_PHAM)
+                OnChange: |-
+                    =If(
+                        cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH<>LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_CHUONG_TRINH) && IsBlank(unReloadMaCT),
+                        UpdateIf(
+                            tmpMaCTChangeNHD,
+                            ID=ThisItem.ID,
+                            {
+                                MA_CHUONG_TRINH:cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
+                                NHOM_TINH_PHI:Blank()
+                            }
+                        );
+                        Reset(cbxNhomTPNHD_1);
+                    );
+                OnSelect: |-
+                    =UpdateContext({
+                        unReloadMaSP:Blank(),
+                        unReloadMaCT:Blank()
+                    })
+                SearchFields: =["cr282_ma_chuong_trinh"]
+                SearchItems: =Search(Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD_2.Selected.MA_SAN_PHAM),cbxMaCTNHD_2.SearchText,"cr282_ma_chuong_trinh")
+                SelectMultiple: =false
+                Size: =11
+                Template: =ListItemTemplate.Double
+                Visible: =ThisItem.edited=1
+                Width: =250
+                X: =672
+                Y: =34
+                ZIndex: =14
+
+            cbxMaSPNHD_2 As combobox:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultSelectedItems: =LookUp(DL_SAN_PHAM,MA_SAN_PHAM=ThisItem.MA_SAN_PHAM)
+                DisplayFields: =["cr282_ma_san_pham","cr282_ten_san_pham"]
+                DisplayMode: =If(ThisItem.edited=1,DisplayMode.Edit,DisplayMode.Disabled)
+                Height: =32
+                InputTextPlaceholder: =""
+                Items: =DL_SAN_PHAM
+                OnChange: |-
+                    =If(
+                        cbxMaSPNHD_2.Selected.MA_SAN_PHAM<>LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_SAN_PHAM) && IsBlank(unReloadMaSP),
+                        UpdateIf(
+                            tmpMaCTChangeNHD,
+                            ID=ThisItem.ID,
+                            {
+                                MA_SAN_PHAM:cbxMaSPNHD_2.Selected.MA_SAN_PHAM,
+                                MA_CHUONG_TRINH:Blank(),
+                                NHOM_TINH_PHI:Blank()
+                            }
+                        );
+                        Reset(cbxMaCTNHD_2);Reset(cbxNhomTPNHD_1);
+                    );
+                OnSelect: |-
+                    =UpdateContext({
+                        unReloadMaSP:Blank(),
+                        unReloadMaCT:Blank()
+                    })
+                SearchFields: =["cr282_ma_san_pham"]
+                SearchItems: =Search(DL_SAN_PHAM,cbxMaSPNHD_2.SearchText,"cr282_ma_san_pham")
+                SelectMultiple: =false
+                Size: =11
+                Template: =ListItemTemplate.Double
+                Width: =250
+                X: =30
+                Y: =34
+                ZIndex: =15
+
+            btnXoaHDSPNHD_1 As button:
+                Height: =32
+                OnSelect: |-
+                    =If(
+                        Or(maAddedHDSPNHD<>"",maUpdatedHDSPNHD<>""),
+                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
+                        //xoa ds ndbh
+                        Refresh(DL_HOP_DONG_SP_NDBH);
+                        ClearCollect(
+                            tmpDSNDBHRemoveNHDCollect,
+                            Filter(
+                                DL_HOP_DONG_SP_NDBH,
+                                MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                            )
+                        );
+                        ForAll(
+                            tmpDSNDBHRemoveNHDCollect As ds,
+                            Remove(
+                                DL_HOP_DONG_SP_NDBH,
+                                ds
+                            )
+                        );
+                        ClearCollect(
+                            tmpDSNDBHRemoveNHDCollect,
+                            Filter(
+                                tmpDSNDBHNHDCollect,
+                                ID_HOPDONG_SP=ThisItem.ID
+                            )
+                        );
+                        ForAll(
+                            tmpDSNDBHRemoveNHDCollect As ds,
+                            Remove(
+                                tmpDSNDBHNHDCollect,
+                                ds
+                            )
+                        );
+                        //end xoa ds ndbh
+                        
+                        //xoa ds qlct
+                        Refresh(DL_HOP_DONG_SP_QLCT);
+                        ClearCollect(
+                            tmpDSQLCTRemoveNHDCollect,
+                            Filter(
+                                DL_HOP_DONG_SP_QLCT,
+                                MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                            )
+                        );
+                        ForAll(
+                            tmpDSQLCTRemoveNHDCollect As ds,
+                            Remove(
+                                DL_HOP_DONG_SP_QLCT,
+                                ds
+                            )
+                        );
+                        ClearCollect(
+                            tmpDSQLCTRemoveNHDCollect,
+                            Filter(
+                                tmpQLCTHDSPNHDCollect,
+                                ID_HOPDONG_SP=ThisItem.ID
+                            )
+                        );
+                        ForAll(
+                            tmpDSQLCTRemoveNHDCollect As ds,
+                            Remove(
+                                tmpQLCTHDSPNHDCollect,
+                                ds
+                            )
+                        );
+                        //end xoa ds qlct
+                    
+                        //xoa ds hdsp
+                        Refresh(DL_HOP_DONG_SPS);
+                        ClearCollect(
+                            tmpDSHDSPRemoveNHDCollect,
+                            Filter(
+                                DL_HOP_DONG_SPS,
+                                ID=ThisItem.ID
+                            )
+                        );
+                        ForAll(
+                            tmpDSHDSPRemoveNHDCollect As ds,
+                            Remove(
+                                DL_HOP_DONG_SPS,
+                                ds
+                            )
+                        );
+                        ClearCollect(
+                            tmpDSHDSPRemoveNHDCollect,
+                            Filter(
+                                tmpDSHDSPNHDCollect,
+                                ID=ThisItem.ID
+                            )
+                        );
+                        ForAll(
+                            tmpDSHDSPRemoveNHDCollect As ds,
+                            Remove(
+                                tmpDSHDSPNHDCollect,
+                                ds
+                            )
+                        );
+                        //end xoa ds hdsp
+                    
+                        UpdateIf(
+                            objHD,
+                            true,
+                            {
+                                SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
+                            }
+                        );
+                        UpdateIf(
+                            DL_HOP_DONG_SPS,
+                            MA_HOP_DONG=First(objHD).MA_HOP_DONG,
+                            {
+                                SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
+                            }
+                        );
+                        Notify("Xóa dữ liệu thành công", NotificationType.Success,2000);
+                    )
+                Size: =11
+                Text: ="Xóa"
+                Visible: =ThisItem.edited=0
+                Width: =90
+                X: =1100
+                Y: =143
+                ZIndex: =16
+
+            btnLuuHDSPNHD_1 As button:
+                Height: =32
+                OnSelect: |
+                    =If(
+                        IsBlank(cbxMaSPNHD_2.Selected.MA_SAN_PHAM),
+                        Notify("Bắt buộc chọn sản phẩm",NotificationType.Error,2000),
+                        IsBlank(cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH),
+                        Notify("Bắt buộc chọn chương trình",NotificationType.Error,2000),
+                        IsEmpty(cbxNhomTPNHD_1.SelectedItems),
+                        Notify("Bắt buộc chọn nhóm tính phí",NotificationType.Error,2000),
+                        UpdateContext({
+                            unReloadMaSP:"1",
+                            unReloadMaCT:"1"
+                        });
+                        If(
+                            ThisItem.ID=maAddedHDSPNHD,
+                            Patch(
+                                DL_HOP_DONG_SPS,
+                                {
+                                    ID: ThisItem.ID,
+                                    MA_HOP_DONG: First(objHD).MA_HOP_DONG,
+                                    MA_SAN_PHAM: cbxMaSPNHD_2.Selected.MA_SAN_PHAM,
+                                    MA_CHUONG_TRINH: cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
+                                    TEN_CHUONG_TRINH: tiTenCTNHD_2.Text,
+                                    TEN_SAN_PHAM: tiTenSPNHD_2.Text,
+                                    DON_VI_TINH: cbxDVTienNHD.Selected.TIEN_TE,
+                                    SONGUOI_THAMGIA: Value(tiSoNTGSPNHD_1.Text),
+                                    TONG_TIEN_PHI: Value(tiTongPhiNHD_1.Text),
+                                    MA_KENH_BAN: cbxMaKBNHD.Selected.MA_KENH_BAN,
+                                    MA_KHACH_HANG: cbxMaKHNHD.Selected.MA_KHACH_HANG,
+                                    NGAY_HOP_DONG: dpNgayHDNHD.SelectedDate,
+                                    NHOM_TINH_PHI: Concat(
+                                        cbxNhomTPNHD_1.SelectedItems,
+                                        Value,
+                                        "|"
+                                    ),
+                                    PHI_DIEU_CHINH:Value(tiPhiDCNHD_1.Text),
+                                    TONG_PHI_DANHSACH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,TONG_PHI_DANHSACH),
+                                    AUTO_GEN_NDBH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,AUTO_GEN_NDBH)
+                                }
+                            ),
+                            ThisItem.ID=maUpdatedHDSPNHD,
+                            UpdateIf(
+                                DL_HOP_DONG_SPS,
+                                ID = ThisItem.ID,
+                                {
+                                    MA_SAN_PHAM:cbxMaSPNHD_2.Selected.MA_SAN_PHAM,
+                                    TEN_SAN_PHAM:tiTenSPNHD_2.Text,
+                                    MA_CHUONG_TRINH:cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
+                                    TEN_CHUONG_TRINH:tiTenCTNHD_2.Text,
+                                    SONGUOI_THAMGIA: Value(tiSoNTGSPNHD_1.Text),
+                                    TONG_TIEN_PHI: Value(tiTongPhiNHD_1.Text),
+                                    MA_KENH_BAN: cbxMaKBNHD.Selected.MA_KENH_BAN,
+                                    MA_KHACH_HANG: cbxMaKHNHD.Selected.MA_KHACH_HANG,
+                                    NGAY_HOP_DONG: dpNgayHDNHD.SelectedDate,
+                                    NHOM_TINH_PHI: Concat(
+                                        cbxNhomTPNHD_1.SelectedItems,
+                                        Value,
+                                        "|"
+                                    ),
+                                    PHI_DIEU_CHINH:Value(tiPhiDCNHD_1.Text),
+                                    TONG_PHI_DANHSACH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,TONG_PHI_DANHSACH),
+                                    AUTO_GEN_NDBH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,AUTO_GEN_NDBH)
+                                }
+                            )
+                        );
+                        UpdateIf(
+                            tmpDSHDSPNHDCollect,
+                            ID=ThisItem.ID,
+                            {
+                                MA_SAN_PHAM:cbxMaSPNHD_2.Selected.MA_SAN_PHAM,
+                                TEN_SAN_PHAM:tiTenSPNHD_2.Text,
+                                MA_CHUONG_TRINH:cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
+                                TEN_CHUONG_TRINH:tiTenCTNHD_2.Text,
+                                PTHUC_THANH_TOAN:cbxPTTTNHD.Selected.value,
+                                SONGUOI_THAMGIA:Value(tiSoNTGSPNHD_1.Text),
+                                TONG_TIEN_PHI:Value(tiTongPhiNHD_1.Text),
+                                NHOM_TINH_PHI:Concat(cbxNhomTPNHD_1.SelectedItems, Value,"|"),
+                                PHI_DIEU_CHINH:Value(tiPhiDCNHD_1.Text),
+                                TONG_PHI_DANHSACH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,TONG_PHI_DANHSACH),
+                                AUTO_GEN_NDBH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,AUTO_GEN_NDBH),
+                                edited:0
+                            }
+                        );
+                        Refresh(DL_HOP_DONG_SP_NDBH);
+                        RemoveIf(
+                            DL_HOP_DONG_SP_NDBH,
+                            MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                        );
+                        ForAll(
+                            Filter(
+                                tmpDSNDBHNHDCollect,
+                                ID_HOPDONG_SP=ThisItem.ID
+                            ) As ds,
+                            Patch(
+                                DL_HOP_DONG_SP_NDBH,
+                                {
+                                    ID:ds.ID,
+                                    MA_HOP_DONG:First(objHD).MA_HOP_DONG,
+                                    MA_SAN_PHAM:cbxMaSPNHD_2.Selected.MA_SAN_PHAM,
+                                    MA_CHUONG_TRINH:cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
+                                    NHOM_TINH_PHI:Concat(cbxNhomTPNHD_1.SelectedItems, Value,"|"),
+                                    TEN_NDBH:ds.TEN_NDBH,
+                                    MST:ds.MST,
+                                    DIA_CHI:ds.DIA_CHI,
+                                    MA_GIOI__TINH:ds.MA_GIOI__TINH,
+                                    MA_TINH_TP: ds.MA_TINH_TP,
+                                    MA_NHAN_VIEN: ds.MA_NHAN_VIEN,
+                                    MOI_QUAN_HE: ds.MOI_QUAN_HE,
+                                    NGAY_SINH: ds.NGAY_SINH,
+                                    NHOM: ds.NHOM,
+                                    SO_GIAY_TO: ds.SO_GIAY_TO,
+                                    PHI_NDBH: ds.PHI_NDBH,
+                                    ID_HOPDONG_SP:ThisItem.ID
+                                }
+                            )
+                        );
+                        UpdateIf(
+                            DL_HOP_DONGS,
+                            MA_HOP_DONG=First(objHD).MA_HOP_DONG,
+                            {
+                                SO_NGUOI_TGIA:Value(tiSoNTGNHD.Text)
+                            }
+                        );
+                        Refresh(DL_HOP_DONG_SP_QLCT);
+                        ClearCollect(
+                            tmpDSQLCTRemoveNHDCollect,
+                            Filter(
+                                DL_HOP_DONG_SP_QLCT,
+                                MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                            )
+                        );
+                        ForAll(
+                            tmpDSQLCTRemoveNHDCollect As ds,
+                            Remove(
+                                DL_HOP_DONG_SP_QLCT,
+                                ds
+                            )
+                        );
+                        If(
+                            CountIf(Filter(tmpQLCTHDSPNHDCollect,ID_HOPDONG_SP=ThisItem.ID),true)=0,
+                            ForAll(
+                                Filter(
+                                    DL_CHUONGTRINH_QLCTS,
+                                    MA_CHUONG_TRINH = cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH && MA_SAN_PHAM = cbxMaSPNHD_2.Selected.MA_SAN_PHAM &&
+                                    MA_NHOM_QL in Distinct(Filter(DL_SAN_PHAM_NHOMQLS,MA_SP = cbxMaSPNHD_2.Selected.MA_SAN_PHAM && 
+                                        !IsBlank(Find(cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG)) &&
+                                        !IsBlank(Find(MA_NHOM_TINHPHI,Concat(cbxNhomTPNHD_1.SelectedItems, Value,"|")))
+                                    ),MA_NHOM_QL)
+                                ) As ds,
+                                Patch(
+                                    DL_HOP_DONG_SP_QLCT,
+                                    {
+                                        MA_HOP_DONG:First(objHD).MA_HOP_DONG,
+                                        MA_SAN_PHAM:cbxMaSPNHD_2.Selected.MA_SAN_PHAM,
+                                        MA_CHUONG_TRINH:cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
+                                        NHOM_TINH_PHI:Concat(cbxNhomTPNHD_1.SelectedItems, Value,"|"),
+                                        ID_HOPDONG_SP:ThisItem.ID,
+                                        MA_QL_CT:ds.MA_QL_CT,
+                                        MA_NHOM_QL:ds.MA_NHOM_QL,
+                                        TT_HIENTHI:ds.TT_HIENTHI,
+                                        GH_SOLAN_NAM:ds.GH_SOLAN_NAM,
+                                        GH_SONGAY_NAM:ds.GH_SONGAY_NAM,
+                                        GH_SOTIEN_BENH: ds.GH_SOTIEN_BENH,
+                                        GH_SOTIEN_NAM: ds.GH_SOTIEN_NAM,
+                                        GH_SOTIEN_NGAY: ds.GH_SOTIEN_NGAY,
+                                        GH_SOTIEN_VU: ds.GH_SOTIEN_VU,
+                                        PT_TU_CHITRA: ds.PT_TU_CHITRA,
+                                        SO_TIEN_BH: ds.SO_TIEN_BH,
+                                        TEN_QUYEN_LOI_HT: ds.TEN_QUYEN_LOI_HT
+                                    }
+                                )
+                            )
+                        );
+                        ForAll(
+                            Filter(
+                                tmpQLCTHDSPNHDCollect,
+                                ID_HOPDONG_SP=ThisItem.ID
+                            ) As ds,
+                            Patch(
+                                DL_HOP_DONG_SP_QLCT,
+                                {
+                                    MA_HOP_DONG:First(objHD).MA_HOP_DONG,
+                                    MA_SAN_PHAM:cbxMaSPNHD_2.Selected.MA_SAN_PHAM,
+                                    MA_CHUONG_TRINH:cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
+                                    NHOM_TINH_PHI:Concat(cbxNhomTPNHD_1.SelectedItems, Value,"|"),
+                                    ID_HOPDONG_SP:ThisItem.ID,
+                                    MA_QL_CT:ds.MA_QL_CT,
+                                    MA_NHOM_QL:ds.MA_NHOM_QL,
+                                    TT_HIENTHI:ds.TT_HIENTHI,
+                                    GH_SOLAN_NAM:ds.GH_SOLAN_NAM,
+                                    GH_SONGAY_NAM:ds.GH_SONGAY_NAM,
+                                    GH_SOTIEN_BENH: ds.GH_SOTIEN_BENH,
+                                    GH_SOTIEN_NAM: ds.GH_SOTIEN_NAM,
+                                    GH_SOTIEN_NGAY: ds.GH_SOTIEN_NGAY,
+                                    GH_SOTIEN_VU: ds.GH_SOTIEN_VU,
+                                    PT_TU_CHITRA: ds.PT_TU_CHITRA,
+                                    SO_TIEN_BH: ds.SO_TIEN_BH,
+                                    TEN_QUYEN_LOI_HT: ds.TEN_QUYEN_LOI_HT
+                                }
+                            )
+                        );
+                        ClearCollect(
+                            tmpMaCTChangeNHD,
+                            tmpDSHDSPNHDCollect
+                        );
+                        UpdateContext({
+                            maAddedHDSPNHD:"",
+                            maUpdatedHDSPNHD:""
+                        });
+                        Notify("Lưu thông tin thành công",NotificationType.Success,2000);
+                    )
+                Size: =11
+                Text: ="Lưu"
+                Visible: =ThisItem.edited=1
+                Width: =90
+                X: =990
+                Y: =143
+                ZIndex: =17
+
+            btnSuaHDSPNHD_1 As button:
+                Height: =32
+                OnSelect: |-
+                    =If(
+                        Or(maAddedHDSPNHD<>"",maUpdatedHDSPNHD<>""),
+                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
+                        UpdateIf(
+                            tmpDSHDSPNHDCollect,
+                            ID=ThisItem.ID,
+                            {
+                                edited:1
+                            }
+                        );
+                        ClearCollect(
+                            tmpMaCTChangeNHD,
+                            tmpDSHDSPNHDCollect
+                        );
+                        UpdateContext({
+                            maUpdatedHDSPNHD:ThisItem.ID
+                        });
+                        Reset(cbxMaSPNHD_2);Reset(cbxMaCTNHD_2);
+                    )
+                Size: =11
+                Text: ="Sửa"
+                Visible: =ThisItem.edited=0
+                Width: =90
+                X: =990
+                Y: =143
+                ZIndex: =18
+
+            btnHuyHDSPNHD_1 As button:
+                Height: =32
+                OnSelect: |-
+                    =If(
+                        ThisItem.ID=maAddedHDSPNHD,
+                        RemoveIf(
+                            tmpDSNDBHNHDCollect,
+                            MA_HOP_DONG=First(objHD).MA_HOP_DONG 
+                            && ID_HOPDONG_SP=ThisItem.ID
+                        );
+                        RemoveIf(
+                            tmpQLCTHDSPNHDCollect,
+                            MA_HOP_DONG=First(objHD).MA_HOP_DONG 
+                            && ID_HOPDONG_SP=ThisItem.ID
+                        );
+                        Remove(tmpDSHDSPNHDCollect,ThisItem),
+                        RemoveIf(
+                            tmpQLCTHDSPNHDCollect,
+                            MA_HOP_DONG=First(objHD).MA_HOP_DONG 
+                            && ID_HOPDONG_SP=ThisItem.ID
+                        );
+                        RemoveIf(
+                            tmpDSNDBHNHDCollect,
+                            MA_HOP_DONG=First(objHD).MA_HOP_DONG 
+                            && ID_HOPDONG_SP=ThisItem.ID
+                        );
+                        Collect(
+                            tmpDSNDBHNHDCollect,
+                            AddColumns(
+                                Filter(
+                                    DL_HOP_DONG_SP_NDBH,
+                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                                ),
+                                "edited",
+                                0
+                            )
+                        );
+                        UpdateIf(
+                            tmpDSHDSPNHDCollect,
+                            ID=ThisItem.ID,
+                            {
+                                /*MA_SAN_PHAM:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,MA_SAN_PHAM),
+                                MA_CHUONG_TRINH:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,MA_CHUONG_TRINH),
+                                NHOM_TINH_PHI:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,NHOM_TINH_PHI),*/
+                                SONGUOI_THAMGIA:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,SONGUOI_THAMGIA),
+                                TONG_TIEN_PHI:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,TONG_TIEN_PHI),
+                                TONG_PHI_DANHSACH:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,TONG_PHI_DANHSACH),
+                                edited:0
+                            }
+                        );
+                        UpdateIf(
+                            tmpMaCTChangeNHD,
+                            ID=ThisItem.ID,
+                            {
+                                MA_CHUONG_TRINH:LookUp(tmpDSHDSPNHDCollect,ID=ThisItem.ID,MA_CHUONG_TRINH),
+                                NHOM_TINH_PHI:LookUp(tmpDSHDSPNHDCollect,ID=ThisItem.ID,NHOM_TINH_PHI)
+                            }
+                        );
+                        UpdateIf(
+                            objHD,
+                            true,
+                            {
+                                SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
+                            }
+                        );
+                        UpdateIf(
+                            DL_HOP_DONGS,
+                            MA_HOP_DONG=First(objHD).MA_HOP_DONG,
+                            {
+                                SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
+                            }
+                        );
+                        Collect(
+                            tmpQLCTHDSPNHDCollect,
+                            AddColumns(
+                                Filter(
+                                    DL_HOP_DONG_SP_QLCT,
+                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
+                                ),
+                                "edited",
+                                0
+                            )
+                        );
+                    );
+                    UpdateContext({
+                        maAddedHDSPNHD:"",
+                        maUpdatedHDSPNHD:"",
+                        unReloadMaCT:"1",
+                        unReloadMaSP:"1"
+                    });
+                Size: =11
+                Text: ="Hủy"
+                Visible: =ThisItem.edited=1
+                Width: =90
+                X: =1100
+                Y: =143
+                ZIndex: =19
+
+            LinkHDLK_5 As text:
+                BorderThickness: =0
+                Color: =RGBA(39, 113, 194, 1)
+                Default: ="Danh sách NĐBH"
+                DisabledBorderColor: =RGBA(255, 255, 255, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: |-
+                    =//If(ThisItem.edited=0,DisplayMode.Edit,DisplayMode.Disabled) 
+                    DisplayMode.Edit
+                Height: =28
+                HoverBorderColor: =RGBA(255, 255, 255, 1)
+                HoverColor: =RGBA(39, 113, 194, 1)
+                HoverFill: =RGBA(255, 255, 255, 1)
+                OnSelect: |-
+                    =ClearCollect(
+                        dmGioiTinhNDBHCollect,
+                        DM_GIOI_TINHS
+                    );
+                    ClearCollect(
+                        dmPhamViNDBHCollect,
+                        DM_PHAMVI_DIALYS
+                    );
+                    If(
+                        IsBlank(cbxMaSPNHD_2.Selected.MA_SAN_PHAM),
+                        Notify(
+                            "Bắt buộc chọn sản phẩm",
+                            NotificationType.Error,
+                            2000
+                        ),
+                        (ThisItem.edited=1 && IsBlank(cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH)) || (ThisItem.edited=0 && IsBlank(cbxMaCTNHDHide_1.Selected.MA_CHUONG_TRINH)),
+                        Notify(
+                            "Bắt buộc chọn chương trình",
+                            NotificationType.Error,
+                            2000
+                        ),
+                        IsEmpty(cbxNhomTPNHD_1.SelectedItems),
+                        Notify(
+                            "Bắt buộc chọn nhóm tính phí",
+                            NotificationType.Error,
+                            2000
+                        ),
+                        Set(
+                            idHopDongSPNDBH,
+                            ThisItem.ID
+                        );
+                        Set(
+                            maSPNDBH,
+                            cbxMaSPNHD_2.Selected.MA_SAN_PHAM
+                        );
+                        Set(
+                            maHDNDBH,
+                            First(objHD).MA_HOP_DONG
+                        );
+                        Set(
+                            maCTNDBH,
+                            If(
+                                ThisItem.edited=1,
+                                cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
+                                cbxMaCTNHDHide_1.Selected.MA_CHUONG_TRINH
+                            )
+                        );
+                        Set(
+                            nhomTPNDBH,
+                            Concat(
+                                cbxNhomTPNHD_1.SelectedItems,
+                                Value,
+                                "|"
+                            )
+                        );
+                        Set(
+                            phiDCNDBH,
+                            tiPhiDCNHD_1.Text
+                        );
+                        If(
+                            cbxLoaiKHNHD.Selected.value = "0" && IsBlank(
+                                LookUp(
+                                    tmpMaCTChangeNHD,
+                                    ID = ThisItem.ID,
+                                    AUTO_GEN_NDBH
+                                )
+                            ) && ThisItem.edited = 1,
+                            /* 
+                            UpdateContext({varPhiNDBH: 0});
+                            UpdateContext({varTuoi: 0});
+                            UpdateContext({varDVTuoi: 0});
+                            //Tinh tuoi
+                            If(
+                                !IsBlank(dpNSinhNHD.SelectedDate),
+                                If(
+                                    DateDiff(
+                                        dpNSinhNHD.SelectedDate,
+                                        Today(),
+                                        TimeUnit.Years
+                                    ) > 0,
+                                    UpdateContext(
+                                        {
+                                            varTuoi: DateDiff(
+                                                dpNSinhNHD.SelectedDate,
+                                                Today(),
+                                                TimeUnit.Years
+                                            )
+                                        }
+                                    );
+                                    UpdateContext({varDVTuoi: 100});
+                                    ,
+                                    If(
+                                        DateDiff(
+                                            dpNSinhNHD.SelectedDate,
+                                            Today(),
+                                            TimeUnit.Months
+                                        ) > 0,
+                                        UpdateContext({varTuoi: 1});
+                                        UpdateContext({varDVTuoi: 200});
+                                        ,
+                                        If(
+                                            DateDiff(
+                                                dpNSinhNHD.SelectedDate,
+                                                Today(),
+                                                TimeUnit.Days
+                                            ) >= 60,
+                                            UpdateContext({varTuoi: 1});
+                                            UpdateContext({varDVTuoi: 400}),
+                                            UpdateContext({varTuoi: 0})
+                                        )
+                                    )
+                                )
+                            );
+                            //Kiem tra dap ung chi tieu
+                    UpdateContext(
+                                {
+                                    varPhiNDBH: Sum(
+                                        Filter(
+                                            DL_CHUONG_TRINH_BANG_PHIS,
+                                            MA_SAN_PHAM = maSPNDBH && MA_CHUONG_TRINH = maCTNDBH && !IsBlank(
+                                                Find(
+                                                    NHOM_TINH_PHI,
+                                                    nhomTPNDBH
+                                                )
+                                            ) && (IsBlank(MA_PHAMVI_DIALY) || (!IsBlank(cbxTinhNHD.Selected.MA_PHAMVI) && MA_PHAMVI_DIALY = cbxTinhNHD.Selected.MA_PHAMVI)) && (IsBlank(MA_GIOI_TINH) || (!IsBlank(cbxGTinhNHD.Selected.MA_GIOI_TINH) && MA_GIOI_TINH = cbxGTinhNHD.Selected.MA_GIOI_TINH)) && (IsBlank(MA_DO_TUOI) || MA_DO_TUOI = LookUp(
+                                                DM_DO_TUOIS,
+                                                (If(
+                                                    MO_TA = MA_DO_TUOI && DONVI_TUOI_TU > 100,
+                                                    1,
+                                                    TUOI_TU
+                                                ) <= varTuoi) && (If(
+                                                    DONVI_TUOI_DEN > 100,
+                                                    1,
+                                                    TUOI_DEN
+                                                ) >= varTuoi)
+                                            ).MO_TA || IsBlank(MA_DO_TUOI))
+                                        ),
+                                        PHI_BH
+                                    )
+                                }
+                            );*/
+                            //Lay phi chuong trinh
+                    UpdateContext(
+                                {
+                                    idNDBH: If(
+                                        CountIf(
+                                            tmpDSNDBHNHDCollect,
+                                            true
+                                        ) > 0,
+                                        Max(
+                                            tmpDSNDBHNHDCollect,
+                                            ID
+                                        ) + 1,
+                                        Max(
+                                            DL_HOP_DONG_SP_NDBH,
+                                            ID
+                                        ) + 1
+                                    )
+                                }
+                            );
+                            Collect(
+                                tmpDSNDBHNHDCollect,
+                                {
+                                    ID: idNDBH,
+                                    ID_HOPDONG_SP: ThisItem.ID,
+                                    MA_HOP_DONG: First(objHD).MA_HOP_DONG,
+                                    MA_SAN_PHAM: ThisItem.MA_SAN_PHAM,
+                                    MA_CHUONG_TRINH: ThisItem.MA_CHUONG_TRINH,
+                                    MST: cbxMaKHNHD.Selected.MST,
+                                    TEN_NDBH: tiTenKHNHD.Text,
+                                    DIA_CHI: tiDChiNHD.Text,
+                                    MA_GIOI__TINH: cbxGTinhNHD.Selected.MA_GIOI_TINH,
+                                    MA_NHAN_VIEN: "",
+                                    MA_TINH_TP: cbxTinhNHD.Selected.MA_PHAMVI,
+                                    MOI_QUAN_HE: "",
+                                    NGAY_SINH: dpNSinhNHD.SelectedDate,
+                                    NHOM: "",
+                                    SO_GIAY_TO: cbxMaKHNHD.Selected.SO_GIAY_TO,
+                                    PHI_NDBH: Blank(),
+                                    edited: 0
+                                }
+                            );
+                            UpdateIf(
+                                tmpMaCTChangeNHD,
+                                ID = ThisItem.ID,
+                                {AUTO_GEN_NDBH: "1"}
+                            )
+                        );
+                    	//tinh lai phi neu thay doi san pham, ctrinh hoac nhom tinh phi
+                        /*
+                        UpdateContext(
+                            {
+                                objChangeNDBH: First(
+                                    Filter(
+                                        tmpDSNDBHNHDCollect,
+                                        ID_HOPDONG_SP = ThisItem.ID
+                                    )
+                                )
+                            }
+                        );*/
+                        ClearCollect(
+                            tmpTinhLaiPhiNDBHCollect,
+                            {
+                                varPhiNDBHCol:0,
+                                varTuoiCol:0,
+                                varDVTuoiCol:0
+                            }
+                        );
+                        ClearCollect(
+                            tmpKQPhiNDBHCollect,
+                            {
+                                ID:0,
+                                PHI_NDBH:0
+                            }
+                        );
+                        Clear(tmpKQPhiNDBHCollect);
+                        /*
+                        ClearCollect(
+                            changeNhomTPNDBH,
+                            {
+                                check:false
+                            }
+                        );
+                        ForAll(
+                            Split(objChangeNDBH.NHOM_TINH_PHI,"|") As ds,
+                            If(
+                                IsBlank(Find(ds.Value,nhomTPNDBH)),
+                                UpdateIf(
+                                    changeNhomTPNDBH,
+                                    true,
+                                    {
+                                        check:true
+                                    }
+                                )
+                            )
+                        );
+                        ForAll(
+                            Split(nhomTPNDBH,"|") As ds,
+                            If(
+                                IsBlank(Find(ds.Value,objChangeNDBH.NHOM_TINH_PHI)),
+                                UpdateIf(
+                                    changeNhomTPNDBH,
+                                    true,
+                                    {
+                                        check:true
+                                    }
+                                )
+                            )
+                        );
+                        If(
+                            objChangeNDBH.MA_SAN_PHAM<>maSPNDBH || objChangeNDBH.MA_CHUONG_TRINH<>maCTNDBH || First(changeNhomTPNDBH).check,*/
+                            ForAll(
+                                Filter(
+                    				tmpDSNDBHNHDCollect,
+                    				ID_HOPDONG_SP = ThisItem.ID
+                    			) As ds,
+                    			//Tinh tuoi
+                    			If(
+                    				!IsBlank(ds.NGAY_SINH),
+                    				If(
+                    					DateDiff(
+                    						ds.NGAY_SINH,
+                    						Today(),
+                    						TimeUnit.Years
+                    					) > 0,
+                                        UpdateIf(
+                                            tmpTinhLaiPhiNDBHCollect,
+                                            true,
+                                            {
+                                                varTuoiCol:DateDiff(
+                    								ds.NGAY_SINH,
+                    								Today(),
+                    								TimeUnit.Years
+                    							),
+                                                varDVTuoiCol: 100
+                                            }
+                                        ),
+                    					If(
+                    						DateDiff(
+                    							ds.NGAY_SINH,
+                    							Today(),
+                    							TimeUnit.Months
+                    						) > 0,
+                                            UpdateIf(
+                    							tmpTinhLaiPhiNDBHCollect,
+                    							true,
+                    							{
+                    								varTuoiCol:1,
+                    								varDVTuoiCol: 200
+                    							}
+                    						),
+                    						If(
+                    							DateDiff(
+                    								ds.NGAY_SINH,
+                    								Today(),
+                    								TimeUnit.Days
+                    							) >= 60,
+                                                UpdateIf(
+                                                    tmpTinhLaiPhiNDBHCollect,
+                                                    true,
+                                                    {
+                                                        varTuoiCol: 1,
+                                                        varDVTuoiCol: 400
+                                                    }
+                                                ),
+                                                UpdateIf(
+                                                    tmpTinhLaiPhiNDBHCollect,
+                                                    true,
+                                                    {
+                                                        varTuoiCol: 0
+                                                    }
+                                                )
+                    						)
+                    					)
+                    				)
+                    			);
+                    			//Kiem tra dap ung chi tieu
+                                UpdateIf(
+                                    tmpTinhLaiPhiNDBHCollect,
+                                    true,
+                                    {
+                                        varPhiNDBHCol:Sum(
+                    					Filter(
+                    						DL_CHUONG_TRINH_BANG_PHIS,MA_SAN_PHAM = maSPNDBH && MA_CHUONG_TRINH = maCTNDBH && 
+                                            !IsBlank(Find(NHOM_TINH_PHI,nhomTPNDBH)) &&
+                    						(IsBlank(MA_PHAMVI_DIALY) || (!IsBlank(ds.MA_TINH_TP) && 
+                    						MA_PHAMVI_DIALY = LookUp(dmPhamViNDBHCollect,MA_PHAMVI=ds.MA_TINH_TP,TEN_PHAMVI))) && 
+                    						(IsBlank(MA_GIOI_TINH) || (!IsBlank(ds.MA_GIOI__TINH) && 
+                    						MA_GIOI_TINH = LookUp(dmGioiTinhNDBHCollect,MA_GIOI_TINH=ds.MA_GIOI__TINH,TEN_GIOI_TINH))) && 
+                    						(IsBlank(MA_DO_TUOI) || MA_DO_TUOI = LookUp(
+                    							DM_DO_TUOIS,
+                    							(If(
+                    								MO_TA = MA_DO_TUOI && DONVI_TUOI_TU > 100,
+                    								1,
+                    								TUOI_TU
+                    							) <= varTuoiCol) && (If(
+                    								DONVI_TUOI_DEN > 100,
+                    								1,
+                    								TUOI_DEN
+                    							) >= varTuoiCol)
+                    						).MO_TA || IsBlank(MA_DO_TUOI))
+                    					),
+                    					PHI_BH
+                    				)
+                                    }
+                                );
+                    			//Lay phi chuong trinh
+                                Collect(
+                                    tmpKQPhiNDBHCollect,
+                                    {
+                                        ID:ds.ID,
+                                        PHI_NDBH:First(tmpTinhLaiPhiNDBHCollect).varPhiNDBHCol
+                                    }
+                                );
+                                UpdateIf(
+                                    tmpTinhLaiPhiNDBHCollect,
+                                    true,
+                                    {
+                                        varPhiNDBHCol:0,
+                                        varTuoiCol:0,
+                                        varDVTuoiCol:0
+                                    }
+                                )
+                            );
+                            ForAll(
+                                tmpKQPhiNDBHCollect As ds,
+                                UpdateIf(
+                                    tmpDSNDBHNHDCollect,
+                                    ID_HOPDONG_SP=ThisItem.ID && ID=ds.ID,
+                                    {
+                                        PHI_NDBH:ds.PHI_NDBH
+                                    }
+                                )
+                            );
+                        //);
+                        // end tinh lai phi neu thay doi san pham, ctrinh hoac nhom tinh phi
+                        If(
+                            ThisItem.edited = 1,
+                            Set(
+                                modeMHNDBH,
+                                "1"
+                            ),
+                            Set(
+                                modeMHNDBH,
+                                "0"
+                            )
+                        );
+                        Navigate(NhapNDBH);
+                    )
+                Size: =11
+                Underline: =true
+                Width: =142
+                X: =342
+                Y: =145
+                ZIndex: =20
+
+            Label3_94 As label:
+                Height: =25
+                Size: =11
+                Text: ="Nhóm tính phí"
+                Width: =140
+                X: =30
+                Y: =74
+                ZIndex: =21
+
+            cbxNhomTPNHD_1 As combobox:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultSelectedItems: |-
+                    =/*If (
+                        ThisItem.edited=1,
+                        Filter(
+                            ["Nhóm chính","Nhóm bổ sung","Nhóm thai sản","Nha khoa/Chăm sóc răng","Ngoại trú","Nhóm thương tật, tử vong"],
+                            !IsBlank(Find(Value,tiNhomTPHideNHD.Text)) &&
+                            !IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH)
+                        ),
+                        Filter(
+                            ["Nhóm chính","Nhóm bổ sung","Nhóm thai sản","Nha khoa/Chăm sóc răng","Ngoại trú","Nhóm thương tật, tử vong"],
+                            !IsBlank(Find(Value,ThisItem.NHOM_TINH_PHI)) &&
+                            !IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH)
+                        )
+                    )*/
+                    Filter(
+                        ["Nhóm chính","Nhóm bổ sung","Nhóm thai sản","Nha khoa/Chăm sóc răng","Ngoại trú","Nhóm thương tật, tử vong"],
+                        !IsBlank(Find(Value,LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,NHOM_TINH_PHI))) &&
+                        !IsBlank(cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH)
+                    )
+                DisplayFields: =["Value"]
+                Height: =32
+                InputTextPlaceholder: =""
+                IsSearchable: =false
+                Items: |-
+                    =Filter(
+                        ["Nhóm chính","Nhóm bổ sung","Nhóm thai sản","Nha khoa/Chăm sóc răng","Ngoại trú","Nhóm thương tật, tử vong"],
+                        Value in
+                        Distinct(
+                            Filter(
+                                DL_SAN_PHAM_NHOMQLS,
+                                MA_SP=cbxMaSPNHD_2.Selected.MA_SAN_PHAM && 
+                                !IsBlank(cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH) && 
+                                !IsBlank(Find(LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_CHUONG_TRINH),CHUONGTRINH_APDUNG))
+                            ),
+                            MA_NHOM_TINHPHI
+                        )
+                    )
+                SearchFields: =["Value"]
+                SearchItems: =[]
+                Size: =11
+                Visible: =ThisItem.edited=1
+                Width: =250
+                X: =30
+                Y: =102
+                ZIndex: =22
+
+            LinkHDLK_4 As text:
+                BorderThickness: =0
+                Color: =RGBA(39, 113, 194, 1)
+                Default: ="Quyền lợi chi tiết"
+                DisabledBorderColor: =RGBA(255, 255, 255, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                Height: =27
+                HoverBorderColor: =RGBA(255, 255, 255, 1)
+                HoverColor: =RGBA(39, 113, 194, 1)
+                HoverFill: =RGBA(255, 255, 255, 1)
+                OnSelect: |
+                    =If(
+                        IsBlank(cbxMaSPNHD_2.Selected.MA_SAN_PHAM),
+                        Notify(
+                            "Bắt buộc chọn sản phẩm",
+                            NotificationType.Error,
+                            2000
+                        ),
+                        (ThisItem.edited=1 && IsBlank(cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH)) || (ThisItem.edited=0 && IsBlank(cbxMaCTNHDHide_1.Selected.MA_CHUONG_TRINH)),
+                        Notify(
+                            "Bắt buộc chọn chương trình",
+                            NotificationType.Error,
+                            2000
+                        ),
+                        IsEmpty(cbxNhomTPNHD_1.SelectedItems),
+                        Notify(
+                            "Bắt buộc chọn nhóm tính phí",
+                            NotificationType.Error,
+                            2000
+                        ),
+                        Set(idHopDongSPQLCT,ThisItem.ID);
+                        Set(maSPQLCTNHD,cbxMaSPNHD_2.Selected.MA_SAN_PHAM);
+                        Set(maHDQLCTNHD,First(objHD).MA_HOP_DONG);
+                        Set(
+                            maCTQLCTNHD,
+                            If(
+                                ThisItem.edited=1,
+                                cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
+                                cbxMaCTNHDHide_1.Selected.MA_CHUONG_TRINH
+                            )
+                        );
+                        Set(maNhomTPQLCTNHD,Concat(cbxNhomTPNHD_1.SelectedItems,Value,"|"));
+                        UpdateContext({
+                            objChangeQLCTNHD:First(
+                                Filter(
+                                    tmpQLCTHDSPNHDCollect,
+                                    ID_HOPDONG_SP=ThisItem.ID
+                                )
+                            )
+                        });
+                        ClearCollect(
+                            tmpChangeQLCTNHD,
+                            {
+                                check:false
+                            }
+                        );
+                        If(
+                            objChangeQLCTNHD.MA_SAN_PHAM<>cbxMaSPNHD_2.Selected.MA_SAN_PHAM || 
+                            objChangeQLCTNHD.MA_CHUONG_TRINH<>maCTQLCTNHD,
+                            //Notify("alo11",NotificationType.Error,1000);
+                            UpdateIf(
+                                tmpChangeQLCTNHD,
+                                true,
+                                {
+                                    check:true
+                                }
+                            )
+                        );
+                        ForAll(
+                            Split(maNhomTPQLCTNHD,"|") As ds,
+                            If(
+                                IsBlank(Find(ds.Value,objChangeQLCTNHD.NHOM_TINH_PHI)),
+                                UpdateIf(
+                                    tmpChangeQLCTNHD,
+                                    true,
+                                    {
+                                        check:true
+                                    }
+                                )
+                            )
+                        );
+                        ForAll(
+                            Split(objChangeQLCTNHD.NHOM_TINH_PHI,"|") As ds,
+                            If(
+                                IsBlank(Find(ds.Value,maNhomTPQLCTNHD)),
+                                UpdateIf(
+                                    tmpChangeQLCTNHD,
+                                    true,
+                                    {
+                                        check:true
+                                    }
+                                )
+                            )
+                        );
+                        If(
+                            First(tmpChangeQLCTNHD).check,
+                            RemoveIf(
+                                tmpQLCTHDSPNHDCollect,
+                                ID_HOPDONG_SP=ThisItem.ID
+                            )
+                        );
+                        If(
+                            CountIf(Filter(tmpQLCTHDSPNHDCollect,ID_HOPDONG_SP=ThisItem.ID),true)=0,
+                            //Notify("alo",NotificationType.Error,1000);
+                            ForAll(
+                                Filter(
+                                    DL_CHUONGTRINH_QLCTS,
+                                    MA_CHUONG_TRINH = maCTQLCTNHD && MA_SAN_PHAM = maSPQLCTNHD &&
+                                    MA_NHOM_QL in Distinct(Filter(DL_SAN_PHAM_NHOMQLS,MA_SP = maSPQLCTNHD && 
+                                        !IsBlank(Find(maCTQLCTNHD,CHUONGTRINH_APDUNG)) &&
+                                        !IsBlank(Find(MA_NHOM_TINHPHI,maNhomTPQLCTNHD))
+                                    ),MA_NHOM_QL)
+                                ) As ql,
+                                Collect(
+                                    tmpQLCTHDSPNHDCollect,
+                                    {
+                                        MA_CHUONG_TRINH: maCTQLCTNHD,
+                                        MA_SAN_PHAM: cbxMaSPNHD_2.Selected.MA_SAN_PHAM,
+                                        NHOM_TINH_PHI:Concat(cbxNhomTPNHD_1.SelectedItems,Value,"|"),
+                                        MA_QL_CT: ql.MA_QL_CT,
+                                        TT_HIENTHI: ql.TT_HIENTHI,
+                                        MA_NHOM_QL: ql.MA_NHOM_QL,
+                                        GH_SOLAN_NAM: ql.GH_SOLAN_NAM,
+                                        GH_SONGAY_NAM: ql.GH_SONGAY_NAM,
+                                        GH_SOTIEN_BENH: ql.GH_SOTIEN_BENH,
+                                        GH_SOTIEN_NAM: ql.GH_SOTIEN_NAM,
+                                        GH_SOTIEN_NGAY: ql.GH_SOTIEN_NGAY,
+                                        GH_SOTIEN_VU: ql.GH_SOTIEN_VU,
+                                        PT_TU_CHITRA: ql.PT_TU_CHITRA,
+                                        SO_TIEN_BH: ql.SO_TIEN_BH,
+                                        TEN_QUYEN_LOI_HT: ql.TEN_QUYEN_LOI_HT,
+                                        ID_HOPDONG_SP:ThisItem.ID,
+                                        edited:0
+                                    }
+                                )
+                            )
+                        );
+                        If(
+                            ThisItem.edited = 1,
+                            Set(
+                                modeMHQLCT,
+                                "1"
+                            ),
+                            Set(
+                                modeMHQLCT,
+                                "0"
+                            )
+                        );
+                        Navigate(DSQuyenLoiHD)
+                    )
+                Size: =11
+                Underline: =true
+                Visible: |-
+                    =//If(!IsBlank(tiMaHDNHD.Text),true,false)
+                    true
+                Width: =169
+                X: =17
+                Y: =145
+                ZIndex: =23
+
+            tiPhiDCNHD_1 As text:
+                Align: =Align.Right
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: |-
+                    =If (
+                        ThisItem.edited=1,
+                        If(LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,PHI_DIEU_CHINH)=0,Blank(),LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,PHI_DIEU_CHINH)),
+                        If(ThisItem.PHI_DIEU_CHINH=0,Blank(),ThisItem.PHI_DIEU_CHINH)
+                    )
+                DisplayMode: =If(ThisItem.edited=1,DisplayMode.Edit,DisplayMode.Disabled)
+                Format: =TextFormat.Number
+                Height: =32
+                OnChange: |-
+                    =If(
+                        Value(tiPhiDCNHD_1.Text)=0,
+                        UpdateIf(
+                            tmpMaCTChangeNHD,
+                            ID=ThisItem.ID,
+                            {
+                                PHI_DIEU_CHINH:Blank()
+                            }
+                        );
+                        Reset(tiPhiDCNHD_1)
+                    );
+                    If(
+                        IsBlank(tiPhiDCNHD_1.Text) || Value(tiPhiDCNHD_1.Text)=0,
+                        UpdateContext({
+                            tongPhiNDBH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,TONG_PHI_DANHSACH)
+                        });
+                        UpdateIf(
+                            tmpMaCTChangeNHD,
+                            ID=ThisItem.ID,
+                            {
+                                TONG_TIEN_PHI:tongPhiNDBH
+                            }
+                        );
+                        Reset(tiTongPhiNHD_1),
+                        Value(tiPhiDCNHD_1.Text)<>ThisItem.PHI_DIEU_CHINH && !IsBlank(tiPhiDCNHD_1.Text) && Value(tiPhiDCNHD_1.Text)<>0,
+                        UpdateIf(
+                            tmpMaCTChangeNHD,
+                            ID=ThisItem.ID,
+                            {
+                                TONG_TIEN_PHI:Value(tiPhiDCNHD_1.Text)*Value(tiSoNTGSPNHD_1.Text)
+                            }
+                        );
+                        Reset(tiTongPhiNHD_1)
+                    )
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =250
+                X: =355
+                Y: =102
+                ZIndex: =24
+
+            Label3_95 As label:
+                Height: =25
+                Size: =11
+                Text: ="Phí/Người điều chỉnh"
+                Width: =180
+                X: =355
+                Y: =74
+                ZIndex: =25
+
+            tiNhomTPNHD_1 As text:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                Default: =Concat(Split(ThisItem.NHOM_TINH_PHI,"|"), Value,", ") 
+                DisplayMode: =DisplayMode.Disabled
+                Height: =32
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Visible: |
+                    =ThisItem.edited=0
+                Width: =250
+                X: =30
+                Y: =102
+                ZIndex: =26
+
+            cbxMaCTNHDHide_1 As combobox:
+                BorderColor: =RGBA(72, 163, 62, 1)
+                DefaultSelectedItems: |-
+                    =/*If (
+                        ThisItem.edited=1,
+                        LookUp(
+                            ' DL_SAN_PHAM_CT',
+                            MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=tiMaCTNHD.Text
+                        ),
+                        LookUp(
+                            ' DL_SAN_PHAM_CT',
+                            MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=ThisItem.MA_CHUONG_TRINH
+                        )
+                    )*/
+                    LookUp(
+                        ' DL_SAN_PHAM_CT',
+                        MA_CHUONG_TRINH=ThisItem.MA_CHUONG_TRINH
+                    )
+                DisplayFields: =["cr282_ma_chuongtrinh"]
+                DisplayMode: =DisplayMode.Disabled
+                Height: =32
+                InputTextPlaceholder: =""
+                Items: =' DL_SAN_PHAM_CT'
+                SearchFields: =["cr282_ma_chuongtrinh"]
+                SearchItems: =Search(' DL_SAN_PHAM_CT',cbxMaCTNHDHide_1.SearchText,"cr282_ma_chuongtrinh")
+                SelectMultiple: =false
+                Size: =11
+                Visible: =ThisItem.edited=0
+                Width: =250
+                X: =672
+                Y: =34
+                ZIndex: =29
+
+        Button2_8 As button:
+            Height: =32
+            OnSelect: |
+                =If(
+                    Or(maAddedHDSPNHD<>"",maUpdatedHDSPNHD<>""),
+                    Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
+                    Collect(
+                        tmpDSHDSPNHDCollect,
+                        Defaults(tmpDSHDSPNHDCollect)
+                    );
+                    UpdateContext({
+                        maHDSP:Max(DL_HOP_DONG_SPS,ID)+1
+                    });
+                    UpdateIf(
+                        tmpDSHDSPNHDCollect,
+                        IsBlank(ID),
+                        {
+                            ID:Text(maHDSP),
+                            MA_HOP_DONG:First(objHD).MA_HOP_DONG,
+                            edited:1
+                        }
+                    );
+                    ClearCollect(
+                        tmpMaCTChangeNHD,
+                        tmpDSHDSPNHDCollect
+                    );
+                    UpdateContext({
+                        maAddedHDSPNHD:Text(maHDSP),
+                        unReloadMaSP:Blank()
+                    });
+                    Reset(LinkHDLK);
+                )
+            Size: =11
+            Text: ="Thêm mới"
+            Width: =100
+            X: =30
+            Y: =30
+            ZIndex: =22
+
+    LeftNavigation_36 As LeftNavigation_9:
+        Width: =LeftNavigation_36.MenuWidth - 10
+        ZIndex: =2
+
