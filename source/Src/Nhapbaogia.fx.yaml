@@ -1502,11 +1502,28 @@
             ZIndex: =22
 
         ComboBox1 As combobox:
-            Items: =ComboBoxSample
-            SearchItems: =Search(ComboBoxSample,ComboBox1.SearchText,"Value1")
+            DisplayFields: =["MA"]
+            Height: =45
+            Items: |-
+                =[{MA:"CN",TEN:"Cá nhân"},{MA:"NH",TEN:"Nhóm"}]
+            SearchFields: =["MA"]
+            SearchItems: |-
+                =Search([{MA:"CN",TEN:"Cá nhân"},{MA:"NH",TEN:"Lựa chọn"}],ComboBox1.SearchText,"MA")
+            SelectMultiple: =false
+            Size: =11
+            Width: =217
             X: =30
             Y: =87
             ZIndex: =23
+
+        Label8 As label:
+            Height: =35
+            Size: =11
+            Text: ="Cá nhân/Nhóm"
+            Width: =217
+            X: =30
+            Y: =51
+            ZIndex: =24
 
     LeftNavigation_36 As LeftNavigation_9:
         Width: =LeftNavigation_36.MenuWidth - 10
