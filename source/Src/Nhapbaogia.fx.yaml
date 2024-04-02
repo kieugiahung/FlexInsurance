@@ -70,11 +70,13 @@
                 Align: =Align.Right
                 BorderColor: =RGBA(72, 163, 62, 1)
                 Default: |-
-                    =If (
+                    =
+                    If(Loailoc = "CN", 1,
+                    If (
                         ThisItem.edited=1,
                         LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,SONGUOI_THAMGIA),
                         ThisItem.SONGUOI_THAMGIA
-                    )
+                    ))
                 DisplayMode: =DisplayMode.Disabled
                 Format: =TextFormat.Number
                 Height: =32
