@@ -84,8 +84,8 @@
                 RadiusTopRight: =0
                 Size: =11
                 Width: =250
-                X: =308
-                Y: =325
+                X: =15
+                Y: =297
                 ZIndex: =7
 
             tiTongPhiNHD_1 As text:
@@ -590,63 +590,6 @@
                 Y: =367
                 ZIndex: =20
 
-            Label3_94 As label:
-                Height: =25
-                Size: =11
-                Text: ="Nhóm tính phí"
-                Width: =140
-                X: =15
-                Y: =297
-                ZIndex: =21
-
-            cbxNhomTPNHD_1 As combobox:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                DefaultSelectedItems: |-
-                    =/*If (
-                        ThisItem.edited=1,
-                        Filter(
-                            ["Nhóm chính","Nhóm bổ sung","Nhóm thai sản","Nha khoa/Chăm sóc răng","Ngoại trú","Nhóm thương tật, tử vong"],
-                            !IsBlank(Find(Value,tiNhomTPHideNHD.Text)) &&
-                            !IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH)
-                        ),
-                        Filter(
-                            ["Nhóm chính","Nhóm bổ sung","Nhóm thai sản","Nha khoa/Chăm sóc răng","Ngoại trú","Nhóm thương tật, tử vong"],
-                            !IsBlank(Find(Value,ThisItem.NHOM_TINH_PHI)) &&
-                            !IsBlank(cbxMaCTNHD.Selected.MA_CHUONG_TRINH)
-                        )
-                    )*/
-                    Filter(
-                        ["Nhóm chính","Nhóm bổ sung","Nhóm thai sản","Nha khoa/Chăm sóc răng","Ngoại trú","Nhóm thương tật, tử vong"],
-                        !IsBlank(Find(Value,LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,NHOM_TINH_PHI))) &&
-                        !IsBlank(cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH)
-                    )
-                DisplayFields: =["Value"]
-                Height: =32
-                InputTextPlaceholder: =""
-                IsSearchable: =false
-                Items: |-
-                    =Filter(
-                        ["Nhóm chính","Nhóm bổ sung","Nhóm thai sản","Nha khoa/Chăm sóc răng","Ngoại trú","Nhóm thương tật, tử vong"],
-                        Value in
-                        Distinct(
-                            Filter(
-                                DL_SAN_PHAM_NHOMQLS,
-                                MA_SP=cbxMaSPNHD_2.Selected.MA_SAN_PHAM && 
-                                !IsBlank(RadioGroupCanvas1.Selected.MA_CHUONG_TRINH) && 
-                                !IsBlank(Find(LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_CHUONG_TRINH),CHUONGTRINH_APDUNG))
-                            ),
-                            MA_NHOM_TINHPHI
-                        )
-                    )
-                SearchFields: =["Value"]
-                SearchItems: =[]
-                Size: =11
-                Visible: =ThisItem.edited=1
-                Width: =250
-                X: =15
-                Y: =326
-                ZIndex: =22
-
             LinkHDLK_4 As text:
                 BorderThickness: =0
                 Color: =RGBA(39, 113, 194, 1)
@@ -860,8 +803,7 @@
                 Size: =11
                 Visible: =false
                 Width: =250
-                X: =340
-                Y: =294
+                Y: =223
                 ZIndex: =24
 
             tiNhomTPNHD_1 As text:
@@ -1018,6 +960,7 @@
                 LoadingSpinner: =LoadingSpinner.Data
                 TemplateSize: =55
                 Width: =1087
+                WrapCount: =5
                 X: =169
                 Y: =107
                 ZIndex: =32
