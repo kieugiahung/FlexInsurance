@@ -855,7 +855,11 @@
                 ZIndex: =29
 
             RadioGroupCanvas1 As Radio.pcfdataset:
+                BasePaletteColor: =RGBA(5, 102, 178, 1)
                 DisplayMode: =DisplayMode.Edit
+                Font: =Font.'Open Sans'
+                FontColor: =RGBA(0, 0, 0, 1)
+                FontSize: =15
                 Height: =46
                 Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD_2.Selected.MA_SAN_PHAM)
                 Layout: ='RadioGroupCanvas.Layout'.Horizontal
@@ -934,7 +938,7 @@
                 Size: =11
                 Text: ="Chọn chương trình"
                 Width: =144
-                Y: =75
+                Y: =73
                 ZIndex: =31
 
             Gallery1 As gallery.galleryVertical:
@@ -977,6 +981,7 @@
 
                 Label9 As label:
                     OnSelect: =Select(Parent)
+                    Size: =11
                     Text: =ThisItem.Value
                     X: =27
                     Y: =6
@@ -1058,8 +1063,8 @@
             Size: =11
             Visible: =If(Loailoc.Selected.MA = "CN", true, false)
             Width: =182
-            X: =302
-            Y: =87
+            X: =258
+            Y: =86
             ZIndex: =25
 
         Label8_1 As label:
@@ -1068,13 +1073,12 @@
             Text: ="Giới tính"
             Visible: =If(Loailoc.Selected.MA = "CN", true, false)
             Width: =182
-            X: =302
-            Y: =51
+            X: =259
+            Y: =52
             ZIndex: =26
 
         dpNSinhNHD_1 As datepicker:
             BorderColor: =RGBA(180, 214, 250, 1)
-            Color: =RGBA(180, 214, 250, 1)
             DefaultDate: =First(objHD).NGAY_SINH
             EndYear: =2200
             Format: ="dd/mm/yyyy"
@@ -1085,7 +1089,7 @@
             StartYear: =1900
             Visible: =If(Loailoc.Selected.MA = "CN", true, false)
             Width: =250
-            X: =531
+            X: =484
             Y: =86
             ZIndex: =27
 
@@ -1095,7 +1099,7 @@
             Text: ="Ngày sinh"
             Visible: =If(Loailoc.Selected.MA = "CN", true, false)
             Width: =250
-            X: =531
+            X: =484
             Y: =51
             ZIndex: =28
 
