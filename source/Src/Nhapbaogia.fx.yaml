@@ -867,7 +867,15 @@
                 Height: =46
                 Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD_2.Selected.MA_SAN_PHAM)
                 Layout: ='RadioGroupCanvas.Layout'.Horizontal
-                OnSelect: =Select(Parent)
+                OnChange: |
+                    =
+                    Reset(Gallery1);
+                OnSelect: |-
+                    =Refresh(Gallery1.Selected);
+                    Reset(Gallery1);
+                    Reset(CheckboxCanvas1);
+                    
+                    Set(CheckedCT, false);
                 Width: =1087
                 X: =169
                 Y: =65
@@ -948,8 +956,8 @@
             Gallery1 As gallery.galleryVertical:
                 DelayItemLoading: =true
                 Height: =71
-                Items: |
-                    =/*Filter(
+                Items: |+
+                    =Filter(
                         ["Nhóm chính","Nhóm bổ sung","Nhóm thai sản","Nha khoa/Chăm sóc răng","Ngoại trú","Nhóm thương tật, tử vong"],
                         Value in
                         Distinct(
@@ -962,18 +970,10 @@
                             MA_NHOM_TINHPHI
                         )
                     )
-                    */
                     
-                            Filter(
-                                DL_SAN_PHAM_NHOMQLS,
-                                MA_SP=cbxMaSPNHD_2.Selected.MA_SAN_PHAM && 
-                                InStr(MA_NHOM_TINHPHI, "PVICARE_002") > 0
-                                &&
-                                !IsBlank(RadioGroupCanvas1.Selected.MA_CHUONG_TRINH) && 
-                                !IsBlank(Find(LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_CHUONG_TRINH),CHUONGTRINH_APDUNG))
-                            )
                 Layout: =Layout.Vertical
                 LoadingSpinner: =LoadingSpinner.Data
+                OnSelect: =
                 TemplateSize: =55
                 Width: =1058
                 WrapCount: =5
@@ -982,6 +982,8 @@
                 ZIndex: =32
 
                 CheckboxCanvas1 As Checkbox:
+                    BasePaletteColor: =
+                    Checked: =CheckedCT
                     DisplayMode: =DisplayMode.Edit
                     Height: =30
                     Label: =""
