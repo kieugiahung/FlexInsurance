@@ -1502,13 +1502,16 @@
             ZIndex: =22
 
         ComboBox1 As combobox:
-            DisplayFields: =["MA"]
+            BorderColor: =RGBA(180, 214, 250, 1)
+            ChevronBackground: =RGBA(180, 214, 250, 1)
+            DisplayFields: =["TEN"]
             Height: =45
             Items: |-
                 =[{MA:"CN",TEN:"Cá nhân"},{MA:"NH",TEN:"Nhóm"}]
-            SearchFields: =["MA"]
+            PressedFill: =RGBA(180, 214, 250, 1)
+            SearchFields: =["TEN"]
             SearchItems: |-
-                =Search([{MA:"CN",TEN:"Cá nhân"},{MA:"NH",TEN:"Lựa chọn"}],ComboBox1.SearchText,"MA")
+                =Search([{MA:"CN",TEN:"Cá nhân"},{MA:"NH",TEN:"Nhóm"}],ComboBox1.SearchText,"TEN")
             SelectMultiple: =false
             Size: =11
             Width: =217
@@ -1524,6 +1527,58 @@
             X: =30
             Y: =51
             ZIndex: =24
+
+        cbxGTinhNHD_1 As combobox:
+            BorderColor: =RGBA(180, 214, 250, 1)
+            ChevronBackground: =RGBA(180, 214, 250, 1)
+            DefaultSelectedItems: =LookUp(DM_GIOI_TINHS,MA_GIOI_TINH=First(objHD).GIOI_TINH)
+            DisplayFields: =["cr282_ten_gioi_tinh"]
+            Height: =45
+            InputTextPlaceholder: ="Chọn giới tính"
+            Items: =DM_GIOI_TINHS
+            SearchFields: =["cr282_ten_gioi_tinh"]
+            SearchItems: =Search(DM_GIOI_TINHS,cbxGTinhNHD_1.SearchText,"cr282_ten_gioi_tinh")
+            SelectionFill: =RGBA(180, 214, 250, 1)
+            SelectMultiple: =false
+            Size: =11
+            Width: =182
+            X: =302
+            Y: =87
+            ZIndex: =25
+
+        Label8_1 As label:
+            Height: =35
+            Size: =11
+            Text: ="Giới tính"
+            Width: =182
+            X: =302
+            Y: =51
+            ZIndex: =26
+
+        dpNSinhNHD_1 As datepicker:
+            BorderColor: =RGBA(180, 214, 250, 1)
+            Color: =RGBA(180, 214, 250, 1)
+            DefaultDate: =First(objHD).NGAY_SINH
+            EndYear: =2200
+            Format: ="dd/mm/yyyy"
+            Height: =46
+            InputTextPlaceholder: =
+            IsEditable: =true
+            Size: =11
+            StartYear: =1900
+            Width: =250
+            X: =531
+            Y: =86
+            ZIndex: =27
+
+        Label8_2 As label:
+            Height: =35
+            Size: =11
+            Text: ="Ngày sinh"
+            Width: =250
+            X: =531
+            Y: =51
+            ZIndex: =28
 
     LeftNavigation_36 As LeftNavigation_9:
         Width: =LeftNavigation_36.MenuWidth - 10
