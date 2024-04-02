@@ -1,4 +1,16 @@
 "Nhapbaogia As screen.'autoLayout_Approval_ver1.0'":
+    OnVisible: |-
+        =    ClearCollect(
+                tmpDSHDSPNHDCollect,
+                AddColumns(
+                    Filter(
+                        DL_HOP_DONG_SPS,
+                        MA_HOP_DONG = maHopDongFwd
+                    ),
+                    "edited",
+                    0
+                )
+            );
 
     Container3_10 As groupContainer.manualLayoutContainer:
         BorderColor: =RGBA(255, 255, 255, 1)
@@ -80,8 +92,8 @@
                 RadiusTopRight: =0
                 Size: =11
                 Width: =250
-                X: =672
-                Y: =102
+                X: =355
+                Y: =99
                 ZIndex: =7
 
             tiTongPhiNHD_1 As text:
@@ -102,8 +114,8 @@
                 RadiusTopRight: =0
                 Size: =11
                 Width: =250
-                X: =990
-                Y: =102
+                X: =683
+                Y: =99
                 ZIndex: =8
 
             Label3_96 As label:
@@ -111,8 +123,8 @@
                 Size: =11
                 Text: ="Số người tham gia"
                 Width: =140
-                X: =672
-                Y: =74
+                X: =355
+                Y: =77
                 ZIndex: =9
 
             Label3_97 As label:
@@ -120,8 +132,8 @@
                 Size: =11
                 Text: ="Tổng phí/Nhóm"
                 Width: =140
-                X: =990
-                Y: =74
+                X: =683
+                Y: =71
                 ZIndex: =10
 
             tiTenSPNHD_2 As text:
@@ -1396,19 +1408,11 @@
                 RadiusTopLeft: =0
                 RadiusTopRight: =0
                 Size: =11
+                Visible: =false
                 Width: =250
                 X: =355
                 Y: =102
                 ZIndex: =24
-
-            Label3_95 As label:
-                Height: =25
-                Size: =11
-                Text: ="Phí/Người điều chỉnh"
-                Width: =180
-                X: =355
-                Y: =74
-                ZIndex: =25
 
             tiNhomTPNHD_1 As text:
                 BorderColor: =RGBA(72, 163, 62, 1)
@@ -1498,6 +1502,13 @@
             X: =30
             Y: =180
             ZIndex: =22
+
+        ComboBox1 As combobox:
+            Items: =ComboBoxSample
+            SearchItems: =Search(ComboBoxSample,ComboBox1.SearchText,"Value1")
+            X: =30
+            Y: =87
+            ZIndex: =23
 
     LeftNavigation_36 As LeftNavigation_9:
         Width: =LeftNavigation_36.MenuWidth - 10
