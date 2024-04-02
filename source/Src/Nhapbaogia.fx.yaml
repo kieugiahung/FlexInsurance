@@ -12,19 +12,20 @@
                 )
             );
 
-    Container3_10 As groupContainer.manualLayoutContainer:
+    danhsachphi As groupContainer.manualLayoutContainer:
         BorderColor: =RGBA(255, 255, 255, 1)
         DropShadow: =DropShadow.None
         Height: =453
-        Width: =1267
-        X: =60
+        Width: =1256
+        X: =71
         Y: =246
         ZIndex: =1
 
         Gallery3_4 As gallery.variableTemplateHeightGallery:
+            BorderColor: =RGBA(0, 0, 0, 1)
             DelayItemLoading: =true
             Fill: =RGBA(255, 255, 255, 1)
-            Height: =366
+            Height: =295
             Items: |-
                 =SortByColumns(
                     tmpDSHDSPNHDCollect,
@@ -33,8 +34,9 @@
                 )
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
-            TemplateSize: =289
-            Width: =1267
+            TemplateSize: =288
+            Width: =1255
+            X: =9
             Y: =76
             ZIndex: =21
 
@@ -175,8 +177,7 @@
                 SearchItems: =Search(DL_SAN_PHAM,cbxMaSPNHD_2.SearchText,"cr282_ma_san_pham")
                 SelectMultiple: =false
                 Size: =11
-                Template: =ListItemTemplate.Double
-                Width: =1073
+                Width: =1044
                 X: =183
                 Y: =6
                 ZIndex: =15
@@ -948,7 +949,7 @@
                 DelayItemLoading: =true
                 Height: =71
                 Items: |-
-                    =Filter(
+                    =/*Filter(
                         ["Nhóm chính","Nhóm bổ sung","Nhóm thai sản","Nha khoa/Chăm sóc răng","Ngoại trú","Nhóm thương tật, tử vong"],
                         Value in
                         Distinct(
@@ -961,10 +962,17 @@
                             MA_NHOM_TINHPHI
                         )
                     )
+                    */
+                    Filter(
+                                DL_SAN_PHAM_NHOMQLS,
+                                MA_SP=cbxMaSPNHD_2.Selected.MA_SAN_PHAM && 
+                                !IsBlank(RadioGroupCanvas1.Selected.MA_CHUONG_TRINH) && 
+                                !IsBlank(Find(LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_CHUONG_TRINH),CHUONGTRINH_APDUNG))
+                            )
                 Layout: =Layout.Vertical
                 LoadingSpinner: =LoadingSpinner.Data
                 TemplateSize: =55
-                Width: =1087
+                Width: =1058
                 WrapCount: =5
                 X: =169
                 Y: =107
@@ -985,7 +993,7 @@
                 Label9 As label:
                     OnSelect: =Select(Parent)
                     Size: =11
-                    Text: =ThisItem.Value
+                    Text: =ThisItem.MA_NHOM_TINHPHI
                     X: =40
                     Y: =6
                     ZIndex: =2
@@ -1042,15 +1050,11 @@
             Width: =1267
             ZIndex: =23
 
-    LeftNavigation_36 As LeftNavigation_9:
-        Width: =LeftNavigation_36.MenuWidth - 10
-        ZIndex: =2
-
-    Container11 As groupContainer.manualLayoutContainer:
+    thongtinchung As groupContainer.manualLayoutContainer:
         DropShadow: =DropShadow.None
         Height: =235
-        Width: =1287
-        X: =60
+        Width: =1275
+        X: =71
         ZIndex: =3
 
         Label10 As label:
@@ -1249,4 +1253,8 @@
             X: =976
             Y: =90
             ZIndex: =15
+
+    LeftNavigation_36 As LeftNavigation_9:
+        Width: =LeftNavigation_36.MenuWidth - 10
+        ZIndex: =4
 
