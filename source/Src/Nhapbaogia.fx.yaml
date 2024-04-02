@@ -86,7 +86,7 @@
                 Size: =11
                 Width: =250
                 X: =308
-                Y: =263
+                Y: =325
                 ZIndex: =7
 
             tiTongPhiNHD_1 As text:
@@ -108,7 +108,7 @@
                 Size: =11
                 Width: =250
                 X: =619
-                Y: =260
+                Y: =322
                 ZIndex: =8
 
             Label3_96 As label:
@@ -117,7 +117,7 @@
                 Text: ="Số người tham gia"
                 Width: =140
                 X: =353
-                Y: =235
+                Y: =297
                 ZIndex: =9
 
             Label3_97 As label:
@@ -126,7 +126,7 @@
                 Text: ="Tổng phí/Nhóm"
                 Width: =249
                 X: =620
-                Y: =235
+                Y: =297
                 ZIndex: =10
 
             tiTenSPNHD_2 As text:
@@ -588,7 +588,7 @@
                 Underline: =true
                 Width: =142
                 X: =330
-                Y: =305
+                Y: =367
                 ZIndex: =20
 
             Label3_94 As label:
@@ -597,7 +597,7 @@
                 Text: ="Nhóm tính phí"
                 Width: =140
                 X: =15
-                Y: =235
+                Y: =297
                 ZIndex: =21
 
             cbxNhomTPNHD_1 As combobox:
@@ -645,7 +645,7 @@
                 Visible: =ThisItem.edited=1
                 Width: =250
                 X: =15
-                Y: =264
+                Y: =326
                 ZIndex: =22
 
             LinkHDLK_4 As text:
@@ -804,7 +804,7 @@
                     =//If(!IsBlank(tiMaHDNHD.Text),true,false)
                     true
                 Width: =169
-                Y: =305
+                Y: =367
                 ZIndex: =23
 
             tiPhiDCNHD_1 As text:
@@ -862,7 +862,7 @@
                 Visible: =false
                 Width: =250
                 X: =340
-                Y: =232
+                Y: =294
                 ZIndex: =24
 
             tiNhomTPNHD_1 As text:
@@ -879,7 +879,7 @@
                     =ThisItem.edited=0
                 Width: =250
                 X: =15
-                Y: =232
+                Y: =294
                 ZIndex: =26
 
             cbxMaCTNHDHide_1 As combobox:
@@ -998,6 +998,49 @@
                 X: =25
                 Y: =66
                 ZIndex: =31
+
+            Gallery1 As gallery.galleryVertical:
+                DelayItemLoading: =true
+                Height: =141
+                Items: |-
+                    =Filter(
+                        ["Nhóm chính","Nhóm bổ sung","Nhóm thai sản","Nha khoa/Chăm sóc răng","Ngoại trú","Nhóm thương tật, tử vong"],
+                        Value in
+                        Distinct(
+                            Filter(
+                                DL_SAN_PHAM_NHOMQLS,
+                                MA_SP=cbxMaSPNHD_2.Selected.MA_SAN_PHAM && 
+                                !IsBlank(RadioGroupCanvas1.Selected.MA_CHUONG_TRINH) && 
+                                !IsBlank(Find(LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_CHUONG_TRINH),CHUONGTRINH_APDUNG))
+                            ),
+                            MA_NHOM_TINHPHI
+                        )
+                    )
+                Layout: =Layout.Vertical
+                LoadingSpinner: =LoadingSpinner.Data
+                TemplateSize: =75
+                X: =15
+                Y: =146
+                ZIndex: =32
+
+                CheckboxCanvas1 As Checkbox:
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =30
+                    Label: =""
+                    OnCheck: =false
+                    OnSelect: =Select(Parent)
+                    OnUncheck: =false
+                    Width: =40
+                    X: =0
+                    Y: =24
+                    ZIndex: =1
+
+                Label9 As label:
+                    OnSelect: =Select(Parent)
+                    Text: =ThisItem.Value
+                    X: =40
+                    Y: =19
+                    ZIndex: =2
 
         Button2_8 As button:
             Height: =32
