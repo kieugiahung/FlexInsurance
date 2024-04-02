@@ -24,7 +24,7 @@
         Gallery3_4 As gallery.variableTemplateHeightGallery:
             DelayItemLoading: =true
             Fill: =RGBA(255, 255, 255, 1)
-            Height: =235
+            Height: =438
             Items: |-
                 =SortByColumns(
                     tmpDSHDSPNHDCollect,
@@ -33,7 +33,7 @@
                 )
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
-            TemplateSize: =230
+            TemplateSize: =395
             Width: =1267
             Y: =169
             ZIndex: =21
@@ -41,9 +41,9 @@
             Label3_90 As label:
                 Height: =25
                 Size: =11
-                Text: ="Sản phẩm"
+                Text: ="Chọn Sản phẩm"
                 Width: =130
-                X: =30
+                X: =23
                 Y: =9
                 ZIndex: =2
 
@@ -85,8 +85,8 @@
                 RadiusTopRight: =0
                 Size: =11
                 Width: =250
-                X: =368
-                Y: =134
+                X: =308
+                Y: =263
                 ZIndex: =7
 
             tiTongPhiNHD_1 As text:
@@ -107,8 +107,8 @@
                 RadiusTopRight: =0
                 Size: =11
                 Width: =250
-                X: =679
-                Y: =134
+                X: =619
+                Y: =260
                 ZIndex: =8
 
             Label3_96 As label:
@@ -116,17 +116,17 @@
                 Size: =11
                 Text: ="Số người tham gia"
                 Width: =140
-                X: =368
-                Y: =105
+                X: =353
+                Y: =235
                 ZIndex: =9
 
             Label3_97 As label:
                 Height: =25
                 Size: =11
                 Text: ="Tổng phí/Nhóm"
-                Width: =140
-                X: =679
-                Y: =108
+                Width: =249
+                X: =620
+                Y: =235
                 ZIndex: =10
 
             tiTenSPNHD_2 As text:
@@ -144,74 +144,6 @@
                 X: =355
                 Y: =34
                 ZIndex: =11
-
-            tiTenCTNHD_2 As text:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Default: =LookUp(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD_2.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,TEN_CHUONG_TRINH)
-                DisplayMode: =DisplayMode.Disabled
-                Height: =32
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Size: =11
-                Visible: =false
-                Width: =250
-                X: =990
-                Y: =34
-                ZIndex: =12
-
-            cbxMaCTNHD_2 As combobox:
-                BorderColor: =RGBA(72, 163, 62, 1)
-                DefaultSelectedItems: |-
-                    =/*If (
-                        ThisItem.edited=1,
-                        LookUp(
-                            ' DL_SAN_PHAM_CT',
-                            MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=tiMaCTNHD.Text
-                        ),
-                        LookUp(
-                            ' DL_SAN_PHAM_CT',
-                            MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=ThisItem.MA_CHUONG_TRINH
-                        )
-                    )*/
-                    
-                    LookUp(
-                        ' DL_SAN_PHAM_CT',
-                        MA_SAN_PHAM=cbxMaSPNHD_2.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_CHUONG_TRINH)
-                    )
-                DisplayFields: =["cr282_ma_chuongtrinh","cr282_ten_chuong_trinh"]
-                Height: =32
-                InputTextPlaceholder: =""
-                Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD_2.Selected.MA_SAN_PHAM)
-                OnChange: |-
-                    =If(
-                        cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH<>LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,MA_CHUONG_TRINH) && IsBlank(unReloadMaCT),
-                        UpdateIf(
-                            tmpMaCTChangeNHD,
-                            ID=ThisItem.ID,
-                            {
-                                MA_CHUONG_TRINH:cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
-                                NHOM_TINH_PHI:Blank()
-                            }
-                        );
-                        Reset(cbxNhomTPNHD_1);
-                    );
-                OnSelect: |-
-                    =UpdateContext({
-                        unReloadMaSP:Blank(),
-                        unReloadMaCT:Blank()
-                    })
-                SearchFields: =["cr282_ma_chuong_trinh"]
-                SearchItems: =Search(Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD_2.Selected.MA_SAN_PHAM),cbxMaCTNHD_2.SearchText,"cr282_ma_chuong_trinh")
-                SelectMultiple: =false
-                Size: =11
-                Template: =ListItemTemplate.Double
-                Visible: =ThisItem.edited=1
-                Width: =250
-                X: =1007
-                Y: =88
-                ZIndex: =14
 
             cbxMaSPNHD_2 As combobox:
                 BorderColor: =RGBA(72, 163, 62, 1)
@@ -232,8 +164,7 @@
                                 MA_CHUONG_TRINH:Blank(),
                                 NHOM_TINH_PHI:Blank()
                             }
-                        );
-                        Reset(cbxMaCTNHD_2);Reset(cbxNhomTPNHD_1);
+                        );   
                     );
                 OnSelect: |-
                     =UpdateContext({
@@ -249,480 +180,6 @@
                 X: =170
                 Y: =6
                 ZIndex: =15
-
-            btnXoaHDSPNHD_1 As button:
-                Height: =32
-                OnSelect: |-
-                    =If(
-                        Or(maAddedHDSPNHD<>"",maUpdatedHDSPNHD<>""),
-                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
-                        //xoa ds ndbh
-                        Refresh(DL_HOP_DONG_SP_NDBH);
-                        ClearCollect(
-                            tmpDSNDBHRemoveNHDCollect,
-                            Filter(
-                                DL_HOP_DONG_SP_NDBH,
-                                MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
-                            )
-                        );
-                        ForAll(
-                            tmpDSNDBHRemoveNHDCollect As ds,
-                            Remove(
-                                DL_HOP_DONG_SP_NDBH,
-                                ds
-                            )
-                        );
-                        ClearCollect(
-                            tmpDSNDBHRemoveNHDCollect,
-                            Filter(
-                                tmpDSNDBHNHDCollect,
-                                ID_HOPDONG_SP=ThisItem.ID
-                            )
-                        );
-                        ForAll(
-                            tmpDSNDBHRemoveNHDCollect As ds,
-                            Remove(
-                                tmpDSNDBHNHDCollect,
-                                ds
-                            )
-                        );
-                        //end xoa ds ndbh
-                        
-                        //xoa ds qlct
-                        Refresh(DL_HOP_DONG_SP_QLCT);
-                        ClearCollect(
-                            tmpDSQLCTRemoveNHDCollect,
-                            Filter(
-                                DL_HOP_DONG_SP_QLCT,
-                                MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
-                            )
-                        );
-                        ForAll(
-                            tmpDSQLCTRemoveNHDCollect As ds,
-                            Remove(
-                                DL_HOP_DONG_SP_QLCT,
-                                ds
-                            )
-                        );
-                        ClearCollect(
-                            tmpDSQLCTRemoveNHDCollect,
-                            Filter(
-                                tmpQLCTHDSPNHDCollect,
-                                ID_HOPDONG_SP=ThisItem.ID
-                            )
-                        );
-                        ForAll(
-                            tmpDSQLCTRemoveNHDCollect As ds,
-                            Remove(
-                                tmpQLCTHDSPNHDCollect,
-                                ds
-                            )
-                        );
-                        //end xoa ds qlct
-                    
-                        //xoa ds hdsp
-                        Refresh(DL_HOP_DONG_SPS);
-                        ClearCollect(
-                            tmpDSHDSPRemoveNHDCollect,
-                            Filter(
-                                DL_HOP_DONG_SPS,
-                                ID=ThisItem.ID
-                            )
-                        );
-                        ForAll(
-                            tmpDSHDSPRemoveNHDCollect As ds,
-                            Remove(
-                                DL_HOP_DONG_SPS,
-                                ds
-                            )
-                        );
-                        ClearCollect(
-                            tmpDSHDSPRemoveNHDCollect,
-                            Filter(
-                                tmpDSHDSPNHDCollect,
-                                ID=ThisItem.ID
-                            )
-                        );
-                        ForAll(
-                            tmpDSHDSPRemoveNHDCollect As ds,
-                            Remove(
-                                tmpDSHDSPNHDCollect,
-                                ds
-                            )
-                        );
-                        //end xoa ds hdsp
-                    
-                        UpdateIf(
-                            objHD,
-                            true,
-                            {
-                                SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
-                            }
-                        );
-                        UpdateIf(
-                            DL_HOP_DONG_SPS,
-                            MA_HOP_DONG=First(objHD).MA_HOP_DONG,
-                            {
-                                SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
-                            }
-                        );
-                        Notify("Xóa dữ liệu thành công", NotificationType.Success,2000);
-                    )
-                Size: =11
-                Text: ="Xóa"
-                Visible: =ThisItem.edited=0
-                Width: =90
-                X: =1100
-                Y: =143
-                ZIndex: =16
-
-            btnLuuHDSPNHD_1 As button:
-                Height: =32
-                OnSelect: |
-                    =If(
-                        IsBlank(cbxMaSPNHD_2.Selected.MA_SAN_PHAM),
-                        Notify("Bắt buộc chọn sản phẩm",NotificationType.Error,2000),
-                        IsBlank(cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH),
-                        Notify("Bắt buộc chọn chương trình",NotificationType.Error,2000),
-                        IsEmpty(cbxNhomTPNHD_1.SelectedItems),
-                        Notify("Bắt buộc chọn nhóm tính phí",NotificationType.Error,2000),
-                        UpdateContext({
-                            unReloadMaSP:"1",
-                            unReloadMaCT:"1"
-                        });
-                        If(
-                            ThisItem.ID=maAddedHDSPNHD,
-                            Patch(
-                                DL_HOP_DONG_SPS,
-                                {
-                                    ID: ThisItem.ID,
-                                    MA_HOP_DONG: First(objHD).MA_HOP_DONG,
-                                    MA_SAN_PHAM: cbxMaSPNHD_2.Selected.MA_SAN_PHAM,
-                                    MA_CHUONG_TRINH: cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
-                                    TEN_CHUONG_TRINH: tiTenCTNHD_2.Text,
-                                    TEN_SAN_PHAM: tiTenSPNHD_2.Text,
-                                    DON_VI_TINH: cbxDVTienNHD.Selected.TIEN_TE,
-                                    SONGUOI_THAMGIA: Value(tiSoNTGSPNHD_1.Text),
-                                    TONG_TIEN_PHI: Value(tiTongPhiNHD_1.Text),
-                                    MA_KENH_BAN: cbxMaKBNHD.Selected.MA_KENH_BAN,
-                                    MA_KHACH_HANG: cbxMaKHNHD.Selected.MA_KHACH_HANG,
-                                    NGAY_HOP_DONG: dpNgayHDNHD.SelectedDate,
-                                    NHOM_TINH_PHI: Concat(
-                                        cbxNhomTPNHD_1.SelectedItems,
-                                        Value,
-                                        "|"
-                                    ),
-                                    PHI_DIEU_CHINH:Value(tiPhiDCNHD_1.Text),
-                                    TONG_PHI_DANHSACH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,TONG_PHI_DANHSACH),
-                                    AUTO_GEN_NDBH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,AUTO_GEN_NDBH)
-                                }
-                            ),
-                            ThisItem.ID=maUpdatedHDSPNHD,
-                            UpdateIf(
-                                DL_HOP_DONG_SPS,
-                                ID = ThisItem.ID,
-                                {
-                                    MA_SAN_PHAM:cbxMaSPNHD_2.Selected.MA_SAN_PHAM,
-                                    TEN_SAN_PHAM:tiTenSPNHD_2.Text,
-                                    MA_CHUONG_TRINH:cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
-                                    TEN_CHUONG_TRINH:tiTenCTNHD_2.Text,
-                                    SONGUOI_THAMGIA: Value(tiSoNTGSPNHD_1.Text),
-                                    TONG_TIEN_PHI: Value(tiTongPhiNHD_1.Text),
-                                    MA_KENH_BAN: cbxMaKBNHD.Selected.MA_KENH_BAN,
-                                    MA_KHACH_HANG: cbxMaKHNHD.Selected.MA_KHACH_HANG,
-                                    NGAY_HOP_DONG: dpNgayHDNHD.SelectedDate,
-                                    NHOM_TINH_PHI: Concat(
-                                        cbxNhomTPNHD_1.SelectedItems,
-                                        Value,
-                                        "|"
-                                    ),
-                                    PHI_DIEU_CHINH:Value(tiPhiDCNHD_1.Text),
-                                    TONG_PHI_DANHSACH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,TONG_PHI_DANHSACH),
-                                    AUTO_GEN_NDBH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,AUTO_GEN_NDBH)
-                                }
-                            )
-                        );
-                        UpdateIf(
-                            tmpDSHDSPNHDCollect,
-                            ID=ThisItem.ID,
-                            {
-                                MA_SAN_PHAM:cbxMaSPNHD_2.Selected.MA_SAN_PHAM,
-                                TEN_SAN_PHAM:tiTenSPNHD_2.Text,
-                                MA_CHUONG_TRINH:cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
-                                TEN_CHUONG_TRINH:tiTenCTNHD_2.Text,
-                                PTHUC_THANH_TOAN:cbxPTTTNHD.Selected.value,
-                                SONGUOI_THAMGIA:Value(tiSoNTGSPNHD_1.Text),
-                                TONG_TIEN_PHI:Value(tiTongPhiNHD_1.Text),
-                                NHOM_TINH_PHI:Concat(cbxNhomTPNHD_1.SelectedItems, Value,"|"),
-                                PHI_DIEU_CHINH:Value(tiPhiDCNHD_1.Text),
-                                TONG_PHI_DANHSACH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,TONG_PHI_DANHSACH),
-                                AUTO_GEN_NDBH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,AUTO_GEN_NDBH),
-                                edited:0
-                            }
-                        );
-                        Refresh(DL_HOP_DONG_SP_NDBH);
-                        RemoveIf(
-                            DL_HOP_DONG_SP_NDBH,
-                            MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
-                        );
-                        ForAll(
-                            Filter(
-                                tmpDSNDBHNHDCollect,
-                                ID_HOPDONG_SP=ThisItem.ID
-                            ) As ds,
-                            Patch(
-                                DL_HOP_DONG_SP_NDBH,
-                                {
-                                    ID:ds.ID,
-                                    MA_HOP_DONG:First(objHD).MA_HOP_DONG,
-                                    MA_SAN_PHAM:cbxMaSPNHD_2.Selected.MA_SAN_PHAM,
-                                    MA_CHUONG_TRINH:cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
-                                    NHOM_TINH_PHI:Concat(cbxNhomTPNHD_1.SelectedItems, Value,"|"),
-                                    TEN_NDBH:ds.TEN_NDBH,
-                                    MST:ds.MST,
-                                    DIA_CHI:ds.DIA_CHI,
-                                    MA_GIOI__TINH:ds.MA_GIOI__TINH,
-                                    MA_TINH_TP: ds.MA_TINH_TP,
-                                    MA_NHAN_VIEN: ds.MA_NHAN_VIEN,
-                                    MOI_QUAN_HE: ds.MOI_QUAN_HE,
-                                    NGAY_SINH: ds.NGAY_SINH,
-                                    NHOM: ds.NHOM,
-                                    SO_GIAY_TO: ds.SO_GIAY_TO,
-                                    PHI_NDBH: ds.PHI_NDBH,
-                                    ID_HOPDONG_SP:ThisItem.ID
-                                }
-                            )
-                        );
-                        UpdateIf(
-                            DL_HOP_DONGS,
-                            MA_HOP_DONG=First(objHD).MA_HOP_DONG,
-                            {
-                                SO_NGUOI_TGIA:Value(tiSoNTGNHD.Text)
-                            }
-                        );
-                        Refresh(DL_HOP_DONG_SP_QLCT);
-                        ClearCollect(
-                            tmpDSQLCTRemoveNHDCollect,
-                            Filter(
-                                DL_HOP_DONG_SP_QLCT,
-                                MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
-                            )
-                        );
-                        ForAll(
-                            tmpDSQLCTRemoveNHDCollect As ds,
-                            Remove(
-                                DL_HOP_DONG_SP_QLCT,
-                                ds
-                            )
-                        );
-                        If(
-                            CountIf(Filter(tmpQLCTHDSPNHDCollect,ID_HOPDONG_SP=ThisItem.ID),true)=0,
-                            ForAll(
-                                Filter(
-                                    DL_CHUONGTRINH_QLCTS,
-                                    MA_CHUONG_TRINH = cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH && MA_SAN_PHAM = cbxMaSPNHD_2.Selected.MA_SAN_PHAM &&
-                                    MA_NHOM_QL in Distinct(Filter(DL_SAN_PHAM_NHOMQLS,MA_SP = cbxMaSPNHD_2.Selected.MA_SAN_PHAM && 
-                                        !IsBlank(Find(cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,CHUONGTRINH_APDUNG)) &&
-                                        !IsBlank(Find(MA_NHOM_TINHPHI,Concat(cbxNhomTPNHD_1.SelectedItems, Value,"|")))
-                                    ),MA_NHOM_QL)
-                                ) As ds,
-                                Patch(
-                                    DL_HOP_DONG_SP_QLCT,
-                                    {
-                                        MA_HOP_DONG:First(objHD).MA_HOP_DONG,
-                                        MA_SAN_PHAM:cbxMaSPNHD_2.Selected.MA_SAN_PHAM,
-                                        MA_CHUONG_TRINH:cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
-                                        NHOM_TINH_PHI:Concat(cbxNhomTPNHD_1.SelectedItems, Value,"|"),
-                                        ID_HOPDONG_SP:ThisItem.ID,
-                                        MA_QL_CT:ds.MA_QL_CT,
-                                        MA_NHOM_QL:ds.MA_NHOM_QL,
-                                        TT_HIENTHI:ds.TT_HIENTHI,
-                                        GH_SOLAN_NAM:ds.GH_SOLAN_NAM,
-                                        GH_SONGAY_NAM:ds.GH_SONGAY_NAM,
-                                        GH_SOTIEN_BENH: ds.GH_SOTIEN_BENH,
-                                        GH_SOTIEN_NAM: ds.GH_SOTIEN_NAM,
-                                        GH_SOTIEN_NGAY: ds.GH_SOTIEN_NGAY,
-                                        GH_SOTIEN_VU: ds.GH_SOTIEN_VU,
-                                        PT_TU_CHITRA: ds.PT_TU_CHITRA,
-                                        SO_TIEN_BH: ds.SO_TIEN_BH,
-                                        TEN_QUYEN_LOI_HT: ds.TEN_QUYEN_LOI_HT
-                                    }
-                                )
-                            )
-                        );
-                        ForAll(
-                            Filter(
-                                tmpQLCTHDSPNHDCollect,
-                                ID_HOPDONG_SP=ThisItem.ID
-                            ) As ds,
-                            Patch(
-                                DL_HOP_DONG_SP_QLCT,
-                                {
-                                    MA_HOP_DONG:First(objHD).MA_HOP_DONG,
-                                    MA_SAN_PHAM:cbxMaSPNHD_2.Selected.MA_SAN_PHAM,
-                                    MA_CHUONG_TRINH:cbxMaCTNHD_2.Selected.MA_CHUONG_TRINH,
-                                    NHOM_TINH_PHI:Concat(cbxNhomTPNHD_1.SelectedItems, Value,"|"),
-                                    ID_HOPDONG_SP:ThisItem.ID,
-                                    MA_QL_CT:ds.MA_QL_CT,
-                                    MA_NHOM_QL:ds.MA_NHOM_QL,
-                                    TT_HIENTHI:ds.TT_HIENTHI,
-                                    GH_SOLAN_NAM:ds.GH_SOLAN_NAM,
-                                    GH_SONGAY_NAM:ds.GH_SONGAY_NAM,
-                                    GH_SOTIEN_BENH: ds.GH_SOTIEN_BENH,
-                                    GH_SOTIEN_NAM: ds.GH_SOTIEN_NAM,
-                                    GH_SOTIEN_NGAY: ds.GH_SOTIEN_NGAY,
-                                    GH_SOTIEN_VU: ds.GH_SOTIEN_VU,
-                                    PT_TU_CHITRA: ds.PT_TU_CHITRA,
-                                    SO_TIEN_BH: ds.SO_TIEN_BH,
-                                    TEN_QUYEN_LOI_HT: ds.TEN_QUYEN_LOI_HT
-                                }
-                            )
-                        );
-                        ClearCollect(
-                            tmpMaCTChangeNHD,
-                            tmpDSHDSPNHDCollect
-                        );
-                        UpdateContext({
-                            maAddedHDSPNHD:"",
-                            maUpdatedHDSPNHD:""
-                        });
-                        Notify("Lưu thông tin thành công",NotificationType.Success,2000);
-                    )
-                Size: =11
-                Text: ="Lưu"
-                Visible: =ThisItem.edited=1
-                Width: =90
-                X: =990
-                Y: =143
-                ZIndex: =17
-
-            btnSuaHDSPNHD_1 As button:
-                Height: =32
-                OnSelect: |-
-                    =If(
-                        Or(maAddedHDSPNHD<>"",maUpdatedHDSPNHD<>""),
-                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,2000),
-                        UpdateIf(
-                            tmpDSHDSPNHDCollect,
-                            ID=ThisItem.ID,
-                            {
-                                edited:1
-                            }
-                        );
-                        ClearCollect(
-                            tmpMaCTChangeNHD,
-                            tmpDSHDSPNHDCollect
-                        );
-                        UpdateContext({
-                            maUpdatedHDSPNHD:ThisItem.ID
-                        });
-                        Reset(cbxMaSPNHD_2);Reset(cbxMaCTNHD_2);
-                    )
-                Size: =11
-                Text: ="Sửa"
-                Visible: =ThisItem.edited=0
-                Width: =90
-                X: =990
-                Y: =143
-                ZIndex: =18
-
-            btnHuyHDSPNHD_1 As button:
-                Height: =32
-                OnSelect: |-
-                    =If(
-                        ThisItem.ID=maAddedHDSPNHD,
-                        RemoveIf(
-                            tmpDSNDBHNHDCollect,
-                            MA_HOP_DONG=First(objHD).MA_HOP_DONG 
-                            && ID_HOPDONG_SP=ThisItem.ID
-                        );
-                        RemoveIf(
-                            tmpQLCTHDSPNHDCollect,
-                            MA_HOP_DONG=First(objHD).MA_HOP_DONG 
-                            && ID_HOPDONG_SP=ThisItem.ID
-                        );
-                        Remove(tmpDSHDSPNHDCollect,ThisItem),
-                        RemoveIf(
-                            tmpQLCTHDSPNHDCollect,
-                            MA_HOP_DONG=First(objHD).MA_HOP_DONG 
-                            && ID_HOPDONG_SP=ThisItem.ID
-                        );
-                        RemoveIf(
-                            tmpDSNDBHNHDCollect,
-                            MA_HOP_DONG=First(objHD).MA_HOP_DONG 
-                            && ID_HOPDONG_SP=ThisItem.ID
-                        );
-                        Collect(
-                            tmpDSNDBHNHDCollect,
-                            AddColumns(
-                                Filter(
-                                    DL_HOP_DONG_SP_NDBH,
-                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
-                                ),
-                                "edited",
-                                0
-                            )
-                        );
-                        UpdateIf(
-                            tmpDSHDSPNHDCollect,
-                            ID=ThisItem.ID,
-                            {
-                                /*MA_SAN_PHAM:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,MA_SAN_PHAM),
-                                MA_CHUONG_TRINH:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,MA_CHUONG_TRINH),
-                                NHOM_TINH_PHI:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,NHOM_TINH_PHI),*/
-                                SONGUOI_THAMGIA:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,SONGUOI_THAMGIA),
-                                TONG_TIEN_PHI:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,TONG_TIEN_PHI),
-                                TONG_PHI_DANHSACH:LookUp(DL_HOP_DONG_SPS,MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID=ThisItem.ID,TONG_PHI_DANHSACH),
-                                edited:0
-                            }
-                        );
-                        UpdateIf(
-                            tmpMaCTChangeNHD,
-                            ID=ThisItem.ID,
-                            {
-                                MA_CHUONG_TRINH:LookUp(tmpDSHDSPNHDCollect,ID=ThisItem.ID,MA_CHUONG_TRINH),
-                                NHOM_TINH_PHI:LookUp(tmpDSHDSPNHDCollect,ID=ThisItem.ID,NHOM_TINH_PHI)
-                            }
-                        );
-                        UpdateIf(
-                            objHD,
-                            true,
-                            {
-                                SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
-                            }
-                        );
-                        UpdateIf(
-                            DL_HOP_DONGS,
-                            MA_HOP_DONG=First(objHD).MA_HOP_DONG,
-                            {
-                                SO_NGUOI_TGIA:Sum(tmpDSHDSPNHDCollect,SONGUOI_THAMGIA)
-                            }
-                        );
-                        Collect(
-                            tmpQLCTHDSPNHDCollect,
-                            AddColumns(
-                                Filter(
-                                    DL_HOP_DONG_SP_QLCT,
-                                    MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
-                                ),
-                                "edited",
-                                0
-                            )
-                        );
-                    );
-                    UpdateContext({
-                        maAddedHDSPNHD:"",
-                        maUpdatedHDSPNHD:"",
-                        unReloadMaCT:"1",
-                        unReloadMaSP:"1"
-                    });
-                Size: =11
-                Text: ="Hủy"
-                Visible: =ThisItem.edited=1
-                Width: =90
-                X: =1100
-                Y: =143
-                ZIndex: =19
 
             LinkHDLK_5 As text:
                 BorderThickness: =0
@@ -1130,8 +587,8 @@
                 Size: =11
                 Underline: =true
                 Width: =142
-                X: =345
-                Y: =175
+                X: =330
+                Y: =305
                 ZIndex: =20
 
             Label3_94 As label:
@@ -1139,8 +596,8 @@
                 Size: =11
                 Text: ="Nhóm tính phí"
                 Width: =140
-                X: =30
-                Y: =105
+                X: =15
+                Y: =235
                 ZIndex: =21
 
             cbxNhomTPNHD_1 As combobox:
@@ -1187,8 +644,8 @@
                 Size: =11
                 Visible: =ThisItem.edited=1
                 Width: =250
-                X: =30
-                Y: =134
+                X: =15
+                Y: =264
                 ZIndex: =22
 
             LinkHDLK_4 As text:
@@ -1347,8 +804,7 @@
                     =//If(!IsBlank(tiMaHDNHD.Text),true,false)
                     true
                 Width: =169
-                X: =15
-                Y: =175
+                Y: =305
                 ZIndex: =23
 
             tiPhiDCNHD_1 As text:
@@ -1405,8 +861,8 @@
                 Size: =11
                 Visible: =false
                 Width: =250
-                X: =355
-                Y: =102
+                X: =340
+                Y: =232
                 ZIndex: =24
 
             tiNhomTPNHD_1 As text:
@@ -1422,8 +878,8 @@
                 Visible: |
                     =ThisItem.edited=0
                 Width: =250
-                X: =30
-                Y: =102
+                X: =15
+                Y: =232
                 ZIndex: =26
 
             cbxMaCTNHDHide_1 As combobox:
@@ -1465,66 +921,10 @@
                 Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD_2.Selected.MA_SAN_PHAM)
                 Layout: ='RadioGroupCanvas.Layout'.Horizontal
                 OnSelect: =Select(Parent)
-                Width: =1242
-                X: =15
-                Y: =38
+                Width: =1250
+                X: =7
+                Y: =108
                 ZIndex: =30
-
-                ID1 As pcfDataField.textualColumn:
-                    FieldDisplayName: ="ID"
-                    FieldName: ="cr282_ma_chuong_trinh"
-                    FieldType: ="s"
-                    FieldVariantName: ="textualColumn"
-                    Order: =2
-                    ZIndex: =0
-
-                TEN_CHUONG_TRINH1 As pcfDataField.textualColumn:
-                    FieldDisplayName: ="TEN_CHUONG_TRINH"
-                    FieldName: ="cr282_ten_chuong_trinh"
-                    FieldType: ="s"
-                    FieldVariantName: ="textualColumn"
-                    Order: =1
-                    ZIndex: =0
-
-                MA_SAN_PHAM2 As pcfDataField.textualColumn:
-                    FieldDisplayName: ="MA_SAN_PHAM"
-                    FieldName: ="cr282_ma_san_pham"
-                    FieldType: ="s"
-                    FieldVariantName: ="textualColumn"
-                    Order: =3
-                    ZIndex: =0
-
-                MO_TA2 As pcfDataField.textualColumn:
-                    FieldDisplayName: ="MO_TA"
-                    FieldName: ="cr282_mo_ta"
-                    FieldType: ="s"
-                    FieldVariantName: ="textualColumn"
-                    Order: =4
-                    ZIndex: =0
-
-                TRANG_THAI2 As pcfDataField.textualColumn:
-                    FieldDisplayName: ="TRANG_THAI"
-                    FieldName: ="cr282_trang_thai"
-                    FieldType: ="n"
-                    FieldVariantName: ="textualColumn"
-                    Order: =5
-                    ZIndex: =0
-
-                MA_CHUONG_TRINH1 As pcfDataField.textualColumn:
-                    FieldDisplayName: ="MA_CHUONG_TRINH"
-                    FieldName: ="cr282_ma_chuongtrinh"
-                    FieldType: ="s"
-                    FieldVariantName: ="textualColumn"
-                    Order: =6
-                    ZIndex: =0
-
-                MA_ID_SO1 As pcfDataField.textualColumn:
-                    FieldDisplayName: ="MA_ID_SO"
-                    FieldName: ="cr282_ma_id_so"
-                    FieldType: ="n"
-                    FieldVariantName: ="textualColumn"
-                    Order: =7
-                    ZIndex: =0
 
                 MA_ID_SO2 As pcfDataField.textualColumn:
                     FieldDisplayName: ="MA_ID_SO"
@@ -1532,7 +932,72 @@
                     FieldType: ="n"
                     FieldVariantName: ="textualColumn"
                     Order: =8
-                    ZIndex: =0
+                    ZIndex: =32
+
+                MA_ID_SO1 As pcfDataField.textualColumn:
+                    FieldDisplayName: ="MA_ID_SO"
+                    FieldName: ="cr282_ma_id_so"
+                    FieldType: ="n"
+                    FieldVariantName: ="textualColumn"
+                    Order: =7
+                    ZIndex: =33
+
+                MA_CHUONG_TRINH1 As pcfDataField.textualColumn:
+                    FieldDisplayName: ="MA_CHUONG_TRINH"
+                    FieldName: ="cr282_ma_chuongtrinh"
+                    FieldType: ="s"
+                    FieldVariantName: ="textualColumn"
+                    Order: =6
+                    ZIndex: =34
+
+                TRANG_THAI2 As pcfDataField.textualColumn:
+                    FieldDisplayName: ="TRANG_THAI"
+                    FieldName: ="cr282_trang_thai"
+                    FieldType: ="n"
+                    FieldVariantName: ="textualColumn"
+                    Order: =5
+                    ZIndex: =35
+
+                MO_TA2 As pcfDataField.textualColumn:
+                    FieldDisplayName: ="MO_TA"
+                    FieldName: ="cr282_mo_ta"
+                    FieldType: ="s"
+                    FieldVariantName: ="textualColumn"
+                    Order: =4
+                    ZIndex: =36
+
+                MA_SAN_PHAM2 As pcfDataField.textualColumn:
+                    FieldDisplayName: ="MA_SAN_PHAM"
+                    FieldName: ="cr282_ma_san_pham"
+                    FieldType: ="s"
+                    FieldVariantName: ="textualColumn"
+                    Order: =3
+                    ZIndex: =37
+
+                TEN_CHUONG_TRINH1 As pcfDataField.textualColumn:
+                    FieldDisplayName: ="TEN_CHUONG_TRINH"
+                    FieldName: ="cr282_ten_chuong_trinh"
+                    FieldType: ="s"
+                    FieldVariantName: ="textualColumn"
+                    Order: =1
+                    ZIndex: =38
+
+                ID1 As pcfDataField.textualColumn:
+                    FieldDisplayName: ="ID"
+                    FieldName: ="cr282_ma_chuong_trinh"
+                    FieldType: ="s"
+                    FieldVariantName: ="textualColumn"
+                    Order: =2
+                    ZIndex: =39
+
+            Label3_91 As label:
+                Height: =25
+                Size: =11
+                Text: ="Chọn chương trình"
+                Width: =144
+                X: =25
+                Y: =66
+                ZIndex: =31
 
         Button2_8 As button:
             Height: =32
@@ -1586,7 +1051,7 @@
             Size: =11
             Width: =217
             X: =30
-            Y: =87
+            Y: =86
             ZIndex: =23
 
         Label8 As label:
