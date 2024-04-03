@@ -15,6 +15,7 @@ Tracuubaogia As screen:
         Label12 As label:
             FontWeight: =FontWeight.Bold
             OnSelect: =Select(Parent)
+            Size: =11
             Text: =LookUp(DL_SAN_PHAM, MA_SAN_PHAM = ThisItem.MA_SAN_PHAM).TEN_SAN_PHAM & " - " & ThisItem.TEN_CHUONG_TRINH
             Width: =1073
             X: =40
@@ -40,7 +41,7 @@ Tracuubaogia As screen:
                 =Filter(
                     DL_SAN_PHAM_NHOMQLS,
                     MA_SP = ThisItem.MA_SAN_PHAM
-                    && Find(ThisItem.MA_CHUONG_TRINH , CHUONGTRINH_APDUNG) > -1
+                   && IsBlank( Find(ThisItem.MA_CHUONG_TRINH , CHUONGTRINH_APDUNG)) 
                 )
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
@@ -53,12 +54,14 @@ Tracuubaogia As screen:
             Label13 As label:
                 BorderThickness: =1
                 OnSelect: =Select(Parent)
+                Size: =11
                 Text: =ThisItem.LOAI
                 ZIndex: =1
 
             Label14 As label:
                 BorderThickness: =1
                 OnSelect: =Select(Parent)
+                Size: =11
                 Text: =ThisItem.TEN_HIEN_THI
                 Width: =216
                 X: =176
