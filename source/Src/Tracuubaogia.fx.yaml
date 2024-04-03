@@ -101,27 +101,39 @@ Tracuubaogia As screen:
                 ZIndex: =3
 
             Label16 As label:
-                Height: =36
+                BorderColor: =RGBA(0, 0, 0, 1)
+                BorderThickness: =1
+                Height: =35
                 OnSelect: =Select(Parent)
                 Text: |-
                     =Max(
                         Filter (
                             DL_CHUONGTRINH_QLCTS,
                             MA_SAN_PHAM = ThisItem.MA_SP &&
-                            MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH
+                            MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH &&
+                            MA_NHOM_QL = ThisItem.MA_NHOM_QL
                          
                         ),
                         GH_SOTIEN_NAM
                     )
-                X: =516
+                X: =366
                 ZIndex: =5
 
             Label20 As label:
                 Height: =36
                 OnSelect: =Select(Parent)
                 Text: =ThisItem.MA_CHUONG_TRINH
+                Visible: =false
                 X: =366
                 ZIndex: =6
+
+            Label21 As label:
+                Height: =36
+                OnSelect: =Select(Parent)
+                Text: =ThisItem.MA_NHOM_QL
+                Visible: =false
+                X: =666
+                ZIndex: =7
 
         Checkbox2 As checkbox:
             BorderColor: =RGBA(0, 0, 0, 1)
