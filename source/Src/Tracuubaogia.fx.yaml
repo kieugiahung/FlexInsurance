@@ -3,3 +3,42 @@ Tracuubaogia As screen:
     LeftNavigation_37 As LeftNavigation_9:
         Width: =LeftNavigation_37.MenuWidth - 10
 
+    Gallery3 As gallery.variableTemplateHeightGallery:
+        BorderThickness: =1
+        DelayItemLoading: =true
+        Items: =DL_SAN_PHAM
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        TemplateSize: =203
+        Width: =1155
+        X: =210
+        Y: =70
+        ZIndex: =2
+
+        Label12 As label:
+            BorderThickness: =1
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.TEN_SAN_PHAM
+            Width: =306
+            X: =5
+            ZIndex: =1
+
+        Gallery6 As gallery.variableTemplateHeightGallery:
+            BorderThickness: =1
+            DelayItemLoading: =true
+            Height: =141
+            Items: =Filter(' DL_SAN_PHAM_CT', MA_SAN_PHAM = ThisItem.MA_SAN_PHAM )
+            Layout: =Layout.Vertical
+            LoadingSpinner: =LoadingSpinner.Data
+            TemplateSize: =87
+            X: =146
+            Y: =47
+            ZIndex: =2
+
+            TextInput9 As text:
+                Default: ="Text input"
+                OnSelect: =Select(Parent)
+                X: =10
+                Y: =5
+                ZIndex: =1
+
