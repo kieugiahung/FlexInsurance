@@ -100,14 +100,6 @@ Tracuubaogia As screen:
                 Y: =4
                 ZIndex: =3
 
-            Label15 As label:
-                Height: =36
-                OnSelect: =Select(Parent)
-                Text: =ThisItem.MA_NHOM_QL
-                Width: =112
-                X: =666
-                ZIndex: =4
-
             Label16 As label:
                 Height: =36
                 OnSelect: =Select(Parent)
@@ -115,7 +107,8 @@ Tracuubaogia As screen:
                     =Max(
                         Filter (
                             DL_CHUONGTRINH_QLCTS,
-                            MA_SAN_PHAM = ThisItem.MA_SP
+                            MA_SAN_PHAM = ThisItem.MA_SP &&
+                            MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH
                          
                         ),
                         GH_SOTIEN_NAM
@@ -141,11 +134,4 @@ Tracuubaogia As screen:
             Text: =""
             Width: =30
             ZIndex: =4
-
-        TextInput9 As text:
-            Default: =ThisItem.MA_CHUONG_TRINH
-            Height: =31
-            OnSelect: =Select(Parent)
-            X: =583
-            ZIndex: =5
 
