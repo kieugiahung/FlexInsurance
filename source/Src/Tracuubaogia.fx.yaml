@@ -40,19 +40,27 @@ Tracuubaogia As screen:
                 =Filter(
                     DL_SAN_PHAM_NHOMQLS,
                     MA_SP = ThisItem.MA_SAN_PHAM
-                    && Find(CHUONGTRINH_APDUNG, ThisItem.MA_CHUONG_TRINH) > -1
+                    && Find(ThisItem.MA_CHUONG_TRINH , CHUONGTRINH_APDUNG) > -1
                 )
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
             TemplateSize: =192
-            X: =60
-            Y: =37
+            Width: =Parent.Width -70
+            X: =47
+            Y: =35
             ZIndex: =3
 
             Label13 As label:
+                BorderThickness: =1
                 OnSelect: =Select(Parent)
                 Text: =ThisItem.LOAI
-                X: =10
-                Y: =5
                 ZIndex: =1
+
+            Label14 As label:
+                BorderThickness: =1
+                OnSelect: =Select(Parent)
+                Text: =ThisItem.TEN_HIEN_THI
+                Width: =216
+                X: =176
+                ZIndex: =2
 
