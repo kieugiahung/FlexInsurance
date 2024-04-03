@@ -109,8 +109,8 @@
                 RadiusTopRight: =0
                 Size: =11
                 Width: =250
-                X: =382
-                Y: =206
+                X: =336
+                Y: =203
                 ZIndex: =8
 
             Label3_96 As label:
@@ -587,6 +587,7 @@
                     )
                 Size: =11
                 Underline: =true
+                Visible: =If(Loailoc.Selected.MA = "CN", false, true)
                 Width: =142
                 X: =169
                 Y: =259
@@ -744,9 +745,7 @@
                     )
                 Size: =11
                 Underline: =true
-                Visible: |-
-                    =//If(!IsBlank(tiMaHDNHD.Text),true,false)
-                    true
+                Visible: =false
                 Width: =169
                 Y: =259
                 ZIndex: =23
@@ -1290,24 +1289,77 @@
         Width: =LeftNavigation_36.MenuWidth - 10
         ZIndex: =4
 
-    ButtonCanvas2 As Button:
-        DisplayMode: =DisplayMode.Edit
-        Height: =33
-        Text: ="Tạo báo giá"
-        Width: =109
-        X: =995
+    Button2_9 As button:
+        Height: =32
+        OnSelect: |+
+            =
+                Collect(
+                    tmpDSHDSPNHDCollect,
+                    Defaults(tmpDSHDSPNHDCollect)
+                );
+                UpdateContext({
+                    maHDSP:Max(DL_HOP_DONG_SPS,ID)+1
+                });
+                UpdateIf(
+                    tmpDSHDSPNHDCollect,
+                    IsBlank(ID),
+                    {
+                        ID:Text(maHDSP),
+                        MA_HOP_DONG:First(objHD).MA_HOP_DONG,
+                        edited:1
+                    }
+                );
+                ClearCollect(
+                    tmpMaCTChangeNHD,
+                    tmpDSHDSPNHDCollect
+                );
+                UpdateContext({
+                    maAddedHDSPNHD:Text(maHDSP),
+                    unReloadMaSP:Blank()
+                });
+                Reset(LinkHDLK);
+            
+        Size: =11
+        Text: ="Tạo bản báo giá"
+        Width: =145
+        X: =1030
         Y: =715
         ZIndex: =5
 
-    ButtonCanvas2_1 As Button:
-        BasePaletteColor: =
-        DisplayMode: =DisplayMode.Disabled
-        FontColor: =
-        Height: =33
+    Button2_10 As button:
+        Height: =32
+        OnSelect: |+
+            =
+                Collect(
+                    tmpDSHDSPNHDCollect,
+                    Defaults(tmpDSHDSPNHDCollect)
+                );
+                UpdateContext({
+                    maHDSP:Max(DL_HOP_DONG_SPS,ID)+1
+                });
+                UpdateIf(
+                    tmpDSHDSPNHDCollect,
+                    IsBlank(ID),
+                    {
+                        ID:Text(maHDSP),
+                        MA_HOP_DONG:First(objHD).MA_HOP_DONG,
+                        edited:1
+                    }
+                );
+                ClearCollect(
+                    tmpMaCTChangeNHD,
+                    tmpDSHDSPNHDCollect
+                );
+                UpdateContext({
+                    maAddedHDSPNHD:Text(maHDSP),
+                    unReloadMaSP:Blank()
+                });
+                Reset(LinkHDLK);
+            
+        Size: =11
         Text: ="Tạo hợp đồng"
-        Visible: =true
-        Width: =127
-        X: =1146
+        Width: =114
+        X: =1201
         Y: =715
         ZIndex: =6
 
