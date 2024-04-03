@@ -18,7 +18,7 @@ Tracuubaogia As screen:
             OnSelect: =Select(Parent)
             Size: =11
             Text: =LookUp(DL_SAN_PHAM, MA_SAN_PHAM = ThisItem.MA_SAN_PHAM).TEN_SAN_PHAM & " - " & ThisItem.TEN_CHUONG_TRINH
-            Width: =990
+            Width: =403
             X: =30
             ZIndex: =1
 
@@ -97,7 +97,7 @@ Tracuubaogia As screen:
                 OnSelect: =Select(Parent)
                 Text: =ThisItem.MA_NHOM_QL
                 Width: =112
-                X: =366
+                X: =666
                 ZIndex: =4
 
             Label16 As label:
@@ -108,7 +108,7 @@ Tracuubaogia As screen:
                         Filter (
                             DL_CHUONGTRINH_QLCTS,
                             MA_SAN_PHAM = ThisItem.MA_SP
-                            && !IsBlank(Find(MA_CHUONG_TRINH ,ThisItem.CHUONGTRINH_APDUNG)) 
+                             && MA_CHUONG_TRINH = Gallery3.Selected.MA_CHUONG_TRINH
                         ),
                         GH_SOTIEN_NAM
                     )
@@ -126,4 +126,11 @@ Tracuubaogia As screen:
             Text: =""
             Width: =30
             ZIndex: =4
+
+        Label18 As label:
+            Height: =31
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.MA_CHUONG_TRINH
+            X: =934
+            ZIndex: =5
 
