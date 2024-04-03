@@ -19,8 +19,8 @@ Tracuubaogia As screen:
             FontWeight: =FontWeight.Bold
             OnSelect: =Select(Parent)
             Text: =ThisItem.TEN_SAN_PHAM
-            Width: =1057
-            X: =5
+            Width: =1112
+            X: =30
             ZIndex: =1
 
         Gallery6 As gallery.variableTemplateHeightGallery:
@@ -30,7 +30,8 @@ Tracuubaogia As screen:
             Items: =Filter(' DL_SAN_PHAM_CT', MA_SAN_PHAM = ThisItem.MA_SAN_PHAM )
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
-            TemplateSize: =153
+            TemplateSize: =191
+            Transition: =Transition.Push
             X: =71
             Y: =47
             ZIndex: =2
@@ -41,4 +42,13 @@ Tracuubaogia As screen:
                 X: =10
                 Y: =5
                 ZIndex: =1
+
+        Icon3 As icon.ArrowDown:
+            Height: =22
+            OnSelect: |-
+                =Set(varOpen, Blank());
+                Set(varOpen, 1)
+            Width: =30
+            Y: =9
+            ZIndex: =3
 
