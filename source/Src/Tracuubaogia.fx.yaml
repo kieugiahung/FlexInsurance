@@ -1,6 +1,6 @@
 Tracuubaogia As screen:
 
-    Gallery3 As gallery.variableTemplateHeightGallery:
+    danhsachnhom As gallery.variableTemplateHeightGallery:
         BorderThickness: =1
         DelayItemLoading: =true
         Items: =Filter(' DL_SAN_PHAM_CT' ,MA_SAN_PHAM = "PVICARE" )
@@ -26,14 +26,20 @@ Tracuubaogia As screen:
             BorderColor: =RGBA(0, 0, 0, 1)
             DelayItemLoading: =true
             Height: =213
-            Items: |-
-                =
-                
+            Items: |+
+                =AddColumns(
                 Filter(
                     DL_SAN_PHAM_NHOMQLS,
                     MA_SP = ThisItem.MA_SAN_PHAM
                    && !IsBlank(Find(ThisItem.MA_CHUONG_TRINH , CHUONGTRINH_APDUNG)) 
-                )
+                ), "MA_CHUONG_TRINH", ThisItem.MA_CHUONG_TRINH)
+                
+                
+                
+                
+                
+                
+                
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
             TemplateSize: =36
@@ -120,7 +126,7 @@ Tracuubaogia As screen:
             Label20 As label:
                 Height: =36
                 OnSelect: =Select(Parent)
-                Text: =
+                Text: =ThisItem.MA_CHUONG_TRINH
                 X: =366
                 ZIndex: =6
 
