@@ -14,14 +14,16 @@ Tracuubaogia As screen:
 
         Label12 As label:
             FontWeight: =FontWeight.Bold
+            Height: =31
             OnSelect: =Select(Parent)
             Size: =11
             Text: =LookUp(DL_SAN_PHAM, MA_SAN_PHAM = ThisItem.MA_SAN_PHAM).TEN_SAN_PHAM & " - " & ThisItem.TEN_CHUONG_TRINH
-            Width: =1073
-            X: =72
+            Width: =990
+            X: =30
             ZIndex: =1
 
         Gallery6 As gallery.variableTemplateHeightGallery:
+            BorderColor: =RGBA(0, 0, 0, 1)
             DelayItemLoading: =true
             Height: =213
             Items: |-
@@ -32,13 +34,14 @@ Tracuubaogia As screen:
                 )
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
-            TemplateSize: =300
+            TemplateSize: =43
             Width: =1076
             X: =30
             Y: =31
             ZIndex: =3
 
             Label13 As label:
+                BorderColor: =RGBA(0, 0, 0, 1)
                 BorderThickness: =1
                 OnSelect: =Select(Parent)
                 Size: =11
@@ -46,6 +49,7 @@ Tracuubaogia As screen:
                 ZIndex: =1
 
             Label14 As label:
+                BorderColor: =RGBA(0, 0, 0, 1)
                 BorderThickness: =1
                 OnSelect: =Select(Parent)
                 Size: =11
@@ -54,13 +58,32 @@ Tracuubaogia As screen:
                 X: =150
                 ZIndex: =2
 
-    CheckboxCanvas5 As Checkbox:
-        DisplayMode: =DisplayMode.Edit
-        Height: =32
-        OnCheck: =false
-        OnUncheck: =false
-        Width: =160
-        X: =40
-        Y: =40
-        ZIndex: =3
+            Checkbox2_1 As checkbox:
+                BorderColor: =RGBA(0, 0, 0, 1)
+                CheckboxBorderColor: |-
+                    =RGBA(0, 0, 0, 0
+                    )
+                CheckboxSize: =20
+                Height: =31
+                OnCheck: =true
+                OnSelect: =Select(Parent)
+                PaddingLeft: =8
+                Size: =11
+                Text: =""
+                Width: =30
+                X: =1011
+                Y: =4
+                ZIndex: =3
+
+        Checkbox2 As checkbox:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            CheckboxBorderColor: =RGBA(0, 0, 0, 1)
+            CheckboxSize: =20
+            Height: =31
+            OnSelect: =Select(Parent)
+            PaddingLeft: =8
+            Size: =11
+            Text: =""
+            Width: =30
+            ZIndex: =4
 
