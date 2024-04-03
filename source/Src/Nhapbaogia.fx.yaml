@@ -15,7 +15,7 @@
     danhsachphi As groupContainer.manualLayoutContainer:
         BorderColor: =RGBA(255, 255, 255, 1)
         DropShadow: =DropShadow.None
-        Height: =453
+        Height: =326
         Width: =1256
         X: =71
         Y: =149
@@ -34,7 +34,7 @@
                 )
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
-            TemplateSize: =288
+            TemplateSize: =245
             Width: =1255
             X: =9
             Y: =76
@@ -126,7 +126,7 @@
                 Size: =11
                 Text: ="Tổng phí"
                 Width: =249
-                X: =382
+                X: =336
                 Y: =181
                 ZIndex: =10
 
@@ -749,64 +749,6 @@
                 Width: =169
                 Y: =259
                 ZIndex: =23
-
-            tiPhiDCNHD_1 As text:
-                Align: =Align.Right
-                BorderColor: =RGBA(72, 163, 62, 1)
-                Default: |-
-                    =If (
-                        ThisItem.edited=1,
-                        If(LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,PHI_DIEU_CHINH)=0,Blank(),LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,PHI_DIEU_CHINH)),
-                        If(ThisItem.PHI_DIEU_CHINH=0,Blank(),ThisItem.PHI_DIEU_CHINH)
-                    )
-                DisplayMode: =If(ThisItem.edited=1,DisplayMode.Edit,DisplayMode.Disabled)
-                Format: =TextFormat.Number
-                Height: =32
-                OnChange: |-
-                    =If(
-                        Value(tiPhiDCNHD_1.Text)=0,
-                        UpdateIf(
-                            tmpMaCTChangeNHD,
-                            ID=ThisItem.ID,
-                            {
-                                PHI_DIEU_CHINH:Blank()
-                            }
-                        );
-                        Reset(tiPhiDCNHD_1)
-                    );
-                    If(
-                        IsBlank(tiPhiDCNHD_1.Text) || Value(tiPhiDCNHD_1.Text)=0,
-                        UpdateContext({
-                            tongPhiNDBH:LookUp(tmpMaCTChangeNHD,ID=ThisItem.ID,TONG_PHI_DANHSACH)
-                        });
-                        UpdateIf(
-                            tmpMaCTChangeNHD,
-                            ID=ThisItem.ID,
-                            {
-                                TONG_TIEN_PHI:tongPhiNDBH
-                            }
-                        );
-                        Reset(tiTongPhiNHD_1),
-                        Value(tiPhiDCNHD_1.Text)<>ThisItem.PHI_DIEU_CHINH && !IsBlank(tiPhiDCNHD_1.Text) && Value(tiPhiDCNHD_1.Text)<>0,
-                        UpdateIf(
-                            tmpMaCTChangeNHD,
-                            ID=ThisItem.ID,
-                            {
-                                TONG_TIEN_PHI:Value(tiPhiDCNHD_1.Text)*Value(tiSoNTGSPNHD_1.Text)
-                            }
-                        );
-                        Reset(tiTongPhiNHD_1)
-                    )
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Size: =11
-                Visible: =false
-                Width: =250
-                X: =46
-                Y: =186
-                ZIndex: =24
 
             tiNhomTPNHD_1 As text:
                 BorderColor: =RGBA(72, 163, 62, 1)
