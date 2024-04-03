@@ -3,7 +3,7 @@ Tracuubaogia As screen:
     Gallery3 As gallery.variableTemplateHeightGallery:
         BorderThickness: =1
         DelayItemLoading: =true
-        Items: =DL_SAN_PHAM
+        Items: =DL_CHUONG_TRINH_BANG_PHIS
         Layout: =Layout.Vertical
         LoadingSpinner: =LoadingSpinner.Data
         TemplateSize: =251
@@ -15,28 +15,39 @@ Tracuubaogia As screen:
         Label12 As label:
             FontWeight: =FontWeight.Bold
             OnSelect: =Select(Parent)
-            Text: =ThisItem.TEN_SAN_PHAM
-            Width: =1112
-            X: =30
+            Text: =LookUp(DL_SAN_PHAM, MA_SAN_PHAM = ThisItem.MA_SAN_PHAM).TEN_SAN_PHAM & " - " & ThisItem.TEN_CHUONG_TRINH
+            Width: =1073
+            X: =40
             ZIndex: =1
 
-        Gallery6 As gallery.variableTemplateHeightGallery:
-            BorderThickness: =1
-            DelayItemLoading: =true
-            Height: =200
-            Items: =Filter(' DL_SAN_PHAM_CT', MA_SAN_PHAM = ThisItem.MA_SAN_PHAM )
-            Layout: =Layout.Vertical
-            LoadingSpinner: =LoadingSpinner.Data
-            TemplateSize: =116
-            Width: =377
-            X: =60
-            Y: =51
+        CheckboxCanvas2 As Checkbox:
+            DisplayMode: =DisplayMode.Edit
+            Height: =40
+            Label: |
+                =""
+            OnCheck: =false
+            OnSelect: =Select(Parent)
+            OnUncheck: =false
+            Width: =37
+            X: =3
+            Y: =0
             ZIndex: =2
 
-            TextInput9 As text:
-                Default: =ThisItem.TEN_CHUONG_TRINH
+        Gallery6 As gallery.variableTemplateHeightGallery:
+            DelayItemLoading: =true
+            Height: =197
+            Items: =Filter(DL_CHUONG_TRINH_BANG_PHIS, MA_SAN_PHAM = ThisItem.MA_SAN_PHAM & MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH)
+            Layout: =Layout.Vertical
+            LoadingSpinner: =LoadingSpinner.Data
+            TemplateSize: =192
+            X: =60
+            Y: =37
+            ZIndex: =3
+
+            Label13 As label:
                 OnSelect: =Select(Parent)
-                X: =10
-                Y: =5
+                Text: =ThisItem.NHOM_TINH_PHI
+                X: =15
+                Y: =10
                 ZIndex: =1
 
