@@ -137,13 +137,14 @@ Tracuubaogia As screen:
                 ""
             );
             ClearCollect(
-                tempQL,
+                tempQLFull,
                 ""
             );
             Set(
                 ConcatenatedResult,
                 ""
             );
+            // lấy danh sách sản phẩm
             ClearCollect(
                 tempSPKH,
                 Filter(
@@ -151,6 +152,7 @@ Tracuubaogia As screen:
                     MA_SAN_PHAM = "PVICARE"
                 )
             );
+            // lấy danh sách nhóm quyền lợi gắn với chương trình của sản phẩm
             ForAll(
                 tempSPKH As sp,
                 Collect(
@@ -177,20 +179,24 @@ Tracuubaogia As screen:
                 );
                 
             );
+            
+            // lấy số tiền bảo hiểm cho từng nhóm quyền lợi và chương trình
             ForAll(
                 tempCTKH As ct,
                 ForAll(
                     ct.GROUP As gr,
                     Collect(
-                        tempQL,
+                        tempQLFull,
                         AddColumns(
                             gr,
                             "SO_TIEN",
-                            "0",
+                            Max(Filter( DL_CHUONGTRINH_QLCTS, MA_SAN_PHAM = ct.cr282_ma_sp && MA_CHUONG_TRINH = ct.MA_CHUONG_TRINH), GH_SOTIEN_NAM),
                             "MA_CHUONG_TRINH",
-                            ct.MA_CHUONG_TRINH,
-                            "MA_SAN_PHAM" ,ct.cr282_ma_sp,
-                            "LOAI_C" ,ct.cr282_loai
+                             ct.MA_CHUONG_TRINH,
+                            "MA_SAN_PHAM",
+                            ct.cr282_ma_sp,
+                            "LOAI_C",
+                            ct.cr282_loai
                         )
                     )
                 )
