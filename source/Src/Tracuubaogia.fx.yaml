@@ -3,13 +3,14 @@ Tracuubaogia As screen:
     danhsachnhom As gallery.variableTemplateHeightGallery:
         BorderThickness: =1
         DelayItemLoading: =true
-        Items: =Filter(' DL_SAN_PHAM_CT' ,MA_SAN_PHAM = "PVICARE" )
+        Height: =512
+        Items: =tempSPKH
         Layout: =Layout.Vertical
         LoadingSpinner: =LoadingSpinner.Data
-        TemplateSize: =251
+        TemplateSize: =121
         Width: =1123
-        X: =132
-        Y: =55
+        X: =140
+        Y: =255
         ZIndex: =2
 
         Label12 As label:
@@ -25,7 +26,7 @@ Tracuubaogia As screen:
         Gallery6 As gallery.variableTemplateHeightGallery:
             BorderColor: =RGBA(0, 0, 0, 1)
             DelayItemLoading: =true
-            Height: =213
+            Height: =84
             Items: |+
                 =GroupBy(
                 AddColumns(
@@ -56,17 +57,6 @@ Tracuubaogia As screen:
                 Text: =ThisItem.cr282_loai
                 ZIndex: =1
 
-            Label14 As label:
-                BorderColor: =RGBA(0, 0, 0, 1)
-                BorderThickness: =1
-                Height: =35
-                OnSelect: =Select(Parent)
-                Size: =11
-                Text: =//ThisItem.TEN_HIEN_THI
-                Width: =216
-                X: =150
-                ZIndex: =2
-
             Checkbox2_1 As checkbox:
                 BorderColor: =RGBA(0, 0, 0, 1)
                 CheckboxBorderColor: |-
@@ -75,6 +65,7 @@ Tracuubaogia As screen:
                 CheckboxSize: =20
                 Default: |
                     =
+                    If(ThisItem.cr282_loai = "Chính", true, false)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
                 DisplayMode: |
@@ -116,7 +107,9 @@ Tracuubaogia As screen:
                         GH_SOTIEN_NAM
                     )
                     */
-                X: =366
+                    LookUp(DL_SAN_PHAM_NHOMQLS, MA_SP = ThisItem.cr282_ma_sp && LOAI = ThisItem.cr282_loai ).TEN_HIEN_THI
+                Width: =299
+                X: =150
                 ZIndex: =5
 
             Label20 As label:
@@ -129,10 +122,11 @@ Tracuubaogia As screen:
 
             Label22 As label:
                 BorderThickness: =1
-                Height: =36
+                Height: =35
                 OnSelect: =Select(Parent)
                 Text: =/*Sum( Filter( DL_CHUONG_TRINH_BANG_PHIS, MA_SAN_PHAM = ThisItem.MA_SP && MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && NHOM_TINH_PHI = ThisItem.MA_NHOM_TINHPHI), PHI_BH)*/
-                X: =516
+                X: =484
+                Y: =1
                 ZIndex: =8
 
         Checkbox2 As checkbox:
@@ -146,4 +140,53 @@ Tracuubaogia As screen:
             Text: =""
             Width: =30
             ZIndex: =4
+
+    ButtonCanvas2 As Button:
+        DisplayMode: =DisplayMode.Edit
+        Height: =32
+        OnSelect: |
+            =ClearCollect(
+                tempCTKH,
+                ""
+            );
+            ClearCollect(
+                tempSPKH,
+                Filter(
+                    ' DL_SAN_PHAM_CT',
+                    MA_SAN_PHAM = "PVICARE"
+                )
+            );
+            ForAll(
+                tempSPKH As sp,
+                Collect(
+                    tempCTKH,
+                    GroupBy(
+                        AddColumns(
+                            Filter(
+                                DL_SAN_PHAM_NHOMQLS,
+                                MA_SP = sp.MA_SAN_PHAM && !IsBlank(
+                                    Find(
+                                        sp.MA_CHUONG_TRINH,
+                                        CHUONGTRINH_APDUNG
+                                    )
+                                )
+                            ),
+                            "MA_CHUONG_TRINH",
+                            sp.MA_CHUONG_TRINH
+                        ),
+                        "MA_CHUONG_TRINH",
+                        "cr282_loai",
+                        "cr282_ma_sp",
+                        "GROUP"
+                    )
+                )
+            );
+        Text: |+
+            ="Tra cứu dữ liệu"
+            
+            
+        Width: =166
+        X: =1097
+        Y: =183
+        ZIndex: =3
 
