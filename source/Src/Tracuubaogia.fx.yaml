@@ -137,7 +137,11 @@ Tracuubaogia As screen:
                 tempCTKH,
                 ""
             );
-            ClearCollect(temp);
+            ClearCollect(
+                tempQL,
+                ""
+            );
+            Set(ConcatenatedResult, "");
             ClearCollect(
                 tempSPKH,
                 Filter(
@@ -169,8 +173,14 @@ Tracuubaogia As screen:
                         "GROUP"
                     )
                 );
-            
-               
+                
+            );
+            ForAll(
+                tempCTKH As ct,
+                ForAll(
+                    ct.GROUP As gr,
+                    Collect(tempQL, Concatenate(ConcatenatedResult, ",",gr.TEN_HIEN_THI))
+                )
             );
         Text: |+
             ="Tra cứu dữ liệu"
