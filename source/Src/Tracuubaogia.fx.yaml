@@ -131,7 +131,7 @@ Tracuubaogia As screen:
     ButtonCanvas2 As Button:
         DisplayMode: =DisplayMode.Edit
         Height: =32
-        OnSelect: |-
+        OnSelect: |
             =ClearCollect(
                 tempCTKH,
                 ""
@@ -173,36 +173,26 @@ Tracuubaogia As screen:
                 );
                 
             );
+            // danh sách có tổng số tiền và phí
             ForAll(
                 tempCTKH As ct,
-                AddColumns(
-                    ct,
-                    "SO_TIEN",
-                     Max(Filter( DL_CHUONGTRINH_QLCTS, MA_SAN_PHAM = ct.MA_SP && MA_CHUONG_TRINH = ct.MA_CHUONG_TRINH && MA_NHOM_QL = ct.MA_NHOM_QL), GH_SOTIEN_NAM)
-                )
-            );
-            /*
-            ForAll(
-                tempCTKH As ct,
-                ForAll(
-                    ct.GROUP As gr,
-                    Collect(
-                        tempQLFull,
-                        AddColumns(
-                            gr,
-                            "SO_TIEN",
-                            Max(Filter( DL_CHUONGTRINH_QLCTS, MA_SAN_PHAM = ct.cr282_ma_sp && MA_CHUONG_TRINH = ct.MA_CHUONG_TRINH && MA_NHOM_QL = ct.cr282_ma_nhom_ql), GH_SOTIEN_NAM),
-                            "MA_CHUONG_TRINH",
-                             ct.MA_CHUONG_TRINH,
-                            "MA_SAN_PHAM",
-                            ct.cr282_ma_sp,
-                            "LOAI_C",
-                            ct.cr282_loai
-                        )
+                Collect(
+                    tempQLFull,
+                    AddColumns(
+                        ct,
+                        "SO_TIEN",
+                        Max(
+                            Filter(
+                                DL_CHUONGTRINH_QLCTS,
+                                MA_SAN_PHAM = ct.MA_SP && MA_CHUONG_TRINH = ct.MA_CHUONG_TRINH && MA_NHOM_QL = ct.MA_NHOM_QL
+                            ),
+                            GH_SOTIEN_NAM
+                        ),
+                        "PHI",
+                        Sum (DL_CHUONG_TRINH_BANG_PHIS, PHI_BH)
                     )
                 )
             );
-            */
         Text: |+
             ="Tra cứu dữ liệu"
             
