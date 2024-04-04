@@ -131,7 +131,7 @@ Tracuubaogia As screen:
     ButtonCanvas2 As Button:
         DisplayMode: =DisplayMode.Edit
         Height: =32
-        OnSelect: |
+        OnSelect: |-
             =ClearCollect(
                 tempCTKH,
                 ""
@@ -157,31 +157,31 @@ Tracuubaogia As screen:
                 tempSPKH As sp,
                 Collect(
                     tempCTKH,
-                    GroupBy(
-                        AddColumns(
-                            Filter(
-                                DL_SAN_PHAM_NHOMQLS,
-                                MA_SP = sp.MA_SAN_PHAM && !IsBlank(
-                                    Find(
-                                        sp.MA_CHUONG_TRINH,
-                                        CHUONGTRINH_APDUNG
-                                    )
+                    AddColumns(
+                        Filter(
+                            DL_SAN_PHAM_NHOMQLS,
+                            MA_SP = sp.MA_SAN_PHAM && !IsBlank(
+                                Find(
+                                    sp.MA_CHUONG_TRINH,
+                                    CHUONGTRINH_APDUNG
                                 )
-                            ),
-                            "MA_CHUONG_TRINH",
-                            sp.MA_CHUONG_TRINH
+                            )
                         ),
                         "MA_CHUONG_TRINH",
-                        "cr282_loai",
-                        "cr282_ma_sp",
-                         "cr282_ma_nhom_ql",
-                        "GROUP"
+                        sp.MA_CHUONG_TRINH
                     )
                 );
                 
             );
-            
-            // lấy số tiền bảo hiểm cho từng nhóm quyền lợi và chương trình
+            ForAll(
+                tempCTKH As ct,
+                AddColumns(
+                    kh,
+                    "so_tien",
+                    1
+                )
+            );
+            /*
             ForAll(
                 tempCTKH As ct,
                 ForAll(
@@ -202,6 +202,7 @@ Tracuubaogia As screen:
                     )
                 )
             );
+            */
         Text: |+
             ="Tra cứu dữ liệu"
             
