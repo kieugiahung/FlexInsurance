@@ -95,7 +95,7 @@ Tracuubaogia As screen:
                         GH_SOTIEN_NAM
                     )
                     */
-                    LookUp(DL_SAN_PHAM_NHOMQLS, MA_SP = ThisItem.cr282_ma_sp && LOAI = ThisItem.cr282_loai ).TEN_HIEN_THI
+                    LookUp(DL_SAN_PHAM_NHOMQLS, MA_SP=ThisItem.cr282_ma_sp && LOAI = ThisItem.cr282_loai ).TEN_HIEN_THI
                 Width: =299
                 X: =150
                 ZIndex: =5
@@ -113,8 +113,7 @@ Tracuubaogia As screen:
                 Height: =35
                 OnSelect: =Select(Parent)
                 Text: =
-                X: =484
-                Y: =1
+                X: =449
                 ZIndex: =8
 
         Checkbox2 As checkbox:
@@ -132,7 +131,7 @@ Tracuubaogia As screen:
     ButtonCanvas2 As Button:
         DisplayMode: =DisplayMode.Edit
         Height: =32
-        OnSelect: |
+        OnSelect: |+
             =ClearCollect(
                 tempCTKH,
                 ""
@@ -175,16 +174,9 @@ Tracuubaogia As screen:
                         "cr282_ma_sp",
                         "GROUP"
                     )
-                );
-                
+                ); 
             );
-            ForAll(
-                tempCTKH As ct,
-                ForAll(
-                    ct.GROUP As gr,
-                    Concat(ct.GROUP,gr.TEN_HIEN_THI, ",")
-                )
-            );
+            
         Text: |+
             ="Tra cứu dữ liệu"
             
