@@ -409,20 +409,19 @@ Tracuubaogia As screen:
             // GỘP LẠI THEO NHÓM TÍNH PHÍ ĐỂ HIỂN THỊ LÊN MÀN HÌNH
             ClearCollect (
                 tmpQLGroup,
-                    GroupBy(
-                        tempQLFull,
-                        "MA_CHUONG_TRINH",
-                        "cr282_ma_sp",
-                        "cr282_ma_nhom_tinhphi",
-                        "cr282_loai",
-                        "PHI",
-                        "GROUP"
-                    )
+                GroupBy(
+                    tempQLFull,
+                    "MA_CHUONG_TRINH",
+                    "cr282_ma_sp",
+                    "cr282_ma_nhom_tinhphi",
+                    "cr282_loai",
+                    "PHI",
+                    "GROUP"
+                )
             );
-            ClearCollect (tmp, "" );
-            ForAll(tmpQLGroup As Group,
-            Collect(tmp,Group )
-             );
+             ForAll(tmpQLGroup as gr,
+             Sum()
+            )
         Size: =11
         Text: ="Tra cứu dữ liệu"
         X: =1025
