@@ -131,7 +131,7 @@ Tracuubaogia As screen:
     ButtonCanvas2 As Button:
         DisplayMode: =DisplayMode.Edit
         Height: =32
-        OnSelect: |+
+        OnSelect: |
             =ClearCollect(
                 tempCTKH,
                 ""
@@ -174,14 +174,25 @@ Tracuubaogia As screen:
                         "cr282_ma_sp",
                         "GROUP"
                     )
-                ); 
+                );
+                
             );
-            ForAll(tempCTKH As ct, 
-                ForAll(ct.GROUP As gr,
-                Collect(tempQL, Concatenate( gr.TEN_HIEN_THI, ",")))
-            
+            ForAll(
+                tempCTKH As ct,
+                ForAll(
+                    ct.GROUP As gr,
+                    Collect(
+                        tempQL,
+                        Concat(
+                            ct.GROUP,
+                            Concatenate(
+                                gr.TEN_HIEN_THI,
+                                ""
+                            )
+                        )
+                    )
+                )
             );
-            
         Text: |+
             ="Tra cứu dữ liệu"
             
