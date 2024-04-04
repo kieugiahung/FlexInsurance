@@ -1,4 +1,85 @@
 Tracuubaogia As screen:
+    OnVisible: |-
+        =ClearCollect(
+            dmSanPhamCCPCollect,
+            AddColumns(
+                DL_SAN_PHAM,
+                "title",
+                Concatenate(MA_SAN_PHAM," - ",TEN_SAN_PHAM)
+            )
+        );
+        ClearCollect(
+            dmGTinhCCPCollect,
+            AddColumns(
+                DM_GIOI_TINHS,
+                "title",
+                Concatenate(MA_GIOI_TINH," - ",TEN_GIOI_TINH)
+            )
+        );
+        ClearCollect(
+            dmDTuoiCCPCollect,
+            DM_DO_TUOIS
+        );
+        ClearCollect(
+            tempCTKH,
+            ""
+        );
+        ClearCollect(
+            tempQLFull,
+            ""
+        );
+        Set(
+            ConcatenatedResult,
+            ""
+        );
+        // lấy danh sách sản phẩm
+        ClearCollect(
+            tempSPKH,
+            ' DL_SAN_PHAM_CT'
+        );
+        // lấy danh sách nhóm quyền lợi gắn với chương trình của sản phẩm
+        ForAll(
+            tempSPKH As sp,
+            Collect(
+                tempCTKH,
+                AddColumns(
+                    Filter(
+                        DL_SAN_PHAM_NHOMQLS,
+                        MA_SP = sp.MA_SAN_PHAM && !IsBlank(
+                            Find(
+                                sp.MA_CHUONG_TRINH,
+                                CHUONGTRINH_APDUNG
+                            )
+                        )
+                    ),
+                    "MA_CHUONG_TRINH",
+                    sp.MA_CHUONG_TRINH
+                )
+            );
+            
+        );
+        // danh sách có tổng số tiền và phí
+        ForAll(
+            tempCTKH As ctql,
+            Collect(
+                tempQLFull,
+                AddColumns(
+                    ctql,
+                    "SO_TIEN",
+                    Max(
+                        Filter(
+                            DL_CHUONGTRINH_QLCTS,
+                            MA_SAN_PHAM = ctql.MA_SP && MA_CHUONG_TRINH = ctql.MA_CHUONG_TRINH && MA_NHOM_QL = ctql.MA_NHOM_QL
+                        ),
+                        GH_SOTIEN_NAM
+                    ),
+                    "PHI",
+                    Sum ( Filter (DL_CHUONG_TRINH_BANG_PHIS, MA_SAN_PHAM = ctql.MA_SP && MA_CHUONG_TRINH = ctql.MA_CHUONG_TRINH && NHOM_TINH_PHI = ctql.MA_NHOM_TINHPHI ), PHI_BH)
+                )
+            )
+        );
+        Reset(cbxLHNVCCP);Reset(cbxMaSPCCP);Reset(cbxGTinhCCP);Reset(dpNgaySinhCCP);
+        Reset(dpNgaySinhCCP);Reset(tiTuoiCCP);Reset(slPhiTuCCP);Reset(slPhiDenCCP);Reset(tislPhiTuCCP);Reset(tislPhiDenCCP);
 
     danhsachnhom As gallery.variableTemplateHeightGallery:
         BorderThickness: =1
@@ -148,7 +229,78 @@ Tracuubaogia As screen:
 
     Button3_18 As button:
         OnSelect: |
-            =ClearCollect(
+            =//Tra cuu theo bang phi
+            ClearCollect(
+                tmpKQCCPCollect,
+                DL_CHUONG_TRINH_BANG_PHIS
+            );
+            //Loc theo ma san pham
+            If(
+                !IsBlank(cbxMaSPCCP.Selected.MA_SAN_PHAM),
+                ClearCollect(
+                    tmpKQCCPCollect,
+                    Filter(
+                        tmpKQCCPCollect,
+                        MA_SAN_PHAM=cbxMaSPCCP.Selected.MA_SAN_PHAM
+                    )
+                );
+            );
+            //Loc theo muc phi tu
+            If(
+                !IsBlank(phi_tu) && phi_tu<>0,
+                ClearCollect(
+                    tmpKQCCPCollect,
+                    Filter(
+                        tmpKQCCPCollect,
+                        PHI_BH>=phi_tu
+                    )
+                );
+            );
+            //Loc theo muc phi den
+            If(
+                !IsBlank(phi_den) && phi_den<>0,
+                ClearCollect(
+                    tmpKQCCPCollect,
+                    Filter(
+                        tmpKQCCPCollect,
+                        PHI_BH<=phi_den
+                    )
+                );
+            );
+            //Loc theo gioi tinh
+            If(
+                !IsBlank(cbxGTinhCCP.Selected.MA_GIOI_TINH),
+                ClearCollect(
+                    tmpKQCCPCollect,
+                    Filter(
+                        tmpKQCCPCollect,
+                        MA_GIOI_TINH=cbxGTinhCCP.Selected.TEN_GIOI_TINH
+                    )
+                );
+            );
+            //Loc theo do tuoi
+            If(
+                !IsBlank(tiTuoiCCP.Text),
+                ClearCollect(
+                    tmpKQCCPCollect,
+                    Filter(
+                        tmpKQCCPCollect,
+                        MA_DO_TUOI in Distinct(Filter(
+                            dmDTuoiCCPCollect,
+                            (donvi_tuoi="tuổi" && DONVI_TUOI_DEN=100 && TUOI_DEN>=tuoi && (DONVI_TUOI_DEN<>100 || TUOI_TU<=tuoi)) ||
+                            (donvi_tuoi="ngày tuổi" && (DONVI_TUOI_DEN=100 || 
+                            (DONVI_TUOI_DEN=200 && tuoi<=(30*TUOI_DEN)) ||
+                            (DONVI_TUOI_DEN=300 && tuoi<=(7*TUOI_DEN)) ||
+                            (DONVI_TUOI_DEN=400 && tuoi<=TUOI_DEN)) &&
+                            ((DONVI_TUOI_TU=200 && tuoi>=(30*TUOI_TU)) ||
+                            (DONVI_TUOI_TU=300 && tuoi>=(7*TUOI_TU)) ||
+                            (DONVI_TUOI_TU=400 && tuoi>=TUOI_TU)))
+                        ),MO_TA)
+                    )
+                );
+            );
+            //End tra cuu theo bang phi
+            ClearCollect(
                 tempCTKH,
                 ""
             );
@@ -165,7 +317,7 @@ Tracuubaogia As screen:
                 tempSPKH,
                 Filter(
                     ' DL_SAN_PHAM_CT',
-                    MA_SAN_PHAM = "PVICARE"
+                    MA_SAN_PHAM in Distinct(tmpKQCCPCollect,MA_SAN_PHAM)
                 )
             );
             // lấy danh sách nhóm quyền lợi gắn với chương trình của sản phẩm
@@ -214,4 +366,238 @@ Tracuubaogia As screen:
         X: =1020
         Y: =195
         ZIndex: =3
+
+    Label2_39 As label:
+        Height: =25
+        Size: =11
+        Text: ="Giới tính"
+        Width: =130
+        X: =55
+        Y: =89
+        ZIndex: =4
+
+    Label2_40 As label:
+        Height: =25
+        Size: =11
+        Text: ="Mã sản phẩm"
+        Width: =130
+        X: =391
+        Y: =18
+        ZIndex: =5
+
+    cbxGTinhCCP As combobox:
+        DisplayFields: =["cr282_ten_gioi_tinh","cr282_ma_don_vi"]
+        Height: =32
+        InputTextPlaceholder: ="Chọn giới tính"
+        Items: =SortByColumns(DM_GIOI_TINHS,"cr282_ma_gioi_tinh",SortOrder.Ascending)
+        SearchFields: =["cr282_ten_gioi_tinh"]
+        SearchItems: =Search(SortByColumns(DM_GIOI_TINHS,"cr282_ma_gioi_tinh",SortOrder.Ascending),cbxGTinhCCP.SearchText,"cr282_ten_gioi_tinh")
+        SelectMultiple: =false
+        Size: =11
+        Width: =250
+        X: =55
+        Y: =116
+        ZIndex: =6
+
+    Label2_41 As label:
+        Height: =25
+        Size: =11
+        Text: ="LHNV"
+        Width: =130
+        X: =55
+        Y: =18
+        ZIndex: =7
+
+    cbxMaSPCCP As combobox:
+        DisplayFields: =["title"]
+        Height: =32
+        InputTextPlaceholder: ="Chọn sản phẩm"
+        Items: =SortByColumns(Filter(dmSanPhamCCPCollect,LHNV=cbxLHNVCCP.Selected.Value),"cr282_ma_san_pham",SortOrder.Ascending)
+        SearchFields: =["title"]
+        SearchItems: =Search(SortByColumns(Filter(dmSanPhamCCPCollect,LHNV=cbxLHNVCCP.Selected.Value),"cr282_ma_san_pham",SortOrder.Ascending),cbxMaSPCCP.SearchText,"title")
+        SelectMultiple: =false
+        Size: =11
+        Width: =250
+        X: =391
+        Y: =45
+        ZIndex: =8
+
+    cbxLHNVCCP As combobox:
+        DisplayFields: =["Value"]
+        Height: =32
+        InputTextPlaceholder: ="Chọn LHNV"
+        IsSearchable: =false
+        Items: =["Sức khỏe","Tai nạn","Trách nhiệm dân sự"]
+        SearchFields: =["Value"]
+        SearchItems: =[]
+        SelectMultiple: =false
+        Size: =11
+        Width: =250
+        X: =55
+        Y: =45
+        ZIndex: =9
+
+    Label2_42 As label:
+        Height: =25
+        Size: =11
+        Text: ="Ngày sinh"
+        Width: =120
+        X: =727
+        Y: =18
+        ZIndex: =10
+
+    dpNgaySinhCCP As datepicker:
+        DefaultDate: =
+        EndYear: =2200
+        Format: ="dd/mm/yyyy"
+        Height: =32
+        InputTextPlaceholder: ="Chọn ngày sinh"
+        IsEditable: =true
+        OnChange: |
+            =UpdateContext({
+                tuoi:If(
+                    DateAdd(dpNgaySinhCCP.SelectedDate,DateDiff(dpNgaySinhCCP.SelectedDate,Today(),TimeUnit.Years),TimeUnit.Years)>Today(),
+                    DateDiff(dpNgaySinhCCP.SelectedDate,Today(),TimeUnit.Years)-1,
+                    DateDiff(dpNgaySinhCCP.SelectedDate,Today(),TimeUnit.Years)
+                )
+            });
+            UpdateContext({
+                donvi_tuoi:If(
+                    tuoi>=1,
+                    "tuổi",
+                    "ngày tuổi"
+                )
+            });
+            If(
+                tuoi<1,
+                UpdateContext({
+                    tuoi:DateDiff(dpNgaySinhCCP.SelectedDate,Today(),TimeUnit.Days)
+                })
+            )
+        OnSelect: |-
+            =If(
+                !IsBlank(ngayHD),
+                UpdateContext({
+                    ngayHD:Blank()
+                });
+            )
+        Size: =11
+        StartYear: =1900
+        Width: =250
+        X: =727
+        Y: =45
+        ZIndex: =11
+
+    Label2_43 As label:
+        Height: =25
+        Size: =11
+        Text: ="Tuổi"
+        Width: =130
+        X: =1054
+        Y: =18
+        ZIndex: =12
+
+    tiTuoiCCP As text:
+        Align: =Align.Right
+        Default: =If(tuoi<=0,Blank(),Concatenate(tuoi," ",donvi_tuoi))
+        DisplayMode: =DisplayMode.Disabled
+        Height: =32
+        HintText: =""
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Size: =11
+        Width: =250
+        X: =1054
+        Y: =45
+        ZIndex: =13
+
+    Label2_44 As label:
+        Height: =25
+        Size: =11
+        Text: ="Mức phí từ"
+        Width: =90
+        X: =376
+        Y: =120
+        ZIndex: =14
+
+    slPhiTuCCP As slider:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Default: =0
+        HandleSize: =12
+        Height: =22
+        OnChange: |-
+            =UpdateContext({
+                phi_tu:slPhiTuCCP.Value*100000
+                
+            })
+        RailThickness: =1
+        ShowValue: =false
+        Width: =250
+        X: =468
+        Y: =94
+        ZIndex: =15
+
+    tislPhiTuCCP As text:
+        Align: =Align.Right
+        Default: |-
+            =If(phi_tu=0,Blank(),Text(phi_tu,"#,###"))
+        DisplayMode: =DisplayMode.Disabled
+        Format: =TextFormat.Number
+        Height: =32
+        HintText: =""
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Size: =11
+        Width: =120
+        X: =468
+        Y: =116
+        ZIndex: =16
+
+    slPhiDenCCP As slider:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Default: =0
+        HandleSize: =12
+        Height: =22
+        OnChange: |-
+            =UpdateContext({
+                phi_den:slPhiDenCCP.Value*100000
+                
+            })
+        RailThickness: =1
+        ShowValue: =false
+        Width: =250
+        X: =718
+        Y: =94
+        ZIndex: =17
+
+    tislPhiDenCCP As text:
+        Align: =Align.Right
+        Default: |-
+            =If(phi_den=0,Blank(),Text(phi_den,"#,###"))
+        DisplayMode: =DisplayMode.Disabled
+        Format: =TextFormat.Number
+        Height: =32
+        HintText: =""
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Size: =11
+        Width: =120
+        X: =848
+        Y: =116
+        ZIndex: =18
+
+    Label2_45 As label:
+        Height: =25
+        Size: =11
+        Text: ="Mức phí đến"
+        Width: =100
+        X: =749
+        Y: =120
+        ZIndex: =19
 
