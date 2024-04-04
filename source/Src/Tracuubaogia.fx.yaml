@@ -253,7 +253,7 @@ Tracuubaogia As screen:
 
     Button3_18 As button:
         Height: =32
-        OnSelect: |+
+        OnSelect: |
             =//Tra cuu theo bang phi
             ClearCollect(
                 tmpKQCCPCollect,
@@ -266,31 +266,34 @@ Tracuubaogia As screen:
                     tmpKQCCPCollect,
                     Filter(
                         tmpKQCCPCollect,
-                        MA_SAN_PHAM=cbxMaSPCCP.Selected.MA_SAN_PHAM
+                        MA_SAN_PHAM = cbxMaSPCCP.Selected.MA_SAN_PHAM
                     )
                 );
+                
             );
             //Loc theo muc phi tu
             If(
-                !IsBlank(phi_tu) && phi_tu<>0,
+                !IsBlank(phi_tu) && phi_tu <> 0,
                 ClearCollect(
                     tmpKQCCPCollect,
                     Filter(
                         tmpKQCCPCollect,
-                        PHI_BH>=phi_tu
+                        PHI_BH >= phi_tu
                     )
                 );
+                
             );
             //Loc theo muc phi den
             If(
-                !IsBlank(phi_den) && phi_den<>0,
+                !IsBlank(phi_den) && phi_den <> 0,
                 ClearCollect(
                     tmpKQCCPCollect,
                     Filter(
                         tmpKQCCPCollect,
-                        PHI_BH<=phi_den
+                        PHI_BH <= phi_den
                     )
                 );
+                
             );
             //Loc theo gioi tinh
             If(
@@ -299,9 +302,10 @@ Tracuubaogia As screen:
                     tmpKQCCPCollect,
                     Filter(
                         tmpKQCCPCollect,
-                        MA_GIOI_TINH=cbxGTinhCCP.Selected.TEN_GIOI_TINH
+                        MA_GIOI_TINH = cbxGTinhCCP.Selected.TEN_GIOI_TINH
                     )
                 );
+                
             );
             //Loc theo do tuoi
             If(
@@ -310,19 +314,16 @@ Tracuubaogia As screen:
                     tmpKQCCPCollect,
                     Filter(
                         tmpKQCCPCollect,
-                        MA_DO_TUOI in Distinct(Filter(
-                            dmDTuoiCCPCollect,
-                            (donvi_tuoi="tuổi" && DONVI_TUOI_DEN=100 && TUOI_DEN>=tuoi && (DONVI_TUOI_DEN<>100 || TUOI_TU<=tuoi)) ||
-                            (donvi_tuoi="ngày tuổi" && (DONVI_TUOI_DEN=100 || 
-                            (DONVI_TUOI_DEN=200 && tuoi<=(30*TUOI_DEN)) ||
-                            (DONVI_TUOI_DEN=300 && tuoi<=(7*TUOI_DEN)) ||
-                            (DONVI_TUOI_DEN=400 && tuoi<=TUOI_DEN)) &&
-                            ((DONVI_TUOI_TU=200 && tuoi>=(30*TUOI_TU)) ||
-                            (DONVI_TUOI_TU=300 && tuoi>=(7*TUOI_TU)) ||
-                            (DONVI_TUOI_TU=400 && tuoi>=TUOI_TU)))
-                        ),MO_TA)
+                        MA_DO_TUOI in Distinct(
+                            Filter(
+                                dmDTuoiCCPCollect,
+                                (donvi_tuoi = "tuổi" && DONVI_TUOI_DEN = 100 && TUOI_DEN >= tuoi && (DONVI_TUOI_DEN <> 100 || TUOI_TU <= tuoi)) || (donvi_tuoi = "ngày tuổi" && (DONVI_TUOI_DEN = 100 || (DONVI_TUOI_DEN = 200 && tuoi <= (30 * TUOI_DEN)) || (DONVI_TUOI_DEN = 300 && tuoi <= (7 * TUOI_DEN)) || (DONVI_TUOI_DEN = 400 && tuoi <= TUOI_DEN)) && ((DONVI_TUOI_TU = 200 && tuoi >= (30 * TUOI_TU)) || (DONVI_TUOI_TU = 300 && tuoi >= (7 * TUOI_TU)) || (DONVI_TUOI_TU = 400 && tuoi >= TUOI_TU)))
+                            ),
+                            MO_TA
+                        )
                     )
                 );
+                
             );
             //End tra cuu theo bang phi
             ClearCollect(
@@ -342,7 +343,10 @@ Tracuubaogia As screen:
                 tempSPKH,
                 Filter(
                     ' DL_SAN_PHAM_CT',
-                    MA_SAN_PHAM in Distinct(tmpKQCCPCollect,MA_SAN_PHAM)
+                    MA_SAN_PHAM in Distinct(
+                        tmpKQCCPCollect,
+                        MA_SAN_PHAM
+                    )
                 )
             );
             // lấy danh sách nhóm quyền lợi gắn với chương trình của sản phẩm
@@ -382,12 +386,16 @@ Tracuubaogia As screen:
                             GH_SOTIEN_NAM
                         ),
                         "PHI",
-                        Sum ( Filter (dlCTBangPhiCCPCollect, MA_SAN_PHAM = ctql.MA_SP && MA_CHUONG_TRINH = ctql.MA_CHUONG_TRINH && NHOM_TINH_PHI = ctql.MA_NHOM_TINHPHI ), PHI_BH)
+                        Sum (
+                            Filter (
+                                dlCTBangPhiCCPCollect,
+                                MA_SAN_PHAM = ctql.MA_SP && MA_CHUONG_TRINH = ctql.MA_CHUONG_TRINH && NHOM_TINH_PHI = ctql.MA_NHOM_TINHPHI
+                            ),
+                            PHI_BH
+                        )
                     )
                 )
             );
-            
-            
         Size: =11
         Text: ="Tra cứu dữ liệu"
         X: =1025
