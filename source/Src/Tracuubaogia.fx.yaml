@@ -425,7 +425,12 @@ Tracuubaogia As screen:
                                 MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI
                             ),
                             SO_TIEN
-                        )
+                        ),
+                        "GHEP_CHUOI_NQL",
+                         ShowColumns( Filter(
+                                tempQLFull,
+                                MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI
+                            ), "cr282_ten_hien_thi" )
                     )
                 )
             );
@@ -433,13 +438,6 @@ Tracuubaogia As screen:
             ClearCollect (
                 tmp,
                 ""
-            );
-            ForAll (
-                tmpQLGroup As gr,
-                Collect (
-                    tmp,
-                    gr
-                )
             );
         Size: =11
         Text: ="Tra cứu dữ liệu"
