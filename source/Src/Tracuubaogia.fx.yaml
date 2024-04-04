@@ -263,7 +263,7 @@ Tracuubaogia As screen:
 
     Button3_18 As button:
         Height: =32
-        OnSelect: |-
+        OnSelect: |
             =//Tra cuu theo bang phi
             ClearCollect(
                 tmpKQCCPCollect,
@@ -428,7 +428,19 @@ Tracuubaogia As screen:
                         )
                     )
                 )
-            )
+            );
+            // ghép chuỗi tên nhóm quyền lợi
+            ClearCollect (
+                tmp,
+                ""
+            );
+            ForAll (
+                tmpQLGroup As gr,
+                Collect (
+                    tmp,
+                    gr
+                )
+            );
         Size: =11
         Text: ="Tra cứu dữ liệu"
         X: =1025
