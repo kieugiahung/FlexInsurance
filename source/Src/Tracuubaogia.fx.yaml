@@ -27,15 +27,13 @@ Tracuubaogia As screen:
             DelayItemLoading: =true
             Height: =213
             Items: |+
-                =Distinct(
+                =GroupBy(
                 AddColumns(
                 Filter(
                     DL_SAN_PHAM_NHOMQLS,
                     MA_SP = ThisItem.MA_SAN_PHAM
                    && !IsBlank(Find(ThisItem.MA_CHUONG_TRINH , CHUONGTRINH_APDUNG)) 
-                ), "MA_CHUONG_TRINH", ThisItem.MA_CHUONG_TRINH),  MA_CHUONG_TRINH)
-                
-                
+                ), "MA_CHUONG_TRINH", ThisItem.MA_CHUONG_TRINH),"MA_CHUONG_TRINH","cr282_loai","cr282_ma_sp","cr282_ma_nhom_ql", "GROUP" )
                 
                 
                 
@@ -55,7 +53,7 @@ Tracuubaogia As screen:
                 Height: =35
                 OnSelect: =Select(Parent)
                 Size: =11
-                Text: =ThisItem.Value
+                Text: =ThisItem.cr282_loai
                 ZIndex: =1
 
             Label14 As label:
