@@ -27,19 +27,7 @@ Tracuubaogia As screen:
             BorderColor: =RGBA(0, 0, 0, 1)
             DelayItemLoading: =true
             Height: =84
-            Items: |+
-                =GroupBy(
-                AddColumns(
-                Filter(
-                    DL_SAN_PHAM_NHOMQLS,
-                    MA_SP = ThisItem.MA_SAN_PHAM
-                   && !IsBlank(Find(ThisItem.MA_CHUONG_TRINH , CHUONGTRINH_APDUNG)) 
-                ), "MA_CHUONG_TRINH", ThisItem.MA_CHUONG_TRINH),"MA_CHUONG_TRINH","cr282_loai","cr282_ma_sp", "GROUP" )
-                
-                
-                
-                
-                
+            Items: =Filter( tempCTKH, MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH)
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
             TemplateSize: =36
@@ -124,7 +112,7 @@ Tracuubaogia As screen:
                 BorderThickness: =1
                 Height: =35
                 OnSelect: =Select(Parent)
-                Text: =/*Sum( Filter( DL_CHUONG_TRINH_BANG_PHIS, MA_SAN_PHAM = ThisItem.MA_SP && MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && NHOM_TINH_PHI = ThisItem.MA_NHOM_TINHPHI), PHI_BH)*/
+                Text: =
                 X: =484
                 Y: =1
                 ZIndex: =8
@@ -149,6 +137,7 @@ Tracuubaogia As screen:
                 tempCTKH,
                 ""
             );
+            ClearCollect(temp);
             ClearCollect(
                 tempSPKH,
                 Filter(
@@ -179,7 +168,9 @@ Tracuubaogia As screen:
                         "cr282_ma_sp",
                         "GROUP"
                     )
-                )
+                );
+            
+               
             );
         Text: |+
             ="Tra cứu dữ liệu"
