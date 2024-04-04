@@ -263,7 +263,7 @@ Tracuubaogia As screen:
 
     Button3_18 As button:
         Height: =32
-        OnSelect: |
+        OnSelect: |-
             =//Tra cuu theo bang phi
             ClearCollect(
                 tmpKQCCPCollect,
@@ -419,8 +419,17 @@ Tracuubaogia As screen:
                     "GROUP"
                 )
             );
-             ForAll(tmpQLGroup as gr,
-             Sum()
+            // 
+            ForAll(
+                tempQLFull As fu,
+                Collect(
+                    tmpQLGroup,
+                    AddColumns(
+                        fu,
+                        "SO_TIEN_SUM",
+                    Sum(Filter( tempQLFull, MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI ), SO_TIEN )
+                    )
+                )
             )
         Size: =11
         Text: ="Tra cứu dữ liệu"
