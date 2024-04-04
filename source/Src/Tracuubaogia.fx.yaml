@@ -409,7 +409,7 @@ Tracuubaogia As screen:
             // GỘP LẠI THEO NHÓM TÍNH PHÍ ĐỂ HIỂN THỊ LÊN MÀN HÌNH
             ClearCollect (
                 tmpQLGroup,
-             {}
+                {}
             );
             // tính tổng số tiền bảo hiểm theo nhóm tính phí
             ForAll(
@@ -419,7 +419,13 @@ Tracuubaogia As screen:
                     AddColumns(
                         fu,
                         "SO_TIEN_SUM",
-                    Sum(Filter( tempQLFull, MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI ), SO_TIEN )
+                        Sum(
+                            Filter(
+                                tempQLFull,
+                                MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI
+                            ),
+                            SO_TIEN
+                        )
                     )
                 )
             )
