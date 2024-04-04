@@ -141,7 +141,10 @@ Tracuubaogia As screen:
                 tempQL,
                 ""
             );
-            Set(ConcatenatedResult, "");
+            Set(
+                ConcatenatedResult,
+                ""
+            );
             ClearCollect(
                 tempSPKH,
                 Filter(
@@ -179,7 +182,7 @@ Tracuubaogia As screen:
                 tempCTKH As ct,
                 ForAll(
                     ct.GROUP As gr,
-                    Collect(tempQL, Concatenate(ConcatenatedResult, ",",gr.TEN_HIEN_THI))
+                    Concat(gr, gr.TEN_HIEN_THI,",")
                 )
             );
         Text: |+
