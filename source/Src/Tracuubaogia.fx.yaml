@@ -1,6 +1,7 @@
 Tracuubaogia As screen:
     OnVisible: |-
-        =ClearCollect(
+        =//Lay danh muc len collect
+        ClearCollect(
             dmSanPhamCCPCollect,
             AddColumns(
                 DL_SAN_PHAM,
@@ -20,78 +21,38 @@ Tracuubaogia As screen:
             dmDTuoiCCPCollect,
             DM_DO_TUOIS
         );
+        //Lay danh muc len collect end
+        
+        //Lay dl nghiep vu len collect
         ClearCollect(
-            tempCTKH,
-            ""
+            dlSPNhomQLCCPCollect,
+            DL_SAN_PHAM_NHOMQLS
         );
         ClearCollect(
-            tempQLFull,
-            ""
+            dlCTQLCTCCPCollect,
+            DL_CHUONGTRINH_QLCTS
         );
-        Set(
-            ConcatenatedResult,
-            ""
-        );
-        // lấy danh sách sản phẩm
         ClearCollect(
-            tempSPKH,
-            ' DL_SAN_PHAM_CT'
+            dlCTBangPhiCCPCollect,
+            DL_CHUONG_TRINH_BANG_PHIS
         );
-        // lấy danh sách nhóm quyền lợi gắn với chương trình của sản phẩm
-        ForAll(
-            tempSPKH As sp,
-            Collect(
-                tempCTKH,
-                AddColumns(
-                    Filter(
-                        DL_SAN_PHAM_NHOMQLS,
-                        MA_SP = sp.MA_SAN_PHAM && !IsBlank(
-                            Find(
-                                sp.MA_CHUONG_TRINH,
-                                CHUONGTRINH_APDUNG
-                            )
-                        )
-                    ),
-                    "MA_CHUONG_TRINH",
-                    sp.MA_CHUONG_TRINH
-                )
-            );
-            
-        );
-        // danh sách có tổng số tiền và phí
-        ForAll(
-            tempCTKH As ctql,
-            Collect(
-                tempQLFull,
-                AddColumns(
-                    ctql,
-                    "SO_TIEN",
-                    Max(
-                        Filter(
-                            DL_CHUONGTRINH_QLCTS,
-                            MA_SAN_PHAM = ctql.MA_SP && MA_CHUONG_TRINH = ctql.MA_CHUONG_TRINH && MA_NHOM_QL = ctql.MA_NHOM_QL
-                        ),
-                        GH_SOTIEN_NAM
-                    ),
-                    "PHI",
-                    Sum ( Filter (DL_CHUONG_TRINH_BANG_PHIS, MA_SAN_PHAM = ctql.MA_SP && MA_CHUONG_TRINH = ctql.MA_CHUONG_TRINH && NHOM_TINH_PHI = ctql.MA_NHOM_TINHPHI ), PHI_BH)
-                )
-            )
-        );
+        //Lay dl nghiep vu len collect end
+        
+        Clear(tempSPKH);
         Reset(cbxLHNVCCP);Reset(cbxMaSPCCP);Reset(cbxGTinhCCP);Reset(dpNgaySinhCCP);
         Reset(dpNgaySinhCCP);Reset(tiTuoiCCP);Reset(slPhiTuCCP);Reset(slPhiDenCCP);Reset(tislPhiTuCCP);Reset(tislPhiDenCCP);
 
     danhsachnhom As gallery.variableTemplateHeightGallery:
         BorderThickness: =1
         DelayItemLoading: =true
-        Height: =512
+        Height: =587
         Items: =tempSPKH
         Layout: =Layout.Vertical
         LoadingSpinner: =LoadingSpinner.Data
         TemplateSize: =282
         Width: =1266
         X: =55
-        Y: =247
+        Y: =163
         ZIndex: =1
 
         Label12 As label:
@@ -224,7 +185,7 @@ Tracuubaogia As screen:
         Text: ="Mua ngay"
         Width: =121
         X: =1200
-        Y: =195
+        Y: =105
         ZIndex: =2
 
     Button3_18 As button:
@@ -327,7 +288,7 @@ Tracuubaogia As screen:
                     tempCTKH,
                     AddColumns(
                         Filter(
-                            DL_SAN_PHAM_NHOMQLS,
+                            dlSPNhomQLCCPCollect,
                             MA_SP = sp.MA_SAN_PHAM && !IsBlank(
                                 Find(
                                     sp.MA_CHUONG_TRINH,
@@ -351,20 +312,20 @@ Tracuubaogia As screen:
                         "SO_TIEN",
                         Max(
                             Filter(
-                                DL_CHUONGTRINH_QLCTS,
+                                dlCTQLCTCCPCollect,
                                 MA_SAN_PHAM = ctql.MA_SP && MA_CHUONG_TRINH = ctql.MA_CHUONG_TRINH && MA_NHOM_QL = ctql.MA_NHOM_QL
                             ),
                             GH_SOTIEN_NAM
                         ),
                         "PHI",
-                        Sum ( Filter (DL_CHUONG_TRINH_BANG_PHIS, MA_SAN_PHAM = ctql.MA_SP && MA_CHUONG_TRINH = ctql.MA_CHUONG_TRINH && NHOM_TINH_PHI = ctql.MA_NHOM_TINHPHI ), PHI_BH)
+                        Sum ( Filter (dlCTBangPhiCCPCollect, MA_SAN_PHAM = ctql.MA_SP && MA_CHUONG_TRINH = ctql.MA_CHUONG_TRINH && NHOM_TINH_PHI = ctql.MA_NHOM_TINHPHI ), PHI_BH)
                     )
                 )
             );
         Size: =11
         Text: ="Tra cứu dữ liệu"
         X: =1020
-        Y: =195
+        Y: =105
         ZIndex: =3
 
     Label2_39 As label:
