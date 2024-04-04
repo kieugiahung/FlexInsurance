@@ -183,12 +183,12 @@ Tracuubaogia As screen:
                     ct.GROUP As gr,
                     Collect(
                         tempQL,
-                        Concat(
-                            ct.GROUP,
-                            Concatenate(
-                                gr.TEN_HIEN_THI,
-                                ""
-                            )
+                        AddColumns(
+                            gr,
+                            "SO_TIEN",
+                            "0",
+                            "MA_CHUONG_TRINH",
+                            ct.MA_CHUONG_TRINH
                         )
                     )
                 )
