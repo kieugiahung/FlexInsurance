@@ -27,12 +27,13 @@ Tracuubaogia As screen:
             DelayItemLoading: =true
             Height: =213
             Items: |+
-                =AddColumns(
+                =Distinct(
+                AddColumns(
                 Filter(
                     DL_SAN_PHAM_NHOMQLS,
                     MA_SP = ThisItem.MA_SAN_PHAM
                    && !IsBlank(Find(ThisItem.MA_CHUONG_TRINH , CHUONGTRINH_APDUNG)) 
-                ), "MA_CHUONG_TRINH", ThisItem.MA_CHUONG_TRINH)
+                ), "MA_CHUONG_TRINH", ThisItem.MA_CHUONG_TRINH),  MA_CHUONG_TRINH)
                 
                 
                 
@@ -54,7 +55,7 @@ Tracuubaogia As screen:
                 Height: =35
                 OnSelect: =Select(Parent)
                 Size: =11
-                Text: =ThisItem.LOAI
+                Text: =ThisItem.Value
                 ZIndex: =1
 
             Label14 As label:
@@ -63,7 +64,7 @@ Tracuubaogia As screen:
                 Height: =35
                 OnSelect: =Select(Parent)
                 Size: =11
-                Text: =ThisItem.TEN_HIEN_THI
+                Text: =//ThisItem.TEN_HIEN_THI
                 Width: =216
                 X: =150
                 ZIndex: =2
@@ -75,7 +76,7 @@ Tracuubaogia As screen:
                     )
                 CheckboxSize: =20
                 Default: |
-                    =If(ThisItem.LOAI = "Chính", true, false)
+                    =
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
                 DisplayMode: |
@@ -106,7 +107,7 @@ Tracuubaogia As screen:
                 Height: =35
                 OnSelect: =Select(Parent)
                 Text: |-
-                    =Max(
+                    =/*Max(
                         Filter (
                             DL_CHUONGTRINH_QLCTS,
                             MA_SAN_PHAM = ThisItem.MA_SP &&
@@ -116,30 +117,23 @@ Tracuubaogia As screen:
                         ),
                         GH_SOTIEN_NAM
                     )
+                    */
                 X: =366
                 ZIndex: =5
 
             Label20 As label:
                 Height: =36
                 OnSelect: =Select(Parent)
-                Text: =ThisItem.MA_CHUONG_TRINH
+                Text: =//ThisItem.MA_CHUONG_TRINH
                 Visible: =false
-                X: =366
+                X: =484
                 ZIndex: =6
-
-            Label21 As label:
-                Height: =36
-                OnSelect: =Select(Parent)
-                Text: =ThisItem.MA_NHOM_QL
-                Visible: =false
-                X: =666
-                ZIndex: =7
 
             Label22 As label:
                 BorderThickness: =1
                 Height: =36
                 OnSelect: =Select(Parent)
-                Text: =Sum( Filter( DL_CHUONG_TRINH_BANG_PHIS, MA_SAN_PHAM = ThisItem.MA_SP && MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && NHOM_TINH_PHI = ThisItem.MA_NHOM_TINHPHI), PHI_BH)
+                Text: =/*Sum( Filter( DL_CHUONG_TRINH_BANG_PHIS, MA_SAN_PHAM = ThisItem.MA_SP && MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && NHOM_TINH_PHI = ThisItem.MA_NHOM_TINHPHI), PHI_BH)*/
                 X: =516
                 ZIndex: =8
 
