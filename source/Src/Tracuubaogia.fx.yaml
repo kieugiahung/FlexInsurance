@@ -175,21 +175,21 @@ Tracuubaogia As screen:
             );
             // danh sách có tổng số tiền và phí
             ForAll(
-                tempCTKH As ct,
+                tempCTKH As ctql,
                 Collect(
                     tempQLFull,
                     AddColumns(
-                        ct,
+                        ctql,
                         "SO_TIEN",
                         Max(
                             Filter(
                                 DL_CHUONGTRINH_QLCTS,
-                                MA_SAN_PHAM = ct.MA_SP && MA_CHUONG_TRINH = ct.MA_CHUONG_TRINH && MA_NHOM_QL = ct.MA_NHOM_QL
+                                MA_SAN_PHAM = ctql.MA_SP && MA_CHUONG_TRINH = ctql.MA_CHUONG_TRINH && MA_NHOM_QL = ctql.MA_NHOM_QL
                             ),
                             GH_SOTIEN_NAM
                         ),
                         "PHI",
-                        Sum (DL_CHUONG_TRINH_BANG_PHIS, PHI_BH)
+                        Sum ( Filter (DL_CHUONG_TRINH_BANG_PHIS, MA_SAN_PHAM = ctql.MA_SP && MA_CHUONG_TRINH = ctql.MA_CHUONG_TRINH && NHOM_TINH_PHI = ctql.MA_NHOM_TINHPHI ), PHI_BH)
                     )
                 )
             );
