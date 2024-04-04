@@ -178,7 +178,7 @@ Tracuubaogia As screen:
                 AddColumns(
                     ct,
                     "SO_TIEN",
-                    Max(DL_CHUONGTRINH_QLCTS, GH_SOTIEN_NAM)
+                     Max(Filter( DL_CHUONGTRINH_QLCTS, MA_SAN_PHAM = ct.MA_SP && MA_CHUONG_TRINH = ct.MA_CHUONG_TRINH && MA_NHOM_QL = ct.MA_NHOM_QL), GH_SOTIEN_NAM)
                 )
             );
             /*
