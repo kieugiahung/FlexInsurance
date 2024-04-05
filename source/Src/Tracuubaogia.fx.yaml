@@ -142,7 +142,7 @@ Tracuubaogia As screen:
                 Size: =11
                 Text: |-
                     =
-                    If(ThisItem.PHI >0 , Text(ThisItem.PHI, "###,###,###"), 0)
+                    If(ThisItem.PHI >0 , Text(ThisItem.PHI, "###,###,###"), 0) & " VND"
                     
                      
                 Width: =218
@@ -310,20 +310,22 @@ Tracuubaogia As screen:
             ZIndex: =9
 
         TextInput9 As text:
+            Align: =Align.Right
             BorderColor: =RGBA(0, 0, 0, 1)
             BorderThickness: =1
             Default: |
-                =Text( Sum(Filter ( Gallery6.AllItems , Checkbox2_1.Value = true && MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH),PHI), "###,###,###")
+                =Text( Sum(Filter ( Gallery6.AllItems , Checkbox2_1.Value = true && MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH),PHI), "###,###,###") & " VND"
             DisabledColor: =RGBA(0, 0, 0, 1)
             DisplayMode: =DisplayMode.Disabled
-            Height: =35
+            FontWeight: =FontWeight.Bold
+            Height: =36
             OnSelect: =Select(Parent)
             RadiusBottomLeft: =0
             RadiusBottomRight: =0
             RadiusTopLeft: =0
             RadiusTopRight: =0
-            Width: =116
-            X: =1115
+            Width: =149
+            X: =1100
             Y: =69
             ZIndex: =12
 
