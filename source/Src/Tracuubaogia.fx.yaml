@@ -254,7 +254,7 @@ Tracuubaogia As screen:
 
     Button3_18 As button:
         Height: =32
-        OnSelect: |+
+        OnSelect: |
             =//Tra cuu theo bang phi
             ClearCollect(
                 tmpKQCCPCollect,
@@ -405,41 +405,41 @@ Tracuubaogia As screen:
             // tính tổng số tiền bảo hiểm theo nhóm tính phí
             ForAll(
                 tempQLFull As fu,
-                
-                    Collect(
-                        tmpQLGroup,
-                        AddColumns(
-                            fu,
-                            "SO_TIEN_SUM",
-                            Sum(
+                Collect(
+                    tmpQLGroup,
+                    AddColumns(
+                        fu,
+                        "SO_TIEN_SUM",
+                        Sum(
+                            Filter(
+                                tempQLFull,
+                                MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI
+                            ),
+                            SO_TIEN
+                        ),
+                        "GHEP_CHUOI_NQL",
+                        Concat(
+                            ShowColumns(
                                 Filter(
                                     tempQLFull,
                                     MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI
                                 ),
-                                SO_TIEN
+                                "cr282_ten_hien_thi"
                             ),
-                            "GHEP_CHUOI_NQL",
-                            Concat(
-                                ShowColumns(
-                                    Filter(
-                                        tempQLFull,
-                                        MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI
-                                    ),
-                                    "cr282_ten_hien_thi"
-                                ),
-                                cr282_ten_hien_thi,
-                                "; "
-                            )
+                            cr282_ten_hien_thi,
+                            "; "
                         )
                     )
-                
+                )
             );
             // group lại danh sách 
             ClearCollect (
                 tmpQLGroupDistinct,
-                GroupBy(tmpQLGroup,"SO_TIEN_SUM", "GHEP_CHUOI_NQL", "cr282_loai", "cr282_ma_sp", "MA_CHUONG_TRINH","cr282_ma_sp","PHI", "cr282_ma_nhom_tinhphi", "Group" )
+                GroupBy(
+                    tmpQLGroup,
+                    "SO_TIEN_SUM","cr282_loai", "cr282_ma_nhom_tinhphi", "cr282_ma_sp", "GHEP_CHUOI_NQL","MA_CHUONG_TRINH","PHI", "Group"
+                )
             );
-            
         Size: =11
         Text: ="Tra cứu dữ liệu"
         X: =1025
