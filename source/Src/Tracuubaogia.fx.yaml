@@ -125,7 +125,8 @@ Tracuubaogia As screen:
                 Height: =35
                 OnSelect: =Select(Parent)
                 Size: =11
-                Text: =Substitute(ThisItem.GHEP_CHUOI_NQL, ";", " & Char(10)")
+                Text: |
+                    =Trim(Substitute(ThisItem.GHEP_CHUOI_NQL, ";", Char(10)))
                 Width: =299
                 X: =150
                 ZIndex: =5
@@ -146,7 +147,8 @@ Tracuubaogia As screen:
                 OnSelect: =Select(Parent)
                 Size: =11
                 Text: |
-                    =ThisItem.GHEP_SO_TIEN 
+                    =
+                    Trim(Substitute(ThisItem.GHEP_SO_TIEN , ";", Char(10)))
                 Width: =237
                 X: =449
                 ZIndex: =8
