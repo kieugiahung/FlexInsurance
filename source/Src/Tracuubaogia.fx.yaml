@@ -194,6 +194,15 @@ Tracuubaogia As screen:
                 X: =449
                 ZIndex: =11
 
+            Label8 As label:
+                BorderThickness: =1
+                Height: =43
+                OnSelect: =Select(Parent)
+                Text: =ThisItem.cr282_ma_nhom_tinhphi
+                Width: =82
+                X: =904
+                ZIndex: =12
+
         Checkbox2 As checkbox:
             BorderColor: =RGBA(0, 0, 0, 1)
             CheckboxBorderColor: =RGBA(0, 0, 0, 1)
@@ -215,11 +224,15 @@ Tracuubaogia As screen:
                     DL_HOP_DONG_SPS
                 );
                 Clear(tempSpFull);
-                // danh sánh các quyền lợi
-                ForAll (Gallery6.AllItems As phi, 
-                
-                1=1)
-                
+                // danh sách quyền lợi
+                ForAll (
+                    Gallery6.AllItems As phi,
+                    // lấy thông tin từng dòng được tích chọn
+                    If(
+                        phi.Checkbox2_1.Value = true,
+                        1 = 1
+                    )
+                )
                 //Navigate(NhapHopDong);
             Size: =11
             Text: ="Mua ngay"
