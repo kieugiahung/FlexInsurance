@@ -107,7 +107,10 @@ Tracuubaogia As screen:
                 HoverBorderColor: |
                     =
                 HoverColor: =RGBA(255, 255, 255, 1)
-                OnSelect: =Select(Parent)
+                OnSelect: |+
+                    =Set (phiAll,Sum(Gallery6.AllItems,PHI));
+                    
+                    
                 PaddingLeft: =8
                 PressedBorderColor: =
                 PressedColor: =RGBA(0, 0, 0, 0)
@@ -138,9 +141,11 @@ Tracuubaogia As screen:
                 Height: =43
                 OnSelect: =Select(Parent)
                 Size: =11
-                Text: |
+                Text: |-
                     =
-                     If(ThisItem.PHI >0 , Text(ThisItem.PHI, "###,###,###"), 0)
+                     //If(ThisItem.PHI >0 , Text(ThisItem.PHI, "###,###,###"), 0)
+                    
+                     ThisItem.PHI
                 Width: =218
                 X: =686
                 ZIndex: =9
@@ -273,12 +278,29 @@ Tracuubaogia As screen:
             BorderThickness: =1
             OnSelect: =Select(Parent)
             Size: =11
-            Text: |
-                =Text(Sum( Filter( tmpQLGroupDistinct, MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && !(MA_CHUONG_TRINH)), PHI ), "###,###,###")
+            Text: |+
+                =phiAll
+                
+                
             Width: =116
             X: =1115
-            Y: =67
+            Y: =41
             ZIndex: =10
+
+        Label8_1 As label:
+            Align: =Align.Right
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderThickness: =1
+            OnSelect: =Select(Parent)
+            Size: =11
+            Text: |+
+                =Text(Sum( Filter( tmpQLGroupDistinct, MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && !(MA_CHUONG_TRINH) && cr282_loai = "Chính"), PHI ), "###,###,###")
+                
+                
+            Width: =116
+            X: =968
+            Y: =41
+            ZIndex: =11
 
     Button3_17 As button:
         Height: =32
@@ -569,6 +591,7 @@ Tracuubaogia As screen:
         ZIndex: =7
 
     cbxMaSPCCP As combobox:
+        BorderThickness: =1
         DisplayFields: =["title"]
         Height: =32
         InputTextPlaceholder: ="Chọn sản phẩm"
@@ -583,6 +606,7 @@ Tracuubaogia As screen:
         ZIndex: =8
 
     cbxLHNVCCP As combobox:
+        BorderThickness: =1
         DisplayFields: =["Value"]
         Height: =32
         InputTextPlaceholder: ="Chọn LHNV"
@@ -678,8 +702,8 @@ Tracuubaogia As screen:
         Size: =11
         Text: ="Mức phí từ"
         Width: =90
-        X: =406
-        Y: =121
+        X: =461
+        Y: =124
         ZIndex: =14
 
     slPhiTuCCP As slider:
@@ -713,8 +737,8 @@ Tracuubaogia As screen:
         RadiusTopRight: =0
         Size: =11
         Width: =120
-        X: =498
-        Y: =117
+        X: =568
+        Y: =114
         ZIndex: =16
 
     slPhiDenCCP As slider:
@@ -748,7 +772,7 @@ Tracuubaogia As screen:
         RadiusTopRight: =0
         Size: =11
         Width: =120
-        X: =878
+        X: =856
         Y: =117
         ZIndex: =18
 
@@ -757,7 +781,7 @@ Tracuubaogia As screen:
         Size: =11
         Text: ="Mức phí đến"
         Width: =100
-        X: =779
+        X: =748
         Y: =121
         ZIndex: =19
 
