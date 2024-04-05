@@ -165,15 +165,6 @@ Tracuubaogia As screen:
                 X: =686
                 ZIndex: =9
 
-            Label15 As label:
-                Height: =31
-                OnSelect: =Select(Parent)
-                Text: =ThisItem.MA_NHOM_TINHPHI
-                Width: =143
-                X: =904
-                Y: =4
-                ZIndex: =10
-
         Checkbox2 As checkbox:
             BorderColor: =RGBA(0, 0, 0, 1)
             CheckboxBorderColor: =RGBA(0, 0, 0, 1)
@@ -263,7 +254,7 @@ Tracuubaogia As screen:
 
     Button3_18 As button:
         Height: =32
-        OnSelect: |+
+        OnSelect: |
             =//Tra cuu theo bang phi
             ClearCollect(
                 tmpKQCCPCollect,
@@ -414,27 +405,37 @@ Tracuubaogia As screen:
             // tính tổng số tiền bảo hiểm theo nhóm tính phí
             ForAll(
                 tempQLFull As fu,
-                Collect(
-                    tmpQLGroup,
-                    AddColumns(
-                        fu,
-                        "SO_TIEN_SUM",
-                        Sum(
-                            Filter(
-                                tempQLFull,
-                                MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI
+                Distinct(
+                    Collect(
+                        tmpQLGroup,
+                        AddColumns(
+                            fu,
+                            "SO_TIEN_SUM",
+                            Sum(
+                                Filter(
+                                    tempQLFull,
+                                    MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI
+                                ),
+                                SO_TIEN
                             ),
-                            SO_TIEN
-                        ),
-                        "GHEP_CHUOI_NQL",
-                         Concat( ShowColumns( Filter(
-                                tempQLFull,
-                                MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI
-                            ), "cr282_ten_hien_thi" ),cr282_ten_hien_thi, "; " )
-                    )
+                            "GHEP_CHUOI_NQL",
+                            Concat(
+                                ShowColumns(
+                                    Filter(
+                                        tempQLFull,
+                                        MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI
+                                    ),
+                                    "cr282_ten_hien_thi"
+                                ),
+                                cr282_ten_hien_thi,
+                                "; "
+                            )
+                        )
+                    ),
+                   ( SO_TIEN_SUM, GHEP_CHUOI_NQL)
                 )
             );
-            
+            // 
         Size: =11
         Text: ="Tra cứu dữ liệu"
         X: =1025
