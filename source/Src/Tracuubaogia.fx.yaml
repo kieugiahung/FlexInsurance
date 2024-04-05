@@ -101,8 +101,7 @@ Tracuubaogia As screen:
                 DisabledFill: =RGBA(255, 255, 255, 1)
                 DisplayMode: |
                     =
-                    
-                    If(Checkbox2.Value = true , If(ThisItem.cr282_loai = "Chính", DisplayMode.Disabled, DisplayMode.Edit), DisplayMode.Disabled)
+                     If(ThisItem.cr282_loai = "Chính", DisplayMode.Disabled, DisplayMode.Edit)
                 Height: =31
                 HoverBorderColor: |
                     =
@@ -143,9 +142,9 @@ Tracuubaogia As screen:
                 Size: =11
                 Text: |-
                     =
-                     //If(ThisItem.PHI >0 , Text(ThisItem.PHI, "###,###,###"), 0)
+                    If(ThisItem.PHI >0 , Text(ThisItem.PHI, "###,###,###"), 0)
                     
-                     ThisItem.PHI
+                     
                 Width: =218
                 X: =686
                 ZIndex: =9
@@ -277,6 +276,8 @@ Tracuubaogia As screen:
             BorderThickness: =1
             Default: |
                 =Text( Sum(Filter ( Gallery6.AllItems , Checkbox2_1.Value = true),PHI), "###,###,###")
+            DisabledColor: =RGBA(0, 0, 0, 1)
+            DisplayMode: =DisplayMode.Disabled
             Height: =35
             OnSelect: =Select(Parent)
             RadiusBottomLeft: =0
@@ -289,6 +290,10 @@ Tracuubaogia As screen:
             ZIndex: =12
 
     Button3_17 As button:
+        DisplayMode: |-
+            =
+            
+            If(CountRows (Filter( danhsachnhom.AllItems, Checkbox2.Value = true)) > 0, DisplayMode.Edit, DisplayMode.Disabled )
         Height: =32
         Size: =11
         Text: ="Mua ngay"
