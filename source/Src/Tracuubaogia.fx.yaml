@@ -81,6 +81,8 @@ Tracuubaogia As screen:
             Label13 As label:
                 BorderColor: =RGBA(0, 0, 0, 1)
                 BorderThickness: =1
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisplayMode: =DisplayMode.Disabled
                 Height: =43
                 OnSelect: =Select(Parent)
                 Size: =11
@@ -131,6 +133,8 @@ Tracuubaogia As screen:
                 Align: =Align.Right
                 BorderColor: =RGBA(0, 0, 0, 1)
                 BorderThickness: =1
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisplayMode: =DisplayMode.Disabled
                 Height: =43
                 OnSelect: =Select(Parent)
                 Size: =11
@@ -145,9 +149,10 @@ Tracuubaogia As screen:
                 BorderColor: =RGBA(0, 0, 0, 1)
                 BorderThickness: =1
                 Default: =Trim(Substitute(ThisItem.GHEP_CHUOI_NQL, ";", Char(10)))
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
                 Height: =43
                 MaxLength: =4000
                 Mode: =TextMode.MultiLine
@@ -167,9 +172,10 @@ Tracuubaogia As screen:
                 BorderColor: =RGBA(0, 0, 0, 1)
                 BorderThickness: =1
                 Default: =Trim(Substitute(ThisItem.GHEP_SO_TIEN, ";", Char(10)))
-                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
+                DisplayMode: =DisplayMode.Disabled
                 Height: =43
                 MaxLength: =4000
                 Mode: =TextMode.MultiLine
@@ -453,6 +459,8 @@ Tracuubaogia As screen:
                     )
                 )
             );
+            
+            
             // GỘP LẠI THEO NHÓM TÍNH PHÍ ĐỂ HIỂN THỊ LÊN MÀN HÌNH
             ClearCollect (
                 tmpQLGroup,
@@ -476,8 +484,7 @@ Tracuubaogia As screen:
                             ),
                              SO_TIEN,
                             ";"
-                        )
-                        ,
+                        ),
                         "GHEP_CHUOI_NQL",
                         Concat(
                             ShowColumns(
