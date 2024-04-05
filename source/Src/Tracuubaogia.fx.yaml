@@ -69,7 +69,7 @@ Tracuubaogia As screen:
             BorderColor: =RGBA(9, 33, 98, 1)
             DelayItemLoading: =true
             Height: =201
-            Items: =Filter( tmpQLGroup, MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && !(MA_CHUONG_TRINH))
+            Items: =Filter( tmpQLGroupDistinct, MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && !(MA_CHUONG_TRINH))
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
             TemplateSize: =43
@@ -125,7 +125,7 @@ Tracuubaogia As screen:
                 Height: =35
                 OnSelect: =Select(Parent)
                 Size: =11
-                Text: =ThisItem.TEN_HIEN_THI
+                Text: =ThisItem.GHEP_CHUOI_NQL
                 Width: =299
                 X: =150
                 ZIndex: =5
@@ -146,7 +146,7 @@ Tracuubaogia As screen:
                 OnSelect: =Select(Parent)
                 Size: =11
                 Text: |
-                    =If(ThisItem.SO_TIEN >0 , Text(ThisItem.SO_TIEN, "###,###,###"), 0)
+                    =If(ThisItem.GHEP_SO_TIEN >0 , Text(ThisItem.GHEP_SO_TIEN, "###,###,###"), 0)
                 Width: =237
                 X: =449
                 ZIndex: =8
