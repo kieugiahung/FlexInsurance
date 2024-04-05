@@ -69,7 +69,7 @@ Tracuubaogia As screen:
             BorderColor: =RGBA(9, 33, 98, 1)
             DelayItemLoading: =true
             Height: =201
-            Items: =Filter( tempQLFull, MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && !(MA_CHUONG_TRINH))
+            Items: =Filter( tmpQLGroup, MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && !(MA_CHUONG_TRINH))
             Layout: =Layout.Vertical
             LoadingSpinner: =LoadingSpinner.Data
             TemplateSize: =43
@@ -84,7 +84,7 @@ Tracuubaogia As screen:
                 Height: =35
                 OnSelect: =Select(Parent)
                 Size: =11
-                Text: =ThisItem.LOAI
+                Text: =ThisItem.cr282_loai
                 ZIndex: =1
 
             Checkbox2_1 As checkbox:
@@ -410,13 +410,18 @@ Tracuubaogia As screen:
                     AddColumns(
                         fu,
                         "SO_TIEN_SUM",
-                        Sum(
-                            Filter(
-                                tempQLFull,
-                                MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI
+                        Concat(
+                            ShowColumns(
+                                Filter(
+                                    tempQLFull,
+                                    MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI
+                                ),
+                                "SO_TIEN"
                             ),
-                            SO_TIEN
-                        ),
+                             "SO_TIEN",
+                            "; "
+                        )
+                        ,
                         "GHEP_CHUOI_NQL",
                         Concat(
                             ShowColumns(
