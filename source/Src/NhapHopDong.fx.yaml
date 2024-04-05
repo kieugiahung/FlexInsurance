@@ -48,15 +48,26 @@
                     )
                 )
             );
-            ClearCollect(
-                tmpDSHDSPNHDCollect,
-                AddColumns(
-                    Filter(
-                        DL_HOP_DONG_SPS,
-                        MA_HOP_DONG = maHopDongFwd
-                    ),
-                    "edited",
-                    0
+            If(
+                IsBlank(nhapBGCCPFwd),
+                ClearCollect(
+                    tmpDSHDSPNHDCollect,
+                    AddColumns(
+                        Filter(
+                            DL_HOP_DONG_SPS,
+                            MA_HOP_DONG = maHopDongFwd
+                        ),
+                        "edited",
+                        0
+                    )
+                ),
+                ClearCollect(
+                    tmpDSHDSPNHDCollect,
+                    AddColumns(
+                        tempSpFull,
+                        "edited",
+                        0
+                    )
                 )
             );
             ClearCollect(
@@ -183,6 +194,10 @@
         );
         Set(
             varUnReloadNHD,
+            Blank()
+        );
+        Set(
+            nhapBGCCPFwd,
             Blank()
         );
         UpdateContext({
