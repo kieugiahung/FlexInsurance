@@ -268,10 +268,13 @@ Tracuubaogia As screen:
             ZIndex: =9
 
         Label8 As label:
+            Align: =Align.Right
             BorderColor: =RGBA(0, 0, 0, 1)
             BorderThickness: =1
             OnSelect: =Select(Parent)
-            Text: =Sum( Filter( tmpQLGroupDistinct, MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && !(MA_CHUONG_TRINH)), PHI )
+            Size: =11
+            Text: |
+                =Text(Sum( Filter( tmpQLGroupDistinct, MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && !(MA_CHUONG_TRINH)), PHI ), "###,###,###")
             Width: =116
             X: =1115
             Y: =67
