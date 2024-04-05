@@ -335,6 +335,40 @@ Tracuubaogia As screen:
             
             DisplayMode.Edit
         Height: =32
+        OnSelect: |-
+            =// convert dữ liệu thông tin báo giá vào sản phẩm trong hợp đồng
+            ClearCollect(
+                tempSpFull,
+                DL_HOP_DONG_SPS
+            );
+            Clear(tempSpFull);
+            // LẤY THÔNG TIN CÁC CHƯƠNG TRÌNH ĐƯỢC TÍCH CHỌN
+            ForAll(
+                danhsachnhom.AllItems As ctrinh,
+                // những chương trình nào được tích thì chuyển sang nhập hợp đồng
+                If(
+                    ctrinh.Checkbox2.Value = true,
+                    ForAll(
+                        ctrinh.Gallery6.AllItems As phi,
+                        Patch(
+                            tempSpFull,
+                            Defaults(tempSpFull),
+                            {
+                                MA_HOP_DONG: "",
+                                MA_SAN_PHAM: ctrinh.MA_SAN_PHAM,
+                                TEN_SAN_PHAM: LookUp(
+                                    DL_SAN_PHAM,
+                                    MA_SAN_PHAM = ctrinh.MA_SAN_PHAM
+                                ).TEN_SAN_PHAM,
+                                MA_CHUONG_TRINH: ctrinh.MA_CHUONG_TRINH,
+                                TEN_CHUONG_TRINH: ctrinh.TEN_CHUONG_TRINH,
+                                DON_VI_TINH: "VND",
+                                NHOM_TINH_PHI: phi.cr282_ma_nhom_tinhphi
+                            }
+                        )
+                    )
+                )
+            )
         Size: =11
         Text: ="Mua ngay"
         Width: =121
