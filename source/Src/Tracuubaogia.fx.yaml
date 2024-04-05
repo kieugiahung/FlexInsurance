@@ -108,7 +108,7 @@ Tracuubaogia As screen:
                     =
                 HoverColor: =RGBA(255, 255, 255, 1)
                 OnSelect: |+
-                    =Reset(Label8)
+                    =Reset(TextInput9)
                     
                     
                 PaddingLeft: =8
@@ -272,21 +272,6 @@ Tracuubaogia As screen:
             Y: =46
             ZIndex: =9
 
-        Label8 As label:
-            Align: =Align.Right
-            BorderColor: =RGBA(0, 0, 0, 1)
-            BorderThickness: =1
-            OnSelect: =Select(Parent)
-            Size: =11
-            Text: |+
-                =Text( Sum(Filter ( Gallery6.AllItems , Checkbox2_1.Value = true),PHI), "###,###,###")
-                
-                
-            Width: =116
-            X: =1115
-            Y: =41
-            ZIndex: =10
-
         Label8_1 As label:
             Align: =Align.Right
             BorderColor: =RGBA(0, 0, 0, 1)
@@ -301,6 +286,15 @@ Tracuubaogia As screen:
             X: =968
             Y: =41
             ZIndex: =11
+
+        TextInput9 As text:
+            Default: |
+                =Text( Sum(Filter ( Gallery6.AllItems , Checkbox2_1.Value = true),PHI), "###,###,###")
+            OnSelect: =Select(Parent)
+            Width: =168
+            X: =1088
+            Y: =120
+            ZIndex: =12
 
     Button3_17 As button:
         Height: =32
