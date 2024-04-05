@@ -119,18 +119,6 @@ Tracuubaogia As screen:
                 Y: =5
                 ZIndex: =3
 
-            Label16 As label:
-                BorderColor: =RGBA(0, 0, 0, 1)
-                BorderThickness: =1
-                Height: =35
-                OnSelect: =Select(Parent)
-                Size: =11
-                Text: |
-                    =Trim(Substitute(ThisItem.GHEP_CHUOI_NQL, ";", Char(10)))
-                Width: =299
-                X: =150
-                ZIndex: =5
-
             Label20 As label:
                 Height: =36
                 OnSelect: =Select(Parent)
@@ -138,20 +126,6 @@ Tracuubaogia As screen:
                 Visible: =false
                 X: =484
                 ZIndex: =6
-
-            Label22 As label:
-                Align: =Align.Right
-                BorderColor: =RGBA(0, 0, 0, 1)
-                BorderThickness: =1
-                Height: =35
-                OnSelect: =Select(Parent)
-                Size: =11
-                Text: |
-                    =
-                    Trim(Substitute(ThisItem.GHEP_SO_TIEN , ";", Char(10)))
-                Width: =237
-                X: =449
-                ZIndex: =8
 
             Label1_1 As label:
                 Align: =Align.Right
@@ -166,6 +140,48 @@ Tracuubaogia As screen:
                 Width: =218
                 X: =686
                 ZIndex: =9
+
+            TiNDDCKCT_1 As text:
+                BorderColor: =RGBA(0, 0, 0, 1)
+                BorderThickness: =1
+                Default: =Trim(Substitute(ThisItem.GHEP_CHUOI_NQL, ";", Char(10)))
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                Height: =35
+                MaxLength: =4000
+                Mode: =TextMode.MultiLine
+                OnChange: =
+                OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =299
+                X: =150
+                ZIndex: =10
+
+            TiNDDCKCT_2 As text:
+                BorderColor: =RGBA(0, 0, 0, 1)
+                BorderThickness: =1
+                Default: =Trim(Substitute(ThisItem.GHEP_SO_TIEN, ";", Char(10)))
+                DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                DisabledColor: =RGBA(0, 0, 0, 1)
+                DisabledFill: =RGBA(255, 255, 255, 1)
+                Height: =35
+                MaxLength: =4000
+                Mode: =TextMode.MultiLine
+                OnChange: =
+                OnSelect: =Select(Parent)
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =11
+                Width: =237
+                X: =449
+                ZIndex: =11
 
         Checkbox2 As checkbox:
             BorderColor: =RGBA(0, 0, 0, 1)
@@ -421,7 +437,7 @@ Tracuubaogia As screen:
                                 "SO_TIEN"
                             ),
                              SO_TIEN,
-                            "; "
+                            ";"
                         )
                         ,
                         "GHEP_CHUOI_NQL",
@@ -434,7 +450,7 @@ Tracuubaogia As screen:
                                 "cr282_ten_hien_thi"
                             ),
                             cr282_ten_hien_thi,
-                           "; "
+                           ";"
                         )
                     )
                 )
