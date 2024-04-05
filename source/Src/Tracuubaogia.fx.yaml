@@ -163,6 +163,7 @@ Tracuubaogia As screen:
                 ZIndex: =10
 
             TiNDDCKCT_2 As text:
+                Align: =Align.Right
                 BorderColor: =RGBA(0, 0, 0, 1)
                 BorderThickness: =1
                 Default: =Trim(Substitute(ThisItem.GHEP_SO_TIEN, ";", Char(10)))
@@ -275,6 +276,42 @@ Tracuubaogia As screen:
             =//Tra cuu theo bang phi
             ClearCollect(
                 tmpKQCCPCollect,
+                DL_CHUONG_TRINH_BANG_PHIS
+            );
+            //Lay danh muc len collect
+            ClearCollect(
+                dmSanPhamCCPCollect,
+                AddColumns(
+                    DL_SAN_PHAM,
+                    "title",
+                    Concatenate(MA_SAN_PHAM," - ",TEN_SAN_PHAM)
+                )
+            );
+            ClearCollect(
+                dmGTinhCCPCollect,
+                AddColumns(
+                    DM_GIOI_TINHS,
+                    "title",
+                    Concatenate(MA_GIOI_TINH," - ",TEN_GIOI_TINH)
+                )
+            );
+            ClearCollect(
+                dmDTuoiCCPCollect,
+                DM_DO_TUOIS
+            );
+            //Lay danh muc len collect end
+            
+            //Lay dl nghiep vu len collect
+            ClearCollect(
+                dlSPNhomQLCCPCollect,
+                DL_SAN_PHAM_NHOMQLS
+            );
+            ClearCollect(
+                dlCTQLCTCCPCollect,
+                DL_CHUONGTRINH_QLCTS
+            );
+            ClearCollect(
+                dlCTBangPhiCCPCollect,
                 DL_CHUONG_TRINH_BANG_PHIS
             );
             //Loc theo ma san pham
