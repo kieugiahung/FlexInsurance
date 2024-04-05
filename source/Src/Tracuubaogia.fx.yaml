@@ -175,7 +175,7 @@ Tracuubaogia As screen:
                 Align: =Align.Right
                 BorderColor: =RGBA(0, 0, 0, 1)
                 BorderThickness: =1
-                Default: =Trim(Substitute(ThisItem.GHEP_SO_TIEN, ";", Char(10)))
+                Default: =Trim(Substitute(ThisItem.GHEP_SO_TIEN, ";", Char(10))) & " VND"
                 DisabledBorderColor: =RGBA(0, 0, 0, 1)
                 DisabledColor: =RGBA(0, 0, 0, 1)
                 DisabledFill: =RGBA(255, 255, 255, 1)
@@ -589,8 +589,8 @@ Tracuubaogia As screen:
                                 ),
                                 "SO_TIEN"
                             ),
-                             SO_TIEN,
-                            ";"
+                            If(SO_TIEN >0 , Text(SO_TIEN, "###,###,###"), 0) ,
+                            " VND;"
                         ),
                         "GHEP_CHUOI_NQL",
                         Concat(
