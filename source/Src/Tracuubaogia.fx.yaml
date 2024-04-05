@@ -210,7 +210,9 @@ Tracuubaogia As screen:
             Height: =38
             OnSelect: |-
                 =// convert dữ liệu thông tin báo giá vào sản phẩm trong hợp đồng
-                ClearCollect (tmpDSHDSPNHDCollect, Filter(DL_HOP_DONG_SPS, 1 <> 1));
+                ClearCollect (tmpDSHDSPNHDCollect, First(DL_HOP_DONG_SPS));
+                
+                
                 
                 Navigate(NhapHopDong);
             Size: =11
