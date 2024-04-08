@@ -345,7 +345,12 @@ Tracuubaogia As screen:
                 DL_HOP_DONG_SPS
             );
             //Luu tam danh sach nhom tinh phi
-            ClearCollect()
+            ClearCollect(
+                tmpDSNhomTPCCPCollect,
+                {
+                    MA_NHOM_TINHPHI:""
+                }
+            );
             Clear(tempSpFull);
             // LẤY THÔNG TIN CÁC CHƯƠNG TRÌNH ĐƯỢC TÍCH CHỌN
             ForAll(
@@ -356,25 +361,13 @@ Tracuubaogia As screen:
                     //   danh sách các nhóm tính phí
                     ForAll(
                         ctrinh.Gallery6.AllItems As phi,
-                        // những dòng nào được tích thì lấy sang hợp đồng
+                        // Chi lay cac nhom tinh phi duoc tich chon
                         If(
                             phi.Checkbox2_1.Value = true,
-            
-                            Patch(
-                                tempSpFull,
-                                Defaults(tempSpFull),
+                            Collect(
+                                tmpDSNhomTPCCPCollect,
                                 {
-                                    ID: Text(Max(DL_HOP_DONG_SPS,ID)+1),
-                                    MA_HOP_DONG: "",
-                                    MA_SAN_PHAM: ctrinh.MA_SAN_PHAM,
-                                    TEN_SAN_PHAM: LookUp(
-                                        DL_SAN_PHAM,
-                                        MA_SAN_PHAM = ctrinh.MA_SAN_PHAM
-                                    ).TEN_SAN_PHAM,
-                                    MA_CHUONG_TRINH: ctrinh.MA_CHUONG_TRINH,
-                                    TEN_CHUONG_TRINH: ctrinh.TEN_CHUONG_TRINH,
-                                    DON_VI_TINH: "VND",
-                                    NHOM_TINH_PHI: phi.cr282_ma_nhom_tinhphi
+                                    MA_NHOM_TINHPHI:phi.cr282_ma_nhom_tinhphi
                                 }
                             )
                         )
@@ -394,7 +387,7 @@ Tracuubaogia As screen:
                             MA_CHUONG_TRINH: ctrinh.MA_CHUONG_TRINH,
                             TEN_CHUONG_TRINH: ctrinh.TEN_CHUONG_TRINH,
                             DON_VI_TINH: "VND",
-                            NHOM_TINH_PHI: phi.cr282_ma_nhom_tinhphi
+                            NHOM_TINH_PHI: Concat(tmpDSNhomTPCCPCollect,MA_NHOM_TINHPHI,"|")
                         }
                     )
                 )
