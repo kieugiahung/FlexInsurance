@@ -5389,9 +5389,18 @@
                             TEN_KHACH_HANG_SAVED:cbxMaKHNHD.Selected.MA_KHACH_HANG
                         }
                     );
-                    ForAll(
-                        tempSpFull As ds,
-                        updateif
+                    If(
+                        !IsBlank(nhapBGCCPFwd),
+                        ForAll(
+                            tempSpFull As ds,
+                            UpdateIf(
+                                DL_HOP_DONG_SPS,
+                                ID=ds.ID,
+                                {
+                                    MA_HOP_DONG:genMaHD
+                                }
+                            )
+                        )
                     ),
                     UpdateIf(
                         DL_HOP_DONGS,
@@ -5559,8 +5568,11 @@
                     )
                 );
                 //End muc 6
-            
-            Notify(
+                Set(
+                    nhapBGCCPFwd,
+                    Blank()
+                );
+                Notify(
                     "Lưu dữ liệu thành công",
                     NotificationType.Success,
                     2000
