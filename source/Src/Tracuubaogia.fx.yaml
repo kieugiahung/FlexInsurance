@@ -344,6 +344,8 @@ Tracuubaogia As screen:
                 tempSpFull,
                 DL_HOP_DONG_SPS
             );
+            //Luu tam danh sach nhom tinh phi
+            ClearCollect()
             Clear(tempSpFull);
             // LẤY THÔNG TIN CÁC CHƯƠNG TRÌNH ĐƯỢC TÍCH CHỌN
             ForAll(
@@ -357,10 +359,12 @@ Tracuubaogia As screen:
                         // những dòng nào được tích thì lấy sang hợp đồng
                         If(
                             phi.Checkbox2_1.Value = true,
+            
                             Patch(
                                 tempSpFull,
                                 Defaults(tempSpFull),
                                 {
+                                    ID: Text(Max(DL_HOP_DONG_SPS,ID)+1),
                                     MA_HOP_DONG: "",
                                     MA_SAN_PHAM: ctrinh.MA_SAN_PHAM,
                                     TEN_SAN_PHAM: LookUp(
@@ -374,6 +378,24 @@ Tracuubaogia As screen:
                                 }
                             )
                         )
+                    );
+                    // những dòng nào được tích thì lấy sang hợp đồng
+                    Patch(
+                        tempSpFull,
+                        Defaults(tempSpFull),
+                        {
+                            ID: Text(Max(DL_HOP_DONG_SPS,ID)+1),
+                            MA_HOP_DONG: "",
+                            MA_SAN_PHAM: ctrinh.MA_SAN_PHAM,
+                            TEN_SAN_PHAM: LookUp(
+                                DL_SAN_PHAM,
+                                MA_SAN_PHAM = ctrinh.MA_SAN_PHAM
+                            ).TEN_SAN_PHAM,
+                            MA_CHUONG_TRINH: ctrinh.MA_CHUONG_TRINH,
+                            TEN_CHUONG_TRINH: ctrinh.TEN_CHUONG_TRINH,
+                            DON_VI_TINH: "VND",
+                            NHOM_TINH_PHI: phi.cr282_ma_nhom_tinhphi
+                        }
                     )
                 )
             );
