@@ -444,7 +444,11 @@ Tracuubaogia As screen:
                 AddColumns(
                     DL_SAN_PHAM,
                     "title",
-                    Concatenate(MA_SAN_PHAM," - ",TEN_SAN_PHAM)
+                    Concatenate(
+                        MA_SAN_PHAM,
+                        " - ",
+                        TEN_SAN_PHAM
+                    )
                 )
             );
             ClearCollect(
@@ -452,7 +456,11 @@ Tracuubaogia As screen:
                 AddColumns(
                     DM_GIOI_TINHS,
                     "title",
-                    Concatenate(MA_GIOI_TINH," - ",TEN_GIOI_TINH)
+                    Concatenate(
+                        MA_GIOI_TINH,
+                        " - ",
+                        TEN_GIOI_TINH
+                    )
                 )
             );
             ClearCollect(
@@ -460,7 +468,6 @@ Tracuubaogia As screen:
                 DM_DO_TUOIS
             );
             //Lay danh muc len collect end
-            
             //Lay dl nghiep vu len collect
             ClearCollect(
                 dlSPNhomQLCCPCollect,
@@ -538,7 +545,8 @@ Tracuubaogia As screen:
                             MO_TA
                         )
                     )
-                );   
+                );
+                
             );
             //End tra cuu theo bang phi
             ClearCollect(
@@ -597,7 +605,6 @@ Tracuubaogia As screen:
                             Filter(
                                 DL_CHUONGTRINH_QLCTS,
                                 MA_SAN_PHAM = ctql.MA_SP && MA_CHUONG_TRINH = ctql.MA_CHUONG_TRINH && MA_NHOM_QL = ctql.MA_NHOM_QL
-                                
                             ),
                             GH_SOTIEN_NAM
                         ),
@@ -612,8 +619,6 @@ Tracuubaogia As screen:
                     )
                 )
             );
-            
-            
             // GỘP LẠI THEO NHÓM TÍNH PHÍ ĐỂ HIỂN THỊ LÊN MÀN HÌNH
             ClearCollect (
                 tmpQLGroup,
@@ -635,7 +640,14 @@ Tracuubaogia As screen:
                                 ),
                                 "SO_TIEN"
                             ),
-                            If(SO_TIEN >0 , Text(SO_TIEN, "###,###,###"), 0) ,
+                            If(
+                                SO_TIEN > 0,
+                                Text(
+                                    SO_TIEN,
+                                    "###,###,###"
+                                ),
+                                0
+                            ),
                             " VND;"
                         ),
                         "GHEP_CHUOI_NQL",
@@ -648,7 +660,7 @@ Tracuubaogia As screen:
                                 "cr282_ten_hien_thi"
                             ),
                             cr282_ten_hien_thi,
-                           ";"
+                            ";"
                         )
                     )
                 )
@@ -658,7 +670,25 @@ Tracuubaogia As screen:
                 tmpQLGroupDistinct,
                 GroupBy(
                     tmpQLGroup,
-                    "GHEP_SO_TIEN","cr282_loai",  "cr282_ma_nhom_tinhphi", "cr282_ma_sp", "GHEP_CHUOI_NQL","MA_CHUONG_TRINH","PHI", "Group"
+                    "GHEP_SO_TIEN",
+                    "cr282_loai",
+                    "cr282_ma_nhom_tinhphi",
+                    "cr282_ma_sp",
+                    "GHEP_CHUOI_NQL",
+                    "MA_CHUONG_TRINH",
+                    "PHI",
+                    "Group"
+                )
+            );
+            ForAll(
+                tmpQLGroupDistinct As gr,
+                If(
+                    gr.cr282_loai = "Chính" And If(
+                        phi_tu <> 0,
+                        gr.PHI < phi_tu,
+                        false
+                    ),
+                    RemoveIf(tempSPKH, MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH)
                 )
             );
         Size: =11
