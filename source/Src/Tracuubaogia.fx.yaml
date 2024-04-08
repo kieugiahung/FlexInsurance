@@ -230,6 +230,7 @@ Tracuubaogia As screen:
                         MA_NHOM_TINHPHI:""
                     }
                 );
+                Clear(tmpDSNhomTPCCPCollect);
                 Clear(tempSpFull);
                 // danh sách quyền lợi
                 ForAll (
@@ -370,6 +371,7 @@ Tracuubaogia As screen:
                     MA_NHOM_TINHPHI:""
                 }
             );
+            Clear(tmpDSNhomTPCCPCollect);
             Clear(tempSpFull);
             // LẤY THÔNG TIN CÁC CHƯƠNG TRÌNH ĐƯỢC TÍCH CHỌN
             ForAll(
@@ -414,7 +416,8 @@ Tracuubaogia As screen:
                             NHOM_TINH_PHI: Concat(tmpDSNhomTPCCPCollect,MA_NHOM_TINHPHI,"|")
                         }
                     )
-                )
+                );
+                RemoveIf(tmpDSNhomTPCCPCollect,true);
             );
             Set(nhapBGCCPFwd,"1");
             Navigate(NhapHopDong)

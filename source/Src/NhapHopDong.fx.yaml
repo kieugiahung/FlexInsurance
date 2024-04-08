@@ -5,13 +5,13 @@
             Blank()
         );
         If(
-            isNhapBGHD="" && IsBlank(First(objHD).MA_HOP_DONG),
+            IsBlank(isNhapBGHD) && IsBlank(First(objHD).MA_HOP_DONG),
             Refresh(DL_HOP_DONG_SPS);
             ClearCollect(
                 tmpDSHDSPRemoveNHDCollect,
                 Filter(
                     DL_HOP_DONG_SPS,
-                    MA_HOP_DONG=""
+                    IsBlank(MA_HOP_DONG)
                 )
             );
             ForAll(
@@ -89,7 +89,7 @@
                     AddColumns(
                         Filter(
                             DL_HOP_DONG_SPS,
-                            MA_HOP_DONG = ""
+                            IsBlank(MA_HOP_DONG)
                         ),
                         "edited",
                         0
