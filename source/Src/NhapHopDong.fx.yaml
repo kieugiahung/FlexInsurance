@@ -1,4 +1,27 @@
 "NhapHopDong As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
+    OnHidden: |-
+        =Set(
+            nhapBGCCPFwd,
+            Blank()
+        );
+        If(
+            isNhapBGHD="" && IsBlank(First(objHD).MA_HOP_DONG),
+            Refresh(DL_HOP_DONG_SPS);
+            ClearCollect(
+                tmpDSHDSPRemoveNHDCollect,
+                Filter(
+                    DL_HOP_DONG_SPS,
+                    MA_HOP_DONG=""
+                )
+            );
+            ForAll(
+                tmpDSHDSPRemoveNHDCollect As ds,
+                Remove(
+                    DL_HOP_DONG_SPS,
+                    ds
+                )
+            )
+        )
     OnVisible: |-
         =If(
             IsBlank(varUnReloadNHD),
@@ -64,7 +87,10 @@
                 ClearCollect(
                     tmpDSHDSPNHDCollect,
                     AddColumns(
-                        tempSpFull,
+                        Filter(
+                            DL_HOP_DONG_SPS,
+                            MA_HOP_DONG = ""
+                        ),
                         "edited",
                         0
                     )
@@ -194,10 +220,6 @@
         );
         Set(
             varUnReloadNHD,
-            Blank()
-        );
-        Set(
-            nhapBGCCPFwd,
             Blank()
         );
         UpdateContext({
@@ -2145,6 +2167,7 @@
                                         "0"
                                     )
                                 );
+                                Set(isNhapBGHD,"1");
                                 Navigate(NhapNDBH);
                             )
                         Size: =11
@@ -2359,7 +2382,8 @@
                                         "0"
                                     )
                                 );
-                                Navigate(DSQuyenLoiHD)
+                                Set(isNhapBGHD,"1");
+                                Navigate(DSQuyenLoiHD);
                             )
                         Size: =11
                         Underline: =true
@@ -2769,6 +2793,7 @@
                         Set(maHDNLKFwd,tiMaHDNHD.Text);
                         Set(maKBNLKFwd,cbxMaKBNHD.Selected.MA_KENH_BAN);
                         Set(maKHNLKFwd,cbxMaKHNHD.Selected.MA_KHACH_HANG);
+                        Set(isNhapBGHD,"1");
                         Navigate(NhapHopDongLK)
                     Size: =11
                     Underline: =true
@@ -4477,6 +4502,7 @@
                                 tmpChonTCCSDT,
                                 pass <> 1
                             );
+                            Set(isNhapBGHD,"1");
                             Navigate(ChonChinhSach);
                             
                         );
