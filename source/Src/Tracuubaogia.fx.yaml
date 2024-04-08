@@ -432,7 +432,7 @@ Tracuubaogia As screen:
 
     Button3_18 As button:
         Height: =32
-        OnSelect: |+
+        OnSelect: |
             =//Tra cuu theo bang phi
             ClearCollect(
                 tmpKQCCPCollect,
@@ -533,7 +533,8 @@ Tracuubaogia As screen:
                             MO_TA
                         )
                     )
-                );   
+                );
+                
             );
             //End tra cuu theo bang phi
             ClearCollect(
@@ -693,7 +694,7 @@ Tracuubaogia As screen:
                     );
                 );
                 // lọc dữ liệu theo giới tính
-                // tìm nhóm tính phí theo giới tính
+            // tìm nhóm tính phí theo giới tính
             If(
                     !IsBlank(cbxGTinhCCP.Selected.TEN_GIOI_TINH) && CountRows(
                         Filter(
@@ -703,15 +704,38 @@ Tracuubaogia As screen:
                     ) = 0,
                     RemoveIf(
                         tmpQLGroupDistinct,
-                        MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH && cr282_ma_sp = gr.cr282_ma_sp && cr282_ma_nhom_tinhphi = gr.cr282_ma_nhom_tinhphi && cr282_loai  <> "Chính"
+                        MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH && cr282_ma_sp = gr.cr282_ma_sp && cr282_ma_nhom_tinhphi = gr.cr282_ma_nhom_tinhphi && cr282_loai <> "Chính"
                     )
                 )
             );
-            ForAll (tempSPKH As sp, 
-            CountRows(Filter(tmpQLGroupDistinct, sp.cr282_ma_sp && MA_CHUONG_TRINH = sp.MA_CHUONG_TRINH))
-            ) ;
-            
-            
+            ClearCollect (
+                tem2,
+                tmpQLGroupDistinct
+            );
+            // nếu nhóm tính phí chỉ có 1 dòng và dòng đó không tim thấy theo giới tính thì xóa chương trình đi
+            If(
+                !IsBlank(cbxGTinhCCP.Selected.TEN_GIOI_TINH),
+                ForAll(
+                    tem2 As gr,
+                    If(
+                        CountRows (
+                            Filter (
+                                tem2,
+                                cr282_ma_sp = gr.cr282_ma_sp && MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH
+                            )
+                        ) = 1 And CountRows(
+                        Filter(
+                            tmpKQCCPCollect,
+                            MA_SAN_PHAM = gr.cr282_ma_sp && MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH && NHOM_TINH_PHI = gr.cr282_ma_nhom_tinhphi && Trim(Lower(MA_GIOI_TINH)) = Trim(Lower(cbxGTinhCCP.Selected.TEN_GIOI_TINH))
+                        )
+                    ) = 0 ,
+                       RemoveIf(
+                            tempSPKH,
+                            MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH
+                        )
+                    )
+                )
+            );
         Size: =11
         Text: ="Tra cứu dữ liệu"
         X: =1007
