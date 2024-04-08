@@ -432,7 +432,7 @@ Tracuubaogia As screen:
 
     Button3_18 As button:
         Height: =32
-        OnSelect: |
+        OnSelect: |+
             =//Tra cuu theo bang phi
             ClearCollect(
                 tmpKQCCPCollect,
@@ -533,8 +533,7 @@ Tracuubaogia As screen:
                             MO_TA
                         )
                     )
-                );
-                
+                );   
             );
             //End tra cuu theo bang phi
             ClearCollect(
@@ -708,6 +707,11 @@ Tracuubaogia As screen:
                     )
                 )
             );
+            ForAll (tempSPKH As sp, 
+            CountRows(Filter(tmpQLGroupDistinct, sp.cr282_ma_sp && MA_CHUONG_TRINH = sp.MA_CHUONG_TRINH))
+            ) ;
+            
+            
         Size: =11
         Text: ="Tra cứu dữ liệu"
         X: =1007
