@@ -518,18 +518,7 @@ Tracuubaogia As screen:
                 );
                 
             );
-            //Loc theo gioi tinh
-            If(
-                !IsBlank(cbxGTinhCCP.Selected.MA_GIOI_TINH),
-                ClearCollect(
-                    tmpKQCCPCollect,
-                    Filter(
-                        tmpKQCCPCollect,
-                        MA_GIOI_TINH = cbxGTinhCCP.Selected.TEN_GIOI_TINH
-                    )
-                );
-                
-            );
+            
             //Loc theo do tuoi
             If(
                 !IsBlank(tiTuoiCCP.Text),
@@ -680,9 +669,13 @@ Tracuubaogia As screen:
                     "Group"
                 )
             );
+            
+            ClearCollect (temp,
+                tmpQLGroupDistinct
+            );
             // lọc dữ liệu
             ForAll(
-                tmpQLGroupDistinct As gr,
+                temp As gr,
                 // lọc theo theo tiền phí từ
                 If(
                     gr.cr282_loai = "Chính",
@@ -701,25 +694,8 @@ Tracuubaogia As screen:
                         )
                     );
                 );
-                If(
-                    gr.cr282_loai <> "Chính",
-                    If(
-                        phi_tu <> 0 And gr.PHI < phi_tu,
-                        RemoveIf(
-                            tempSPKH,
-                            MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH
-                        )
-                    );
-                    If(
-                        phi_den <> 0 And gr.PHI > phi_den,
-                        RemoveIf(
-                            tempSPKH,
-                            MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH
-                        )
-                    );
-                );
-                
-                
+                // lọc dữ liệu theo giới tính
+               If(!IsBlank(cbxGTinhCCP.Selected.TEN_GIOI_TINH), 1= 1)  
             );
         Size: =11
         Text: ="Tra cứu dữ liệu"
