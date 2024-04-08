@@ -682,13 +682,29 @@ Tracuubaogia As screen:
             );
             ForAll(
                 tmpQLGroupDistinct As gr,
+                // lọc theo theo tiền phí từ
                 If(
                     gr.cr282_loai = "Chính" And If(
                         phi_tu <> 0,
                         gr.PHI < phi_tu,
                         false
                     ),
-                    RemoveIf(tempSPKH, MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH)
+                    RemoveIf(
+                        tempSPKH,
+                        MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH
+                    )
+                );
+                // lọc theo theo tiền phí đến
+                If(
+                    gr.cr282_loai = "Chính" And If(
+                        phi_den <> 0,
+                        gr.PHI > phi_den,
+                        false
+                    ),
+                    RemoveIf(
+                        tempSPKH,
+                        MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH
+                    )
                 )
             );
         Size: =11
