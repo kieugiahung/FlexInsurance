@@ -1,10 +1,6 @@
 "NhapHopDong As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
     OnHidden: |-
-        =Set(
-            nhapBGCCPFwd,
-            Blank()
-        );
-        If(
+        =If(
             IsBlank(isNhapBGHD) && IsBlank(First(objHD).MA_HOP_DONG),
             Refresh(DL_HOP_DONG_SPS);
             ClearCollect(
@@ -20,7 +16,11 @@
                     DL_HOP_DONG_SPS,
                     ds
                 )
-            )
+            );
+            Set(
+                nhapBGCCPFwd,
+                Blank()
+            );
         )
     OnVisible: |-
         =If(
