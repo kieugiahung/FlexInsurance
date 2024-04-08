@@ -148,7 +148,7 @@ Tracuubaogia As screen:
                     
                      
                 Width: =218
-                X: =686
+                X: =685
                 ZIndex: =9
 
             TiNDDCKCT_1 As text:
@@ -698,12 +698,12 @@ Tracuubaogia As screen:
                     !IsBlank(cbxGTinhCCP.Selected.TEN_GIOI_TINH) && CountRows(
                         Filter(
                             tmpKQCCPCollect,
-                            MA_SAN_PHAM = gr.cr282_ma_sp && MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH && NHOM_TINH_PHI = gr.cr282_ma_nhom_tinhphi && Lower(MA_GIOI_TINH) = Lower(cbxGTinhCCP.Selected.TEN_GIOI_TINH)
+                            MA_SAN_PHAM = gr.cr282_ma_sp && MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH && NHOM_TINH_PHI = gr.cr282_ma_nhom_tinhphi && Trim(Lower(MA_GIOI_TINH)) =Trim(Lower(cbxGTinhCCP.Selected.TEN_GIOI_TINH))
                         )
-                    ) = 0,
+                    ) = 0 ,
                     RemoveIf(
-                            tempSPKH,
-                            MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH
+                            tmpQLGroupDistinct,
+                            MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH && cr282_ma_sp = gr.cr282_ma_sp && cr282_ma_nhom_tinhphi = gr.cr282_ma_nhom_tinhphi
                         )
                 )
             );
