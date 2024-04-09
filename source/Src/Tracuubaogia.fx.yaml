@@ -481,6 +481,18 @@ Tracuubaogia As screen:
                 dlCTBangPhiCCPCollect,
                 DL_CHUONG_TRINH_BANG_PHIS
             );
+            //Loc theo LHNV
+            If(
+                !IsBlank(cbxLHNVCCP.Selected.Value),
+                ClearCollect(
+                    tmpKQCCPCollect,
+                    Filter(
+                        tmpKQCCPCollect,
+                        MA_SAN_PHAM in Distinct(Filter(dmSanPhamCCPCollect,LHNV=cbxLHNVCCP.Selected.Value),MA_SAN_PHAM)
+                    )
+                );
+                
+            );
             //Loc theo ma san pham
             If(
                 !IsBlank(cbxMaSPCCP.Selected.MA_SAN_PHAM),
@@ -925,9 +937,8 @@ Tracuubaogia As screen:
     tislPhiTuCCP As text:
         Align: =Align.Right
         Default: |-
-            =If(phi_tu=0,Blank(),Text(phi_tu,"#,###"))
+            =If(phi_tu=0,Blank(),Concatenate(Text(phi_tu,"#,###")," VNĐ"))
         DisplayMode: =DisplayMode.Disabled
-        Format: =TextFormat.Number
         Height: =32
         HintText: =""
         RadiusBottomLeft: =0
@@ -935,8 +946,8 @@ Tracuubaogia As screen:
         RadiusTopLeft: =0
         RadiusTopRight: =0
         Size: =11
-        Width: =120
-        X: =568
+        Width: =150
+        X: =555
         Y: =114
         ZIndex: =16
 
@@ -961,9 +972,8 @@ Tracuubaogia As screen:
     tislPhiDenCCP As text:
         Align: =Align.Right
         Default: |-
-            =If(phi_den=0,Blank(),Text(phi_den,"#,###"))
+            =If(phi_den=0,Blank(),Concatenate(Text(phi_den,"#,###")," VNĐ"))
         DisplayMode: =DisplayMode.Disabled
-        Format: =TextFormat.Number
         Height: =32
         HintText: =""
         RadiusBottomLeft: =0
@@ -971,8 +981,8 @@ Tracuubaogia As screen:
         RadiusTopLeft: =0
         RadiusTopRight: =0
         Size: =11
-        Width: =120
-        X: =856
+        Width: =150
+        X: =834
         Y: =117
         ZIndex: =18
 
@@ -981,7 +991,7 @@ Tracuubaogia As screen:
         Size: =11
         Text: ="Mức phí đến"
         Width: =100
-        X: =748
+        X: =726
         Y: =121
         ZIndex: =19
 
