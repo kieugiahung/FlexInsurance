@@ -15,7 +15,15 @@
                 Remove(
                     DL_HOP_DONG_SPS,
                     ds
-                )
+                );
+                RemoveIf(
+                    DL_HOP_DONG_SP_NDBH,
+                    ID_HOPDONG_SP=ds.ID
+                );
+                RemoveIf(
+                    DL_HOP_DONG_SP_QLCT,
+                    ID_HOPDONG_SP=ds.ID
+                );
             );
             Set(
                 nhapBGCCPFwd,
