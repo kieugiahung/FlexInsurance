@@ -496,7 +496,13 @@ Tracuubaogia As screen:
                     tmpKQCCPCollect,
                     Filter(
                         tmpKQCCPCollect,
-                        MA_SAN_PHAM in Distinct(Filter(dmSanPhamCCPCollect,LHNV=cbxLHNVCCP.Selected.Value),MA_SAN_PHAM)
+                        MA_SAN_PHAM in Distinct(
+                            Filter(
+                                dmSanPhamCCPCollect,
+                                LHNV = cbxLHNVCCP.Selected.Value
+                            ),
+                            MA_SAN_PHAM
+                        )
                     )
                 );
                 
@@ -666,7 +672,7 @@ Tracuubaogia As screen:
                                 ),
                                 "cr282_ten_hien_thi"
                             ),
-                             cr282_ten_hien_thi,
+                            cr282_ten_hien_thi,
                             ";"
                         )
                     )
@@ -715,6 +721,7 @@ Tracuubaogia As screen:
                 
             // lọc dữ liệu theo giới tính
             // tìm nhóm tính phí theo giới tính
+            /*
             If(
                     !IsBlank(cbxGTinhCCP.Selected.TEN_GIOI_TINH) && CountRows(
                         Filter(
@@ -728,7 +735,21 @@ Tracuubaogia As screen:
                         MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH && cr282_ma_sp = gr.cr282_ma_sp && cr282_ma_nhom_tinhphi = gr.cr282_ma_nhom_tinhphi && cr282_loai <> "Chính"
                     )
                 );
+                */
             );
+            // tìm theo giới tính, nếu nhập giới tính thì tìm theo giới tinh
+            // trường hợp trong bảng tính phí k có giới tính thì vẫn lấy
+            If(
+                !IsBlank(cbxGTinhCCP.Selected.TEN_GIOI_TINH),
+                ClearCollect(
+                    tmpKQCCPCollect,
+                    Filter(
+                        tmpKQCCPCollect,
+                        (Trim(Lower(MA_GIOI_TINH)) = Trim(Lower(cbxGTinhCCP.Selected.TEN_GIOI_TINH) Or !IsBlank(MA_GIOI_TINH)))
+                    )
+                )
+            );
+            /*
             ClearCollect (
                 tem2,
                 tmpQLGroupDistinct
@@ -757,6 +778,7 @@ Tracuubaogia As screen:
                     )
                 )
             );
+            */
             ClearCollect(
                 tempFinal,
                 tempSPKH
