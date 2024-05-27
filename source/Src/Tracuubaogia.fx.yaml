@@ -5,7 +5,7 @@ Tracuubaogia As screen:
             dmSanPhamCCPCollect,
             AddColumns(
                 DL_SAN_PHAM,
-                "title",
+                title,
                 Concatenate(MA_SAN_PHAM," - ",TEN_SAN_PHAM)
             )
         );
@@ -13,7 +13,7 @@ Tracuubaogia As screen:
             dmGTinhCCPCollect,
             AddColumns(
                 DM_GIOI_TINHS,
-                "title",
+                title,
                 Concatenate(MA_GIOI_TINH," - ",TEN_GIOI_TINH)
             )
         );
@@ -46,6 +46,7 @@ Tracuubaogia As screen:
         Reset(dpNgaySinhCCP);Reset(tiTuoiCCP);Reset(slPhiTuCCP);Reset(slPhiDenCCP);Reset(tislPhiTuCCP);Reset(tislPhiDenCCP);
 
     danhsachnhom As gallery.variableTemplateHeightGallery:
+        '#CopilotOverlayLabel': ="Filtered"
         BorderThickness: =1
         DelayItemLoading: =true
         Height: =587
@@ -69,6 +70,7 @@ Tracuubaogia As screen:
             ZIndex: =1
 
         Gallery6 As gallery.variableTemplateHeightGallery:
+            '#CopilotOverlayLabel': ="Filtered"
             BorderColor: =RGBA(9, 33, 98, 1)
             DelayItemLoading: =true
             Height: =201
@@ -451,7 +453,7 @@ Tracuubaogia As screen:
                 dmSanPhamCCPCollect,
                 AddColumns(
                     DL_SAN_PHAM,
-                    "title",
+                    title,
                     Concatenate(
                         MA_SAN_PHAM,
                         " - ",
@@ -463,7 +465,7 @@ Tracuubaogia As screen:
                 dmGTinhCCPCollect,
                 AddColumns(
                     DM_GIOI_TINHS,
-                    "title",
+                    title,
                     Concatenate(
                         MA_GIOI_TINH,
                         " - ",
@@ -600,7 +602,7 @@ Tracuubaogia As screen:
                                 )
                             )
                         ),
-                        "MA_CHUONG_TRINH",
+                        MA_CHUONG_TRINH,
                         sp.MA_CHUONG_TRINH
                     )
                 );
@@ -613,7 +615,7 @@ Tracuubaogia As screen:
                     tempQLFull,
                     AddColumns(
                         ctql,
-                        "SO_TIEN",
+                        SO_TIEN,
                         Max(
                             Filter(
                                 DL_CHUONGTRINH_QLCTS,
@@ -621,7 +623,7 @@ Tracuubaogia As screen:
                             ),
                             GH_SOTIEN_NAM
                         ),
-                        "PHI",
+                        PHI,
                         Min (
                             Filter (
                                 DL_CHUONG_TRINH_BANG_PHIS,
@@ -644,14 +646,14 @@ Tracuubaogia As screen:
                     tmpQLGroup,
                     AddColumns(
                         fu,
-                        "GHEP_SO_TIEN",
+                        GHEP_SO_TIEN,
                         Concat(
                             ShowColumns(
                                 Filter(
                                     tempQLFull,
                                     MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI
                                 ),
-                                "SO_TIEN"
+                                SO_TIEN
                             ),
                             If(
                                 SO_TIEN > 0,
@@ -663,14 +665,14 @@ Tracuubaogia As screen:
                             ),
                             " VND;"
                         ),
-                        "GHEP_CHUOI_NQL",
+                        GHEP_CHUOI_NQL,
                         Concat(
                             ShowColumns(
                                 Filter(
                                     tempQLFull,
                                     MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI
                                 ),
-                                "cr282_ten_hien_thi"
+                                TEN_HIEN_THI
                             ),
                             cr282_ten_hien_thi,
                             ";"
@@ -683,14 +685,14 @@ Tracuubaogia As screen:
                 tmpQLGroupDistinct,
                 GroupBy(
                     tmpQLGroup,
-                    "GHEP_SO_TIEN",
-                    "cr282_loai",
-                    "cr282_ma_nhom_tinhphi",
-                    "cr282_ma_sp",
-                    "GHEP_CHUOI_NQL",
-                    "MA_CHUONG_TRINH",
-                    "PHI",
-                    "Group"
+                    GHEP_SO_TIEN,
+                    LOAI,
+                    MA_NHOM_TINHPHI,
+                    MA_SP,
+                    GHEP_CHUOI_NQL,
+                    MA_CHUONG_TRINH,
+                    PHI,
+                    Group
                 )
             );
             ClearCollect (
@@ -801,7 +803,7 @@ Tracuubaogia As screen:
         InputTextPlaceholder: ="Chọn giới tính"
         Items: =SortByColumns(DM_GIOI_TINHS,"cr282_ma_gioi_tinh",SortOrder.Ascending)
         SearchFields: =["cr282_ten_gioi_tinh"]
-        SearchItems: =Search(SortByColumns(DM_GIOI_TINHS,"cr282_ma_gioi_tinh",SortOrder.Ascending),cbxGTinhCCP.SearchText,"cr282_ten_gioi_tinh")
+        SearchItems: =Search(SortByColumns(DM_GIOI_TINHS,"cr282_ma_gioi_tinh",SortOrder.Ascending),cbxGTinhCCP.SearchText,cr282_ten_gioi_tinh)
         SelectMultiple: =false
         Size: =11
         Width: =250
@@ -825,7 +827,7 @@ Tracuubaogia As screen:
         InputTextPlaceholder: ="Chọn sản phẩm"
         Items: =SortByColumns(Filter(dmSanPhamCCPCollect,LHNV=cbxLHNVCCP.Selected.Value),"cr282_ma_san_pham",SortOrder.Ascending)
         SearchFields: =["title"]
-        SearchItems: =Search(SortByColumns(Filter(dmSanPhamCCPCollect,LHNV=cbxLHNVCCP.Selected.Value),"cr282_ma_san_pham",SortOrder.Ascending),cbxMaSPCCP.SearchText,"title")
+        SearchItems: =Search(SortByColumns(Filter(dmSanPhamCCPCollect,LHNV=cbxLHNVCCP.Selected.Value),"cr282_ma_san_pham",SortOrder.Ascending),cbxMaSPCCP.SearchText,title)
         SelectMultiple: =false
         Size: =11
         Width: =250

@@ -7,7 +7,7 @@ NhapHopDongLK As screen:
                     DL_SAN_PHAM,
                     !IsBlank(Find(MA_SAN_PHAM,dsMaSPNLKFwd))
                 ),
-                "title",
+                title,
                 Concatenate(MA_SAN_PHAM," - ",TEN_SAN_PHAM)
             )
         );
@@ -18,7 +18,7 @@ NhapHopDongLK As screen:
                     DM_KENH_BANS,
                     MA_KENH_BAN=maKBNLKFwd
                 ),
-                "title",
+                title,
                 Concatenate(MA_KENH_BAN," - ",TEN_KENH_BAN)
             )
         );
@@ -34,21 +34,21 @@ NhapHopDongLK As screen:
                         (IsBlank(dpNgayHDNLK.SelectedDate) || NGAY_HOP_DONG=dpNgayHDNLK.SelectedDate) &&
                         MA_HOP_DONG<>maHDNLKFwd
                     ),
-                    "chon",
+                    chon,
                     0
                 ),
-                "cr282_id",
-                "cr282_ma_hop_dong",
-                "cr282_ngay_hop_dong",
-                "cr282_ma_san_pham",
-                "cr282_ten_san_pham",
-                "cr282_ma_chuong_trinh",
-                "cr282_ten_chuong_trinh",
-                "cr282_ma_kenh_ban",
-                "cr282_ma_khach_hang",
-                "cr282_tong_tien_phi",
-                "cr282_don_vi_tinh",
-                "chon"
+                ID,
+                MA_HOP_DONG,
+                NGAY_HOP_DONG,
+                MA_SAN_PHAM,
+                TEN_SAN_PHAM,
+                MA_CHUONG_TRINH,
+                TEN_CHUONG_TRINH,
+                MA_KENH_BAN,
+                MA_KHACH_HANG,
+                TONG_TIEN_PHI,
+                DON_VI_TINH,
+                chon
             )
         );
         UpdateIf(
@@ -162,6 +162,7 @@ NhapHopDongLK As screen:
             ZIndex: =10
 
         GalleryDKCTCT_6 As gallery.galleryVertical:
+            '#CopilotOverlayLabel': ="Filtered"
             DelayItemLoading: =true
             Height: =604
             Items: =SortByColumns(tmpDSHDLKNLKCollect,"cr282_ngay_hop_dong",SortOrder.Ascending,"cr282_ma_hop_dong",SortOrder.Ascending)
@@ -527,21 +528,21 @@ NhapHopDongLK As screen:
                                 (IsBlank(dpNgayHDNLK.SelectedDate) || NGAY_HOP_DONG=dpNgayHDNLK.SelectedDate) &&
                                 MA_HOP_DONG<>maHDNLKFwd
                             ),
-                            "chon",
+                            chon,
                             0
                         ),
-                        "cr282_id",
-                        "cr282_ma_hop_dong",
-                        "cr282_ngay_hop_dong",
-                        "cr282_ma_san_pham",
-                        "cr282_ten_san_pham",
-                        "cr282_ma_chuong_trinh",
-                        "cr282_ten_chuong_trinh",
-                        "cr282_ma_kenh_ban",
-                        "cr282_ma_khach_hang",
-                        "cr282_tong_tien_phi",
-                        "cr282_don_vi_tinh",
-                        "chon"
+                        ID,
+                        MA_HOP_DONG,
+                        NGAY_HOP_DONG,
+                        MA_SAN_PHAM,
+                        TEN_SAN_PHAM,
+                        MA_CHUONG_TRINH,
+                        TEN_CHUONG_TRINH,
+                        MA_KENH_BAN,
+                        MA_KHACH_HANG,
+                        TONG_TIEN_PHI,
+                        DON_VI_TINH,
+                        chon
                     )
                 );
                 UpdateIf(
@@ -555,7 +556,7 @@ NhapHopDongLK As screen:
                     ngayHD:Blank()
                 })
             SearchFields: =["title"]
-            SearchItems: =Search(SortByColumns(dmSanPhamHDLKCollect,"cr282_ma_san_pham",SortOrder.Ascending),cbxMaSPNLK.SearchText,"title")
+            SearchItems: =Search(SortByColumns(dmSanPhamHDLKCollect,"cr282_ma_san_pham",SortOrder.Ascending),cbxMaSPNLK.SearchText,title)
             SelectMultiple: =false
             Size: =11
             Width: =235
@@ -582,21 +583,21 @@ NhapHopDongLK As screen:
                                 (IsBlank(dpNgayHDNLK.SelectedDate) || NGAY_HOP_DONG=dpNgayHDNLK.SelectedDate) &&
                                 MA_HOP_DONG<>maHDNLKFwd
                             ),
-                            "chon",
+                            chon,
                             0
                         ),
-                        "cr282_id",
-                        "cr282_ma_hop_dong",
-                        "cr282_ngay_hop_dong",
-                        "cr282_ma_san_pham",
-                        "cr282_ten_san_pham",
-                        "cr282_ma_chuong_trinh",
-                        "cr282_ten_chuong_trinh",
-                        "cr282_ma_kenh_ban",
-                        "cr282_ma_khach_hang",
-                        "cr282_tong_tien_phi",
-                        "cr282_don_vi_tinh",
-                        "chon"
+                        ID,
+                        MA_HOP_DONG,
+                        NGAY_HOP_DONG,
+                        MA_SAN_PHAM,
+                        TEN_SAN_PHAM,
+                        MA_CHUONG_TRINH,
+                        TEN_CHUONG_TRINH,
+                        MA_KENH_BAN,
+                        MA_KHACH_HANG,
+                        TONG_TIEN_PHI,
+                        DON_VI_TINH,
+                        chon
                     )
                 );
                 UpdateIf(
@@ -646,21 +647,21 @@ NhapHopDongLK As screen:
                                 (IsBlank(dpNgayHDNLK.SelectedDate) || NGAY_HOP_DONG=dpNgayHDNLK.SelectedDate) &&
                                 MA_HOP_DONG<>maHDNLKFwd
                             ),
-                            "chon",
+                            chon,
                             0
                         ),
-                        "cr282_id",
-                        "cr282_ma_hop_dong",
-                        "cr282_ngay_hop_dong",
-                        "cr282_ma_san_pham",
-                        "cr282_ten_san_pham",
-                        "cr282_ma_chuong_trinh",
-                        "cr282_ten_chuong_trinh",
-                        "cr282_ma_kenh_ban",
-                        "cr282_ma_khach_hang",
-                        "cr282_tong_tien_phi",
-                        "cr282_don_vi_tinh",
-                        "chon"
+                        ID,
+                        MA_HOP_DONG,
+                        NGAY_HOP_DONG,
+                        MA_SAN_PHAM,
+                        TEN_SAN_PHAM,
+                        MA_CHUONG_TRINH,
+                        TEN_CHUONG_TRINH,
+                        MA_KENH_BAN,
+                        MA_KHACH_HANG,
+                        TONG_TIEN_PHI,
+                        DON_VI_TINH,
+                        chon
                     )
                 );
                 UpdateIf(

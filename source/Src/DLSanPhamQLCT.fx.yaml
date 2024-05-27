@@ -12,24 +12,24 @@ DLSanPhamQLCT As screen:
                         "cr282_ma_ql_chitiet",
                         SortOrder.Ascending
                     ),
-                    "chon",
+                    chon,
                     0,
-                    "che_do",
+                    che_do,
                     0,
-                    "ten_hien_thi",
+                    ten_hien_thi,
                     "cr282_ten_ql_chitiet",
-                    "hien_thi",
+                    hien_thi,
                     0
                 ),
-                "cr282_ma_ql_chitiet",
-                "cr282_cap",
-                "cr282_ma_nhom_ql",
-                "cr282_ma_ql_cha",
-                "cr282_ten_ql_chitiet",
-                "chon",
-                "che_do",
-                "ten_hien_thi",
-                "hien_thi"
+                MA_QL_CHITIET,
+                CAP,
+                MA_NHOM_QL,
+                MA_QL_CHA,
+                TEN_QL_CHITIET,
+                chon,
+                che_do,
+                ten_hien_thi,
+                hien_thi
             )
         );
         UpdateIf(
@@ -69,6 +69,7 @@ DLSanPhamQLCT As screen:
         ZIndex: =7
 
         GalleryQLTV As gallery.variableTemplateHeightGallery:
+            '#CopilotOverlayLabel': ="Filtered"
             DelayItemLoading: =true
             Height: =637
             Items: =SortByColumns(Filter(tmpQLTVCollect,hien_thi=1),"cr282_ma_ql_chitiet",SortOrder.Ascending)

@@ -369,7 +369,7 @@ NhapDMKenhBan As screen:
                 Items: =DM_LOAI_KENH_BANS
                 OnSelect: =Reset(ComboBoxNHangBA)
                 SearchFields: =["cr282_ten_loai_kb"]
-                SearchItems: =Search(DM_LOAI_KENH_BANS,ComboBoxLoaiKB.SearchText,"cr282_ten_loai_kb")
+                SearchItems: =Search(DM_LOAI_KENH_BANS,ComboBoxLoaiKB.SearchText,cr282_ten_loai_kb)
                 SelectMultiple: =false
                 Size: =11
                 Width: =200
@@ -421,7 +421,7 @@ NhapDMKenhBan As screen:
                 Items: =DM_NGAN_HANGS
                 OnChange: =Reset(TextMST);Reset(DateNTLap);Reset(TextSTK);
                 SearchFields: =["cr282_ma_ngan_hang"]
-                SearchItems: =Search(DM_NGAN_HANGS,ComboBoxNHangBA.SearchText,"cr282_ma_ngan_hang")
+                SearchItems: =Search(DM_NGAN_HANGS,ComboBoxNHangBA.SearchText,cr282_ma_ngan_hang)
                 SelectMultiple: =false
                 Size: =11
                 Template: =ListItemTemplate.Double
@@ -472,7 +472,7 @@ NhapDMKenhBan As screen:
                 InputTextPlaceholder: ="Chọn loại giấy tờ"
                 Items: =DM_LOAI_GIAYTO
                 SearchFields: =["cr282_ten_loai_gt"]
-                SearchItems: =Search(DM_LOAI_GIAYTO,ComboBoxLGT.SearchText,"cr282_ten_loai_gt")
+                SearchItems: =Search(DM_LOAI_GIAYTO,ComboBoxLGT.SearchText,cr282_ten_loai_gt)
                 SelectMultiple: =false
                 Size: =11
                 Width: =200
@@ -555,7 +555,7 @@ NhapDMKenhBan As screen:
                 Items: =Filter(DM_PHAMVI_DIALYS,LOAI="TINH_TP")
                 OnChange: =Reset(ComboBoxQHuyen)
                 SearchFields: =["cr282_ten_phamvi"]
-                SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="TINH_TP"),ComboBoxTinhTP.SearchText,"cr282_ten_phamvi")
+                SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="TINH_TP"),ComboBoxTinhTP.SearchText,cr282_ten_phamvi)
                 SelectMultiple: =false
                 Size: =11
                 Width: =200
@@ -571,7 +571,7 @@ NhapDMKenhBan As screen:
                 InputTextPlaceholder: ="Chọn quận/huyện"
                 Items: =Filter(DM_PHAMVI_DIALYS,LOAI="QUAN_HUYEN" && MA_CHA=ComboBoxTinhTP.Selected.MA_PHAMVI)
                 SearchFields: =["cr282_ten_phamvi"]
-                SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="QUAN_HUYEN" && MA_CHA=ComboBoxTinhTP.Selected.MA_PHAMVI),ComboBoxQHuyen.SearchText,"cr282_ten_phamvi")
+                SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="QUAN_HUYEN" && MA_CHA=ComboBoxTinhTP.Selected.MA_PHAMVI),ComboBoxQHuyen.SearchText,cr282_ten_phamvi)
                 SelectMultiple: =false
                 Size: =11
                 Width: =200
@@ -739,7 +739,7 @@ NhapDMKenhBan As screen:
                 InputTextPlaceholder: ="Chọn ngân hàng"
                 Items: =DM_NGAN_HANGS
                 SearchFields: =["cr282_ma_ngan_hang"]
-                SearchItems: =Search(DM_NGAN_HANGS,ComboBoxNHang.SearchText,"cr282_ma_ngan_hang")
+                SearchItems: =Search(DM_NGAN_HANGS,ComboBoxNHang.SearchText,cr282_ma_ngan_hang)
                 SelectMultiple: =false
                 Size: =11
                 Template: =ListItemTemplate.Double
@@ -758,7 +758,7 @@ NhapDMKenhBan As screen:
                 Items: =Filter(DM_PHAMVI_DIALYS,LOAI="QUOC_GIA")
                 OnChange: =
                 SearchFields: =["cr282_ten_phamvi"]
-                SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="QUOC_GIA"),ComboBoxQGiaDMKB.SearchText,"cr282_ten_phamvi")
+                SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="QUOC_GIA"),ComboBoxQGiaDMKB.SearchText,cr282_ten_phamvi)
                 SelectMultiple: =false
                 Size: =11
                 Visible: =!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức")
@@ -776,7 +776,7 @@ NhapDMKenhBan As screen:
                 Items: =DM_QUOC_TICHES
                 OnChange: =Reset(ComboBoxQHuyen)
                 SearchFields: =["cr282_ten_quoc_tich"]
-                SearchItems: =Search(DM_QUOC_TICHES,CbxQTichDMKB.SearchText,"cr282_ten_quoc_tich")
+                SearchItems: =Search(DM_QUOC_TICHES,CbxQTichDMKB.SearchText,cr282_ten_quoc_tich)
                 SelectMultiple: =false
                 Size: =11
                 Visible: =ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân")
@@ -1027,7 +1027,7 @@ NhapDMKenhBan As screen:
                 InputTextPlaceholder: ="Chọn loại giấy tờ"
                 Items: =DM_LOAI_GIAYTO
                 SearchFields: =["cr282_ten_loai_gt"]
-                SearchItems: =Search(DM_LOAI_GIAYTO,ComboBoxLGTNDD.SearchText,"cr282_ten_loai_gt")
+                SearchItems: =Search(DM_LOAI_GIAYTO,ComboBoxLGTNDD.SearchText,cr282_ten_loai_gt)
                 SelectMultiple: =false
                 Size: =11
                 Width: =200

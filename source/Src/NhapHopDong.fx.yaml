@@ -88,7 +88,7 @@
                             DL_HOP_DONG_SPS,
                             MA_HOP_DONG = maHopDongFwd
                         ),
-                        "edited",
+                        edited,
                         0
                     )
                 ),
@@ -99,7 +99,7 @@
                             DL_HOP_DONG_SPS,
                             IsBlank(MA_HOP_DONG)
                         ),
-                        "edited",
+                        edited,
                         0
                     )
                 )
@@ -111,7 +111,7 @@
                         DL_HOP_DONG_SP_NDBH,
                         MA_HOP_DONG=First(objHD).MA_HOP_DONG
                     ),
-                    "edited",
+                    edited,
                     0
                 )
             );
@@ -122,7 +122,7 @@
                         DL_HOP_DONG_SP_QLCT,
                         MA_HOP_DONG=First(objHD).MA_HOP_DONG
                     ),
-                    "edited",
+                    edited,
                     0
                 )
             );
@@ -137,12 +137,12 @@
                 dmMaGiamGiaNHDCollect,
                 AddColumns(
                     DM_MA_GIAMGIAS,
-                    "title",
+                    title,
                     Concatenate(
                         "Mã: ",MA_GIAM_GIA,", Giảm theo: ",If(LOAI="SO_TIEN","Số tiền","Tỷ lệ"),", Giá trị giảm: ",
                         If(LOAI="SO_TIEN",Text(SO_TIEN),Concatenate(Text(TY_LE_GIAM*100),"%",", Phí giảm tối đa: ",Text(SO_TIEN_TOIDA)))
                     ),
-                    "gia_tri_tong",
+                    gia_tri_tong,
                     If(LOAI="SO_TIEN",SO_TIEN,SO_TIEN_TOIDA)
                 )
             );
@@ -312,7 +312,7 @@
                     InputTextPlaceholder: ="Chọn đơn vị quản lý"
                     Items: =Filter(DM_PHAMVI_DIALYS,LOAI="DON_VI")
                     SearchFields: =["cr282_ten_phamvi"]
-                    SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="DON_VI"),cbxDVQLNHD.SearchText,"cr282_ten_phamvi")
+                    SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="DON_VI"),cbxDVQLNHD.SearchText,cr282_ten_phamvi)
                     SelectMultiple: =false
                     Size: =11
                     Template: =ListItemTemplate.Double
@@ -403,7 +403,7 @@
                     InputTextPlaceholder: ="Chọn đơn vị tiền"
                     Items: =BH_DM_TIENTES
                     SearchFields: =["cr282_id"]
-                    SearchItems: =Search(BH_DM_TIENTES,cbxDVTienNHD.SearchText,"cr282_id")
+                    SearchItems: =Search(BH_DM_TIENTES,cbxDVTienNHD.SearchText,cr282_id)
                     SelectMultiple: =false
                     Size: =11
                     Width: =250
@@ -450,7 +450,7 @@
                         =[{title:"Tiền mặt",value:"0"},{title:"Chuyển khoản",value:"1"}]
                     SearchFields: =["title"]
                     SearchItems: |-
-                        =Search([{title:"Tiền mặt",value:"0"},{title:"Chuyển khoản",value:"1"}],cbxPTTTNHD.SearchText,"title")
+                        =Search([{title:"Tiền mặt",value:"0"},{title:"Chuyển khoản",value:"1"}],cbxPTTTNHD.SearchText,title)
                     SelectMultiple: =false
                     Size: =11
                     Width: =250
@@ -555,7 +555,7 @@
                     Items: =DM_LOAI_KENH_BANS
                     OnChange: =Reset(cbxMaKBNHD)
                     SearchFields: =["cr282_ten_loai_kb"]
-                    SearchItems: =Search(DM_LOAI_KENH_BANS,cbxLoaiKBNHD.SearchText,"cr282_ten_loai_kb")
+                    SearchItems: =Search(DM_LOAI_KENH_BANS,cbxLoaiKBNHD.SearchText,cr282_ten_loai_kb)
                     SelectMultiple: =false
                     Size: =11
                     Width: =250
@@ -594,7 +594,7 @@
                             })
                         )
                     SearchFields: =["cr282_ma_kenh_ban"]
-                    SearchItems: =Search(Filter(DM_KENH_BANS,LOAI=cbxLoaiKBNHD.Selected.MA_LOAI_KB),cbxMaKBNHD.SearchText,"cr282_ma_kenh_ban")
+                    SearchItems: =Search(Filter(DM_KENH_BANS,LOAI=cbxLoaiKBNHD.Selected.MA_LOAI_KB),cbxMaKBNHD.SearchText,cr282_ma_kenh_ban)
                     SelectMultiple: =false
                     Size: =11
                     Template: =ListItemTemplate.Double
@@ -611,7 +611,7 @@
                     InputTextPlaceholder: ="Chọn đơn vị kênh bán"
                     Items: =DM_DON_VI
                     SearchFields: =["cr282_ten_don_vi"]
-                    SearchItems: =Search(DM_DON_VI,cbxDVKBNHD.SearchText,"cr282_ten_don_vi")
+                    SearchItems: =Search(DM_DON_VI,cbxDVKBNHD.SearchText,cr282_ten_don_vi)
                     SelectMultiple: =false
                     Size: =11
                     Template: =ListItemTemplate.Double
@@ -736,13 +736,13 @@
                                     RenameColumns(
                                         ShowColumns(
                                             DM_NGHE_NGHIEP,
-                                            "cr282_ma_nghe_nghiep",
-                                            "cr282_ten_nghe_nghiep"
+                                            MA_NGHE_NGHIEP,
+                                            TEN_NGHE_NGHIEP
                                         ),
-                                        "cr282_ma_nghe_nghiep",
-                                        "value",
-                                        "cr282_ten_nghe_nghiep",
-                                        "title"
+                                        cr282_ma_nghe_nghiep,
+                                        value,
+                                        cr282_ten_nghe_nghiep,
+                                        title
                                     )
                                 ),
                                 ClearCollect(
@@ -750,13 +750,13 @@
                                     RenameColumns(
                                         ShowColumns(
                                             BH_DM_NGANHNGHES,
-                                            "cr282_ma_nhom_nganh",
-                                            "cr282_ten_nganh"
+                                            MA_NHOM_NGANH,
+                                            TEN_NGANH
                                         ),
-                                        "cr282_ma_nhom_nganh",
-                                        "value",
-                                        "cr282_ten_nganh",
-                                        "title"
+                                        cr282_ma_nhom_nganh,
+                                        value,
+                                        cr282_ten_nganh,
+                                        title
                                     )
                                 )
                             );
@@ -827,7 +827,7 @@
                             checkChangeKH1:"1"
                         })
                     SearchFields: =["cr282_ma_khach_hang"]
-                    SearchItems: =Search(DM_KHACH_HANG,cbxMaKHNHD.SearchText,"cr282_ma_khach_hang")
+                    SearchItems: =Search(DM_KHACH_HANG,cbxMaKHNHD.SearchText,cr282_ma_khach_hang)
                     SelectMultiple: =false
                     Size: =11
                     Template: =ListItemTemplate.Double
@@ -858,7 +858,7 @@
                     InputTextPlaceholder: ="Chọn giới tính"
                     Items: =DM_GIOI_TINHS
                     SearchFields: =["cr282_ten_gioi_tinh"]
-                    SearchItems: =Search(DM_GIOI_TINHS,cbxGTinhNHD.SearchText,"cr282_ten_gioi_tinh")
+                    SearchItems: =Search(DM_GIOI_TINHS,cbxGTinhNHD.SearchText,cr282_ten_gioi_tinh)
                     SelectMultiple: =false
                     Size: =11
                     Width: =250
@@ -927,7 +927,7 @@
                     InputTextPlaceholder: =
                     Items: =SortByColumns(dmKhachHangNHDCollect,"value",SortOrder.Ascending)
                     SearchFields: =["title"]
-                    SearchItems: =Search(SortByColumns(dmKhachHangNHDCollect,"value",SortOrder.Ascending),cbxNgheNHD.SearchText,"title")
+                    SearchItems: =Search(SortByColumns(dmKhachHangNHDCollect,"value",SortOrder.Ascending),cbxNgheNHD.SearchText,title)
                     SelectMultiple: =false
                     Size: =11
                     Width: =250
@@ -1007,7 +1007,7 @@
                     InputTextPlaceholder: ="Chọn tỉnh/thành phố"
                     Items: =Filter(DM_PHAMVI_DIALYS,LOAI="TINH_TP")
                     SearchFields: =["cr282_ma_phamvi"]
-                    SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="TINH_TP"),cbxTinhNHD.SearchText,"cr282_ma_phamvi")
+                    SearchItems: =Search(Filter(DM_PHAMVI_DIALYS,LOAI="TINH_TP"),cbxTinhNHD.SearchText,cr282_ma_phamvi)
                     SelectMultiple: =false
                     Size: =11
                     Width: =250
@@ -1068,6 +1068,7 @@
                     ZIndex: =19
 
                 Gallery3_2 As gallery.variableTemplateHeightGallery:
+                    '#CopilotOverlayLabel': ="Filtered"
                     DelayItemLoading: =true
                     Height: =184
                     Items: |-
@@ -1253,7 +1254,7 @@
                                 unReloadMaCT:Blank()
                             })
                         SearchFields: =["cr282_ma_chuong_trinh"]
-                        SearchItems: =Search(Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM),cbxMaCTNHD.SearchText,"cr282_ma_chuong_trinh")
+                        SearchItems: =Search(Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD.Selected.MA_SAN_PHAM),cbxMaCTNHD.SearchText,cr282_ma_chuong_trinh)
                         SelectMultiple: =false
                         Size: =11
                         Template: =ListItemTemplate.Double
@@ -1291,7 +1292,7 @@
                                 unReloadMaCT:Blank()
                             })
                         SearchFields: =["cr282_ma_san_pham"]
-                        SearchItems: =Search(DL_SAN_PHAM,cbxMaSPNHD.SearchText,"cr282_ma_san_pham")
+                        SearchItems: =Search(DL_SAN_PHAM,cbxMaSPNHD.SearchText,cr282_ma_san_pham)
                         SelectMultiple: =false
                         Size: =11
                         Template: =ListItemTemplate.Double
@@ -1709,7 +1710,7 @@
                                             DL_HOP_DONG_SP_NDBH,
                                             MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
                                         ),
-                                        "edited",
+                                        edited,
                                         0
                                     )
                                 );
@@ -1755,7 +1756,7 @@
                                             DL_HOP_DONG_SP_QLCT,
                                             MA_HOP_DONG=First(objHD).MA_HOP_DONG && ID_HOPDONG_SP=ThisItem.ID
                                         ),
-                                        "edited",
+                                        edited,
                                         0
                                     )
                                 );
@@ -2510,7 +2511,7 @@
                         InputTextPlaceholder: =""
                         Items: =' DL_SAN_PHAM_CT'
                         SearchFields: =["cr282_ma_chuongtrinh"]
-                        SearchItems: =Search(' DL_SAN_PHAM_CT',cbxMaCTNHDHide.SearchText,"cr282_ma_chuongtrinh")
+                        SearchItems: =Search(' DL_SAN_PHAM_CT',cbxMaCTNHDHide.SearchText,cr282_ma_chuongtrinh)
                         SelectMultiple: =false
                         Size: =11
                         Visible: =ThisItem.edited=0
@@ -2577,6 +2578,7 @@
                     ZIndex: =19
 
                 Gallery3_1 As gallery.variableTemplateHeightGallery:
+                    '#CopilotOverlayLabel': ="Filtered"
                     DelayItemLoading: =true
                     Height: =146
                     Items: |-
@@ -3548,8 +3550,8 @@
                                 GroupedSp,
                                 GroupBy(
                                     dsSpKetHop,
-                                    "MA_SAN_PHAM",
-                                    "Grouped"
+                                    MA_SAN_PHAM,
+                                    Grouped
                                 )
                             );
                             If(
@@ -4294,8 +4296,8 @@
                                 GroupedSp,
                                 GroupBy(
                                     dsSpKetHop,
-                                    "MA_SAN_PHAM",
-                                    "Grouped"
+                                    MA_SAN_PHAM,
+                                    Grouped
                                 )
                             );
                             If(
@@ -4433,43 +4435,43 @@
                                             "cr282_ma_chinh_sach",
                                             SortOrder.Ascending
                                         ),
-                                        "hinh_thuc",
+                                        hinh_thuc,
                                         "",
-                                        "loai_dieu_kien",
+                                        loai_dieu_kien,
                                         "",
-                                        "loai_cs",
+                                        loai_cs,
                                         "",
-                                        "so_tien",
+                                        so_tien,
                                         0,
-                                        "ty_le",
+                                        ty_le,
                                         0,
-                                        "so_tien_max",
+                                        so_tien_max,
                                         0,
-                                        "donvi_tien",
+                                        donvi_tien,
                                         "",
-                                        "pass",
+                                        pass,
                                         0,
-                                        "tich_chon",
+                                        tich_chon,
                                         false
                                     ),
-                                    "cr282_id",
-                                    "cr282_ma_chinh_sach",
-                                    "cr282_mo_ta",
-                                    "cr282_san_pham",
-                                    "cr282_kenh_ban",
-                                    "cr282_khach_hang",
-                                    "cr282_pham_vi",
-                                    "cr282_hieu_luc_tu",
-                                    "cr282_hieu_luc_den",
-                                    "hinh_thuc",
-                                    "loai_dieu_kien",
-                                    "loai_cs",
-                                    "so_tien",
-                                    "ty_le",
-                                    "so_tien_max",
-                                    "donvi_tien",
-                                    "pass",
-                                    "tich_chon"
+                                    ID,
+                                    MA_CHINH_SACH,
+                                    MO_TA,
+                                    SAN_PHAM,
+                                    KENH_BAN,
+                                    KHACH_HANG,
+                                    PHAM_VI,
+                                    HIEU_LUC_TU,
+                                    HIEU_LUC_DEN,
+                                    hinh_thuc,
+                                    loai_dieu_kien,
+                                    loai_cs,
+                                    so_tien,
+                                    ty_le,
+                                    so_tien_max,
+                                    donvi_tien,
+                                    pass,
+                                    tich_chon
                                 )
                             );
                             ForAll(//Lay gia tri cs ap dung
@@ -4536,10 +4538,10 @@
                         DataField: ="cr282_loai_tac_dong"
                         Default: =ThisItem.LOAI_TAC_DONG
                         DisplayMode: =Parent.DisplayMode
-                        DisplayName: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS],DataSourceInfo.DisplayName,"cr282_loai_tac_dong")
+                        DisplayName: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS],DataSourceInfo.DisplayName,cr282_loai_tac_dong)
                         Fill: =RGBA(0, 0, 0, 0)
                         Height: =50
-                        MaxLength: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS], DataSourceInfo.MaxLength, "cr282_loai_tac_dong")
+                        MaxLength: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS], DataSourceInfo.MaxLength, cr282_loai_tac_dong)
                         Required: =false
                         Update: =DataCardValue21_1.Selected.MA
                         Width: =326
@@ -4603,10 +4605,10 @@
                         DataField: ="cr282_kieu_du_lieu"
                         Default: =ThisItem.KIEU_DU_LIEU
                         DisplayMode: =Parent.DisplayMode
-                        DisplayName: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS],DataSourceInfo.DisplayName,"cr282_kieu_du_lieu")
+                        DisplayName: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS],DataSourceInfo.DisplayName,cr282_kieu_du_lieu)
                         Fill: =RGBA(0, 0, 0, 0)
                         Height: =50
-                        MaxLength: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS], DataSourceInfo.MaxLength, "cr282_kieu_du_lieu")
+                        MaxLength: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS], DataSourceInfo.MaxLength, cr282_kieu_du_lieu)
                         Required: =false
                         Update: =DataCardValue19_1.Selected.MA
                         Width: =326
@@ -4670,7 +4672,7 @@
                         DataField: ="cr282_gia_tri"
                         Default: =ThisItem.GIA_TRI
                         DisplayMode: =Parent.DisplayMode
-                        DisplayName: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS],DataSourceInfo.DisplayName,"cr282_gia_tri")
+                        DisplayName: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS],DataSourceInfo.DisplayName,cr282_gia_tri)
                         Fill: =RGBA(0, 0, 0, 0)
                         Height: =50
                         Required: =false
@@ -4744,7 +4746,7 @@
                         DataField: ="cr282_so_tien_toi_da"
                         Default: =ThisItem.SO_TIEN_TOI_DA
                         DisplayMode: =Parent.DisplayMode
-                        DisplayName: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS],DataSourceInfo.DisplayName,"cr282_so_tien_toi_da")
+                        DisplayName: =DataSourceInfo([@DL_HOP_DONG_KETQUA_CS],DataSourceInfo.DisplayName,cr282_so_tien_toi_da)
                         Fill: =RGBA(0, 0, 0, 0)
                         Height: =50
                         Required: =false
@@ -4870,6 +4872,7 @@
                         ZIndex: =8
 
                     "GalleryCSDaChon As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0'":
+                        '#CopilotOverlayLabel': ="Filtered"
                         BorderColor: =RGBA(255, 255, 255, 1)
                         DelayItemLoading: =true
                         Height: =146
@@ -4954,6 +4957,7 @@
                     ZIndex: =19
 
                 Gallery3_3 As gallery.variableTemplateHeightGallery:
+                    '#CopilotOverlayLabel': ="Filtered"
                     DelayItemLoading: =true
                     Height: =153
                     Items: |-

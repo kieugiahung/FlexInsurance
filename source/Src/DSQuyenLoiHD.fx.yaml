@@ -19,6 +19,7 @@ DSQuyenLoiHD As screen:
         ZIndex: =1
 
         GalleryDKCTCT_8 As gallery.galleryVertical:
+            '#CopilotOverlayLabel': ="Filtered"
             DelayItemLoading: =true
             Height: =612
             Items: =SortByColumns(Filter(tmpQLCTHDSPNHDCollect,ID_HOPDONG_SP=idHopDongSPQLCT),"cr282_tt_hienthi",SortOrder.Ascending)
@@ -774,7 +775,7 @@ DSQuyenLoiHD As screen:
             Items: =Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD_1.Selected.MA_SAN_PHAM)
             OnChange: =
             SearchFields: =["cr282_ma_chuong_trinh"]
-            SearchItems: =Search(Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD_1.Selected.MA_SAN_PHAM),cbxMaCTNHD_1.SearchText,"cr282_ma_chuong_trinh")
+            SearchItems: =Search(Filter(' DL_SAN_PHAM_CT',MA_SAN_PHAM=cbxMaSPNHD_1.Selected.MA_SAN_PHAM),cbxMaCTNHD_1.SearchText,cr282_ma_chuong_trinh)
             SelectMultiple: =false
             Size: =11
             Template: =ListItemTemplate.Double
@@ -793,7 +794,7 @@ DSQuyenLoiHD As screen:
             Items: =DL_SAN_PHAM
             OnChange: =Reset(cbxMaCTNHD_1)
             SearchFields: =["cr282_ma_san_pham"]
-            SearchItems: =Search(DL_SAN_PHAM,cbxMaSPNHD_1.SearchText,"cr282_ma_san_pham")
+            SearchItems: =Search(DL_SAN_PHAM,cbxMaSPNHD_1.SearchText,cr282_ma_san_pham)
             SelectMultiple: =false
             Size: =11
             Template: =ListItemTemplate.Double
