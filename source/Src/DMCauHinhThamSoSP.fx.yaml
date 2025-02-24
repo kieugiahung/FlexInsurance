@@ -378,18 +378,21 @@ DMCauHinhThamSoSP As screen:
                 X: =433
                 ZIndex: =23
 
-        BadgeCanvas1_8 As Badge:
+        "BadgeCanvas1_8 As 'Huy hiệu'":
+            Align: =""
             BasePaletteColor: =
             Content: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =39
+            VerticalAlign: =""
             Width: =1160
             X: =17
             Y: =97
             ZIndex: =2
 
-        TextCanvas2_38 As Text:
+        "TextCanvas2_38 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -401,7 +404,8 @@ DMCauHinhThamSoSP As screen:
             Y: =97
             ZIndex: =3
 
-        TextCanvas2_32 As Text:
+        "TextCanvas2_32 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -413,7 +417,8 @@ DMCauHinhThamSoSP As screen:
             Y: =98
             ZIndex: =4
 
-        TextCanvas2_40 As Text:
+        "TextCanvas2_40 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -425,7 +430,8 @@ DMCauHinhThamSoSP As screen:
             Y: =98
             ZIndex: =5
 
-        TextCanvas2_39 As Text:
+        "TextCanvas2_39 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -437,13 +443,16 @@ DMCauHinhThamSoSP As screen:
             Y: =97
             ZIndex: =6
 
-        "TextFilterNQLNV As 'Text input'":
+        "TextFilterNQLNV As 'Văn bản đầu vào'":
+            Appearance: ="FilledDarker"
             BasePaletteColor: =
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =43
             OnChange: =
             Placeholder: ="Nhập giá trị lọc"
+            TriggerOutput: ="FocusOut"
             Visible: =loaiFilterYTAH=0
             Width: =240
             X: =570
@@ -522,7 +531,9 @@ DMCauHinhThamSoSP As screen:
             Y: =40
             ZIndex: =9
 
-        CbxFilterNQLNV As Combobox.pcfdataset:
+        "CbxFilterNQLNV As 'Hộp tổ hợp'.pcfdataset":
+            Appearance: ="FilledDarker"
+            BorderStyle: =""
             DefaultSelectedItems: =Filter(["Mã dữ liệu", "Nhóm quyền lợi","Loại hình nghiệp vụ"],Value="Mã dữ liệu")
             DisplayMode: =DisplayMode.Edit
             Height: =43
@@ -537,12 +548,16 @@ DMCauHinhThamSoSP As screen:
                     UpdateContext({loaiFilterNQL:2})
                 );
                 Reset(TextFilterNQLNV);Reset(CbxFilterValueNQLNVNQL);Reset(CbxFilterValueNQLNVLHNV);
+            Required: =false
+            TriggerOutput: ="Keypress"
             Width: =240
             X: =320
             Y: =36
             ZIndex: =11
 
-        CbxFilterValueNQLNVNQL As Combobox.pcfdataset:
+        "CbxFilterValueNQLNVNQL As 'Hộp tổ hợp'.pcfdataset":
+            Appearance: ="FilledDarker"
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             Height: =43
             InputTextPlaceholder: |+
@@ -552,13 +567,15 @@ DMCauHinhThamSoSP As screen:
             Items: |+
                 =SortByColumns(DM_NHOM_QUYENLOIS,"cr282_ma_nhom_ql",SortOrder.Ascending)
                 
+            Required: =false
+            TriggerOutput: ="Keypress"
             Visible: =loaiFilterNQL=1
             Width: =240
             X: =570
             Y: =36
             ZIndex: =13
 
-            MA_NHOM_QL1_4 As pcfDataField.textualColumn:
+            MA_NHOM_QL1_4 As PowerApps_CoreControls_ComboboxCanvasTemplate_dataField.textualColumn:
                 FieldDisplayName: ="MA_NHOM_QL"
                 FieldName: ="cr282_ma_nhom_ql"
                 FieldType: ="s"
@@ -566,7 +583,7 @@ DMCauHinhThamSoSP As screen:
                 Order: =2
                 ZIndex: =20
 
-            TEN_NHOM_QL1_4 As pcfDataField.textualColumn:
+            TEN_NHOM_QL1_4 As PowerApps_CoreControls_ComboboxCanvasTemplate_dataField.textualColumn:
                 FieldDisplayName: ="TEN_NHOM_QL"
                 FieldName: ="cr282_ten_nhom_ql"
                 FieldType: ="s"
@@ -574,7 +591,7 @@ DMCauHinhThamSoSP As screen:
                 Order: =1
                 ZIndex: =21
 
-            GHI_CHU1_4 As pcfDataField.textualColumn:
+            GHI_CHU1_4 As PowerApps_CoreControls_ComboboxCanvasTemplate_dataField.textualColumn:
                 FieldDisplayName: ="GHI_CHU"
                 FieldName: ="cr282_ghi_chu"
                 FieldType: ="s"
@@ -582,7 +599,8 @@ DMCauHinhThamSoSP As screen:
                 Order: =3
                 ZIndex: =22
 
-        TextCanvas1_2 As Text:
+        "TextCanvas1_2 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =29
@@ -594,7 +612,8 @@ DMCauHinhThamSoSP As screen:
             Y: =0
             ZIndex: =14
 
-        TextCanvas2_41 As Text:
+        "TextCanvas2_41 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -606,7 +625,9 @@ DMCauHinhThamSoSP As screen:
             Y: =98
             ZIndex: =15
 
-        CbxFilterValueNQLNVLHNV As Combobox.pcfdataset:
+        "CbxFilterValueNQLNVLHNV As 'Hộp tổ hợp'.pcfdataset":
+            Appearance: ="FilledDarker"
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             Height: =43
             InputTextPlaceholder: |+
@@ -616,13 +637,15 @@ DMCauHinhThamSoSP As screen:
             Items: |+
                 =["Sức khỏe","Tai nạn","Trách nhiệm dân sự"]
                 
+            Required: =false
+            TriggerOutput: ="Keypress"
             Visible: =loaiFilterNQL=2
             Width: =240
             X: =570
             Y: =36
             ZIndex: =16
 
-            Value2 As pcfDataField.textualColumn:
+            Value2 As PowerApps_CoreControls_ComboboxCanvasTemplate_dataField.textualColumn:
                 FieldDisplayName: ="Value"
                 FieldName: ="Value"
                 FieldType: ="s"
@@ -630,12 +653,18 @@ DMCauHinhThamSoSP As screen:
                 Order: =1
                 ZIndex: =24
 
-        ButtonCanvas4_1 As Button:
+        ButtonCanvas4_1 As Nút:
+            Align: =""
             BasePaletteColor: =
+            BorderStyle: =""
             DisplayMode: =If(Or(maAddedNQL<>"",maUpdatedNQL<>""),DisplayMode.Disabled,DisplayMode.Edit)
             FontColor: =
             FontSize: =16
             Height: =43
+            Icon: =""
+            IconRotation: =0
+            IconStyle: ="Outline"
+            Layout: ="Icon before"
             OnSelect: |-
                 =ClearCollect(
                     tmpNQLLHNVCollect,
@@ -686,6 +715,7 @@ DMCauHinhThamSoSP As screen:
                     )
                 );
             Text: ="Tra cứu"
+            VerticalAlign: =""
             Width: =96
             X: =822
             Y: =36
@@ -997,18 +1027,21 @@ DMCauHinhThamSoSP As screen:
                 X: =433
                 ZIndex: =22
 
-        BadgeCanvas1_7 As Badge:
+        "BadgeCanvas1_7 As 'Huy hiệu'":
+            Align: =""
             BasePaletteColor: =
             Content: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =39
+            VerticalAlign: =""
             Width: =1160
             X: =17
             Y: =97
             ZIndex: =2
 
-        TextCanvas2_36 As Text:
+        "TextCanvas2_36 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -1020,7 +1053,8 @@ DMCauHinhThamSoSP As screen:
             Y: =97
             ZIndex: =3
 
-        TextCanvas2_31 As Text:
+        "TextCanvas2_31 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -1032,7 +1066,8 @@ DMCauHinhThamSoSP As screen:
             Y: =98
             ZIndex: =4
 
-        TextCanvas2_35 As Text:
+        "TextCanvas2_35 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -1044,7 +1079,8 @@ DMCauHinhThamSoSP As screen:
             Y: =98
             ZIndex: =5
 
-        TextCanvas2_34 As Text:
+        "TextCanvas2_34 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -1056,13 +1092,16 @@ DMCauHinhThamSoSP As screen:
             Y: =97
             ZIndex: =6
 
-        "TextFilterYTAH As 'Text input'":
+        "TextFilterYTAH As 'Văn bản đầu vào'":
+            Appearance: ="FilledDarker"
             BasePaletteColor: =
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =43
             OnChange: =
             Placeholder: ="Nhập giá trị lọc"
+            TriggerOutput: ="FocusOut"
             Visible: =loaiFilterYTAH=0
             Width: =240
             X: =570
@@ -1141,7 +1180,9 @@ DMCauHinhThamSoSP As screen:
             Y: =40
             ZIndex: =9
 
-        CbxFilterYTAH As Combobox.pcfdataset:
+        "CbxFilterYTAH As 'Hộp tổ hợp'.pcfdataset":
+            Appearance: ="FilledDarker"
+            BorderStyle: =""
             DefaultSelectedItems: =Filter(["Mã yếu tố", "Tên yếu tố","Loại hình nghiệp vụ"],Value="Mã yếu tố")
             DisplayMode: =DisplayMode.Edit
             Height: =43
@@ -1154,23 +1195,29 @@ DMCauHinhThamSoSP As screen:
                     UpdateContext({loaiFilterYTAH:0})
                 );
                 Reset(TextFilterYTAH);Reset(CbxFilterValueYTAH)
+            Required: =false
+            TriggerOutput: ="Keypress"
             Width: =240
             X: =320
             Y: =36
             ZIndex: =11
 
-        CbxFilterValueYTAH As Combobox.pcfdataset:
+        "CbxFilterValueYTAH As 'Hộp tổ hợp'.pcfdataset":
+            Appearance: ="FilledDarker"
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             Height: =43
             InputTextPlaceholder: ="Chọn loại hình nghiệp vụ"
             Items: =["Sức khỏe","Tai nạn","Trách nhiệm dân sự"]
+            Required: =false
+            TriggerOutput: ="Keypress"
             Visible: =loaiFilterYTAH=1
             Width: =240
             X: =570
             Y: =36
             ZIndex: =13
 
-            Value1 As pcfDataField.textualColumn:
+            Value1 As PowerApps_CoreControls_ComboboxCanvasTemplate_dataField.textualColumn:
                 FieldDisplayName: ="Value"
                 FieldName: ="Value"
                 FieldType: ="s"
@@ -1178,7 +1225,8 @@ DMCauHinhThamSoSP As screen:
                 Order: =4
                 ZIndex: =23
 
-        TextCanvas1_1 As Text:
+        "TextCanvas1_1 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =29
@@ -1190,7 +1238,8 @@ DMCauHinhThamSoSP As screen:
             Y: =0
             ZIndex: =14
 
-        TextCanvas2_37 As Text:
+        "TextCanvas2_37 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -1202,12 +1251,18 @@ DMCauHinhThamSoSP As screen:
             Y: =98
             ZIndex: =15
 
-        ButtonCanvas4 As Button:
+        ButtonCanvas4 As Nút:
+            Align: =""
             BasePaletteColor: =
+            BorderStyle: =""
             DisplayMode: =If(Or(maAddedYTAH<>"",maUpdatedYTAH<>""),DisplayMode.Disabled,DisplayMode.Edit)
             FontColor: =
             FontSize: =16
             Height: =43
+            Icon: =""
+            IconRotation: =0
+            IconStyle: ="Outline"
+            Layout: ="Icon before"
             OnSelect: |-
                 =ClearCollect(
                     tmpYTAHCollect,
@@ -1255,6 +1310,7 @@ DMCauHinhThamSoSP As screen:
                     )
                 );
             Text: ="Tra cứu"
+            VerticalAlign: =""
             Width: =96
             X: =822
             Y: =36
@@ -1271,7 +1327,8 @@ DMCauHinhThamSoSP As screen:
         Y: =281
         ZIndex: =4
 
-        TextCanvas1_20 As Text:
+        "TextCanvas1_20 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Disabled
             FontColor: =
             Height: =31

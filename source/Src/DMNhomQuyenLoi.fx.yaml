@@ -221,18 +221,21 @@ DMNhomQuyenLoi As screen:
                 X: =1238
                 ZIndex: =16
 
-        BadgeCanvas1_6 As Badge:
+        "BadgeCanvas1_6 As 'Huy hiệu'":
+            Align: =""
             BasePaletteColor: =
             Content: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
+            VerticalAlign: =""
             Width: =1189
             X: =15
             Y: =117
             ZIndex: =2
 
-        TextCanvas2_26 As Text:
+        "TextCanvas2_26 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -244,7 +247,8 @@ DMNhomQuyenLoi As screen:
             Y: =117
             ZIndex: =3
 
-        TextCanvas2_27 As Text:
+        "TextCanvas2_27 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -256,7 +260,8 @@ DMNhomQuyenLoi As screen:
             Y: =117
             ZIndex: =4
 
-        TextCanvas2_30 As Text:
+        "TextCanvas2_30 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -268,13 +273,16 @@ DMNhomQuyenLoi As screen:
             Y: =118
             ZIndex: =5
 
-        "TextFilterNQL As 'Text input'":
+        "TextFilterNQL As 'Văn bản đầu vào'":
+            Appearance: ="FilledDarker"
             BasePaletteColor: =
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =43
             OnChange: =
             Placeholder: ="Nhập giá trị lọc"
+            TriggerOutput: ="FocusOut"
             Width: =204
             X: =519
             Y: =55
@@ -347,24 +355,34 @@ DMNhomQuyenLoi As screen:
             Y: =60
             ZIndex: =8
 
-        CbxFilterNQL As Combobox.pcfdataset:
+        "CbxFilterNQL As 'Hộp tổ hợp'.pcfdataset":
+            Appearance: ="FilledDarker"
+            BorderStyle: =""
             DefaultSelectedItems: =Filter(["Mã nhóm quyền lợi", "Tên nhóm quyền lợi"],Value="Mã nhóm quyền lợi")
             DisplayMode: =DisplayMode.Edit
             Height: =43
             InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
             Items: =["Mã nhóm quyền lợi", "Tên nhóm quyền lợi"]
             OnChange: =Reset(TextFilterNQL)
+            Required: =false
+            TriggerOutput: ="Keypress"
             Width: =186
             X: =324
             Y: =55
             ZIndex: =10
 
-        ButtonCanvas4_3 As Button:
+        ButtonCanvas4_3 As Nút:
+            Align: =""
             BasePaletteColor: =
+            BorderStyle: =""
             DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
             FontColor: =
             FontSize: =16
             Height: =43
+            Icon: =""
+            IconRotation: =0
+            IconStyle: ="Outline"
+            Layout: ="Icon before"
             OnSelect: |-
                 =ClearCollect(
                     tmpNQLCollect,
@@ -400,6 +418,7 @@ DMNhomQuyenLoi As screen:
                     )
                 )
             Text: ="Tra cứu"
+            VerticalAlign: =""
             Width: =96
             X: =733
             Y: =55
@@ -416,7 +435,8 @@ DMNhomQuyenLoi As screen:
         Y: =253
         ZIndex: =3
 
-        TextCanvas1_18 As Text:
+        "TextCanvas1_18 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Disabled
             FontColor: =
             Height: =31

@@ -1,0 +1,3978 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  TraCuuCSADDT:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =Reset(ComLoaiDKCS);Reset(ComLoaiCSCS);Reset(ComThamSoCS);Reset(TextInputTuCS);Reset(TextInputDenCS);Reset(cbxTPhanCS);Reset(cbxApDungCS);Reset(ComTieuChiCS);Reset(ComGiaTriCS);
+        Clear(tmpdsGiaTriTCCSCollect1);
+        //load bảng phamvi lên collect
+        ClearCollect(
+            tmpDMPVDiaLyCSCollect,
+            DM_PHAMVI_DIALYS
+        );
+        //load bảng chinhsachdoituong lên collect
+        ClearCollect(
+            tmpDLCSDoiTuongCSCollect,
+            DL_CHINHSACH_DOITUONG
+        );
+        //load bảng chinhsachdoituongct lên collect
+        ClearCollect(
+            tmpDLCSDoiTuongCTCSCollect,
+            DL_CHINHSACH_DOITUONG_CT
+        );
+        ClearCollect(
+            tmpTCCSDTCollect,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                        DL_CHINHSACH_CHUNG,
+                        "cr282_ma_chinh_sach",
+                        SortOrder.Ascending
+                    ),
+                    san_pham,
+                    "",
+                    kenh_ban,
+                    "",
+                    khach_hang,
+                    "",
+                    pham_vi,
+                    "",
+                    loai_dieu_kien,
+                    "",
+                    loai_chinh_sach,
+                    "",
+                    so_tien,
+                    0,
+                    ty_le,
+                    0,
+                    so_tien_toi_da,
+                    0
+                ),
+                MA_CHINH_SACH,
+                HOAT_DONG,
+                san_pham,
+                kenh_ban,
+                khach_hang,
+                pham_vi,
+                loai_dieu_kien,
+                loai_chinh_sach,
+                so_tien,
+                ty_le,
+                so_tien_toi_da
+            )
+        );
+        ForAll(
+            DL_CHINHSACH_APDUNG As dsCSAD,
+            UpdateIf(
+                tmpTCCSDTCollect,
+                cr282_ma_chinh_sach=dsCSAD.MA_CHINH_SACH,
+                {
+                    loai_dieu_kien:dsCSAD.LOAI_DK,
+                    loai_chinh_sach:dsCSAD.ANH_HUONG,
+                    so_tien:dsCSAD.SO_TIEN,
+                    ty_le:dsCSAD.TY_LE,
+                    so_tien_toi_da:dsCSAD.SO_TIEN_TOI_DA
+                }
+            )
+        );
+        ClearCollect(
+            tmpdsMaTCCSDTCollect,
+            ShowColumns(
+                DL_CHINHSACH_CHUNG,
+                MA_CHINH_SACH
+            )
+        );
+        ClearCollect(
+            tmpstrDLTCCSDTCollect,
+            {
+                strAD:"- Áp dụng: ",
+                strLT:"- Loại trừ: "
+            }
+        );
+        ClearCollect(
+            tmpVarCSDT,
+            {
+                ma_chi_tieu:""
+            }
+        );
+        ForAll(
+            tmpdsMaTCCSDTCollect As dsMa,
+            //lay thong tin san pham
+            If(
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")),
+                UpdateIf(
+                    tmpstrDLTCCSDTCollect,
+                    true,
+                    {
+                        strAD:Concatenate(strAD,"Tất cả")
+                    }
+                ),
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2")),
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                            }
+                        )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
+                )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
+            );
+            UpdateIf(
+                tmpTCCSDTCollect,
+                cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                {
+                    san_pham:LookUp(tmpstrDLTCCSDTCollect,true,strAD)
+                }
+            );
+            If(
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")),
+                UpdateIf(
+                    tmpstrDLTCCSDTCollect,
+                    true,
+                    {
+                        strLT:Concatenate(strLT,"Tất cả")
+                    }
+                ),
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2")),
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                            }
+                        )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
+                )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
+            );
+            UpdateIf(
+                tmpTCCSDTCollect,
+                cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                {
+                    san_pham:Concatenate(san_pham,Char(10),LookUp(tmpstrDLTCCSDTCollect,true,strLT))
+                }
+            );
+            UpdateIf(
+                tmpstrDLTCCSDTCollect,
+                true,
+                {
+                    strAD:"- Áp dụng: ",
+                    strLT:"- Loại trừ: "
+                }
+            );
+
+            //lay thong tin kenh ban
+            If(
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="1")),
+                UpdateIf(
+                    tmpstrDLTCCSDTCollect,
+                    true,
+                    {
+                        strAD:Concatenate(strAD,"Tất cả")
+                    }
+                ),
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2")),
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                            }
+                        )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
+                )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
+            );
+            UpdateIf(
+                tmpTCCSDTCollect,
+                cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                {
+                    kenh_ban:LookUp(tmpstrDLTCCSDTCollect,true,strAD)
+                }
+            );
+            If(
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="1")),
+                UpdateIf(
+                    tmpstrDLTCCSDTCollect,
+                    true,
+                    {
+                        strLT:Concatenate(strLT,"Tất cả")
+                    }
+                ),
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2")),
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                            }
+                        )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
+                )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
+            );
+            UpdateIf(
+                tmpTCCSDTCollect,
+                cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                {
+                    kenh_ban:Concatenate(kenh_ban,Char(10),LookUp(tmpstrDLTCCSDTCollect,true,strLT))
+                }
+            );
+            UpdateIf(
+                tmpstrDLTCCSDTCollect,
+                true,
+                {
+                    strAD:"- Áp dụng: ",
+                    strLT:"- Loại trừ: "
+                }
+            );
+
+            //lay thong tin khach hang
+            If(
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="1")),
+                UpdateIf(
+                    tmpstrDLTCCSDTCollect,
+                    true,
+                    {
+                        strAD:Concatenate(strAD,"Tất cả")
+                    }
+                ),
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2")),
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                            }
+                        )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
+                )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
+            );
+            UpdateIf(
+                tmpTCCSDTCollect,
+                cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                {
+                    khach_hang:LookUp(tmpstrDLTCCSDTCollect,true,strAD)
+                }
+            );
+            If(
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="1")),
+                UpdateIf(
+                    tmpstrDLTCCSDTCollect,
+                    true,
+                    {
+                        strLT:Concatenate(strLT,"Tất cả")
+                    }
+                ),
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2")),
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                            }
+                        )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
+                )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
+            );
+            UpdateIf(
+                tmpTCCSDTCollect,
+                cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                {
+                    khach_hang:Concatenate(khach_hang,Char(10),LookUp(tmpstrDLTCCSDTCollect,true,strLT))
+                }
+            );
+            UpdateIf(
+                tmpstrDLTCCSDTCollect,
+                true,
+                {
+                    strAD:"- Áp dụng: ",
+                    strLT:"- Loại trừ: "
+                }
+            );
+
+            //lay thong tin pham vi
+            If(
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="1")),
+                UpdateIf(
+                    tmpstrDLTCCSDTCollect,
+                    true,
+                    {
+                        strAD:Concatenate(strAD,"Tất cả")
+                    }
+                ),
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2")),
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                            }
+                        )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
+                )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
+            );
+            UpdateIf(
+                tmpTCCSDTCollect,
+                cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                {
+                    pham_vi:LookUp(tmpstrDLTCCSDTCollect,true,strAD)
+                }
+            );
+            If(
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="1")),
+                UpdateIf(
+                    tmpstrDLTCCSDTCollect,
+                    true,
+                    {
+                        strLT:Concatenate(strLT,"Tất cả")
+                    }
+                ),
+                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2")),
+                ForAll(
+                    SortByColumns(
+                        Filter(
+                            tmpDLCSDoiTuongCTCSCollect,
+                            MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2"
+                        ),
+                        "cr282_ma_tieu_chi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gia_tri",
+                        SortOrder.Ascending
+                    ) As dsCT,
+                    If(
+                        First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                            }
+                        ),
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                            }
+                        )
+                    );
+                    UpdateIf(
+                        tmpVarCSDT,
+                        true,
+                        {
+                            ma_chi_tieu:dsCT.MA_TIEU_CHI
+                        }
+                    )
+                )
+            );
+            UpdateIf(
+                tmpVarCSDT,
+                true,
+                {
+                    ma_chi_tieu:""
+                }
+            );
+            UpdateIf(
+                tmpTCCSDTCollect,
+                cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                {
+                    pham_vi:Concatenate(pham_vi,Char(10),LookUp(tmpstrDLTCCSDTCollect,true,strLT))
+                }
+            );
+            UpdateIf(
+                tmpstrDLTCCSDTCollect,
+                true,
+                {
+                    strAD:"- Áp dụng: ",
+                    strLT:"- Loại trừ: "
+                }
+            )
+        )
+    Children:
+      - Container8_1:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            Height: =768
+            Width: =1306
+            X: =60
+          Children:
+            - ComTieuChiCS:
+                Control: Classic/ComboBox@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  ChevronBackground: =RGBA(56, 96, 178, 1)
+                  ChevronFill: =RGBA(255, 255, 255, 1)
+                  ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DisplayFields: =["cr282_ten_chi_tieu"]
+                  Font: =Font.'Open Sans'
+                  Height: =28
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  InputTextPlaceholder: ="Chọn tiêu chí"
+                  IsSearchable: =false
+                  Items: =Filter(DM_TIEU_CHI_APDUNGS,LOAI=cbxTPhanCS.Selected.value)
+                  OnChange: |
+                    =Reset(ComGiaTriCS);
+                    If(
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_CT",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    ' DL_SAN_PHAM_CT',
+                                    "cr282_ma_chuongtrinh",
+                                    SortOrder.Ascending
+                                ),
+                                MA_CHUONG_TRINH,
+                                TEN_CHUONG_TRINH
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_chuongtrinh," - ",cr282_ten_chuong_trinh),
+                                value,
+                                cr282_ma_chuongtrinh
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_SP",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    DL_SAN_PHAM,
+                                    "cr282_ma_san_pham",
+                                    SortOrder.Ascending
+                                ),
+                                MA_SAN_PHAM,
+                                TEN_SAN_PHAM
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_san_pham," - ",cr282_ten_san_pham),
+                                value,
+                                cr282_ma_san_pham
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_DL",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        DM_KENH_BANS,
+                                        LOAI="2"
+                                    ),
+                                    "cr282_ma_kenh_ban",
+                                    SortOrder.Ascending
+                                ),
+                                MA_KENH_BAN,
+                                TEN_KENH_BAN
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_kenh_ban," - ",cr282_ten_kenh_ban),
+                                value,
+                                cr282_ma_kenh_ban
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_NH",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        DM_KENH_BANS,
+                                        LOAI="4"
+                                    ),
+                                    "cr282_ma_kenh_ban",
+                                    SortOrder.Ascending
+                                ),
+                                MA_KENH_BAN,
+                                TEN_KENH_BAN
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_kenh_ban," - ",cr282_ten_kenh_ban),
+                                value,
+                                cr282_ma_kenh_ban
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_MG",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        DM_KENH_BANS,
+                                        LOAI="3"
+                                    ),
+                                    "cr282_ma_kenh_ban",
+                                    SortOrder.Ascending
+                                ),
+                                MA_KENH_BAN,
+                                TEN_KENH_BAN
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_kenh_ban," - ",cr282_ten_kenh_ban),
+                                value,
+                                cr282_ma_kenh_ban
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_NHAN_VIEN",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        DM_KENH_BANS,
+                                        LOAI="1"
+                                    ),
+                                    "cr282_ma_kenh_ban",
+                                    SortOrder.Ascending
+                                ),
+                                MA_KENH_BAN,
+                                TEN_KENH_BAN
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_kenh_ban," - ",cr282_ten_kenh_ban),
+                                value,
+                                cr282_ma_kenh_ban
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_KHU_VUC",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        DM_PHAMVI_DIALYS,
+                                        LOAI="KHU_VUC"
+                                    ),
+                                    "cr282_ma_phamvi",
+                                    SortOrder.Ascending
+                                ),
+                                MA_PHAMVI,
+                                TEN_PHAMVI
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_phamvi," - ",cr282_ten_phamvi),
+                                value,
+                                cr282_ma_phamvi
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_QG",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        DM_PHAMVI_DIALYS,
+                                        LOAI="QUOC_GIA"
+                                    ),
+                                    "cr282_ma_phamvi",
+                                    SortOrder.Ascending
+                                ),
+                                MA_PHAMVI,
+                                TEN_PHAMVI
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_phamvi," - ",cr282_ten_phamvi),
+                                value,
+                                cr282_ma_phamvi
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_QUAN_HUYEN",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        DM_PHAMVI_DIALYS,
+                                        LOAI="QUAN_HUYEN"
+                                    ),
+                                    "cr282_ma_phamvi",
+                                    SortOrder.Ascending
+                                ),
+                                MA_PHAMVI,
+                                TEN_PHAMVI
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_phamvi," - ",cr282_ten_phamvi),
+                                value,
+                                cr282_ma_phamvi
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_TINH_TP",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        DM_PHAMVI_DIALYS,
+                                        LOAI="TINH_TP"
+                                    ),
+                                    "cr282_ma_phamvi",
+                                    SortOrder.Ascending
+                                ),
+                                MA_PHAMVI,
+                                TEN_PHAMVI
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_phamvi," - ",cr282_ten_phamvi),
+                                value,
+                                cr282_ma_phamvi
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_VUNG_MIEN",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        DM_PHAMVI_DIALYS,
+                                        LOAI="VUNG_MIEN"
+                                    ),
+                                    "cr282_ma_phamvi",
+                                    SortOrder.Ascending
+                                ),
+                                MA_PHAMVI,
+                                TEN_PHAMVI
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_phamvi," - ",cr282_ten_phamvi),
+                                value,
+                                cr282_ma_phamvi
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_KH_LOAI",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            {
+                                title:"0 - Cá nhân",
+                                value:"0"
+                            },
+                            {
+                                title:"1 - Tổ chức",
+                                value:"1"
+                            }
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_KH_NHOM",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    DM_NHOM_KH,
+                                    "cr282_ma_nhom_kh",
+                                    SortOrder.Ascending
+                                ),
+                                MA_NHOM_KH,
+                                TEN_NHOM_KH
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_nhom_kh," - ",cr282_ten_nhom_kh),
+                                value,
+                                cr282_ma_nhom_kh
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="LHNV",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    DM_LHNV,
+                                    "cr282_ma_lhnv",
+                                    SortOrder.Ascending
+                                ),
+                                MA_LHNV,
+                                TEN_LHNV
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_lhnv," - ",cr282_ten_lhnv),
+                                value,
+                                cr282_ma_lhnv
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_DON_VI",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    DM_DON_VI,
+                                    "cr282_ma_don_vi",
+                                    SortOrder.Ascending
+                                ),
+                                MA_DON_VI,
+                                TEN_DON_VI
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_don_vi," - ",cr282_ten_don_vi),
+                                value,
+                                cr282_ma_don_vi
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_KB_DM",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    DM_KENH_BANS,
+                                    "cr282_ma_kenh_ban",
+                                    SortOrder.Ascending
+                                ),
+                                MA_KENH_BAN,
+                                TEN_KENH_BAN
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_kenh_ban," - ",cr282_ten_kenh_ban),
+                                value,
+                                cr282_ma_kenh_ban
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_KB_LOAI",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    DM_LOAI_KENH_BANS,
+                                    "cr282_ma_loai_kb",
+                                    SortOrder.Ascending
+                                ),
+                                MA_LOAI_KB,
+                                TEN_LOAI_KB
+                            )
+                        );
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            AddColumns(
+                                tmpdsGiaTriTCCSDTCollect,
+                                title,
+                                Concatenate(cr282_ma_loai_kb," - ",cr282_ten_loai_kb),
+                                value,
+                                cr282_ma_loai_kb
+                            )
+                        ),
+                        ComTieuChiCS.Selected.MA_CHI_TIEU="MA_KB_NHOM",
+                        ClearCollect(
+                            tmpdsGiaTriTCCSDTCollect1,
+                            {
+                                title:"0 - Cá nhân",
+                                value:"0"
+                            },
+                            {
+                                title:"1 - Tổ chức",
+                                value:"1"
+                            }
+                        ),
+                        Clear(tmpdsGiaTriTCCSDTCollect1)
+                    )
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 18, 107, 1)
+                  SearchFields: =["cr282_ten_chi_tieu"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(56, 96, 178, 1)
+                  Size: =9
+                  Width: =185
+                  X: =550
+                  Y: =90
+            - Label2_17:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =22
+                  Size: =9
+                  Text: ="Loại dữ liệu"
+                  Width: =83
+                  X: =123
+                  Y: =66
+            - Label2_18:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =22
+                  Size: =9
+                  Text: ="Loại điều kiện"
+                  Width: =98
+                  X: =340
+                  Y: =66
+            - Label2_19:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =22
+                  Size: =9
+                  Text: ="Tiêu chí"
+                  Width: =60
+                  X: =550
+                  Y: =66
+            - Label2_20:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =22
+                  Size: =9
+                  Text: ="Giá trị"
+                  Width: =50
+                  X: =760
+                  Y: =66
+            - Button6_13:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =28
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |
+                    =//load bảng chinhsachdoituong lên collect
+                    ClearCollect(
+                        tmpDLCSDoiTuongCSCollect,
+                        DL_CHINHSACH_DOITUONG
+                    );
+                    //load bảng chinhsachdoituongct lên collect
+                    ClearCollect(
+                        tmpDLCSDoiTuongCTCSCollect,
+                        DL_CHINHSACH_DOITUONG_CT
+                    );
+                    ClearCollect(
+                        tmpDSCSADLoc1Collect,
+                        ShowColumns(
+                            Filter(
+                                DL_CHINHSACH_APDUNG,
+                                (IsBlank(ComLoaiDKCS.Selected.value) || (!IsBlank(ComLoaiDKCS.Selected.value) && LOAI_DK=ComLoaiDKCS.Selected.value)) &&
+                                (IsBlank(ComLoaiCSCS.Selected.value) || (!IsBlank(ComLoaiCSCS.Selected.value) && ANH_HUONG=ComLoaiCSCS.Selected.value)) &&
+                                (IsBlank(ComThamSoCS.Selected.value) || (!IsBlank(ComThamSoCS.Selected.value) && 
+                                (IsBlank(TextInputTuCS.Text) || (!IsBlank(TextInputTuCS.Text) && ((ComThamSoCS.Selected.value="1" && TY_LE>=Value(TextInputTuCS.Text)) || 
+                                (ComThamSoCS.Selected.value="2" && SO_TIEN>=Value(TextInputTuCS.Text))))) &&
+                                (IsBlank(TextInputDenCS.Text) || (!IsBlank(TextInputDenCS.Text) && ((ComThamSoCS.Selected.value="1" && TY_LE<=Value(TextInputDenCS.Text)) || 
+                                (ComThamSoCS.Selected.value="2" && SO_TIEN<=Value(TextInputDenCS.Text)))))
+                                ))
+                            ),
+                            MA_CHINH_SACH
+                        )
+                    );
+                    ClearCollect(
+                        tmpTCCSDTADCollect,
+                        ShowColumns(
+                            SortByColumns(
+                                Filter(
+                                    tmpDLCSDoiTuongCSCollect,
+                                    CountIf(tmpDSCSADLoc1Collect,cr282_ma_chinh_sach=MA_CHINH_SACH)>0
+                                ),
+                                "cr282_ma_chinh_sach",
+                                SortOrder.Ascending
+                            ),
+                            MA_CHINH_SACH
+                        )
+                    );
+                    ClearCollect(
+                        tmpChonCSDTCollect,
+                        {
+                            cr282_ma_chinh_sach:""
+                        }
+                    );
+                    Clear(tmpChonCSDTCollect);
+                    If(
+                        cbxTPhanCS.Selected.value="PV" && !IsBlank(ComTieuChiCS.Selected.MA_CHI_TIEU) && !IsBlank(ComGiaTriCS.Selected.value) && CountIf(tmpDSCSADLoc1Collect,true)>0,
+                        ClearCollect(
+                            dsPVDLTCCSDTCollect,
+                            {
+                                ma_pvdl:ComGiaTriCS.Selected.value,
+                                ma_cha:LookUp(tmpDMPVDiaLyCSCollect,MA_PHAMVI=ComGiaTriCS.Selected.value,MA_CHA),
+                                duyet:0
+                            }
+                        );
+                        ClearCollect(
+                            dsPVDLTCCSDTCollect1,
+                            {
+                                ma_pvdl:ComGiaTriCS.Selected.value,
+                                ma_cha:LookUp(tmpDMPVDiaLyCSCollect,MA_PHAMVI=ComGiaTriCS.Selected.value,MA_CHA),
+                                duyet:0
+                            }
+                        );
+                        //lan 1
+                        ForAll(
+                            dsPVDLTCCSDTCollect As dsPV,
+                            If(
+                                dsPV.duyet=0,
+                                UpdateIf(
+                                    dsPVDLTCCSDTCollect1 As dsUp,
+                                    dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                    {
+                                        duyet:1
+                                    }
+                                );
+                                ForAll(
+                                    Filter(
+                                        tmpDMPVDiaLyCSCollect,
+                                        MA_PHAMVI=dsPV.ma_cha
+                                    ) As dsIns,
+                                    Collect(
+                                        dsPVDLTCCSDTCollect1,
+                                        {
+                                            ma_pvdl:dsIns.MA_PHAMVI,
+                                            ma_cha:dsIns.MA_CHA,
+                                            duyet:0
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        ClearCollect(
+                            dsPVDLTCCSDTCollect,
+                            dsPVDLTCCSDTCollect1
+                        );
+
+                        // lan 2
+                        ForAll(
+                            dsPVDLTCCSDTCollect As dsPV,
+                            If(
+                                dsPV.duyet=0,
+                                UpdateIf(
+                                    dsPVDLTCCSDTCollect1 As dsUp,
+                                    dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                    {
+                                        duyet:1
+                                    }
+                                );
+                                ForAll(
+                                    Filter(
+                                        tmpDMPVDiaLyCSCollect,
+                                        MA_PHAMVI=dsPV.ma_cha
+                                    ) As dsIns,
+                                    Collect(
+                                        dsPVDLTCCSDTCollect1,
+                                        {
+                                            ma_pvdl:dsIns.MA_PHAMVI,
+                                            ma_cha:dsIns.MA_CHA,
+                                            duyet:0
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        ClearCollect(
+                            dsPVDLTCCSDTCollect,
+                            dsPVDLTCCSDTCollect1
+                        );
+
+                        //lan 3
+                        ForAll(
+                            dsPVDLTCCSDTCollect As dsPV,
+                            If(
+                                dsPV.duyet=0,
+                                UpdateIf(
+                                    dsPVDLTCCSDTCollect1 As dsUp,
+                                    dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                    {
+                                        duyet:1
+                                    }
+                                );
+                                ForAll(
+                                    Filter(
+                                        tmpDMPVDiaLyCSCollect,
+                                        MA_PHAMVI=dsPV.ma_cha
+                                    ) As dsIns,
+                                    Collect(
+                                        dsPVDLTCCSDTCollect1,
+                                        {
+                                            ma_pvdl:dsIns.MA_PHAMVI,
+                                            ma_cha:dsIns.MA_CHA,
+                                            duyet:0
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        ClearCollect(
+                            dsPVDLTCCSDTCollect,
+                            dsPVDLTCCSDTCollect1
+                        );
+
+                        //lan 4
+                        ForAll(
+                            dsPVDLTCCSDTCollect As dsPV,
+                            If(
+                                dsPV.duyet=0,
+                                UpdateIf(
+                                    dsPVDLTCCSDTCollect1 As dsUp,
+                                    dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                    {
+                                        duyet:1
+                                    }
+                                );
+                                ForAll(
+                                    Filter(
+                                        tmpDMPVDiaLyCSCollect,
+                                        MA_PHAMVI=dsPV.ma_cha
+                                    ) As dsIns,
+                                    Collect(
+                                        dsPVDLTCCSDTCollect1,
+                                        {
+                                            ma_pvdl:dsIns.MA_PHAMVI,
+                                            ma_cha:dsIns.MA_CHA,
+                                            duyet:0
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        ClearCollect(
+                            dsPVDLTCCSDTCollect,
+                            dsPVDLTCCSDTCollect1
+                        );
+
+                        //lan 5
+                        ForAll(
+                            dsPVDLTCCSDTCollect As dsPV,
+                            If(
+                                dsPV.duyet=0,
+                                UpdateIf(
+                                    dsPVDLTCCSDTCollect1 As dsUp,
+                                    dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                    {
+                                        duyet:1
+                                    }
+                                );
+                                ForAll(
+                                    Filter(
+                                        tmpDMPVDiaLyCSCollect,
+                                        MA_PHAMVI=dsPV.ma_cha
+                                    ) As dsIns,
+                                    Collect(
+                                        dsPVDLTCCSDTCollect1,
+                                        {
+                                            ma_pvdl:dsIns.MA_PHAMVI,
+                                            ma_cha:dsIns.MA_CHA,
+                                            duyet:0
+                                        }
+                                    )
+                                )
+                            )
+                        );
+                        ClearCollect(
+                            dsPVDLTCCSDTCollect,
+                            dsPVDLTCCSDTCollect1
+                        );
+
+                        //lan 6
+                        ForAll(
+                            dsPVDLTCCSDTCollect As dsPV,
+                            If(
+                                dsPV.duyet=0,
+                                UpdateIf(
+                                    dsPVDLTCCSDTCollect1 As dsUp,
+                                    dsUp.ma_pvdl=dsPV.ma_pvdl,
+                                    {
+                                        duyet:1
+                                    }
+                                );
+                                ForAll(
+                                    Filter(
+                                        tmpDMPVDiaLyCSCollect,
+                                        MA_PHAMVI=dsPV.ma_cha
+                                    ) As dsIns,
+                                    Collect(
+                                        dsPVDLTCCSDTCollect1,
+                                        {
+                                            ma_pvdl:dsIns.MA_PHAMVI,
+                                            ma_cha:dsIns.MA_CHA,
+                                            duyet:0
+                                        }
+                                    )
+                                )
+                            )
+                        )
+                    );
+                    If(
+                        !IsBlank(cbxTPhanCS.Selected.value) && !IsBlank(cbxApDungCS.Selected.value) && 
+                        !IsBlank(ComTieuChiCS.Selected.MA_CHI_TIEU) && !IsBlank(ComGiaTriCS.Selected.value) && CountIf(tmpDSCSADLoc1Collect,true)>0,
+                        If(
+                            cbxTPhanCS.Selected.value="PV",
+                            If(
+                                cbxApDungCS.Selected.value="1",
+                                ForAll(
+                                    tmpTCCSDTADCollect As dsCha,
+                                    If(
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="1" && KIEU="1")) ||
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCTCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="1" &&
+                                        KIEU="2" && (MA_GIA_TRI="000" || CountIf(dsPVDLTCCSCollect1,ma_pvdl=MA_GIA_TRI)>0))),
+                                        Collect(
+                                            tmpChonCSADCollect,
+                                            {
+                                                cr282_ma_chinh_sach:dsCha.cr282_ma_chinh_sach
+                                            }
+                                        )
+                                    );
+                                    If(
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCTCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" &&
+                                        KIEU="2" && (MA_GIA_TRI="000" || CountIf(dsPVDLTCCSDTCollect1,ma_pvdl=MA_GIA_TRI)>0))),
+                                        RemoveIf(
+                                            tmpChonCSDTCollect,
+                                            cr282_ma_chinh_sach=dsCha.cr282_ma_chinh_sach
+                                        )
+                                    )
+                                ),
+                                ForAll(
+                                    tmpTCCSDTADCollect As dsCha,
+                                    If(
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCTCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" &&
+                                        KIEU="2" && (MA_GIA_TRI="000" || CountIf(dsPVDLTCCSDTCollect1,ma_pvdl=MA_GIA_TRI)>0))),
+                                        Collect(
+                                            tmpChonCSDTCollect,
+                                            {
+                                                cr282_ma_chinh_sach:dsCha.cr282_ma_chinh_sach
+                                            }
+                                        )
+                                    )
+                                )
+                            ),
+                            cbxTPhanCS.Selected.value="SP",
+                            If(
+                                cbxApDungCS.Selected.value="1",
+                                ForAll(
+                                    tmpTCCSDTADCollect As dsCha,
+                                    If(
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="1" && KIEU="1")) ||
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCTCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="1" &&
+                                        KIEU="2" && StartsWith(ComGiaTriCS.Selected.value,MA_GIA_TRI))),
+                                        Collect(
+                                            tmpChonCSDTCollect,
+                                            {
+                                                cr282_ma_chinh_sach:dsCha.cr282_ma_chinh_sach
+                                            }
+                                        )
+                                    );
+                                    If(
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCTCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" &&
+                                        KIEU="2" && StartsWith(ComGiaTriCS.Selected.value,MA_GIA_TRI))),
+                                        RemoveIf(
+                                            tmpChonCSDTCollect,
+                                            cr282_ma_chinh_sach=dsCha.cr282_ma_chinh_sach
+                                        )
+                                    )
+                                ),
+                                ForAll(
+                                    tmpTCCSDTADCollect As dsCha,
+                                    If(
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCTCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" &&
+                                        KIEU="2" && StartsWith(ComGiaTriCS.Selected.value,MA_GIA_TRI))),
+                                        Collect(
+                                            tmpChonCSDTCollect,
+                                            {
+                                                cr282_ma_chinh_sach:dsCha.cr282_ma_chinh_sach
+                                            }
+                                        )
+                                    )
+                                )
+                            ),
+                            If(
+                                cbxApDungCS.Selected.value="1",
+                                ForAll(
+                                    tmpTCCSDTADCollect As dsCha,
+                                    If(
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="1" && KIEU="1")) ||
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCTCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="1" &&
+                                        KIEU="2" && MA_TIEU_CHI=ComTieuChiCS.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCS.Selected.value)),
+                                        Collect(
+                                            tmpChonCSDTCollect,
+                                            {
+                                                cr282_ma_chinh_sach:dsCha.cr282_ma_chinh_sach
+                                            }
+                                        )
+                                    );
+                                    If(
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCTCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" &&
+                                        KIEU="2" && MA_TIEU_CHI=ComTieuChiCS.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCS.Selected.value)),
+                                        RemoveIf(
+                                            tmpChonCSDTCollect,
+                                            cr282_ma_chinh_sach=dsCha.cr282_ma_chinh_sach
+                                        )
+                                    )
+                                ),
+                                ForAll(
+                                    tmpTCCSDTADCollect As dsCha,
+                                    If(
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" && KIEU="1")) ||
+                                        !IsBlank(LookUp(tmpDLCSDoiTuongCTCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                        THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG="2" &&
+                                        KIEU="2" && MA_TIEU_CHI=ComTieuChiCS.Selected.MA_CHI_TIEU && MA_GIA_TRI=ComGiaTriCS.Selected.value)),
+                                        Collect(
+                                            tmpChonCSDTCollect,
+                                            {
+                                                cr282_ma_chinh_sach:dsCha.cr282_ma_chinh_sach
+                                            }
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+                        !IsBlank(cbxTPhanCS.Selected.value) && !IsBlank(cbxApDungCS.Selected.value) && 
+                        IsBlank(ComGiaTriCS.Selected.value) && CountIf(tmpDSCSADLoc1Collect,true)>0,
+                        ForAll(
+                            tmpTCCSDTADCollect As dsCha,
+                            If(
+                                !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG=cbxApDungCS.Selected.value && KIEU="1")) &&
+                                IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsCha.cr282_ma_chinh_sach && 
+                                THANH_PHAN=cbxTPhanCS.Selected.value && AP_DUNG<>cbxApDungCS.Selected.value)),
+                                Collect(
+                                    tmpChonCSDTCollect,
+                                    {
+                                        cr282_ma_chinh_sach:dsCha.cr282_ma_chinh_sach
+                                    }
+                                )
+                            )
+                        ),
+                        ClearCollect(
+                            tmpChonCSDTCollect,
+                            tmpDSCSADLoc1Collect
+                        )
+                    );
+                    ClearCollect(
+                        tmpTCCSDTCollect,
+                        ShowColumns(
+                            AddColumns(
+                                SortByColumns(
+                                    Filter(
+                                        DL_CHINHSACH_CHUNG,
+                                        CountIf(tmpChonCSDTCollect,cr282_ma_chinh_sach=MA_CHINH_SACH)>0
+                                    ),
+                                    "cr282_ma_chinh_sach",
+                                    SortOrder.Ascending
+                                ),
+                                san_pham,
+                                "",
+                                kenh_ban,
+                                "",
+                                khach_hang,
+                                "",
+                                pham_vi,
+                                "",
+                                loai_dieu_kien,
+                                "",
+                                loai_chinh_sach,
+                                "",
+                                so_tien,
+                                0,
+                                ty_le,
+                                0,
+                                so_tien_toi_da,
+                                0
+                            ),
+                            MA_CHINH_SACH,
+                            HOAT_DONG,
+                            san_pham,
+                            kenh_ban,
+                            khach_hang,
+                            pham_vi,
+                            loai_dieu_kien,
+                            loai_chinh_sach,
+                            so_tien,
+                            ty_le,
+                            so_tien_toi_da
+                        )
+                    );
+                    ForAll(
+                        DL_CHINHSACH_APDUNG As dsCSAD,
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsCSAD.MA_CHINH_SACH,
+                            {
+                                loai_dieu_kien:dsCSAD.LOAI_DK,
+                                loai_chinh_sach:dsCSAD.ANH_HUONG,
+                                so_tien:dsCSAD.SO_TIEN,
+                                ty_le:dsCSAD.TY_LE,
+                                so_tien_toi_da:dsCSAD.SO_TIEN_TOI_DA
+                            }
+                        )
+                    );
+                    ClearCollect(
+                        tmpdsMaTCCSDTCollect,
+                        ShowColumns(
+                            DL_CHINHSACH_CHUNG,
+                            MA_CHINH_SACH
+                        )
+                    );
+                    ClearCollect(
+                        tmpstrDLTCCSDTCollect,
+                        {
+                            strAD:"- Áp dụng: ",
+                            strLT:"- Loại trừ: "
+                        }
+                    );
+                    ClearCollect(
+                        tmpVarCSDT,
+                        {
+                            ma_chi_tieu:""
+                        }
+                    );
+                    ForAll(
+                        tmpdsMaTCCSDTCollect As dsMa,
+                        //lay thong tin san pham
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strAD:Concatenate(strAD,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                san_pham:LookUp(tmpstrDLTCCSDTCollect,true,strAD)
+                            }
+                        );
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strLT:Concatenate(strLT,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                san_pham:Concatenate(san_pham,Char(10),LookUp(tmpstrDLTCCSDTCollect,true,strLT))
+                            }
+                        );
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:"- Áp dụng: ",
+                                strLT:"- Loại trừ: "
+                            }
+                        );
+
+                        //lay thong tin kenh ban
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strAD:Concatenate(strAD,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                kenh_ban:LookUp(tmpstrDLTCCSDTCollect,true,strAD)
+                            }
+                        );
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strLT:Concatenate(strLT,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                kenh_ban:Concatenate(kenh_ban,Char(10),LookUp(tmpstrDLTCCSDTCollect,true,strLT))
+                            }
+                        );
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:"- Áp dụng: ",
+                                strLT:"- Loại trừ: "
+                            }
+                        );
+
+                        //lay thong tin khach hang
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strAD:Concatenate(strAD,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                khach_hang:LookUp(tmpstrDLTCCSDTCollect,true,strAD)
+                            }
+                        );
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strLT:Concatenate(strLT,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                khach_hang:Concatenate(khach_hang,Char(10),LookUp(tmpstrDLTCCSDTCollect,true,strLT))
+                            }
+                        );
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:"- Áp dụng: ",
+                                strLT:"- Loại trừ: "
+                            }
+                        );
+
+                        //lay thong tin pham vi
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strAD:Concatenate(strAD,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                pham_vi:LookUp(tmpstrDLTCCSDTCollect,true,strAD)
+                            }
+                        );
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strLT:Concatenate(strLT,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                pham_vi:Concatenate(pham_vi,Char(10),LookUp(tmpstrDLTCCSDTCollect,true,strLT))
+                            }
+                        );
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:"- Áp dụng: ",
+                                strLT:"- Loại trừ: "
+                            }
+                        )
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =9
+                  Text: ="Tra cứu"
+                  Width: =80
+                  X: =1198
+                  Y: =35
+            - ComGiaTriCS:
+                Control: Classic/ComboBox@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  ChevronBackground: =RGBA(56, 96, 178, 1)
+                  ChevronFill: =RGBA(255, 255, 255, 1)
+                  ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DisplayFields: =["title","key"]
+                  Font: =Font.'Open Sans'
+                  Height: =28
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  InputTextPlaceholder: =""
+                  Items: =SortByColumns(tmpdsGiaTriTCCSDTCollect1,"value",SortOrder.Ascending)
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 18, 107, 1)
+                  SearchFields: =["title"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(56, 96, 178, 1)
+                  Size: =9
+                  Width: =185
+                  X: =760
+                  Y: =90
+            - Button6_9:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =28
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |-
+                    =Reset(ComLoaiDKCS);Reset(ComLoaiCSCS);Reset(ComThamSoCS);Reset(TextInputTuCS);Reset(TextInputDenCS);Reset(cbxTPhanCS);Reset(cbxApDungCS);Reset(ComTieuChiCS);Reset(ComGiaTriCS);
+                    Clear(tmpdsGiaTriTCCSCollect1);
+                    //load bảng phamvi lên collect
+                    ClearCollect(
+                        tmpDMPVDiaLyCSCollect,
+                        DM_PHAMVI_DIALYS
+                    );
+                    //load bảng chinhsachdoituong lên collect
+                    ClearCollect(
+                        tmpDLCSDoiTuongCSCollect,
+                        DL_CHINHSACH_DOITUONG
+                    );
+                    //load bảng chinhsachdoituongct lên collect
+                    ClearCollect(
+                        tmpDLCSDoiTuongCTCSCollect,
+                        DL_CHINHSACH_DOITUONG_CT
+                    );
+                    ClearCollect(
+                        tmpTCCSDTCollect,
+                        ShowColumns(
+                            AddColumns(
+                                SortByColumns(
+                                    DL_CHINHSACH_CHUNG,
+                                    "cr282_ma_chinh_sach",
+                                    SortOrder.Ascending
+                                ),
+                                san_pham,
+                                "",
+                                kenh_ban,
+                                "",
+                                khach_hang,
+                                "",
+                                pham_vi,
+                                "",
+                                loai_dieu_kien,
+                                "",
+                                loai_chinh_sach,
+                                "",
+                                so_tien,
+                                0,
+                                ty_le,
+                                0,
+                                so_tien_toi_da,
+                                0
+                            ),
+                            MA_CHINH_SACH,
+                            HOAT_DONG,
+                            san_pham,
+                            kenh_ban,
+                            khach_hang,
+                            pham_vi,
+                            loai_dieu_kien,
+                            loai_chinh_sach,
+                            so_tien,
+                            ty_le,
+                            so_tien_toi_da
+                        )
+                    );
+                    ForAll(
+                        DL_CHINHSACH_APDUNG As dsCSAD,
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsCSAD.MA_CHINH_SACH,
+                            {
+                                loai_dieu_kien:dsCSAD.LOAI_DK,
+                                loai_chinh_sach:dsCSAD.ANH_HUONG,
+                                so_tien:dsCSAD.SO_TIEN,
+                                ty_le:dsCSAD.TY_LE,
+                                so_tien_toi_da:dsCSAD.SO_TIEN_TOI_DA
+                            }
+                        )
+                    );
+                    ClearCollect(
+                        tmpdsMaTCCSDTCollect,
+                        ShowColumns(
+                            DL_CHINHSACH_CHUNG,
+                            MA_CHINH_SACH
+                        )
+                    );
+                    ClearCollect(
+                        tmpstrDLTCCSDTCollect,
+                        {
+                            strAD:"- Áp dụng: ",
+                            strLT:"- Loại trừ: "
+                        }
+                    );
+                    ClearCollect(
+                        tmpVarCSDT,
+                        {
+                            ma_chi_tieu:""
+                        }
+                    );
+                    ForAll(
+                        tmpdsMaTCCSDTCollect As dsMa,
+                        //lay thong tin san pham
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strAD:Concatenate(strAD,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="1" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                san_pham:LookUp(tmpstrDLTCCSDTCollect,true,strAD)
+                            }
+                        );
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strLT:Concatenate(strLT,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="SP" && AP_DUNG="2" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                san_pham:Concatenate(san_pham,Char(10),LookUp(tmpstrDLTCCSDTCollect,true,strLT))
+                            }
+                        );
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:"- Áp dụng: ",
+                                strLT:"- Loại trừ: "
+                            }
+                        );
+
+                        //lay thong tin kenh ban
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strAD:Concatenate(strAD,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="1" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                kenh_ban:LookUp(tmpstrDLTCCSDTCollect,true,strAD)
+                            }
+                        );
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strLT:Concatenate(strLT,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KB" && AP_DUNG="2" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                kenh_ban:Concatenate(kenh_ban,Char(10),LookUp(tmpstrDLTCCSDTCollect,true,strLT))
+                            }
+                        );
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:"- Áp dụng: ",
+                                strLT:"- Loại trừ: "
+                            }
+                        );
+
+                        //lay thong tin khach hang
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strAD:Concatenate(strAD,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="1" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                khach_hang:LookUp(tmpstrDLTCCSDTCollect,true,strAD)
+                            }
+                        );
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strLT:Concatenate(strLT,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="KH" && AP_DUNG="2" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                khach_hang:Concatenate(khach_hang,Char(10),LookUp(tmpstrDLTCCSDTCollect,true,strLT))
+                            }
+                        );
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:"- Áp dụng: ",
+                                strLT:"- Loại trừ: "
+                            }
+                        );
+
+                        //lay thong tin pham vi
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strAD:Concatenate(strAD,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="1" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strAD:Concatenate(strAD,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                pham_vi:LookUp(tmpstrDLTCCSDTCollect,true,strAD)
+                            }
+                        );
+                        If(
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="1")),
+                            UpdateIf(
+                                tmpstrDLTCCSDTCollect,
+                                true,
+                                {
+                                    strLT:Concatenate(strLT,"Tất cả")
+                                }
+                            ),
+                            !IsBlank(LookUp(tmpDLCSDoiTuongCSCollect,MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2")),
+                            ForAll(
+                                SortByColumns(
+                                    Filter(
+                                        tmpDLCSDoiTuongCTCSCollect,
+                                        MA_CHINH_SACH=dsMa.cr282_ma_chinh_sach && THANH_PHAN="PV" && AP_DUNG="2" && KIEU="2"
+                                    ),
+                                    "cr282_ma_tieu_chi",
+                                    SortOrder.Ascending,
+                                    "cr282_ma_gia_tri",
+                                    SortOrder.Ascending
+                                ) As dsCT,
+                                If(
+                                    First(tmpVarCSDT).ma_chi_tieu<>dsCT.MA_TIEU_CHI,
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,Char(10),"+ ",dsCT.TEN_TIEU_CHI,": ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpstrDLTCCSDTCollect,
+                                        true,
+                                        {
+                                            strLT:Concatenate(strLT,", ",dsCT.TEN_GIA_TRI)
+                                        }
+                                    )
+                                );
+                                UpdateIf(
+                                    tmpVarCSDT,
+                                    true,
+                                    {
+                                        ma_chi_tieu:dsCT.MA_TIEU_CHI
+                                    }
+                                )
+                            )
+                        );
+                        UpdateIf(
+                            tmpVarCSDT,
+                            true,
+                            {
+                                ma_chi_tieu:""
+                            }
+                        );
+                        UpdateIf(
+                            tmpTCCSDTCollect,
+                            cr282_ma_chinh_sach=dsMa.cr282_ma_chinh_sach,
+                            {
+                                pham_vi:Concatenate(pham_vi,Char(10),LookUp(tmpstrDLTCCSDTCollect,true,strLT))
+                            }
+                        );
+                        UpdateIf(
+                            tmpstrDLTCCSDTCollect,
+                            true,
+                            {
+                                strAD:"- Áp dụng: ",
+                                strLT:"- Loại trừ: "
+                            }
+                        )
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =9
+                  Text: ="Tải lại"
+                  Width: =80
+                  X: =1198
+                  Y: =93
+            - GalleryDKCTCT_5:
+                Control: Gallery@2.15.0
+                Variant: Vertical
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =597
+                  Items: =SortByColumns(tmpTCCSDTCollect,"cr282_ma_chinh_sach",SortOrder.Ascending)
+                  NavigationStep: =0
+                  TemplatePadding: =0
+                  TemplateSize: =103
+                  Width: =1306
+                  WrapCount: =0
+                  Y: =171
+                Children:
+                  - TiSttQLCTCT_3:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_ma_chinh_sach
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =102
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Mode: =TextMode.MultiLine
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Width: =66
+                        X: =5
+                  - TiTthtQLCTCT_4:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.san_pham
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =102
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Mode: =TextMode.MultiLine
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Tooltip: =ThisItem.san_pham
+                        Width: =178
+                        X: =71
+                  - TiTenQLHTQLCTCT_7:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.pham_vi
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =102
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Mode: =TextMode.MultiLine
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Tooltip: =ThisItem.pham_vi
+                        Width: =178
+                        X: =605
+                  - TiGHSLNam_2:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        Align: =Align.Right
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =If(ThisItem.ty_le=0,Blank(),ThisItem.ty_le)
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Format: =TextFormat.Number
+                        Height: =102
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Mode: =TextMode.MultiLine
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Width: =45
+                        X: =995
+                  - TiGHSTVu_2:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        Align: =Align.Right
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =Text(If(ThisItem.so_tien=0,Blank(),ThisItem.so_tien),"#,###")
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Format: =TextFormat.Number
+                        Height: =102
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Mode: =TextMode.MultiLine
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Width: =91
+                        X: =904
+                  - TiGHSTNam_3:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =If(ThisItem.loai_chinh_sach="1","Tăng","Giảm")
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =102
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Mode: =TextMode.MultiLine
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Width: =51
+                        X: =853
+                  - TiGHSTNgay_4:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =If(ThisItem.loai_dieu_kien="1","Riêng lẻ","Kết hợp")
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =102
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Mode: =TextMode.MultiLine
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Width: =70
+                        X: =783
+                  - TiTenQLHTQLCTCT_5:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.kenh_ban
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =102
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Mode: =TextMode.MultiLine
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Tooltip: =ThisItem.kenh_ban
+                        Width: =178
+                        X: =249
+                  - TiTenQLHTQLCTCT_6:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.khach_hang
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =102
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Mode: =TextMode.MultiLine
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Tooltip: =ThisItem.khach_hang
+                        Width: =178
+                        X: =427
+                  - Button6_15:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =RGBA(56, 96, 178, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Bold
+                        Height: =38
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        OnSelect: |-
+                          =Refresh(DL_CHINHSACH_DOITUONG_CT);
+                          RemoveIf(DL_CHINHSACH_DOITUONG_CT,MA_CHINH_SACH=ThisItem.cr282_ma_chinh_sach);
+                          Refresh(DL_CHINHSACH_DOITUONG);
+                          RemoveIf(DL_CHINHSACH_DOITUONG,MA_CHINH_SACH=ThisItem.cr282_ma_chinh_sach);
+                          Refresh(DL_CHINHSACH_APDUNG);
+                          RemoveIf(DL_CHINHSACH_APDUNG,MA_CHINH_SACH=ThisItem.cr282_ma_chinh_sach);
+                          Refresh(DL_CHINHSACH_CHUNG);
+                          RemoveIf(DL_CHINHSACH_CHUNG,MA_CHINH_SACH=ThisItem.cr282_ma_chinh_sach);
+                          RemoveIf(tmpTCCSDTCollect,cr282_ma_chinh_sach=ThisItem.cr282_ma_chinh_sach);
+                          Notify("Xóa dữ liệu thành công",NotificationType,2000)
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        Size: =9
+                        Text: ="Xóa"
+                        Width: =45
+                        X: =1238
+                        Y: =32
+                  - Button6_14:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =RGBA(56, 96, 178, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Bold
+                        Height: =38
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        OnSelect: |-
+                          =Select(Parent);
+                          Set(varMaCS, ThisItem.cr282_ma_chinh_sach);
+                          Set(varGhiCS, If(LookUp(DL_CHINHSACH_CHUNG, MA_CHINH_SACH=varMaCS).TRANG_THAI_FIX="1",true,false));
+
+                          Reset(RadioCSKB);
+                          Reset(RadioCSKB_LoaiTru);
+                          Reset(RadioCSKH);
+                          Reset(RadioCSKH_LoaiTru);
+                          Reset(RadioCSPV);
+                          Reset(RadioCSPV_LoaiTru);
+
+
+                          ClearCollect(
+                              tmpDsGiatriCS,
+                              [
+                                  {
+                                      Ma: "",
+                                      Ten: "",
+                                      Loai: "",
+                                      cr282_ten_gia_tri: ""
+                                  }
+                              ]
+                          );
+                          //Kenh ban
+                          ClearCollect(
+                              tmpCSApdungKB,
+                              GroupBy(
+                                  Filter(
+                                      DL_CHINHSACH_DOITUONG_CT,
+                                      MA_CHINH_SACH = varMaCS && THANH_PHAN = "KB" && AP_DUNG = "1"
+                                  ),
+                                  ID,
+                                  MA_CHINH_SACH,
+                                  AP_DUNG,
+                                  MA_TIEU_CHI,
+                                  TEN_TIEU_CHI,
+                                  GROUP_CS
+                              )
+                          );
+                          ClearCollect(
+                              tmpCSLoaitruKB,
+                              GroupBy(
+                                  Filter(
+                                      DL_CHINHSACH_DOITUONG_CT,
+                                      MA_CHINH_SACH = varMaCS && THANH_PHAN = "KB" && AP_DUNG = "2"
+                                  ),
+                                  ID,
+                                  MA_CHINH_SACH,
+                                  AP_DUNG,
+                                  MA_TIEU_CHI,
+                                  TEN_TIEU_CHI,
+                                  GROUP_CS
+                              )
+                          );
+                          // them kenh ban
+                          ForAll(
+                              DM_KENH_BANS As kb,
+                              Patch(
+                                  tmpDsGiatriCS,
+                                  Defaults(tmpDsGiatriCS),
+                                  {
+                                      Ma: kb.MA_KENH_BAN,
+                                      Ten: kb.TEN_KENH_BAN,
+                                      Loai: "MA_KB_DM",
+                                      cr282_ten_gia_tri: kb.TEN_KENH_BAN
+                                  }
+                              )
+                          );
+                          ForAll(
+                              DM_LOAI_KENH_BANS As kb,
+                              Patch(
+                                  tmpDsGiatriCS,
+                                  Defaults(tmpDsGiatriCS),
+                                  {
+                                      Ma: kb.MA_LOAI_KB,
+                                      Ten: kb.TEN_LOAI_KB,
+                                      Loai: "MA_KB_LOAI",
+                                      cr282_ten_gia_tri: kb.TEN_LOAI_KB
+                                  }
+                              )
+                          );
+                          Collect(
+                              tmpDsGiatriCS,
+                              {
+                                  Ma: "0",
+                                  Ten: "Cá nhân",
+                                  Loai: "MA_KB_NHOM",
+                                  cr282_ten_gia_tri: "Cá nhân"
+                              },
+                              {
+                                  Ma: "1",
+                                  Ten: "Tổ chức",
+                                  Loai: "MA_KB_NHOM",
+                                  cr282_ten_gia_tri: "Tổ chức"
+                              }
+                          );
+                          //End Kenh ban
+                          //KHACH HANG
+                          ClearCollect(
+                              tmpCSApdungKH,
+                              GroupBy(
+                                  Filter(
+                                      DL_CHINHSACH_DOITUONG_CT,
+                                      MA_CHINH_SACH = varMaCS && THANH_PHAN = "KH" && AP_DUNG = "1"
+                                  ),
+                                  ID,
+                                  MA_CHINH_SACH,
+                                  AP_DUNG,
+                                  MA_TIEU_CHI,
+                                  TEN_TIEU_CHI,
+                                  GROUP_CS
+                              )
+                          );
+                          ClearCollect(
+                              tmpCSLoaitruKH,
+                              GroupBy(
+                                  Filter(
+                                      DL_CHINHSACH_DOITUONG_CT,
+                                      MA_CHINH_SACH = varMaCS && THANH_PHAN = "KH" && AP_DUNG = "2"
+                                  ),
+                                  ID,
+                                  MA_CHINH_SACH,
+                                  AP_DUNG,
+                                  MA_TIEU_CHI,
+                                  TEN_TIEU_CHI,
+                                  GROUP_CS
+                              )
+                          );
+                          ForAll(
+                              DM_NHOM_KH As kh,
+                              Patch(
+                                  tmpDsGiatriCS,
+                                  Defaults(tmpDsGiatriCS),
+                                  {
+                                      Ma: kh.MA_NHOM_KH,
+                                      Ten: kh.TEN_NHOM_KH,
+                                      Loai: "MA_KH_NHOM",
+                                      cr282_ten_gia_tri: kh.TEN_NHOM_KH
+                                  }
+                              )
+                          );
+                          Collect(
+                              tmpDsGiatriCS,
+                              {
+                                  Ma: "0",
+                                  Ten: "Cá nhân",
+                                  Loai: "MA_KH_LOAI",
+                                  cr282_ten_gia_tri: "Cá nhân"
+                              },
+                              {
+                                  Ma: "1",
+                                  Ten: "Tổ chức",
+                                  Loai: "MA_KH_LOAI",
+                                  cr282_ten_gia_tri: "Tổ chức"
+                              }
+                          );
+                          ForAll(
+                              DM_KHACH_HANG As kh,
+                              Patch(
+                                  tmpDsGiatriCS,
+                                  Defaults(tmpDsGiatriCS),
+                                  {
+                                      Ma: kh.MA_KHACH_HANG,
+                                      Ten: kh.TEN_KHACH_HANG,
+                                      Loai: "MA_KH",
+                                      cr282_ten_gia_tri: kh.TEN_KHACH_HANG
+                                  }
+                              )
+                          );
+                          //END KHACH HANG
+                          //PHAM VI
+                          ClearCollect(
+                              tmpCSApdungPV,
+                              GroupBy(
+                                  Filter(
+                                      DL_CHINHSACH_DOITUONG_CT,
+                                      MA_CHINH_SACH = varMaCS && THANH_PHAN = "PV" && AP_DUNG = "1"
+                                  ),
+                                  ID,
+                                  MA_CHINH_SACH,
+                                  AP_DUNG,
+                                  MA_TIEU_CHI,
+                                  TEN_TIEU_CHI,
+                                  GROUP_CS
+                              )
+                          );
+                          ClearCollect(
+                              tmpCSLoaitruPV,
+                              GroupBy(
+                                  Filter(
+                                      DL_CHINHSACH_DOITUONG_CT,
+                                      MA_CHINH_SACH = varMaCS && THANH_PHAN = "PV" && AP_DUNG = "2"
+                                  ),
+                                  ID,
+                                  MA_CHINH_SACH,
+                                  AP_DUNG,
+                                  MA_TIEU_CHI,
+                                  TEN_TIEU_CHI,
+                                  GROUP_CS
+                              )
+                          );
+                          ForAll(
+                              DM_PHAMVI_DIALYS As pv,
+                              Patch(
+                                  tmpDsGiatriCS,
+                                  Defaults(tmpDsGiatriCS),
+                                  {
+                                      Ma: pv.MA_PHAMVI,
+                                      Ten: pv.TEN_PHAMVI,
+                                      Loai: If(
+                                          pv.LOAI = "KHU_VUC",
+                                          "MA_KHU_VUC",
+                                          If(
+                                              pv.LOAI = "QUOC_GIA",
+                                              "MA_QG",
+                                              If(
+                                                  pv.LOAI = "VUNG_MIEN",
+                                                  "MA_VUNG_MIEN",
+                                                  If(
+                                                      pv.LOAI = "TINH_TP",
+                                                      "MA_TINH_TP",
+                                                      If(
+                                                          pv.LOAI = "QUAN_HUYEN",
+                                                          "MA_QUAN_HUYEN",
+                                                          If(
+                                                              pv.LOAI = "DON_VI",
+                                                              "MA_DON_VI",
+                                                              "KHAC"
+                                                          )
+                                                      )
+                                                  )
+                                              )
+                                          )
+                                      ),
+                                      cr282_ten_gia_tri: pv.TEN_PHAMVI
+                                  }
+                              )
+                          );
+                          //END PHAM VI
+
+                          //SAN PHAM
+                          ClearCollect(
+                              tmpCSApdungSP,
+                              GroupBy(
+                                  Filter(
+                                      DL_CHINHSACH_DOITUONG_CT,
+                                      MA_CHINH_SACH = varMaCS && THANH_PHAN = "SP" && AP_DUNG = "1"
+                                  ),
+                                  ID,
+                                  MA_CHINH_SACH,
+                                  AP_DUNG,
+                                  MA_TIEU_CHI,
+                                  TEN_TIEU_CHI,
+                                  MA_PV_AD,
+                                  TEN_PV_AD,
+                                  GIATRI_TU,
+                                  GIATRI_DEN,
+                                  GROUP_CS
+                              )
+                          );
+                          ClearCollect(
+                              tmpCSLoaitruSP,
+                              GroupBy(
+                                  Filter(
+                                      DL_CHINHSACH_DOITUONG_CT,
+                                      MA_CHINH_SACH = varMaCS && THANH_PHAN = "SP" && AP_DUNG = "2"
+                                  ),
+                                  ID,
+                                  MA_CHINH_SACH,
+                                  AP_DUNG,
+                                  MA_TIEU_CHI,
+                                  TEN_TIEU_CHI,
+                                  MA_PV_AD,
+                                  TEN_PV_AD,
+                                  GIATRI_TU,
+                                  GIATRI_DEN,
+                                  GROUP_CS
+                              )
+                          );
+                          ForAll(
+                              DL_SAN_PHAM As kh,
+                              Patch(
+                                  tmpDsGiatriCS,
+                                  Defaults(tmpDsGiatriCS),
+                                  {
+                                      Ma: kh.MA_SAN_PHAM,
+                                      Ten: kh.TEN_SAN_PHAM,
+                                      Loai: "MA_SP",
+                                      cr282_ten_gia_tri: kh.TEN_SAN_PHAM
+                                  }
+                              )
+                          );
+                          ForAll(
+                              ' DL_SAN_PHAM_CT' As kh,
+                              Patch(
+                                  tmpDsGiatriCS,
+                                  Defaults(tmpDsGiatriCS),
+                                  {
+                                      Ma: kh.MA_CHUONG_TRINH,
+                                      Ten: kh.TEN_CHUONG_TRINH,
+                                      Loai: "MA_CT",
+                                      cr282_ten_gia_tri: kh.TEN_CHUONG_TRINH
+                                  }
+                              )
+                          );
+                          Patch(
+                                  tmpDsGiatriCS,
+                                  Defaults(tmpDsGiatriCS),
+                                  {
+                                      Ma: "SK",
+                                      Loai: "LHNV",
+                                      cr282_ten_gia_tri :"Sức khoẻ"
+                                  }
+                              );
+                                 Patch(
+                                  tmpDsGiatriCS,
+                                  Defaults(tmpDsGiatriCS),
+                                  {
+                                      Ma: "TAI_NAM",
+                                      Loai: "LHNV",
+                                      cr282_ten_gia_tri :"Tai nạn"
+                                  }
+                              );
+                              Patch(
+                                  tmpDsGiatriCS,
+                                  Defaults(tmpDsGiatriCS),
+                                  {
+                                      Ma: "TN_DS",
+                                      Loai: "LHNV",
+                                      cr282_ten_gia_tri :"Trách nhiệm dân sự"
+                                  }
+                              );
+                          //END SAN PHAM
+                          //SO TIEN
+                          ClearCollect(
+                              tmpCSApdungST,
+                              GroupBy(
+                                  Filter(
+                                      DL_CHINHSACH_DOITUONG_CT,
+                                      MA_CHINH_SACH = varMaCS && THANH_PHAN = "ST" && AP_DUNG = "1"
+                                  ),
+                                  ID,
+                                  MA_CHINH_SACH,
+                                  AP_DUNG,
+                                  MA_TIEU_CHI,
+                                  TEN_TIEU_CHI,
+                                  MA_PV_AD,
+                                  TEN_PV_AD,
+                                  GIATRI_TU,
+                                  GIATRI_DEN,
+                                  GROUP_CS
+                              )
+                          );
+                          ClearCollect(
+                              tmpCSLoaitruST,
+                              GroupBy(
+                                  Filter(
+                                      DL_CHINHSACH_DOITUONG_CT,
+                                      MA_CHINH_SACH = varMaCS && THANH_PHAN = "ST" && AP_DUNG = "2"
+                                  ),
+                                  ID,
+                                  MA_CHINH_SACH,
+                                  AP_DUNG,
+                                  MA_TIEU_CHI,
+                                  TEN_TIEU_CHI,
+                                  MA_PV_AD,
+                                  TEN_PV_AD,
+                                  GIATRI_TU,
+                                  GIATRI_DEN,
+                                  GROUP_CS
+                              )
+                          );
+                          ForAll(
+                              DM_THOIHAN_AD As kh,
+                              Patch(
+                                  tmpDsGiatriCS,
+                                  Defaults(tmpDsGiatriCS),
+                                  {
+                                      Ma: kh.MA_THOIHAN_AD,
+                                      Ten: kh.TEN_THOIHAN_AD,
+                                      Loai: "MA_ST_LK",
+                                      cr282_ten_gia_tri: kh.TEN_THOIHAN_AD
+                                  }
+                              )
+                          );
+                          //END SO TIEN
+
+                          EditForm(TTChungCS);
+                          EditForm(TTCSApDung);
+                          Navigate(NhapChinhSach);
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        Size: =9
+                        Text: ="Chi tiết"
+                        Width: =55
+                        X: =1175
+                        Y: =32
+                  - TiGHSLNam_3:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        Align: =Align.Right
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =If(ThisItem.so_tien_toi_da=0,Blank(),ThisItem.so_tien_toi_da)
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Format: =TextFormat.Number
+                        Height: =102
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Mode: =TextMode.MultiLine
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Width: =84
+                        X: =1040
+                  - CheckboxHDongTCCSDT:
+                      Control: Classic/CheckBox@2.1.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        CheckboxBorderColor: =RGBA(0, 18, 107, 1)
+                        CheckboxSize: =35
+                        CheckmarkFill: =RGBA(0, 0, 0, 1)
+                        Default: =If(ThisItem.cr282_hoat_dong="true",true,false)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =35
+                        HoverColor: =RGBA(0, 18, 107, 1)
+                        Size: =11
+                        Text: ="Option"
+                        Width: =35
+                        X: =1131
+                        Y: =30
+            - BadgeCanvas1_37:
+                Control: Badge@0.0.24
+                Properties:
+                  Content: =""
+                  Height: =40
+                  Width: =1298
+                  Y: =132
+            - TextCanvas2_203:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =40
+                  Size: =10
+                  Text: ="Mã"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =27
+                  X: =25
+                  Y: =132
+            - TextCanvas2_213:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =40
+                  Size: =10
+                  Text: ="Thao tác"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =53
+                  X: =1190
+                  Y: =132
+            - TextCanvas2_204:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =40
+                  Size: =10
+                  Text: ="Sản phẩm"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =55
+                  X: =128
+                  Y: =132
+            - TextCanvas2_205:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =40
+                  Size: =10
+                  Text: ="Kênh bán"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =59
+                  X: =307
+                  Y: =132
+            - TextCanvas2_206:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =40
+                  Size: =10
+                  Text: ="Khách hàng"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =71
+                  X: =480
+                  Y: =132
+            - TextCanvas2_207:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =40
+                  Size: =10
+                  Text: ="Phạm vi"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =84
+                  X: =656
+                  Y: =132
+            - TextCanvas2_208:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =40
+                  Size: =10
+                  Text: |-
+                    ="Loại 
+                    điều khoản"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =65
+                  X: =784
+                  Y: =132
+            - TextCanvas2_209:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =40
+                  Size: =10
+                  Text: |-
+                    ="Loại 
+                    chính sách"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =68
+                  X: =846
+                  Y: =132
+            - TextCanvas2_210:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =40
+                  Size: =10
+                  Text: ="Số tiền"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =52
+                  X: =926
+                  Y: =132
+            - TextCanvas2_211:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =40
+                  Size: =10
+                  Text: |-
+                    ="Tỷ lệ 
+                    (%)"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =45
+                  X: =996
+                  Y: =132
+            - TextCanvas2_212:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =40
+                  Size: =10
+                  Text: ="Số tiền tối đa"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =75
+                  X: =1044
+                  Y: =132
+            - Button6_10:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =28
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |-
+                    =Set(varMaCS, "");
+                    Set(varGhiCS, false);
+                    ResetForm(TTChungCS);
+                    ResetForm(TTCSApDung);
+                    Reset(RadioCSKB);
+                    Reset(RadioCSKB_LoaiTru);
+                    Reset(RadioCSKH);
+                    Reset(RadioCSKH_LoaiTru);
+                    Reset(RadioCSPV);
+                    Reset(RadioCSPV_LoaiTru);
+                    Clear(tmpCSApdungKB);
+                    Clear(tmpCSLoaitruKB);
+                    Clear(tmpCSApdungKH);
+                    Clear(tmpCSLoaitruKH);
+                    Clear(tmpCSApdungPV);
+                    Clear(tmpCSLoaitruPV);
+                    Navigate(NhapChinhSach);
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =9
+                  Text: ="Thêm mới"
+                  Width: =80
+                  X: =5
+                  Y: =93
+            - Label2_12:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =27
+                  Size: =9
+                  Text: ="Loại điều khoản"
+                  Width: =105
+                  X: =123
+                  Y: =6
+            - Label2_13:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =25
+                  Size: =9
+                  Text: ="Loại chính sách"
+                  Width: =120
+                  X: =340
+                  Y: =6
+            - Label2_14:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =27
+                  Size: =9
+                  Text: ="Tham số"
+                  Width: =105
+                  X: =550
+                  Y: =6
+            - TextInputTuCS:
+                Control: Classic/TextInput@2.3.2
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Default: =
+                  Font: =Font.'Open Sans'
+                  Format: =TextFormat.Number
+                  Height: =28
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Size: =9
+                  Width: =185
+                  X: =760
+                  Y: =31
+            - TextInputDenCS:
+                Control: Classic/TextInput@2.3.2
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Default: =
+                  Font: =Font.'Open Sans'
+                  Format: =TextFormat.Number
+                  Height: =28
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Size: =9
+                  Width: =185
+                  X: =970
+                  Y: =31
+            - Label2_15:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =27
+                  Size: =9
+                  Text: ="Từ"
+                  Width: =33
+                  X: =760
+                  Y: =6
+            - Label2_16:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =26
+                  Size: =9
+                  Text: ="Đến"
+                  Width: =44
+                  X: =970
+                  Y: =6
+            - ComLoaiDKCS:
+                Control: Classic/ComboBox@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  ChevronBackground: =RGBA(56, 96, 178, 1)
+                  ChevronFill: =RGBA(255, 255, 255, 1)
+                  ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DisplayFields: =["title","key"]
+                  Font: =Font.'Open Sans'
+                  Height: =28
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  InputTextPlaceholder: ="Chọn loại điều kiện"
+                  IsSearchable: =false
+                  Items: =[{title:"Riêng lẻ",value:"1"},{title:"Kết hợp",value:"2"}]
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 18, 107, 1)
+                  SearchFields: =["title"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(56, 96, 178, 1)
+                  Size: =9
+                  Width: =185
+                  X: =123
+                  Y: =31
+            - ComLoaiCSCS:
+                Control: Classic/ComboBox@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  ChevronBackground: =RGBA(56, 96, 178, 1)
+                  ChevronFill: =RGBA(255, 255, 255, 1)
+                  ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DisplayFields: =["title","key"]
+                  Font: =Font.'Open Sans'
+                  Height: =28
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  InputTextPlaceholder: ="Chọn loại chính sách"
+                  IsSearchable: =false
+                  Items: =[{title:"Tăng",value:"1"},{title:"Giảm",value:"2"}]
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 18, 107, 1)
+                  SearchFields: =["title"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(56, 96, 178, 1)
+                  Size: =9
+                  Width: =185
+                  X: =340
+                  Y: =31
+            - cbxTPhanCS:
+                Control: Classic/ComboBox@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  ChevronBackground: =RGBA(56, 96, 178, 1)
+                  ChevronFill: =RGBA(255, 255, 255, 1)
+                  ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DisplayFields: =["title"]
+                  Font: =Font.'Open Sans'
+                  Height: =28
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  InputTextPlaceholder: ="Chọn loại dữ liệu"
+                  IsSearchable: =false
+                  Items: =[{title:"Sản phẩm",value:"SP"},{title:"Kênh bán",value:"KB"},{title:"Khách hàng",value:"KH"},{title:"Phạm vi",value:"PV"},{title:"Giá trị",value:"ST"}]
+                  OnChange: =Reset(ComTieuChiCS);Reset(ComTieuChiCS)
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 18, 107, 1)
+                  SearchFields: =["title"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(56, 96, 178, 1)
+                  Size: =10
+                  Width: =185
+                  X: =123
+                  Y: =90
+            - cbxApDungCS:
+                Control: Classic/ComboBox@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  ChevronBackground: =RGBA(56, 96, 178, 1)
+                  ChevronFill: =RGBA(255, 255, 255, 1)
+                  ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DisplayFields: =["title"]
+                  Font: =Font.'Open Sans'
+                  Height: =28
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  InputTextPlaceholder: ="Chọn loại điều kiện"
+                  IsSearchable: =false
+                  Items: =[{title:"Áp dụng",value:"1"},{title:"Loại trừ",value:"2"}]
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 18, 107, 1)
+                  SearchFields: =["title"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(56, 96, 178, 1)
+                  Size: =10
+                  Width: =185
+                  X: =340
+                  Y: =90
+            - ComThamSoCS:
+                Control: Classic/ComboBox@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  ChevronBackground: =RGBA(56, 96, 178, 1)
+                  ChevronFill: =RGBA(255, 255, 255, 1)
+                  ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DisplayFields: =["title","key"]
+                  Font: =Font.'Open Sans'
+                  Height: =28
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  InputTextPlaceholder: ="Chọn tham số lọc"
+                  IsSearchable: =false
+                  Items: =[{title:"Tỷ lệ",value:"1"},{title:"Số tiền",value:"2"}]
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 18, 107, 1)
+                  SearchFields: =["title"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(56, 96, 178, 1)
+                  Size: =9
+                  Width: =185
+                  X: =550
+                  Y: =31
+            - TextCanvas2_281:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =40
+                  Size: =10
+                  Text: ="Hoạt động"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =50
+                  X: =1122
+                  Y: =132

@@ -199,12 +199,14 @@ Quanlykenhban As screen:
                 X: =437
                 ZIndex: =28
 
-        BadgeCanvas1_36 As Badge:
+        "BadgeCanvas1_36 As 'Huy hiệu'":
+            Align: =""
             BasePaletteColor: =
             Content: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =35
+            VerticalAlign: =""
             Visible: =true
             Width: |
                 =//1199
@@ -213,8 +215,9 @@ Quanlykenhban As screen:
             Y: =90
             ZIndex: =2
 
-        TextCanvas2_194 As Text:
+        "TextCanvas2_194 As 'Văn bản'":
             Align: ='TextCanvas.Align'.Center
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =34
@@ -226,8 +229,9 @@ Quanlykenhban As screen:
             Y: =90
             ZIndex: =3
 
-        TextCanvas2_198 As Text:
+        "TextCanvas2_198 As 'Văn bản'":
             Align: ='TextCanvas.Align'.Center
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =33
@@ -239,8 +243,9 @@ Quanlykenhban As screen:
             Y: =90
             ZIndex: =5
 
-        TextCanvas2_192 As Text:
+        "TextCanvas2_192 As 'Văn bản'":
             Align: ='TextCanvas.Align'.Center
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =34
@@ -311,8 +316,9 @@ Quanlykenhban As screen:
             X: =5
             ZIndex: =15
 
-        TextCanvas2_196 As Text:
+        "TextCanvas2_196 As 'Văn bản'":
             Align: ='TextCanvas.Align'.Center
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =34
@@ -324,8 +330,9 @@ Quanlykenhban As screen:
             Y: =90
             ZIndex: =16
 
-        TextCanvas2_197 As Text:
+        "TextCanvas2_197 As 'Văn bản'":
             Align: ='TextCanvas.Align'.Center
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =34
@@ -337,8 +344,9 @@ Quanlykenhban As screen:
             Y: =90
             ZIndex: =17
 
-        TextCanvas2_193 As Text:
+        "TextCanvas2_193 As 'Văn bản'":
             Align: ='TextCanvas.Align'.Center
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =35
@@ -350,8 +358,9 @@ Quanlykenhban As screen:
             Y: =90
             ZIndex: =18
 
-        TextCanvas2_195 As Text:
+        "TextCanvas2_195 As 'Văn bản'":
             Align: ='TextCanvas.Align'.Center
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =33
@@ -363,25 +372,32 @@ Quanlykenhban As screen:
             Y: =90
             ZIndex: =19
 
-        "TextFilterPV_1 As 'Text input'":
+        "TextFilterPV_1 As 'Văn bản đầu vào'":
+            Appearance: ="FilledDarker"
             BasePaletteColor: =
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =43
             OnChange: =
             Placeholder: ="Nhập giá trị lọc"
+            TriggerOutput: ="FocusOut"
             Width: =204
             X: =548
             Y: =31
             ZIndex: =20
 
-        CbxFilterPV_1 As Combobox.pcfdataset:
+        "CbxFilterPV_1 As 'Hộp tổ hợp'.pcfdataset":
+            Appearance: ="FilledDarker"
+            BorderStyle: =""
             DefaultSelectedItems: =Filter(["Mã kênh bán", "Tên kênh bán",  "Số giấy tờ"],Value="Mã kênh bán")
             DisplayMode: =DisplayMode.Edit
             Height: =43
             InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
             Items: =["Mã kênh bán", "Tên kênh bán", "Số giấy tờ"]
             OnChange: =Reset(TextFilterPV_1)
+            Required: =false
+            TriggerOutput: ="Keypress"
             Width: =152
             X: =387
             Y: =31

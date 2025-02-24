@@ -1,0 +1,1362 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  TraCuuBangPhi:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =ClearCollect(
+            tmpKQTCBPCollect,
+            ShowColumns(
+                SortByColumns(
+                    DL_CHUONG_TRINH_BANG_PHIS,
+                    "cr282_ma_bang_phi",
+                    SortOrder.Ascending
+                ),
+                MA_BANG_PHI,
+                MA_CHUONG_TRINH,
+                MA_SAN_PHAM,
+                MA_DO_TUOI,
+                MA_GIOI_TINH,
+                MA_PHAMVI_DIALY,
+                NHOM_TINH_PHI,
+                NHOM_NGANH_NGHE,
+                SO_NDBH,
+                THOI_HAN_BH,
+                DOI_TUONG,
+                PTHUC_DONG_PHI,
+                PHI_BH,
+                SO_TIEN,
+                TYLE_PHI
+            )
+        );
+        Clear(tmpDSTCBPCollect);
+        Reset(CbxMaSPTCBP);Reset(CbxMaCTTCBP);Reset(CbxNhomTPTCBP);Reset(CbxDTTCBP);Reset(CbxGTTCBP);Reset(CbxPVTCBP);
+        Reset(TiPhiTuTCBP);Reset(TiPhiDenTCBP);
+        Clear(tmpDSCTTCBPCollect);Clear(tmpDSNhomTPTCBPCollect)
+      Width: |+
+        =Max(1355, App.MinScreenWidth) - 25
+
+    Children:
+      - ContainerTCBP:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            Height: =768
+            Width: =1271
+            X: =60
+          Children:
+            - GalleryDKCTCT_3:
+                Control: Gallery@2.15.0
+                Variant: Vertical
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =557
+                  Items: |-
+                    =SortByColumns(
+                        tmpKQTCBPCollect,
+                        "cr282_ma_san_pham",
+                        SortOrder.Ascending,
+                        "cr282_ma_chuong_trinh",
+                        SortOrder.Ascending,
+                        "cr282_nhom_tinh_phi",
+                        SortOrder.Ascending,
+                        "cr282_ma_do_tuoi",
+                        SortOrder.Ascending,
+                        "cr282_ma_gioi_tinh",
+                        SortOrder.Ascending,
+                        "cr282_ma_phamvi_dialy",
+                        SortOrder.Ascending,
+                        "cr282_nhom_nganh_nghe",
+                        SortOrder.Ascending,
+                        "cr282_so_ndbh",
+                        SortOrder.Ascending,
+                        "cr282_thoi_han_bh",
+                        SortOrder.Ascending,
+                        "cr282_doi_tuong",
+                        SortOrder.Ascending,
+                        "cr282_pthuc_dong_phi",
+                        SortOrder.Ascending,
+                        "cr282_phi_bh",
+                        SortOrder.Ascending,
+                        "cr282_so_tien",
+                        SortOrder.Ascending,
+                        "cr282_tyle_phi",
+                        SortOrder.Ascending
+                    )
+                  NavigationStep: =0
+                  TemplatePadding: =0
+                  TemplateSize: =32
+                  Width: =1278
+                  Y: =211
+                Children:
+                  - TiSttQLCTCT_1:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_ma_san_pham
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =31
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =8
+                        Width: =70
+                        X: =16
+                  - TiTthtQLCTCT_1:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =LookUp(DL_SAN_PHAM,MA_SAN_PHAM=ThisItem.cr282_ma_san_pham,TEN_SAN_PHAM)
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =31
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =8
+                        Width: =133
+                        X: =86
+                  - TiTenQLHTQLCTCT_1:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =LookUp(' DL_SAN_PHAM_CT',MA_CHUONG_TRINH=ThisItem.cr282_ma_chuong_trinh && MA_SAN_PHAM=ThisItem.cr282_ma_san_pham,TEN_CHUONG_TRINH)
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =31
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =8
+                        Width: =124
+                        X: =219
+                  - TiSTBH_1:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_tyle_phi
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Format: =TextFormat.Number
+                        Height: =31
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =8
+                        Width: =43
+                        X: =1221
+                  - TiTuChiTra_1:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        Align: =Align.Right
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_phi_bh
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Format: =TextFormat.Number
+                        Height: =31
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =8
+                        Width: =84
+                        X: =1137
+                  - TiGHSTBenh_1:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_pthuc_dong_phi
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =31
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =8
+                        Width: =66
+                        X: =1071
+                  - TiGHSNNam_1:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_ma_gioi_tinh
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =31
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =8
+                        Width: =69
+                        X: =633
+                  - TiGHSTNam_1:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_ma_do_tuoi
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =31
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =8
+                        Width: =111
+                        X: =522
+                  - TiGHSTNgay_1:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_nhom_tinh_phi
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =31
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =8
+                        Width: =91
+                        X: =343
+                  - TiGHSTNgay_2:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_ma_phamvi_dialy
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =31
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =8
+                        Width: =88
+                        X: =434
+                  - TiGHSNNam_2:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_nhom_nganh_nghe
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =31
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =8
+                        Width: =74
+                        X: =702
+                  - TiGHSNNam_3:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        Align: =Align.Right
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_so_tien
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Format: =TextFormat.Number
+                        Height: =31
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =8
+                        Width: =83
+                        X: =776
+                  - TiGHSNNam_4:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        Align: =Align.Right
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_so_ndbh
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =31
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =8
+                        Width: =82
+                        X: =859
+                  - TiGHSNNam_5:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_thoi_han_bh
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =31
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =8
+                        Width: =65
+                        X: =941
+                  - TiGHSNNam_6:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_doi_tuong
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =31
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =8
+                        Width: =65
+                        X: =1006
+            - BadgeCanvas1_32:
+                Control: Badge@0.0.24
+                Properties:
+                  Content: =""
+                  Height: =43
+                  Width: =1258
+                  X: =12
+                  Y: =164
+            - TextCanvas2_144:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =43
+                  Size: =10
+                  Text: |-
+                    ="Mã
+                    sản phẩm"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =84
+                  X: =8
+                  Y: =164
+            - TextCanvas1_21:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =29
+                  Size: =16
+                  Text: ="Tra cứu bảng phí"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =451
+                  X: =17
+            - TextCanvas2_167:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =43
+                  Size: =10
+                  Text: |-
+                    ="Tỷ lệ 
+                    phí"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =36
+                  X: =1222
+                  Y: =164
+            - BtnTaiLaiDKCTCT_3:
+                Control: Button@0.0.44
+                Properties:
+                  BasePaletteColor: =RGBA(5, 102, 178, 1)
+                  FontSize: =13
+                  FontWeight: =FontWeight.Bold
+                  Height: =34
+                  OnSelect: |-
+                    =ClearCollect(
+                        tmpKQTCBPCollect,
+                        ShowColumns(
+                            SortByColumns(
+                                DL_CHUONG_TRINH_BANG_PHIS,
+                                "cr282_ma_bang_phi",
+                                SortOrder.Ascending
+                            ),
+                            MA_BANG_PHI,
+                            MA_CHUONG_TRINH,
+                            MA_SAN_PHAM,
+                            MA_DO_TUOI,
+                            MA_GIOI_TINH,
+                            MA_PHAMVI_DIALY,
+                            NHOM_TINH_PHI,
+                            NHOM_NGANH_NGHE,
+                            SO_NDBH,
+                            THOI_HAN_BH,
+                            DOI_TUONG,
+                            PTHUC_DONG_PHI,
+                            PHI_BH,
+                            SO_TIEN,
+                            TYLE_PHI
+                        )
+                    );
+                    Clear(tmpDSTCBPCollect);
+                    Reset(CbxMaSPTCBP);Reset(CbxMaCTTCBP);Reset(CbxNhomTPTCBP);Reset(CbxDTTCBP);Reset(CbxGTTCBP);Reset(CbxPVTCBP);
+                    Reset(TiPhiTuTCBP);Reset(TiPhiDenTCBP);
+                    Clear(tmpDSCTTCBPCollect);Clear(tmpDSNhomTPTCBPCollect)
+                  Text: ="Tải lại"
+                  Width: =85
+                  X: =1061
+                  Y: =119
+            - TextCanvas2_154:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =43
+                  Size: =10
+                  Text: ="Tên sản phẩm"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =82
+                  X: =115
+                  Y: =164
+            - TextCanvas2_155:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =43
+                  Size: =10
+                  Text: ="Chương trình"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =83
+                  X: =242
+                  Y: =164
+            - TextCanvas2_156:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =43
+                  Size: =10
+                  Text: |-
+                    ="Nhóm 
+                    tính phí"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =84
+                  X: =346
+                  Y: =164
+            - TextCanvas2_157:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =43
+                  Size: =10
+                  Text: |-
+                    ="Phạm vi
+                    địa lý"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =89
+                  X: =432
+                  Y: =164
+            - TextCanvas2_158:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =43
+                  Size: =10
+                  Text: ="Độ tuổi"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =66
+                  X: =548
+                  Y: =164
+            - TextCanvas2_166:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =43
+                  Size: =10
+                  Text: ="Phí"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =40
+                  X: =1160
+                  Y: =164
+            - TextCanvas2_161:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =43
+                  Size: =10
+                  Text: |-
+                    ="Số tiền
+                    bảo hiểm"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =61
+                  X: =787
+                  Y: =164
+            - TextCanvas2_159:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =43
+                  Size: =10
+                  Text: ="Giới tính"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =66
+                  X: =635
+                  Y: =164
+            - TextCanvas4:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =30
+                  Text: ="Sản phẩm"
+                  Width: =69
+                  X: =92
+                  Y: =29
+            - CbxMaSPTCBP:
+                Control: ComboBox@0.0.49
+                Properties:
+                  InputTextPlaceholder: ="Nhập giá trị lọc"
+                  Items: =SortByColumns(DL_SAN_PHAM,"cr282_ma_san_pham",SortOrder.Ascending)
+                  OnChange: |-
+                    =ClearCollect(
+                        tmpDSTCBPCollect,
+                        ShowColumns(
+                            Filter(
+                                DL_CHUONG_TRINH_BANG_PHIS,
+                                MA_SAN_PHAM=CbxMaSPTCBP.Selected.MA_SAN_PHAM
+                            ),
+                            MA_PHAMVI_DIALY,
+                            MA_DO_TUOI,
+                            MA_GIOI_TINH
+                        )
+                    );
+                    ClearCollect(
+                        tmpDSCTTCBPCollect,
+                        ShowColumns(
+                            SortByColumns(
+                                Filter(
+                                    ' DL_SAN_PHAM_CT',
+                                    MA_SAN_PHAM=CbxMaSPTCBP.Selected.MA_SAN_PHAM
+                                ),
+                                "cr282_ma_chuongtrinh",
+                                SortOrder.Ascending
+                            ),
+                            MA_CHUONG_TRINH,
+                            TEN_CHUONG_TRINH
+                        )
+                    );
+                  Width: =200
+                  X: =165
+                  Y: =30
+                Children:
+                  - MA1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="MA"
+                        FieldName: ="cr282_ma"
+                        FieldType: ="s"
+                        Order: =4
+                  - QUY_TAC_BH1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="QUY_TAC_BH"
+                        FieldName: ="cr282_quy_tac_bh"
+                        FieldType: ="F"
+                        Order: =6
+                  - TAI_LIEU_MAU1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="TAI_LIEU_MAU"
+                        FieldName: ="cr282_tai_lieu_mau"
+                        FieldType: ="F"
+                        Order: =7
+                  - LHNV1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="LHNV"
+                        FieldName: ="cr282_lhnv"
+                        FieldType: ="s"
+                        Order: =8
+                  - MA_SAN_PHAM1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="MA_SAN_PHAM"
+                        FieldName: ="cr282_ma_san_pham"
+                        FieldType: ="s"
+                        Order: =2
+                  - TEN_SAN_PHAM1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="TEN_SAN_PHAM"
+                        FieldName: ="cr282_ten_san_pham"
+                        FieldType: ="s"
+                        Order: =1
+                  - MO_TA1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="MO_TA"
+                        FieldName: ="cr282_mo_ta"
+                        FieldType: ="s"
+                        Order: =9
+                  - SO_VAN_BAN1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="SO_VAN_BAN"
+                        FieldName: ="cr282_so_van_ban"
+                        FieldType: ="s"
+                        Order: =10
+                  - HL_TU1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="HL_TU"
+                        FieldName: ="cr282_hl_tu"
+                        FieldType: ="d"
+                        Order: =11
+                  - HL_DEN1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="HL_DEN"
+                        FieldName: ="cr282_hl_den"
+                        FieldType: ="d"
+                        Order: =12
+                  - DOANH_NGHIEP_BH1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="DOANH_NGHIEP_BH"
+                        FieldName: ="cr282_doanh_nghiep_bh"
+                        FieldType: ="s"
+                        Order: =13
+                  - TRANG_THAI1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="TRANG_THAI"
+                        FieldName: ="cr282_trang_thai"
+                        FieldType: ="n"
+                        Order: =14
+            - TextCanvas4_1:
+                Control: Text@0.0.50
+                Properties:
+                  Text: ="Chương trình"
+                  Width: =85
+                  X: =468
+                  Y: =29
+            - CbxMaCTTCBP:
+                Control: ComboBox@0.0.49
+                Properties:
+                  InputTextPlaceholder: ="Nhập giá trị lọc"
+                  Items: =SortByColumns(tmpDSCTTCBPCollect,"cr282_ma_chuongtrinh",SortOrder.Ascending)
+                  OnChange: |-
+                    =ClearCollect(
+                        tmpDSTCBPCollect,
+                        ShowColumns(
+                            Filter(
+                                DL_CHUONG_TRINH_BANG_PHIS,
+                                MA_SAN_PHAM=CbxMaSPTCBP.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh
+                            ),
+                            MA_PHAMVI_DIALY,
+                            MA_DO_TUOI,
+                            MA_GIOI_TINH
+                        )
+                    );
+                    ClearCollect(
+                        tmpDSNhomTPTCBPCollect,
+                        Distinct(
+                            Filter(
+                                DL_SAN_PHAM_NHOMQLS,
+                                MA_SP=CbxMaSPTCBP.Selected.MA_SAN_PHAM && !IsBlank(Find(CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh,CHUONGTRINH_APDUNG))
+                            ),
+                            MA_NHOM_TINHPHI
+                        )
+                    );
+                  Width: =200
+                  X: =558
+                  Y: =30
+                Children:
+                  - cr282_ma_chuongtrinh1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="cr282_ma_chuongtrinh"
+                        FieldName: ="cr282_ma_chuongtrinh"
+                        FieldType: ="s"
+                        Order: =2
+                  - cr282_ten_chuong_trinh1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="cr282_ten_chuong_trinh"
+                        FieldName: ="cr282_ten_chuong_trinh"
+                        FieldType: ="s"
+                        Order: =1
+            - TextCanvas4_2:
+                Control: Text@0.0.50
+                Properties:
+                  Text: ="Nhóm tính phí"
+                  X: =855
+                  Y: =30
+            - CbxNhomTPTCBP:
+                Control: ComboBox@0.0.49
+                Properties:
+                  InputTextPlaceholder: ="Nhập giá trị lọc"
+                  Items: =tmpDSNhomTPTCBPCollect
+                  OnChange: |-
+                    =ClearCollect(
+                        tmpDSTCBPCollect,
+                        ShowColumns(
+                            Filter(
+                                DL_CHUONG_TRINH_BANG_PHIS,
+                                MA_SAN_PHAM=CbxMaSPTCBP.Selected.MA_SAN_PHAM && MA_CHUONG_TRINH=CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh && NHOM_TINH_PHI=CbxNhomTPTCBP.Selected.Value
+                            ),
+                            MA_PHAMVI_DIALY,
+                            MA_DO_TUOI,
+                            MA_GIOI_TINH
+                        )
+                    );
+                  Width: =200
+                  X: =955
+                  Y: =30
+                Children:
+                  - Value3:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="Value"
+                        FieldName: ="Value"
+                        FieldType: ="s"
+                        Order: =1
+            - TextCanvas4_3:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =26
+                  Text: ="Phạm vi"
+                  Width: =57
+                  X: =92
+                  Y: =76
+            - CbxPVTCBP:
+                Control: ComboBox@0.0.49
+                Properties:
+                  InputTextPlaceholder: ="Nhập giá trị lọc"
+                  Items: |-
+                    =SortByColumns(
+                        Filter(
+                            DM_PHAMVI_DIALYS,
+                            (IsBlank(CbxMaSPTCBP.Selected.MA_SAN_PHAM) && 
+                            IsBlank(CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh) && 
+                            IsBlank(CbxNhomTPTCBP.Selected.Value) 
+                            && CountIf(tmpDSTCBPCollect,true)=0)||
+                            CountIf(tmpDSTCBPCollect,cr282_ma_phamvi_dialy=TEN_PHAMVI)>0
+                        ),"cr282_ma_phamvi",
+                        SortOrder.Ascending
+                    )
+                  Width: =200
+                  X: =165
+                  Y: =75
+                Children:
+                  - cr282_ten_phamvi1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="cr282_ten_phamvi"
+                        FieldName: ="cr282_ten_phamvi"
+                        FieldType: ="s"
+                        Order: =1
+            - TextCanvas4_4:
+                Control: Text@0.0.50
+                Properties:
+                  Text: ="Độ tuổi"
+                  Width: =56
+                  X: =468
+                  Y: =73
+            - CbxDTTCBP:
+                Control: ComboBox@0.0.49
+                Properties:
+                  InputTextPlaceholder: ="Nhập giá trị lọc"
+                  Items: |-
+                    =SortByColumns(
+                        Filter(
+                            DM_DO_TUOIS,
+                            (IsBlank(CbxMaSPTCBP.Selected.MA_SAN_PHAM) && 
+                            IsBlank(CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh) && 
+                            IsBlank(CbxNhomTPTCBP.Selected.Value) 
+                            && CountIf(tmpDSTCBPCollect,true)=0)||
+                            CountIf(tmpDSTCBPCollect,cr282_ma_do_tuoi=MO_TA)>0
+                        ),"cr282_ma_do_tuoi",
+                        SortOrder.Ascending
+                    )
+                  Width: =200
+                  X: =558
+                  Y: =75
+                Children:
+                  - MA_DO_TUOI1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="MA_DO_TUOI"
+                        FieldName: ="cr282_ma_do_tuoi"
+                        FieldType: ="s"
+                        Order: =2
+                  - MO_TA3:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="MO_TA"
+                        FieldName: ="cr282_mo_ta"
+                        FieldType: ="s"
+                        Order: =1
+                  - TUOI_TU1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="TUOI_TU"
+                        FieldName: ="cr282_tuoi_tu"
+                        FieldType: ="n"
+                        Order: =3
+                  - DONVI_TUOI_TU1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="DONVI_TUOI_TU"
+                        FieldName: ="cr282_donvi_tuoi_tu"
+                        FieldType: ="n"
+                        Order: =4
+                  - TUOI_DEN1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="TUOI_DEN"
+                        FieldName: ="cr282_tuoi_den"
+                        FieldType: ="n"
+                        Order: =5
+                  - DONVI_TUOI_DEN1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="DONVI_TUOI_DEN"
+                        FieldName: ="cr282_donvi_tuoi_den"
+                        FieldType: ="n"
+                        Order: =6
+                  - GHI_CHU2:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="GHI_CHU"
+                        FieldName: ="cr282_ghi_chu"
+                        FieldType: ="s"
+                        Order: =7
+            - TextCanvas4_5:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =34
+                  Text: ="Giới tính"
+                  Width: =67
+                  X: =855
+                  Y: =73
+            - CbxGTTCBP:
+                Control: ComboBox@0.0.49
+                Properties:
+                  InputTextPlaceholder: ="Nhập giá trị lọc"
+                  Items: |-
+                    =SortByColumns(
+                        Filter(
+                            DM_GIOI_TINHS,
+                            (IsBlank(CbxMaSPTCBP.Selected.MA_SAN_PHAM) && 
+                            IsBlank(CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh) && 
+                            IsBlank(CbxNhomTPTCBP.Selected.Value) 
+                            && CountIf(tmpDSTCBPCollect,true)=0)||
+                            CountIf(tmpDSTCBPCollect,cr282_ma_gioi_tinh=TEN_GIOI_TINH)>0
+                        ),"cr282_ma_gioi_tinh",
+                        SortOrder.Ascending
+                    )
+                  Width: =200
+                  X: =955
+                  Y: =75
+                Children:
+                  - MA_GIOI_TINH1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="MA_GIOI_TINH"
+                        FieldName: ="cr282_ma_gioi_tinh"
+                        FieldType: ="s"
+                        Order: =2
+                  - TEN_GIOI_TINH1:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="TEN_GIOI_TINH"
+                        FieldName: ="cr282_ten_gioi_tinh"
+                        FieldType: ="s"
+                        Order: =1
+                  - GHI_CHU3:
+                      Control: ComboBoxDataField@1.5.0
+                      Variant: textualColumn
+                      IsLocked: true
+                      Properties:
+                        FieldDisplayName: ="GHI_CHU"
+                        FieldName: ="cr282_ghi_chu"
+                        FieldType: ="s"
+                        Order: =3
+            - TextCanvas4_8:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =30
+                  Text: ="Phí từ"
+                  Width: =38
+                  X: =92
+                  Y: =119
+            - TiPhiTuTCBP:
+                Control: TextInput@0.0.53
+                Properties:
+                  Type: ='TextInputCanvas.Type'.Text
+                  Width: =200
+                  X: =165
+                  Y: =120
+            - TextCanvas4_9:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =31
+                  Text: ="Đến"
+                  Width: =41
+                  X: =468
+                  Y: =119
+            - TiPhiDenTCBP:
+                Control: TextInput@0.0.53
+                Properties:
+                  Type: ='TextInputCanvas.Type'.Text
+                  Width: =200
+                  X: =558
+                  Y: =120
+            - BtnTaiLaiDKCTCT_4:
+                Control: Button@0.0.44
+                Properties:
+                  FontSize: =13
+                  FontWeight: =FontWeight.Bold
+                  Height: =34
+                  OnSelect: |+
+                    =ClearCollect(
+                        tmpKQTCBPCollect,
+                        ShowColumns(
+                            SortByColumns(
+                                DL_CHUONG_TRINH_BANG_PHIS,
+                                "cr282_ma_bang_phi",
+                                SortOrder.Ascending
+                            ),
+                            MA_BANG_PHI,
+                            MA_CHUONG_TRINH,
+                            MA_SAN_PHAM,
+                            MA_DO_TUOI,
+                            MA_GIOI_TINH,
+                            MA_PHAMVI_DIALY,
+                            NHOM_TINH_PHI,
+                            NHOM_NGANH_NGHE,
+                            SO_NDBH,
+                            THOI_HAN_BH,
+                            DOI_TUONG,
+                            PTHUC_DONG_PHI,
+                            PHI_BH,
+                            SO_TIEN,
+                            TYLE_PHI
+                        )
+                    );
+                    If(
+                        !IsBlank(CbxMaSPTCBP.Selected.MA_SAN_PHAM),
+                        ClearCollect(
+                            tmpKQTCBPCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        DL_CHUONG_TRINH_BANG_PHIS,
+                                        MA_SAN_PHAM=CbxMaSPTCBP.Selected.MA_SAN_PHAM
+                                    ),
+                                    "cr282_ma_bang_phi",
+                                    SortOrder.Ascending
+                                ),
+                                MA_BANG_PHI,
+                                MA_CHUONG_TRINH,
+                                MA_SAN_PHAM,
+                                MA_DO_TUOI,
+                                MA_GIOI_TINH,
+                                MA_PHAMVI_DIALY,
+                                NHOM_TINH_PHI,
+                                NHOM_NGANH_NGHE,
+                                SO_NDBH,
+                                THOI_HAN_BH,
+                                DOI_TUONG,
+                                PTHUC_DONG_PHI,
+                                PHI_BH,
+                                SO_TIEN,
+                                TYLE_PHI
+                            )
+                        );
+                    );
+                    If(
+                        !IsBlank(CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh),
+                        ClearCollect(
+                            tmpKQTCBPCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        tmpKQTCBPCollect,
+                                        cr282_ma_chuong_trinh=CbxMaCTTCBP.Selected.cr282_ma_chuongtrinh
+                                    ),
+                                    "cr282_ma_bang_phi",
+                                    SortOrder.Ascending
+                                ),
+                                cr282_ma_bang_phi,
+                                cr282_ma_chuong_trinh,
+                                cr282_ma_san_pham,
+                                cr282_ma_do_tuoi,
+                                cr282_ma_gioi_tinh,
+                                cr282_ma_phamvi_dialy,
+                                cr282_nhom_tinh_phi,
+                                cr282_nhom_nganh_nghe,
+                                cr282_so_ndbh,
+                                cr282_thoi_han_bh,
+                                cr282_doi_tuong,
+                                cr282_pthuc_dong_phi,
+                                cr282_phi_bh,
+                                cr282_so_tien,
+                                cr282_tyle_phi
+                            )
+                        );
+                    );
+                    If(
+                        !IsBlank(CbxNhomTPTCBP.Selected.Value),
+                        ClearCollect(
+                            tmpKQTCBPCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        tmpKQTCBPCollect,
+                                        cr282_nhom_tinh_phi=CbxNhomTPTCBP.Selected.Value
+                                    ),
+                                    "cr282_ma_bang_phi",
+                                    SortOrder.Ascending
+                                ),
+                                cr282_ma_bang_phi,
+                                cr282_ma_chuong_trinh,
+                                cr282_ma_san_pham,
+                                cr282_ma_do_tuoi,
+                                cr282_ma_gioi_tinh,
+                                cr282_ma_phamvi_dialy,
+                                cr282_nhom_tinh_phi,
+                                cr282_nhom_nganh_nghe,
+                                cr282_so_ndbh,
+                                cr282_thoi_han_bh,
+                                cr282_doi_tuong,
+                                cr282_pthuc_dong_phi,
+                                cr282_phi_bh,
+                                cr282_so_tien,
+                                cr282_tyle_phi
+                            )
+                        );
+                    );
+                    If(
+                        !IsBlank(TiPhiTuTCBP.Value),
+                        ClearCollect(
+                            tmpKQTCBPCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        tmpKQTCBPCollect,
+                                        cr282_phi_bh>=Value(TiPhiTuTCBP.Value)
+                                    ),
+                                    "cr282_ma_bang_phi",
+                                    SortOrder.Ascending
+                                ),
+                                cr282_ma_bang_phi,
+                                cr282_ma_chuong_trinh,
+                                cr282_ma_san_pham,
+                                cr282_ma_do_tuoi,
+                                cr282_ma_gioi_tinh,
+                                cr282_ma_phamvi_dialy,
+                                cr282_nhom_tinh_phi,
+                                cr282_nhom_nganh_nghe,
+                                cr282_so_ndbh,
+                                cr282_thoi_han_bh,
+                                cr282_doi_tuong,
+                                cr282_pthuc_dong_phi,
+                                cr282_phi_bh,
+                                cr282_so_tien,
+                                cr282_tyle_phi
+                            )
+                        );
+                    );
+                    If(
+                        !IsBlank(TiPhiDenTCBP.Value),
+                        ClearCollect(
+                            tmpKQTCBPCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        tmpKQTCBPCollect,
+                                        cr282_phi_bh<=Value(TiPhiDenTCBP.Value)
+                                    ),
+                                    "cr282_ma_bang_phi",
+                                    SortOrder.Ascending
+                                ),
+                                cr282_ma_bang_phi,
+                                cr282_ma_chuong_trinh,
+                                cr282_ma_san_pham,
+                                cr282_ma_do_tuoi,
+                                cr282_ma_gioi_tinh,
+                                cr282_ma_phamvi_dialy,
+                                cr282_nhom_tinh_phi,
+                                cr282_nhom_nganh_nghe,
+                                cr282_so_ndbh,
+                                cr282_thoi_han_bh,
+                                cr282_doi_tuong,
+                                cr282_pthuc_dong_phi,
+                                cr282_phi_bh,
+                                cr282_so_tien,
+                                cr282_tyle_phi
+                            )
+                        );
+                    );
+                    If(
+                        !IsBlank(CbxDTTCBP.Selected.MA_DO_TUOI),
+                        ClearCollect(
+                            tmpKQTCBPCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        tmpKQTCBPCollect,
+                                        cr282_ma_do_tuoi=CbxDTTCBP.Selected.MO_TA
+                                    ),
+                                    "cr282_ma_bang_phi",
+                                    SortOrder.Ascending
+                                ),
+                                cr282_ma_bang_phi,
+                                cr282_ma_chuong_trinh,
+                                cr282_ma_san_pham,
+                                cr282_ma_do_tuoi,
+                                cr282_ma_gioi_tinh,
+                                cr282_ma_phamvi_dialy,
+                                cr282_nhom_tinh_phi,
+                                cr282_nhom_nganh_nghe,
+                                cr282_so_ndbh,
+                                cr282_thoi_han_bh,
+                                cr282_doi_tuong,
+                                cr282_pthuc_dong_phi,
+                                cr282_phi_bh,
+                                cr282_so_tien,
+                                cr282_tyle_phi
+                            )
+                        );
+                    );
+                    If(
+                        !IsBlank(CbxGTTCBP.Selected.MA_GIOI_TINH),
+                        ClearCollect(
+                            tmpKQTCBPCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        tmpKQTCBPCollect,
+                                        cr282_ma_gioi_tinh=CbxGTTCBP.Selected.TEN_GIOI_TINH
+                                    ),
+                                    "cr282_ma_bang_phi",
+                                    SortOrder.Ascending
+                                ),
+                                cr282_ma_bang_phi,
+                                cr282_ma_chuong_trinh,
+                                cr282_ma_san_pham,
+                                cr282_ma_do_tuoi,
+                                cr282_ma_gioi_tinh,
+                                cr282_ma_phamvi_dialy,
+                                cr282_nhom_tinh_phi,
+                                cr282_nhom_nganh_nghe,
+                                cr282_so_ndbh,
+                                cr282_thoi_han_bh,
+                                cr282_doi_tuong,
+                                cr282_pthuc_dong_phi,
+                                cr282_phi_bh,
+                                cr282_so_tien,
+                                cr282_tyle_phi
+                            )
+                        );
+                    );
+                    If(
+                        !IsBlank(CbxPVTCBP.Selected.MA_PHAMVI),
+                        ClearCollect(
+                            tmpKQTCBPCollect,
+                            ShowColumns(
+                                SortByColumns(
+                                    Filter(
+                                        tmpKQTCBPCollect,
+                                        cr282_ma_phamvi_dialy=CbxPVTCBP.Selected.TEN_PHAMVI
+                                    ),
+                                    "cr282_ma_bang_phi",
+                                    SortOrder.Ascending
+                                ),
+                                cr282_ma_bang_phi,
+                                cr282_ma_chuong_trinh,
+                                cr282_ma_san_pham,
+                                cr282_ma_do_tuoi,
+                                cr282_ma_gioi_tinh,
+                                cr282_ma_phamvi_dialy,
+                                cr282_nhom_tinh_phi,
+                                cr282_nhom_nganh_nghe,
+                                cr282_so_ndbh,
+                                cr282_thoi_han_bh,
+                                cr282_doi_tuong,
+                                cr282_pthuc_dong_phi,
+                                cr282_phi_bh,
+                                cr282_so_tien,
+                                cr282_tyle_phi
+                            )
+                        );
+                    );
+
+                  Text: ="Tra cứu"
+                  Width: =85
+                  X: =964
+                  Y: =119
+            - TextCanvas2_160:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =43
+                  Size: =10
+                  Text: |-
+                    ="Nhóm
+                    ngành nghề"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =86
+                  X: =697
+                  Y: =164
+            - TextCanvas2_162:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =43
+                  Size: =10
+                  Text: |-
+                    ="Số người 
+                    được bảo hiểm"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =85
+                  X: =860
+                  Y: =164
+            - TextCanvas2_163:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =43
+                  Size: =10
+                  Text: |-
+                    ="Thời hạn
+                    bảo hiểm"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =63
+                  X: =945
+                  Y: =164
+            - TextCanvas2_164:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =43
+                  Size: =10
+                  Text: |-
+                    ="Đối
+                    tượng"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =48
+                  X: =1016
+                  Y: =164
+            - TextCanvas2_165:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =43
+                  Size: =10
+                  Text: |-
+                    ="Phương thức
+                    đóng phí"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =63
+                  X: =1076
+                  Y: =164

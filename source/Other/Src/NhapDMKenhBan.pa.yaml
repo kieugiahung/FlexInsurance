@@ -1,0 +1,1304 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  NhapDMKenhBan:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =Reset(DropCNTC);Reset(ComboBoxLoaiKB);Reset(ComboBoxLGT);Reset(CbxQTichDMKB);Reset(ComboBoxQGiaDMKB);Reset(ComboBoxNHang);Reset(ComboBoxLGTNDD);
+        Reset(TextMaKB);Reset(TextTenKB);Reset(TextSGT);Reset(TextSGTNDD);Reset(TextSDT);Reset(TextSDTNDD);Reset(TextMST);Reset(TextSoHD);Reset(TextMaNV);
+        Reset(DateNSinh);Reset(DateNTLap);Reset(TextDChi);Reset(TextTenNDD);Reset(TextSTK);
+        Reset(DropTThai);Reset(ComboBoxTinhTP);Reset(ComboBoxQHuyen);Reset(DateNHDong);Reset(DateNHLTuHD);Reset(DateNHLDenHD);Reset(DataCardValue3_3);Reset(ComboBoxNHangBA);
+        If(
+            IsBlank(LookUp(DM_KENH_BANS,MA_KENH_BAN=maKenhBanFwd)),
+            UpdateContext({
+                objKB:{
+                    MA_KENH_BAN:Blank(),
+                    LOAI_CANHAN_TOCHUC:"Cá nhân"
+                }
+            }),
+            UpdateContext({
+                objKB:LookUp(DM_KENH_BANS,MA_KENH_BAN=maKenhBanFwd)
+            })
+        )
+    Children:
+      - Container2_1:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            Height: =768
+            Width: =1306
+            X: =60
+          Children:
+            - Button2_2:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =32
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |-
+                    =If(
+                        IsBlank(TextTenKB.Text),
+                        Notify("Bắt buộc nhập tên kênh bán",NotificationType.Error,2000),
+                        IsBlank(ComboBoxLoaiKB.Selected.MA_LOAI_KB),
+                        Notify("Bắt buộc nhập loại kênh bán",NotificationType.Error,2000),
+                    	IsBlank(ComboBoxLGT.Selected.MA_LOAI_GT),
+                    	Notify("Bắt buộc nhập loại giấy tờ",NotificationType.Error,2000),
+                    	IsBlank(TextSGT.Text),
+                    	Notify("Bắt buộc nhập số giấy tờ",NotificationType.Error,2000),
+                    	IsBlank(TextMST.Text),
+                    	Notify("Bắt buộc nhập mã số thuế",NotificationType.Error,2000),
+                        (!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || 
+                    	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"))
+                        && IsBlank(ComboBoxQGiaDMKB.Selected.MA_PHAMVI),
+                    	Notify("Bắt buộc nhập quốc gia",NotificationType.Error,2000),
+                        (ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || 
+                    	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân"))
+                        && IsBlank(CbxQTichDMKB.Selected.MA_QUOC_TICH),
+                    	Notify("Bắt buộc nhập quốc tịch",NotificationType.Error,2000),
+                    	IsBlank(ComboBoxTinhTP.Selected.MA_PHAMVI),
+                    	Notify("Bắt buộc nhập tỉnh/thành phố",NotificationType.Error,2000),
+                    	IsBlank(ComboBoxQHuyen.Selected.MA_PHAMVI),
+                    	Notify("Bắt buộc nhập quận/huyện",NotificationType.Error,2000),
+                    	ComboBoxLoaiKB.Selected.MA_LOAI_KB="4" && IsBlank(ComboBoxNHangBA.Selected.MA_NGAN_HANG),
+                    	Notify("Bắt buộc nhập ngân hàng",NotificationType.Error,2000),
+                    	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB = "Trực tiếp" || 
+                    	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân")) 
+                    	&& IsBlank(TextMaNV.Text),
+                    	Notify("Bắt buộc nhập mã nhân viên",NotificationType.Error,2000),
+                    	(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || 
+                    	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"))
+                    	&& IsBlank(TextSoHD.Text),
+                    	Notify("Bắt buộc nhập số hợp đồng",NotificationType.Error,2000),
+                    	(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || 
+                    	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"))
+                    	&& IsBlank(DateNHDong.SelectedDate),
+                    	Notify("Bắt buộc nhập ngày hợp đồng",NotificationType.Error,2000),
+                    	(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || 
+                    	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"))
+                    	&& IsBlank(DateNHLTuHD.SelectedDate),
+                    	Notify("Bắt buộc nhập ngày hiệu lực từ của hợp đồng",NotificationType.Error,2000),
+                    	(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || 
+                    	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"))
+                    	&& IsBlank(TextTenNDD.Text),
+                    	Notify("Bắt buộc nhập tên người đại diện",NotificationType.Error,2000),
+                    	(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || 
+                    	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"))
+                    	&& IsBlank(ComboBoxLGTNDD.Selected.MA_LOAI_GT),
+                    	Notify("Bắt buộc nhập loại giấy tờ của người đại diện",NotificationType.Error,2000),
+                    	(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || 
+                    	(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"))
+                    	&& IsBlank(TextSGTNDD.Text),
+                    	Notify("Bắt buộc nhập số giấy tờ của người đại diện",NotificationType.Error,2000),
+                    	!IsBlank(DateNTLap.SelectedDate) && DateNTLap.SelectedDate>DateNHDong.SelectedDate,
+                        Notify("Bắt buộc ngày thành lập phải trước ngày hợp đồng",NotificationType.Error,2000),
+                    	DateNHDong.SelectedDate>DateNHLTuHD.SelectedDate,
+                        Notify("Bắt buộc ngày hợp đồng phải trước ngày hiệu lực từ của hợp đồng",NotificationType.Error,2000),
+                    	!IsBlank(DateNHLDenHD.SelectedDate) && DateNHLDenHD.SelectedDate<DateNHLTuHD.SelectedDate,
+                        Notify("Bắt buộc ngày hiệu lực từ phải trước ngày hiệu lực đến của hợp đồng",NotificationType.Error,2000),
+                        Refresh(DM_KENH_BANS);
+                        If(
+                            CountIf(DM_KENH_BANS,StartsWith(MA_KENH_BAN,ComboBoxLoaiKB.Selected.CODE_KENH_BAN))=0,
+                            UpdateContext({
+                                genMaKB:Concatenate(ComboBoxLoaiKB.Selected.CODE_KENH_BAN,"0001")
+                            }),
+                            UpdateContext({
+                                sampleID:"000",
+                                maxIdKB:Last(SortByColumns(Filter(DM_KENH_BANS,StartsWith(MA_KENH_BAN,ComboBoxLoaiKB.Selected.CODE_KENH_BAN)),"cr282_ma_kenh_ban",SortOrder.Ascending)).MA_KENH_BAN
+                            });
+                            UpdateContext({
+                                maIdKB:Text((Right(maxIdKB,4))+1)
+                            });
+                            UpdateContext({
+                                genMaKB:Concatenate(ComboBoxLoaiKB.Selected.CODE_KENH_BAN,If(Len(maIdKB)>3,"",Left(sampleID,4-Len(maIdKB))),maIdKB)
+                            });
+                        );
+                        If(
+                            IsBlank(LookUp(DM_KENH_BANS,MA_KENH_BAN=TextMaKB.Text)),
+                            If(
+                                ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân"),
+                                Patch(
+                                    DM_KENH_BANS,
+                                    {
+                                        MA_KENH_BAN:genMaKB,
+                                        TEN_KENH_BAN:TextTenKB.Text,
+                                        LOAI_GIAY_TO:ComboBoxLGT.Selected.MA_LOAI_GT,
+                                        SO_GIAY_TO:TextSGT.Text,
+                                        NGAY_SINH:DateNSinh.SelectedDate,
+                                        NGAY_THANH_LAP:Blank(),
+                                        LOAI:ComboBoxLoaiKB.Selected.MA_LOAI_KB,
+                                        DIA_CHI:TextDChi.Text,
+                                        MA_SO_THUE:TextMST.Text,
+                                        SO_DIEN_THOAI:TextSDT.Text,
+                                        EMAIL:TextEmail.Text,
+                                        TEN_NGAN_HANG:ComboBoxNHang.Selected.MA_DU_LIEU,
+                                        SO_TK_NGANHANG:TextSTK.Text,
+                                        QUOC_GIA:Blank(),
+                                        QUOC_TICH:CbxQTichDMKB.Selected.MA_QUOC_TICH,
+                                        SO_HOP_DONG:Blank(),
+                                        MA_NHAN_VIEN:TextMaNV.Text,
+                                        LOAI_CANHAN_TOCHUC:If(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý",If(DropCNTC.Selected.Value="Cá nhân","0","1"),Blank()),
+                                        LOAI_GIAY_TO_NDD:Blank(),
+                                        SO_GIAY_TO_NDD:Blank(),
+                                        SO_DIEN_THOAI_NDD:Blank(),
+                                        NGUOI_DAI_DIEN:Blank(),
+                                        TRANG_THAI:DropTThai.Selected.Value,
+                                        QUAN_HUYEN:ComboBoxQHuyen.Selected.MA_PHAMVI,
+                                        TINH_TP:ComboBoxTinhTP.Selected.MA_PHAMVI,
+                                        NGAY_HDONG:Blank(),
+                                        HLUC_TU_HDONG:Blank(),
+                                        HLUC_DEN_HDONG:Blank(),
+                                        FILE_HDONG:Blank()
+                                    }
+                                ),
+                                Patch(
+                                    DM_KENH_BANS,
+                                    {
+                                        MA_KENH_BAN:genMaKB,
+                                        TEN_KENH_BAN:TextTenKB.Text,
+                                        LOAI_GIAY_TO:ComboBoxLGT.Selected.MA_LOAI_GT,
+                                        SO_GIAY_TO:TextSGT.Text,
+                                        NGAY_SINH:Blank(),
+                                        NGAY_THANH_LAP:DateNTLap.SelectedDate,
+                                        LOAI:ComboBoxLoaiKB.Selected.MA_LOAI_KB,
+                                        DIA_CHI:TextDChi.Text,
+                                        MA_SO_THUE:TextMST.Text,
+                                        SO_DIEN_THOAI:TextSDT.Text,
+                                        EMAIL:TextEmail.Text,
+                                        NGUOI_DAI_DIEN:TextTenNDD.Text,
+                                        TEN_NGAN_HANG:If(ComboBoxLoaiKB.Selected.MA_LOAI_KB="4",ComboBoxNHangBA.Selected.MA_DU_LIEU,ComboBoxNHang.Selected.MA_DU_LIEU),
+                                        SO_TK_NGANHANG:TextSTK.Text,
+                                        QUOC_GIA:ComboBoxQGiaDMKB.Selected.MA_PHAMVI,
+                                        QUOC_TICH:Blank(),
+                                        LOAI_GIAY_TO_NDD:ComboBoxLGTNDD.Selected.MA_LOAI_GT,
+                                        SO_GIAY_TO_NDD:TextSGTNDD.Text,
+                                        SO_DIEN_THOAI_NDD:TextSDTNDD.Text,
+                                        SO_HOP_DONG:TextSoHD.Text,
+                                        MA_NHAN_VIEN:Blank(),
+                                        LOAI_CANHAN_TOCHUC:If(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý",If(DropCNTC.Selected.Value="Cá nhân","0","1"),Blank()),
+                                        TRANG_THAI:DropTThai.Selected.Value,
+                                        QUAN_HUYEN:ComboBoxQHuyen.Selected.MA_PHAMVI,
+                                        TINH_TP:ComboBoxTinhTP.Selected.MA_PHAMVI,
+                                        NGAY_HDONG:DateNHDong.SelectedDate,
+                                        HLUC_TU_HDONG:DateNHLTuHD.SelectedDate,
+                                        HLUC_DEN_HDONG:DateNHLDenHD.SelectedDate,
+                                        FILE_HDONG:If(
+                                            IsEmpty(DataCardValue3_3.Attachments),
+                                            Blank(),
+                                            {
+                                                FileName:First(DataCardValue3_3.Attachments).Name,
+                                                Value:First(DataCardValue3_3.Attachments).Value
+                                            }
+                                        )
+                                    }
+                                )
+                            ),
+                            If(
+                                ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân"),
+                                UpdateIf(
+                                    DM_KENH_BANS,
+                                    MA_KENH_BAN=TextMaKB.Text,
+                                    {
+                                        TEN_KENH_BAN:TextTenKB.Text,
+                                        LOAI_GIAY_TO:ComboBoxLGT.Selected.MA_LOAI_GT,
+                                        SO_GIAY_TO:TextSGT.Text,
+                                        NGAY_SINH:DateNSinh.SelectedDate,
+                                        NGAY_THANH_LAP:Blank(),
+                                        LOAI:ComboBoxLoaiKB.Selected.MA_LOAI_KB,
+                                        DIA_CHI:TextDChi.Text,
+                                        MA_SO_THUE:TextMST.Text,
+                                        SO_DIEN_THOAI:TextSDT.Text,
+                                        EMAIL:TextEmail.Text,
+                                        TEN_NGAN_HANG:ComboBoxNHang.Selected.MA_DU_LIEU,
+                                        SO_TK_NGANHANG:TextSTK.Text,
+                                        QUOC_GIA:Blank(),
+                                        QUOC_TICH:CbxQTichDMKB.Selected.MA_QUOC_TICH,
+                                        SO_HOP_DONG:Blank(),
+                                        MA_NHAN_VIEN:TextMaNV.Text,
+                                        LOAI_CANHAN_TOCHUC:If(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý",If(DropCNTC.Selected.Value="Cá nhân","0","1"),Blank()),
+                                        LOAI_GIAY_TO_NDD:Blank(),
+                                        SO_GIAY_TO_NDD:Blank(),
+                                        SO_DIEN_THOAI_NDD:Blank(),
+                                        NGUOI_DAI_DIEN:Blank(),
+                                        TRANG_THAI:DropTThai.Selected.Value,
+                                        QUAN_HUYEN:ComboBoxQHuyen.Selected.MA_PHAMVI,
+                                        TINH_TP:ComboBoxTinhTP.Selected.MA_PHAMVI,
+                                        NGAY_HDONG:Blank(),
+                                        HLUC_TU_HDONG:Blank(),
+                                        HLUC_DEN_HDONG:Blank(),
+                                        FILE_HDONG:Blank()
+                                    }
+                                ),
+                                UpdateIf(
+                                    DM_KENH_BANS,
+                                    MA_KENH_BAN=TextMaKB.Text,
+                                    {
+                                        TEN_KENH_BAN:TextTenKB.Text,
+                                        LOAI_GIAY_TO:ComboBoxLGT.Selected.MA_LOAI_GT,
+                                        SO_GIAY_TO:TextSGT.Text,
+                                        NGAY_SINH:Blank(),
+                                        NGAY_THANH_LAP:DateNTLap.SelectedDate,
+                                        LOAI:ComboBoxLoaiKB.Selected.MA_LOAI_KB,
+                                        DIA_CHI:TextDChi.Text,
+                                        MA_SO_THUE:TextMST.Text,
+                                        SO_DIEN_THOAI:TextSDT.Text,
+                                        EMAIL:TextEmail.Text,
+                                        NGUOI_DAI_DIEN:TextTenNDD.Text,
+                                        TEN_NGAN_HANG:If(ComboBoxLoaiKB.Selected.MA_LOAI_KB="4",ComboBoxNHangBA.Selected.MA_DU_LIEU,ComboBoxNHang.Selected.MA_DU_LIEU),
+                                        SO_TK_NGANHANG:TextSTK.Text,
+                                        QUOC_GIA:ComboBoxQGiaDMKB.Selected.MA_PHAMVI,
+                                        QUOC_TICH:Blank(),
+                                        LOAI_GIAY_TO_NDD:ComboBoxLGTNDD.Selected.MA_LOAI_GT,
+                                        SO_GIAY_TO_NDD:TextSGTNDD.Text,
+                                        SO_DIEN_THOAI_NDD:TextSDTNDD.Text,
+                                        SO_HOP_DONG:TextSoHD.Text,
+                                        MA_NHAN_VIEN:Blank(),
+                                        LOAI_CANHAN_TOCHUC:If(ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý",If(DropCNTC.Selected.Value="Cá nhân","0","1"),Blank()),
+                                        TRANG_THAI:DropTThai.Selected.Value,
+                                        QUAN_HUYEN:ComboBoxQHuyen.Selected.MA_PHAMVI,
+                                        TINH_TP:ComboBoxTinhTP.Selected.MA_PHAMVI,
+                                        NGAY_HDONG:DateNHDong.SelectedDate,
+                                        HLUC_TU_HDONG:DateNHLTuHD.SelectedDate,
+                                        HLUC_DEN_HDONG:DateNHLDenHD.SelectedDate,
+                                        FILE_HDONG:If(
+                                            IsEmpty(DataCardValue3_3.Attachments),
+                                            Blank(),
+                                            {
+                                                FileName:First(DataCardValue3_3.Attachments).Name,
+                                                Value:First(DataCardValue3_3.Attachments).Value
+                                            }
+                                        )
+                                    }
+                                )
+                            )
+                        );
+                        Notify("Lưu dữ liệu thành công",NotificationType.Success,2000);
+                        Navigate(Quanlykenhban)
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =11
+                  Text: ="Lưu"
+                  Width: =85
+                  X: =1164
+                  Y: =712
+            - Button3:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =32
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: =Navigate(Quanlykenhban)
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =11
+                  Text: ="Hủy"
+                  Width: =85
+                  X: =1044
+                  Y: =712
+            - Container3:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  Height: =132
+                  Width: =1267
+                  X: =8
+                  Y: =8
+                Children:
+                  - Label3_1:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =36
+                        Size: =11
+                        Text: ="Mã kênh bán"
+                        Width: =120
+                        X: =120
+                        Y: =4
+                  - TextMaKB:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: '=If(IsBlank(objKB.MA_KENH_BAN),"Hệ thống tự sinh",objKB.MA_KENH_BAN) '
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Size: =11
+                        Width: =200
+                        X: =290
+                        Y: =6
+                  - Label3_2:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =36
+                        Size: =11
+                        Text: ="Tên kênh bán (*)"
+                        Width: =140
+                        X: =120
+                        Y: =46
+                  - TextTenKB:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =objKB.TEN_KENH_BAN
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Size: =11
+                        Width: =200
+                        X: =290
+                        Y: =48
+                  - Label3_18:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Size: =11
+                        Text: ="Loại cá nhân/tổ chức"
+                        Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB="2"
+                        Width: =160
+                        X: =674
+                        Y: =90
+                  - DropCNTC:
+                      Control: Classic/DropDown@2.3.1
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        Default: =If(IsBlank(objKB.LOAI_CANHAN_TOCHUC),"Cá nhân",objKB.LOAI_CANHAN_TOCHUC)
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =["Cá nhân","Tổ chức"]
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =11
+                        Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB="2"
+                        Width: =200
+                        X: =840
+                        Y: =90
+                  - Label3_8:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        Size: =11
+                        Text: ="Loại kênh bán (*)"
+                        Width: =135
+                        X: =120
+                        Y: =90
+                  - ComboBoxLoaiKB:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =If(IsBlank(LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=objKB.LOAI)),LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB="1"),LookUp(DM_LOAI_KENH_BANS,MA_LOAI_KB=objKB.LOAI))
+                        DisplayFields: =["cr282_ten_loai_kb"]
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        InputTextPlaceholder: ="Chọn loại kênh bán"
+                        Items: =DM_LOAI_KENH_BANS
+                        OnSelect: =Reset(ComboBoxNHangBA)
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["cr282_ten_loai_kb"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =11
+                        Width: =200
+                        X: =290
+                        Y: =90
+                  - Label3_28:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =36
+                        Size: =11
+                        Text: ="Trạng thái"
+                        Width: =140
+                        X: =674
+                        Y: =46
+                  - DropTThai:
+                      Control: Classic/DropDown@2.3.1
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        Default: |-
+                          =If(
+                              IsBlank(objKB.TRANG_THAI),
+                              "Hoạt động",
+                              objKB.TRANG_THAI
+                          )
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =["Hoạt động","Ngừng hoạt động","Tạm khóa"]
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =11
+                        Width: =200
+                        X: =840
+                        Y: =48
+                  - Label3_29:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =31
+                        Size: =11
+                        Text: ="Ngân hàng (*)"
+                        Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB="4"
+                        Width: =118
+                        X: =674
+                        Y: =90
+                  - ComboBoxNHangBA:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =LookUp(DM_NGAN_HANGS,MA_DU_LIEU=objKB.TEN_NGAN_HANG)
+                        DisplayFields: =["cr282_ma_ngan_hang","cr282_ten_ngan_hang"]
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        InputTextPlaceholder: ="Chọn ngân hàng"
+                        Items: =DM_NGAN_HANGS
+                        OnChange: =Reset(TextMST);Reset(DateNTLap);Reset(TextSTK);
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["cr282_ma_ngan_hang"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =11
+                        Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB="4"
+                        Width: =200
+                        X: =840
+                        Y: =90
+            - Container4_1:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  Height: =274
+                  Width: =1267
+                  X: =8
+                  Y: =140
+                Children:
+                  - Label3_4:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Size: =11
+                        Text: ="Loại giấy tờ (*)"
+                        Width: =118
+                        X: =120
+                        Y: =8
+                  - Label3_5:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Size: =11
+                        Text: ="Số giấy tờ (*)"
+                        Width: =105
+                        X: =670
+                        Y: =8
+                  - TextSGT:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =objKB.SO_GIAY_TO
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Size: =11
+                        Width: =200
+                        X: =840
+                        Y: =12
+                  - ComboBoxLGT:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =LookUp(DM_LOAI_GIAYTO,MA_LOAI_GT=objKB.LOAI_GIAY_TO)
+                        DisplayFields: =["cr282_ten_loai_gt"]
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        InputTextPlaceholder: ="Chọn loại giấy tờ"
+                        Items: =DM_LOAI_GIAYTO
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["cr282_ten_loai_gt"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =11
+                        Width: =200
+                        X: =290
+                        Y: =12
+                  - Label3_7:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =36
+                        Size: =11
+                        Text: ="Mã số thuế (*)"
+                        Width: =110
+                        X: =120
+                        Y: =55
+                  - TextMST:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: |-
+                          =If(
+                              ComboBoxLoaiKB.Selected.MA_LOAI_KB="4" && !IsBlank(ComboBoxNHangBA.Selected.MA_NGAN_HANG),
+                              LookUp(
+                                  DM_NGAN_HANGS,
+                                  MA_NGAN_HANG=ComboBoxNHangBA.Selected.MA_NGAN_HANG,
+                                  MA_SO_THUE
+                              ),
+                              objKB.MA_SO_THUE
+                          )
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Size: =11
+                        Width: =200
+                        X: =290
+                        Y: =55
+                  - Label3_14:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =36
+                        Size: =11
+                        Text: ="Quốc gia (*)"
+                        Visible: =!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức")
+                        Width: =97
+                        X: =670
+                        Y: =55
+                  - Label3_15:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =36
+                        Size: =11
+                        Text: ="Quốc tịch (*)"
+                        Visible: =ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân")
+                        Width: =97
+                        X: =670
+                        Y: =55
+                  - Label3_22:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =41
+                        Size: =11
+                        Text: ="Quận/Huyện (*)"
+                        Width: =145
+                        X: =670
+                        Y: =100
+                  - Label3_23:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =41
+                        Size: =11
+                        Text: ="Tỉnh/Thành phố (*)"
+                        Width: =145
+                        X: =120
+                        Y: =100
+                  - ComboBoxTinhTP:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=objKB.TINH_TP)
+                        DisplayFields: =["cr282_ten_phamvi"]
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        InputTextPlaceholder: ="Chọn tỉnh/thành phố"
+                        Items: =Filter(DM_PHAMVI_DIALYS,LOAI="TINH_TP")
+                        OnChange: =Reset(ComboBoxQHuyen)
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["cr282_ten_phamvi"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =11
+                        Width: =200
+                        X: =290
+                        Y: =100
+                  - ComboBoxQHuyen:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=objKB.QUAN_HUYEN)
+                        DisplayFields: =["cr282_ten_phamvi"]
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        InputTextPlaceholder: ="Chọn quận/huyện"
+                        Items: =Filter(DM_PHAMVI_DIALYS,LOAI="QUAN_HUYEN" && MA_CHA=ComboBoxTinhTP.Selected.MA_PHAMVI)
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["cr282_ten_phamvi"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =11
+                        Width: =200
+                        X: =840
+                        Y: =100
+                  - Label3_9:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Size: =11
+                        Text: ="Ngày sinh"
+                        Visible: =ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân")
+                        Width: =95
+                        X: =670
+                        Y: =145
+                  - Label3_10:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Size: =11
+                        Text: ="Ngày thành lập"
+                        Visible: =!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức")
+                        Width: =126
+                        X: =670
+                        Y: =145
+                  - Label3_6:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =36
+                        Size: =11
+                        Text: ="Địa chỉ"
+                        Width: =61
+                        X: =120
+                        Y: =145
+                  - Label3_11:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        Size: =11
+                        Text: ="Số điện thoại"
+                        Width: =108
+                        X: =120
+                        Y: =190
+                  - Label3_12:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =33
+                        Size: =11
+                        Text: ="Email"
+                        Width: =55
+                        X: =670
+                        Y: =190
+                  - Label3_13:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =31
+                        Size: =11
+                        Text: ="Ngân hàng"
+                        Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB<>"4"
+                        Width: =118
+                        X: =120
+                        Y: =235
+                  - Label3_16:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =46
+                        Size: =11
+                        Text: ="Số tài khoản ngân hàng"
+                        Width: =95
+                        X: =670
+                        Y: =226
+                  - DateNSinh:
+                      Control: Classic/DatePicker@2.6.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        DefaultDate: =objKB.NGAY_SINH
+                        Font: =Font.'Open Sans'
+                        Format: ="dd/mm/yyyy"
+                        Height: =32
+                        IconBackground: =RGBA(56, 96, 178, 1)
+                        IconFill: =RGBA(255, 255, 255, 1)
+                        InputTextPlaceholder: =
+                        IsEditable: =true
+                        Size: =11
+                        Visible: =ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân")
+                        Width: =200
+                        X: =840
+                        Y: =145
+                  - DateNTLap:
+                      Control: Classic/DatePicker@2.6.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        DefaultDate: |-
+                          =If(
+                              ComboBoxLoaiKB.Selected.MA_LOAI_KB="4" && !IsBlank(ComboBoxNHangBA.Selected.MA_NGAN_HANG),
+                              LookUp(
+                                  DM_NGAN_HANGS,
+                                  MA_NGAN_HANG=ComboBoxNHangBA.Selected.MA_NGAN_HANG,
+                                  NGAY_THANH_LAP
+                              ),
+                              objKB.NGAY_THANH_LAP
+                          )
+                        EndYear: =2100
+                        Font: =Font.'Open Sans'
+                        Format: ="dd/mm/yyyy"
+                        Height: =32
+                        IconBackground: =RGBA(56, 96, 178, 1)
+                        IconFill: =RGBA(255, 255, 255, 1)
+                        InputTextPlaceholder: =
+                        IsEditable: =true
+                        Size: =11
+                        StartYear: =1900
+                        Visible: =!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức")
+                        Width: =200
+                        X: =840
+                        Y: =145
+                  - TextDChi:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =objKB.DIA_CHI
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Size: =11
+                        Width: =200
+                        X: =290
+                        Y: =145
+                  - TextSDT:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =objKB.SO_DIEN_THOAI
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Size: =11
+                        Width: =200
+                        X: =290
+                        Y: =190
+                  - TextEmail:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =objKB.EMAIL
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Size: =11
+                        Width: =200
+                        X: =840
+                        Y: =190
+                  - TextSTK:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: |-
+                          =If(
+                              ComboBoxLoaiKB.Selected.MA_LOAI_KB="4" && !IsBlank(ComboBoxNHangBA.Selected.MA_NGAN_HANG),
+                              LookUp(
+                                  DM_NGAN_HANGS,
+                                  MA_NGAN_HANG=ComboBoxNHangBA.Selected.MA_NGAN_HANG,
+                                  SO_TAI_KHOAN
+                              ),
+                              objKB.SO_TK_NGANHANG
+                          )
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Size: =11
+                        Width: =200
+                        X: =840
+                        Y: =235
+                  - ComboBoxNHang:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =LookUp(DM_NGAN_HANGS,MA_DU_LIEU=objKB.TEN_NGAN_HANG)
+                        DisplayFields: =["cr282_ma_ngan_hang","cr282_ten_ngan_hang"]
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        InputTextPlaceholder: ="Chọn ngân hàng"
+                        Items: =DM_NGAN_HANGS
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["cr282_ma_ngan_hang"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =11
+                        Visible: =ComboBoxLoaiKB.Selected.MA_LOAI_KB<>"4"
+                        Width: =200
+                        X: =290
+                        Y: =235
+                  - ComboBoxQGiaDMKB:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =If(IsBlank(objKB.QUOC_GIA),LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI="VN"),LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=objKB.QUOC_GIA))
+                        DisplayFields: =["cr282_ten_phamvi"]
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        InputTextPlaceholder: ="Chọn quốc gia"
+                        Items: =Filter(DM_PHAMVI_DIALYS,LOAI="QUOC_GIA")
+                        OnChange: =
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["cr282_ten_phamvi"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =11
+                        Visible: =!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức")
+                        Width: =200
+                        X: =840
+                        Y: =55
+                  - CbxQTichDMKB:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =If(IsBlank(objKB.QUOC_TICH),LookUp(DM_QUOC_TICHES,MA_QUOC_TICH="1"),LookUp(DM_QUOC_TICHES,MA_QUOC_TICH=objKB.QUOC_TICH))
+                        DisplayFields: =["cr282_ten_quoc_tich"]
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        InputTextPlaceholder: ="Chọn quốc tịch"
+                        Items: =DM_QUOC_TICHES
+                        OnChange: =Reset(ComboBoxQHuyen)
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["cr282_ten_quoc_tich"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =11
+                        Visible: =ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Cộng tác viên"] || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân")
+                        Width: =200
+                        X: =840
+                        Y: =55
+            - Container6:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  Height: =If(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"),177,0)
+                  Width: =1267
+                  X: =8
+                  Y: =414
+                Children:
+                  - Label3_17:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =36
+                        Size: =11
+                        Text: ="Số hợp đồng (*)"
+                        Width: =120
+                        X: =120
+                        Y: =8
+                  - TextSoHD:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =objKB.SO_HOP_DONG
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Size: =11
+                        Width: =200
+                        X: =290
+                        Y: =10
+                  - Label3_24:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =36
+                        Size: =11
+                        Text: ="Ngày hợp đồng (*)"
+                        Width: =140
+                        X: =670
+                        Y: =8
+                  - DateNHDong:
+                      Control: Classic/DatePicker@2.6.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        DefaultDate: =objKB.NGAY_HDONG
+                        EndYear: =2100
+                        Font: =Font.'Open Sans'
+                        Format: ="dd/mm/yyyy"
+                        Height: =32
+                        IconBackground: =RGBA(56, 96, 178, 1)
+                        IconFill: =RGBA(255, 255, 255, 1)
+                        InputTextPlaceholder: =
+                        IsEditable: =true
+                        Size: =11
+                        StartYear: =1900
+                        Width: =200
+                        X: =840
+                        Y: =10
+                  - Label3_25:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Size: =11
+                        Text: ="Ngày hiệu lực từ của hợp đồng (*)"
+                        Width: =127
+                        X: =120
+                        Y: =48
+                  - DateNHLTuHD:
+                      Control: Classic/DatePicker@2.6.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        DefaultDate: =objKB.HLUC_TU_HDONG
+                        EndYear: =2100
+                        Font: =Font.'Open Sans'
+                        Format: ="dd/mm/yyyy"
+                        Height: =32
+                        IconBackground: =RGBA(56, 96, 178, 1)
+                        IconFill: =RGBA(255, 255, 255, 1)
+                        InputTextPlaceholder: =
+                        IsEditable: =true
+                        Size: =11
+                        StartYear: =1900
+                        Width: =200
+                        X: =290
+                        Y: =52
+                  - DateNHLDenHD:
+                      Control: Classic/DatePicker@2.6.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        DefaultDate: =objKB.HLUC_DEN_HDONG
+                        EndYear: =2100
+                        Font: =Font.'Open Sans'
+                        Format: ="dd/mm/yyyy"
+                        Height: =32
+                        IconBackground: =RGBA(56, 96, 178, 1)
+                        IconFill: =RGBA(255, 255, 255, 1)
+                        InputTextPlaceholder: =
+                        IsEditable: =true
+                        Size: =11
+                        StartYear: =1900
+                        Width: =200
+                        X: =840
+                        Y: =52
+                  - Label3_27:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =36
+                        Size: =11
+                        Text: ="File hợp đồng đính kèm"
+                        Width: =127
+                        X: =120
+                        Y: =102
+                  - Label3_26:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Size: =11
+                        Text: ="Ngày hiệu lực đến của hợp đồng"
+                        Width: =142
+                        X: =670
+                        Y: =48
+                  - DataCardValue3_3:
+                      Control: Attachments@2.3.0
+                      Properties:
+                        AddAttachmentText: ="Chọn file"
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        DisplayMode: =Parent.DisplayMode
+                        DropTargetBorderColor: =RGBA(72, 163, 62, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =74
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        ItemColor: =RGBA(255, 255, 255, 1)
+                        ItemFill: =RGBA(56, 96, 178, 1)
+                        ItemHoverFill: =RGBA(186, 202, 226, 1)
+                        Items: |-
+                          =If(
+                              IsBlank(objKB.MA_KENH_BAN) || IsBlank(objKB.FILE_HDONG),
+                              Blank(),
+                              {
+                                  FileName:objKB.FILE_HDONG.FileName,
+                                  Value:objKB.FILE_HDONG.Value
+                              }
+                          )
+                        Items.Name: =FileName
+                        Items.Value: =FileName
+                        MaxAttachments: =1
+                        MaxAttachmentsText: =""
+                        NoAttachmentsText: =""
+                        OnAddFile: =
+                        PaddingBottom: =5
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PaddingRight: =5
+                        PaddingTop: =5
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        Size: =11
+                        Width: =200
+                        X: =290
+                        Y: =96
+            - Container7:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  Height: =If(ComboBoxLoaiKB.Selected.TEN_LOAI_KB = "Trực tiếp" || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Cá nhân"),58,0)
+                  Width: =1267
+                  X: =8
+                  Y: =414
+                Children:
+                  - Label3_19:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =36
+                        Size: =11
+                        Text: ="Mã nhân viên (*)"
+                        Width: =130
+                        X: =120
+                        Y: =12
+                  - TextMaNV:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =objKB.MA_NHAN_VIEN
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Size: =11
+                        Width: =200
+                        X: =290
+                        Y: =12
+            - Container5:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  Height: =If(!(ComboBoxLoaiKB.Selected.TEN_LOAI_KB in ["Trực tiếp","Đại lý","Cộng tác viên"]) || (ComboBoxLoaiKB.Selected.TEN_LOAI_KB="Đại lý" && DropCNTC.Selected.Value="Tổ chức"),100,0)
+                  Width: =1267
+                  X: =8
+                  Y: =591
+                Children:
+                  - Label3_20:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =33
+                        Size: =11
+                        Text: ="Tên người đại diện (*)"
+                        Width: =160
+                        X: =120
+                        Y: =6
+                  - Label3_30:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =46
+                        Size: =11
+                        Text: ="Loại giấy tờ của người đại diện (*)"
+                        Width: =140
+                        X: =120
+                        Y: =44
+                  - Label3_31:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =46
+                        Size: =11
+                        Text: ="Số giấy tờ của người đại diện (*)"
+                        Width: =140
+                        X: =670
+                        Y: =44
+                  - Label3_21:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =46
+                        Size: =11
+                        Text: ="Số điện thoại của người đại diện"
+                        Width: =128
+                        X: =670
+                        Y: =4
+                  - TextTenNDD:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =objKB.NGUOI_DAI_DIEN
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Size: =11
+                        Width: =200
+                        X: =290
+                        Y: =9
+                  - TextSDTNDD:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =objKB.SO_DIEN_THOAI_NDD
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Size: =11
+                        Width: =200
+                        X: =840
+                        Y: =9
+                  - TextSGTNDD:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =objKB.SO_GIAY_TO_NDD
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Size: =11
+                        Width: =200
+                        X: =840
+                        Y: =52
+                  - ComboBoxLGTNDD:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =LookUp(DM_LOAI_GIAYTO,MA_LOAI_GT=objKB.LOAI_GIAY_TO_NDD)
+                        DisplayFields: =["cr282_ten_loai_gt"]
+                        Font: =Font.'Open Sans'
+                        Height: =32
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        InputTextPlaceholder: ="Chọn loại giấy tờ"
+                        Items: =DM_LOAI_GIAYTO
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["cr282_ten_loai_gt"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =11
+                        Width: =200
+                        X: =290
+                        Y: =52

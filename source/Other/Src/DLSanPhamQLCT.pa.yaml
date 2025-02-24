@@ -1,0 +1,406 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  DLSanPhamQLCT:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |+
+        =ClearCollect(
+            tmpQLTVCollect,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                        Filter(
+                            DM_QUYENLOI_CHITIETS,
+                            MA_NHOM_QL=maNQLFwd
+                        ),
+                        "cr282_ma_ql_chitiet",
+                        SortOrder.Ascending
+                    ),
+                    chon,
+                    0,
+                    che_do,
+                    0,
+                    ten_hien_thi,
+                    "cr282_ten_ql_chitiet",
+                    hien_thi,
+                    0
+                ),
+                MA_QL_CHITIET,
+                CAP,
+                MA_NHOM_QL,
+                MA_QL_CHA,
+                TEN_QL_CHITIET,
+                chon,
+                che_do,
+                ten_hien_thi,
+                hien_thi
+            )
+        );
+        UpdateIf(
+            tmpQLTVCollect,
+            true,
+            {
+                ten_hien_thi:cr282_ten_ql_chitiet
+            }
+        );
+        Collect(
+            tmpQLTVCollect,
+            {
+                cr282_ma_ql_chitiet:"1",
+                cr282_cap:1,
+                cr282_ten_ql_chitiet:LookUp(DM_NHOM_QUYENLOIS,MA_NHOM_QL=maNQLFwd,TEN_NHOM_QL),
+                chon:Value(LookUp(DL_SAN_PHAM_NHOMQLS,MA_DL=maDLNhomQLFwd,CO_CHON_ALL)),
+                che_do:0,
+                hien_thi:1
+            }
+        );
+        UpdateIf(
+            tmpQLTVCollect As ds,
+            CountIf(DL_SAN_PHAM_QLCT_CHONS,MA_QL_CHITIET=ds.cr282_ma_ql_chitiet && MA_SAN_PHAM=maSPFwd)>0,
+            {
+                chon:1,
+                ten_hien_thi:LookUp(DL_SAN_PHAM_QLCT_CHONS,MA_QL_CHITIET=ds.cr282_ma_ql_chitiet && MA_SAN_PHAM=maSPFwd,TEN_HIEN_THI)
+            }
+        )
+
+
+      Width: =Max(1500, App.MinScreenWidth)
+    Children:
+      - ContainerQLTV:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            Height: =768
+            Width: =1430
+            X: =67
+          Children:
+            - GalleryQLTV:
+                Control: Gallery@2.15.0
+                Variant: VariableHeight
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =637
+                  Items: =SortByColumns(Filter(tmpQLTVCollect,hien_thi=1),"cr282_ma_ql_chitiet",SortOrder.Ascending)
+                  TemplateSize: =48
+                  Width: =1314
+                  X: =54
+                  Y: =66
+                Children:
+                  - TextTenHTQLCT:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        BorderThickness: =3
+                        Default: =ThisItem.ten_hien_thi
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.chon=1,DisplayMode.Edit,DisplayMode.Disabled)
+                        Font: =Font.'Open Sans'
+                        Height: =48
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: |-
+                          =UpdateIf(
+                              tmpQLTVCollect,
+                              cr282_ma_ql_chitiet=ThisItem.cr282_ma_ql_chitiet,
+                              {
+                                  ten_hien_thi:TextTenHTQLCT.Text
+                              }
+                          )
+                        OnSelect: =Select(Parent)
+                        Visible: =ThisItem.cr282_cap>1
+                        Width: =302
+                        X: =986
+                  - Container1_1:
+                      Control: GroupContainer@1.3.0
+                      Variant: ManualLayout
+                      Properties:
+                        BorderStyle: =BorderStyle.None
+                        Height: =48
+                        Width: =657
+                        X: =ThisItem.cr282_cap*50
+                      Children:
+                        - TextQLCT:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              BorderStyle: =BorderStyle.None
+                              Default: =ThisItem.cr282_ten_ql_chitiet
+                              DisplayMode: =DisplayMode.View
+                              Font: =Font.'Open Sans'
+                              HoverBorderColor: =RGBA(0, 18, 107, 1)
+                              HoverFill: =RGBA(186, 202, 226, 1)
+                              Width: =543
+                              X: =55
+                              Y: =2
+                        - cbChonQLCT:
+                            Control: Classic/CheckBox@2.1.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              CheckboxBorderColor: =RGBA(0, 18, 107, 1)
+                              CheckmarkFill: =RGBA(0, 0, 0, 1)
+                              Default: =If(ThisItem.chon=1,true,false)
+                              Font: =Font.'Open Sans'
+                              Height: =40
+                              HoverColor: =RGBA(0, 18, 107, 1)
+                              OnCheck: |
+                                =If(
+                                    ThisItem.cr282_cap=1,
+                                    UpdateContext({
+                                        chonAll:1
+                                    });
+                                    UpdateIf(
+                                        tmpQLTVCollect,
+                                        true,
+                                        {
+                                            chon:1
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpQLTVCollect,
+                                        StartsWith(cr282_ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet),
+                                        {
+                                            chon:1
+                                        }
+                                    )
+                                )
+                              OnUncheck: |-
+                                =If(
+                                    ThisItem.cr282_cap=1,
+                                    UpdateContext({
+                                        chonAll:0
+                                    });
+                                    UpdateIf(
+                                        tmpQLTVCollect,
+                                        true,
+                                        {
+                                            chon:0
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpQLTVCollect,
+                                        StartsWith(cr282_ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet),
+                                        {
+                                            chon:0
+                                        }
+                                    )
+                                )
+                              Text: =
+                              Width: =39
+                              X: =5
+                              Y: =2
+                        - IconMo:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(0, 18, 107, 1)
+                              Height: =34
+                              Icon: =Icon.NextArrow
+                              OnSelect: |+
+                                =If(
+                                    ThisItem.cr282_cap=1,
+                                    UpdateIf(
+                                        tmpQLTVCollect,
+                                        cr282_cap=ThisItem.cr282_cap,
+                                        {
+                                            che_do:1
+                                        }
+                                    );
+                                    UpdateIf(
+                                        tmpQLTVCollect,
+                                        cr282_ma_nhom_ql=maNQLFwd && IsBlank(cr282_ma_ql_cha),
+                                        {
+                                            hien_thi:1,
+                                            che_do:0
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpQLTVCollect,
+                                        cr282_ma_ql_chitiet=ThisItem.cr282_ma_ql_chitiet,
+                                        {
+                                            che_do:1
+                                        }
+                                    );
+                                    UpdateIf(
+                                        tmpQLTVCollect,
+                                        cr282_ma_ql_cha=ThisItem.cr282_ma_ql_chitiet,
+                                        {
+                                            hien_thi:1,
+                                            che_do:0
+                                        }
+                                    )
+                                )
+
+                              Visible: |-
+                                =If(
+                                    ThisItem.cr282_cap=1,
+                                    ThisItem.che_do=0 && !IsEmpty(Filter(DM_QUYENLOI_CHITIETS,MA_NHOM_QL=maNQLFwd)),
+                                    ThisItem.che_do=0 && !IsEmpty(Filter(DM_QUYENLOI_CHITIETS,MA_QL_CHA=ThisItem.cr282_ma_ql_chitiet))
+                                )
+                              Width: =37
+                              X: =610
+                              Y: =7
+                        - IconDong:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(0, 18, 107, 1)
+                              Height: =34
+                              Icon: =Icon.ChevronUp
+                              OnSelect: |-
+                                =If(
+                                    ThisItem.cr282_cap=1,
+                                    UpdateIf(
+                                        tmpQLTVCollect,
+                                        cr282_cap>1,
+                                        {
+                                            hien_thi:0
+                                        }
+                                    );
+                                    UpdateIf(
+                                        tmpQLTVCollect,
+                                        cr282_cap=ThisItem.cr282_cap,
+                                        {
+                                            che_do:0
+                                        }
+                                    ),
+                                    UpdateIf(
+                                        tmpQLTVCollect,
+                                        cr282_ma_ql_chitiet<>ThisItem.cr282_ma_ql_chitiet && StartsWith(cr282_ma_ql_chitiet,ThisItem.cr282_ma_ql_chitiet),
+                                        {
+                                            hien_thi:0
+                                        }
+                                    );
+                                    UpdateIf(
+                                        tmpQLTVCollect,
+                                        cr282_ma_ql_chitiet=ThisItem.cr282_ma_ql_chitiet,
+                                        {
+                                            che_do:0
+                                        }
+                                    );
+                                )
+                              Visible: |
+                                =If(
+                                    ThisItem.cr282_cap=1,
+                                    ThisItem.che_do=1 && !IsEmpty(Filter(DM_QUYENLOI_CHITIETS,MA_NHOM_QL=maNQLFwd)),
+                                    ThisItem.che_do=1 && !IsEmpty(Filter(DM_QUYENLOI_CHITIETS,MA_QL_CHA=ThisItem.cr282_ma_ql_chitiet))
+                                )
+                              Width: =32
+                              X: =613
+                              Y: =7
+            - BadgeCanvas1_16:
+                Control: Badge@0.0.24
+                Properties:
+                  Content: =""
+                  Height: =54
+                  Width: =1244
+                  X: =106
+                  Y: =9
+            - TextCanvas2_71:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =57
+                  Size: =16
+                  Text: ="Quyền lợi chi tiết"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =171
+                  X: =144
+                  Y: =9
+            - TextCanvas2_72:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =57
+                  Size: =16
+                  Text: ="Tên hiển thị"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =151
+                  X: =1045
+                  Y: =9
+            - Button5_4:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =30
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |-
+                    =Navigate(NhapChiTietSP);
+                    Clear(tmpQLTVCollect);
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =11
+                  Text: ="Hủy"
+                  Width: =96
+                  X: =1118
+                  Y: =721
+            - Button5_5:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =30
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |-
+                    =Refresh(DL_SAN_PHAM_QLCT_CHONS);
+                    RemoveIf(DL_SAN_PHAM_QLCT_CHONS,MA_NHOMQL_SP=maDLNhomQLFwd);
+                    ForAll(
+                        Filter(tmpQLTVCollect,chon=1 && cr282_cap>1),
+                        Patch(
+                            DL_SAN_PHAM_QLCT_CHONS,
+                            {
+                                MA_QL_CHITIET:ThisRecord.cr282_ma_ql_chitiet,
+                                MA_NHOMQL_SP:maDLNhomQLFwd,
+                                TEN_HIEN_THI:ThisRecord.ten_hien_thi,
+                                MA_SAN_PHAM:maSPFwd,
+                                MA_NHOM_QL:maNQLFwd
+                            }
+                        )
+                    );
+                    If(
+                        LookUp(tmpQLTVCollect,cr282_cap=1,chon)=1,
+                        UpdateIf(
+                            DL_SAN_PHAM_NHOMQLS,
+                            MA_DL=maDLNhomQLFwd,
+                            {
+                                CO_CHON_ALL:"1"
+                            }
+                        ),
+                        UpdateIf(
+                            DL_SAN_PHAM_NHOMQLS,
+                            MA_DL=maDLNhomQLFwd,
+                            {
+                                CO_CHON_ALL:"0"
+                            }
+                        )
+                    );
+                    Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
+                    Navigate(NhapChiTietSP);
+                    Clear(tmpQLTVCollect)
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =11
+                  Text: ="Lưu"
+                  Width: =96
+                  X: =1254
+                  Y: =721

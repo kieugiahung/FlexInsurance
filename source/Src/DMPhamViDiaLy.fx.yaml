@@ -392,18 +392,21 @@ DMPhamViDiaLy As screen:
                 Width: =115
                 ZIndex: =21
 
-        BadgeCanvas1 As Badge:
+        "BadgeCanvas1 As 'Huy hiệu'":
+            Align: =""
             BasePaletteColor: =
             Content: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =39
+            VerticalAlign: =""
             Width: =1178
             X: =21
             Y: =98
             ZIndex: =2
 
-        TextCanvas2 As Text:
+        "TextCanvas2 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -415,7 +418,8 @@ DMPhamViDiaLy As screen:
             Y: =98
             ZIndex: =3
 
-        TextCanvas2_1 As Text:
+        "TextCanvas2_1 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -427,7 +431,8 @@ DMPhamViDiaLy As screen:
             Y: =98
             ZIndex: =4
 
-        TextCanvas2_2 As Text:
+        "TextCanvas2_2 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -439,7 +444,8 @@ DMPhamViDiaLy As screen:
             Y: =98
             ZIndex: =5
 
-        TextCanvas2_5 As Text:
+        "TextCanvas2_5 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -451,13 +457,16 @@ DMPhamViDiaLy As screen:
             Y: =98
             ZIndex: =8
 
-        "TextFilterPV As 'Text input'":
+        "TextFilterPV As 'Văn bản đầu vào'":
+            Appearance: ="FilledDarker"
             BasePaletteColor: =
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =43
             OnChange: =
             Placeholder: ="Nhập giá trị lọc"
+            TriggerOutput: ="FocusOut"
             Visible: =loaiFilter=0
             Width: =204
             X: =525
@@ -530,7 +539,9 @@ DMPhamViDiaLy As screen:
             Y: =41
             ZIndex: =11
 
-        CbxFilterPV As Combobox.pcfdataset:
+        "CbxFilterPV As 'Hộp tổ hợp'.pcfdataset":
+            Appearance: ="FilledDarker"
+            BorderStyle: =""
             DefaultSelectedItems: =Filter(["Mã phạm vi", "Tên phạm vi","Loại"],Value="Mã phạm vi")
             DisplayMode: =DisplayMode.Edit
             Height: =43
@@ -543,17 +554,25 @@ DMPhamViDiaLy As screen:
                     UpdateContext({loaiFilter:0})
                 );
                 Reset(TextFilterPV);Reset(CbxFilterValuePVDL)
+            Required: =false
+            TriggerOutput: ="Keypress"
             Width: =152
             X: =364
             Y: =36
             ZIndex: =13
 
-        ButtonCanvas4_5 As Button:
+        ButtonCanvas4_5 As Nút:
+            Align: =""
             BasePaletteColor: =
+            BorderStyle: =""
             DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
             FontColor: =
             FontSize: =16
             Height: =43
+            Icon: =""
+            IconRotation: =0
+            IconStyle: ="Outline"
+            Layout: ="Icon before"
             OnSelect: |-
                 =ClearCollect(
                     tmpPVDLCollect,
@@ -598,12 +617,15 @@ DMPhamViDiaLy As screen:
                     )
                 )
             Text: ="Tra cứu"
+            VerticalAlign: =""
             Width: =96
             X: =740
             Y: =36
             ZIndex: =14
 
-        CbxFilterValuePVDL As Combobox.pcfdataset:
+        "CbxFilterValuePVDL As 'Hộp tổ hợp'.pcfdataset":
+            Appearance: ="FilledDarker"
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             Height: =43
             InputTextPlaceholder: ="Chọn loại phạm vi"
@@ -634,13 +656,15 @@ DMPhamViDiaLy As screen:
                         value:"Đơn vị"
                     }
                 ]
+            Required: =false
+            TriggerOutput: ="Keypress"
             Visible: =loaiFilter=1
             Width: =204
             X: =525
             Y: =36
             ZIndex: =15
 
-            key1 As pcfDataField.textualColumn:
+            key1 As PowerApps_CoreControls_ComboboxCanvasTemplate_dataField.textualColumn:
                 FieldDisplayName: ="key"
                 FieldName: ="key"
                 FieldType: ="s"
@@ -648,7 +672,7 @@ DMPhamViDiaLy As screen:
                 Order: =2
                 ZIndex: =17
 
-            value1 As pcfDataField.textualColumn:
+            value1 As PowerApps_CoreControls_ComboboxCanvasTemplate_dataField.textualColumn:
                 FieldDisplayName: ="value"
                 FieldName: ="value"
                 FieldType: ="s"
@@ -656,7 +680,8 @@ DMPhamViDiaLy As screen:
                 Order: =1
                 ZIndex: =18
 
-        TextCanvas2_3 As Text:
+        "TextCanvas2_3 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -668,7 +693,8 @@ DMPhamViDiaLy As screen:
             Y: =98
             ZIndex: =16
 
-        TextCanvas2_4 As Text:
+        "TextCanvas2_4 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -691,7 +717,8 @@ DMPhamViDiaLy As screen:
         Y: =253
         ZIndex: =3
 
-        TextCanvas1_16 As Text:
+        "TextCanvas1_16 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Disabled
             FontColor: =
             Height: =31

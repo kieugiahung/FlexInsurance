@@ -1,0 +1,491 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Quanlykenhban:
+    Properties:
+      Fill: =RGBA(0, 0, 0, 0)
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =Refresh(DM_KENH_BANS);
+        Reset(TextFilterPV_1);
+        Reset(CbxFilterPV_1);
+        Reset(TextFilterPV_1);
+        ClearCollect(
+            tmpKenhbanCollect,
+            DM_KENH_BANS)
+    Children:
+      - 1. ChuongTrinh_5:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            Height: =768
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =1306
+            X: =60
+          Children:
+            - GalleryCT_13:
+                Control: Gallery@2.15.0
+                Variant: Vertical
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =644
+                  Items: =tmpKenhbanCollect
+                  NavigationStep: =0
+                  TemplatePadding: =0
+                  TemplateSize: =30
+                  Width: =1306
+                  Y: =124
+                Children:
+                  - TxtMaCT_5:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(15, 108, 189, 1)
+                        Default: =ThisItem.MA_KENH_BAN
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =125
+                        X: =13
+                  - TxtTenCT_5:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.TEN_KENH_BAN
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =299
+                        X: =138
+                  - TxtID_7:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(15, 108, 189, 1)
+                        Default: =ThisItem.MA_KENH_BAN
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: =false
+                        Width: =119
+                  - TxtMoTa_15:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.DIA_CHI
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =213
+                        X: =594
+                  - TxtMoTa_17:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.TRANG_THAI
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =139
+                        X: =982
+                  - TxtMoTa_16:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =LookUp(DM_PHAMVI_DIALYS,MA_PHAMVI=ThisItem.TINH_TP,TEN_PHAMVI)
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =175
+                        X: =807
+                  - Button6_4:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =RGBA(56, 96, 178, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Bold
+                        Height: =24
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        OnSelect: |-
+                          =Set(maKenhBanFwd,ThisItem.MA_KENH_BAN);
+                          Navigate(NhapDMKenhBan)
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        Size: =11
+                        Text: ="Sửa"
+                        Width: =71
+                        X: =1133
+                        Y: =3
+                  - Button6_5:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =RGBA(56, 96, 178, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Bold
+                        Height: =24
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        OnSelect: |-
+                          =Refresh(DM_KENH_BANS);
+                          RemoveIf(
+                              tmpKenhbanCollect,
+                              MA_KENH_BAN=ThisItem.MA_KENH_BAN
+                          );
+                          RemoveIf(
+                              DM_KENH_BANS,
+                              MA_KENH_BAN=ThisItem.MA_KENH_BAN
+                          );
+                          Notify("Xóa dữ liệu thành công",NotificationType.Success,2000)
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        Size: =11
+                        Text: ="Xóa"
+                        Width: =71
+                        X: =1217
+                        Y: =3
+                  - TxtTenCT_6:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.SO_GIAY_TO
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =157
+                        X: =437
+            - BadgeCanvas1_36:
+                Control: Badge@0.0.24
+                Properties:
+                  Content: =""
+                  Height: =35
+                  Width: |
+                    =//1199
+                    Parent.Width -10
+                  X: =10
+                  Y: =90
+            - TextCanvas2_194:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =34
+                  Text: ="Tên kênh bán"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =187
+                  X: =193
+                  Y: =90
+            - TextCanvas2_198:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =33
+                  Text: ="Thao tác"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =169
+                  X: =1135
+                  Y: =90
+            - TextCanvas2_192:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =34
+                  Text: ="Mã kênh bán"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =110
+                  X: =23
+                  Y: =90
+            - ThemMoiCT_19:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =30
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |-
+                    =Set(maKenhBanFwd,"");
+                    Navigate(NhapDMKenhBan)
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =11
+                  Text: ="Thêm mới"
+                  Width: =96
+                  X: =10
+                  Y: =44
+            - IconTaiLaiCT_5:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(83, 144, 164, 1)
+                  Height: =36
+                  Icon: =Icon.Sync
+                  OnSelect: |-
+                    =ClearCollect(
+                        tmpCTCollect,
+                        ShowColumns(
+                            AddColumns(
+                                SortByColumns(
+                                    ' DL_SAN_PHAM_CT',
+                                    "cr282_ma_chuong_trinh",
+                                    SortOrder.Ascending
+                                ),
+                                edited,
+                                0
+                            ),
+                            ID,
+                            'MA_ID_SO (cr282_ma_idso)',
+                            MA_CHUONG_TRINH,
+                            TEN_CHUONG_TRINH,
+                            MO_TA,
+                            MA_SAN_PHAM,
+                            TRANG_THAI,
+                            edited
+                        )
+                    );
+                    UpdateContext({
+                        maAdded:"",
+                        maUpdated:""
+                    });
+                  Tooltip: ="Tải lại"
+                  Visible: =false
+                  Width: =32
+                  X: =1167
+                  Y: =38
+            - Label6_3:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =38
+                  Text: ="Quản lý kênh bán"
+                  Width: =193
+                  X: =5
+            - TextCanvas2_196:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =34
+                  Text: ="Địa chỉ"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =213
+                  X: =593
+                  Y: =90
+            - TextCanvas2_197:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =34
+                  Text: ="Tỉnh/TP"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =133
+                  X: =826
+                  Y: =90
+            - TextCanvas2_193:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =35
+                  Text: ="Trạng thái"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =140
+                  X: =980
+                  Y: =90
+            - TextCanvas2_195:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =33
+                  Text: ="Số giấy tờ"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =150
+                  X: =440
+                  Y: =90
+            - TextFilterPV_1:
+                Control: TextInput@0.0.53
+                Properties:
+                  Height: =43
+                  OnChange: =
+                  Placeholder: ="Nhập giá trị lọc"
+                  Width: =204
+                  X: =548
+                  Y: =31
+            - CbxFilterPV_1:
+                Control: ComboBox@0.0.49
+                Properties:
+                  DefaultSelectedItems: =Filter(["Mã kênh bán", "Tên kênh bán",  "Số giấy tờ"],Value="Mã kênh bán")
+                  Height: =43
+                  InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
+                  Items: =["Mã kênh bán", "Tên kênh bán", "Số giấy tờ"]
+                  OnChange: =Reset(TextFilterPV_1)
+                  Width: =152
+                  X: =387
+                  Y: =31
+            - ThemMoiCT_20:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =30
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |-
+                    =ClearCollect(
+                        tmpKenhbanCollect,
+                        Filter(
+                            DM_KENH_BANS,
+                            Or(
+                                TextFilterPV_1.Value = "",
+                                Or(
+                                    And(
+                                        CbxFilterPV_1.Selected.Value = "Mã kênh bán",
+                                        !IsBlank(
+                                            Find(
+                                                Lower(TextFilterPV_1.Value),
+                                                Lower(MA_KENH_BAN)
+                                            )
+                                        )
+                                    ),
+                                    And(
+                                        CbxFilterPV_1.Selected.Value = "Tên kênh bán",
+                                        !IsBlank(
+                                            Find(
+                                                Lower(TextFilterPV_1.Value),
+                                                Lower(TEN_KENH_BAN)
+                                            )
+                                        )
+                                    )
+                                    ,
+                                    And(
+                                        CbxFilterPV_1.Selected.Value = "Số giấy tờ",
+                                        !IsBlank(
+                                            Find(
+                                                Lower(TextFilterPV_1.Value),
+                                                Lower(SO_GIAY_TO)
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =11
+                  Text: ="Tra cứu"
+                  Width: =96
+                  X: =789
+                  Y: =37

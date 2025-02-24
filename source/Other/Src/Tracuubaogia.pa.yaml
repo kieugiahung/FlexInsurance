@@ -1,0 +1,801 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Tracuubaogia:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =//Lay danh muc len collect
+        ClearCollect(
+            dmSanPhamCCPCollect,
+            AddColumns(
+                DL_SAN_PHAM,
+                title,
+                Concatenate(MA_SAN_PHAM," - ",TEN_SAN_PHAM)
+            )
+        );
+        ClearCollect(
+            dmGTinhCCPCollect,
+            AddColumns(
+                DM_GIOI_TINHS,
+                title,
+                Concatenate(MA_GIOI_TINH," - ",TEN_GIOI_TINH)
+            )
+        );
+        ClearCollect(
+            dmDTuoiCCPCollect,
+            DM_DO_TUOIS
+        );
+        //Lay danh muc len collect end
+
+
+        //Lay dl nghiep vu len collect
+        ClearCollect(
+            dlSPNhomQLCCPCollect,
+            DL_SAN_PHAM_NHOMQLS
+        );
+        ClearCollect(
+            dlCTQLCTCCPCollect,
+            DL_CHUONGTRINH_QLCTS
+        );
+        ClearCollect(
+            dlCTBangPhiCCPCollect,
+            DL_CHUONG_TRINH_BANG_PHIS
+        );
+
+        //Lay dl nghiep vu len collect end
+
+        Clear(tempSPKH);
+        Clear(tempFinal);
+        Reset(cbxLHNVCCP);Reset(cbxMaSPCCP);Reset(cbxGTinhCCP);Reset(dpNgaySinhCCP);
+        Reset(dpNgaySinhCCP);Reset(tiTuoiCCP);Reset(slPhiTuCCP);Reset(slPhiDenCCP);Reset(tislPhiTuCCP);Reset(tislPhiDenCCP);
+    Children:
+      - danhsachnhom:
+          Control: Gallery@2.15.0
+          Variant: VariableHeight
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            BorderThickness: =1
+            Height: =587
+            Items: =tempFinal
+            TemplateSize: =282
+            Width: =1266
+            X: =85
+            Y: =181
+          Children:
+            - Label12:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =31
+                  OnSelect: =Select(Parent)
+                  Size: =11
+                  Text: =LookUp(DL_SAN_PHAM, MA_SAN_PHAM = ThisItem.MA_SAN_PHAM).TEN_SAN_PHAM & " - " & ThisItem.TEN_CHUONG_TRINH
+                  Width: =908
+                  X: =30
+            - Gallery6:
+                Control: Gallery@2.15.0
+                Variant: VariableHeight
+                Properties:
+                  BorderColor: =RGBA(9, 33, 98, 1)
+                  Height: =201
+                  Items: =Filter( tmpQLGroupDistinct, MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH && !(MA_CHUONG_TRINH))
+                  TemplatePadding: =0
+                  TemplateSize: =43
+                  Width: =1034
+                  X: =30
+                  Y: =81
+                Children:
+                  - Label13:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderThickness: =1
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =43
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Text: =ThisItem.cr282_loai
+                        X: =2
+                  - Checkbox2_1:
+                      Control: Classic/CheckBox@2.1.0
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        CheckboxBorderColor: |-
+                          =RGBA(0, 0, 0, 1
+                          )
+                        CheckboxSize: =20
+                        CheckmarkFill: =RGBA(0, 0, 0, 1)
+                        Default: |
+                          =If(ThisItem.cr282_loai = "Chính", true, false)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: |
+                          =
+                           If(ThisItem.cr282_loai = "Chính", DisplayMode.Disabled, DisplayMode.Edit)
+                        Font: =Font.'Open Sans'
+                        Height: =31
+                        HoverBorderColor: |
+                          =
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        OnSelect: |+
+                          =Reset(TextInput9)
+
+
+                        PaddingLeft: =8
+                        PressedBorderColor: =
+                        PressedColor: =RGBA(0, 0, 0, 0)
+                        PressedFill: |
+                          =
+                        Size: =11
+                        Text: =""
+                        Underline: =true
+                        Width: =30
+                        X: =966
+                        Y: =5
+                  - Label20:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =36
+                        OnSelect: =Select(Parent)
+                        Text: =//ThisItem.MA_CHUONG_TRINH
+                        Visible: =false
+                        X: =484
+                  - Label1_1:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Right
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderThickness: =1
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =43
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Text: "=\nIf(ThisItem.PHI >0 , Text(ThisItem.PHI, \"###,###,###\"), 0) & \" VND\"\n\n "
+                        Width: =218
+                        X: =685
+                  - TiNDDCKCT_1:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderThickness: =1
+                        Default: =Trim(Substitute(ThisItem.GHEP_CHUOI_NQL, ";", Char(10)))
+                        DisabledBorderColor: =RGBA(0, 0, 0, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =43
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =4000
+                        Mode: =TextMode.MultiLine
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =299
+                        X: =150
+                  - TiNDDCKCT_2:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        Align: =Align.Right
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderThickness: =1
+                        Default: =Trim(Substitute(ThisItem.GHEP_SO_TIEN, ";", Char(10))) & " VND"
+                        DisabledBorderColor: =RGBA(0, 0, 0, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =43
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =4000
+                        Mode: =TextMode.MultiLine
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =237
+                        X: =449
+                  - Label8:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =43
+                        OnSelect: =Select(Parent)
+                        Text: =ThisItem.cr282_ma_nhom_tinhphi
+                        Visible: =false
+                        Width: =62
+                        X: =904
+            - Checkbox2:
+                Control: Classic/CheckBox@2.1.0
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  CheckboxBorderColor: =RGBA(0, 0, 0, 1)
+                  CheckboxSize: =20
+                  CheckmarkFill: =RGBA(0, 0, 0, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =31
+                  HoverColor: =RGBA(0, 18, 107, 1)
+                  OnSelect: =
+                  PaddingLeft: =8
+                  Size: =11
+                  Text: =""
+                  Width: =30
+            - Button4_4:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =32
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |-
+                    =// convert dữ liệu thông tin báo giá vào sản phẩm trong hợp đồng
+                    ClearCollect(
+                        tempSpFull,
+                        DL_HOP_DONG_SPS
+                    );
+                    //Luu tam danh sach nhom tinh phi
+                    ClearCollect(
+                        tmpDSNhomTPCCPCollect,
+                        {
+                            MA_NHOM_TINHPHI:""
+                        }
+                    );
+                    Clear(tmpDSNhomTPCCPCollect);
+                    Clear(tempSpFull);
+                    // danh sách quyền lợi
+                    ForAll (
+                        Gallery6.AllItems As phi,
+                        // lấy thông tin từng dòng được tích chọn
+                        If(
+                            phi.Checkbox2_1.Value = true,
+                            Collect(
+                                tmpDSNhomTPCCPCollect,
+                                {
+                                    MA_NHOM_TINHPHI:phi.cr282_ma_nhom_tinhphi
+                                }
+                            )
+                        )
+                    );
+                    // luu thong tin chuong trinh san pham duoc chon vao bang tam
+                    Collect(
+                        tempSpFull,
+                        {
+                            ID: Text(Max(DL_HOP_DONG_SPS,ID)+1)
+                        }
+                    );
+                    Patch(
+                        DL_HOP_DONG_SPS,
+                        {
+                            ID: Text(Max(DL_HOP_DONG_SPS,ID)+1),
+                            MA_HOP_DONG : "",
+                            MA_SAN_PHAM: ThisItem.MA_SAN_PHAM,
+                            TEN_SAN_PHAM: LookUp(DL_SAN_PHAM, MA_SAN_PHAM = ThisItem.MA_SAN_PHAM).TEN_SAN_PHAM,
+                            MA_CHUONG_TRINH: ThisItem.MA_CHUONG_TRINH,
+                            TEN_CHUONG_TRINH:ThisItem.TEN_CHUONG_TRINH,
+                            DON_VI_TINH: "VND",
+                            NHOM_TINH_PHI: Concat(tmpDSNhomTPCCPCollect,MA_NHOM_TINHPHI,"|")
+                        }
+                    );
+                    Set(nhapBGCCPFwd,"1");
+                    Navigate(NhapHopDong);
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =11
+                  Text: ="Mua ngay"
+                  Width: =123
+                  X: =1087
+                  Y: =117
+            - Label14:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderThickness: =1
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =35
+                  OnSelect: =Select(Parent)
+                  Size: =11
+                  Text: ="Loại quyền lợi"
+                  Width: =149
+                  X: =31
+                  Y: =46
+            - Label14_1:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderThickness: =1
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =35
+                  OnSelect: =Select(Parent)
+                  Size: =11
+                  Text: ="Nhóm quyền lợi"
+                  Width: =299
+                  X: =180
+                  Y: =46
+            - Label14_2:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderThickness: =1
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =35
+                  OnSelect: =Select(Parent)
+                  Size: =11
+                  Text: ="Số tiền bảo hiểm tối đa/năm"
+                  Width: =237
+                  X: =479
+                  Y: =46
+            - Label14_3:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderThickness: =1
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =35
+                  OnSelect: =Select(Parent)
+                  Size: =11
+                  Text: ="Phí tối thiểu"
+                  Width: =217
+                  X: =716
+                  Y: =46
+            - TextInput9:
+                Control: Classic/TextInput@2.3.2
+                Properties:
+                  Align: =Align.Right
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderThickness: =1
+                  Default: |
+                    =Text( Sum(Filter ( Gallery6.AllItems , Checkbox2_1.Value = true && MA_CHUONG_TRINH = ThisItem.MA_CHUONG_TRINH),PHI), "###,###,###") & " VND"
+                  DisabledColor: =RGBA(0, 0, 0, 1)
+                  DisplayMode: =DisplayMode.Disabled
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =36
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  OnSelect: =Select(Parent)
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =149
+                  X: =1074
+                  Y: =69
+      - Button3_17:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: |-
+              =
+
+              //If(CountRows (Filter( danhsachnhom.AllItems, Checkbox2.Value = true)) > 0, DisplayMode.Edit, DisplayMode.Disabled )
+
+              DisplayMode.Edit
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =32
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnSelect: |
+              =If(
+                  IsBlank(LookUp(danhsachnhom.AllItems,Checkbox2.Value = true)),
+                  Notify("Chưa có sản phẩm được chọn!",NotificationType.Warning,2000),
+                  // convert dữ liệu thông tin báo giá vào sản phẩm trong hợp đồng
+                  ClearCollect(
+                      tempSpFull,
+                      DL_HOP_DONG_SPS
+                  );
+                  //Luu tam danh sach nhom tinh phi
+                  ClearCollect(
+                      tmpDSNhomTPCCPCollect,
+                      {
+                          MA_NHOM_TINHPHI:""
+                      }
+                  );
+                  Clear(tmpDSNhomTPCCPCollect);
+                  Clear(tempSpFull);
+                  // LẤY THÔNG TIN CÁC CHƯƠNG TRÌNH ĐƯỢC TÍCH CHỌN
+                  ForAll(
+                      danhsachnhom.AllItems As ctrinh,
+                      // những chương trình nào được tích thì chuyển sang nhập hợp đồng
+                      If(
+                          ctrinh.Checkbox2.Value = true,
+                          //   danh sách các nhóm tính phí
+                          ForAll(
+                              ctrinh.Gallery6.AllItems As phi,
+                              // Chi lay cac nhom tinh phi duoc tich chon
+                              If(
+                                  phi.Checkbox2_1.Value = true,
+                                  Collect(
+                                      tmpDSNhomTPCCPCollect,
+                                      {
+                                          MA_NHOM_TINHPHI:phi.cr282_ma_nhom_tinhphi
+                                      }
+                                  )
+                              )
+                          );
+                          // những dòng nào được tích thì lấy sang hợp đồng
+                          Collect(
+                              tempSpFull,
+                              {
+                                  ID: Text(Max(DL_HOP_DONG_SPS,ID)+1)
+                              }
+                          );
+                          Patch(
+                              DL_HOP_DONG_SPS,
+                              {
+                                  ID: Text(Max(DL_HOP_DONG_SPS,ID)+1),
+                                  MA_HOP_DONG: "",
+                                  MA_SAN_PHAM: ctrinh.MA_SAN_PHAM,
+                                  TEN_SAN_PHAM: LookUp(
+                                      DL_SAN_PHAM,
+                                      MA_SAN_PHAM = ctrinh.MA_SAN_PHAM
+                                  ).TEN_SAN_PHAM,
+                                  MA_CHUONG_TRINH: ctrinh.MA_CHUONG_TRINH,
+                                  TEN_CHUONG_TRINH: ctrinh.TEN_CHUONG_TRINH,
+                                  DON_VI_TINH: "VND",
+                                  NHOM_TINH_PHI: Concat(tmpDSNhomTPCCPCollect,MA_NHOM_TINHPHI,"|")
+                              }
+                          )
+                      );
+                      RemoveIf(tmpDSNhomTPCCPCollect,true);
+                  );
+                  Set(nhapBGCCPFwd,"1");
+                  Navigate(NhapHopDong)
+              )
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =11
+            Text: ="Mua ngay"
+            Width: =121
+            X: =1179
+            Y: =117
+      - Button3_18:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =32
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnSelect: "=//Tra cuu theo bang phi\nClearCollect(\n    tmpKQCCPCollect,\n    DL_CHUONG_TRINH_BANG_PHIS\n);\n//Lay danh muc len collect\nClearCollect(\n    dmSanPhamCCPCollect,\n    AddColumns(\n        DL_SAN_PHAM,\n        title,\n        Concatenate(\n            MA_SAN_PHAM,\n            \" - \",\n            TEN_SAN_PHAM\n        )\n    )\n);\nClearCollect(\n    dmGTinhCCPCollect,\n    AddColumns(\n        DM_GIOI_TINHS,\n        title,\n        Concatenate(\n            MA_GIOI_TINH,\n            \" - \",\n            TEN_GIOI_TINH\n        )\n    )\n);\nClearCollect(\n    dmDTuoiCCPCollect,\n    DM_DO_TUOIS\n);\n//Lay danh muc len collect end\n//Lay dl nghiep vu len collect\nClearCollect(\n    dlSPNhomQLCCPCollect,\n    DL_SAN_PHAM_NHOMQLS\n);\nClearCollect(\n    dlCTQLCTCCPCollect,\n    DL_CHUONGTRINH_QLCTS\n);\nClearCollect(\n    dlCTBangPhiCCPCollect,\n    DL_CHUONG_TRINH_BANG_PHIS\n);\n//Loc theo LHNV\nIf(\n    !IsBlank(cbxLHNVCCP.Selected.Value),\n    ClearCollect(\n        tmpKQCCPCollect,\n        Filter(\n            tmpKQCCPCollect,\n            MA_SAN_PHAM in Distinct(\n                Filter(\n                    dmSanPhamCCPCollect,\n                    LHNV = cbxLHNVCCP.Selected.Value\n                ),\n                MA_SAN_PHAM\n            )\n        )\n    );\n    \n);\n//Loc theo ma san pham\nIf(\n    !IsBlank(cbxMaSPCCP.Selected.MA_SAN_PHAM),\n    ClearCollect(\n        tmpKQCCPCollect,\n        Filter(\n            tmpKQCCPCollect,\n            MA_SAN_PHAM = cbxMaSPCCP.Selected.MA_SAN_PHAM\n        )\n    );\n    \n);\n//Loc theo muc phi tu\nIf(\n    !IsBlank(phi_tu) && phi_tu <> 0,\n    ClearCollect(\n        tmpKQCCPCollect,\n        Filter(\n            tmpKQCCPCollect,\n            PHI_BH >= phi_tu\n        )\n    );\n    \n);\n//Loc theo muc phi den\nIf(\n    !IsBlank(phi_den) && phi_den <> 0,\n    ClearCollect(\n        tmpKQCCPCollect,\n        Filter(\n            tmpKQCCPCollect,\n            PHI_BH <= phi_den\n        )\n    );\n    \n);\n//Loc theo do tuoi\nIf(\n    !IsBlank(tiTuoiCCP.Text),\n    ClearCollect(\n        tmpKQCCPCollect,\n        Filter(\n            tmpKQCCPCollect,\n            MA_DO_TUOI in Distinct(\n                Filter(\n                    dmDTuoiCCPCollect,\n                    (donvi_tuoi = \"tuổi\" && DONVI_TUOI_DEN = 100 && TUOI_DEN >= tuoi && (DONVI_TUOI_DEN <> 100 || TUOI_TU <= tuoi)) || (donvi_tuoi = \"ngày tuổi\" && (DONVI_TUOI_DEN = 100 || (DONVI_TUOI_DEN = 200 && tuoi <= (30 * TUOI_DEN)) || (DONVI_TUOI_DEN = 300 && tuoi <= (7 * TUOI_DEN)) || (DONVI_TUOI_DEN = 400 && tuoi <= TUOI_DEN)) && ((DONVI_TUOI_TU = 200 && tuoi >= (30 * TUOI_TU)) || (DONVI_TUOI_TU = 300 && tuoi >= (7 * TUOI_TU)) || (DONVI_TUOI_TU = 400 && tuoi >= TUOI_TU)))\n                ),\n                MO_TA\n            ) || IsBlank(MA_DO_TUOI)\n        )\n    );\n    \n);\n//End tra cuu theo bang phi\nClearCollect(\n    tempCTKH,\n    {}\n);\nClearCollect(\n    tempQLFull,\n    {}\n);\nSet(\n    ConcatenatedResult,\n    {}\n);\n// lấy danh sách sản phẩm\nClearCollect(\n    tempSPKH,\n    Filter(\n        ' DL_SAN_PHAM_CT',\n        MA_SAN_PHAM in Distinct(\n            tmpKQCCPCollect,\n            MA_SAN_PHAM\n        )\n    )\n);\n// lấy danh sách nhóm quyền lợi gắn với chương trình của sản phẩm\nForAll(\n    tempSPKH As sp,\n    Collect(\n        tempCTKH,\n        AddColumns(\n            Filter(\n                dlSPNhomQLCCPCollect,\n                MA_SP = sp.MA_SAN_PHAM && !IsBlank(\n                    Find(\n                        sp.MA_CHUONG_TRINH,\n                        CHUONGTRINH_APDUNG\n                    )\n                )\n            ),\n            MA_CHUONG_TRINH,\n            sp.MA_CHUONG_TRINH\n        )\n    );\n    \n);\n// danh sách có tổng số tiền và phí\nForAll(\n    tempCTKH As ctql,\n    Collect(\n        tempQLFull,\n        AddColumns(\n            ctql,\n            SO_TIEN,\n            Max(\n                Filter(\n                    DL_CHUONGTRINH_QLCTS,\n                    MA_SAN_PHAM = ctql.MA_SP && MA_CHUONG_TRINH = ctql.MA_CHUONG_TRINH && MA_NHOM_QL = ctql.MA_NHOM_QL\n                ),\n                GH_SOTIEN_NAM\n            ),\n            PHI,\n            Min (\n                Filter (\n                    DL_CHUONG_TRINH_BANG_PHIS,\n                    MA_SAN_PHAM = ctql.MA_SP && MA_CHUONG_TRINH = ctql.MA_CHUONG_TRINH && NHOM_TINH_PHI = ctql.MA_NHOM_TINHPHI\n                ),\n                PHI_BH\n            )\n        )\n    )\n);\n// GỘP LẠI THEO NHÓM TÍNH PHÍ ĐỂ HIỂN THỊ LÊN MÀN HÌNH\nClearCollect (\n    tmpQLGroup,\n    {}\n);\n// tính tổng số tiền bảo hiểm theo nhóm tính phí\nForAll(\n    tempQLFull As fu,\n    Collect(\n        tmpQLGroup,\n        AddColumns(\n            fu,\n            GHEP_SO_TIEN,\n            Concat(\n                ShowColumns(\n                    Filter(\n                        tempQLFull,\n                        MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI\n                    ),\n                    SO_TIEN\n                ),\n                If(\n                    SO_TIEN > 0,\n                    Text(\n                        SO_TIEN,\n                        \"###,###,###\"\n                    ),\n                    0\n                ),\n                \" VND;\"\n            ),\n            GHEP_CHUOI_NQL,\n            Concat(\n                ShowColumns(\n                    Filter(\n                        tempQLFull,\n                        MA_SP = fu.MA_SP && MA_CHUONG_TRINH = fu.MA_CHUONG_TRINH && MA_NHOM_TINHPHI = fu.MA_NHOM_TINHPHI\n                    ),\n                    TEN_HIEN_THI\n                ),\n                cr282_ten_hien_thi,\n                \";\"\n            )\n        )\n    )\n);\n// group lại danh sách \nClearCollect (\n    tmpQLGroupDistinct,\n    GroupBy(\n        tmpQLGroup,\n        GHEP_SO_TIEN,\n        LOAI,\n        MA_NHOM_TINHPHI,\n        MA_SP,\n        GHEP_CHUOI_NQL,\n        MA_CHUONG_TRINH,\n        PHI,\n        Group\n    )\n);\nClearCollect (\n    temp,\n    tmpQLGroupDistinct\n);\n// lọc dữ liệu\nForAll(\n    temp As gr,\n    // lọc theo theo tiền phí từ\n    If(\n        gr.cr282_loai = \"Chính\",\n        If(\n            phi_tu <> 0 And gr.PHI < phi_tu,\n            RemoveIf(\n                tempSPKH,\n                MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH\n            )\n        );\n        If(\n            phi_den <> 0 And gr.PHI > phi_den,\n            RemoveIf(\n                tempSPKH,\n                MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH\n            )\n        );\n    );\n    \n// lọc dữ liệu theo giới tính\n// tìm nhóm tính phí theo giới tính\n\nIf(\n        !IsBlank(cbxGTinhCCP.Selected.TEN_GIOI_TINH) && CountRows(\n            Filter(\n                tmpKQCCPCollect,\n                MA_SAN_PHAM = gr.cr282_ma_sp && MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH && NHOM_TINH_PHI = gr.cr282_ma_nhom_tinhphi && (Trim(Lower(MA_GIOI_TINH)) = Trim(Lower(cbxGTinhCCP.Selected.TEN_GIOI_TINH) And \n                !( MA_GIOI_TINH)))\n            )\n        ) = 0,\n        RemoveIf(\n            tmpQLGroupDistinct,\n            MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH && cr282_ma_sp = gr.cr282_ma_sp && cr282_ma_nhom_tinhphi = gr.cr282_ma_nhom_tinhphi && cr282_loai <> \"Chính\"\n        )\n    );\n\n);\n\nClearCollect (\n    tem2,\n    tmpQLGroupDistinct\n);\n// nếu nhóm tính phí chỉ có 1 dòng và dòng đó không tìm thấy theo giới tính thì xóa chương trình đi\nIf(\n    !IsBlank(cbxGTinhCCP.Selected.TEN_GIOI_TINH),\n    ForAll(\n        tem2 As gr,\n        If(\n            CountRows (\n                Filter (\n                    tem2,\n                    cr282_ma_sp = gr.cr282_ma_sp && MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH\n                )\n            ) = 1 And CountRows(\n                Filter(\n                    tmpKQCCPCollect,\n                    MA_SAN_PHAM = gr.cr282_ma_sp && MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH && NHOM_TINH_PHI = gr.cr282_ma_nhom_tinhphi && ( Trim(Lower(MA_GIOI_TINH)) = Trim(Lower(cbxGTinhCCP.Selected.TEN_GIOI_TINH)) Or IsBlank(MA_GIOI_TINH) )\n                )\n            ) = 0,\n            RemoveIf(\n                tempSPKH,\n                MA_CHUONG_TRINH = gr.MA_CHUONG_TRINH\n            )\n        )\n    )\n);\nClearCollect(\n    tempFinal,\n    tempSPKH\n);\n"
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =11
+            Text: ="Tìm kiếm"
+            Width: =122
+            X: =1044
+            Y: =117
+      - Label2_39:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Font: =Font.'Open Sans'
+            Height: =25
+            Size: =11
+            Text: ="Giới tính"
+            Width: =130
+            X: =85
+            Y: =90
+      - Label2_40:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Font: =Font.'Open Sans'
+            Height: =25
+            Size: =11
+            Text: ="Mã sản phẩm"
+            Width: =130
+            X: =421
+            Y: =19
+      - cbxGTinhCCP:
+          Control: Classic/ComboBox@2.4.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            ChevronBackground: =RGBA(56, 96, 178, 1)
+            ChevronFill: =RGBA(255, 255, 255, 1)
+            ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            ChevronHoverFill: =RGBA(255, 255, 255, 1)
+            DisplayFields: =["cr282_ten_gioi_tinh","cr282_ma_don_vi"]
+            Font: =Font.'Open Sans'
+            Height: =32
+            HoverFill: =RGBA(186, 202, 226, 1)
+            InputTextPlaceholder: ="Chọn giới tính"
+            Items: =SortByColumns(DM_GIOI_TINHS,"cr282_ma_gioi_tinh",SortOrder.Ascending)
+            PressedColor: =RGBA(255, 255, 255, 1)
+            PressedFill: =RGBA(0, 18, 107, 1)
+            SearchFields: =["cr282_ten_gioi_tinh"]
+            SelectMultiple: =false
+            SelectionColor: =RGBA(255, 255, 255, 1)
+            SelectionFill: =RGBA(56, 96, 178, 1)
+            Size: =11
+            Width: =250
+            X: =85
+            Y: =117
+      - Label2_41:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Font: =Font.'Open Sans'
+            Height: =25
+            Size: =11
+            Text: ="LHNV"
+            Width: =130
+            X: =85
+            Y: =19
+      - cbxMaSPCCP:
+          Control: Classic/ComboBox@2.4.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            BorderThickness: =1
+            ChevronBackground: =RGBA(56, 96, 178, 1)
+            ChevronFill: =RGBA(255, 255, 255, 1)
+            ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            ChevronHoverFill: =RGBA(255, 255, 255, 1)
+            DisplayFields: =["title"]
+            Font: =Font.'Open Sans'
+            Height: =32
+            HoverFill: =RGBA(186, 202, 226, 1)
+            InputTextPlaceholder: ="Chọn sản phẩm"
+            Items: =SortByColumns(Filter(dmSanPhamCCPCollect,LHNV=cbxLHNVCCP.Selected.Value),"cr282_ma_san_pham",SortOrder.Ascending)
+            PressedColor: =RGBA(255, 255, 255, 1)
+            PressedFill: =RGBA(0, 18, 107, 1)
+            SearchFields: =["title"]
+            SelectMultiple: =false
+            SelectionColor: =RGBA(255, 255, 255, 1)
+            SelectionFill: =RGBA(56, 96, 178, 1)
+            Size: =11
+            Width: =250
+            X: =421
+            Y: =46
+      - cbxLHNVCCP:
+          Control: Classic/ComboBox@2.4.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            BorderThickness: =1
+            ChevronBackground: =RGBA(56, 96, 178, 1)
+            ChevronFill: =RGBA(255, 255, 255, 1)
+            ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            ChevronHoverFill: =RGBA(255, 255, 255, 1)
+            DisplayFields: =["Value"]
+            Font: =Font.'Open Sans'
+            Height: =32
+            HoverFill: =RGBA(186, 202, 226, 1)
+            InputTextPlaceholder: ="Chọn LHNV"
+            IsSearchable: =false
+            Items: =["Sức khỏe","Tai nạn","Trách nhiệm dân sự"]
+            PressedColor: =RGBA(255, 255, 255, 1)
+            PressedFill: =RGBA(0, 18, 107, 1)
+            SearchFields: =["Value"]
+            SelectMultiple: =false
+            SelectionColor: =RGBA(255, 255, 255, 1)
+            SelectionFill: =RGBA(56, 96, 178, 1)
+            Size: =11
+            Width: =250
+            X: =85
+            Y: =46
+      - Label2_42:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Font: =Font.'Open Sans'
+            Height: =25
+            Size: =11
+            Text: ="Ngày sinh"
+            Width: =120
+            X: =757
+            Y: =19
+      - dpNgaySinhCCP:
+          Control: Classic/DatePicker@2.6.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            DefaultDate: =
+            EndYear: =2200
+            Font: =Font.'Open Sans'
+            Format: ="dd/mm/yyyy"
+            Height: =32
+            IconBackground: =RGBA(56, 96, 178, 1)
+            IconFill: =RGBA(255, 255, 255, 1)
+            InputTextPlaceholder: ="Chọn ngày sinh"
+            IsEditable: =true
+            OnChange: |
+              =UpdateContext({
+                  tuoi:If(
+                      DateAdd(dpNgaySinhCCP.SelectedDate,DateDiff(dpNgaySinhCCP.SelectedDate,Today(),TimeUnit.Years),TimeUnit.Years)>Today(),
+                      DateDiff(dpNgaySinhCCP.SelectedDate,Today(),TimeUnit.Years)-1,
+                      DateDiff(dpNgaySinhCCP.SelectedDate,Today(),TimeUnit.Years)
+                  )
+              });
+              UpdateContext({
+                  donvi_tuoi:If(
+                      tuoi>=1,
+                      "tuổi",
+                      "ngày tuổi"
+                  )
+              });
+              If(
+                  tuoi<1,
+                  UpdateContext({
+                      tuoi:DateDiff(dpNgaySinhCCP.SelectedDate,Today(),TimeUnit.Days)
+                  })
+              )
+            OnSelect: |-
+              =If(
+                  !IsBlank(ngayHD),
+                  UpdateContext({
+                      ngayHD:Blank()
+                  });
+              )
+            Size: =11
+            StartYear: =1900
+            Width: =250
+            X: =757
+            Y: =46
+      - Label2_43:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Font: =Font.'Open Sans'
+            Height: =25
+            Size: =11
+            Text: ="Tuổi"
+            Width: =130
+            X: =1084
+            Y: =19
+      - tiTuoiCCP:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            Align: =Align.Right
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: =If(tuoi<=0,Blank(),Concatenate(tuoi," ",donvi_tuoi))
+            DisplayMode: =DisplayMode.Disabled
+            Font: =Font.'Open Sans'
+            Height: =32
+            HoverBorderColor: =RGBA(0, 18, 107, 1)
+            HoverFill: =RGBA(186, 202, 226, 1)
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Size: =11
+            Width: =250
+            X: =1084
+            Y: =46
+      - Label2_44:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Font: =Font.'Open Sans'
+            Height: =25
+            Size: =11
+            Text: ="Mức phí từ"
+            Width: =90
+            X: =461
+            Y: =124
+      - slPhiTuCCP:
+          Control: Classic/Slider@2.1.0
+          Properties:
+            BorderColor: =RGBA(255, 255, 255, 1)
+            Default: =0
+            HandleSize: =12
+            Height: =22
+            Max: =500
+            OnChange: "=UpdateContext({\n    phi_tu:slPhiTuCCP.Value*100000\n    \n})"
+            RailThickness: =1
+            ShowValue: =false
+            ValueFill: =RGBA(0, 18, 107, 1)
+            Width: =250
+            X: =476
+            Y: =95
+      - tislPhiTuCCP:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            Align: =Align.Right
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: =If(phi_tu=0,Blank(),Concatenate(Text(phi_tu,"#,###")," VNĐ"))
+            DisplayMode: =DisplayMode.Disabled
+            Font: =Font.'Open Sans'
+            Height: =32
+            HoverBorderColor: =RGBA(0, 18, 107, 1)
+            HoverFill: =RGBA(186, 202, 226, 1)
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Size: =11
+            Width: =150
+            X: =555
+            Y: =114
+      - slPhiDenCCP:
+          Control: Classic/Slider@2.1.0
+          Properties:
+            BorderColor: =RGBA(255, 255, 255, 1)
+            Default: =0
+            HandleSize: =12
+            Height: =22
+            Max: =500
+            OnChange: "=UpdateContext({\n    phi_den:slPhiDenCCP.Value*100000\n    \n})"
+            RailThickness: =1
+            ShowValue: =false
+            ValueFill: =RGBA(0, 18, 107, 1)
+            Width: =250
+            X: =726
+            Y: =95
+      - tislPhiDenCCP:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            Align: =Align.Right
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: =If(phi_den=0,Blank(),Concatenate(Text(phi_den,"#,###")," VNĐ"))
+            DisplayMode: =DisplayMode.Disabled
+            Font: =Font.'Open Sans'
+            Height: =32
+            HoverBorderColor: =RGBA(0, 18, 107, 1)
+            HoverFill: =RGBA(186, 202, 226, 1)
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Size: =11
+            Width: =150
+            X: =834
+            Y: =117
+      - Label2_45:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Font: =Font.'Open Sans'
+            Height: =25
+            Size: =11
+            Text: ="Mức phí đến"
+            Width: =100
+            X: =726
+            Y: =121

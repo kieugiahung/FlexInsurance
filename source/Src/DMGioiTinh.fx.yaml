@@ -222,18 +222,21 @@ DMGioiTinh As screen:
                 X: =1240
                 ZIndex: =16
 
-        BadgeCanvas1_5 As Badge:
+        "BadgeCanvas1_5 As 'Huy hiệu'":
+            Align: =""
             BasePaletteColor: =
             Content: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =39
+            VerticalAlign: =""
             Width: =1194
             X: =20
             Y: =97
             ZIndex: =2
 
-        TextCanvas2_24 As Text:
+        "TextCanvas2_24 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -245,7 +248,8 @@ DMGioiTinh As screen:
             Y: =97
             ZIndex: =3
 
-        TextCanvas2_25 As Text:
+        "TextCanvas2_25 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -257,7 +261,8 @@ DMGioiTinh As screen:
             Y: =97
             ZIndex: =4
 
-        TextCanvas2_29 As Text:
+        "TextCanvas2_29 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =38
@@ -269,13 +274,16 @@ DMGioiTinh As screen:
             Y: =98
             ZIndex: =5
 
-        "TextFilterGT As 'Text input'":
+        "TextFilterGT As 'Văn bản đầu vào'":
+            Appearance: ="FilledDarker"
             BasePaletteColor: =
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Edit
             FontColor: =
             Height: =43
             OnChange: =
             Placeholder: ="Nhập giá trị lọc"
+            TriggerOutput: ="FocusOut"
             Width: =204
             X: =524
             Y: =34
@@ -348,24 +356,34 @@ DMGioiTinh As screen:
             Y: =40
             ZIndex: =8
 
-        CbxFilterGT As Combobox.pcfdataset:
+        "CbxFilterGT As 'Hộp tổ hợp'.pcfdataset":
+            Appearance: ="FilledDarker"
+            BorderStyle: =""
             DefaultSelectedItems: =Filter(["Mã giới tính", "Tên giới tính"],Value="Mã giới tính")
             DisplayMode: =DisplayMode.Edit
             Height: =43
             InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
             Items: =["Mã giới tính", "Tên giới tính"]
             OnChange: =Reset(TextFilterGT)
+            Required: =false
+            TriggerOutput: ="Keypress"
             Width: =152
             X: =363
             Y: =34
             ZIndex: =10
 
-        ButtonCanvas4_6 As Button:
+        ButtonCanvas4_6 As Nút:
+            Align: =""
             BasePaletteColor: =
+            BorderStyle: =""
             DisplayMode: =If(Or(maAddedGT<>"",maUpdatedGT<>""),DisplayMode.Disabled,DisplayMode.Edit)
             FontColor: =
             FontSize: =16
             Height: =43
+            Icon: =""
+            IconRotation: =0
+            IconStyle: ="Outline"
+            Layout: ="Icon before"
             OnSelect: |-
                 =ClearCollect(
                     tmpGTCollect,
@@ -401,6 +419,7 @@ DMGioiTinh As screen:
                     )
                 )
             Text: ="Tra cứu"
+            VerticalAlign: =""
             Width: =96
             X: =739
             Y: =34
@@ -417,7 +436,8 @@ DMGioiTinh As screen:
         Y: =244
         ZIndex: =3
 
-        TextCanvas1_15 As Text:
+        "TextCanvas1_15 As 'Văn bản'":
+            BorderStyle: =""
             DisplayMode: =DisplayMode.Disabled
             FontColor: =
             Height: =31

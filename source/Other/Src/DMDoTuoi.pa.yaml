@@ -1,0 +1,799 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  DMDoTuoi:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |
+        =ClearCollect(
+            dvTuoiCollect,
+            {
+                Key:"tuổi",
+                Value:100
+            },
+            {
+                Key:"tháng tuổi",
+                Value:200
+            },
+            {
+                Key:"tuần tuổi",
+                Value:300
+            },
+            {
+                Key:"ngày tuổi",
+                Value:400
+            }
+        );
+        ClearCollect(
+            tmpDTCollect,
+            ShowColumns(
+                AddColumns(
+                    SortByColumns(
+                        DM_DO_TUOIS,
+                        "cr282_ma_do_tuoi",
+                        SortOrder.Ascending
+                    ),
+                    edited,
+                    0
+                ),
+                MA_DO_TUOI,
+                MO_TA,
+                TUOI_TU,
+                TUOI_DEN,
+                DONVI_TUOI_TU,
+                DONVI_TUOI_DEN,
+                GHI_CHU,
+                edited
+            )
+        );
+        UpdateContext({
+            maAdded:"",
+            maUpdated:"",
+            showConfirm:0
+        });
+      Width: =Max(1390, App.MinScreenWidth)
+    Children:
+      - ContainerDT:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            Height: =768
+            Visible: =showConfirm=0
+            Width: =1329
+            X: =60
+          Children:
+            - GalleryDT:
+                Control: Gallery@2.15.0
+                Variant: Vertical
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =602
+                  Items: =SortByColumns(tmpDTCollect,"cr282_ma_do_tuoi",SortOrder.Ascending)
+                  NavigationStep: =0
+                  TemplateSize: =40
+                  Width: =1283
+                  X: =20
+                  Y: =166
+                Children:
+                  - IconXoaDT:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(233, 79, 76, 1)
+                        Height: =40
+                        Icon: =Icon.Trash
+                        OnSelect: |-
+                          =If(
+                              Or(maAdded<>"",maUpdated<>""),
+                              Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                              UpdateContext({
+                                  showConfirm:1,
+                                  maDelete:ThisItem.cr282_ma_do_tuoi,
+                                  objDelete:ThisItem
+                              });
+                          )
+                        Tooltip: ="Xóa"
+                        Visible: =ThisItem.edited=0
+                        Width: =37
+                        X: =1226
+                  - TextMaDT:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(15, 108, 189, 1)
+                        Default: =ThisItem.cr282_ma_do_tuoi
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =102
+                  - TextMoTaDT:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_mo_ta
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: '=If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) '
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =438
+                        X: =107
+                  - TextTuoiTu:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_tuoi_tu
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit)
+                        Font: =Font.'Open Sans'
+                        Format: =TextFormat.Number
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =80
+                        X: =550
+                  - TextTuoiDen:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_tuoi_den
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: '=If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) '
+                        Font: =Font.'Open Sans'
+                        Format: =TextFormat.Number
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =80
+                        X: =799
+                  - TextGhiChuDT:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.cr282_ghi_chu
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: '=If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) '
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Width: =128
+                        X: =1044
+                  - IconSuaDT:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(83, 144, 164, 1)
+                        Height: =40
+                        Icon: =Icon.Edit
+                        OnSelect: |-
+                          =If(
+                              Or(maAdded<>"",maUpdated<>""),
+                              Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                              UpdateIf(
+                                  tmpDTCollect,
+                                  cr282_ma_do_tuoi=ThisItem.cr282_ma_do_tuoi,
+                                  {
+                                      edited:1
+                                  }
+                              );
+                              UpdateContext({
+                                  maUpdated:ThisItem.cr282_ma_do_tuoi
+                              })
+                          )
+                        Tooltip: ="Sửa"
+                        Visible: =ThisItem.edited=0
+                        Width: =29
+                        X: =1185
+                  - IconLuuDT:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(72, 163, 62, 1)
+                        Height: =40
+                        Icon: =Icon.Save
+                        OnSelect: |
+                          =If(
+                              !Or(
+                                  And(
+                                      !IsBlank(TextTuoiTu.Text),
+                                      !IsBlank(CbxDVTuoiTu.Selected.Value)
+                                  ),
+                                  And(
+                                      !IsBlank(TextTuoiDen.Text),
+                                      !IsBlank(CbxDVTuoiDen.Selected.Value)
+                                  )
+                              ),
+                              Notify("Bắt buộc nhập tuổi từ và đơn vị tuổi từ, hoặc tuổi đến và đơn vị tuổi đến", NotificationType.Error,800),
+                              !IsBlank(TextTuoiTu.Text) && !IsMatch(TextTuoiTu.Text, "\d+", MatchOptions.Complete),
+                              Notify("Bắt buộc nhập giá trị số nguyên lớn hơn hoặc bằng 0 cho tuổi từ", NotificationType.Error,800),
+                              !IsBlank(TextTuoiDen.Text) && !IsMatch(TextTuoiDen.Text, "\d+", MatchOptions.Complete),
+                              Notify("Bắt buộc nhập giá trị số nguyên lớn hơn hoặc bằng 0 cho tuổi đến", NotificationType.Error,800),
+                              And(
+                                  !IsBlank(TextTuoiTu.Text),
+                                  IsBlank(CbxDVTuoiTu.Selected.Value)
+                              ),
+                              Notify("Bắt buộc nhập đơn vị tuổi từ nếu nhập tuổi từ", NotificationType.Error,800),
+                              And(
+                                  !IsBlank(TextTuoiDen.Text),
+                                  IsBlank(CbxDVTuoiDen.Selected.Value)
+                              ),
+                              Notify("Bắt buộc nhập đơn vị tuổi đến nếu nhập tuổi đến", NotificationType.Error,800),
+                              And(
+                                  !IsBlank(TextTuoiTu.Text),
+                                  !IsBlank(CbxDVTuoiTu.Selected.Value),
+                                  !IsBlank(TextTuoiDen.Text),
+                                  !IsBlank(CbxDVTuoiDen.Selected.Value),
+                                  Or(
+                                      And(
+                                          CbxDVTuoiDen.Selected.Value=CbxDVTuoiTu.Selected.Value,
+                                          Value(TextTuoiTu.Text)>Value(TextTuoiDen.Text)
+                                      ),
+                                      CbxDVTuoiDen.Selected.Value>CbxDVTuoiTu.Selected.Value
+                                  )
+                              ),
+                              Notify("Giá trị tuổi từ lớn hơn giá trị tuổi đến", NotificationType.Error,800),
+                              If(
+                                  ThisItem.cr282_ma_do_tuoi=maAdded,
+
+                                  Patch(
+                                      DM_DO_TUOIS,
+                                      {
+                                          MA_DO_TUOI:ThisItem.cr282_ma_do_tuoi,
+                                          MO_TA:If(
+                                              IsBlank(TextMoTaDT.Text),
+                                              Concatenate(
+                                                  If(
+                                                      IsBlank(TextTuoiTu.Text),
+                                                      "",
+                                                      Concatenate(
+                                                          "từ ",
+                                                          Value(TextTuoiTu.Text),
+                                                          " ",
+                                                          LookUp(dvTuoiCollect,Value=CbxDVTuoiTu.Selected.Value,Key),
+                                                          " "
+                                                      )
+                                                  ),
+                                                  If(
+                                                      IsBlank(TextTuoiDen.Text),
+                                                      "",
+                                                      Concatenate(
+                                                          "đến ",
+                                                          Value(TextTuoiDen.Text),
+                                                          " ",
+                                                          LookUp(dvTuoiCollect,Value=CbxDVTuoiDen.Selected.Value,Key),
+                                                          " "
+                                                      )
+                                                  )
+                                              ),
+                                              TextMoTaDT.Text
+                                          ),
+                                          TUOI_TU:Value(TextTuoiTu.Text),
+                                          TUOI_DEN:Value(TextTuoiDen.Text),
+                                          DONVI_TUOI_TU:CbxDVTuoiTu.Selected.Value,
+                                          DONVI_TUOI_DEN:CbxDVTuoiDen.Selected.Value,
+                                          GHI_CHU:TextGhiChuDT.Text
+                                      }
+                                  ),
+                                  UpdateIf(
+                                      DM_DO_TUOIS,
+                                      MA_DO_TUOI=ThisItem.cr282_ma_do_tuoi,
+                                      {
+                                          MO_TA:If(
+                                              IsBlank(TextMoTaDT.Text),
+                                              Concatenate(
+                                                  If(
+                                                      IsBlank(TextTuoiTu.Text),
+                                                      "",
+                                                      Concatenate(
+                                                          "từ ",
+                                                          Value(TextTuoiTu.Text),
+                                                          " ",
+                                                          LookUp(dvTuoiCollect,Value=CbxDVTuoiTu.Selected.Value,Key),
+                                                          " "
+                                                      )
+                                                  ),
+                                                  If(
+                                                      IsBlank(TextTuoiDen.Text),
+                                                      "",
+                                                      Concatenate(
+                                                          "đến ",
+                                                          Value(TextTuoiDen.Text),
+                                                          " ",
+                                                          LookUp(dvTuoiCollect,Value=CbxDVTuoiDen.Selected.Value,Key),
+                                                          " "
+                                                      )
+                                                  )
+                                              ),
+                                              TextMoTaDT.Text
+                                          ),
+                                          TUOI_TU:Value(TextTuoiTu.Text),
+                                          TUOI_DEN:Value(TextTuoiDen.Text),
+                                          DONVI_TUOI_TU:CbxDVTuoiTu.Selected.Value,
+                                          DONVI_TUOI_DEN:CbxDVTuoiDen.Selected.Value,
+                                          GHI_CHU:TextGhiChuDT.Text
+                                      }
+                                  )
+                              );
+                              UpdateIf(
+                                  tmpDTCollect,
+                                  cr282_ma_do_tuoi=ThisItem.cr282_ma_do_tuoi,
+                                  {
+                                      cr282_ma_do_tuoi:ThisItem.cr282_ma_do_tuoi,
+                                      cr282_mo_ta:If(
+                                              IsBlank(TextMoTaDT.Text),
+                                              Concatenate(
+                                                  If(
+                                                      IsBlank(TextTuoiTu.Text),
+                                                      "",
+                                                      Concatenate(
+                                                          "từ ",
+                                                          Value(TextTuoiTu.Text),
+                                                          " ",
+                                                          LookUp(dvTuoiCollect,Value=CbxDVTuoiTu.Selected.Value,Key),
+                                                          " "
+                                                      )
+                                                  ),
+                                                  If(
+                                                      IsBlank(TextTuoiDen.Text),
+                                                      "",
+                                                      Concatenate(
+                                                          "đến ",
+                                                          Value(TextTuoiDen.Text),
+                                                          " ",
+                                                          LookUp(dvTuoiCollect,Value=CbxDVTuoiDen.Selected.Value,Key),
+                                                          " "
+                                                      )
+                                                  )
+                                              ),
+                                              TextMoTaDT.Text
+                                          ),
+                                      cr282_tuoi_tu:Value(TextTuoiTu.Text),
+                                      cr282_tuoi_den:Value(TextTuoiDen.Text),
+                                      cr282_donvi_tuoi_tu:CbxDVTuoiTu.Selected.Value,
+                                      cr282_donvi_tuoi_den:CbxDVTuoiDen.Selected.Value,
+                                      cr282_ghi_chu:TextGhiChuDT.Text,
+                                      edited:0
+                                  }
+                              );
+                              Notify("Lưu dữ liệu thành công", NotificationType.Success,800);
+                              ClearCollect(
+                                  tmpDTCollect,
+                                  ShowColumns(
+                                      AddColumns(
+                                          SortByColumns(
+                                              DM_DO_TUOIS,
+                                              "cr282_ma_do_tuoi",
+                                              SortOrder.Ascending
+                                          ),
+                                          edited,
+                                          0
+                                      ),
+                                      MA_DO_TUOI,
+                                      MO_TA,
+                                      TUOI_TU,
+                                      TUOI_DEN,
+                                      DONVI_TUOI_TU,
+                                      DONVI_TUOI_DEN,
+                                      GHI_CHU,
+                                      edited
+                                  )
+                              );
+                              UpdateContext({
+                                  maAdded:"",
+                                  maUpdated:""
+                              });
+                              Reset(TextFilterDT); Reset(CbxFilterDT)
+                          )
+                        Tooltip: ="Lưu"
+                        Visible: =ThisItem.edited=1
+                        Width: =33
+                        X: =1185
+                  - IconHuyDT:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(139, 154, 159, 1)
+                        Height: =40
+                        Icon: =Icon.CancelBadge
+                        OnSelect: |-
+                          =If(
+                              ThisItem.cr282_ma_do_tuoi=maAdded,
+                              Remove(tmpDTCollect,ThisItem),
+                              UpdateIf(
+                                  tmpDTCollect,
+                                  cr282_ma_do_tuoi=ThisItem.cr282_ma_do_tuoi,
+                                  {
+                                      edited:0
+                                  }
+                              )
+                          );
+                          UpdateContext({
+                              maAdded:"",
+                              maUpdated:""
+                          });
+                        Tooltip: ="Hủy"
+                        Visible: =ThisItem.edited=1
+                        Width: =28
+                        X: =1231
+                  - CbxDVTuoiDen:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                        ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
+                        ChevronHoverBackground: =RGBA(255, 255, 255, 1)
+                        ChevronHoverFill: =RGBA(72, 163, 62, 1)
+                        DefaultSelectedItems: =If(IsBlank(ThisItem.cr282_donvi_tuoi_den),Blank(),LookUp(dvTuoiCollect,Value=ThisItem.cr282_donvi_tuoi_den))
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayFields: =["Key"]
+                        DisplayMode: '=If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) '
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(9, 33, 98, 1)
+                        HoverFill: =RGBA(180, 214, 250, 1)
+                        InputTextPlaceholder: ="Chọn đơn vị tuổi"
+                        IsSearchable: =false
+                        Items: =SortByColumns(dvTuoiCollect,"Value",SortOrder.Ascending)
+                        OnSelect: =Select(Parent)
+                        PressedColor: =RGBA(72, 163, 62, 1)
+                        PressedFill: =RGBA(255, 255, 255, 1)
+                        SearchFields: =["Key"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(0, 0, 0, 1)
+                        SelectionFill: =RGBA(214, 221, 224, 1)
+                        Width: =153
+                        X: =885
+                  - CbxDVTuoiTu:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        ChevronBackground: =RGBA(255, 255, 255, 1)
+                        ChevronDisabledBackground: =RGBA(180, 214, 250, 1)
+                        ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                        ChevronFill: =RGBA(72, 163, 62, 1)
+                        ChevronHoverBackground: =RGBA(255, 255, 255, 1)
+                        ChevronHoverFill: =RGBA(72, 163, 62, 1)
+                        DefaultSelectedItems: =If(IsBlank(ThisItem.cr282_donvi_tuoi_tu),Blank(),LookUp(dvTuoiCollect,Value=ThisItem.cr282_donvi_tuoi_tu))
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayFields: =["Key"]
+                        DisplayMode: '=If(ThisItem.edited=0,DisplayMode.Disabled,DisplayMode.Edit) '
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(9, 33, 98, 1)
+                        HoverFill: =RGBA(180, 214, 250, 1)
+                        InputTextPlaceholder: ="Chọn đơn vị tuổi"
+                        IsSearchable: =false
+                        Items: =SortByColumns(dvTuoiCollect,"Value",SortOrder.Ascending)
+                        OnSelect: =Select(Parent)
+                        PressedColor: =RGBA(72, 163, 62, 1)
+                        PressedFill: =RGBA(255, 255, 255, 1)
+                        SearchFields: =["Key"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(0, 0, 0, 1)
+                        SelectionFill: =RGBA(214, 221, 224, 1)
+                        Width: =158
+                        X: =635
+            - BadgeCanvas1_1:
+                Control: Badge@0.0.24
+                Properties:
+                  Content: =""
+                  Height: =39
+                  Width: =1184
+                  X: =20
+                  Y: =124
+            - TextCanvas2_6:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =38
+                  Text: ="Mã độ tuổi"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  X: =32
+                  Y: =125
+            - TextCanvas2_7:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =38
+                  Text: ="Mô tả"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  X: =142
+                  Y: =125
+            - TextCanvas2_8:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =38
+                  Text: ="Tuổi từ"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  X: =576
+                  Y: =125
+            - TextCanvas2_9:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =38
+                  Text: ="Tuổi đến"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =62
+                  X: =826
+                  Y: =125
+            - TextCanvas2_10:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =38
+                  Text: ="Đơn vị tuổi đến"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =118
+                  X: =916
+                  Y: =125
+            - TextCanvas2_11:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =38
+                  Text: ="Ghi chú"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  X: =1072
+                  Y: =125
+            - TextFilterDT:
+                Control: TextInput@0.0.53
+                Properties:
+                  Height: =43
+                  OnChange: =
+                  Placeholder: ="Nhập giá trị lọc"
+                  Width: =204
+                  X: =524
+                  Y: =61
+            - IconTaiLaiDT:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(83, 144, 164, 1)
+                  Height: =36
+                  Icon: =Icon.Sync
+                  OnSelect: |-
+                    =ClearCollect(
+                        dvTuoiCollect,
+                        {
+                            Key:"tuổi",
+                            Value:100
+                        },
+                        {
+                            Key:"tháng tuổi",
+                            Value:200
+                        },
+                        {
+                            Key:"tuần tuổi",
+                            Value:300
+                        },
+                        {
+                            Key:"ngày tuổi",
+                            Value:400
+                        }
+                    );
+                    ClearCollect(
+                        tmpDTCollect,
+                        ShowColumns(
+                            AddColumns(
+                                SortByColumns(
+                                    DM_DO_TUOIS,
+                                    "cr282_ma_do_tuoi",
+                                    SortOrder.Ascending
+                                ),
+                                edited,
+                                0
+                            ),
+                            MA_DO_TUOI,
+                            MO_TA,
+                            TUOI_TU,
+                            TUOI_DEN,
+                            DONVI_TUOI_TU,
+                            DONVI_TUOI_DEN,
+                            GHI_CHU,
+                            edited
+                        )
+                    );
+                    UpdateContext({
+                        maAdded:"",
+                        maUpdated:"",
+                        showConfirm:0
+                    });
+                    Reset(TextFilterDT); Reset(CbxFilterDT);
+                  Tooltip: ="Tải lại"
+                  Width: =32
+                  X: =55
+                  Y: =71
+            - IconThemDT:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(72, 163, 62, 1)
+                  DisplayMode: =If(And(maAdded="",maUpdated=""), DisplayMode.Edit,DisplayMode.Disabled)
+                  Height: =42
+                  Icon: =Icon.AddDocument
+                  OnSelect: |
+                    =If(
+                        Or(maAdded<>"",maUpdated<>""),
+                        Notify("Có dữ liệu chưa được lưu",NotificationType.Warning,800),
+                        UpdateContext({
+                            idMa:If(
+                                CountIf(DM_DO_TUOIS,true)=0,
+                                1000,
+                                Value(Last(SortByColumns(DM_DO_TUOIS,"cr282_ma_do_tuoi",SortOrder.Ascending)).MA_DO_TUOI)+1
+                            )
+                        });
+                        Collect(
+                            tmpDTCollect,
+                            {
+                                cr282_ma_do_tuoi:Text(idMa),
+                                cr282_mo_ta:"",
+                                cr282_tuoi_tu:Blank(),
+                                cr282_tuoi_den:Blank(),
+                                cr282_donvi_tuoi_tu:Blank(),
+                                cr282_donvi_tuoi_den:Blank(),
+                                cr282_ghi_chu:"",
+                                edited:1
+                            }
+                        );
+                        UpdateContext({maAdded:Text(idMa)})
+                    )
+                  Tooltip: ="Thêm mới"
+                  Width: =40
+                  X: =106
+                  Y: =67
+            - CbxFilterDT:
+                Control: ComboBox@0.0.49
+                Properties:
+                  DefaultSelectedItems: =Filter(["Mã độ tuổi", "Mô tả"],Value="Mã độ tuổi")
+                  Height: =43
+                  InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
+                  Items: =["Mã độ tuổi", "Mô tả"]
+                  OnChange: =Reset(TextFilterDT)
+                  Width: =152
+                  X: =363
+                  Y: =61
+            - TextCanvas2_12:
+                Control: Text@0.0.50
+                Properties:
+                  Height: =38
+                  Text: ="Đơn vị tuổi từ"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =118
+                  X: =664
+                  Y: =125
+            - ButtonCanvas4_4:
+                Control: Button@0.0.44
+                Properties:
+                  DisplayMode: =If(Or(maAdded<>"",maUpdated<>""),DisplayMode.Disabled,DisplayMode.Edit)
+                  FontSize: =16
+                  Height: =43
+                  OnSelect: |-
+                    =ClearCollect(
+                        tmpDTCollect,
+                        ShowColumns(
+                            AddColumns(
+                                SortByColumns(
+                                    Filter(
+                                        DM_DO_TUOIS,
+                                        Or(
+                                            TextFilterDT.Value="",
+                                            Or(
+                                                And(
+                                                    CbxFilterDT.Selected.Value="Mã độ tuổi",
+                                                    !IsBlank(Find(Lower(TextFilterDT.Value),Lower(MA_DO_TUOI)))
+                                                ),
+                                                And(
+                                                    CbxFilterDT.Selected.Value="Mô tả",
+                                                    !IsBlank(Find(Lower(TextFilterDT.Value),Lower(MO_TA)))
+                                                )
+                                            )
+                                        )
+                                    ),
+                                    "cr282_ma_do_tuoi",
+                                    SortOrder.Ascending
+                                ),
+                                edited,
+                                0
+                            ),
+                            MA_DO_TUOI,
+                            MO_TA,
+                            TUOI_TU,
+                            TUOI_DEN,
+                            DONVI_TUOI_TU,
+                            DONVI_TUOI_DEN,
+                            GHI_CHU,
+                            edited
+                        )
+                    );
+                  Text: ="Tra cứu"
+                  X: =740
+                  Y: =61
+      - ContainerConfirmDT:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            BorderColor: =RGBA(180, 214, 250, 1)
+            BorderThickness: =2
+            Fill: =Color.White
+            Height: =223
+            Visible: =showConfirm=1
+            Width: =438
+            X: =506
+            Y: =253
+          Children:
+            - TextCanvas1_17:
+                Control: Text@0.0.50
+                Properties:
+                  DisplayMode: =DisplayMode.Disabled
+                  Height: =31
+                  Size: =16
+                  Text: ="Bạn có chắc chắn muốn xóa?"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =233
+                  X: =108
+                  Y: =52
+            - OKDT:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(72, 163, 62, 1)
+                  Height: =46
+                  Icon: =Icon.Check
+                  OnSelect: |-
+                    =UpdateContext({
+                        showConfirm:0
+                    });
+                    Refresh(DM_DO_TUOIS);
+                    RemoveIf(
+                        DM_DO_TUOIS,
+                        MA_DO_TUOI=maDelete
+                    );
+                    Remove(tmpDTCollect,objDelete);
+                    Notify("Xóa dữ liệu thành công", NotificationType.Success,800)
+                  Tooltip: ="OK"
+                  Width: =47
+                  X: =128
+                  Y: =105
+            - CancelDT:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(233, 79, 76, 1)
+                  Height: =46
+                  Icon: =Icon.CancelBadge
+                  OnSelect: |-
+                    =UpdateContext({
+                        showConfirm:0,
+                        maDelete:Blank(),
+                        objDelete:Blank()
+                    })
+                  Tooltip: ="Hủy"
+                  Width: =41
+                  X: =261
+                  Y: =105

@@ -1,0 +1,910 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  TraCuuHopDong:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =Reset(cbxLoaiHDTCHD);Reset(tiSoHDTCHD);Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTuTCHD);Reset(dpNgayHDDenTCHD);
+        ClearCollect(
+            dmDonViTCHDCollect,
+            AddColumns(
+                DM_DON_VI,
+                title,
+                Concatenate(MA_DON_VI," - ",TEN_DON_VI)
+            )
+        );
+        ClearCollect(
+            dmSanPhamTCHDCollect,
+            AddColumns(
+                DL_SAN_PHAM,
+                title,
+                Concatenate(MA_SAN_PHAM," - ",TEN_SAN_PHAM)
+            )
+        );
+        ClearCollect(
+            dmKenhBanTCHDCollect,
+            AddColumns(
+                DM_KENH_BANS,
+                title,
+                Concatenate(MA_KENH_BAN," - ",TEN_KENH_BAN)
+            )
+        );
+        ClearCollect(
+            dmKhachHangTCHDCollect,
+            AddColumns(
+                DM_KHACH_HANG,
+                title,
+                Concatenate(MA_KHACH_HANG," - ",TEN_KHACH_HANG)
+            )
+        );
+        ClearCollect(
+            tmpDSHDSPTCHDCollect,
+            DL_HOP_DONG_SPS
+        );
+        ClearCollect(
+            tmpDSHDTCHDCollect,
+            Filter(
+                DL_HOP_DONGS,
+                (IsBlank(cbxLoaiHDTCHD.Selected.value) || LOAI_HOP_DONG=cbxLoaiHDTCHD.Selected.value) &&
+                (IsBlank(tiSoHDTCHD.Text) || !IsBlank(Find(tiSoHDTCHD.Text,MA_HOP_DONG))) &&
+                (IsBlank(cbxMaDVTCHD.Selected.MA_DON_VI) || DONVI_QUANLY_HD=cbxMaDVTCHD.Selected.MA_DON_VI) &&
+                (IsBlank(cbxMaSPTCHD.Selected.MA_SAN_PHAM) || 
+                CountIf(tmpDSHDSPTCHDCollect As hdsp,hdsp.MA_HOP_DONG=MA_HOP_DONG && hdsp.MA_SAN_PHAM=cbxMaSPTCHD.Selected.MA_SAN_PHAM)>0) && 
+                (IsBlank(cbxMaKBTCHD.Selected.MA_KENH_BAN) || MA_KENH_BAN=cbxMaKBTCHD.Selected.MA_KENH_BAN) && 
+                (IsBlank(cbxMaKHTCHD.Selected.MA_KHACH_HANG) || MA_KHACH_HANG=cbxMaKHTCHD.Selected.MA_KHACH_HANG) && 
+                (IsBlank(dpNgayHDTuTCHD.SelectedDate) || NGAY_HOP_DONG>=dpNgayHDTuTCHD.SelectedDate) &&
+                (IsBlank(dpNgayHDDenTCHD.SelectedDate) || NGAY_HOP_DONG<=dpNgayHDDenTCHD.SelectedDate)
+            )
+        );
+    Children:
+      - Container8_3:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            Height: =768
+            Width: =1306
+            X: =60
+          Children:
+            - Label2_25:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =25
+                  Size: =11
+                  Text: ="Đơn vị"
+                  Width: =130
+                  X: =20
+                  Y: =81
+            - Label2_26:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =25
+                  Size: =11
+                  Text: ="Mã sản phẩm"
+                  Width: =130
+                  X: =895
+                  Y: =81
+            - Label2_27:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =25
+                  Size: =11
+                  Text: ="Mã khách hàng"
+                  X: =600
+                  Y: =81
+            - Label2_28:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =25
+                  Size: =11
+                  Text: ="Ngày HĐ từ"
+                  Width: =120
+                  X: =600
+                  Y: =15
+            - Button6_17:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =32
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |-
+                    =ClearCollect(
+                        tmpDSHDSPTCHDCollect,
+                        DL_HOP_DONG_SPS
+                    );
+                    ClearCollect(
+                        tmpDSHDTCHDCollect,
+                        Filter(
+                            DL_HOP_DONGS,
+                            (IsBlank(cbxLoaiHDTCHD.Selected.value) || LOAI_HOP_DONG=cbxLoaiHDTCHD.Selected.value) &&
+                            (IsBlank(tiSoHDTCHD.Text) || !IsBlank(Find(tiSoHDTCHD.Text,MA_HOP_DONG))) &&
+                            (IsBlank(cbxMaDVTCHD.Selected.MA_DON_VI) || DONVI_QUANLY_HD=cbxMaDVTCHD.Selected.MA_DON_VI) &&
+                            (IsBlank(cbxMaSPTCHD.Selected.MA_SAN_PHAM) || 
+                            CountIf(tmpDSHDSPTCHDCollect As hdsp,hdsp.MA_HOP_DONG=MA_HOP_DONG && hdsp.MA_SAN_PHAM=cbxMaSPTCHD.Selected.MA_SAN_PHAM)>0) && 
+                            (IsBlank(cbxMaKBTCHD.Selected.MA_KENH_BAN) || MA_KENH_BAN=cbxMaKBTCHD.Selected.MA_KENH_BAN) && 
+                            (IsBlank(cbxMaKHTCHD.Selected.MA_KHACH_HANG) || MA_KHACH_HANG=cbxMaKHTCHD.Selected.MA_KHACH_HANG) && 
+                            (IsBlank(dpNgayHDTuTCHD.SelectedDate) || NGAY_HOP_DONG>=dpNgayHDTuTCHD.SelectedDate) &&
+                            (IsBlank(dpNgayHDDenTCHD.SelectedDate) || NGAY_HOP_DONG<=dpNgayHDDenTCHD.SelectedDate)
+                        )
+                    );
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =10
+                  Text: ="Tra cứu"
+                  Width: =95
+                  X: =1180
+                  Y: =42
+            - Button6_18:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =32
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |-
+                    =Reset(cbxLoaiHDTCHD);Reset(cbxMaDVTCHD);Reset(cbxMaSPTCHD);Reset(cbxMaKBTCHD);Reset(cbxMaKHTCHD);Reset(dpNgayHDTuTCHD);
+                    ClearCollect(
+                        dmDonViTCHDCollect,
+                        AddColumns(
+                            DM_DON_VI,
+                            title,
+                            Concatenate(MA_DON_VI," - ",TEN_DON_VI)
+                        )
+                    );
+                    ClearCollect(
+                        dmSanPhamTCHDCollect,
+                        AddColumns(
+                            DL_SAN_PHAM,
+                            title,
+                            Concatenate(MA_SAN_PHAM," - ",TEN_SAN_PHAM)
+                        )
+                    );
+                    ClearCollect(
+                        dmKenhBanTCHDCollect,
+                        AddColumns(
+                            DM_KENH_BANS,
+                            title,
+                            Concatenate(MA_KENH_BAN," - ",TEN_KENH_BAN)
+                        )
+                    );
+                    ClearCollect(
+                        dmKhachHangTCHDCollect,
+                        AddColumns(
+                            DM_KHACH_HANG,
+                            title,
+                            Concatenate(MA_KHACH_HANG," - ",TEN_KHACH_HANG)
+                        )
+                    );
+                    ClearCollect(
+                        tmpDSHDSPTCHDCollect,
+                        DL_HOP_DONG_SPS
+                    );
+                    ClearCollect(
+                        tmpDSHDTCHDCollect,
+                        Filter(
+                            DL_HOP_DONGS,
+                            (IsBlank(cbxLoaiHDTCHD.Selected.value) || LOAI_HOP_DONG=cbxLoaiHDTCHD.Selected.value) &&
+                            (IsBlank(tiSoHDTCHD.Text) || !IsBlank(Find(tiSoHDTCHD.Text,MA_HOP_DONG))) &&
+                            (IsBlank(cbxMaDVTCHD.Selected.MA_DON_VI) || DONVI_QUANLY_HD=cbxMaDVTCHD.Selected.MA_DON_VI) &&
+                            (IsBlank(cbxMaSPTCHD.Selected.MA_SAN_PHAM) || 
+                            CountIf(tmpDSHDSPTCHDCollect As hdsp,hdsp.MA_HOP_DONG=MA_HOP_DONG && hdsp.MA_SAN_PHAM=cbxMaSPTCHD.Selected.MA_SAN_PHAM)>0) && 
+                            (IsBlank(cbxMaKBTCHD.Selected.MA_KENH_BAN) || MA_KENH_BAN=cbxMaKBTCHD.Selected.MA_KENH_BAN) && 
+                            (IsBlank(cbxMaKHTCHD.Selected.MA_KHACH_HANG) || MA_KHACH_HANG=cbxMaKHTCHD.Selected.MA_KHACH_HANG) && 
+                            (IsBlank(dpNgayHDTuTCHD.SelectedDate) || NGAY_HOP_DONG>=dpNgayHDTuTCHD.SelectedDate) &&
+                            (IsBlank(dpNgayHDDenTCHD.SelectedDate) || NGAY_HOP_DONG<=dpNgayHDDenTCHD.SelectedDate)
+                        )
+                    );
+                    UpdateContext({
+                        ngayHD:Blank()
+                    });
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =10
+                  Text: ="Tải lại"
+                  Width: =95
+                  X: =1180
+                  Y: =108
+            - GalleryDKCTCT_7:
+                Control: Gallery@2.15.0
+                Variant: Vertical
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =562
+                  Items: =SortByColumns(tmpDSHDTCHDCollect,"cr282_ngay_hop_dong",SortOrder.Ascending,"cr282_ma_hop_dong",SortOrder.Ascending)
+                  NavigationStep: =0
+                  TemplatePadding: =0
+                  TemplateSize: =36
+                  Width: =1306
+                  Y: =205
+                Children:
+                  - TiTthtQLCTCT_6:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.DONVI_QUANLY_HD
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =35
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Tooltip: =
+                        Width: =74
+                        X: =5
+                  - TiTenQLHTQLCTCT_13:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.MA_KHACH_HANG
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =35
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Tooltip: =
+                        Width: =85
+                        X: =352
+                  - TiGHSLNam_5:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.TRANG_THAI
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =35
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Width: =94
+                        X: =1040
+                  - TiGHSTVu_4:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        Align: =Align.Right
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =Text(ThisItem.TIEN_PHI_SAU_GIAM,"#,###")
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Format: =TextFormat.Number
+                        Height: =35
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Width: =88
+                        X: =952
+                  - TiGHSTNam_7:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =Concat(Filter(dmSanPhamTCHDCollect,MA_SAN_PHAM in Distinct(Filter(tmpDSHDSPTCHDCollect,MA_HOP_DONG=ThisItem.MA_HOP_DONG),MA_SAN_PHAM)),TEN_SAN_PHAM,", ")
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =35
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Tooltip: =Concat(Filter(dmSanPhamTCHDCollect,MA_SAN_PHAM in Distinct(Filter(tmpDSHDSPTCHDCollect,MA_HOP_DONG=ThisItem.MA_HOP_DONG),MA_SAN_PHAM)),TEN_SAN_PHAM,", ")
+                        Width: =134
+                        X: =818
+                  - TiGHSTNgay_6:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =Concatenate(ThisItem.MA_KENH_BAN," - ",ThisItem.TEN_KENH_BAN)
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =35
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Tooltip: =Concatenate(ThisItem.MA_KENH_BAN," - ",ThisItem.TEN_KENH_BAN)
+                        Width: =127
+                        X: =568
+                  - TiTenQLHTQLCTCT_11:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =Text(ThisItem.NGAY_HOP_DONG,"dd/mm/yyyy")
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =35
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Tooltip: =
+                        Width: =95
+                        X: =164
+                  - TiTenQLHTQLCTCT_12:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.MA_HOP_DONG
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =35
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Tooltip: =
+                        Width: =93
+                        X: =259
+                  - TiGHSTNam_6:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =Concat(Distinct(Filter(dmSanPhamTCHDCollect,MA_SAN_PHAM in Distinct(Filter(tmpDSHDSPTCHDCollect,MA_HOP_DONG=ThisItem.MA_HOP_DONG),MA_SAN_PHAM)),LHNV),Value,", ")
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =35
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Tooltip: =Concat(Distinct(Filter(dmSanPhamTCHDCollect,MA_SAN_PHAM in Distinct(Filter(tmpDSHDSPTCHDCollect,MA_HOP_DONG=ThisItem.MA_HOP_DONG),MA_SAN_PHAM)),LHNV),Value,", ")
+                        Width: =123
+                        X: =695
+                  - TiTenQLHTQLCTCT_14:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.TEN_KHACH_HANG
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =35
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Tooltip: =ThisItem.TEN_KHACH_HANG
+                        Width: =131
+                        X: =437
+                  - TiGHSLNam_6:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =LookUp([{title:"Lần đầu",value:"0"},{title:"Tái tục",value:"1"}],value=ThisItem.LOAI_HOP_DONG,title)
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =35
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =10
+                        Width: =85
+                        X: =79
+                  - Button6_19:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =RGBA(56, 96, 178, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Bold
+                        Height: =28
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        OnSelect: |-
+                          =Set(maHopDongFwd,ThisItem.MA_HOP_DONG);
+                          Navigate(NhapHopDong)
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        Size: =10
+                        Text: ="Chi tiết"
+                        Width: =70
+                        X: =1145
+                        Y: =4
+                  - Button6_20:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =RGBA(56, 96, 178, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Bold
+                        Height: =28
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        OnSelect: |-
+                          =Refresh(DL_HOP_DONG_LIENKETS);
+                          RemoveIf(DL_HOP_DONG_LIENKETS,SO_HOP_DONG=ThisItem.MA_HOP_DONG || SO_HOP_DONG_LK=ThisItem.MA_HOP_DONG);
+                          Refresh(DL_HOP_DONG_SPS);
+                          RemoveIf(DL_HOP_DONG_SPS,MA_HOP_DONG=ThisItem.MA_HOP_DONG);
+                          Refresh(DL_HOP_DONGS);
+                          RemoveIf(DL_HOP_DONGS,MA_HOP_DONG=ThisItem.MA_HOP_DONG);
+                          Remove(tmpDSHDTCHDCollect,ThisItem);
+                          Notify("Xóa dữ liệu thành công",NotificationType.Success,2000)
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        Size: =10
+                        Text: ="Xóa"
+                        Width: =70
+                        X: =1220
+                        Y: =4
+            - BadgeCanvas1_58:
+                Control: Badge@0.0.24
+                Properties:
+                  Content: =""
+                  Height: =49
+                  Width: =1298
+                  X: =1
+                  Y: =156
+            - TextCanvas2_237:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =49
+                  Size: =12
+                  Text: ="Mã đơn vị"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =68
+                  X: =8
+                  Y: =156
+            - TextCanvas2_238:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =49
+                  Size: =12
+                  Text: ="Ngày HĐ"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =59
+                  X: =180
+                  Y: =156
+            - TextCanvas2_239:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =49
+                  Size: =12
+                  Text: ="Số HĐ"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =77
+                  X: =266
+                  Y: =156
+            - TextCanvas2_240:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =49
+                  Size: =12
+                  Text: ="Mã khách hàng"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =66
+                  X: =357
+                  Y: =156
+            - TextCanvas2_242:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =49
+                  Size: =12
+                  Text: ="Kênh bán"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =66
+                  X: =600
+                  Y: =156
+            - TextCanvas2_243:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =49
+                  Size: =12
+                  Text: ="LHNV"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =81
+                  X: =715
+                  Y: =156
+            - TextCanvas2_244:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =49
+                  Size: =12
+                  Text: ="Sản phẩm"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =100
+                  X: =835
+                  Y: =156
+            - TextCanvas2_245:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =49
+                  Size: =12
+                  Text: ="Số tiền phí"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =75
+                  X: =958
+                  Y: =156
+            - TextCanvas2_248:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =49
+                  Size: =12
+                  Text: ="Thao tác"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =73
+                  X: =1181
+                  Y: =156
+            - cbxMaDVTCHD:
+                Control: Classic/ComboBox@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  ChevronBackground: =RGBA(56, 96, 178, 1)
+                  ChevronFill: =RGBA(255, 255, 255, 1)
+                  ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DisplayFields: =["title","cr282_ma_don_vi"]
+                  Font: =Font.'Open Sans'
+                  Height: =32
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  InputTextPlaceholder: =""
+                  Items: =SortByColumns(dmDonViTCHDCollect,"cr282_ma_don_vi",SortOrder.Ascending)
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 18, 107, 1)
+                  SearchFields: =["title"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(56, 96, 178, 1)
+                  Size: =11
+                  Width: =250
+                  X: =20
+                  Y: =108
+            - dpNgayHDTuTCHD:
+                Control: Classic/DatePicker@2.6.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  EndYear: =2200
+                  Font: =Font.'Open Sans'
+                  Format: ="dd/mm/yyyy"
+                  Height: =32
+                  IconBackground: =RGBA(56, 96, 178, 1)
+                  IconFill: =RGBA(255, 255, 255, 1)
+                  InputTextPlaceholder: =""
+                  IsEditable: =true
+                  Size: =11
+                  StartYear: =1900
+                  Width: =250
+                  X: =600
+                  Y: =42
+            - TextCanvas2_241:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =49
+                  Size: =12
+                  Text: ="Tên khách hàng"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =100
+                  X: =450
+                  Y: =156
+            - TextCanvas2_246:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =49
+                  Size: =12
+                  Text: ="Trạng thái"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =65
+                  X: =1053
+                  Y: =156
+            - TextCanvas2_247:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =49
+                  Size: =12
+                  Text: |-
+                    ="Loại 
+                    hợp đồng"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =80
+                  X: =82
+                  Y: =156
+            - Label2_29:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =25
+                  Size: =11
+                  Text: ="Mã kênh bán"
+                  Width: =130
+                  X: =310
+                  Y: =81
+            - cbxMaSPTCHD:
+                Control: Classic/ComboBox@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  ChevronBackground: =RGBA(56, 96, 178, 1)
+                  ChevronFill: =RGBA(255, 255, 255, 1)
+                  ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DisplayFields: =["title","cr282_ten_san_pham"]
+                  Font: =Font.'Open Sans'
+                  Height: =32
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  InputTextPlaceholder: =""
+                  Items: =SortByColumns(dmSanPhamTCHDCollect,"cr282_ma_san_pham",SortOrder.Ascending)
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 18, 107, 1)
+                  SearchFields: =["title"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(56, 96, 178, 1)
+                  Size: =11
+                  Width: =250
+                  X: =895
+                  Y: =108
+            - cbxMaKBTCHD:
+                Control: Classic/ComboBox@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  ChevronBackground: =RGBA(56, 96, 178, 1)
+                  ChevronFill: =RGBA(255, 255, 255, 1)
+                  ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DisplayFields: =["title","cr282_ten_kenh_ban"]
+                  Font: =Font.'Open Sans'
+                  Height: =32
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  InputTextPlaceholder: =""
+                  Items: =SortByColumns(dmKenhBanTCHDCollect,"cr282_ma_kenh_ban",SortOrder.Ascending)
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 18, 107, 1)
+                  SearchFields: =["title"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(56, 96, 178, 1)
+                  Size: =11
+                  Width: =250
+                  X: =310
+                  Y: =108
+            - cbxMaKHTCHD:
+                Control: Classic/ComboBox@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  ChevronBackground: =RGBA(56, 96, 178, 1)
+                  ChevronFill: =RGBA(255, 255, 255, 1)
+                  ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DisplayFields: =["title"]
+                  Font: =Font.'Open Sans'
+                  Height: =32
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  InputTextPlaceholder: =""
+                  Items: =SortByColumns(dmKhachHangTCHDCollect,"cr282_ma_khach_hang",SortOrder.Ascending)
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 18, 107, 1)
+                  SearchFields: =["title"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(56, 96, 178, 1)
+                  Size: =11
+                  Width: =250
+                  X: =600
+                  Y: =108
+            - tiSoHDTCHD:
+                Control: Classic/TextInput@2.3.2
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Default: =
+                  Font: =Font.'Open Sans'
+                  Height: =32
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  Width: =250
+                  X: =310
+                  Y: =42
+            - Label2_36:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =25
+                  Size: =11
+                  Text: ="Số hợp đồng"
+                  Width: =130
+                  X: =310
+                  Y: =15
+            - Label2_37:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =25
+                  Size: =11
+                  Text: ="Ngày HĐ đến"
+                  Width: =120
+                  X: =895
+                  Y: =15
+            - dpNgayHDDenTCHD:
+                Control: Classic/DatePicker@2.6.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DefaultDate: =
+                  EndYear: =2200
+                  Font: =Font.'Open Sans'
+                  Format: ="dd/mm/yyyy"
+                  Height: =32
+                  IconBackground: =RGBA(56, 96, 178, 1)
+                  IconFill: =RGBA(255, 255, 255, 1)
+                  InputTextPlaceholder: =""
+                  IsEditable: =true
+                  Size: =11
+                  StartYear: =1900
+                  Width: =250
+                  X: =895
+                  Y: =42
+            - Label2_38:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =25
+                  Size: =11
+                  Text: ="Loại hợp đồng"
+                  Width: =130
+                  X: =20
+                  Y: =15
+            - cbxLoaiHDTCHD:
+                Control: Classic/ComboBox@2.4.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  ChevronBackground: =RGBA(56, 96, 178, 1)
+                  ChevronFill: =RGBA(255, 255, 255, 1)
+                  ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  Default: ={title:"Lần đầu",value:"0"}
+                  DisplayFields: =["title","cr282_ma_don_vi"]
+                  Font: =Font.'Open Sans'
+                  Height: =32
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  InputTextPlaceholder: =""
+                  IsSearchable: =false
+                  Items: =[{title:"Lần đầu",value:"0"},{title:"Tái tục",value:"1"}]
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 18, 107, 1)
+                  SearchFields: =["title"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(56, 96, 178, 1)
+                  Size: =11
+                  Width: =250
+                  X: =20
+                  Y: =42

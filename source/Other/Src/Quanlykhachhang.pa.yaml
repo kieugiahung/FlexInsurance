@@ -1,0 +1,540 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Quanlykhachhang:
+    Properties:
+      Fill: =RGBA(0, 0, 0, 0)
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =ClearCollect(
+            tmpKhacCollect,
+            DM_KHACH_HANG)
+    Children:
+      - 1. ChuongTrinh_2:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            Height: =768
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =1306
+            X: =60
+          Children:
+            - GalleryKH:
+                Control: Gallery@2.15.0
+                Variant: Vertical
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =644
+                  Items: =tmpKhacCollect
+                  NavigationStep: =0
+                  TemplatePadding: =0
+                  TemplateSize: =30
+                  Width: =1306
+                  Y: =124
+                Children:
+                  - TxtMaCT_2:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(15, 108, 189, 1)
+                        Default: =ThisItem.MA_KHACH_HANG
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        Size: =11
+                        Width: =100
+                        X: =19
+                  - TxtTenCT_2:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.TEN_KHACH_HANG
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =188
+                        X: =119
+                  - TxtID_4:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(15, 108, 189, 1)
+                        Default: =ThisItem.ID
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: =false
+                        Width: =119
+                  - TxtMoTa_3:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.SO_GIAY_TO
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =125
+                        X: =457
+                  - TxtMoTa_4:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =LookUp(DM_PHAMVI_DIALYS, MA_PHAMVI=ThisItem.MA_TINH && LOAI="TINH_TP").TEN_PHAMVI
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =182
+                        X: =914
+                  - TxtMoTa_9:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.DIA_CHI_KH
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =207
+                        X: =707
+                  - Btn_editKH:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =RGBA(56, 96, 178, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Bold
+                        Height: =25
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        OnSelect: |
+                          =ResetForm(ThemMoiKH);
+                          EditForm(ThemMoiKH);
+                          Navigate(ThemKhachHang);
+                          ClearCollect(
+                              tmpDaiDienKH,
+                              ShowColumns(
+                                  AddColumns(
+                                      SortByColumns(
+                                          Filter(
+                                              DM_DAIDIEN_KH,
+                                              MA_KHACH_HANG = DataCardValue1_1.Text
+                                          ),
+                                          "cr282_id",
+                                          SortOrder.Ascending
+                                      ),
+                                      edited,
+                                      0
+                                  ),
+                                  ID,
+                                  MST,
+                                  TEN_NGUOI_DAI_DIEN,
+                                  DIA_CHI,
+                                  SO_DIEN_THOAI,
+                                  EMAIL,
+                                  CHUC_VU,
+                                  MA_KHACH_HANG,SO_GIAY_TO,edited
+                              )
+                          );
+                          UpdateContext(
+                              {
+                                  maAddedDD: "",
+                                  maUpdatedDD: ""
+                              }
+                          );
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        Size: =11
+                        Text: ="Sửa"
+                        Width: =78
+                        X: =1114
+                        Y: =5
+                  - Btn_XoaKH:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =RGBA(56, 96, 178, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Bold
+                        Height: =25
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        OnSelect: |-
+                          =RemoveIf(DM_KHACH_HANG, ID=ThisItem.ID);
+                          RemoveIf(tmpKhacCollect, ID=ThisItem.ID)
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        Size: =11
+                        Text: ="Xóa"
+                        Width: =78
+                        X: =1200
+                        Y: =5
+                  - TxtTenCT_3:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.MST
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =150
+                        X: =307
+                  - TxtMoTa_5:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(72, 163, 62, 1)
+                        Default: =ThisItem.SDT_KHACH_HANG
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        DisabledColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        OnChange: =
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =125
+                        X: =582
+            - BadgeCanvas1_33:
+                Control: Badge@0.0.24
+                Properties:
+                  Content: =""
+                  Height: =35
+                  Width: |
+                    =//1199
+                    Parent.Width -10
+                  X: =10
+                  Y: =90
+            - TextCanvas2_139:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =34
+                  Text: ="Tên khách hàng"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =187
+                  X: =121
+                  Y: =88
+            - TextCanvas2_173:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =34
+                  Text: ="Thao tác"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =203
+                  X: =1102
+                  Y: =88
+            - TextCanvas2_114:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =34
+                  Text: ="Mã"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =100
+                  X: =21
+                  Y: =88
+            - ThemMoiCT_13:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =30
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |-
+                    =ResetForm(ThemMoiKH);
+                    NewForm(ThemMoiKH);
+                    Clear(tmpDaiDienKH);
+                    Navigate(ThemKhachHang);
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =11
+                  Text: ="Thêm mới"
+                  Width: =96
+                  X: =10
+                  Y: =44
+            - IconTaiLaiCT_2:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(83, 144, 164, 1)
+                  Height: =36
+                  Icon: =Icon.Sync
+                  OnSelect: |-
+                    =ClearCollect(
+                        tmpCTCollect,
+                        ShowColumns(
+                            AddColumns(
+                                SortByColumns(
+                                    ' DL_SAN_PHAM_CT',
+                                    "cr282_ma_chuong_trinh",
+                                    SortOrder.Ascending
+                                ),
+                                edited,
+                                0
+                            ),
+                            ID,
+                            'MA_ID_SO (cr282_ma_idso)',
+                            MA_CHUONG_TRINH,
+                            TEN_CHUONG_TRINH,
+                            MO_TA,
+                            MA_SAN_PHAM,
+                            TRANG_THAI,
+                            edited
+                        )
+                    );
+                    UpdateContext({
+                        maAdded:"",
+                        maUpdated:""
+                    });
+                  Tooltip: ="Tải lại"
+                  Visible: =false
+                  Width: =32
+                  X: =1167
+                  Y: =38
+            - Label6:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =38
+                  Text: ="Quản lý khách hàng"
+                  Width: =193
+                  X: =5
+            - TextCanvas2_175:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =34
+                  Text: ="Địa chỉ"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =164
+                  X: =728
+                  Y: =88
+            - TextCanvas2_176:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =34
+                  Text: ="Số giấy tờ"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =125
+                  X: =454
+                  Y: =88
+            - TextCanvas2_177:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =34
+                  Text: ="Tỉnh/TP"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =154
+                  X: =927
+                  Y: =88
+            - TextCanvas2_178:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =34
+                  Text: ="MST"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =146
+                  X: =308
+                  Y: =88
+            - TextFilterPV_2:
+                Control: TextInput@0.0.53
+                Properties:
+                  Height: =43
+                  OnChange: =
+                  Placeholder: ="Nhập giá trị lọc"
+                  Width: =204
+                  X: =570
+                  Y: =31
+            - CbxFilterPV_2:
+                Control: ComboBox@0.0.49
+                Properties:
+                  DefaultSelectedItems: =Filter(["Mã khách hàng", "Tên khách hàng", "Số giấy tờ"],Value="Mã khách hàng")
+                  Height: =43
+                  InputTextPlaceholder: ="Chọn chỉ tiêu lọc"
+                  Items: =["Mã khách hàng", "Tên khách hàng", "Số giấy tờ"]
+                  OnChange: =Reset(TextFilterPV_2)
+                  Width: =152
+                  X: =409
+                  Y: =31
+            - ThemMoiCT_21:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(56, 96, 178, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Height: =30
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                  OnSelect: |-
+                    =ClearCollect(
+                        tmpKhacCollect,
+                        Filter(
+                            DM_KHACH_HANG,
+                            Or(
+                                TextFilterPV_2.Value = "",
+                                Or(
+                                    And(
+                                        CbxFilterPV_2.Selected.Value = "Mã khách hàng",
+                                        !IsBlank(
+                                            Find(
+                                                Lower(TextFilterPV_2.Value),
+                                                Lower(MA_KHACH_HANG)
+                                            )
+                                        )
+                                    ),
+                                    And(
+                                        CbxFilterPV_2.Selected.Value = "Tên khách hàng",
+                                        !IsBlank(
+                                            Find(
+                                                Lower(TextFilterPV_2.Value),
+                                                Lower(TEN_KHACH_HANG)
+                                            )
+                                        )
+                                    ),
+                                    And(
+                                        CbxFilterPV_2.Selected.Value = "Số giấy tờ",
+                                        !IsBlank(
+                                            Find(
+                                                Lower(TextFilterPV_2.Value),
+                                                Lower(SO_GIAY_TO)
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =11
+                  Text: ="Tra cứu"
+                  Width: =96
+                  X: =811
+                  Y: =37
+            - TextCanvas2_221:
+                Control: Text@0.0.50
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: =34
+                  Text: ="SĐT"
+                  Weight: ='TextCanvas.Weight'.Bold
+                  Width: =125
+                  X: =581
+                  Y: =88

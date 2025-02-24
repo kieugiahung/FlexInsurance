@@ -1,0 +1,587 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  TraCuuSP:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: =Reset(TxtFilterMSP);Reset(Drop_Filter_LHNV);Reset(Date_HLT);Reset(Date_HLD);
+      Width: |+
+        =Max(App.Width, App.MinScreenWidth) + 105
+
+
+    Children:
+      - Container2:
+          Control: GroupContainer@1.3.0
+          Variant: AutoLayout
+          Properties:
+            Height: =Max(App.Height, App.MinScreenHeight)
+            LayoutDirection: =LayoutDirection.Horizontal
+            LayoutOverflowX: =LayoutOverflow.Scroll
+            LayoutOverflowY: =LayoutOverflow.Scroll
+            Width: =Max(App.Width+45, App.MinScreenHeight)
+            X: =60
+          Children:
+            - Container1:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  FillPortions: =0
+                  Height: =Max(App.Height, App.MinScreenHeight)
+                  Width: =Max(App.Width+45, App.MinScreenHeight)
+                  X: =84
+                Children:
+                  - GallerySP:
+                      Control: Gallery@2.15.0
+                      Variant: Vertical
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =620
+                        Items: |-
+                          =//SortByColumns(DL_SAN_PHAM,"cr282_ma",SortOrder.Ascending)
+                          SortByColumns(
+                              Filter(
+                                  DL_SAN_PHAM,
+                                  If(
+                                      !IsBlank(TxtFilterMSP.Text),
+                                      TxtFilterMSP.Text in MA_SAN_PHAM,
+                                      true
+                                  ) && If(
+                                      !IsBlank(Drop_Filter_LHNV.Selected.Value),
+                                      LHNV = Drop_Filter_LHNV.Selected.Value,
+                                      true
+                                  ) && If(
+                                      !IsBlank(Date_HLT.SelectedDate),
+                                      HL_TU >= Date_HLT.SelectedDate,
+                                      true
+                                  ) && If(
+                                      !IsBlank(Date_HLD.SelectedDate) && !IsBlank(HL_DEN),
+                                      HL_DEN <= Date_HLD.SelectedDate,
+                                      true
+                                  )
+                              ),
+                              "cr282_ma",
+                              SortOrder.Ascending
+                          )
+                        NavigationStep: |
+                          =0
+                        TemplatePadding: =0
+                        TemplateSize: =41
+                        Width: =Parent.Width
+                        Y: =146
+                      Children:
+                        - TextMaPV_1:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =RGBA(15, 108, 189, 1)
+                              Default: =ThisItem.MA
+                              DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                              DisabledColor: =RGBA(0, 0, 0, 1)
+                              DisabledFill: =RGBA(255, 255, 255, 1)
+                              DisplayMode: =DisplayMode.Disabled
+                              Font: =Font.'Open Sans'
+                              HoverBorderColor: =RGBA(0, 18, 107, 1)
+                              HoverFill: =RGBA(186, 202, 226, 1)
+                              OnChange: =
+                              OnSelect: =Select(Parent)
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Size: =11
+                              Tooltip: =ThisItem.cr282_mo_ta
+                              Width: =75
+                        - TextTenPV_1:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =RGBA(72, 163, 62, 1)
+                              Default: =ThisItem.LHNV
+                              DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                              DisabledColor: =RGBA(0, 0, 0, 1)
+                              DisabledFill: =RGBA(255, 255, 255, 1)
+                              DisplayMode: =DisplayMode.Disabled
+                              Font: =Font.'Open Sans'
+                              HoverBorderColor: =RGBA(0, 18, 107, 1)
+                              HoverFill: =RGBA(186, 202, 226, 1)
+                              OnChange: =
+                              OnSelect: =Select(Parent)
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Size: =11
+                              Width: =178
+                              X: =75
+                        - TextMoTa_1:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =RGBA(72, 163, 62, 1)
+                              Default: =ThisItem.MA_SAN_PHAM
+                              DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                              DisabledColor: =RGBA(0, 0, 0, 1)
+                              DisabledFill: =RGBA(255, 255, 255, 1)
+                              DisplayMode: =DisplayMode.Disabled
+                              Font: =Font.'Open Sans'
+                              HoverBorderColor: =RGBA(0, 18, 107, 1)
+                              HoverFill: =RGBA(186, 202, 226, 1)
+                              OnChange: =
+                              OnSelect: =Select(Parent)
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Size: =11
+                              Width: =138
+                              X: =253
+                        - TextDNBH_1:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =RGBA(72, 163, 62, 1)
+                              Default: =ThisItem.TEN_SAN_PHAM
+                              DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                              DisabledColor: =RGBA(0, 0, 0, 1)
+                              DisabledFill: =RGBA(255, 255, 255, 1)
+                              DisplayMode: =DisplayMode.Disabled
+                              Font: =Font.'Open Sans'
+                              HoverBorderColor: =RGBA(0, 18, 107, 1)
+                              HoverFill: =RGBA(186, 202, 226, 1)
+                              OnChange: =
+                              OnSelect: =Select(Parent)
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Size: =11
+                              Width: =114
+                              X: =391
+                        - TextMaSP_1:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =RGBA(72, 163, 62, 1)
+                              Default: =ThisItem.SO_VAN_BAN
+                              DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                              DisabledColor: =RGBA(0, 0, 0, 1)
+                              DisabledFill: =RGBA(255, 255, 255, 1)
+                              DisplayMode: =DisplayMode.Disabled
+                              Font: =Font.'Open Sans'
+                              HoverBorderColor: =RGBA(0, 18, 107, 1)
+                              HoverFill: =RGBA(186, 202, 226, 1)
+                              OnChange: =
+                              OnSelect: =Select(Parent)
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Size: =11
+                              Width: =144
+                              X: =505
+                        - TextGhiChu_1:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =RGBA(72, 163, 62, 1)
+                              Default: =ThisItem.QUY_TAC_BH.FileName
+                              DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                              DisabledColor: =RGBA(0, 0, 0, 1)
+                              DisabledFill: =RGBA(255, 255, 255, 1)
+                              DisplayMode: =DisplayMode.Disabled
+                              Font: =Font.'Open Sans'
+                              Height: =41
+                              HoverBorderColor: =RGBA(0, 18, 107, 1)
+                              HoverFill: =RGBA(186, 202, 226, 1)
+                              OnChange: =
+                              OnSelect: =Select(Parent)
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Size: =11
+                              Width: =149
+                              X: =653
+                        - TextGhiChu_2:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =RGBA(72, 163, 62, 1)
+                              Default: =ThisItem.TAI_LIEU_MAU.FileName
+                              DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                              DisabledColor: =RGBA(0, 0, 0, 1)
+                              DisabledFill: =RGBA(255, 255, 255, 1)
+                              DisplayMode: =DisplayMode.Disabled
+                              Font: =Font.'Open Sans'
+                              HoverBorderColor: =RGBA(0, 18, 107, 1)
+                              HoverFill: =RGBA(186, 202, 226, 1)
+                              OnChange: =
+                              OnSelect: =Select(Parent)
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Size: =11
+                              Width: =150
+                              X: =798
+                        - TextGhiChu_4:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =RGBA(72, 163, 62, 1)
+                              Default: =Text(ThisItem.HL_TU,"dd/mm/yyyy")
+                              DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                              DisabledColor: =RGBA(0, 0, 0, 1)
+                              DisabledFill: =RGBA(255, 255, 255, 1)
+                              DisplayMode: =DisplayMode.Disabled
+                              Font: =Font.'Open Sans'
+                              Format: =
+                              HoverBorderColor: =RGBA(0, 18, 107, 1)
+                              HoverFill: =RGBA(186, 202, 226, 1)
+                              OnChange: =
+                              OnSelect: =Select(Parent)
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Size: =11
+                              Width: =117
+                              X: =948
+                        - TextGhiChu_5:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =RGBA(72, 163, 62, 1)
+                              Default: =Text(ThisItem.HL_DEN,"dd/mm/yyyy")
+                              DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                              DisabledColor: =RGBA(0, 0, 0, 1)
+                              DisabledFill: =RGBA(255, 255, 255, 1)
+                              DisplayMode: =DisplayMode.Disabled
+                              Font: =Font.'Open Sans'
+                              Format: ="dd/mm/yyyy"
+                              HoverBorderColor: =RGBA(0, 18, 107, 1)
+                              HoverFill: =RGBA(186, 202, 226, 1)
+                              OnChange: =
+                              OnSelect: =Select(Parent)
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Size: =11
+                              Width: =105
+                              X: =1065
+                        - Btn_detailSP:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =ColorFade(Self.Fill, -15%)
+                              Color: =RGBA(255, 255, 255, 1)
+                              DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                              Fill: =RGBA(56, 96, 178, 1)
+                              Font: =Font.'Open Sans'
+                              FontWeight: =FontWeight.Bold
+                              Height: =30
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(255, 255, 255, 1)
+                              HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                              OnSelect: |-
+                                =
+                                Set(valMaSP,ThisItem.MA_SAN_PHAM);
+                                Set(valTenSP,ThisItem.TEN_SAN_PHAM);
+                                Navigate(NhapChiTietSP);
+                                UpdateContext({showGrid: false});
+                                Clear(tmpBYTCollect);
+                                Clear(tmpLTCollect);
+
+                                If(!IsEmpty(Filter(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP)),
+                                ClearCollect(
+                                    tmpCbxChuongTrinh,
+                                    Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).CHUONG_TRINH,"|")
+                                );
+                                ClearCollect(
+                                    tmpCbxNhom,
+                                    Split(LookUp(DL_SAN_PHAM_YT, MA_SAN_PHAM=valMaSP).NHOM_TINH_PHI,"|")
+                                );
+                                );
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =Self.Fill
+                              PressedFill: =Self.Color
+                              Size: =11
+                              Text: ="Chi tiết"
+                              Width: =93
+                              X: =1183
+                              Y: =5
+                        - Btn_editSP:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =ColorFade(Self.Fill, -15%)
+                              Color: =RGBA(255, 255, 255, 1)
+                              DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                              Fill: =RGBA(56, 96, 178, 1)
+                              Font: =Font.'Open Sans'
+                              FontWeight: =FontWeight.Bold
+                              Height: =30
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(255, 255, 255, 1)
+                              HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                              OnSelect: |-
+                                =Set(varEditSP, true);
+                                ResetForm(ThemMoiSP);
+                                EditForm(ThemMoiSP);
+                                Navigate(ThemMoi);
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =Self.Fill
+                              PressedFill: =Self.Color
+                              Size: =11
+                              Text: ="Sửa"
+                              Width: =97
+                              X: =1295
+                              Y: =5
+                  - BadgeCanvas1_3:
+                      Control: Badge@0.0.24
+                      Properties:
+                        Content: =""
+                        Height: =37
+                        Width: =1408
+                        Y: =109
+                  - TextCanvas2_22:
+                      Control: Text@0.0.50
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        Height: =30
+                        Text: ="Mã"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =71
+                        Y: =110
+                  - TextCanvas2_21:
+                      Control: Text@0.0.50
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        Height: =30
+                        Text: ="Loại hình nghiệp vụ"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =171
+                        X: =88
+                        Y: =110
+                  - TextCanvas2_20:
+                      Control: Text@0.0.50
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        Height: =30
+                        Text: ="Mã sản phẩm"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =125
+                        X: =259
+                        Y: =110
+                  - TextCanvas2_19:
+                      Control: Text@0.0.50
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        Height: =30
+                        Text: ="Tên sản phẩm"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =109
+                        X: =399
+                        Y: =110
+                  - TextCanvas2_18:
+                      Control: Text@0.0.50
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        Height: =30
+                        Text: ="Số văn bản"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =136
+                        X: =508
+                        Y: =110
+                  - TextCanvas2_17:
+                      Control: Text@0.0.50
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        Height: =30
+                        Text: ="Quy tắc bảo hiểm"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =148
+                        X: =654
+                        Y: =110
+                  - Btn_ThemMoi:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =RGBA(56, 96, 178, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Bold
+                        Height: =30
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        OnSelect: |
+                          =Set(varEditSP, false);
+                          ResetForm(ThemMoiSP);
+                          ClearCollect(colLHNV,{Ten_lhnv:"Bảo hiểm sức khỏe"},{Ten_lhnv:"Bảo hiểm nhân thọ"},{Ten_lhnv:"Bảo hiểm phi nhân thọ"});
+                          NewForm(ThemMoiSP);
+                          Navigate(ThemMoi);
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        Size: =11
+                        Text: ="Thêm mới"
+                        Width: =96
+                        Y: =65
+                  - Label_Filter_MSP:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        Size: =11
+                        Text: ="Mã sản phẩm"
+                        Width: =125
+                        X: =27
+                        Y: =19
+                  - TxtFilterMSP:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Default: =
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =11
+                        Width: =160
+                        X: =155
+                        Y: =19
+                  - Label_Filter_LHNV:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        Size: =11
+                        Text: ="Loại hình nghiệp vụ"
+                        X: =335
+                        Y: =19
+                  - Drop_Filter_LHNV:
+                      Control: Classic/DropDown@2.3.1
+                      Properties:
+                        AllowEmptySelection: =true
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =["Sức khỏe","Tai nạn","Trách nhiệm dân sự"]
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Size: =11
+                        Width: =203
+                        X: =485
+                        Y: =19
+                  - Label_Filter_HLT:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        Size: =11
+                        Text: ="Hiệu lực từ"
+                        Width: =90
+                        X: =731
+                        Y: =19
+                  - Date_HLT:
+                      Control: Classic/DatePicker@2.6.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        DefaultDate: =
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        Font: =Font.'Open Sans'
+                        Format: ="dd/mm/yyyy"
+                        Height: =30
+                        IconBackground: =RGBA(56, 96, 178, 1)
+                        IconFill: =RGBA(255, 255, 255, 1)
+                        InputTextPlaceholder: =
+                        IsEditable: =true
+                        Size: =11
+                        Width: =203
+                        X: =821
+                        Y: =19
+                  - Label_Filter_HLD:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =30
+                        Size: =11
+                        Text: ="Hiệu lực đến"
+                        Width: =100
+                        X: =1078
+                        Y: =19
+                  - Date_HLD:
+                      Control: Classic/DatePicker@2.6.0
+                      Properties:
+                        BorderColor: =RGBA(12, 59, 94, 1)
+                        DefaultDate: =
+                        DisabledBorderColor: =RGBA(180, 214, 250, 1)
+                        Font: =Font.'Open Sans'
+                        Format: ="dd/mm/yyyy"
+                        Height: =30
+                        IconBackground: =RGBA(56, 96, 178, 1)
+                        IconFill: =RGBA(255, 255, 255, 1)
+                        InputTextPlaceholder: =
+                        IsEditable: =true
+                        Size: =11
+                        Width: =203
+                        X: =1178
+                        Y: =19
+                  - TextCanvas2_23:
+                      Control: Text@0.0.50
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        Height: =30
+                        Text: ="Tài liệu minh họa"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =137
+                        X: =802
+                        Y: =110
+                  - TextCanvas2_42:
+                      Control: Text@0.0.50
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        Height: =30
+                        Text: ="Hiệu lực từ"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =113
+                        X: =951
+                        Y: =110
+                  - TextCanvas2_43:
+                      Control: Text@0.0.50
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        Height: =30
+                        Text: ="Hiệu lực đến"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =84
+                        X: =1075
+                        Y: =110
+                  - TextCanvas2_45:
+                      Control: Text@0.0.50
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        Height: =30
+                        Text: ="Thao tác"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =217
+                        X: =1175
+                        Y: =110
